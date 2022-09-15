@@ -135,4 +135,7 @@ export enum SortingStrategy {
     AcceptanceRateDesc = "Acceptance Rate (Descending)",
     FrequencyAsc = "Frequency (Ascending)",
     FrequencyDesc = "Frequency (Descending)",
+    ScoreAsc = "Score (Ascending)",
+    ScoreDesc = "Score (Descending)",
+    IDDesc = "ID (Descending)"
 }

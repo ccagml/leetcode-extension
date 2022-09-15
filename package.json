@@ -697,7 +697,10 @@
                         "enum": [
                             "None",
                             "Acceptance Rate (Ascending)",
-                            "Acceptance Rate (Descending)"
+                            "Acceptance Rate (Descending)",
+                            "Score (Ascending)",
+                            "Score (Descending)",
+                            "ID (Descending)"
                         ],
                         "description": "Sorting strategy for problems list."
                     }

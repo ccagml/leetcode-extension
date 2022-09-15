@@ -58,6 +58,9 @@ const SORT_ORDER: SortingStrategy[] = [
     SortingStrategy.None,
     SortingStrategy.AcceptanceRateAsc,
     SortingStrategy.AcceptanceRateDesc,
+    SortingStrategy.ScoreAsc,
+    SortingStrategy.ScoreDesc,
+    SortingStrategy.IDDesc,
 ];
 
 export async function switchSortingStrategy(): Promise<void> {

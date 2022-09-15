@@ -210,7 +210,7 @@ class ExplorerNodeManager implements Disposable {
                     if (node.score > "0") {
                         const check_rank = toNumber(metaInfo[1]);
                         const node_rank = toNumber(node.score);
-                        let m: Map<Number, Array<number>> = new Map<Number, Array<number>>;
+                        let m: Map<Number, Array<number>> = new Map<Number, Array<number>>();
                         m.set(2300, [2300, 9999]);
                         m.set(2200, [2200, 2300]);
                         m.set(2100, [2100, 2200]);
@@ -284,6 +284,9 @@ class ExplorerNodeManager implements Disposable {
         switch (strategy) {
             case SortingStrategy.AcceptanceRateAsc: return nodes.sort((x: LeetCodeNode, y: LeetCodeNode) => Number(x.acceptanceRate) - Number(y.acceptanceRate));
             case SortingStrategy.AcceptanceRateDesc: return nodes.sort((x: LeetCodeNode, y: LeetCodeNode) => Number(y.acceptanceRate) - Number(x.acceptanceRate));
+            case SortingStrategy.ScoreAsc: return nodes.sort((x: LeetCodeNode, y: LeetCodeNode) => Number(x.score) - Number(y.score));
+            case SortingStrategy.ScoreDesc: return nodes.sort((x: LeetCodeNode, y: LeetCodeNode) => Number(y.score) - Number(x.score));
+            case SortingStrategy.IDDesc: return nodes.sort((x: LeetCodeNode, y: LeetCodeNode) => Number(y.id) - Number(x.id));
             default: return nodes;
         }
     }
