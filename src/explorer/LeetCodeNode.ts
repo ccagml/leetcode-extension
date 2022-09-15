@@ -64,7 +64,7 @@ export class LeetCodeNode {
             scheme: "leetcode",
             authority: this.isProblem ? "problems" : "tree-node",
             path: `/${this.id}`, // path must begin with slash /
-            query: `difficulty=${this.difficulty}`,
+            query: `difficulty=${this.difficulty}&score=${this.score}`,
         });
     }
 

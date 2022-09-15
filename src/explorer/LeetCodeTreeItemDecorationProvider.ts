@@ -14,7 +14,7 @@ export class LeetCodeTreeItemDecorationProvider implements FileDecorationProvide
         hard: new ThemeColor("charts.red"),
     };
 
-    public provideFileDecoration(uri: Uri): ProviderResult<FileDecoration>  {
+    public provideFileDecoration(uri: Uri): ProviderResult<FileDecoration> {
         if (!this.isDifficultyBadgeEnabled()) {
             return;
         }
@@ -25,8 +25,9 @@ export class LeetCodeTreeItemDecorationProvider implements FileDecorationProvide
 
         const params: URLSearchParams = new URLSearchParams(uri.query);
         const difficulty: string = params.get("difficulty")!.toLowerCase();
+        const score: string = params.get("score") || "0";
         return {
-            badge: this.DIFFICULTY_BADGE_LABEL[difficulty],
+            badge: score > "0" ? "" : this.DIFFICULTY_BADGE_LABEL[difficulty],
             color: this.ITEM_COLOR[difficulty],
         };
     }
