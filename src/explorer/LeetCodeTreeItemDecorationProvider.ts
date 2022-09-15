@@ -29,6 +29,7 @@ export class LeetCodeTreeItemDecorationProvider implements FileDecorationProvide
         return {
             badge: score > "0" ? "" : this.DIFFICULTY_BADGE_LABEL[difficulty],
             color: this.ITEM_COLOR[difficulty],
+            tooltip: score > "0" ? score : "0"
         };
     }
 
