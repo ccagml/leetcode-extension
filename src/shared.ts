@@ -74,12 +74,22 @@ export interface IProblem {
     isFavorite: boolean;
     locked: boolean;
     state: ProblemState;
-    id: string;
+    id: string; // 题目编号
     name: string;
     difficulty: string;
     passRate: string;
     companies: string[];
     tags: string[];
+    scoreData: IScoreData | undefined; // 分数的结构
+}
+
+export interface IScoreData {
+    Rating: number; // 分数
+    score: string; // rank分
+    ID: string;   // 题目ID
+    ContestID_en: string; // 周赛名称
+    ProblemIndex: string; // 周赛第几题
+    ContestSlug: string; // 周赛名称
 }
 
 export const defaultProblem: IProblem = {
@@ -92,6 +102,7 @@ export const defaultProblem: IProblem = {
     passRate: "",
     companies: [] as string[],
     tags: [] as string[],
+    scoreData: undefined,
 };
 
 export enum Category {

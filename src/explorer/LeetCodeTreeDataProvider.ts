@@ -5,7 +5,7 @@ import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
 import { leetCodeManager } from "../leetCodeManager";
-import { Category, defaultProblem, ProblemState } from "../shared";
+import { Category, defaultProblem, IScoreData, ProblemState } from "../shared";
 import { explorerNodeManager } from "./explorerNodeManager";
 import { LeetCodeNode } from "./LeetCodeNode";
 
@@ -46,7 +46,7 @@ export class LeetCodeTreeDataProvider implements vscode.TreeDataProvider<LeetCod
         }
 
         return {
-            label: element.isProblem ? `[${element.id}] ${element.name}` : element.name,
+            label: element.isProblem ? `[${element.id}] ${element.name} ${element.score} ` : element.name,
             tooltip: this.getSubCategoryTooltip(element),
             collapsibleState: element.isProblem ? vscode.TreeItemCollapsibleState.None : vscode.TreeItemCollapsibleState.Collapsed,
             iconPath: this.parseIconPathFromProblemState(element),
@@ -87,7 +87,18 @@ export class LeetCodeTreeDataProvider implements vscode.TreeDataProvider<LeetCod
             }
         }
     }
-
+    // 返回题目id的数据
+    public getScoreData(): Map<string, IScoreData> {
+        const file_path = this.context.asAbsolutePath(path.join("resources", "data.json"));
+        const scoreData: Array<IScoreData> = require(file_path)
+        let nameSiteMapping = new Map<string, IScoreData>();
+        scoreData.forEach(element => {
+            element.score = "" + Math.floor(element.Rating || 0)
+            element.ID = "" + element.ID
+            nameSiteMapping.set(element.ID, element)
+        });
+        return nameSiteMapping
+    }
     private parseIconPathFromProblemState(element: LeetCodeNode): string {
         if (!element.isProblem) {
             return "";

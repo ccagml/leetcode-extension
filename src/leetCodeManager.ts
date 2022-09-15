@@ -85,6 +85,7 @@ class LeetCodeManager extends EventEmitter {
 
                 childProc.stdout?.on("data", async (data: string | Buffer) => {
                     data = data.toString();
+                    // vscode.window.showInformationMessage(`cc login msg ${data}.`);
                     leetCodeChannel.append(data);
                     if (data.includes("twoFactorCode")) {
                         const twoFactor: string | undefined = await vscode.window.showInputBox({

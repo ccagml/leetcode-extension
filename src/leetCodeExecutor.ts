@@ -197,7 +197,7 @@ class LeetCodeExecutor implements Disposable {
         }
         await this.executeCommandWithProgressEx("Updating the favorite list...", "node", commandParams);
     }
-
+    // 读取tag 编号看着只有钱1148才有
     public async getCompaniesAndTags(): Promise<{ companies: { [key: string]: string[] }, tags: { [key: string]: string[] } }> {
         // preprocess the plugin source
         const companiesTagsPath: string = path.join(this.leetCodeRootPath, "lib", "plugins", "company.js");

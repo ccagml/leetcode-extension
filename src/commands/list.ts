@@ -7,6 +7,7 @@ import { leetCodeManager } from "../leetCodeManager";
 import { IProblem, ProblemState, UserStatus } from "../shared";
 import * as settingUtils from "../utils/settingUtils";
 import { DialogType, promptForOpenOutputChannel } from "../utils/uiUtils";
+import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
 
 export async function listProblems(): Promise<IProblem[]> {
     try {
@@ -21,6 +22,7 @@ export async function listProblems(): Promise<IProblem[]> {
         const lines: string[] = result.split("\n");
         const reg: RegExp = /^(.)\s(.{1,2})\s(.)\s\[\s*(\d*)\s*\]\s*(.*)\s*(Easy|Medium|Hard)\s*\((\s*\d+\.\d+ %)\)/;
         const { companies, tags } = await leetCodeExecutor.getCompaniesAndTags();
+        const AllScoreData = leetCodeTreeDataProvider.getScoreData();
         for (const line of lines) {
             const match: RegExpMatchArray | null = line.match(reg);
             if (match && match.length === 8) {
@@ -35,6 +37,7 @@ export async function listProblems(): Promise<IProblem[]> {
                     passRate: match[7].trim(),
                     companies: companies[id] || ["Unknown"],
                     tags: tags[id] || ["Unknown"],
+                    scoreData: AllScoreData.get(id),
                 });
             }
         }
