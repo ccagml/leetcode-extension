@@ -38,6 +38,7 @@ export async function listProblems(): Promise<IProblem[]> {
                     companies: companies[id] || ["Unknown"],
                     tags: tags[id] || ["Unknown"],
                     scoreData: AllScoreData.get(id),
+                    isSearchResult: false
                 });
             }
         }

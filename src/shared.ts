@@ -81,6 +81,7 @@ export interface IProblem {
     companies: string[];
     tags: string[];
     scoreData: IScoreData | undefined; // 分数的结构
+    isSearchResult: boolean;
 }
 
 export interface IScoreData {
@@ -103,6 +104,7 @@ export const defaultProblem: IProblem = {
     companies: [] as string[],
     tags: [] as string[],
     scoreData: undefined,
+    isSearchResult: false
 };
 
 export enum Category {
@@ -138,4 +140,19 @@ export enum SortingStrategy {
     ScoreAsc = "Score (Ascending)",
     ScoreDesc = "Score (Descending)",
     IDDesc = "ID (Descending)"
+}
+
+export enum SearchSetType {
+    ScoreRange = "ScoreRange",
+    Context = "Context",
+}
+
+export interface ISearchSet {
+    value: string,
+    type: SearchSetType
+}
+
+export const SearchNode: ISearchSet = {
+    value: "",
+    type: SearchSetType.ScoreRange,
 }

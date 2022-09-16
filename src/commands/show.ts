@@ -10,7 +10,8 @@ import { LeetCodeNode } from "../explorer/LeetCodeNode";
 import { leetCodeChannel } from "../leetCodeChannel";
 import { leetCodeExecutor } from "../leetCodeExecutor";
 import { leetCodeManager } from "../leetCodeManager";
-import { IProblem, IQuickItemEx, languages, ProblemState } from "../shared";
+import { IProblem, IQuickItemEx, languages, ProblemState, SearchNode, SearchSetType } from "../shared";
+import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
 import { genFileExt, genFileName, getNodeIdFromFile } from "../utils/problemUtils";
 import * as settingUtils from "../utils/settingUtils";
 import { IDescriptionConfiguration } from "../utils/settingUtils";
@@ -58,7 +59,13 @@ export async function searchScoreRange(): Promise<void> {
         validateInput: (s: string): string | undefined => s && s.trim() ? undefined : "The input must not be empty",
     });
 
-    vscode.window.showErrorMessage(twoFactor || "输入错误");
+    // vscode.window.showErrorMessage(twoFactor || "输入错误");
+    const tt = Object.assign({}, SearchNode, {
+        value: twoFactor,
+        type: SearchSetType.ScoreRange,
+    })
+    explorerNodeManager.insertSearchSet(tt);
+    await leetCodeTreeDataProvider.refresh()
 }
 
 export async function showProblem(node?: LeetCodeNode): Promise<void> {
@@ -68,7 +75,8 @@ export async function showProblem(node?: LeetCodeNode): Promise<void> {
     await showProblemInternal(node);
 }
 
-export async function searchProblem(): Promise<void> {
+
+export async function searchProblemByID(): Promise<void> {
     if (!leetCodeManager.getUser()) {
         promptForSignIn();
         return;
@@ -84,6 +92,46 @@ export async function searchProblem(): Promise<void> {
         return;
     }
     await showProblemInternal(choice.value);
+}
+
+
+export async function searchProblem(): Promise<void> {
+    if (!leetCodeManager.getUser()) {
+        promptForSignIn();
+        return;
+    }
+
+    const picks: Array<IQuickItemEx<string>> = [];
+    picks.push(
+        {
+            label: `题目id查询`,
+            detail: `通过题目id查询`,
+            value: `byid`,
+        },
+        {
+            label: `分数范围查询`,
+            detail: `例如 1500-1600`,
+            value: `range`,
+        },
+        {
+            label: `周赛期数查询`,
+            detail: `周赛期数查询`,
+            value: `contest`,
+        }
+    );
+    const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(
+        picks,
+        { title: "选择查询选项" },
+    );
+    if (!choice) {
+        return
+    }
+    if (choice.value == "byid") {
+        await searchProblemByID();
+    } else if (choice.value == "range") {
+        await searchScoreRange();
+    }
+
 }
 
 export async function showSolution(input: LeetCodeNode | vscode.Uri): Promise<void> {

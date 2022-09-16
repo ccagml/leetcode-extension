@@ -5,7 +5,7 @@ import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
 import { leetCodeManager } from "../leetCodeManager";
-import { Category, defaultProblem, IScoreData, ProblemState } from "../shared";
+import { Category, defaultProblem, IScoreData, ProblemState, SearchSetType } from "../shared";
 import { explorerNodeManager } from "./explorerNodeManager";
 import { LeetCodeNode } from "./LeetCodeNode";
 
@@ -68,25 +68,40 @@ export class LeetCodeTreeDataProvider implements vscode.TreeDataProvider<LeetCod
         if (!element) { // Root view
             return explorerNodeManager.getRootNodes();
         } else {
-            switch (element.id) { // First-level
-                case Category.All:
-                    return explorerNodeManager.getAllNodes();
-                case Category.Favorite:
-                    return explorerNodeManager.getFavoriteNodes();
-                case Category.Difficulty:
-                    return explorerNodeManager.getAllDifficultyNodes();
-                case Category.Tag:
-                    return explorerNodeManager.getAllTagNodes();
-                case Category.Company:
-                    return explorerNodeManager.getAllCompanyNodes();
-                case Category.Score:
-                    return explorerNodeManager.getAllScoreNodes();
-                default:
-                    if (element.isProblem) {
-                        return [];
-                    }
-                    return explorerNodeManager.getChildrenNodesById(element.id);
+            if (element.isSearchResult) {
+                switch (element.id) {
+                    case SearchSetType.ScoreRange:
+                        return explorerNodeManager.getScoreRangeNodes(element.name);
+                        break;
+                    case SearchSetType.Context:
+                        return explorerNodeManager.getContextNodes();
+                        break;
+                    default:
+                        break;
+                }
+                return [];
+            } else {
+                switch (element.id) { // First-level
+                    case Category.All:
+                        return explorerNodeManager.getAllNodes();
+                    case Category.Favorite:
+                        return explorerNodeManager.getFavoriteNodes();
+                    case Category.Difficulty:
+                        return explorerNodeManager.getAllDifficultyNodes();
+                    case Category.Tag:
+                        return explorerNodeManager.getAllTagNodes();
+                    case Category.Company:
+                        return explorerNodeManager.getAllCompanyNodes();
+                    case Category.Score:
+                        return explorerNodeManager.getAllScoreNodes();
+                    default:
+                        if (element.isProblem) {
+                            return [];
+                        }
+                        return explorerNodeManager.getChildrenNodesById(element.id);
+                }
             }
+
         }
     }
     // 返回题目id的数据

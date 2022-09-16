@@ -9,11 +9,16 @@ import { getSortingStrategy } from "../commands/plugin";
 import { Category, defaultProblem, ProblemState, SortingStrategy } from "../shared";
 import { shouldHideSolvedProblem } from "../utils/settingUtils";
 import { LeetCodeNode } from "./LeetCodeNode";
-
+import { ISearchSet } from "../shared";
 class ExplorerNodeManager implements Disposable {
     private explorerNodeMap: Map<string, LeetCodeNode> = new Map<string, LeetCodeNode>();
     private companySet: Set<string> = new Set<string>();
     private tagSet: Set<string> = new Set<string>();
+    private searchSet: Map<string, ISearchSet> = new Map<string, ISearchSet>();
+
+    public insertSearchSet(tt: ISearchSet) {
+        this.searchSet.set(tt.value, tt);
+    }
 
     public async refreshCache(): Promise<void> {
         this.dispose();
@@ -33,7 +38,7 @@ class ExplorerNodeManager implements Disposable {
     }
 
     public getRootNodes(): LeetCodeNode[] {
-        return [
+        const baseNode: LeetCodeNode[] = [
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: Category.All,
                 name: Category.All,
@@ -59,6 +64,46 @@ class ExplorerNodeManager implements Disposable {
                 name: Category.Score,
             }), false),
         ];
+        this.searchSet.forEach(element => {
+            baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+                id: element.type,
+                name: element.value,
+                isSearchResult: true,
+            }), false));
+        });
+        return baseNode;
+    }
+
+    public getScoreRangeNodes(rank_range: string): LeetCodeNode[] {
+        const sorceNode: LeetCodeNode[] = []
+        const rank_r: Array<string> = rank_range.split("-")
+        var rank_a = Number(rank_r[0])
+        var rank_b = Number(rank_r[1])
+        if (rank_a > 0 && rank_b > 0) {
+            if (rank_a > rank_b) {
+                const rank_c: number = rank_a
+                rank_a = rank_b
+                rank_b = rank_c
+            }
+
+            this.explorerNodeMap.forEach(element => {
+                if (rank_a <= Number(element.score) && Number(element.score) <= rank_b) {
+                    sorceNode.push(element)
+                }
+            });
+            // for (const key in this.explorerNodeMap.values()) {
+            //     const element: LeetCodeNode = this.explorerNodeMap[key];
+            //     if (rank_a <= Number(element.score) && Number(element.score) <= rank_b) {
+            //         sorceNode.push(element)
+            //     }
+            // }
+        }
+        return this.applySortingStrategy(sorceNode);
+    }
+    public getContextNodes(): LeetCodeNode[] {
+        return this.applySortingStrategy(
+            Array.from(this.explorerNodeMap.values()),
+        );
     }
 
     public getAllNodes(): LeetCodeNode[] {

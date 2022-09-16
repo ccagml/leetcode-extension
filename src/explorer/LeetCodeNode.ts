@@ -87,5 +87,8 @@ export class LeetCodeNode {
     public get scoreData(): IScoreData | undefined {
         return this.data.scoreData
     }
+    public get isSearchResult(): boolean {
+        return this.data.isSearchResult
+    }
 
 }
