@@ -46,7 +46,7 @@ export class LeetCodeTreeDataProvider implements vscode.TreeDataProvider<LeetCod
         }
 
         return {
-            label: element.isProblem ? (element.score > "0" ? ("score:" + element.score) + ", " : "") + `ID:${element.id}.${element.name} ` : element.name,
+            label: element.isProblem ? (element.score > "0" ? (element.score) + "分, " : "") + `ID:${element.id}.${element.name} ` : element.name,
             tooltip: this.getSubCategoryTooltip(element),
             collapsibleState: element.isProblem ? vscode.TreeItemCollapsibleState.None : vscode.TreeItemCollapsibleState.Collapsed,
             iconPath: this.parseIconPathFromProblemState(element),

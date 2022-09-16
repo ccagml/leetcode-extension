@@ -39,6 +39,7 @@
         "onCommand:leetcode.submitSolution",
         "onCommand:leetcode.switchDefaultLanguage",
         "onCommand:leetcode.problems.sort",
+        "onCommand:leetcode.searchScoreRange",
         "onView:leetCodeExplorer"
     ],
     "main": "./out/src/extension",
@@ -141,6 +142,11 @@
                 "title": "Sort Problems",
                 "category": "LeetCode",
                 "icon": "$(sort-precedence)"
+            },
+            {
+                "command": "leetcode.searchScoreRange",
+                "title": "分数范围查询",
+                "category": "LeetCode"
             }
         ],
         "viewsContainers": {
@@ -191,6 +197,11 @@
                     "command": "leetcode.problems.sort",
                     "when": "view == leetCodeExplorer",
                     "group": "overflow@1"
+                },
+                {
+                    "command": "leetcode.searchScoreRange",
+                    "when": "view == leetCodeExplorer",
+                    "group": "overflow@2"
                 }
             ],
             "view/item/context": [

@@ -51,6 +51,15 @@ export async function pickOne(): Promise<void> {
     const randomProblem: IProblem = problems[Math.floor(Math.random() * problems.length)];
     await showProblemInternal(randomProblem);
 }
+export async function searchScoreRange(): Promise<void> {
+    const twoFactor: string | undefined = await vscode.window.showInputBox({
+        prompt: "输入分数范围 低分-高分 例如: 1500-1600",
+        ignoreFocusOut: true,
+        validateInput: (s: string): string | undefined => s && s.trim() ? undefined : "The input must not be empty",
+    });
+
+    vscode.window.showErrorMessage(twoFactor || "输入错误");
+}
 
 export async function showProblem(node?: LeetCodeNode): Promise<void> {
     if (!node) {
