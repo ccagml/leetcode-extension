@@ -1,7 +1,7 @@
 {
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
-    "description": "为LeetCode题目难度进行打分",
+    "description": "为LeetCode题目难度进行打分。避免只有简单、中等、困难三种难度",
     "version": "1.0.0",
     "author": "ccagml",
     "publisher": "ccagml",
