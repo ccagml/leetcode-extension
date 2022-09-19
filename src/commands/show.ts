@@ -70,7 +70,7 @@ export async function searchScoreRange(): Promise<void> {
 
 export async function searchContest(): Promise<void> {
     const twoFactor: string | undefined = await vscode.window.showInputBox({
-        prompt: "输入期数范围 低期数-高期数 例如: 303-306",
+        prompt: "单期数 例如: 300 或者 输入期数范围 低期数-高期数 例如: 303-306",
         ignoreFocusOut: true,
         validateInput: (s: string): string | undefined => s && s.trim() ? undefined : "The input must not be empty",
     });
