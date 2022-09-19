@@ -1,8 +1,8 @@
 {
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
-    "description": "LeetCode problems rating",
-    "version": "0.0.1",
+    "description": "为LeetCode题目难度进行打分",
+    "version": "1.0.0",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",

@@ -1,11 +1,15 @@
-# VSCODE LEETCODE PROBLEM RATING
-## 基于以下两个项目开发
-### 官方vscode插件
+# 概要设计
+    Leetcode 只提供了简单、中等、困难的难度区分。题目与题目之间难度差别很大,因此需要客观的分数对题目难度进行打分
+# 项目依赖
+## 官方vscode插件
 - https://github.com/LeetCode-OpenSource/vscode-leetcode/
-### 题目难度分
+## 题目难度分
 - https://github.com/zerotrac/leetcode_problem_rating/
 
-## 编译插件的相关信息
+# 新增内容
+    在基础插件上增加了难度分的查询、筛选操作
+
+<!-- ## 编译插件的相关信息
 ### 系统信息
 ```
 PRETTY_NAME="Ubuntu 22.04 LTS"
@@ -49,4 +53,4 @@ UBUNTU_CODENAME=jammy
     vsce package
 ```
 
-
+ -->
