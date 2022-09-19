@@ -1,5 +1,5 @@
 # 概要设计(Outline design)
-- Leetcode 只提供了简单、中等、困难的难度区分。题目与题目之间难度差别很大,因此需要客观的分数对题目难度进行打分
+- Leetcode 只提供了简单、中等、困难的难度区分。题目与题目之间难度差别很大，因此需要客观的分数对题目难度进行打分
 - Leetcode only provides easy, medium, and hard difficulty distinctions. Difficulty varies greatly from subject to subject, so objective scores are required to rate the difficulty of the subject
 # 项目地址(project address)
 - https://github.com/ccagml/vscode-leetcode-problem-rating/
