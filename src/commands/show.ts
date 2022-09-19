@@ -68,6 +68,22 @@ export async function searchScoreRange(): Promise<void> {
     await leetCodeTreeDataProvider.refresh()
 }
 
+export async function searchContest(): Promise<void> {
+    const twoFactor: string | undefined = await vscode.window.showInputBox({
+        prompt: "输入期数范围 低期数-高期数 例如: 303-306",
+        ignoreFocusOut: true,
+        validateInput: (s: string): string | undefined => s && s.trim() ? undefined : "The input must not be empty",
+    });
+
+    // vscode.window.showErrorMessage(twoFactor || "输入错误");
+    const tt = Object.assign({}, SearchNode, {
+        value: twoFactor,
+        type: SearchSetType.Context,
+    })
+    explorerNodeManager.insertSearchSet(tt);
+    await leetCodeTreeDataProvider.refresh()
+}
+
 export async function showProblem(node?: LeetCodeNode): Promise<void> {
     if (!node) {
         return;
@@ -130,6 +146,8 @@ export async function searchProblem(): Promise<void> {
         await searchProblemByID();
     } else if (choice.value == "range") {
         await searchScoreRange();
+    } else if (choice.value == "contest") {
+        await searchContest();
     }
 
 }

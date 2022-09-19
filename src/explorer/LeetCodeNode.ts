@@ -90,5 +90,7 @@ export class LeetCodeNode {
     public get isSearchResult(): boolean {
         return this.data.isSearchResult
     }
-
+    public get input(): string {
+        return this.data.input || "";
+    }
 }

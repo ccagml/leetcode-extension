@@ -71,10 +71,10 @@ export class LeetCodeTreeDataProvider implements vscode.TreeDataProvider<LeetCod
             if (element.isSearchResult) {
                 switch (element.id) {
                     case SearchSetType.ScoreRange:
-                        return explorerNodeManager.getScoreRangeNodes(element.name);
+                        return explorerNodeManager.getScoreRangeNodes(element.input);
                         break;
                     case SearchSetType.Context:
-                        return explorerNodeManager.getContextNodes();
+                        return explorerNodeManager.getContextNodes(element.input);
                         break;
                     default:
                         break;

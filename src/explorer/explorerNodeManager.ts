@@ -6,7 +6,7 @@ import { toNumber } from "lodash";
 import { Disposable } from "vscode";
 import * as list from "../commands/list";
 import { getSortingStrategy } from "../commands/plugin";
-import { Category, defaultProblem, ProblemState, SortingStrategy } from "../shared";
+import { Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName } from "../shared";
 import { shouldHideSolvedProblem } from "../utils/settingUtils";
 import { LeetCodeNode } from "./LeetCodeNode";
 import { ISearchSet } from "../shared";
@@ -67,7 +67,8 @@ class ExplorerNodeManager implements Disposable {
         this.searchSet.forEach(element => {
             baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: element.type,
-                name: element.value,
+                name: SearchSetTypeName[element.type] + element.value,
+                input: element.value,
                 isSearchResult: true,
             }), false));
         });
@@ -100,10 +101,25 @@ class ExplorerNodeManager implements Disposable {
         }
         return this.applySortingStrategy(sorceNode);
     }
-    public getContextNodes(): LeetCodeNode[] {
-        return this.applySortingStrategy(
-            Array.from(this.explorerNodeMap.values()),
-        );
+    public getContextNodes(rank_range: string): LeetCodeNode[] {
+        const sorceNode: LeetCodeNode[] = []
+        const rank_r: Array<string> = rank_range.split("-")
+        var rank_a = Number(rank_r[0])
+        var rank_b = Number(rank_r[1])
+        if (rank_a > 0) {
+            this.explorerNodeMap.forEach(element => {
+
+                const slu = element.ContestSlug;
+                const slu_arr: Array<string> = slu.split("-")
+                const slu_id = Number(slu_arr[slu_arr.length - 1]);
+                if (rank_b > 0 && rank_a <= slu_id && slu_id <= rank_b) {
+                    sorceNode.push(element)
+                } else if (rank_a == slu_id) {
+                    sorceNode.push(element)
+                }
+            });
+        }
+        return this.applySortingStrategy(sorceNode);
     }
 
     public getAllNodes(): LeetCodeNode[] {

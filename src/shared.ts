@@ -82,6 +82,7 @@ export interface IProblem {
     tags: string[];
     scoreData: IScoreData | undefined; // 分数的结构
     isSearchResult: boolean;
+    input: string;
 }
 
 export interface IScoreData {
@@ -104,7 +105,8 @@ export const defaultProblem: IProblem = {
     companies: [] as string[],
     tags: [] as string[],
     scoreData: undefined,
-    isSearchResult: false
+    isSearchResult: false,
+    input: ""
 };
 
 export enum Category {
@@ -145,6 +147,11 @@ export enum SortingStrategy {
 export enum SearchSetType {
     ScoreRange = "ScoreRange",
     Context = "Context",
+}
+
+export enum SearchSetTypeName {
+    ScoreRange = "分数范围:",
+    Context = "周赛期数:"
 }
 
 export interface ISearchSet {
