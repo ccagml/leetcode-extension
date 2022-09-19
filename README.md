@@ -1,13 +1,17 @@
-# 概要设计
-    Leetcode 只提供了简单、中等、困难的难度区分。题目与题目之间难度差别很大,因此需要客观的分数对题目难度进行打分
-# 项目依赖
-## 官方vscode插件
+# 概要设计(Outline design)
+- Leetcode 只提供了简单、中等、困难的难度区分。题目与题目之间难度差别很大,因此需要客观的分数对题目难度进行打分
+- Leetcode only provides easy, medium, and hard difficulty distinctions. Difficulty varies greatly from subject to subject, so objective scores are required to rate the difficulty of the subject
+# 项目地址(project address)
+- https://github.com/ccagml/vscode-leetcode-problem-rating/
+# 项目依赖(project dependencies)
+## vscode插件(vscode plugin)
 - https://github.com/LeetCode-OpenSource/vscode-leetcode/
-## 题目难度分
+## 题目难度分(Difficulty score)
 - https://github.com/zerotrac/leetcode_problem_rating/
 
-# 新增内容
-    在基础插件上增加了难度分的查询、筛选操作
+# 新增内容(new content)
+- 在基础插件上增加了难度分的显示、查询、筛选操作
+- Added difficulty score display, query, and filter operations to the basic plug-in
 
 <!-- ## 编译插件的相关信息
 ### 系统信息
