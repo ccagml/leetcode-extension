@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode problem rating",
     "description": "为LeetCode题目难度进行打分。避免只有简单、中等、困难三种难度",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -286,21 +286,21 @@
         ],
         "configuration": [
             {
-                "title": "LeetCode",
+                "title": "leetcode-problem-rating",
                 "properties": {
-                    "leetcode.hideSolved": {
+                    "leetcode-problem-rating.hideSolved": {
                         "type": "boolean",
                         "default": false,
                         "scope": "application",
                         "description": "Hide solved problems."
                     },
-                    "leetcode.showLocked": {
+                    "leetcode-problem-rating.showLocked": {
                         "type": "boolean",
                         "default": false,
                         "scope": "application",
                         "description": "Show locked problems."
                     },
-                    "leetcode.defaultLanguage": {
+                    "leetcode-problem-rating.defaultLanguage": {
                         "type": "string",
                         "enum": [
                             "bash",
@@ -324,7 +324,7 @@
                         "scope": "application",
                         "description": "Default language for solving the problems."
                     },
-                    "leetcode.showDescription": {
+                    "leetcode-problem-rating.showDescription": {
                         "type": "string",
                         "default": "In Webview",
                         "enum": [
@@ -340,46 +340,46 @@
                         "scope": "application",
                         "description": "Specify where to show the description."
                     },
-                    "leetcode.showCommentDescription": {
+                    "leetcode-problem-rating.showCommentDescription": {
                         "type": "boolean",
                         "default": false,
                         "scope": "application",
                         "description": "[Deprecated] Include problem description in comments.",
                         "deprecationMessage": "This setting will be deprecated in 0.17.0, please use 'leetcode.showDescription' instead"
                     },
-                    "leetcode.hint.setDefaultLanguage": {
+                    "leetcode-problem-rating.hint.setDefaultLanguage": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
                         "description": "Show a hint to set the default language."
                     },
-                    "leetcode.hint.configWebviewMarkdown": {
+                    "leetcode-problem-rating.hint.configWebviewMarkdown": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
                         "description": "Show a hint to change webview appearance through markdown config."
                     },
-                    "leetcode.hint.commentDescription": {
+                    "leetcode-problem-rating.hint.commentDescription": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
                         "description": "Show a hint to enable comment description in solution code file."
                     },
-                    "leetcode.hint.commandShortcut": {
+                    "leetcode-problem-rating.hint.commandShortcut": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
                         "description": "Show a hint to configure commands key binding."
                     },
-                    "leetcode.useWsl": {
+                    "leetcode-problem-rating.useWsl": {
                         "type": "boolean",
                         "default": false,
                         "scope": "application",
                         "description": "Use the Windows Subsystem for Linux."
                     },
-                    "leetcode.endpoint": {
+                    "leetcode-problem-rating.endpoint": {
                         "type": "string",
-                        "default": "leetcode",
+                        "default": "leetcode-cn",
                         "scope": "application",
                         "enum": [
                             "leetcode",
@@ -387,19 +387,19 @@
                         ],
                         "description": "Endpoint of the user account."
                     },
-                    "leetcode.useEndpointTranslation": {
+                    "leetcode-problem-rating.useEndpointTranslation": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
                         "description": "Use endpoint's translation (if available)"
                     },
-                    "leetcode.workspaceFolder": {
+                    "leetcode-problem-rating.workspaceFolder": {
                         "type": "string",
                         "scope": "application",
                         "description": "The path of the workspace folder to store the problem files.",
                         "default": ""
                     },
-                    "leetcode.filePath": {
+                    "leetcode-problem-rating.filePath": {
                         "type": "object",
                         "scope": "application",
                         "description": "The output folder and filename to save the problem files.",
@@ -640,13 +640,13 @@
                             }
                         }
                     },
-                    "leetcode.enableStatusBar": {
+                    "leetcode-problem-rating.enableStatusBar": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
                         "description": "Show the LeetCode status bar or not."
                     },
-                    "leetcode.editor.shortcuts": {
+                    "leetcode-problem-rating.editor.shortcuts": {
                         "type": "array",
                         "default": [
                             "submit",
@@ -672,25 +672,25 @@
                         },
                         "description": "Customize the shortcuts in editors."
                     },
-                    "leetcode.enableSideMode": {
+                    "leetcode-problem-rating.enableSideMode": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
                         "description": "Determine whether to group all webview pages into the second editor column when solving problems."
                     },
-                    "leetcode.nodePath": {
+                    "leetcode-problem-rating.nodePath": {
                         "type": "string",
                         "default": "node",
                         "scope": "application",
                         "description": "The Node.js executable path. for example, C:\\Program Files\\nodejs\\node.exe"
                     },
-                    "leetcode.colorizeProblems": {
+                    "leetcode-problem-rating.colorizeProblems": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
                         "description": "Add difficulty badge and colorize problems files in explorer tree."
                     },
-                    "leetcode.problems.sortStrategy": {
+                    "leetcode-problem-rating.problems.sortStrategy": {
                         "type": "string",
                         "default": "None",
                         "scope": "application",

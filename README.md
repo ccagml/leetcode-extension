@@ -13,6 +13,9 @@
 - 在基础插件上增加了难度分的显示、查询、筛选操作
 - Added difficulty score display, query, and filter operations to the basic plug-in
 
+# 更新内容(update)
+## version 1.0.1
+- 设置相关内容
 <!-- ## 编译插件的相关信息
 ### 系统信息
 ```
