@@ -38,8 +38,8 @@ class LeetCodeStatusBarController implements Disposable {
     }
 
     private isStatusBarEnabled(): boolean {
-        const configuration: WorkspaceConfiguration = workspace.getConfiguration();
-        return configuration.get<boolean>("leetcode.enableStatusBar", true);
+        const configuration: WorkspaceConfiguration = workspace.getConfiguration("leetcode-problem-rating");
+        return configuration.get<boolean>("enableStatusBar", true);
     }
 }
 
