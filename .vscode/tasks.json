@@ -3,6 +3,23 @@
     "tasks": [
         {
             "label": "npm",
+            "dependsOn": [
+                "npm_rm",
+                "npm_do"
+            ]
+        },
+        {
+            "label": "npm_rm",
+            "type": "shell",
+            "command": "rm",
+            "args": [
+                "-rf",
+                "out"
+            ],
+            // "isBackground": true,
+        },
+        {
+            "label": "npm_do",
             "type": "shell",
             "command": "npm",
             "group": {
@@ -24,10 +41,10 @@
         {
             "type": "npm",
             "script": "lint",
-            "problemMatcher": {
-                "base": "$tslint5",
-                "fileLocation": "absolute"
-            }
+            // "problemMatcher": {
+            //     "base": "$tslint5",
+            //     "fileLocation": "absolute"
+            // }
         }
     ]
 }
