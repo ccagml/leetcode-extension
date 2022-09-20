@@ -218,7 +218,7 @@ class LeetCodeExecutor implements Disposable {
     }
 
     private getNodePath(): string {
-        const extensionConfig: WorkspaceConfiguration = workspace.getConfiguration("leetcode", null);
+        const extensionConfig: WorkspaceConfiguration = workspace.getConfiguration("leetcode-problem-rating", null);
         return extensionConfig.get<string>("nodePath", "node" /* default value */);
     }
 

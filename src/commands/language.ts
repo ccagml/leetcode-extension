@@ -5,7 +5,7 @@ import { QuickPickItem, window, workspace, WorkspaceConfiguration } from "vscode
 import { languages } from "../shared";
 
 export async function switchDefaultLanguage(): Promise<void> {
-    const leetCodeConfig: WorkspaceConfiguration = workspace.getConfiguration("leetcode");
+    const leetCodeConfig: WorkspaceConfiguration = workspace.getConfiguration("leetcode-problem-rating");
     const defaultLanguage: string | undefined = leetCodeConfig.get<string>("defaultLanguage");
     const languageItems: QuickPickItem[] = [];
     for (const language of languages) {

@@ -6,7 +6,7 @@ import { executeCommand } from "./cpUtils";
 import { isWindows } from "./osUtils";
 
 export function useWsl(): boolean {
-    const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode");
+    const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
     return isWindows() && leetCodeConfig.get<boolean>("useWsl") === true;
 }
 

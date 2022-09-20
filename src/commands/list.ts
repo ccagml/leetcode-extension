@@ -14,7 +14,7 @@ export async function listProblems(): Promise<IProblem[]> {
         if (leetCodeManager.getStatus() === UserStatus.SignedOut) {
             return [];
         }
-        const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode");
+        const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
         const showLocked: boolean = !!leetCodeConfig.get<boolean>("showLocked");
         const useEndpointTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
         const result: string = await leetCodeExecutor.listProblems(showLocked, useEndpointTranslation);
