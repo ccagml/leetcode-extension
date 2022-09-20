@@ -19,6 +19,9 @@
 
 ## version 1.0.2
 - 设置相关内容
+
+## version 1.0.3
+- 题目颜色显示
 <!-- ## 编译插件的相关信息
 ### 系统信息
 ```
@@ -44,6 +47,13 @@ UBUNTU_CODENAME=jammy
 ```
     8.15.0
 ```
+### 更新指令
+```
+sudo npm cache clean -f
+sudo npm install -g n
+sudo n stable
+```
+
 ### 安装node依赖
 ```
     npm install
