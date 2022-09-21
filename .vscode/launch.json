@@ -4,6 +4,7 @@
     "configurations": [
         {
             "name": "Launch Extension",
+            // "type": "extensionHost",
             "type": "extensionHost",
             "request": "launch",
             "runtimeExecutable": "${execPath}",
@@ -11,12 +12,20 @@
                 "--extensionDevelopmentPath=${workspaceRoot}",
                 "--trace-warnings"
             ],
-            "stopOnEntry": false,
+            // "autoAttachChildProcesses": true,
+            // "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [
                 "${workspaceRoot}/out/src/**/*.js"
             ],
+            "trace": true,
             "preLaunchTask": "npm"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "extension child process",
+            "processId": "${command:PickProcess}",
         },
         {
             "name": "Launch Tests",
@@ -28,7 +37,7 @@
                 "--extensionTestsPath=${workspaceRoot}/out/test",
                 "--trace-warnings"
             ],
-            "stopOnEntry": false,
+            // "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [
                 "${workspaceRoot}/out/test/**/*.js"
