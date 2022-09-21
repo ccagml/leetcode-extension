@@ -29,11 +29,13 @@ jobs:
       - name: VSCE Packge
         run: |
           vsce package
-          APK=$(find ./ -name '*vscode-leetcode-problem-rating*.vsix')
+          VSIX_FILE=$(find ./ -name '*vscode-leetcode-problem-rating*.vsix')
+          echo "VSIX_FILE=$VSIX_FILE" >> $GITHUB_ENV
+          echo $VSIX_FILE
       - uses: actions/upload-artifact@v2
         with:
           name: vsix
-          path: ${{ env.APK }}
+          path: ${{ env.VSIX_FILE }}
 
   windows:
     name: Windows
