@@ -23,6 +23,9 @@ jobs:
       - name: Install Node.js modules
         run: npm install
 
+      - name: Update Node.js modules
+        run: npm update
+
       - name: Install vsce
         run: npm i -g vsce
 
