@@ -22,9 +22,6 @@ jobs:
       - name: Install Node.js modules
         run: npm install
 
-      - name: Lint
-        run: npm run lint
-
       - name: Install vsce
         run: npm i -g vsce
 
@@ -45,9 +42,6 @@ jobs:
 
       - name: Install Node.js modules
         run: npm install
-
-      - name: Lint
-        run: npm run lint
 
       - name: Install vsce
         run: npm i -g vsce
@@ -75,9 +69,6 @@ jobs:
 
       - name: Install Node.js modules
         run: npm install
-
-      - name: Lint
-        run: npm run lint
 
       - name: Install vsce
         run: npm i -g vsce
