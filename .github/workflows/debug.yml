@@ -27,7 +27,13 @@ jobs:
         run: npm i -g vsce
 
       - name: VSCE Packge
-        run: vsce package
+        run: |
+          vsce package
+          APK=$(find ./ -name '*vscode-leetcode-problem-rating*.vsix')
+      - uses: actions/upload-artifact@v2
+        with:
+          name: vsix
+          path: ${{ env.APK }}
 
   windows:
     name: Windows
@@ -50,11 +56,6 @@ jobs:
       - name: VSCE Packge
         run: |
           vsce package
-          APK=$(find ./ -name '*vscode-leetcode-problem-rating*.vsix')
-      - uses: actions/upload-artifact@v2
-        with:
-          name: vsix
-          path: ${{ env.APK }}
 
   darwin:
     name: macOS
