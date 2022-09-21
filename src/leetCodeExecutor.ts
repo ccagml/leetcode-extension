@@ -15,13 +15,15 @@ import * as wsl from "./utils/wslUtils";
 import { toWslPath, useWsl } from "./utils/wslUtils";
 
 class LeetCodeExecutor implements Disposable {
-    private leetCodeRootPath: string;
+    private leetCodeCliResourcesRootPath: string;
+    private leetCodeCliRootPath: string;
     private nodeExecutable: string;
     private configurationChangeListener: Disposable;
 
     constructor() {
-        // this.leetCodeRootPath = path.join(__dirname, "..", "..", "node_modules", "vsc-leetcode-cli");
-        this.leetCodeRootPath = path.join(__dirname, "..", "..", "resources");
+        // this.leetCodeCliResourcesRootPath = path.join(__dirname, "..", "..", "node_modules", "vsc-leetcode-cli");
+        this.leetCodeCliResourcesRootPath = path.join(__dirname, "..", "..", "resources");
+        this.leetCodeCliRootPath = path.join(__dirname, "..", "..", "out", "src", "vsc-leetcode-cli");
         this.nodeExecutable = this.getNodePath();
         this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
             if (event.affectsConfiguration("leetcode.nodePath")) {
@@ -32,9 +34,9 @@ class LeetCodeExecutor implements Disposable {
 
     public async getLeetCodeBinaryPath(): Promise<string> {
         if (wsl.useWsl()) {
-            return `${await wsl.toWslPath(`"${path.join(this.leetCodeRootPath, "bin", "leetcode")}"`)}`;
+            return `${await wsl.toWslPath(`"${path.join(this.leetCodeCliResourcesRootPath, "bin", "leetcode")}"`)}`;
         }
-        return `"${path.join(this.leetCodeRootPath, "bin", "leetcode")}"`;
+        return `"${path.join(this.leetCodeCliResourcesRootPath, "bin", "leetcode")}"`;
     }
 
     public async meetRequirements(context: ExtensionContext): Promise<boolean> {
@@ -201,7 +203,7 @@ class LeetCodeExecutor implements Disposable {
     // 读取tag 编号看着只有钱1148才有
     public async getCompaniesAndTags(): Promise<{ companies: { [key: string]: string[] }, tags: { [key: string]: string[] } }> {
         // preprocess the plugin source
-        const companiesTagsPath: string = path.join(this.leetCodeRootPath, "lib", "plugins", "company.js");
+        const companiesTagsPath: string = path.join(this.leetCodeCliRootPath, "lib", "plugins", "company.js");
         const companiesTagsSrc: string = (await fse.readFile(companiesTagsPath, "utf8")).replace(
             "module.exports = plugin",
             "module.exports = { COMPONIES, TAGS }",

@@ -168,7 +168,7 @@ function showProblem(problem, argv) {
   if (problem.totalSubmit)
     log.printf('* Total Submissions: %s', problem.totalSubmit);
   if (problem.testable && problem.testcase)
-    log.printf('* Testcase Example:  %s', cutil.inspect(problem.testcase));
+    log.printf('* Testcase Example:  %s', util.inspect(problem.testcase));
   if (filename)
     log.printf('* Source Code:       %s', filename);
 

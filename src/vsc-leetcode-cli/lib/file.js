@@ -128,7 +128,8 @@ file.codeData = function(fullpath) {
 
 /// templates & metadata ///
 file.render = function(tpl, data) {
-  const tplfile = path.join(this.codeDir('templates'), tpl + '.tpl');
+  const tplfile = path.join(__dirname, "..", "..", "..", "..", "resources", "templates", tpl + '.tpl')
+  // const tplfile = path.join(this.codeDir('templates'), tpl + '.tpl');
   let result = _.template(this.data(tplfile).replace(/\r\n/g, '\n'))(data);
 
   if (this.isWindows()) {
