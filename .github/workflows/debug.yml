@@ -37,7 +37,7 @@ jobs:
           echo $VSIX_FILE
       - uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.VSIX_FILE }}
+          name: vsix_file
           path: ${{ env.VSIX_FILE }}
 
   windows:
