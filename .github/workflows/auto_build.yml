@@ -1,11 +1,10 @@
-name: debug
+name: auto_build
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: "test Tag"
-        required: true
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   linux:
