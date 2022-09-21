@@ -29,16 +29,5 @@ jobs:
       - name: Install vsce
         run: npm i -g vsce
 
-      - name: VSCE Packge
-        run: |
-          vsce package
-          VSIX_FILE=$(find ./ -name '*vscode-leetcode-problem-rating*.vsix')
-          echo "VSIX_FILE=$VSIX_FILE" >> $GITHUB_ENV
-          echo $VSIX_FILE
-      - uses: actions/upload-artifact@v2
-        with:
-          name: vsix_file
-          path: ${{ env.VSIX_FILE }}
-
       - name: Publish
         run: vsce publish -p ${{ secrets.VSCE_PAT }}
