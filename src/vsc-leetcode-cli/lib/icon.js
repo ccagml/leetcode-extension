@@ -9,6 +9,7 @@ const icons = {
   like: '★',
   unlike: '☆',
   lock: '🔒',
+  nolock: '　',
   empty: ' ',
   ac: '▣',
   notac: '▤',
