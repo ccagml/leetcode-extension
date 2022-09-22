@@ -14,9 +14,9 @@ const core = new Plugin(99999999, 'core', '20170722', 'Plugins manager');
 
 core.filters = {
   query: {
-    alias:    'query',
-    type:     'string',
-    default:  '',
+    alias: 'query',
+    type: 'string',
+    default: '',
     describe: [
       'Filter questions by condition:',
       'Uppercase means negative',
@@ -29,9 +29,9 @@ core.filters = {
     ].join('\n')
   },
   tag: {
-    alias:    'tag',
-    type:     'array',
-    default:  [],
+    alias: 'tag',
+    type: 'array',
+    default: [],
     describe: 'Filter questions by tag'
   }
 };
@@ -60,8 +60,8 @@ const QUERY_HANDLERS = {
   S: _.negate(isStarred)
 };
 
-core.filterProblems = function(opts, cb) {
-  this.getProblems(!opts.dontTranslate, function(e, problems) {
+core.filterProblems = function (opts, cb) {
+  this.getProblems(!opts.dontTranslate, function (e, problems) {
     if (e) return cb(e);
 
     for (let q of (opts.query || '').split('')) {
@@ -71,7 +71,7 @@ core.filterProblems = function(opts, cb) {
     }
 
     for (let t of (opts.tag || [])) {
-      problems = problems.filter(function(x) {
+      problems = problems.filter(function (x) {
         return x.category === t ||
           hasTag(x.companies, t) ||
           hasTag(x.tags, t);
@@ -82,16 +82,16 @@ core.filterProblems = function(opts, cb) {
   });
 };
 
-core.getProblem = function(keyword, needTranslation, cb) {
+core.getProblem = function (keyword, needTranslation, cb) {
   if (keyword.id)
     return core.next.getProblem(keyword, needTranslation, cb);
 
-  this.getProblems(needTranslation, function(e, problems) {
+  this.getProblems(needTranslation, function (e, problems) {
     if (e) return cb(e);
 
-    keyword = Number(keyword) || keyword;	
+    keyword = Number(keyword) || keyword;
     const metaFid = file.exist(keyword) ? Number(file.meta(keyword).id) : NaN;
-    const problem = problems.find(function(x) {
+    const problem = problems.find(function (x) {
       return x.fid + '' === keyword + '' || x.fid + '' === metaFid + '' || x.name === keyword || x.slug === keyword;
     });
     if (!problem) return cb('Problem not found!');
@@ -99,7 +99,7 @@ core.getProblem = function(keyword, needTranslation, cb) {
   });
 };
 
-core.starProblem = function(problem, starred, cb) {
+core.starProblem = function (problem, starred, cb) {
   if (problem.starred === starred) {
     log.debug('problem is already ' + (starred ? 'starred' : 'unstarred'));
     return cb(null, starred);
@@ -108,7 +108,7 @@ core.starProblem = function(problem, starred, cb) {
   core.next.starProblem(problem, starred, cb);
 };
 
-core.exportProblem = function(problem, opts) {
+core.exportProblem = function (problem, opts) {
   const data = _.extend({}, problem);
 
   // unify format before rendering

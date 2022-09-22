@@ -11,7 +11,7 @@ function padLeft(s, n, c) {
   return c.repeat(k) + s;
 }
 
-function padRight(s, n , c) {
+function padRight(s, n, c) {
   let k = Math.max(0, n - len(s));
   return s + c.repeat(k);
 }
@@ -22,16 +22,16 @@ function padCenter(s, n, c) {
   return c.repeat(l) + s + c.repeat(r);
 }
 
-const tsprintf = function() {
+const tsprintf = function () {
   const args = Array.from(arguments);
   let fmt = args.shift();
-  return fmt.replace(/%[^s%]*[s%]/g, function(s) {
+  return fmt.replace(/%[^s%]*[s%]/g, function (s) {
     if (s === '%%') return '%';
 
     let x = '' + args.shift();
     let n = 0;
 
-    s = s.slice(1, s.length-1);
+    s = s.slice(1, s.length - 1);
     if (s.length > 0) {
       switch (s[0]) {
         case '-':

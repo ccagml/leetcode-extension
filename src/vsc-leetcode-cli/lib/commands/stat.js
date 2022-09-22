@@ -2,7 +2,7 @@
 var moment = require('moment');
 var _ = require('underscore');
 
- 
+
 var icon = require('../icon');
 var log = require('../log');
 var core = require('../core');
@@ -12,26 +12,26 @@ var h = require('../helper');
 
 const cmd = {
   command: 'stat',
-  desc:    'Show statistics',
+  desc: 'Show statistics',
   aliases: ['stats', 'progress', 'report'],
-  builder: function(yargs) {
+  builder: function (yargs) {
     return yargs
       .option('c', {
-        alias:    'cal',
-        type:     'boolean',
-        default:  false,
+        alias: 'cal',
+        type: 'boolean',
+        default: false,
         describe: 'Show calendar statistics'
       })
       .option('g', {
-        alias:    'graph',
-        type:     'boolean',
-        default:  false,
+        alias: 'graph',
+        type: 'boolean',
+        default: false,
         describe: 'Show graphic statistics'
       })
       .option('l', {
-        alias:    'lock',
-        type:     'boolean',
-        default:  true,
+        alias: 'lock',
+        type: 'boolean',
+        default: true,
         describe: 'Include locked questions'
       })
       .option('q', core.filters.query)
@@ -59,9 +59,9 @@ function printLine(key, done, all) {
 
 function showProgress(problems) {
   const stats = {
-    easy:   {all: 0, ac: 0},
-    medium: {all: 0, ac: 0},
-    hard:   {all: 0, ac: 0}
+    easy: { all: 0, ac: 0 },
+    medium: { all: 0, ac: 0 },
+    hard: { all: 0, ac: 0 }
   };
 
   for (let problem of problems) {
@@ -82,9 +82,9 @@ function showProgress(problems) {
 
 function showGraph(problems) {
   const ICONS = {
-    ac:    icon.ac,
+    ac: icon.ac,
     notac: icon.notac,
-    none:  icon.none,
+    none: icon.none,
     empty: icon.empty
   };
 
@@ -120,9 +120,9 @@ function showGraph(problems) {
 
   log.info();
   log.printf('%7s%s%3s%s%3s%s',
-      ' ', ICONS.ac +  '  Accepted',
-      ' ', ICONS.notac +  '  Not Accepted',
-      ' ', ICONS.none + '  Remaining');
+    ' ', ICONS.ac + '  Accepted',
+    ' ', ICONS.notac + '  Not Accepted',
+    ' ', ICONS.none + '  Remaining');
 }
 
 function showCal(problems) {
@@ -130,10 +130,10 @@ function showCal(problems) {
   const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const ICONS = [
     icon.none,
-     icon.ac,
-     icon.ac,
-     icon.ac,
-     icon.ac
+    icon.ac,
+    icon.ac,
+    icon.ac,
+    icon.ac
   ];
 
   const N_MONTHS = 12;
@@ -142,7 +142,7 @@ function showCal(problems) {
 
   const now = moment();
 
-  const SCORES = {easy: 1, medium: 2, hard: 5};
+  const SCORES = { easy: 1, medium: 2, hard: 5 };
   function toScore(sum, id) {
     const problem = problems.find(x => x.fid === id);
     if (problem) sum += (SCORES[problem.level.toLowerCase()] || 1);
@@ -191,7 +191,7 @@ function showCal(problems) {
 
       let icon = ICONS[idx];
       // use different colors for adjacent months
-      if (idx === 0 && d.month() % 2) icon =  icon;
+      if (idx === 0 && d.month() % 2) icon = icon;
       line.push(icon);
     }
     log.info(line.join(' '));
@@ -205,18 +205,18 @@ function showCal(problems) {
     ' ', ICONS[4] + '  16+');
 }
 
-cmd.handler = function(argv) {
+cmd.handler = function (argv) {
   session.argv = argv;
-  core.filterProblems(argv, function(e, problems) {
+  core.filterProblems(argv, function (e, problems) {
     if (e) return log.fail(e);
 
     if (!argv.lock)
       problems = problems.filter(x => !x.locked);
 
     log.info();
-    if (argv.graph)    showGraph(problems);
+    if (argv.graph) showGraph(problems);
     else if (argv.cal) showCal(problems);
-    else               showProgress(problems);
+    else showProgress(problems);
     log.info();
   });
 };

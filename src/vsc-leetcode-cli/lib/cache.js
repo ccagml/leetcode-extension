@@ -5,7 +5,7 @@ var file = require('./file');
 
 const cache = {};
 
-cache.init = function() {
+cache.init = function () {
   file.mkdir(file.cacheDir());
 };
 
@@ -15,20 +15,20 @@ cache.deleteAll = function () {
   })
 };
 
-cache.get = function(k) {
+cache.get = function (k) {
   const fullpath = file.cacheFile(k);
   if (!file.exist(fullpath)) return null;
 
   return JSON.parse(file.data(fullpath));
 };
 
-cache.set = function(k, v) {
+cache.set = function (k, v) {
   const fullpath = file.cacheFile(k);
   file.write(fullpath, JSON.stringify(v));
   return true;
 };
 
-cache.del = function(k) {
+cache.del = function (k) {
   const fullpath = file.cacheFile(k);
   if (!file.exist(fullpath)) return false;
 
@@ -36,15 +36,15 @@ cache.del = function(k) {
   return true;
 };
 
-cache.list = function() {
+cache.list = function () {
   return file.list(file.cacheDir())
     .filter(x => path.extname(x) === '.json')
-    .map(function(filename) {
+    .map(function (filename) {
       const k = path.basename(filename, '.json');
       const stat = file.stat(file.cacheFile(k));
       return {
-        name:  k,
-        size:  stat.size,
+        name: k,
+        size: stat.size,
         mtime: stat.mtime
       };
     });

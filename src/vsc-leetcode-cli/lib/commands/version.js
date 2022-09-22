@@ -2,7 +2,7 @@
 var _ = require('underscore');
 
 var file = require('../file');
- 
+
 var icon = require('../icon');
 var log = require('../log');
 var Plugin = require('../plugin');
@@ -11,8 +11,8 @@ var session = require('../session');
 const cmd = {
   command: 'version',
   aliases: ['info', 'env'],
-  desc:    'Show version info',
-  builder: function(yargs) {
+  desc: 'Show version info',
+  builder: function (yargs) {
     return yargs
       .example('leetcode version', 'Show version number')
       .example('leetcode version -v', 'Show more details');
@@ -29,12 +29,12 @@ function getVersion() {
   try {
     const commit = require('../../.env.json').commit.short;
     if (commit) version += '-' + commit;
-  } catch (e) {}
+  } catch (e) { }
 
   return version;
 }
 
-cmd.handler = function(argv) {
+cmd.handler = function (argv) {
   session.argv = argv;
   const version = getVersion();
 
@@ -47,7 +47,7 @@ cmd.handler = function(argv) {
     '| | ___  ___| |_  ___  ___   __| | ___ ',
     '| |/ _ \\/ _ \\ __|/ __|/ _ \\ / _` |/ _ \\',
     '| |  __/  __/ |_  (__| (_) | (_| |  __/',
-    '|_|\\___|\\___|\\__|\\___|\\___/ \\__,_|\\___|  CLI ' +  'v' + version
+    '|_|\\___|\\___|\\__|\\___|\\___/ \\__,_|\\___|  CLI ' + 'v' + version
   ].join('\n');
   log.info(logo);
 
@@ -61,7 +61,7 @@ cmd.handler = function(argv) {
   printLine('Config', file.configFile());
 
   log.info('\n[Configuration]');
-  _.each(config.getAll(true), function(v, k) {
+  _.each(config.getAll(true), function (v, k) {
     if (k === 'plugins') return;
     printLine(k, JSON.stringify(v));
   });

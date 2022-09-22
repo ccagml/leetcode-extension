@@ -13,27 +13,27 @@ var session = require('../session');
 // https://github.com/skygragon/leetcode-cli-plugins/blob/master/docs/leetcode.cn.md
 //
 var plugin = new Plugin(15, 'leetcode.cn', '2018.11.25',
-    'Plugin to talk with leetcode-cn APIs.');
+  'Plugin to talk with leetcode-cn APIs.');
 
-plugin.init = function() {
+plugin.init = function () {
   config.app = 'leetcode.cn';
-  config.sys.urls.base              = 'https://leetcode.cn';
-  config.sys.urls.login             = 'https://leetcode.cn/accounts/login/';
-  config.sys.urls.problems          = 'https://leetcode.cn/api/problems/$category/';
-  config.sys.urls.problem           = 'https://leetcode.cn/problems/$slug/description/';
-  config.sys.urls.graphql           = 'https://leetcode.cn/graphql';
-  config.sys.urls.problem_detail    = 'https://leetcode.cn/graphql';
-  config.sys.urls.test              = 'https://leetcode.cn/problems/$slug/interpret_solution/';
-  config.sys.urls.session           = 'https://leetcode.cn/session/';
-  config.sys.urls.submit            = 'https://leetcode.cn/problems/$slug/submit/';
-  config.sys.urls.submissions       = 'https://leetcode.cn/api/submissions/$slug';
-  config.sys.urls.submission        = 'https://leetcode.cn/submissions/detail/$id/';
-  config.sys.urls.verify            = 'https://leetcode.cn/submissions/detail/$id/check/';
-  config.sys.urls.favorites         = 'https://leetcode.cn/list/api/questions';
-  config.sys.urls.favorite_delete   = 'https://leetcode.cn/list/api/questions/$hash/$id';
+  config.sys.urls.base = 'https://leetcode.cn';
+  config.sys.urls.login = 'https://leetcode.cn/accounts/login/';
+  config.sys.urls.problems = 'https://leetcode.cn/api/problems/$category/';
+  config.sys.urls.problem = 'https://leetcode.cn/problems/$slug/description/';
+  config.sys.urls.graphql = 'https://leetcode.cn/graphql';
+  config.sys.urls.problem_detail = 'https://leetcode.cn/graphql';
+  config.sys.urls.test = 'https://leetcode.cn/problems/$slug/interpret_solution/';
+  config.sys.urls.session = 'https://leetcode.cn/session/';
+  config.sys.urls.submit = 'https://leetcode.cn/problems/$slug/submit/';
+  config.sys.urls.submissions = 'https://leetcode.cn/api/submissions/$slug';
+  config.sys.urls.submission = 'https://leetcode.cn/submissions/detail/$id/';
+  config.sys.urls.verify = 'https://leetcode.cn/submissions/detail/$id/check/';
+  config.sys.urls.favorites = 'https://leetcode.cn/list/api/questions';
+  config.sys.urls.favorite_delete = 'https://leetcode.cn/list/api/questions/$hash/$id';
   // third parties
-  config.sys.urls.github_login      = 'https://leetcode.cn/accounts/github/login/?next=%2F';
-  config.sys.urls.linkedin_login    = 'https://leetcode.cn/accounts/linkedin_oauth2/login/?next=%2F';
+  config.sys.urls.github_login = 'https://leetcode.cn/accounts/github/login/?next=%2F';
+  config.sys.urls.linkedin_login = 'https://leetcode.cn/accounts/linkedin_oauth2/login/?next=%2F';
   config.sys.urls.leetcode_redirect = 'https://leetcode.cn/';
 };
 
@@ -41,7 +41,7 @@ plugin.init = function() {
 // update options with user credentials
 function signOpts(opts, user) {
   opts.headers.Cookie = 'LEETCODE_SESSION=' + user.sessionId +
-                        ';csrftoken=' + user.sessionCSRF + ';';
+    ';csrftoken=' + user.sessionCSRF + ';';
   opts.headers['X-CSRFToken'] = user.sessionCSRF;
   opts.headers['X-Requested-With'] = 'XMLHttpRequest';
 }
@@ -64,17 +64,17 @@ function checkError(e, resp, expectedStatus) {
     if (code === 403 || code === 401) {
       e = session.errors.EXPIRED;
     } else {
-      e = {msg: 'http error', statusCode: code};
+      e = { msg: 'http error', statusCode: code };
     }
   }
   return e;
 }
 
-// overloading getProblems here to make sure everything related 
-//   to listing out problems can have a chance to be translated. 
+// overloading getProblems here to make sure everything related
+//   to listing out problems can have a chance to be translated.
 // NOTE: Details of the problem is translated inside leetcode.js
 plugin.getProblems = function (needTranslation, cb) {
-  plugin.next.getProblems(needTranslation, function(e, problems) {
+  plugin.next.getProblems(needTranslation, function (e, problems) {
     if (e) return cb(e);
 
     if (needTranslation) {
@@ -96,7 +96,7 @@ plugin.getProblems = function (needTranslation, cb) {
   });
 };
 
-plugin.getProblemsTitle = function(cb) {
+plugin.getProblemsTitle = function (cb) {
   log.debug('running leetcode.cn.getProblemNames');
 
   const opts = makeOpts(config.sys.urls.graphql);
@@ -114,18 +114,18 @@ plugin.getProblemsTitle = function(cb) {
       '    }',
       '}'
     ].join('\n'),
-    variables:     {},
+    variables: {},
     operationName: 'getQuestionTranslation'
   };
 
   const spin = h.spin('Downloading questions titles');
-  request.post(opts, function(e, resp, body) {
+  request.post(opts, function (e, resp, body) {
     spin.stop();
     e = checkError(e, resp, 200);
     if (e) return cb(e);
 
     const titles = [];
-    body.data.translations.forEach(function(x) {
+    body.data.translations.forEach(function (x) {
       titles[x.questionId] = x.title;
     });
 

@@ -10,35 +10,35 @@ const session = {};
 
 session.errors = {
   EXPIRED: {
-    msg:        'session expired, please login again',
+    msg: 'session expired, please login again',
     statusCode: -1
   }
 };
 
-session.getUser = function() {
+session.getUser = function () {
   return cache.get(h.KEYS.user);
 };
 
-session.saveUser = function(user) {
+session.saveUser = function (user) {
   // when auto login enabled, have to save password to re-login later
   // otherwise don't dump password for the sake of security.
   const _user = _.omit(user, config.autologin.enable ? [] : ['pass']);
   cache.set(h.KEYS.user, _user);
 };
 
-session.deleteUser = function() {
+session.deleteUser = function () {
   cache.del(h.KEYS.user);
 };
 
-session.deleteCodingSession = function() {
+session.deleteCodingSession = function () {
   cache.del(h.KEYS.problems);
 };
 
-session.isLogin = function() {
+session.isLogin = function () {
   return this.getUser() !== null;
 };
 
-session.updateStat = function(k, v) {
+session.updateStat = function (k, v) {
   // TODO: use other storage if too many stat data
   const today = moment().format('YYYY-MM-DD');
   const stats = cache.get(h.KEYS.stat) || {};

@@ -12,24 +12,24 @@ var session = require('../session');
 const cmd = {
   command: 'test <filename>',
   aliases: ['run'],
-  desc:    'Test code',
-  builder: function(yargs) {
+  desc: 'Test code',
+  builder: function (yargs) {
     return yargs
       .option('i', {
-        alias:    'interactive',
-        type:     'boolean',
-        default:  false,
+        alias: 'interactive',
+        type: 'boolean',
+        default: false,
         describe: 'Provide test case interactively'
       })
       .option('t', {
-        alias:    'testcase',
-        type:     'string',
-        default:  '',
+        alias: 'testcase',
+        type: 'string',
+        default: '',
         describe: 'Provide test case'
       })
       .positional('filename', {
-        type:     'string',
-        default:  '',
+        type: 'string',
+        default: '',
         describe: 'Code file to test'
       })
       .example('leetcode test 1.two-sum.cpp', 'Test code with default test case')
@@ -59,7 +59,7 @@ function runTest(argv) {
 
   const meta = file.meta(argv.filename);
 
-  core.getProblem(meta.id, true, function(e, problem) {
+  core.getProblem(meta.id, true, function (e, problem) {
     if (e) return log.fail(e);
 
     if (!problem.testable)
@@ -74,7 +74,7 @@ function runTest(argv) {
     problem.file = argv.filename;
     problem.lang = meta.lang;
 
-    core.testProblem(problem, function(e, results) {
+    core.testProblem(problem, function (e, results) {
       if (e) return log.fail(e);
 
       results = _.sortBy(results, x => x.type);
@@ -98,12 +98,12 @@ function runTest(argv) {
   });
 }
 
-cmd.handler = function(argv) {
+cmd.handler = function (argv) {
   session.argv = argv;
   if (!argv.i)
     return runTest(argv);
 
-  h.readStdin(function(e, data) {
+  h.readStdin(function (e, data) {
     if (e) return log.fail(e);
 
     argv.testcase = data;

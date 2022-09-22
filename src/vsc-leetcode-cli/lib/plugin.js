@@ -26,34 +26,34 @@ function Plugin(id, name, ver, desc, deps) {
 
   // only need deps for current platform
   this.deps = _.chain(deps || [])
-    .filter(x => ! x.includes(':') || x.includes(':' + process.platform))
+    .filter(x => !x.includes(':') || x.includes(':' + process.platform))
     .map(x => x.split(':')[0])
     .value();
 }
 
-Plugin.prototype.init = function() {
+Plugin.prototype.init = function () {
   this.config = config.plugins[this.name] || {};
   this.next = null;
 };
 
-Plugin.prototype.setNext = function(next) {
+Plugin.prototype.setNext = function (next) {
   Object.setPrototypeOf(this, next);
   this.next = next;
 };
 
-Plugin.prototype.delete = function() {
+Plugin.prototype.delete = function () {
   if (!this.missing) {
     try {
       const fullpath = file.pluginFile(this.file);
       file.rm(fullpath);
-    } catch(e) {
+    } catch (e) {
       return log.error(e.message);
     }
   }
   this.deleted = true;
 };
 
-Plugin.prototype.save = function() {
+Plugin.prototype.save = function () {
   const stats = cache.get(h.KEYS.plugins) || {};
 
   if (this.deleted) delete stats[this.name];
@@ -63,23 +63,23 @@ Plugin.prototype.save = function() {
   cache.set(h.KEYS.plugins, stats);
 };
 
-Plugin.prototype.install = function(cb) {
+Plugin.prototype.install = function (cb) {
   if (this.deps.length === 0) return cb();
 
   const cmd = 'npm install --save ' + this.deps.join(' ');
   log.debug(cmd);
   const spin = h.spin(cmd);
-  cp.exec(cmd, {cwd: file.codeDir()}, function(e) {
+  cp.exec(cmd, { cwd: file.codeDir() }, function (e) {
     spin.stop();
     return cb(e);
   });
 };
 
-Plugin.prototype.help = function() {};
+Plugin.prototype.help = function () { };
 
 Plugin.plugins = [];
 
-Plugin.init = function(head) {
+Plugin.init = function (head) {
   log.trace('initializing all plugins');
   head = head || require('./core');
 
@@ -142,7 +142,7 @@ Plugin.init = function(head) {
   return missings.length === 0;
 };
 
-Plugin.copy = function(src, cb) {
+Plugin.copy = function (src, cb) {
   // FIXME: remove local file support?
   if (path.extname(src) !== '.js') {
     src = config.sys.urls.plugin.replace('$name', src);
@@ -153,19 +153,19 @@ Plugin.copy = function(src, cb) {
   const dststream = fs.createWriteStream(dst);
   let error;
 
-  srcstream.on('response', function(resp) {
+  srcstream.on('response', function (resp) {
     if (resp.statusCode !== 200)
       srcstream.emit('error', 'HTTP Error: ' + resp.statusCode);
   });
-  srcstream.on('error', function(e) {
+  srcstream.on('error', function (e) {
     dststream.emit('error', e);
   });
 
-  dststream.on('error', function(e) {
+  dststream.on('error', function (e) {
     error = e;
     dststream.end();
   });
-  dststream.on('close', function() {
+  dststream.on('close', function () {
     spin.stop();
     if (error) file.rm(dst);
     return cb(error, dst);
@@ -176,22 +176,22 @@ Plugin.copy = function(src, cb) {
   srcstream.pipe(dststream);
 };
 
-Plugin.install = function(name, cb) {
-  Plugin.copy(name, function(e, fullpath) {
+Plugin.install = function (name, cb) {
+  Plugin.copy(name, function (e, fullpath) {
     if (e) return cb(e);
     log.debug('copied to ' + fullpath);
 
     const p = require(fullpath);
     p.file = path.basename(fullpath);
-    p.install(function() {
+    p.install(function () {
       return cb(null, p);
     });
   });
 };
 
-Plugin.installMissings = function(cb) {
+Plugin.installMissings = function (cb) {
   function doTask(plugin, queue, cb) {
-    Plugin.install(plugin.name, function(e, p) {
+    Plugin.install(plugin.name, function (e, p) {
       if (!e) {
         p.enabled = plugin.enabled;
         p.save();
@@ -209,7 +209,7 @@ Plugin.installMissings = function(cb) {
   q.run(1, cb);
 };
 
-Plugin.save = function() {
+Plugin.save = function () {
   for (let p of this.plugins) p.save();
 };
 

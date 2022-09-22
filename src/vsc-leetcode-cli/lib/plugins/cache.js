@@ -30,7 +30,7 @@ plugin.getProblems = function (needTranslation, cb) {
     return cb(null, problems);
   }
 
-  plugin.next.getProblems(needTranslation, function(e, problems) {
+  plugin.next.getProblems(needTranslation, function (e, problems) {
     if (e) return cb(e);
 
     cache.set(h.KEYS.problems, problems);
@@ -57,7 +57,7 @@ plugin.getProblem = function (problem, needTranslation, cb) {
     }
   }
 
-  plugin.next.getProblem(problem, needTranslation, function(e, _problem) {
+  plugin.next.getProblem(problem, needTranslation, function (e, _problem) {
     if (e) return cb(e);
 
     plugin.saveProblem(_problem);
@@ -65,7 +65,7 @@ plugin.getProblem = function (problem, needTranslation, cb) {
   });
 };
 
-plugin.saveProblem = function(problem) {
+plugin.saveProblem = function (problem) {
   // it would be better to leave specific problem cache being user
   // independent, thus try to reuse existing cache as much as possible
   // after changing user.
@@ -73,7 +73,7 @@ plugin.saveProblem = function(problem) {
   return cache.set(h.KEYS.problem(problem), _problem);
 };
 
-plugin.updateProblem = function(problem, kv) {
+plugin.updateProblem = function (problem, kv) {
   const problems = cache.get(h.KEYS.problems);
   if (!problems) return false;
 
@@ -84,16 +84,16 @@ plugin.updateProblem = function(problem, kv) {
   return cache.set(h.KEYS.problems, problems);
 };
 
-plugin.login = function(user, cb) {
+plugin.login = function (user, cb) {
   this.logout(user, false);
-  plugin.next.login(user, function(e, user) {
+  plugin.next.login(user, function (e, user) {
     if (e) return cb(e);
     session.saveUser(user);
     return cb(null, user);
   });
 };
 
-plugin.logout = function(user, purge) {
+plugin.logout = function (user, purge) {
   if (!user) user = session.getUser();
   if (purge) session.deleteUser();
   // NOTE: need invalidate any user related cache

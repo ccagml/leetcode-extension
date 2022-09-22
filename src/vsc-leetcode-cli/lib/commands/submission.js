@@ -5,7 +5,7 @@ var _ = require('underscore');
 
 var h = require('../helper');
 var file = require('../file');
- 
+
 var config = require('../config');
 var log = require('../log');
 var Queue = require('../queue');
@@ -15,42 +15,42 @@ var session = require('../session');
 const cmd = {
   command: 'submission [keyword]',
   aliases: ['pull'],
-  desc:    'Download submission code',
-  builder: function(yargs) {
+  desc: 'Download submission code',
+  builder: function (yargs) {
     return yargs
       .option('a', {
-        alias:    'all',
-        type:     'boolean',
-        default:  false,
+        alias: 'all',
+        type: 'boolean',
+        default: false,
         describe: 'Download all questions'
       })
       .option('l', {
-        alias:    'lang',
-        type:     'string',
-        default:  'all',
+        alias: 'lang',
+        type: 'string',
+        default: 'all',
         describe: 'Filter by programming language'
       })
       .option('o', {
-        alias:    'outdir',
-        type:     'string',
+        alias: 'outdir',
+        type: 'string',
         describe: 'Where to save submission code',
-        default:  '.'
+        default: '.'
       })
       .option('x', {
-        alias:    'extra',
-        type:     'boolean',
-        default:  false,
+        alias: 'extra',
+        type: 'boolean',
+        default: false,
         describe: 'Show extra question details in submission code'
       })
       .option('T', {
-        alias:    'dontTranslate',
-        type:     'boolean',
-        default:  false,
+        alias: 'dontTranslate',
+        type: 'boolean',
+        default: false,
         describe: 'Set to true to disable endpoint\'s translation',
       })
       .positional('keyword', {
-        type:     'string',
-        default:  '',
+        type: 'string',
+        default: '',
         describe: 'Download specific question by id'
       })
       .example('leetcode submission -a -o mydir', 'Download all to folder mydir')
@@ -69,13 +69,13 @@ function doTask(problem, queue, cb) {
     // - yellow: not ac-ed, fresh download
     // - white: existed already, skip download
     log.printf('[%=4s] %-60s %s', problem.fid, problem.name,
-        (e ? 'ERROR: ' + (e.msg || e) : msg));
+      (e ? 'ERROR: ' + (e.msg || e) : msg));
     if (cb) cb(e);
   }
 
   if (argv.extra) {
     // have to get problem details, e.g. problem description.
-    core.getProblem(problem.fid, !argv.dontTranslate, function(e, problem) {
+    core.getProblem(problem.fid, !argv.dontTranslate, function (e, problem) {
       if (e) return cb(e);
       exportSubmission(problem, argv, onTaskDone);
     });
@@ -85,7 +85,7 @@ function doTask(problem, queue, cb) {
 }
 
 function exportSubmission(problem, argv, cb) {
-  core.getSubmissions(problem, function(e, submissions) {
+  core.getSubmissions(problem, function (e, submissions) {
     if (e) return cb(e);
     if (submissions.length === 0)
       return cb('No submissions?');
@@ -110,27 +110,27 @@ function exportSubmission(problem, argv, cb) {
     if (file.exist(f))
       return cb(null, f);
 
-    core.getSubmission(submission, function(e, submission) {
+    core.getSubmission(submission, function (e, submission) {
       if (e) return cb(e);
 
       const opts = {
         lang: submission.lang,
         code: submission.code,
-        tpl:  argv.extra ? 'detailed' : 'codeonly'
+        tpl: argv.extra ? 'detailed' : 'codeonly'
       };
       file.write(f, core.exportProblem(problem, opts));
-      cb(null, submission.ac ?  f
-                             : f);
+      cb(null, submission.ac ? f
+        : f);
     });
   });
 }
 
-cmd.handler = function(argv) {
+cmd.handler = function (argv) {
   session.argv = argv;
-  const q = new Queue(null, {argv: argv}, doTask);
+  const q = new Queue(null, { argv: argv }, doTask);
 
   if (argv.all) {
-    core.getProblems(function(e, problems) {
+    core.getProblems(function (e, problems) {
       if (e) return log.fail(e);
       problems = problems.filter(x => x.state === 'ac' || x.state === 'notac');
       q.addTasks(problems).run();
@@ -141,7 +141,7 @@ cmd.handler = function(argv) {
   if (!argv.keyword)
     return log.fail('missing keyword?');
 
-  core.getProblem(argv.keyword, !argv.dontTranslate, function(e, problem) {
+  core.getProblem(argv.keyword, !argv.dontTranslate, function (e, problem) {
     if (e) return log.fail(e);
     q.addTask(problem).run();
   });

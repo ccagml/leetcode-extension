@@ -15,56 +15,56 @@ var session = require('../session');
 const cmd = {
   command: 'show [keyword]',
   aliases: ['view', 'pick'],
-  desc:    'Show question',
-  builder: function(yargs) {
+  desc: 'Show question',
+  builder: function (yargs) {
     return yargs
       .option('c', {
-        alias:    'codeonly',
-        type:     'boolean',
-        default:  false,
+        alias: 'codeonly',
+        type: 'boolean',
+        default: false,
         describe: 'Only show code template'
       })
       .option('e', {
-        alias:    'editor',
-        type:     'string',
+        alias: 'editor',
+        type: 'string',
         describe: 'Open source code in editor'
       })
       .option('g', {
-        alias:    'gen',
-        type:     'boolean',
-        default:  false,
+        alias: 'gen',
+        type: 'boolean',
+        default: false,
         describe: 'Generate source code'
       })
       .option('l', {
-        alias:    'lang',
-        type:     'string',
-        default:  config.code.lang,
+        alias: 'lang',
+        type: 'string',
+        default: config.code.lang,
         describe: 'Programming language of the source code',
-        choices:  config.sys.langs
+        choices: config.sys.langs
       })
       .option('o', {
-        alias:    'outdir',
-        type:     'string',
+        alias: 'outdir',
+        type: 'string',
         describe: 'Where to save source code',
-        default:  '.'
+        default: '.'
       })
       .option('q', core.filters.query)
       .option('t', core.filters.tag)
       .option('x', {
-        alias:    'extra',
-        type:     'boolean',
-        default:  false,
+        alias: 'extra',
+        type: 'boolean',
+        default: false,
         describe: 'Show extra question details in source code'
       })
       .option('T', {
-        alias:    'dontTranslate',
-        type:     'boolean',
-        default:  false,
+        alias: 'dontTranslate',
+        type: 'boolean',
+        default: false,
         describe: 'Set to true to disable endpoint\'s translation',
       })
       .positional('keyword', {
-        type:     'string',
-        default:  '',
+        type: 'string',
+        default: '',
         describe: 'Show question by name or id'
       })
       .example('leetcode show 1', 'Show question 1')
@@ -118,7 +118,7 @@ function showProblem(problem, argv) {
     const opts = {
       lang: argv.lang,
       code: template.defaultCode,
-      tpl:  argv.extra ? 'detailed' : 'codeonly'
+      tpl: argv.extra ? 'detailed' : 'codeonly'
     };
     code = core.exportProblem(problem, opts);
   }
@@ -143,7 +143,7 @@ function showProblem(problem, argv) {
   }
 
   log.printf('[%s] %s %s', problem.fid, problem.name,
-      (problem.starred ? icon.like : icon.empty));
+    (problem.starred ? icon.like : icon.empty));
   log.info();
   log.info(problem.link);
   if (argv.extra) {
@@ -176,22 +176,22 @@ function showProblem(problem, argv) {
   log.info(problem.desc);
 }
 
-cmd.handler = function(argv) {
+cmd.handler = function (argv) {
   session.argv = argv;
   if (argv.keyword.length > 0) {
     // show specific one
-    core.getProblem(argv.keyword, !argv.dontTranslate, function(e, problem) {
+    core.getProblem(argv.keyword, !argv.dontTranslate, function (e, problem) {
       if (e) return log.fail(e);
       showProblem(problem, argv);
     });
   } else {
     // show random one
-    core.filterProblems(argv, function(e, problems) {
+    core.filterProblems(argv, function (e, problems) {
       if (e) return log.fail(e);
 
       // random select one that not AC-ed yet
       const user = session.getUser();
-      problems = problems.filter(function(x) {
+      problems = problems.filter(function (x) {
         if (x.state === 'ac') return false;
         if (!user.paid && x.locked) return false;
         return true;
@@ -199,7 +199,7 @@ cmd.handler = function(argv) {
       if (problems.length === 0) return log.fail('Problem not found!');
 
       const problem = _.sample(problems);
-      core.getProblem(problem, !argv.dontTranslate, function(e, problem) {
+      core.getProblem(problem, !argv.dontTranslate, function (e, problem) {
         if (e) return log.fail(e);
         showProblem(problem, argv);
       });

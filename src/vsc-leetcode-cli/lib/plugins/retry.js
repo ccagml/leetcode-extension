@@ -5,7 +5,7 @@ var Plugin = require('../plugin');
 var session = require('../session');
 
 var plugin = new Plugin(30, 'retry', '',
-    'Plugin to retry last failed request if autologin.enable is on.');
+  'Plugin to retry last failed request if autologin.enable is on.');
 
 const count = {};
 
@@ -15,7 +15,7 @@ function canRetry(e, name) {
     (count[name] || 0) < config.autologin.retry;
 }
 
-plugin.init = function() {
+plugin.init = function () {
   const names = [
     'activateSession',
     'createSession',
@@ -33,11 +33,11 @@ plugin.init = function() {
 
   for (let name of names) {
     count[name] = 0;
-    plugin[name] = function() {
+    plugin[name] = function () {
       const args = Array.from(arguments);
       const cb = args.pop();
 
-      const _cb = function() {
+      const _cb = function () {
         const results = Array.from(arguments);
         const e = results[0];
         if (!canRetry(e, name)) {
@@ -46,7 +46,7 @@ plugin.init = function() {
         }
 
         ++count[name];
-        plugin.relogin(function() {
+        plugin.relogin(function () {
           // for now we don't care result, just blindly retry
           plugin[name].apply(plugin, args.concat(cb));
         });
@@ -62,7 +62,7 @@ plugin.init = function() {
 // which means once you login on web, your cli session will get
 // expired immediately. In that case we will try to re-login in
 // the backend to give a seamless user experience.
-plugin.relogin = function(cb) {
+plugin.relogin = function (cb) {
   log.debug('session expired, try to re-login...');
 
   const user = session.getUser();
@@ -71,7 +71,7 @@ plugin.relogin = function(cb) {
     return cb();
   }
 
-  this.login(user, function(e) {
+  this.login(user, function (e) {
     if (e) {
       log.debug('login failed:' + e.msg);
     } else {

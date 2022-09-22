@@ -2,7 +2,7 @@
 var _ = require('underscore');
 
 var h = require('../helper');
- 
+
 var icon = require('../icon');
 var log = require('../log');
 var core = require('../core');
@@ -11,32 +11,32 @@ var session = require('../session');
 const cmd = {
   command: 'list [keyword]',
   aliases: ['ls'],
-  desc:    'List questions',
-  builder: function(yargs) {
+  desc: 'List questions',
+  builder: function (yargs) {
     return yargs
       .option('q', core.filters.query)
       .option('s', {
-        alias:    'stat',
-        type:     'boolean',
-        default:  false,
+        alias: 'stat',
+        type: 'boolean',
+        default: false,
         describe: 'Show statistics of listed questions'
       })
       .option('t', core.filters.tag)
       .option('x', {
-        alias:    'extra',
-        type:     'boolean',
-        default:  false,
+        alias: 'extra',
+        type: 'boolean',
+        default: false,
         describe: 'Show extra details: category, companies, tags.'
       })
       .option('T', {
-        alias:    'dontTranslate',
-        type:     'boolean',
-        default:  false,
+        alias: 'dontTranslate',
+        type: 'boolean',
+        default: false,
         describe: 'Set to true to disable endpoint\'s translation',
       })
       .positional('keyword', {
-        type:     'string',
-        default:  '',
+        type: 'string',
+        default: '',
         describe: 'Filter questions by keyword'
       })
       .example('leetcode list', 'List all questions')
@@ -49,9 +49,9 @@ const cmd = {
   }
 };
 
-cmd.handler = function(argv) {
+cmd.handler = function (argv) {
   session.argv = argv;
-  core.filterProblems(argv, function(e, problems) {
+  core.filterProblems(argv, function (e, problems) {
     if (e) return log.fail(e);
 
     const word = argv.keyword.toLowerCase();
@@ -73,13 +73,13 @@ cmd.handler = function(argv) {
       if (problem.starred) ++stat.starred;
 
       log.printf('%s %s %s [%=4s] %-60s %-6s (%s %%)',
-          (problem.starred ? icon.like : icon.empty),
-          (problem.locked ? icon.lock : icon.nolock),
-          h.prettyState(problem.state),
-          problem.fid,
-          problem.name,
-          h.prettyLevel(problem.level),
-          (problem.percent || 0).toFixed(2));
+        (problem.starred ? icon.like : icon.empty),
+        (problem.locked ? icon.lock : icon.nolock),
+        h.prettyState(problem.state),
+        problem.fid,
+        problem.name,
+        h.prettyLevel(problem.level),
+        (problem.percent || 0).toFixed(2));
 
       if (argv.extra) {
         let badges = [problem.category];
@@ -90,7 +90,7 @@ cmd.handler = function(argv) {
         let len = 0;
         for (let x of badges) {
           if (len + x.length + 3 >= 60) {
-            log.printf('%12s%s', ' ',buf.join(' | '));
+            log.printf('%12s%s', ' ', buf.join(' | '));
             buf = [];
             len = 0;
           }
@@ -98,7 +98,7 @@ cmd.handler = function(argv) {
           len += x.length + 3;
         }
         if (buf.length > 0)
-          log.printf('%12s%s', ' ',buf.join(' | '));
+          log.printf('%12s%s', ' ', buf.join(' | '));
       }
     }
 
