@@ -14,6 +14,11 @@
 - Added difficulty score display, query, and filter operations to the basic plug-in
 
 # 更新内容(update)
+
+## version 1.0.5
+- 获取每日一题
+- 如果有竞赛分会根据竞赛分显示 绿、蓝、紫、黄、红
+
 ## version 1.0.4
 - 修改padLevel错误
 - 自动化提交到市场
