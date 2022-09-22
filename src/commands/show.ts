@@ -10,7 +10,7 @@ import { LeetCodeNode } from "../explorer/LeetCodeNode";
 import { leetCodeChannel } from "../leetCodeChannel";
 import { leetCodeExecutor } from "../leetCodeExecutor";
 import { leetCodeManager } from "../leetCodeManager";
-import { IProblem, IQuickItemEx, languages, ProblemState, SearchNode, SearchSetType } from "../shared";
+import { IProblem, IQuickItemEx, languages, ProblemState, SearchNode, SearchSetType, userContestRankingObj, userContestRanKingBase } from "../shared";
 import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
 import { genFileExt, genFileName, getNodeIdFromFile } from "../utils/problemUtils";
 import * as settingUtils from "../utils/settingUtils";
@@ -177,9 +177,8 @@ export async function searchUserContest(): Promise<void> {
         const needTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
         const solution: string = await leetCodeExecutor.getUserContest(needTranslation, leetCodeManager.getUser() || "");
         const query_result = JSON.parse(solution);
-        // const titleSlug: string = query_result.titleSlug
-        const questionId: string = query_result.questionId
-
+        const tt: userContestRanKingBase = Object.assign({}, userContestRankingObj, query_result.userContestRanking)
+        await leetCodeManager.insertCurrentUserContestInfo(tt);
 
     } catch (error) {
         leetCodeChannel.appendLine(error.toString());

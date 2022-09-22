@@ -10,13 +10,23 @@ import { Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeN
 import { shouldHideSolvedProblem } from "../utils/settingUtils";
 import { LeetCodeNode } from "./LeetCodeNode";
 import { ISearchSet } from "../shared";
-import { searchToday } from "../commands/show";
+import { searchToday, searchUserContest } from "../commands/show";
+import { leetCodeTreeDataProvider } from "./LeetCodeTreeDataProvider";
+
 class ExplorerNodeManager implements Disposable {
     private explorerNodeMap: Map<string, LeetCodeNode> = new Map<string, LeetCodeNode>();
     private companySet: Set<string> = new Set<string>();
     private tagSet: Set<string> = new Set<string>();
     private searchSet: Map<string, ISearchSet> = new Map<string, ISearchSet>();
     private waitTodayQuestion: boolean;
+    private waitUserContest: boolean;
+    private user_score: number;
+
+
+    public async update_user_score(user_score: number) {
+        this.user_score = user_score;
+        await leetCodeTreeDataProvider.refresh()
+    }
 
     public insertSearchSet(tt: ISearchSet) {
         this.searchSet.set(tt.value, tt);
@@ -25,13 +35,14 @@ class ExplorerNodeManager implements Disposable {
     public async refreshCache(): Promise<void> {
         const temp_searchSet: Map<string, ISearchSet> = this.searchSet
         const temp_waitTodayQuestion: boolean = this.waitTodayQuestion
+        const temp_waitUserContest: boolean = this.waitUserContest
         this.dispose();
         const shouldHideSolved: boolean = shouldHideSolvedProblem();
         for (const problem of await list.listProblems()) {
             if (shouldHideSolved && problem.state === ProblemState.AC) {
                 continue;
             }
-            this.explorerNodeMap.set(problem.id, new LeetCodeNode(problem));
+            this.explorerNodeMap.set(problem.id, new LeetCodeNode(problem, true, this.user_score));
             for (const company of problem.companies) {
                 this.companySet.add(company);
             }
@@ -41,6 +52,7 @@ class ExplorerNodeManager implements Disposable {
         }
         this.searchSet = temp_searchSet;
         this.waitTodayQuestion = temp_waitTodayQuestion
+        this.waitUserContest = temp_waitUserContest
         const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime(); //获取当天零点的时间
         const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime(); //获取当天23:59:59的时间
         var need_get_today: boolean = true;
@@ -54,6 +66,10 @@ class ExplorerNodeManager implements Disposable {
         if (need_get_today && !this.waitTodayQuestion) {
             this.waitTodayQuestion = true
             await searchToday();
+        }
+        if (!this.user_score && !this.waitUserContest) {
+            this.waitUserContest = true;
+            await searchUserContest();
         }
     }
 
@@ -88,7 +104,7 @@ class ExplorerNodeManager implements Disposable {
                 id: Category.Score,
                 name: Category.Score,
                 rootNodeSortId: RootNodeSort.Score,
-            }), false),
+            }), false, this.user_score),
         ];
         this.searchSet.forEach(element => {
             baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
@@ -195,61 +211,61 @@ class ExplorerNodeManager implements Disposable {
         return res;
     }
 
-    public getAllScoreNodes(): LeetCodeNode[] {
+    public getAllScoreNodes(user_score: number): LeetCodeNode[] {
         const res: LeetCodeNode[] = [];
         res.push(
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.2300`,
                 name: "2300",
-            }), false),
+            }), false, user_score),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.2200`,
                 name: "2200",
-            }), false),
+            }), false, user_score),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.2100`,
                 name: "2100",
-            }), false),
+            }), false, user_score),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.2000`,
                 name: "2000",
-            }), false),
+            }), false, user_score),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.1900`,
                 name: "1900",
-            }), false),
+            }), false, user_score),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.1800`,
                 name: "1800",
-            }), false),
+            }), false, user_score),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.1700`,
                 name: "1700",
-            }), false),
+            }), false, user_score),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.1600`,
                 name: "1600",
-            }), false),
+            }), false, user_score),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.1500`,
                 name: "1500",
-            }), false),
+            }), false, user_score),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.1400`,
                 name: "1400",
-            }), false),
+            }), false, user_score),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.1300`,
                 name: "1300",
-            }), false),
+            }), false, user_score),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.1200`,
                 name: "1200",
-            }), false),
+            }), false, user_score),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: `${Category.Score}.1100`,
                 name: "1100",
-            }), false),
+            }), false, user_score),
         );
         this.sortSubCategoryNodes(res, Category.Score);
         return res;

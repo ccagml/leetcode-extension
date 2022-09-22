@@ -6,17 +6,18 @@ import { EventEmitter } from "events";
 import * as vscode from "vscode";
 import { leetCodeChannel } from "./leetCodeChannel";
 import { leetCodeExecutor } from "./leetCodeExecutor";
-import { IQuickItemEx, loginArgsMapping, UserStatus } from "./shared";
+import { IQuickItemEx, loginArgsMapping, UserStatus, userContestRanKingBase } from "./shared";
 import { createEnvOption } from "./utils/cpUtils";
 import { DialogType, promptForOpenOutputChannel } from "./utils/uiUtils";
 import * as wsl from "./utils/wslUtils";
+import { explorerNodeManager } from "./explorer/explorerNodeManager";
 
 class LeetCodeManager extends EventEmitter {
     private currentUser: string | undefined;
     private userStatus: UserStatus;
     private readonly successRegex: RegExp = /(?:.*)Successfully .*login as (.*)/i;
     private readonly failRegex: RegExp = /.*\[ERROR\].*/i;
-    // private currentUserContestInfo;
+    private currentUserContestInfo: userContestRanKingBase;
 
     constructor() {
         super();
@@ -24,6 +25,10 @@ class LeetCodeManager extends EventEmitter {
         this.userStatus = UserStatus.SignedOut;
     }
 
+    public async insertCurrentUserContestInfo(tt: userContestRanKingBase) {
+        this.currentUserContestInfo = tt;
+        await explorerNodeManager.update_user_score(tt.rating);
+    }
     public async getLoginStatus(): Promise<void> {
         try {
             const result: string = await leetCodeExecutor.getUserInfo();
@@ -161,6 +166,10 @@ class LeetCodeManager extends EventEmitter {
 
     public getStatus(): UserStatus {
         return this.userStatus;
+    }
+
+    public getUserContestInfo(): userContestRanKingBase | undefined {
+        return this.currentUserContestInfo;
     }
 
     public getUser(): string | undefined {

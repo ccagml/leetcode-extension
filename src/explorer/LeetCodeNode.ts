@@ -5,8 +5,10 @@ import { Command, Uri } from "vscode";
 import { IProblem, IScoreData, ProblemState, RootNodeSort } from "../shared";
 
 export class LeetCodeNode {
-
-    constructor(private data: IProblem, private isProblemNode: boolean = true) { }
+    private _u_score;
+    constructor(private data: IProblem, private isProblemNode: boolean = true, userscore: number = 0) {
+        this._u_score = userscore;
+    }
 
     public get locked(): boolean {
         return this.data.locked;
@@ -67,8 +69,16 @@ export class LeetCodeNode {
             scheme: "leetcode",
             authority: this.isProblem ? "problems" : "tree-node",
             path: `/${this.id}`, // path must begin with slash /
-            query: `difficulty=${this.difficulty}&score=${this.score}`,
+            query: `difficulty=${this.difficulty}&score=${this.score}&user_score=${this._u_score}`,
         });
+    }
+
+    public set set_user_score(s: number) {
+        this._u_score = s;
+    }
+
+    public get user_score(): number {
+        return this._u_score;
     }
 
     // rank分
