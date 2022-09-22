@@ -4,7 +4,7 @@
 import * as vscode from "vscode";
 import { leetCodeExecutor } from "../leetCodeExecutor";
 import { leetCodeManager } from "../leetCodeManager";
-import { IProblem, ProblemState, UserStatus } from "../shared";
+import { IProblem, ProblemState, RootNodeSort, UserStatus } from "../shared";
 import * as settingUtils from "../utils/settingUtils";
 import { DialogType, promptForOpenOutputChannel } from "../utils/uiUtils";
 import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
@@ -40,6 +40,7 @@ export async function listProblems(): Promise<IProblem[]> {
                     scoreData: AllScoreData.get(id),
                     isSearchResult: false,
                     input: "",
+                    rootNodeSortId: RootNodeSort.ZERO,
                 });
             }
         }

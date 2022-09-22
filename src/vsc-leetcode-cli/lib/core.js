@@ -135,4 +135,11 @@ core.exportProblem = function (problem, opts) {
   return file.render(opts.tpl, data);
 };
 
+core.getTodayQuestion = function (cb) {
+  this.getQuestionOfToday(function (e, result) {
+    if (e) return cb(e);
+    return cb(null, result);
+  });
+}
+
 module.exports = core;

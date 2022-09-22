@@ -63,6 +63,7 @@ export async function searchScoreRange(): Promise<void> {
     const tt = Object.assign({}, SearchNode, {
         value: twoFactor,
         type: SearchSetType.ScoreRange,
+        time: Math.floor(Date.now() / 1000)
     })
     explorerNodeManager.insertSearchSet(tt);
     await leetCodeTreeDataProvider.refresh()
@@ -79,6 +80,7 @@ export async function searchContest(): Promise<void> {
     const tt = Object.assign({}, SearchNode, {
         value: twoFactor,
         type: SearchSetType.Context,
+        time: Math.floor(Date.now() / 1000)
     })
     explorerNodeManager.insertSearchSet(tt);
     await leetCodeTreeDataProvider.refresh()
@@ -133,6 +135,11 @@ export async function searchProblem(): Promise<void> {
             label: `周赛期数查询`,
             detail: `周赛期数查询`,
             value: `contest`,
+        },
+        {
+            label: `每日一题`,
+            detail: `每日一题`,
+            value: `today`,
         }
     );
     const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(
@@ -148,9 +155,35 @@ export async function searchProblem(): Promise<void> {
         await searchScoreRange();
     } else if (choice.value == "contest") {
         await searchContest();
+    } else if (choice.value == "today") {
+        await searchToday();
     }
 
 }
+export async function searchToday(): Promise<void> {
+    try {
+        const needTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
+        const solution: string = await leetCodeExecutor.getTodayQuestion(needTranslation);
+        const query_result = JSON.parse(solution);
+        // const titleSlug: string = query_result.titleSlug
+        const questionId: string = query_result.questionId
+        const id_num: number = Number(questionId)
+        if (id_num > 0) {
+            const tt = Object.assign({}, SearchNode, {
+                value: questionId,
+                type: SearchSetType.Day,
+                time: Math.floor(Date.now() / 1000)
+            })
+            explorerNodeManager.insertSearchSet(tt);
+            await leetCodeTreeDataProvider.refresh()
+        }
+
+    } catch (error) {
+        leetCodeChannel.appendLine(error.toString());
+        await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
+    }
+}
+
 
 export async function showSolution(input: LeetCodeNode | vscode.Uri): Promise<void> {
     let problemInput: string | undefined;

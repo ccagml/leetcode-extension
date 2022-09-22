@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Command, Uri } from "vscode";
-import { IProblem, IScoreData, ProblemState } from "../shared";
+import { IProblem, IScoreData, ProblemState, RootNodeSort } from "../shared";
 
 export class LeetCodeNode {
 
@@ -45,6 +45,9 @@ export class LeetCodeNode {
 
     public get isProblem(): boolean {
         return this.isProblemNode;
+    }
+    public get rootNodeSortId(): RootNodeSort {
+        return this.data.rootNodeSortId;
     }
 
     public get previewCommand(): Command {

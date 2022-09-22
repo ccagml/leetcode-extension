@@ -76,6 +76,9 @@ export class LeetCodeTreeDataProvider implements vscode.TreeDataProvider<LeetCod
                     case SearchSetType.Context:
                         return explorerNodeManager.getContextNodes(element.input);
                         break;
+                    case SearchSetType.Day:
+                        return explorerNodeManager.getDayNodes(element.input);
+                        break;
                     default:
                         break;
                 }

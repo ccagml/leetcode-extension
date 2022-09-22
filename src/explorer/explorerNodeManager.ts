@@ -6,21 +6,25 @@ import { toNumber } from "lodash";
 import { Disposable } from "vscode";
 import * as list from "../commands/list";
 import { getSortingStrategy } from "../commands/plugin";
-import { Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName } from "../shared";
+import { Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType } from "../shared";
 import { shouldHideSolvedProblem } from "../utils/settingUtils";
 import { LeetCodeNode } from "./LeetCodeNode";
 import { ISearchSet } from "../shared";
+import { searchToday } from "../commands/show";
 class ExplorerNodeManager implements Disposable {
     private explorerNodeMap: Map<string, LeetCodeNode> = new Map<string, LeetCodeNode>();
     private companySet: Set<string> = new Set<string>();
     private tagSet: Set<string> = new Set<string>();
     private searchSet: Map<string, ISearchSet> = new Map<string, ISearchSet>();
+    private waitTodayQuestion: boolean;
 
     public insertSearchSet(tt: ISearchSet) {
         this.searchSet.set(tt.value, tt);
     }
 
     public async refreshCache(): Promise<void> {
+        const temp_searchSet: Map<string, ISearchSet> = this.searchSet
+        const temp_waitTodayQuestion: boolean = this.waitTodayQuestion
         this.dispose();
         const shouldHideSolved: boolean = shouldHideSolvedProblem();
         for (const problem of await list.listProblems()) {
@@ -35,6 +39,22 @@ class ExplorerNodeManager implements Disposable {
                 this.tagSet.add(tag);
             }
         }
+        this.searchSet = temp_searchSet;
+        this.waitTodayQuestion = temp_waitTodayQuestion
+        const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime(); //获取当天零点的时间
+        const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime(); //获取当天23:59:59的时间
+        var need_get_today: boolean = true;
+        this.searchSet.forEach(element => {
+            if (element.type == SearchSetType.Day) {
+                if (day_start <= element.time && element.time <= day_end) {
+                    need_get_today = false;
+                }
+            }
+        });
+        if (need_get_today && !this.waitTodayQuestion) {
+            this.waitTodayQuestion = true
+            await searchToday();
+        }
     }
 
     public getRootNodes(): LeetCodeNode[] {
@@ -42,26 +62,32 @@ class ExplorerNodeManager implements Disposable {
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: Category.All,
                 name: Category.All,
+                rootNodeSortId: RootNodeSort.All,
             }), false),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: Category.Difficulty,
                 name: Category.Difficulty,
+                rootNodeSortId: RootNodeSort.Difficulty,
             }), false),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: Category.Tag,
                 name: Category.Tag,
+                rootNodeSortId: RootNodeSort.Tag,
             }), false),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: Category.Company,
                 name: Category.Company,
+                rootNodeSortId: RootNodeSort.Company,
             }), false),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: Category.Favorite,
                 name: Category.Favorite,
+                rootNodeSortId: RootNodeSort.Favorite,
             }), false),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: Category.Score,
                 name: Category.Score,
+                rootNodeSortId: RootNodeSort.Score,
             }), false),
         ];
         this.searchSet.forEach(element => {
@@ -70,8 +96,17 @@ class ExplorerNodeManager implements Disposable {
                 name: SearchSetTypeName[element.type] + element.value,
                 input: element.value,
                 isSearchResult: true,
+                rootNodeSortId: RootNodeSort[element.type],
             }), false));
         });
+        baseNode.sort(function (a: LeetCodeNode, b: LeetCodeNode): number {
+            if (a.rootNodeSortId < b.rootNodeSortId) {
+                return -1;
+            } else if (a.rootNodeSortId > b.rootNodeSortId) {
+                return 1
+            }
+            return 0;
+        })
         return baseNode;
     }
 
@@ -116,6 +151,18 @@ class ExplorerNodeManager implements Disposable {
                     sorceNode.push(element)
                 } else if (rank_a == slu_id) {
                     sorceNode.push(element)
+                }
+            });
+        }
+        return this.applySortingStrategy(sorceNode);
+    }
+    public getDayNodes(rank_range: string): LeetCodeNode[] {
+        const sorceNode: LeetCodeNode[] = []
+        var q_id = Number(rank_range)
+        if (q_id > 0) {
+            this.explorerNodeMap.forEach(element => {
+                if (element.id == rank_range) {
+                    sorceNode.push(element);
                 }
             });
         }

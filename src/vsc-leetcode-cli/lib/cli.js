@@ -76,7 +76,6 @@ function runCommand() {
     .help('h')
     .alias('h', 'help')
     .version(false)
-    .epilog('Seek more help at https://skygragon.github.io/leetcode-cli/commands')
     .wrap(Math.min(h.width, 120))
     .argv;
 }

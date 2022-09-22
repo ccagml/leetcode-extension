@@ -133,4 +133,51 @@ plugin.getProblemsTitle = function (cb) {
   });
 };
 
+// 获取每日一题
+plugin.getQuestionOfToday = function (cb) {
+  log.debug('running leetcode.cn.getQuestionOfToday');
+
+  const opts = makeOpts(config.sys.urls.graphql);
+  opts.headers.Origin = config.sys.urls.base;
+  opts.headers.Referer = 'https://leetcode.cn/';
+
+  opts.json = true;
+  opts.body = {
+    operationName: "questionOfToday",
+    variables: {},
+    query: [
+      'query questionOfToday {',
+      '  todayRecord {',
+      '    question {',
+      '      titleSlug',
+      '      questionId',
+      // '      content',
+      // '      stats',
+      // '      likes',
+      // '      dislikes',
+      // '      codeDefinition',
+      // '      sampleTestCase',
+      // '      enableRunCode',
+      // '      metaData',
+      // '      translatedContent',
+      '      __typename',
+      '    }',
+      '  __typename',
+      '  }',
+      '}'
+    ].join('\n'),
+  };
+
+  const spin = h.spin('Downloading today question');
+  request.post(opts, function (e, resp, body) {
+    spin.stop();
+    e = checkError(e, resp, 200);
+    if (e) return cb(e);
+    const result = {}
+    result.titleSlug = body.data.todayRecord[0].question.titleSlug
+    result.questionId = body.data.todayRecord[0].question.questionId
+    return cb(null, result);
+  });
+};
+
 module.exports = plugin;

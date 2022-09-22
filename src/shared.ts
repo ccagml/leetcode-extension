@@ -70,6 +70,20 @@ export enum Endpoint {
     LeetCodeCN = "leetcode-cn",
 }
 
+export enum RootNodeSort {
+    ZERO = 0,
+    Day = 1,
+    All = 2,
+    Difficulty = 3,
+    Tag = 4,
+    Company = 5,
+    Favorite = 6,
+    Score = 7,
+    ScoreRange = 8,
+    Context = 8,
+}
+
+
 export interface IProblem {
     isFavorite: boolean;
     locked: boolean;
@@ -83,6 +97,7 @@ export interface IProblem {
     scoreData: IScoreData | undefined; // 分数的结构
     isSearchResult: boolean;
     input: string;
+    rootNodeSortId: RootNodeSort;
 }
 
 export interface IScoreData {
@@ -106,7 +121,8 @@ export const defaultProblem: IProblem = {
     tags: [] as string[],
     scoreData: undefined,
     isSearchResult: false,
-    input: ""
+    input: "",
+    rootNodeSortId: RootNodeSort.ZERO
 };
 
 export enum Category {
@@ -147,19 +163,23 @@ export enum SortingStrategy {
 export enum SearchSetType {
     ScoreRange = "ScoreRange",
     Context = "Context",
+    Day = "Day",
 }
 
 export enum SearchSetTypeName {
     ScoreRange = "分数范围:",
-    Context = "周赛期数:"
+    Context = "周赛期数:",
+    Day = "每日一题:"
 }
 
 export interface ISearchSet {
     value: string,
-    type: SearchSetType
+    type: SearchSetType,
+    time: number // 时间戳
 }
 
 export const SearchNode: ISearchSet = {
     value: "",
     type: SearchSetType.ScoreRange,
+    time: 0,
 }
