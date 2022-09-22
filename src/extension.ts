@@ -33,6 +33,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
         leetCodeManager.on("statusChanged", () => {
             leetCodeStatusBarController.updateStatusBar(leetCodeManager.getStatus(), leetCodeManager.getUser());
+            leetCodeTreeDataProvider.cleanUserScore();
             leetCodeTreeDataProvider.refresh();
         });
 

@@ -135,17 +135,18 @@ export async function searchProblem(): Promise<void> {
             label: `周赛期数查询`,
             detail: `周赛期数查询`,
             value: `contest`,
-        },
-        {
-            label: `每日一题`,
-            detail: `每日一题`,
-            value: `today`,
-        },
-        {
-            label: `查询自己竞赛信息`,
-            detail: `查询自己竞赛信息`,
-            value: `userContest`,
         }
+        // ,
+        // {
+        //     label: `每日一题`,
+        //     detail: `每日一题`,
+        //     value: `today`,
+        // },
+        // {
+        //     label: `查询自己竞赛信息`,
+        //     detail: `查询自己竞赛信息`,
+        //     value: `userContest`,
+        // }
     );
     const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(
         picks,

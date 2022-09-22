@@ -31,6 +31,10 @@ class ExplorerNodeManager implements Disposable {
     public insertSearchSet(tt: ISearchSet) {
         this.searchSet.set(tt.value, tt);
     }
+    public clearUserScore() {
+        this.user_score = 0;
+        this.waitUserContest = false;
+    }
 
     public async refreshCache(): Promise<void> {
         const temp_searchSet: Map<string, ISearchSet> = this.searchSet
