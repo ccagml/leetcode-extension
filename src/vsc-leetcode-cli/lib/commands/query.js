@@ -25,6 +25,12 @@ const cmd = {
                 default: false,
                 describe: 'getTodayQuestion',
             })
+            .option('b', {
+                alias: 'username',
+                type: 'string',
+                default: "",
+                describe: 'user name',
+            })
             .example('leetcode query today', 'query today question')
     }
 };
@@ -33,6 +39,11 @@ cmd.handler = function (argv) {
     session.argv = argv;
     if (argv.a) {
         core.getTodayQuestion(function (e, result) {
+            if (e) return;
+            log.info(JSON.stringify(result));
+        });
+    } else if (argv.b) {
+        core.getUserContest(argv.b, function (e, result) {
             if (e) return;
             log.info(JSON.stringify(result));
         });

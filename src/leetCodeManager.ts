@@ -16,6 +16,7 @@ class LeetCodeManager extends EventEmitter {
     private userStatus: UserStatus;
     private readonly successRegex: RegExp = /(?:.*)Successfully .*login as (.*)/i;
     private readonly failRegex: RegExp = /.*\[ERROR\].*/i;
+    // private currentUserContestInfo;
 
     constructor() {
         super();

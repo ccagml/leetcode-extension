@@ -31,6 +31,9 @@ plugin.init = function () {
   config.sys.urls.verify = 'https://leetcode.cn/submissions/detail/$id/check/';
   config.sys.urls.favorites = 'https://leetcode.cn/list/api/questions';
   config.sys.urls.favorite_delete = 'https://leetcode.cn/list/api/questions/$hash/$id';
+  config.sys.urls.noj_go = 'https://leetcode.cn/graphql/noj-go/'
+  config.sys.urls.u = 'https://leetcode.cn/u/$username/'
+
   // third parties
   config.sys.urls.github_login = 'https://leetcode.cn/accounts/github/login/?next=%2F';
   config.sys.urls.linkedin_login = 'https://leetcode.cn/accounts/linkedin_oauth2/login/?next=%2F';
@@ -151,6 +154,7 @@ plugin.getQuestionOfToday = function (cb) {
       '    question {',
       '      titleSlug',
       '      questionId',
+      '      questionFrontendId',
       // '      content',
       // '      stats',
       // '      likes',
@@ -176,7 +180,63 @@ plugin.getQuestionOfToday = function (cb) {
     const result = {}
     result.titleSlug = body.data.todayRecord[0].question.titleSlug
     result.questionId = body.data.todayRecord[0].question.questionId
+    result.fid = body.data.todayRecord[0].question.questionFrontendId
     return cb(null, result);
+  });
+};
+
+plugin.getUserContestP = function (username, cb) {
+  log.debug('running leetcode.cn.getUserContest');
+
+
+  // config.sys.urls.noj_go = 'https://leetcode.cn/graphql/noj-go/'
+  // config.sys.urls.u = 'https://leetcode.cn/u/$username/'
+
+  const opts = makeOpts(config.sys.urls.noj_go);
+  opts.headers.Origin = config.sys.urls.base;
+  opts.headers.Referer = config.sys.urls.u.replace('$username', username);
+
+  opts.json = true;
+  opts.body = {
+    variables: {
+      userSlug: username
+    },
+    query: [
+      '        query userContestRankingInfo($userSlug: String!) {',
+      '          userContestRanking(userSlug: $userSlug) {',
+      '            attendedContestsCount',
+      '            rating',
+      '            globalRanking',
+      '            localRanking',
+      '            globalTotalParticipants',
+      '            localTotalParticipants',
+      '            topPercentage',
+      '        }',
+      '      userContestRankingHistory(userSlug: $userSlug) {',
+      '            attended',
+      '            totalProblems',
+      '            trendingDirection',
+      '            finishTimeInSeconds',
+      '            rating',
+      '            score',
+      '            ranking',
+      '            contest {',
+      '              title',
+      '              titleCn',
+      '              startTime',
+      '            }',
+      '        }',
+      '    }'
+    ].join('\n'),
+  };
+
+  const spin = h.spin('Downloading userContest');
+  request.post(opts, function (e, resp, body) {
+    spin.stop();
+    e = checkError(e, resp, 200);
+    if (e) return cb(e);
+
+    return cb(null, body.data);
   });
 };
 

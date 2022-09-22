@@ -140,6 +140,11 @@ export async function searchProblem(): Promise<void> {
             label: `每日一题`,
             detail: `每日一题`,
             value: `today`,
+        },
+        {
+            label: `查询自己竞赛信息`,
+            detail: `查询自己竞赛信息`,
+            value: `userContest`,
         }
     );
     const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(
@@ -157,20 +162,46 @@ export async function searchProblem(): Promise<void> {
         await searchContest();
     } else if (choice.value == "today") {
         await searchToday();
+    } else if (choice.value == "userContest") {
+        await searchUserContest();
     }
 
 }
+
+export async function searchUserContest(): Promise<void> {
+    if (!leetCodeManager.getUser()) {
+        promptForSignIn();
+        return;
+    }
+    try {
+        const needTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
+        const solution: string = await leetCodeExecutor.getUserContest(needTranslation, leetCodeManager.getUser() || "");
+        const query_result = JSON.parse(solution);
+        // const titleSlug: string = query_result.titleSlug
+        const questionId: string = query_result.questionId
+
+
+    } catch (error) {
+        leetCodeChannel.appendLine(error.toString());
+        await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
+    }
+}
 export async function searchToday(): Promise<void> {
+    if (!leetCodeManager.getUser()) {
+        promptForSignIn();
+        return;
+    }
     try {
         const needTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
         const solution: string = await leetCodeExecutor.getTodayQuestion(needTranslation);
         const query_result = JSON.parse(solution);
         // const titleSlug: string = query_result.titleSlug
-        const questionId: string = query_result.questionId
-        const id_num: number = Number(questionId)
+        // const questionId: string = query_result.questionId
+        const fid: string = query_result.fid
+        const id_num: number = Number(fid)
         if (id_num > 0) {
             const tt = Object.assign({}, SearchNode, {
-                value: questionId,
+                value: fid,
                 type: SearchSetType.Day,
                 time: Math.floor(Date.now() / 1000)
             })

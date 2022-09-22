@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "configurations": [
         {
-            "name": "Launch Extension",
+            "name": "master",
             // "type": "extensionHost",
             "type": "extensionHost",
             "request": "launch",
@@ -24,7 +24,7 @@
         {
             "type": "node",
             "request": "attach",
-            "name": "extension child process",
+            "name": "attach process",
             "processId": "${command:PickProcess}",
         },
         {

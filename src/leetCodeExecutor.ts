@@ -141,6 +141,16 @@ class LeetCodeExecutor implements Disposable {
         return solution;
     }
 
+    public async getUserContest(needTranslation: boolean, username: string): Promise<string> {
+        // solution don't support translation
+        const cmd: string[] = [await this.getLeetCodeBinaryPath(), "query", "-b", username];
+        if (!needTranslation) {
+            cmd.push("-T");
+        }
+        const solution: string = await this.executeCommandWithProgressEx("Fetching UserContest...", this.nodeExecutable, cmd);
+        return solution;
+    }
+
     public async getTodayQuestion(needTranslation: boolean): Promise<string> {
         // solution don't support translation
         const cmd: string[] = [await this.getLeetCodeBinaryPath(), "query", "-a"];

@@ -183,3 +183,23 @@ export const SearchNode: ISearchSet = {
     type: SearchSetType.ScoreRange,
     time: 0,
 }
+
+export interface userContestRanKingBase {
+    attendedContestsCount: number, // 参与次数
+    rating: number, // 分数
+    globalRanking: number, // 全球名次
+    localRanking: number, // 本地名次
+    globalTotalParticipants: number, //全球所有
+    localTotalParticipants: number, // 本地所有
+    topPercentage: number, // 位次百分比
+}
+
+export const userContestRankingObj: userContestRanKingBase = {
+    attendedContestsCount: 0,
+    rating: 1500,
+    globalRanking: 0,
+    localRanking: 0,
+    globalTotalParticipants: 0,
+    localTotalParticipants: 0,
+    topPercentage: 0,
+};

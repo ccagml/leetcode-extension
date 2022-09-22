@@ -141,5 +141,11 @@ core.getTodayQuestion = function (cb) {
     return cb(null, result);
   });
 }
+core.getUserContest = function (username, cb) {
+  this.getUserContestP(username, function (e, result) {
+    if (e) return cb(e);
+    return cb(null, result);
+  });
+}
 
 module.exports = core;
