@@ -395,13 +395,13 @@
                     },
                     "leetcode-problem-rating.workspaceFolder": {
                         "type": "string",
-                        "scope": "application",
+                        "scope": "machine",
                         "description": "The path of the workspace folder to store the problem files.",
                         "default": ""
                     },
                     "leetcode-problem-rating.filePath": {
                         "type": "object",
-                        "scope": "application",
+                        "scope": "machine",
                         "description": "The output folder and filename to save the problem files.",
                         "properties": {
                             "default": {
@@ -681,7 +681,7 @@
                     "leetcode-problem-rating.nodePath": {
                         "type": "string",
                         "default": "node",
-                        "scope": "application",
+                        "scope": "machine",
                         "description": "The Node.js executable path. for example, C:\\Program Files\\nodejs\\node.exe"
                     },
                     "leetcode-problem-rating.colorizeProblems": {
@@ -703,6 +703,18 @@
                             "ID (Descending)"
                         ],
                         "description": "Sorting strategy for problems list."
+                    },
+                    "leetcode-problem-rating.pickOneByRankRangeMin": {
+                        "type": "integer",
+                        "default": 50,
+                        "scope": "application",
+                        "description": "Minimum score for a random question(your score + pickOneByRankRangeMin) "
+                    },
+                    "leetcode-problem-rating.pickOneByRankRangeMax": {
+                        "type": "integer",
+                        "default": 150,
+                        "scope": "application",
+                        "description": "Highest score for a random question(your score + pickOneByRankRangeMax)"
                     }
                 }
             }

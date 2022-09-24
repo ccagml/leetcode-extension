@@ -168,6 +168,14 @@ class LeetCodeManager extends EventEmitter {
         return this.userStatus;
     }
 
+    // 获取竞赛分
+    public getUserContestScore(): number {
+        if (this.currentUserContestInfo.rating > 0) {
+            return this.currentUserContestInfo.rating
+        }
+        return 0;
+    }
+
     public getUserContestInfo(): userContestRanKingBase | undefined {
         return this.currentUserContestInfo;
     }
