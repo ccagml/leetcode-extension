@@ -49,8 +49,31 @@ export async function previewProblem(input: IProblem | vscode.Uri, isSideMode: b
 
 export async function pickOne(): Promise<void> {
     const problems: IProblem[] = await list.listProblems();
-    const randomProblem: IProblem = problems[Math.floor(Math.random() * problems.length)];
-    await showProblemInternal(randomProblem);
+    var randomProblem: IProblem;
+
+    const user_score = leetCodeManager.getUserContestScore()
+    if (user_score > 0) {
+        const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
+        let min_score: number = leetCodeConfig.get<number>("pickOneByRankRangeMin") || 50;
+        let max_score: number = leetCodeConfig.get<number>("pickOneByRankRangeMax") || 150;
+        let temp_problems: IProblem[] = new Array();
+        const need_min = user_score + min_score;
+        const need_max = user_score + max_score;
+        problems.forEach(element => {
+            if (element.scoreData?.Rating) {
+                if (element.scoreData.Rating >= need_min && element.scoreData.Rating <= need_max) {
+                    temp_problems.push(element);
+                }
+            }
+        });
+        randomProblem = temp_problems[Math.floor(Math.random() * temp_problems.length)];
+
+    } else {
+        randomProblem = problems[Math.floor(Math.random() * problems.length)];
+    }
+    if (randomProblem) {
+        await showProblemInternal(randomProblem);
+    }
 }
 export async function searchScoreRange(): Promise<void> {
     const twoFactor: string | undefined = await vscode.window.showInputBox({
