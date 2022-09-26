@@ -1105,6 +1105,11 @@
         "ContestSlug": "weekly-contest-137"
     },
     {
+        "Rating": 2092.0222850837,
+        "ID": 2412,
+        "ContestSlug": "biweekly-contest-87"
+    },
+    {
         "Rating": 2091.3820373571,
         "ID": 1383,
         "ContestSlug": "weekly-contest-180"
@@ -1748,6 +1753,11 @@
         "Rating": 1938.2224916289,
         "ID": 866,
         "ContestSlug": "weekly-contest-92"
+    },
+    {
+        "Rating": 1938.0586460002,
+        "ID": 2411,
+        "ContestSlug": "biweekly-contest-87"
     },
     {
         "Rating": 1936.6613414859,
@@ -2810,6 +2820,11 @@
         "ContestSlug": "weekly-contest-128"
     },
     {
+        "Rating": 1725.1995150882,
+        "ID": 2416,
+        "ContestSlug": "weekly-contest-311"
+    },
+    {
         "Rating": 1724.394164934,
         "ID": 2261,
         "ContestSlug": "weekly-contest-291"
@@ -3710,6 +3725,11 @@
         "ContestSlug": "weekly-contest-90"
     },
     {
+        "Rating": 1562.0956544608,
+        "ID": 2409,
+        "ContestSlug": "biweekly-contest-87"
+    },
+    {
         "Rating": 1561.2655635205,
         "ID": 1256,
         "ContestSlug": "biweekly-contest-13"
@@ -4470,6 +4490,11 @@
         "ContestSlug": "weekly-contest-151"
     },
     {
+        "Rating": 1431.0523656241,
+        "ID": 2415,
+        "ContestSlug": "weekly-contest-311"
+    },
+    {
         "Rating": 1430.3429533629,
         "ID": 1636,
         "ContestSlug": "biweekly-contest-38"
@@ -4843,6 +4868,11 @@
         "Rating": 1381.2168789318,
         "ID": 1881,
         "ContestSlug": "weekly-contest-243"
+    },
+    {
+        "Rating": 1381.0888968455,
+        "ID": 2410,
+        "ContestSlug": "biweekly-contest-87"
     },
     {
         "Rating": 1380.1541980647,
@@ -6215,6 +6245,11 @@
         "ContestSlug": "weekly-contest-218"
     },
     {
+        "Rating": 1221.8477681772,
+        "ID": 2414,
+        "ContestSlug": "weekly-contest-311"
+    },
+    {
         "Rating": 1221.6801628274,
         "ID": 1550,
         "ContestSlug": "weekly-contest-202"
@@ -6613,6 +6648,11 @@
         "Rating": 1151.3534799042,
         "ID": 1290,
         "ContestSlug": "weekly-contest-167"
+    },
+    {
+        "Rating": 1144.9508874557,
+        "ID": 2413,
+        "ContestSlug": "weekly-contest-311"
     },
     {
         "Rating": 1144.6237559885,
