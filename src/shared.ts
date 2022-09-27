@@ -98,7 +98,14 @@ export interface IProblem {
     isSearchResult: boolean;
     input: string;
     rootNodeSortId: RootNodeSort;
+    todayData: ITodayData | undefined;
 }
+
+export interface ITodayData {
+    date: string; // 分数
+    userStatus: string; // rank分
+}
+
 
 export interface IScoreData {
     Rating: number; // 分数
@@ -122,7 +129,8 @@ export const defaultProblem: IProblem = {
     scoreData: undefined,
     isSearchResult: false,
     input: "",
-    rootNodeSortId: RootNodeSort.ZERO
+    rootNodeSortId: RootNodeSort.ZERO,
+    todayData: undefined
 };
 
 export enum Category {
@@ -175,13 +183,15 @@ export enum SearchSetTypeName {
 export interface ISearchSet {
     value: string,
     type: SearchSetType,
-    time: number // 时间戳
+    time: number, // 时间戳
+    todayData: ITodayData | undefined;
 }
 
 export const SearchNode: ISearchSet = {
     value: "",
     type: SearchSetType.ScoreRange,
     time: 0,
+    todayData: undefined
 }
 
 export interface userContestRanKingBase {

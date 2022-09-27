@@ -226,7 +226,8 @@ export async function searchToday(): Promise<void> {
             const tt = Object.assign({}, SearchNode, {
                 value: fid,
                 type: SearchSetType.Day,
-                time: Math.floor(Date.now() / 1000)
+                time: Math.floor(Date.now() / 1000),
+                todayData: query_result,
             })
             explorerNodeManager.insertSearchSet(tt);
             await leetCodeTreeDataProvider.refresh()

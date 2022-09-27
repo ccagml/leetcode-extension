@@ -151,6 +151,8 @@ plugin.getQuestionOfToday = function (cb) {
     query: [
       'query questionOfToday {',
       '  todayRecord {',
+      '    date',
+      '    userStatus',
       '    question {',
       '      titleSlug',
       '      questionId',
@@ -181,6 +183,8 @@ plugin.getQuestionOfToday = function (cb) {
     result.titleSlug = body.data.todayRecord[0].question.titleSlug
     result.questionId = body.data.todayRecord[0].question.questionId
     result.fid = body.data.todayRecord[0].question.questionFrontendId
+    result.date = body.data.todayRecord[0].data
+    result.userStatus = body.data.todayRecord[0].userStatus
     return cb(null, result);
   });
 };

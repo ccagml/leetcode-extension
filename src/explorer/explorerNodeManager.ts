@@ -111,13 +111,24 @@ class ExplorerNodeManager implements Disposable {
             }), false, this.user_score),
         ];
         this.searchSet.forEach(element => {
-            baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: element.type,
-                name: SearchSetTypeName[element.type] + element.value,
-                input: element.value,
-                isSearchResult: true,
-                rootNodeSortId: RootNodeSort[element.type],
-            }), false));
+            if (element.type == SearchSetType.Day) {
+                baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+                    id: element.type,
+                    name: "[" + element.todayData?.date + "]" + element.value,
+                    input: element.value,
+                    isSearchResult: true,
+                    rootNodeSortId: RootNodeSort[element.type],
+                    todayData: element.todayData
+                }), false));
+            } else {
+                baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+                    id: element.type,
+                    name: SearchSetTypeName[element.type] + element.value,
+                    input: element.value,
+                    isSearchResult: true,
+                    rootNodeSortId: RootNodeSort[element.type],
+                }), false));
+            }
         });
         baseNode.sort(function (a: LeetCodeNode, b: LeetCodeNode): number {
             if (a.rootNodeSortId < b.rootNodeSortId) {
@@ -176,7 +187,8 @@ class ExplorerNodeManager implements Disposable {
         }
         return this.applySortingStrategy(sorceNode);
     }
-    public getDayNodes(rank_range: string): LeetCodeNode[] {
+    public getDayNodes(element: LeetCodeNode | undefined): LeetCodeNode[] {
+        const rank_range: string = element?.input || ""
         const sorceNode: LeetCodeNode[] = []
         var q_id = Number(rank_range)
         if (q_id > 0) {

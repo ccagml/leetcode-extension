@@ -41,6 +41,7 @@ export async function listProblems(): Promise<IProblem[]> {
                     isSearchResult: false,
                     input: "",
                     rootNodeSortId: RootNodeSort.ZERO,
+                    todayData: undefined
                 });
             }
         }
