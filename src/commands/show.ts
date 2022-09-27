@@ -221,8 +221,7 @@ export async function searchToday(): Promise<void> {
         // const titleSlug: string = query_result.titleSlug
         // const questionId: string = query_result.questionId
         const fid: string = query_result.fid
-        const id_num: number = Number(fid)
-        if (id_num > 0) {
+        if (fid) {
             const tt = Object.assign({}, SearchNode, {
                 value: fid,
                 type: SearchSetType.Day,

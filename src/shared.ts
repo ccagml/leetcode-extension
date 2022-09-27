@@ -88,7 +88,8 @@ export interface IProblem {
     isFavorite: boolean;
     locked: boolean;
     state: ProblemState;
-    id: string; // 题目编号
+    id: string; // 题目编号 fid
+    qid: string;
     name: string;
     difficulty: string;
     passRate: string;
@@ -102,8 +103,8 @@ export interface IProblem {
 }
 
 export interface ITodayData {
-    date: string; // 分数
-    userStatus: string; // rank分
+    date: string; // 日期
+    userStatus: string; // 状态   'NOT_START' 'FINISH'
 }
 
 
@@ -121,6 +122,7 @@ export const defaultProblem: IProblem = {
     locked: false,
     state: ProblemState.Unknown,
     id: "",
+    qid: "",
     name: "",
     difficulty: "",
     passRate: "",

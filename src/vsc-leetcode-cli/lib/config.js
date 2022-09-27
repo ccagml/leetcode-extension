@@ -9,9 +9,9 @@ const DEFAULT_CONFIG = {
   sys: {
     categories: [
       'algorithms',
-      'database',
-      'shell',
-      'concurrency'
+      'LCCI',
+      'LCOF',
+      'LCOF2'
     ],
     langs: [
       'bash',

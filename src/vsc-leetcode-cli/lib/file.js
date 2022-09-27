@@ -158,19 +158,29 @@ file.meta = function (filename) {
 
   const line = this.data(filename).split('\n')
     .find(x => x.indexOf(' @lc app=') >= 0) || '';
-  line.split(' ').forEach(function (x) {
-    const v = x.split('=');
-    if (v.length == 2) {
-      m[v[0]] = v[1].trim();
-    }
-  });
+
+  // @lc app=leetcode.cn id=剑指 Offer II 116 lang=cpp
+
+  var id_right = line.split('id=')[1]
+  var lang_cat = id_right.split('lang=')
+  var id = lang_cat[0].trim();
+  var lang = lang_cat[1].trim();
+  m.id = id
+  m.lang = lang
+  return m;
+  // line.split(' ').forEach(function (x) {
+  //   const v = x.split('=');
+  //   if (v.length == 2) {
+  //     m[v[0]] = v[1].trim();
+  //   }
+  // });
 
 
-  if (!m.id || !m.lang) {
-    const olddata = this.metaByName(filename);
-    m.id = m.id || olddata.id;
-    m.lang = m.lang || olddata.lang;
-  }
+  // if (!m.id || !m.lang) {
+  //   const olddata = this.metaByName(filename);
+  //   m.id = m.id || olddata.id;
+  //   m.lang = m.lang || olddata.lang;
+  // }
 
   return m;
 };

@@ -36,6 +36,27 @@ class ExplorerNodeManager implements Disposable {
         this.waitUserContest = false;
     }
 
+    public async refreshCheck(): Promise<void> {
+        const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime(); //获取当天零点的时间
+        const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime(); //获取当天23:59:59的时间
+        var need_get_today: boolean = true;
+        this.searchSet.forEach(element => {
+            if (element.type == SearchSetType.Day) {
+                if (day_start <= element.time && element.time <= day_end) {
+                    need_get_today = false;
+                }
+            }
+        });
+        if (need_get_today && !this.waitTodayQuestion) {
+            this.waitTodayQuestion = true
+            await searchToday();
+        }
+        if (!this.user_score && !this.waitUserContest) {
+            this.waitUserContest = true;
+            await searchUserContest();
+        }
+    }
+
     public async refreshCache(): Promise<void> {
         const temp_searchSet: Map<string, ISearchSet> = this.searchSet
         const temp_waitTodayQuestion: boolean = this.waitTodayQuestion
@@ -57,24 +78,6 @@ class ExplorerNodeManager implements Disposable {
         this.searchSet = temp_searchSet;
         this.waitTodayQuestion = temp_waitTodayQuestion
         this.waitUserContest = temp_waitUserContest
-        const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime(); //获取当天零点的时间
-        const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime(); //获取当天23:59:59的时间
-        var need_get_today: boolean = true;
-        this.searchSet.forEach(element => {
-            if (element.type == SearchSetType.Day) {
-                if (day_start <= element.time && element.time <= day_end) {
-                    need_get_today = false;
-                }
-            }
-        });
-        if (need_get_today && !this.waitTodayQuestion) {
-            this.waitTodayQuestion = true
-            await searchToday();
-        }
-        if (!this.user_score && !this.waitUserContest) {
-            this.waitUserContest = true;
-            await searchUserContest();
-        }
     }
 
     public getRootNodes(): LeetCodeNode[] {
@@ -190,8 +193,7 @@ class ExplorerNodeManager implements Disposable {
     public getDayNodes(element: LeetCodeNode | undefined): LeetCodeNode[] {
         const rank_range: string = element?.input || ""
         const sorceNode: LeetCodeNode[] = []
-        var q_id = Number(rank_range)
-        if (q_id > 0) {
+        if (rank_range) {
             this.explorerNodeMap.forEach(element => {
                 if (element.id == rank_range) {
                     sorceNode.push(element);

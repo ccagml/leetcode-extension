@@ -127,4 +127,7 @@ export class LeetCodeNode {
     public get todayDataUserStatus(): string {
         return this.data.todayData?.userStatus || ""
     }
+    public get qid(): string {
+        return this.data.qid || ""
+    }
 }

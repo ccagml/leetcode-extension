@@ -18,32 +18,35 @@ export async function listProblems(): Promise<IProblem[]> {
         const showLocked: boolean = !!leetCodeConfig.get<boolean>("showLocked");
         const useEndpointTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
         const result: string = await leetCodeExecutor.listProblems(showLocked, useEndpointTranslation);
+        const all_problem_info = JSON.parse(result);
         const problems: IProblem[] = [];
-        const lines: string[] = result.split("\n");
-        const reg: RegExp = /^(.)\s(.{1,2})\s(.)\s\[\s*(\d*)\s*\]\s*(.*)\s*(Easy|Medium|Hard)\s*\((\s*\d+\.\d+ %)\)/;
-        const { companies, tags } = await leetCodeExecutor.getCompaniesAndTags();
+        // const lines: string[] = result.split("\n");
+        // const reg: RegExp = /^(.)\s(.{1,2})\s(.)\s\[\s*(\d*)\s*\]\s*(.*)\s*(Easy|Medium|Hard)\s*\((\s*\d+\.\d+ %)\)/;
+        // const { companies, tags } = await leetCodeExecutor.getCompaniesAndTags();
         const AllScoreData = leetCodeTreeDataProvider.getScoreData();
-        for (const line of lines) {
-            const match: RegExpMatchArray | null = line.match(reg);
-            if (match && match.length === 8) {
-                const id: string = match[4].trim();
-                problems.push({
-                    id,
-                    isFavorite: match[1].trim().length > 0,
-                    locked: match[2].trim().length > 0,
-                    state: parseProblemState(match[3]),
-                    name: match[5].trim(),
-                    difficulty: match[6].trim(),
-                    passRate: match[7].trim(),
-                    companies: companies[id] || ["Unknown"],
-                    tags: tags[id] || ["Unknown"],
-                    scoreData: AllScoreData.get(id),
-                    isSearchResult: false,
-                    input: "",
-                    rootNodeSortId: RootNodeSort.ZERO,
-                    todayData: undefined
-                });
-            }
+        // {
+        //     "state": "None", "id": 951, "fid": "915", "name": "分割数组", "slug": "partition-array-into-disjoint-intervals",
+        //     "link": "https://leetcode.cn/problems/partition-array-into-disjoint-intervals/description/", "locked": false, "percent": 47.273372361185025, "level": "Medium", "starred": false, "category": "algorithms", "tags": ["array"]
+        // }
+        for (const p of all_problem_info) {
+            // console.log(p)
+            problems.push({
+                id: p.fid,
+                qid: p.id,
+                isFavorite: p.starred,
+                locked: p.locked,
+                state: parseProblemState(p.state),
+                name: p.name,
+                difficulty: p.level,
+                passRate: p.percent,
+                companies: p.companies || ["Unknown"],
+                tags: p.tags || ["Unknown"],
+                scoreData: AllScoreData.get(p.fid),
+                isSearchResult: false,
+                input: "",
+                rootNodeSortId: RootNodeSort.ZERO,
+                todayData: undefined,
+            });
         }
         return problems.reverse();
     } catch (error) {
@@ -60,10 +63,12 @@ function parseProblemState(stateOutput: string): ProblemState {
         case "v":
         case "✔":
         case "√":
+        case "ac":
             return ProblemState.AC;
         case "X":
         case "✘":
         case "×":
+        case "notac":
             return ProblemState.NotAC;
         default:
             return ProblemState.Unknown;
