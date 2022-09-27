@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Command, Uri } from "vscode";
-import { IProblem, IScoreData, ITodayData, ProblemState, RootNodeSort, SearchSetType } from "../shared";
+import { IProblem, IScoreData, ITodayData, ProblemState, RootNodeSort } from "../shared";
 
 export class LeetCodeNode {
     private _u_score;
@@ -20,7 +20,7 @@ export class LeetCodeNode {
     public get state(): ProblemState {
 
         // 每日一题的修正
-        if (this.id == SearchSetType.Day) {
+        if (this.todayData) {
             const us = this.todayDataUserStatus
             if (us == "FINISH") {
                 return ProblemState.AC
@@ -120,6 +120,9 @@ export class LeetCodeNode {
     // 每日一题的一些信息
     public get todayData(): ITodayData | undefined {
         return this.data.todayData
+    }
+    public set todayData(s: ITodayData | undefined) {
+        this.data.todayData = s
     }
     public get todayDataDate(): string {
         return this.data.todayData?.date || ""

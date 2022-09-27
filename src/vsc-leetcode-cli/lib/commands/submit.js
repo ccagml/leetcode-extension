@@ -107,6 +107,7 @@ cmd.handler = function (argv) {
         printResult(result, 'expected_answer');
         printResult(result, 'stdout');
       }
+      // log.info(JSON.stringify(result))
 
       // update this problem status in local cache
       core.updateProblem(problem, { state: (result.ok ? 'ac' : 'notac') });

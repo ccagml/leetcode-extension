@@ -194,9 +194,10 @@ class ExplorerNodeManager implements Disposable {
         const rank_range: string = element?.input || ""
         const sorceNode: LeetCodeNode[] = []
         if (rank_range) {
-            this.explorerNodeMap.forEach(element => {
-                if (element.id == rank_range) {
-                    sorceNode.push(element);
+            this.explorerNodeMap.forEach(new_node => {
+                if (new_node.id == rank_range) {
+                    new_node.todayData = element?.todayData
+                    sorceNode.push(new_node);
                 }
             });
         }

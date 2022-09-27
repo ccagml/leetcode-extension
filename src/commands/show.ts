@@ -43,7 +43,7 @@ export async function previewProblem(input: IProblem | vscode.Uri, isSideMode: b
         node = input;
     }
     const needTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
-    const descString: string = await leetCodeExecutor.getDescription(node.id, needTranslation);
+    const descString: string = await leetCodeExecutor.getDescription(node.qid, needTranslation);
     leetCodePreviewProvider.show(descString, node, isSideMode);
 }
 
@@ -242,7 +242,7 @@ export async function searchToday(): Promise<void> {
 export async function showSolution(input: LeetCodeNode | vscode.Uri): Promise<void> {
     let problemInput: string | undefined;
     if (input instanceof LeetCodeNode) { // Triggerred from explorer
-        problemInput = input.id;
+        problemInput = input.qid;
     } else if (input instanceof vscode.Uri) { // Triggerred from Code Lens/context menu
         problemInput = `"${input.fsPath}"`;
     } else if (!input) { // Triggerred from command
