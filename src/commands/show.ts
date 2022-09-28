@@ -43,7 +43,7 @@ export async function previewProblem(input: IProblem | vscode.Uri, isSideMode: b
         node = input;
     }
     const needTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
-    const descString: string = await leetCodeExecutor.getDescription(node.id, needTranslation);
+    const descString: string = await leetCodeExecutor.getDescription(node.qid, needTranslation);
     leetCodePreviewProvider.show(descString, node, isSideMode);
 }
 
@@ -126,6 +126,7 @@ export async function searchProblemByID(): Promise<void> {
         parseProblemsToPicks(list.listProblems()),
         {
             matchOnDetail: true,
+            matchOnDescription: true,
             placeHolder: "Select one problem",
         },
     );
@@ -221,12 +222,12 @@ export async function searchToday(): Promise<void> {
         // const titleSlug: string = query_result.titleSlug
         // const questionId: string = query_result.questionId
         const fid: string = query_result.fid
-        const id_num: number = Number(fid)
-        if (id_num > 0) {
+        if (fid) {
             const tt = Object.assign({}, SearchNode, {
                 value: fid,
                 type: SearchSetType.Day,
-                time: Math.floor(Date.now() / 1000)
+                time: Math.floor(Date.now() / 1000),
+                todayData: query_result,
             })
             explorerNodeManager.insertSearchSet(tt);
             await leetCodeTreeDataProvider.refresh()
@@ -242,7 +243,7 @@ export async function searchToday(): Promise<void> {
 export async function showSolution(input: LeetCodeNode | vscode.Uri): Promise<void> {
     let problemInput: string | undefined;
     if (input instanceof LeetCodeNode) { // Triggerred from explorer
-        problemInput = input.id;
+        problemInput = input.qid;
     } else if (input instanceof vscode.Uri) { // Triggerred from Code Lens/context menu
         problemInput = `"${input.fsPath}"`;
     } else if (!input) { // Triggerred from command
@@ -359,7 +360,7 @@ async function parseProblemsToPicks(p: Promise<IProblem[]>): Promise<Array<IQuic
     return new Promise(async (resolve: (res: Array<IQuickItemEx<IProblem>>) => void): Promise<void> => {
         const picks: Array<IQuickItemEx<IProblem>> = (await p).map((problem: IProblem) => Object.assign({}, {
             label: `${parseProblemDecorator(problem.state, problem.locked)}${problem.id}.${problem.name}`,
-            description: "",
+            description: `QID:${problem.qid}`,
             detail: ((problem.scoreData?.score || "0") > "0" ? ("score: " + problem.scoreData?.score + " , ") : "") + `AC rate: ${problem.passRate}, Difficulty: ${problem.difficulty}`,
             value: problem,
         }));

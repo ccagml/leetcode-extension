@@ -12,6 +12,7 @@ import { LeetCodeNode } from "./LeetCodeNode";
 import { ISearchSet } from "../shared";
 import { searchToday, searchUserContest } from "../commands/show";
 import { leetCodeTreeDataProvider } from "./LeetCodeTreeDataProvider";
+import { resourcesData } from "../ResourcesData";
 
 class ExplorerNodeManager implements Disposable {
     private explorerNodeMap: Map<string, LeetCodeNode> = new Map<string, LeetCodeNode>();
@@ -36,6 +37,27 @@ class ExplorerNodeManager implements Disposable {
         this.waitUserContest = false;
     }
 
+    public async refreshCheck(): Promise<void> {
+        const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime(); //获取当天零点的时间
+        const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime(); //获取当天23:59:59的时间
+        var need_get_today: boolean = true;
+        this.searchSet.forEach(element => {
+            if (element.type == SearchSetType.Day) {
+                if (day_start <= element.time && element.time <= day_end) {
+                    need_get_today = false;
+                }
+            }
+        });
+        if (need_get_today && !this.waitTodayQuestion) {
+            this.waitTodayQuestion = true
+            await searchToday();
+        }
+        if (!this.user_score && !this.waitUserContest) {
+            this.waitUserContest = true;
+            await searchUserContest();
+        }
+    }
+
     public async refreshCache(): Promise<void> {
         const temp_searchSet: Map<string, ISearchSet> = this.searchSet
         const temp_waitTodayQuestion: boolean = this.waitTodayQuestion
@@ -57,24 +79,6 @@ class ExplorerNodeManager implements Disposable {
         this.searchSet = temp_searchSet;
         this.waitTodayQuestion = temp_waitTodayQuestion
         this.waitUserContest = temp_waitUserContest
-        const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime(); //获取当天零点的时间
-        const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime(); //获取当天23:59:59的时间
-        var need_get_today: boolean = true;
-        this.searchSet.forEach(element => {
-            if (element.type == SearchSetType.Day) {
-                if (day_start <= element.time && element.time <= day_end) {
-                    need_get_today = false;
-                }
-            }
-        });
-        if (need_get_today && !this.waitTodayQuestion) {
-            this.waitTodayQuestion = true
-            await searchToday();
-        }
-        if (!this.user_score && !this.waitUserContest) {
-            this.waitUserContest = true;
-            await searchUserContest();
-        }
     }
 
     public getRootNodes(): LeetCodeNode[] {
@@ -109,15 +113,32 @@ class ExplorerNodeManager implements Disposable {
                 name: Category.Score,
                 rootNodeSortId: RootNodeSort.Score,
             }), false, this.user_score),
+            new LeetCodeNode(Object.assign({}, defaultProblem, {
+                id: Category.Choice,
+                name: Category.Choice,
+                rootNodeSortId: RootNodeSort.Choice,
+            }), false),
         ];
         this.searchSet.forEach(element => {
-            baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: element.type,
-                name: SearchSetTypeName[element.type] + element.value,
-                input: element.value,
-                isSearchResult: true,
-                rootNodeSortId: RootNodeSort[element.type],
-            }), false));
+            if (element.type == SearchSetType.Day) {
+                const curDate = new Date()
+                baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+                    id: element.type,
+                    name: "[" + (curDate.getFullYear()) + "-" + (curDate.getMonth() + 1) + "-" + (curDate.getDate()) + "]" + SearchSetTypeName[SearchSetType.Day],
+                    input: element.value,
+                    isSearchResult: true,
+                    rootNodeSortId: RootNodeSort[element.type],
+                    todayData: element.todayData
+                }), false));
+            } else {
+                baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+                    id: element.type,
+                    name: SearchSetTypeName[element.type] + element.value,
+                    input: element.value,
+                    isSearchResult: true,
+                    rootNodeSortId: RootNodeSort[element.type],
+                }), false));
+            }
         });
         baseNode.sort(function (a: LeetCodeNode, b: LeetCodeNode): number {
             if (a.rootNodeSortId < b.rootNodeSortId) {
@@ -176,13 +197,14 @@ class ExplorerNodeManager implements Disposable {
         }
         return this.applySortingStrategy(sorceNode);
     }
-    public getDayNodes(rank_range: string): LeetCodeNode[] {
+    public getDayNodes(element: LeetCodeNode | undefined): LeetCodeNode[] {
+        const rank_range: string = element?.input || ""
         const sorceNode: LeetCodeNode[] = []
-        var q_id = Number(rank_range)
-        if (q_id > 0) {
-            this.explorerNodeMap.forEach(element => {
-                if (element.id == rank_range) {
-                    sorceNode.push(element);
+        if (rank_range) {
+            this.explorerNodeMap.forEach(new_node => {
+                if (new_node.id == rank_range) {
+                    new_node.todayData = element?.todayData
+                    sorceNode.push(new_node);
                 }
             });
         }
@@ -217,61 +239,33 @@ class ExplorerNodeManager implements Disposable {
 
     public getAllScoreNodes(user_score: number): LeetCodeNode[] {
         const res: LeetCodeNode[] = [];
-        res.push(
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.2300`,
-                name: "2300",
-            }), false, user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.2200`,
-                name: "2200",
-            }), false, user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.2100`,
-                name: "2100",
-            }), false, user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.2000`,
-                name: "2000",
-            }), false, user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.1900`,
-                name: "1900",
-            }), false, user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.1800`,
-                name: "1800",
-            }), false, user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.1700`,
-                name: "1700",
-            }), false, user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.1600`,
-                name: "1600",
-            }), false, user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.1500`,
-                name: "1500",
-            }), false, user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.1400`,
-                name: "1400",
-            }), false, user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.1300`,
-                name: "1300",
-            }), false, user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.1200`,
-                name: "1200",
-            }), false, user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: `${Category.Score}.1100`,
-                name: "1100",
-            }), false, user_score),
-        );
+        const score_array: Array<string> = ["3300", "3200", "3100", "3000", "2900", "2800", "2700", "2600", "2500", "2400", "2300", "2200", "2100", "2000", "1900", "1800", "1700", "1600", "1500", "1400", "1300", "1200", "1100"];
+        score_array.forEach(element => {
+            const temp_num = Number(element);
+            const diff = Math.abs(temp_num - user_score)
+            if (diff <= 200) {
+                res.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+                    id: `${Category.Score}.${element}`,
+                    name: `${element}`,
+                }), false, user_score))
+            }
+        })
+
         this.sortSubCategoryNodes(res, Category.Score);
+        return res;
+    }
+
+    public getAllChoiceNodes(): LeetCodeNode[] {
+        const res: LeetCodeNode[] = [];
+
+        const all_choice = resourcesData.getChoiceData();
+        all_choice.forEach(element => {
+            res.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+                id: `${Category.Choice}.${element.id}`,
+                name: `${element.name}`,
+            }), false))
+        })
+        this.sortSubCategoryNodes(res, Category.Choice);
         return res;
     }
 
@@ -317,6 +311,20 @@ class ExplorerNodeManager implements Disposable {
         // The sub-category node's id is named as {Category.SubName}
         const metaInfo: string[] = id.split(".");
         const res: LeetCodeNode[] = [];
+
+        const choiceQuestionId: Map<number, boolean> = new Map<number, boolean>()
+        if (metaInfo[0] == Category.Choice) {
+            const all_choice = resourcesData.getChoiceData();
+            all_choice.forEach(element => {
+                if (element.id == metaInfo[1]) {
+                    element.questions.forEach(kk => {
+                        choiceQuestionId[kk] = true
+                    })
+                    return
+                }
+            })
+        }
+
         for (const node of this.explorerNodeMap.values()) {
             switch (metaInfo[0]) {
                 case Category.Company:
@@ -338,26 +346,15 @@ class ExplorerNodeManager implements Disposable {
                     if (node.score > "0") {
                         const check_rank = toNumber(metaInfo[1]);
                         const node_rank = toNumber(node.score);
-                        let m: Map<Number, Array<number>> = new Map<Number, Array<number>>();
-                        m.set(2300, [2300, 9999]);
-                        m.set(2200, [2200, 2300]);
-                        m.set(2100, [2100, 2200]);
-                        m.set(2000, [2000, 2100]);
-                        m.set(1900, [1900, 2000]);
-                        m.set(1800, [1800, 1900]);
-                        m.set(1700, [1700, 1800]);
-                        m.set(1600, [1600, 1700]);
-                        m.set(1500, [1500, 1600]);
-                        m.set(1400, [1400, 1500]);
-                        m.set(1300, [1300, 1400]);
-                        m.set(1200, [1200, 1300]);
-                        m.set(1100, [1, 1200]);
-                        const v: Array<number> | undefined = m.get(check_rank)
-                        if (v != undefined && v[0] <= node_rank && node_rank < v[1]) {
+                        if (check_rank <= node_rank && node_rank < check_rank + 100) {
                             res.push(node);
                         }
                     }
                     break;
+                case Category.Choice:
+                    if (choiceQuestionId[Number(node.qid)]) {
+                        res.push(node);
+                    }
                 default:
                     break;
             }

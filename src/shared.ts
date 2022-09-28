@@ -78,9 +78,10 @@ export enum RootNodeSort {
     Tag = 4,
     Company = 5,
     Favorite = 6,
-    Score = 7,
-    ScoreRange = 8,
-    Context = 8,
+    Choice = 7,
+    Score = 8,
+    ScoreRange = 9,
+    Context = 9,
 }
 
 
@@ -88,7 +89,8 @@ export interface IProblem {
     isFavorite: boolean;
     locked: boolean;
     state: ProblemState;
-    id: string; // 题目编号
+    id: string; // 题目编号 fid
+    qid: string;
     name: string;
     difficulty: string;
     passRate: string;
@@ -98,12 +100,19 @@ export interface IProblem {
     isSearchResult: boolean;
     input: string;
     rootNodeSortId: RootNodeSort;
+    todayData: ITodayData | undefined;
 }
+
+export interface ITodayData {
+    date: string; // 日期
+    userStatus: string; // 状态   'NOT_START' 'FINISH'
+}
+
 
 export interface IScoreData {
     Rating: number; // 分数
     score: string; // rank分
-    ID: string;   // 题目ID
+    ID: number;   // 题目ID
     ContestID_en: string; // 周赛名称
     ProblemIndex: string; // 周赛第几题
     ContestSlug: string; // 周赛名称
@@ -114,6 +123,7 @@ export const defaultProblem: IProblem = {
     locked: false,
     state: ProblemState.Unknown,
     id: "",
+    qid: "",
     name: "",
     difficulty: "",
     passRate: "",
@@ -122,7 +132,8 @@ export const defaultProblem: IProblem = {
     scoreData: undefined,
     isSearchResult: false,
     input: "",
-    rootNodeSortId: RootNodeSort.ZERO
+    rootNodeSortId: RootNodeSort.ZERO,
+    todayData: undefined
 };
 
 export enum Category {
@@ -131,7 +142,9 @@ export enum Category {
     Tag = "Tag",
     Company = "Company",
     Favorite = "Favorite",
-    Score = "Score"
+    Score = "Score",
+    Choice = "Choice",
+
 }
 
 export const supportedPlugins: string[] = [
@@ -169,19 +182,21 @@ export enum SearchSetType {
 export enum SearchSetTypeName {
     ScoreRange = "分数范围:",
     Context = "周赛期数:",
-    Day = "每日一题:"
+    Day = "每日一题"
 }
 
 export interface ISearchSet {
     value: string,
     type: SearchSetType,
-    time: number // 时间戳
+    time: number, // 时间戳
+    todayData: ITodayData | undefined;
 }
 
 export const SearchNode: ISearchSet = {
     value: "",
     type: SearchSetType.ScoreRange,
     time: 0,
+    todayData: undefined
 }
 
 export interface userContestRanKingBase {

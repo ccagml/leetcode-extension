@@ -60,14 +60,14 @@ const cmd = {
 };
 
 function print(plugins) {
-  log.info(sprintf(' %6s  %-18s %-15s %s', 'Active', 'Name', 'Version', 'Desc'));
-  log.info('-'.repeat(100));
+  // log.info(sprintf(' %6s  %-18s %-15s %s', 'Active', 'Name', 'Version', 'Desc'));
+  // log.info('-'.repeat(100));
 
-  plugins = plugins || Plugin.plugins;
-  for (let p of plugins)
-    log.printf('   %s     %-18s %-15s %s',
-      h.prettyText('', p.enabled && !p.missing),
-      p.name, p.ver, p.desc);
+  // plugins = plugins || Plugin.plugins;
+  // for (let p of plugins)
+  //   log.printf('   %s     %-18s %-15s %s',
+  //     h.prettyText('', p.enabled && !p.missing),
+  //     p.name, p.ver, p.desc);
 }
 
 cmd.handler = function (argv) {
@@ -82,7 +82,7 @@ cmd.handler = function (argv) {
       p.help();
       p.save();
       Plugin.init();
-      print();
+      // print();
     };
 
     if (name) {
@@ -103,20 +103,20 @@ cmd.handler = function (argv) {
   if (argv.enable) {
     p.enabled = true;
     p.save();
-    print();
+    // print();
   } else if (argv.disable) {
     p.enabled = false;
     p.save();
-    print();
+    // print();
   } else if (argv.delete) {
     p.delete();
     p.save();
     Plugin.init();
-    print();
+    // print();
   } else if (argv.config) {
     log.info(JSON.stringify(config.plugins[name] || {}, null, 2));
   } else {
-    print(plugins);
+    // print(plugins);
   }
 };
 
