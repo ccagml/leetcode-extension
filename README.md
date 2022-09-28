@@ -15,6 +15,10 @@
 
 # 更新内容(update)
 
+## version 1.0.10
+- tag数据修复
+- 去除company分类
+
 ## version 1.0.9
 - github提醒依赖安全更新
 
