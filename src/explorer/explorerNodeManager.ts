@@ -12,6 +12,7 @@ import { LeetCodeNode } from "./LeetCodeNode";
 import { ISearchSet } from "../shared";
 import { searchToday, searchUserContest } from "../commands/show";
 import { leetCodeTreeDataProvider } from "./LeetCodeTreeDataProvider";
+import { resourcesData } from "../ResourcesData";
 
 class ExplorerNodeManager implements Disposable {
     private explorerNodeMap: Map<string, LeetCodeNode> = new Map<string, LeetCodeNode>();
@@ -112,6 +113,11 @@ class ExplorerNodeManager implements Disposable {
                 name: Category.Score,
                 rootNodeSortId: RootNodeSort.Score,
             }), false, this.user_score),
+            new LeetCodeNode(Object.assign({}, defaultProblem, {
+                id: Category.Choice,
+                name: Category.Choice,
+                rootNodeSortId: RootNodeSort.Choice,
+            }), false),
         ];
         this.searchSet.forEach(element => {
             if (element.type == SearchSetType.Day) {
@@ -249,6 +255,20 @@ class ExplorerNodeManager implements Disposable {
         return res;
     }
 
+    public getAllChoiceNodes(): LeetCodeNode[] {
+        const res: LeetCodeNode[] = [];
+
+        const all_choice = resourcesData.getChoiceData();
+        all_choice.forEach(element => {
+            res.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+                id: `${Category.Choice}.${element.id}`,
+                name: `${element.name}`,
+            }), false))
+        })
+        this.sortSubCategoryNodes(res, Category.Choice);
+        return res;
+    }
+
     public getAllCompanyNodes(): LeetCodeNode[] {
         const res: LeetCodeNode[] = [];
         for (const company of this.companySet.values()) {
@@ -291,6 +311,20 @@ class ExplorerNodeManager implements Disposable {
         // The sub-category node's id is named as {Category.SubName}
         const metaInfo: string[] = id.split(".");
         const res: LeetCodeNode[] = [];
+
+        const choiceQuestionId: Map<number, boolean> = new Map<number, boolean>()
+        if (metaInfo[0] == Category.Choice) {
+            const all_choice = resourcesData.getChoiceData();
+            all_choice.forEach(element => {
+                if (element.id == metaInfo[1]) {
+                    element.questions.forEach(kk => {
+                        choiceQuestionId[kk] = true
+                    })
+                    return
+                }
+            })
+        }
+
         for (const node of this.explorerNodeMap.values()) {
             switch (metaInfo[0]) {
                 case Category.Company:
@@ -317,6 +351,10 @@ class ExplorerNodeManager implements Disposable {
                         }
                     }
                     break;
+                case Category.Choice:
+                    if (choiceQuestionId[Number(node.qid)]) {
+                        res.push(node);
+                    }
                 default:
                     break;
             }

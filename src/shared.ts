@@ -78,9 +78,10 @@ export enum RootNodeSort {
     Tag = 4,
     Company = 5,
     Favorite = 6,
-    Score = 7,
-    ScoreRange = 8,
-    Context = 8,
+    Choice = 7,
+    Score = 8,
+    ScoreRange = 9,
+    Context = 9,
 }
 
 
@@ -111,7 +112,7 @@ export interface ITodayData {
 export interface IScoreData {
     Rating: number; // 分数
     score: string; // rank分
-    ID: string;   // 题目ID
+    ID: number;   // 题目ID
     ContestID_en: string; // 周赛名称
     ProblemIndex: string; // 周赛第几题
     ContestSlug: string; // 周赛名称
@@ -141,7 +142,9 @@ export enum Category {
     Tag = "Tag",
     Company = "Company",
     Favorite = "Favorite",
-    Score = "Score"
+    Score = "Score",
+    Choice = "Choice",
+
 }
 
 export const supportedPlugins: string[] = [
@@ -179,7 +182,7 @@ export enum SearchSetType {
 export enum SearchSetTypeName {
     ScoreRange = "分数范围:",
     Context = "周赛期数:",
-    Day = "每日一题:"
+    Day = "每日一题"
 }
 
 export interface ISearchSet {

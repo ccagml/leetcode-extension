@@ -8,6 +8,7 @@ import { leetCodeManager } from "../leetCodeManager";
 import { Category, defaultProblem, IScoreData, ProblemState, SearchSetType } from "../shared";
 import { explorerNodeManager } from "./explorerNodeManager";
 import { LeetCodeNode } from "./LeetCodeNode";
+import { resourcesData } from "../ResourcesData";
 
 export class LeetCodeTreeDataProvider implements vscode.TreeDataProvider<LeetCodeNode> {
 
@@ -103,6 +104,8 @@ export class LeetCodeTreeDataProvider implements vscode.TreeDataProvider<LeetCod
                         return explorerNodeManager.getAllCompanyNodes();
                     case Category.Score:
                         return explorerNodeManager.getAllScoreNodes(element.user_score);
+                    case Category.Choice:
+                        return explorerNodeManager.getAllChoiceNodes();
                     default:
                         if (element.isProblem) {
                             return [];
@@ -115,15 +118,16 @@ export class LeetCodeTreeDataProvider implements vscode.TreeDataProvider<LeetCod
     }
     // 返回题目id的数据
     public getScoreData(): Map<string, IScoreData> {
-        const file_path = this.context.asAbsolutePath(path.join("resources", "data.json"));
-        const scoreData: Array<IScoreData> = require(file_path)
-        let nameSiteMapping = new Map<string, IScoreData>();
-        scoreData.forEach(element => {
-            element.score = "" + Math.floor(element.Rating || 0)
-            element.ID = "" + element.ID
-            nameSiteMapping.set(element.ID, element)
-        });
-        return nameSiteMapping
+        // const file_path = this.context.asAbsolutePath(path.join("resources", "data.json"));
+        // const scoreData: Array<IScoreData> = require(file_path)
+        return resourcesData.getScoreData()
+        // let nameSiteMapping = new Map<string, IScoreData>();
+        // scoreData.forEach(element => {
+        //     element.score = "" + Math.floor(element.Rating || 0)
+        //     element.ID = element.ID
+        //     nameSiteMapping.set("" + element.ID, element)
+        // });
+        // return nameSiteMapping
     }
     private parseIconPathFromProblemState(element: LeetCodeNode): string {
         if (!element.isProblem) {
