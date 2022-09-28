@@ -159,7 +159,12 @@ export async function searchProblem(): Promise<void> {
             label: `周赛期数查询`,
             detail: `周赛期数查询`,
             value: `contest`,
-        }
+        },
+        // {
+        //     label: `测试api`,
+        //     detail: `测试api`,
+        //     value: `testapi`,
+        // }
         // ,
         // {
         //     label: `每日一题`,
@@ -189,8 +194,32 @@ export async function searchProblem(): Promise<void> {
         await searchToday();
     } else if (choice.value == "userContest") {
         await searchUserContest();
+    } else if (choice.value == "testapi") {
+        await testapi();
     }
 
+}
+
+export async function testapi(): Promise<void> {
+    if (!leetCodeManager.getUser()) {
+        promptForSignIn();
+        return;
+    }
+    try {
+        const twoFactor: string | undefined = await vscode.window.showInputBox({
+            prompt: "测试数据",
+            ignoreFocusOut: true,
+            validateInput: (s: string): string | undefined => s && s.trim() ? undefined : "The input must not be empty",
+        });
+
+        // vscode.window.showErrorMessage(twoFactor || "输入错误");
+        const solution: string = await leetCodeExecutor.getTestApi(twoFactor || "")
+        const query_result = JSON.parse(solution);
+        console.log(query_result);
+    } catch (error) {
+        leetCodeChannel.appendLine(error.toString());
+        await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
+    }
 }
 
 export async function searchUserContest(): Promise<void> {

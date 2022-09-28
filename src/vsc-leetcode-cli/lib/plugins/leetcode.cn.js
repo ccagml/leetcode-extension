@@ -244,4 +244,57 @@ plugin.getUserContestP = function (username, cb) {
   });
 };
 
+plugin.getTestApi = function (value, cb) {
+  log.debug('running leetcode.cn.getTestApi');
+
+  const opts = makeOpts(config.sys.urls.graphql);
+  opts.headers.Origin = config.sys.urls.base;
+
+  const value_array = value.split("-")
+
+  opts.json = true;
+  opts.body = {
+    variables: {
+      categorySlug: "",
+      skip: value_array[0],
+      limit: value_array[1],
+      filters: {},
+    },
+    query: [
+      '    query problemsetQuestionList($categorySlug: String, $limit: Int, $skip: Int, $filters: QuestionListFilterInput) {',
+      '      problemsetQuestionList(',
+      '        categorySlug: $categorySlug',
+      '        limit: $limit',
+      '        skip: $skip',
+      '        filters: $filters',
+      '      ) {',
+      '        hasMore',
+      '        total',
+      '        questions {',
+      '          frontendQuestionId',
+      '          topicTags {',
+      '            slug',
+      '          }',
+      '        }',
+      '       }',
+      '  }',
+    ].join('\n'),
+  };
+
+  const spin = h.spin('Downloading ');
+  request.post(opts, function (e, resp, body) {
+    spin.stop();
+    e = checkError(e, resp, 200);
+    if (e) return cb(e);
+    let result = {}
+    body.data.problemsetQuestionList.questions.forEach(element => {
+      result[element.frontendQuestionId] = {
+        topicTags: element.topicTags.map(function (p) { return p.slug; }),
+        CompanyTags: element.extra.topCompanyTags.map(function (p) { return p.slug; }),
+      }
+    })
+    return cb(null, result);
+  });
+};
+
 module.exports = plugin;

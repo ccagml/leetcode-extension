@@ -148,4 +148,11 @@ core.getUserContest = function (username, cb) {
   });
 }
 
+core.getQueryZ = function (username, cb) {
+  this.getTestApi(username, function (e, result) {
+    if (e) return cb(e);
+    return cb(null, result);
+  });
+}
+
 module.exports = core;
