@@ -35,6 +35,7 @@ class ExplorerNodeManager implements Disposable {
     public clearUserScore() {
         this.user_score = 0;
         this.waitUserContest = false;
+        this.waitTodayQuestion = false;
     }
 
     public async refreshCheck(): Promise<void> {
