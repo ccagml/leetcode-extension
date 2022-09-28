@@ -126,6 +126,7 @@ export async function searchProblemByID(): Promise<void> {
         parseProblemsToPicks(list.listProblems()),
         {
             matchOnDetail: true,
+            matchOnDescription: true,
             placeHolder: "Select one problem",
         },
     );
@@ -359,7 +360,7 @@ async function parseProblemsToPicks(p: Promise<IProblem[]>): Promise<Array<IQuic
     return new Promise(async (resolve: (res: Array<IQuickItemEx<IProblem>>) => void): Promise<void> => {
         const picks: Array<IQuickItemEx<IProblem>> = (await p).map((problem: IProblem) => Object.assign({}, {
             label: `${parseProblemDecorator(problem.state, problem.locked)}${problem.id}.${problem.name}`,
-            description: "",
+            description: `QID:${problem.qid}`,
             detail: ((problem.scoreData?.score || "0") > "0" ? ("score: " + problem.scoreData?.score + " , ") : "") + `AC rate: ${problem.passRate}, Difficulty: ${problem.difficulty}`,
             value: problem,
         }));

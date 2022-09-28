@@ -24,10 +24,6 @@ export async function listProblems(): Promise<IProblem[]> {
         // const reg: RegExp = /^(.)\s(.{1,2})\s(.)\s\[\s*(\d*)\s*\]\s*(.*)\s*(Easy|Medium|Hard)\s*\((\s*\d+\.\d+ %)\)/;
         // const { companies, tags } = await leetCodeExecutor.getCompaniesAndTags();
         const AllScoreData = leetCodeTreeDataProvider.getScoreData();
-        // {
-        //     "state": "None", "id": 951, "fid": "915", "name": "分割数组", "slug": "partition-array-into-disjoint-intervals",
-        //     "link": "https://leetcode.cn/problems/partition-array-into-disjoint-intervals/description/", "locked": false, "percent": 47.273372361185025, "level": "Medium", "starred": false, "category": "algorithms", "tags": ["array"]
-        // }
         for (const p of all_problem_info) {
             // console.log(p)
             problems.push({
