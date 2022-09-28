@@ -148,7 +148,7 @@ export enum Category {
 }
 
 export const supportedPlugins: string[] = [
-    "company",
+    // "company",
     "solution.discuss",
     "leetcode.cn",
 ];

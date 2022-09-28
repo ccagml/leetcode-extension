@@ -30,6 +30,11 @@ const cmd = {
                 type: 'string',
                 default: "",
                 describe: 'user name',
+            }).option('z', {
+                alias: 'test',
+                type: 'string',
+                default: "",
+                describe: 'test',
             })
             .example('leetcode query today', 'query today question')
     }
@@ -44,6 +49,11 @@ cmd.handler = function (argv) {
         });
     } else if (argv.b) {
         core.getUserContest(argv.b, function (e, result) {
+            if (e) return;
+            log.info(JSON.stringify(result));
+        });
+    } else if (argv.z) {
+        core.getQueryZ(argv.z, function (e, result) {
             if (e) return;
             log.info(JSON.stringify(result));
         });

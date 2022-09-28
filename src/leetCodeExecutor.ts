@@ -151,6 +151,13 @@ class LeetCodeExecutor implements Disposable {
         return solution;
     }
 
+    public async getTestApi(username: string): Promise<string> {
+        // solution don't support translation
+        const cmd: string[] = [await this.getLeetCodeBinaryPath(), "query", "-z", username];
+        const solution: string = await this.executeCommandWithProgressEx("Fetching testapi...", this.nodeExecutable, cmd);
+        return solution;
+    }
+
     public async getTodayQuestion(needTranslation: boolean): Promise<string> {
         // solution don't support translation
         const cmd: string[] = [await this.getLeetCodeBinaryPath(), "query", "-a"];

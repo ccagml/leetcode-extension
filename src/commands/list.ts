@@ -8,6 +8,7 @@ import { IProblem, ProblemState, RootNodeSort, UserStatus } from "../shared";
 import * as settingUtils from "../utils/settingUtils";
 import { DialogType, promptForOpenOutputChannel } from "../utils/uiUtils";
 import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
+import { resourcesData } from "../ResourcesData";
 
 export async function listProblems(): Promise<IProblem[]> {
     try {
@@ -35,8 +36,8 @@ export async function listProblems(): Promise<IProblem[]> {
                 name: p.name,
                 difficulty: p.level,
                 passRate: p.percent,
-                companies: p.companies || ["Unknown"],
-                tags: p.tags || ["Unknown"],
+                companies: p.companies || [],
+                tags: resourcesData.getTagsData(p.fid) || ["Unknown"],
                 scoreData: AllScoreData.get(p.fid),
                 isSearchResult: false,
                 input: "",

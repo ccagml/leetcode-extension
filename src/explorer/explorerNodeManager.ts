@@ -35,6 +35,7 @@ class ExplorerNodeManager implements Disposable {
     public clearUserScore() {
         this.user_score = 0;
         this.waitUserContest = false;
+        this.waitTodayQuestion = false;
     }
 
     public async refreshCheck(): Promise<void> {
@@ -98,11 +99,11 @@ class ExplorerNodeManager implements Disposable {
                 name: Category.Tag,
                 rootNodeSortId: RootNodeSort.Tag,
             }), false),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
-                id: Category.Company,
-                name: Category.Company,
-                rootNodeSortId: RootNodeSort.Company,
-            }), false),
+            // new LeetCodeNode(Object.assign({}, defaultProblem, {
+            //     id: Category.Company,
+            //     name: Category.Company,
+            //     rootNodeSortId: RootNodeSort.Company,
+            // }), false),
             new LeetCodeNode(Object.assign({}, defaultProblem, {
                 id: Category.Favorite,
                 name: Category.Favorite,
