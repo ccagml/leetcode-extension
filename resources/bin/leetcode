@@ -1,31 +1,3 @@
 #!/usr/bin/env node
 
-
-// const fs = require('fs');
-// const path = require('path');
-
-// const directoryLabel = '├── ';
-// const hierarchyLabel = '│   ';
-
-// function printDirectory(dir, deep = "") {
-//     const files = fs.readdirSync(dir, { encoding: 'utf-8' })
-//     for (let i = 0; i < files.length; i++) {
-//         const childDir = path.resolve(dir, files[i]);
-
-//         console.log(deep + directoryLabel + files[i]);
-//         const stats = fs.statSync(childDir);
-//         if (stats.isDirectory()) {
-//             printDirectory(childDir, deep + hierarchyLabel);
-//         }
-//     }
-// }
-
-// function printAllDirectory(dir) {
-//     console.log(directoryLabel + path.basename(dir));
-//     printDirectory(dir, hierarchyLabel);
-// }
-
-// printAllDirectory(__dirname + "/../../");
-
-
 require('../../out/src/vsc-leetcode-cli/lib/cli').run();
