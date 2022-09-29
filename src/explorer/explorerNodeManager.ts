@@ -69,14 +69,7 @@ class ExplorerNodeManager implements Disposable {
         const temp_waitTodayQuestion: boolean = this.waitTodayQuestion
         const temp_waitUserContest: boolean = this.waitUserContest
         this.dispose();
-        const shouldHideSolved: boolean = shouldHideSolvedProblem();
         for (const problem of await list.listProblems()) {
-            if (shouldHideSolved && problem.state === ProblemState.AC) {
-                continue;
-            }
-            if (shouldHideScoreProblem(problem, this.user_score)) {
-                continue;
-            }
             this.explorerNodeMap.set(problem.id, new LeetCodeNode(problem, true, this.user_score));
             for (const company of problem.companies) {
                 this.companySet.add(company);
@@ -173,19 +166,27 @@ class ExplorerNodeManager implements Disposable {
             }
 
             this.explorerNodeMap.forEach(element => {
+                if (!this.canShow(element)) {
+                    return;
+                }
                 if (rank_a <= Number(element.score) && Number(element.score) <= rank_b) {
                     sorceNode.push(element)
                 }
             });
-            // for (const key in this.explorerNodeMap.values()) {
-            //     const element: LeetCodeNode = this.explorerNodeMap[key];
-            //     if (rank_a <= Number(element.score) && Number(element.score) <= rank_b) {
-            //         sorceNode.push(element)
-            //     }
-            // }
         }
         return this.applySortingStrategy(sorceNode);
     }
+
+    public canShow(element: LeetCodeNode) {
+        if (shouldHideSolvedProblem() && element.state === ProblemState.AC) {
+            return false;
+        }
+        if (shouldHideScoreProblem(element, element.user_score)) {
+            return false;
+        }
+        return true;
+    }
+
     public getContextNodes(rank_range: string): LeetCodeNode[] {
         const sorceNode: LeetCodeNode[] = []
         const rank_r: Array<string> = rank_range.split("-")
@@ -193,7 +194,9 @@ class ExplorerNodeManager implements Disposable {
         var rank_b = Number(rank_r[1])
         if (rank_a > 0) {
             this.explorerNodeMap.forEach(element => {
-
+                if (!this.canShow(element)) {
+                    return;
+                }
                 const slu = element.ContestSlug;
                 const slu_arr: Array<string> = slu.split("-")
                 const slu_id = Number(slu_arr[slu_arr.length - 1]);
@@ -222,7 +225,7 @@ class ExplorerNodeManager implements Disposable {
 
     public getAllNodes(): LeetCodeNode[] {
         return this.applySortingStrategy(
-            Array.from(this.explorerNodeMap.values()),
+            Array.from(this.explorerNodeMap.values()).filter(p => this.canShow(p)),
         );
     }
 
@@ -309,6 +312,9 @@ class ExplorerNodeManager implements Disposable {
     public getFavoriteNodes(): LeetCodeNode[] {
         const res: LeetCodeNode[] = [];
         for (const node of this.explorerNodeMap.values()) {
+            if (!this.canShow(node)) {
+                continue;
+            }
             if (node.isFavorite) {
                 res.push(node);
             }
@@ -335,6 +341,9 @@ class ExplorerNodeManager implements Disposable {
         }
 
         for (const node of this.explorerNodeMap.values()) {
+            if (!this.canShow(node)) {
+                continue;
+            }
             switch (metaInfo[0]) {
                 case Category.Company:
                     if (node.companies.indexOf(metaInfo[1]) >= 0) {
