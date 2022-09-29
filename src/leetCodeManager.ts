@@ -6,7 +6,7 @@ import { EventEmitter } from "events";
 import * as vscode from "vscode";
 import { leetCodeChannel } from "./leetCodeChannel";
 import { leetCodeExecutor } from "./leetCodeExecutor";
-import { IQuickItemEx, loginArgsMapping, UserStatus, userContestRanKingBase } from "./shared";
+import { IQuickItemEx, loginArgsMapping, UserStatus, userContestRanKingBase, userContestRankingObj } from "./shared";
 import { createEnvOption } from "./utils/cpUtils";
 import { DialogType, promptForOpenOutputChannel } from "./utils/uiUtils";
 import * as wsl from "./utils/wslUtils";
@@ -158,6 +158,7 @@ class LeetCodeManager extends EventEmitter {
             vscode.window.showInformationMessage("Successfully signed out.");
             this.currentUser = undefined;
             this.userStatus = UserStatus.SignedOut;
+            this.currentUserContestInfo = Object.assign({}, userContestRankingObj, {})
             this.emit("statusChanged");
         } catch (error) {
             // swallow the error when sign out.

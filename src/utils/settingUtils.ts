@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { workspace, WorkspaceConfiguration } from "vscode";
-import { DescriptionConfiguration } from "../shared";
+import { DescriptionConfiguration, IProblem } from "../shared";
 
 export function getWorkspaceConfiguration(): WorkspaceConfiguration {
     return workspace.getConfiguration("leetcode-problem-rating");
@@ -10,6 +10,49 @@ export function getWorkspaceConfiguration(): WorkspaceConfiguration {
 
 export function shouldHideSolvedProblem(): boolean {
     return getWorkspaceConfiguration().get<boolean>("hideSolved", false);
+}
+
+
+export function shouldHideScoreProblem(problem: IProblem, user_score: number): boolean {
+    // "None",
+    // "Score",
+    // "NoScore",
+    // "ScoreRange"
+    const config_value: string = getWorkspaceConfiguration().get<string>("hideScore", "None");
+    switch (config_value) {
+        case "Score":
+            if ((problem?.scoreData?.Rating || 0) > 0) {
+                return true;
+            }
+            break;
+        case "NoScore":
+            if ((problem?.scoreData?.Rating || 0) == 0) {
+                return true;
+            }
+            break;
+        case "ScoreRange":
+            const min_v = getPickOneByRankRangeMin();
+            const max_v = getPickOneByRankRangeMax();
+            const p_score = problem?.scoreData?.Rating || 0;
+            const u_score = user_score > 0 ? user_score : 1500;
+            if (p_score < u_score + min_v) {
+                return true;
+            }
+            if (p_score > u_score + max_v) {
+                return true;
+            }
+            break;
+        default:
+            break;
+    }
+    return false;
+}
+
+export function getPickOneByRankRangeMin(): number {
+    return getWorkspaceConfiguration().get<number>("pickOneByRankRangeMin") || 50;
+}
+export function getPickOneByRankRangeMax(): number {
+    return getWorkspaceConfiguration().get<number>("pickOneByRankRangeMax") || 150;
 }
 
 export function getWorkspaceFolder(): string {

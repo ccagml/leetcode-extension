@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode problem rating",
     "description": "为LeetCode题目难度进行打分。避免只有简单、中等、困难三种难度",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -32,6 +32,7 @@
         "onCommand:leetcode.manageSessions",
         "onCommand:leetcode.refreshExplorer",
         "onCommand:leetcode.pickOne",
+        "onCommand:leetcode.deleteAllCache",
         "onCommand:leetcode.showProblem",
         "onCommand:leetcode.previewProblem",
         "onCommand:leetcode.searchProblem",
@@ -80,6 +81,11 @@
             {
                 "command": "leetcode.pickOne",
                 "title": "Pick One",
+                "category": "LeetCode"
+            },
+            {
+                "command": "leetcode.deleteAllCache",
+                "title": "deleteAllCache",
                 "category": "LeetCode"
             },
             {
@@ -191,6 +197,11 @@
                     "command": "leetcode.problems.sort",
                     "when": "view == leetCodeExplorer",
                     "group": "overflow@1"
+                },
+                {
+                    "command": "leetcode.deleteAllCache",
+                    "when": "view == leetCodeExplorer",
+                    "group": "overflow@2"
                 }
             ],
             "view/item/context": [
@@ -715,6 +726,24 @@
                         "default": 150,
                         "scope": "application",
                         "description": "Highest score for a random question(your score + pickOneByRankRangeMax)"
+                    },
+                    "leetcode-problem-rating.hideScore": {
+                        "type": "string",
+                        "default": "None",
+                        "enum": [
+                            "None",
+                            "Score",
+                            "NoScore",
+                            "ScoreRange"
+                        ],
+                        "enumDescriptions": [
+                            "Don't hide",
+                            "Hide questions with scores",
+                            "Hide questions with no scores",
+                            "Hide questions outside the range of scores [pickOneByRankRangeMin, pickOneByRankRangeMax]"
+                        ],
+                        "scope": "application",
+                        "description": "Precinct Score Hidden Questions."
                     }
                 }
             }

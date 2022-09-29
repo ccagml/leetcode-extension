@@ -267,7 +267,7 @@ class LeetCodeExecutor implements Disposable {
         return await executeCommandWithProgress(message, command, args, options);
     }
 
-    private async removeOldCache(): Promise<void> {
+    public async removeOldCache(): Promise<void> {
         const oldPath: string = path.join(os.homedir(), ".lc");
         if (await fse.pathExists(oldPath)) {
             await fse.remove(oldPath);

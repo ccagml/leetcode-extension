@@ -20,7 +20,9 @@ import { getActiveFilePath, selectWorkspaceFolder } from "../utils/workspaceUtil
 import * as wsl from "../utils/wslUtils";
 import { leetCodePreviewProvider } from "../webview/leetCodePreviewProvider";
 import { leetCodeSolutionProvider } from "../webview/leetCodeSolutionProvider";
+import { getPickOneByRankRangeMin, getPickOneByRankRangeMax } from "../utils/settingUtils";
 import * as list from "./list";
+import { getLeetCodeEndpoint } from "./plugin";
 
 export async function previewProblem(input: IProblem | vscode.Uri, isSideMode: boolean = false): Promise<void> {
     let node: IProblem;
@@ -47,15 +49,23 @@ export async function previewProblem(input: IProblem | vscode.Uri, isSideMode: b
     leetCodePreviewProvider.show(descString, node, isSideMode);
 }
 
+export async function deleteAllCache(): Promise<void> {
+    await leetCodeManager.signOut();
+    await leetCodeExecutor.removeOldCache();
+    await leetCodeExecutor.switchEndpoint(getLeetCodeEndpoint());
+    await leetCodeTreeDataProvider.refresh()
+}
+
+
 export async function pickOne(): Promise<void> {
     const problems: IProblem[] = await list.listProblems();
     var randomProblem: IProblem;
 
     const user_score = leetCodeManager.getUserContestScore()
     if (user_score > 0) {
-        const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
-        let min_score: number = leetCodeConfig.get<number>("pickOneByRankRangeMin") || 50;
-        let max_score: number = leetCodeConfig.get<number>("pickOneByRankRangeMax") || 150;
+
+        let min_score: number = getPickOneByRankRangeMin();
+        let max_score: number = getPickOneByRankRangeMax();
         let temp_problems: IProblem[] = new Array();
         const need_min = user_score + min_score;
         const need_max = user_score + max_score;
