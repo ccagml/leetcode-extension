@@ -153,29 +153,30 @@ export class LeetCodeTreeDataProvider implements vscode.TreeDataProvider<LeetCod
         if (element.isProblem || element.id === "ROOT" || element.id in Category) {
             return "";
         }
+        return "";
 
-        const childernNodes: LeetCodeNode[] = explorerNodeManager.getChildrenNodesById(element.id);
+        // const childernNodes: LeetCodeNode[] = explorerNodeManager.getChildrenNodesById(element.id);
 
-        let acceptedNum: number = 0;
-        let failedNum: number = 0;
-        for (const node of childernNodes) {
-            switch (node.state) {
-                case ProblemState.AC:
-                    acceptedNum++;
-                    break;
-                case ProblemState.NotAC:
-                    failedNum++;
-                    break;
-                default:
-                    break;
-            }
-        }
+        // let acceptedNum: number = 0;
+        // let failedNum: number = 0;
+        // for (const node of childernNodes) {
+        //     switch (node.state) {
+        //         case ProblemState.AC:
+        //             acceptedNum++;
+        //             break;
+        //         case ProblemState.NotAC:
+        //             failedNum++;
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        // }
 
-        return [
-            `AC: ${acceptedNum}`,
-            `Failed: ${failedNum}`,
-            `Total: ${childernNodes.length}`,
-        ].join(os.EOL);
+        // return [
+        //     `AC: ${acceptedNum}`,
+        //     `Failed: ${failedNum}`,
+        //     `Total: ${childernNodes.length}`,
+        // ].join(os.EOL);
     }
 }
 
