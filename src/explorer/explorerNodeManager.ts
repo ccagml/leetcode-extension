@@ -7,12 +7,13 @@ import { Disposable } from "vscode";
 import * as list from "../commands/list";
 import { getSortingStrategy } from "../commands/plugin";
 import { Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType } from "../shared";
-import { shouldHideSolvedProblem } from "../utils/settingUtils";
+import { shouldHideSolvedProblem, shouldHideScoreProblem } from "../utils/settingUtils";
 import { LeetCodeNode } from "./LeetCodeNode";
 import { ISearchSet } from "../shared";
 import { searchToday, searchUserContest } from "../commands/show";
 import { leetCodeTreeDataProvider } from "./LeetCodeTreeDataProvider";
 import { resourcesData } from "../ResourcesData";
+import { leetCodeManager } from "../leetCodeManager";
 
 class ExplorerNodeManager implements Disposable {
     private explorerNodeMap: Map<string, LeetCodeNode> = new Map<string, LeetCodeNode>();
@@ -36,11 +37,15 @@ class ExplorerNodeManager implements Disposable {
         this.user_score = 0;
         this.waitUserContest = false;
         this.waitTodayQuestion = false;
+        this.searchSet = new Map<string, ISearchSet>();
     }
 
     public async refreshCheck(): Promise<void> {
-        const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime(); //获取当天零点的时间
-        const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime(); //获取当天23:59:59的时间
+        if (!leetCodeManager.getUser()) {
+            return;
+        }
+        const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000; //获取当天零点的时间
+        const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime() / 1000; //获取当天23:59:59的时间
         var need_get_today: boolean = true;
         this.searchSet.forEach(element => {
             if (element.type == SearchSetType.Day) {
@@ -67,6 +72,9 @@ class ExplorerNodeManager implements Disposable {
         const shouldHideSolved: boolean = shouldHideSolvedProblem();
         for (const problem of await list.listProblems()) {
             if (shouldHideSolved && problem.state === ProblemState.AC) {
+                continue;
+            }
+            if (shouldHideScoreProblem(problem, this.user_score)) {
                 continue;
             }
             this.explorerNodeMap.set(problem.id, new LeetCodeNode(problem, true, this.user_score));
