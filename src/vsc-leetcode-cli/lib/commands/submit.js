@@ -50,7 +50,7 @@ cmd.handler = function (argv) {
   const meta = file.meta(argv.filename);
 
   // translation doesn't affect problem lookup
-  core.getProblem(meta.id, true, function (e, problem) {
+  core.getProblem(meta, true, function (e, problem) {
     if (e) return log.fail(e);
 
     problem.file = argv.filename;

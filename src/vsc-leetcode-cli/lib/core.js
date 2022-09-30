@@ -83,8 +83,8 @@ core.filterProblems = function (opts, cb) {
 };
 
 core.getProblem = function (keyword, needTranslation, cb) {
-  if (keyword.id)
-    return core.next.getProblem(keyword, needTranslation, cb);
+  // if (keyword.id)
+  //   return core.next.getProblem(keyword, needTranslation, cb);
 
   this.getProblems(needTranslation, function (e, problems) {
     if (e) return cb(e);
@@ -92,7 +92,13 @@ core.getProblem = function (keyword, needTranslation, cb) {
     keyword = Number(keyword) || keyword;
     const metaFid = file.exist(keyword) ? Number(file.meta(keyword).id) : NaN;
     const problem = problems.find(function (x) {
-      return x.id + '' === keyword + '' || x.name === keyword || x.slug === keyword;
+      if (keyword?.fid) {
+        return x.fid + '' === keyword.fid + ''
+      } else if (keyword?.qid) {
+        return x.id + '' === keyword.qid + ''
+      } else {
+        return x.id + '' === keyword + '' || x.name === keyword || x.slug === keyword;
+      }
     });
     if (!problem) return cb('Problem not found!');
     core.next.getProblem(problem, needTranslation, cb);

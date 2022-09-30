@@ -166,6 +166,7 @@ file.meta = function (filename) {
   var id = lang_cat[0].trim();
   var lang = lang_cat[1].trim();
   m.id = id
+  m.fid = id
   m.lang = lang
   return m;
   // line.split(' ').forEach(function (x) {

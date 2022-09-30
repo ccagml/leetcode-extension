@@ -59,7 +59,7 @@ function runTest(argv) {
 
   const meta = file.meta(argv.filename);
 
-  core.getProblem(meta.id, true, function (e, problem) {
+  core.getProblem(meta, true, function (e, problem) {
     if (e) return log.fail(e);
 
     if (!problem.testable)
