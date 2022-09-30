@@ -186,24 +186,24 @@ cmd.handler = function (argv) {
     });
   } else {
     // show random one
-    core.filterProblems(argv, function (e, problems) {
-      if (e) return log.fail(e);
+    // core.filterProblems(argv, function (e, problems) {
+    //   if (e) return log.fail(e);
 
-      // random select one that not AC-ed yet
-      const user = session.getUser();
-      problems = problems.filter(function (x) {
-        if (x.state === 'ac') return false;
-        if (!user.paid && x.locked) return false;
-        return true;
-      });
-      if (problems.length === 0) return log.fail('Problem not found!');
+    //   // random select one that not AC-ed yet
+    //   const user = session.getUser();
+    //   problems = problems.filter(function (x) {
+    //     if (x.state === 'ac') return false;
+    //     if (!user.paid && x.locked) return false;
+    //     return true;
+    //   });
+    //   if (problems.length === 0) return log.fail('Problem not found!');
 
-      const problem = _.sample(problems);
-      core.getProblem(problem, !argv.dontTranslate, function (e, problem) {
-        if (e) return log.fail(e);
-        showProblem(problem, argv);
-      });
-    });
+    //   const problem = _.sample(problems);
+    //   core.getProblem(problem, !argv.dontTranslate, function (e, problem) {
+    //     if (e) return log.fail(e);
+    //     showProblem(problem, argv);
+    //   });
+    // });
   }
 };
 
