@@ -1,8 +1,23 @@
+<p align="center">
+  <a href="https://github.com/ccagml/vscode-leetcode-problem-rating/actions/workflows/release.yml">
+    <img src="https://img.shields.io/github/workflow/status/ccagml/vscode-leetcode-problem-rating/release?style=flat-square" alt="">
+  </a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=ccagml.vscode-leetcode-problem-rating">
+    <img src="https://img.shields.io/visual-studio-marketplace/d/ccagml.vscode-leetcode-problem-rating.svg?style=flat-square" alt="">
+  </a>
+  <a href="https://github.com/ccagml/vscode-leetcode-problem-rating/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/ccagml/vscode-leetcode-problem-rating" alt="">
+  </a>
+</p>
+
 # 概要设计(Outline design)
 - Leetcode 只提供了简单、中等、困难的难度区分。题目与题目之间难度差别很大，因此需要客观的分数对题目难度进行打分
 - Leetcode only provides easy, medium, and hard difficulty distinctions. Difficulty varies greatly from subject to subject, so objective scores are required to rate the difficulty of the subject
 # 项目地址(project address)
 - https://github.com/ccagml/vscode-leetcode-problem-rating/
+# 报告问题(report problem)
+- https://github.com/ccagml/vscode-leetcode-problem-rating/issues
+
 # 项目依赖(project dependencies)
 ## vscode插件(vscode plugin)
 - https://github.com/LeetCode-OpenSource/vscode-leetcode/
@@ -14,6 +29,10 @@
 - Added difficulty score display, query, and filter operations to the basic plug-in
 
 # 更新内容(update)
+
+## version 1.0.14
+- 安装插件检测
+- github问题报告模板
 
 ## version 1.0.13
 - 修复测试提交功能
