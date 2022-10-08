@@ -15,8 +15,8 @@ import { explorerNodeManager } from "./explorer/explorerNodeManager";
 class LeetCodeManager extends EventEmitter {
     private currentUser: string | undefined;
     private userStatus: UserStatus;
-    private readonly successRegex: RegExp = /(?:.*)Successfully .*login as (.*)/i;
-    private readonly failRegex: RegExp = /.*\[ERROR\].*/i;
+    // private readonly successRegex: RegExp = /(?:.*)Successfully .*login as (.*)/i;
+    // private readonly failRegex: RegExp = /.*\[ERROR\].*/i;
     private currentUserContestInfo: userContestRanKingBase;
 
     constructor() {
@@ -105,13 +105,19 @@ class LeetCodeManager extends EventEmitter {
                         }
                         childProc.stdin?.write(`${twoFactor}\n`);
                     }
-                    const successMatch: RegExpMatchArray | null = data.match(this.successRegex);
-                    if (successMatch && successMatch[1]) {
+
+                    var successMatch;
+                    try {
+                        successMatch = JSON.parse(data);
+                    } catch (e) {
+                        successMatch = {};
+                    }
+                    if (successMatch.code == 100) {
                         childProc.stdin?.end();
-                        return resolve(successMatch[1]);
-                    } else if (data.match(this.failRegex)) {
+                        return resolve(successMatch.user_name);
+                    } else if (successMatch.code < 0) {
                         childProc.stdin?.end();
-                        return reject(new Error("Faile to login"));
+                        return reject(new Error(successMatch.msg));
                     }
                 });
 
