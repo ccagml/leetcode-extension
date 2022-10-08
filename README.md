@@ -30,6 +30,9 @@
 
 # 更新内容(update)
 
+## version 1.0.15
+- 更换icon使得看起来不起眼
+
 ## version 1.0.14
 - 安装插件检测
 - github问题报告模板
