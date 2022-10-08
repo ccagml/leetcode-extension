@@ -27,6 +27,26 @@ const cmd = {
   }
 };
 
+
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().option('d', {
+    alias: 'delete',
+    type: 'boolean',
+    describe: 'Unstar question',
+    default: false
+  })
+    .positional('keyword', {
+      type: 'string',
+      describe: 'Question name or id',
+      default: ''
+    })
+
+
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
 cmd.handler = function (argv) {
   session.argv = argv;
   // translation doesn't affect question lookup

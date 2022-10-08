@@ -77,6 +77,64 @@ const cmd = {
   }
 };
 
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().option('c', {
+    alias: 'codeonly',
+    type: 'boolean',
+    default: false,
+    describe: 'Only show code template'
+  })
+    .option('e', {
+      alias: 'editor',
+      type: 'string',
+      describe: 'Open source code in editor'
+    })
+    .option('g', {
+      alias: 'gen',
+      type: 'boolean',
+      default: false,
+      describe: 'Generate source code'
+    })
+    .option('l', {
+      alias: 'lang',
+      type: 'string',
+      default: config.code.lang,
+      describe: 'Programming language of the source code',
+      choices: config.sys.langs
+    })
+    .option('o', {
+      alias: 'outdir',
+      type: 'string',
+      describe: 'Where to save source code',
+      default: '.'
+    })
+    .option('q', core.filters.query)
+    .option('t', core.filters.tag)
+    .option('x', {
+      alias: 'extra',
+      type: 'boolean',
+      default: false,
+      describe: 'Show extra question details in source code'
+    })
+    .option('T', {
+      alias: 'dontTranslate',
+      type: 'boolean',
+      default: false,
+      describe: 'Set to true to disable endpoint\'s translation',
+    })
+    .positional('keyword', {
+      type: 'string',
+      default: '',
+      describe: 'Show question by name or id'
+    })
+
+
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
+
 function genFileName(problem, opts) {
   const path = require('path');
   const params = [

@@ -201,4 +201,78 @@ h.badge = function (s, color) {
   return (s);
 };
 
+h.base_argv = function () {
+  var base = {
+    all_base_data: {},
+    positional_index: 0,
+    positional_key: {},
+    option: function (key, value) {
+      this.all_base_data[key] = value.default
+      this.all_base_data[value.alias] = value.default
+      this[key] = value
+      return this
+    },
+    positional: function (key, value) {
+      this.positional_key[this.positional_index] = key
+      this.positional_index = this.positional_index + 1;
+      this.all_base_data[key] = value.default
+      this.all_base_data[value.alias] = value.default
+      this[key] = value
+      return this
+    },
+    set_opt: function (key, temp_val) {
+      var cfg = this[key]
+      if (cfg) {
+        if (cfg.type == "boolean") {
+          this.all_base_data[key] = true;
+          if (cfg.alias) {
+            this.all_base_data[cfg.alias] = true;
+          }
+          return false;
+        } else {
+          this.all_base_data[key] = temp_val;
+          if (cfg.alias) {
+            this.all_base_data[cfg.alias] = temp_val;
+          }
+          return true;
+        }
+      } else {
+        this.all_base_data[key] = true;
+      }
+    },
+    set_posi: function (value, index) {
+      var cfg_key = this.positional_key[index]
+      var cfg = this[cfg_key]
+      if (cfg) {
+        this.all_base_data[cfg_key] = value;
+        if (cfg.alias) {
+          this.all_base_data[cfg.alias] = value;
+        }
+      }
+    },
+    process_argv: function (argv) {
+      var all_posi = 0
+      for (let index = 3; index < argv.length; index++) {
+        var con = argv[index]
+        if (con[0] == '-' && con[1] == '-') {
+          this.set_opt(con.substring(2))
+        }
+        else if (con[0] == '-') {
+          for (let con_index = 1; con_index < con.length; con_index++) {
+            if (this.set_opt(con[con_index], argv[index + 1])) {
+              con_index++;
+            }
+          }
+        } else {
+          this.set_posi(con, all_posi);
+          all_posi = all_posi + 1;
+        }
+      }
+    },
+    get_result: function () {
+      return this.all_base_data
+    }
+  }
+  return base;
+}
 module.exports = h;

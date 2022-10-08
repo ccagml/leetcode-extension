@@ -46,6 +46,32 @@ const cmd = {
   }
 };
 
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().option('c', {
+    alias: 'cal',
+    type: 'boolean',
+    default: false,
+    describe: 'Show calendar statistics'
+  })
+    .option('g', {
+      alias: 'graph',
+      type: 'boolean',
+      default: false,
+      describe: 'Show graphic statistics'
+    })
+    .option('l', {
+      alias: 'lock',
+      type: 'boolean',
+      default: true,
+      describe: 'Include locked questions'
+    })
+    .option('q', core.filters.query)
+    .option('t', core.filters.tag)
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
 function printLine(key, done, all) {
   const n = 30;
   const percent = (all > 0) ? done / all : 0;

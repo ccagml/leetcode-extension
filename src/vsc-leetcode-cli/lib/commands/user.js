@@ -53,6 +53,44 @@ const cmd = {
   }
 };
 
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().option('l', {
+    alias: 'login',
+    type: 'boolean',
+    default: false,
+    describe: 'Login'
+  })
+    .option('c', {
+      alias: 'cookie',
+      type: 'boolean',
+      default: false,
+      describe: 'cookieLogin'
+    })
+    .option('g', {
+      alias: 'github',
+      type: 'boolean',
+      default: false,
+      describe: 'githubLogin'
+    })
+    .option('i', {
+      alias: 'linkedin',
+      type: 'boolean',
+      default: false,
+      describe: 'linkedinLogin'
+    })
+    .option('L', {
+      alias: 'logout',
+      type: 'boolean',
+      default: false,
+      describe: 'Logout'
+    })
+
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
+
 cmd.handler = function (argv) {
   session.argv = argv;
   let user = null;

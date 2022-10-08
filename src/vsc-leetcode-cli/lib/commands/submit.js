@@ -24,6 +24,19 @@ const cmd = {
   }
 };
 
+
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().positional('filename', {
+    type: 'string',
+    describe: 'Code file to submit',
+    default: ''
+  })
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
+
 function printResult(actual, k) {
   if (!actual.hasOwnProperty(k)) return;
 

@@ -37,6 +37,31 @@ const cmd = {
   }
 };
 
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().option('i', {
+    alias: 'interactive',
+    type: 'boolean',
+    default: false,
+    describe: 'Provide test case interactively'
+  })
+    .option('t', {
+      alias: 'testcase',
+      type: 'string',
+      default: '',
+      describe: 'Provide test case'
+    })
+    .positional('filename', {
+      type: 'string',
+      default: '',
+      describe: 'Code file to test'
+    })
+
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
+
 function printResult(actual, extra, k) {
   if (!actual.hasOwnProperty(k)) return;
   // HACk: leetcode still return 'Accepted' even the answer is wrong!!

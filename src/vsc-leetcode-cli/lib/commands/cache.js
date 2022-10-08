@@ -31,6 +31,24 @@ const cmd = {
   }
 };
 
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().option('d', {
+    alias: 'delete',
+    type: 'boolean',
+    describe: 'Delete cache by keyword',
+    default: false
+  })
+    .positional('keyword', {
+      type: 'string',
+      describe: 'Cache name or question id',
+      default: ''
+    })
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
+
 cmd.handler = function (argv) {
   session.argv = argv;
 
