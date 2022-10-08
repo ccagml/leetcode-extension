@@ -166,14 +166,9 @@ cmd.handler = function (argv) {
     // show current user
     user = session.getUser();
     if (user) {
-      log.info(sprintf(' %-9s %-20s %s', 'Premium', 'User', 'Host'));
-      log.info('-'.repeat(60));
-      log.printf('    %s      %-20s %s',
-        h.prettyText('', user.paid || false),
-        user.name,
-        config.sys.urls.base);
+      log.info(JSON.stringify({ code: 100, user_name: user.name }));
     } else
-      return log.fail('You are not login yet?');
+      return log.fail(JSON.stringify({ code: -7, msg: 'You are not login yet?' }));
   }
 };
 

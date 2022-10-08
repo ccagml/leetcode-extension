@@ -192,12 +192,15 @@ class LeetCodeManager extends EventEmitter {
     }
 
     private tryParseUserName(output: string): string {
-        const reg: RegExp = /^\s*.\s*(.+?)\s*https:\/\/leetcode/m;
-        const match: RegExpMatchArray | null = output.match(reg);
-        if (match && match.length === 2) {
-            return match[1].trim();
+        var successMatch;
+        try {
+            successMatch = JSON.parse(output);
+        } catch (e) {
+            successMatch = {};
         }
-
+        if (successMatch.code == 100) {
+            return successMatch.user_name;
+        }
         return "Unknown";
     }
 }
