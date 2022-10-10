@@ -5,7 +5,7 @@
 import * as path from "path";
 import * as vscode from "vscode";
 import { leetCodeManager } from "../leetCodeManager";
-import { Category, defaultProblem, IScoreData, ProblemState, SearchSetType } from "../shared";
+import { Category, defaultProblem, IScoreData, ProblemState, SearchSetType, ISubmitEvent } from "../shared";
 import { explorerNodeManager } from "./explorerNodeManager";
 import { LeetCodeNode } from "./LeetCodeNode";
 import { resourcesData } from "../ResourcesData";
@@ -20,6 +20,10 @@ export class LeetCodeTreeDataProvider implements vscode.TreeDataProvider<LeetCod
 
     public initialize(context: vscode.ExtensionContext): void {
         this.context = context;
+    }
+
+    public checkSubmit(e: ISubmitEvent) {
+        explorerNodeManager.checkSubmit(e)
     }
 
     public cleanUserScore() {

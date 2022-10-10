@@ -83,6 +83,12 @@ cmd.handler = function (argv) {
 
       var log_obj = {}
       log_obj.messages = []
+      log_obj.system_message = {}
+      log_obj.system_message.fid = problem.fid
+      log_obj.system_message.id = problem.id
+      log_obj.system_message.qid = problem.id
+      log_obj.system_message.sub_type = "submit"
+      log_obj.system_message.accepted = false;
 
       printResult(result, 'state', log_obj);
       printLine(log_obj, result, '%d/%d cases passed (%s)',
@@ -91,6 +97,7 @@ cmd.handler = function (argv) {
       if (result.ok) {
         session.updateStat('ac', 1);
         session.updateStat('ac.set', problem.fid);
+        log_obj.system_message.accepted = true;
 
         (function () {
           if (result.runtime_percentile)

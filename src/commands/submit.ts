@@ -23,6 +23,7 @@ export async function submitSolution(uri?: vscode.Uri): Promise<void> {
     try {
         const result: string = await leetCodeExecutor.submitSolution(filePath);
         leetCodeSubmissionProvider.show(result);
+        leetCodeManager.emit("submit", leetCodeSubmissionProvider.getSubmitEvent());
     } catch (error) {
         await promptForOpenOutputChannel("Failed to submit the solution. Please open the output channel for details.", DialogType.error);
         return;

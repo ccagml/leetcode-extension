@@ -5,6 +5,7 @@ import { ViewColumn } from "vscode";
 import { openKeybindingsEditor, promptHintMessage } from "../utils/uiUtils";
 import { ILeetCodeWebviewOption, LeetCodeWebview } from "./LeetCodeWebview";
 import { markdownEngine } from "./markdownEngine";
+import { ISubmitEvent } from "../shared";
 
 class LeetCodeSubmissionProvider extends LeetCodeWebview {
 
@@ -15,6 +16,9 @@ class LeetCodeSubmissionProvider extends LeetCodeWebview {
         this.result = this.parseResult(resultString);
         this.showWebviewInternal();
         this.showKeybindingsHint();
+    }
+    public getSubmitEvent(): ISubmitEvent {
+        return this.result.system_message as unknown as ISubmitEvent
     }
 
     protected getWebviewOption(): ILeetCodeWebviewOption {
@@ -29,7 +33,7 @@ class LeetCodeSubmissionProvider extends LeetCodeWebview {
         const title: string = `## ${this.result.messages[0]}`;
         const messages: string[] = this.result.messages.slice(1).map((m: string) => `* ${m}`);
         const sections: string[] = Object.keys(this.result)
-            .filter((key: string) => key !== "messages")
+            .filter((key: string) => (key !== "messages" && key !== "system_message"))
             .map((key: string) => [
                 `### ${key}`,
                 "```",
@@ -79,5 +83,6 @@ interface IResult {
     [key: string]: string[];
     messages: string[];
 }
+
 
 export const leetCodeSubmissionProvider: LeetCodeSubmissionProvider = new LeetCodeSubmissionProvider();
