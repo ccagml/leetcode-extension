@@ -113,12 +113,22 @@ function runTest(argv) {
     core.testProblem(problem, function (e, results) {
       if (e) return log.fail(e);
 
-      var log_obj = {}
-      log_obj.messages = []
+
       results = _.sortBy(results, x => x.type);
 
-      if (results[0].state === 'Accepted')
+      var log_obj = {}
+      log_obj.messages = []
+      log_obj.system_message = {}
+      log_obj.system_message.fid = problem.fid
+      log_obj.system_message.id = problem.id
+      log_obj.system_message.qid = problem.id
+      log_obj.system_message.sub_type = "test"
+      log_obj.system_message.accepted = false;
+
+      if (results[0].state === 'Accepted') {
         results[0].state = 'Finished';
+        log_obj.system_message.accepted = true;
+      }
       printResult(results[0], null, 'state', log_obj);
       printResult(results[0], null, 'error', log_obj);
 

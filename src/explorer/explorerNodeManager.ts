@@ -6,7 +6,7 @@ import { toNumber } from "lodash";
 import { Disposable } from "vscode";
 import * as list from "../commands/list";
 import { getSortingStrategy } from "../commands/plugin";
-import { Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType } from "../shared";
+import { Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType, ISubmitEvent } from "../shared";
 import { shouldHideSolvedProblem, shouldHideScoreProblem } from "../utils/settingUtils";
 import { LeetCodeNode } from "./LeetCodeNode";
 import { ISearchSet } from "../shared";
@@ -38,6 +38,26 @@ class ExplorerNodeManager implements Disposable {
         this.waitUserContest = false;
         this.waitTodayQuestion = false;
         this.searchSet = new Map<string, ISearchSet>();
+    }
+
+    public checkSubmit(e: ISubmitEvent) {
+        if (e.sub_type == "submit" && e.accepted) {
+            const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000; //获取当天零点的时间
+            const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime() / 1000; //获取当天23:59:59的时间
+            var need_get_today: boolean = false;
+            this.searchSet.forEach(element => {
+                if (element.type == SearchSetType.Day) {
+                    if (day_start <= element.time && element.time <= day_end) {
+                        if (e.fid == element.value) {
+                            need_get_today = true;
+                        }
+                    }
+                }
+            });
+            if (need_get_today) {
+                searchToday();
+            }
+        }
     }
 
     public async refreshCheck(): Promise<void> {

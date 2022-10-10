@@ -24,6 +24,7 @@ import { leetCodePreviewProvider } from "./webview/leetCodePreviewProvider";
 import { leetCodeSolutionProvider } from "./webview/leetCodeSolutionProvider";
 import { leetCodeSubmissionProvider } from "./webview/leetCodeSubmissionProvider";
 import { markdownEngine } from "./webview/markdownEngine";
+import { ISubmitEvent } from "./shared";
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
     try {
@@ -35,6 +36,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
             leetCodeStatusBarController.updateStatusBar(leetCodeManager.getStatus(), leetCodeManager.getUser());
             leetCodeTreeDataProvider.cleanUserScore();
             leetCodeTreeDataProvider.refresh();
+        });
+        leetCodeManager.on("submit", (e: ISubmitEvent) => {
+            leetCodeTreeDataProvider.checkSubmit(e);
         });
 
         leetCodeTreeDataProvider.initialize(context);

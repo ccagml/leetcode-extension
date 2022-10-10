@@ -218,3 +218,12 @@ export const userContestRankingObj: userContestRanKingBase = {
     localTotalParticipants: 0,
     topPercentage: 0,
 };
+
+
+export interface ISubmitEvent {
+    fid: string;
+    qid: string;
+    id: string;
+    sub_type: string; // test  submit
+    accepted: boolean
+}
