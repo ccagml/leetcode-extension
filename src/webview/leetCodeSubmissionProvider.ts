@@ -71,30 +71,7 @@ class LeetCodeSubmissionProvider extends LeetCodeWebview {
     }
 
     private parseResult(raw: string): IResult {
-        raw = raw.concat("  √ "); // Append a dummy sentinel to the end of raw string
-        const regSplit: RegExp = /  [√×✔✘vx] ([^]+?)\n(?=  [√×✔✘vx] )/g;
-        const regKeyVal: RegExp = /(.+?): ([^]*)/;
-        const result: IResult = { messages: [] };
-        let entry: RegExpExecArray | null;
-        do {
-            entry = regSplit.exec(raw);
-            if (!entry) {
-                continue;
-            }
-            const kvMatch: RegExpExecArray | null = regKeyVal.exec(entry[1]);
-            if (kvMatch) {
-                const [key, value] = kvMatch.slice(1);
-                if (value) { // Do not show empty string
-                    if (!result[key]) {
-                        result[key] = [];
-                    }
-                    result[key].push(value);
-                }
-            } else {
-                result.messages.push(entry[1]);
-            }
-        } while (entry);
-        return result;
+        return JSON.parse(raw);
     }
 }
 
