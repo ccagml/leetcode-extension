@@ -64,6 +64,7 @@ jobs:
       - name: VSCE Packge
         run: |
           vsce package
+          path: ${{ env.VSIX_FILE }}
 
   darwin:
     name: macOS
