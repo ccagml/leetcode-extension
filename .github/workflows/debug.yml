@@ -63,7 +63,10 @@ jobs:
 
       - name: VSCE Packge
         run: |
+
           vsce1
+          vs4214
+
 
   darwin:
     name: macOS
