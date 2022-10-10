@@ -9,9 +9,6 @@ var icon = require('./icon');
 var log = require('./log');
 var Plugin = require('./plugin');
 
-// We are expecting a tier configuration like:
-// global config < local config < cli params
-// Color is a tricky one so we manually handle it here.
 
 
 function initIcon() {
