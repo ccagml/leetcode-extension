@@ -44,6 +44,36 @@ const cmd = {
   }
 };
 
+
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().option('a', {
+    alias: 'all',
+    type: 'boolean',
+    describe: 'Show all config',
+    default: false
+  })
+    .option('d', {
+      alias: 'delete',
+      type: 'boolean',
+      describe: 'Delete config by key',
+      default: false
+    })
+    .positional('key', {
+      type: 'string',
+      describe: 'Config key, delimited by colon',
+      default: ''
+    })
+    .positional('value', {
+      type: 'string',
+      describe: 'Config value',
+      default: ''
+    })
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
+
 function prettyConfig(cfg) {
   return JSON.stringify(cfg, null, 2);
 }

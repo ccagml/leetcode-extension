@@ -53,6 +53,44 @@ const cmd = {
   }
 };
 
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().option('l', {
+    alias: 'login',
+    type: 'boolean',
+    default: false,
+    describe: 'Login'
+  })
+    .option('c', {
+      alias: 'cookie',
+      type: 'boolean',
+      default: false,
+      describe: 'cookieLogin'
+    })
+    .option('g', {
+      alias: 'github',
+      type: 'boolean',
+      default: false,
+      describe: 'githubLogin'
+    })
+    .option('i', {
+      alias: 'linkedin',
+      type: 'boolean',
+      default: false,
+      describe: 'linkedinLogin'
+    })
+    .option('L', {
+      alias: 'logout',
+      type: 'boolean',
+      default: false,
+      describe: 'Logout'
+    })
+
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
+
 cmd.handler = function (argv) {
   session.argv = argv;
   let user = null;
@@ -65,20 +103,24 @@ cmd.handler = function (argv) {
       { name: 'login', required: true },
       { name: 'pass', required: true, hidden: true }
     ], function (e, user) {
-      if (e) return log.fail(e);
+      if (e) {
+        return log.fail(JSON.stringify({ code: -1, msg: e.msg || e }));
+      }
 
       core.login(user, function (e, user) {
-        if (e) return log.fail(e);
-        log.info('Successfully login as', user.name);
+        if (e) {
+          return log.fail(JSON.stringify({ code: -2, msg: e.msg || e }));
+        }
+        log.info(JSON.stringify({ code: 100, user_name: user.name }));
       });
     });
   } else if (argv.logout) {
     // logout
     user = core.logout(user, true);
     if (user)
-      log.info('Successfully logout as', user.name);
+      log.info(JSON.stringify({ code: 100, user_name: user.name }));
     else
-      log.fail('You are not login yet?');
+      log.fail(JSON.stringify({ code: -3, msg: 'You are not login yet?' }));
     // third parties
   } else if (argv.github || argv.linkedin) {
     // add future third parties here
@@ -99,10 +141,10 @@ cmd.handler = function (argv) {
       { name: 'login', required: true },
       { name: 'pass', required: true, hidden: true }
     ], function (e, user) {
-      if (e) return log.fail(e);
+      if (e) return log.fail(JSON.stringify({ code: -4, msg: e.msg || e }));
       coreFunction(user, function (e, user) {
-        if (e) return log.fail(e);
-        log.info('Successfully third party login as', user.name);
+        if (e) return log.fail(JSON.stringify({ code: -5, msg: e.msg || e }));
+        log.info(JSON.stringify({ code: 100, user_name: user.name }));
       });
     });
   } else if (argv.cookie) {
@@ -116,22 +158,17 @@ cmd.handler = function (argv) {
     ], function (e, user) {
       if (e) return log.fail(e);
       core.cookieLogin(user, function (e, user) {
-        if (e) return log.fail(e);
-        log.info('Successfully cookie login as', user.name);
+        if (e) return log.fail(JSON.stringify({ code: -6, msg: e.msg || e }));
+        log.info(JSON.stringify({ code: 100, user_name: user.name }));
       });
     });
   } else {
     // show current user
     user = session.getUser();
     if (user) {
-      log.info(sprintf(' %-9s %-20s %s', 'Premium', 'User', 'Host'));
-      log.info('-'.repeat(60));
-      log.printf('    %s      %-20s %s',
-        h.prettyText('', user.paid || false),
-        user.name,
-        config.sys.urls.base);
+      log.info(JSON.stringify({ code: 100, user_name: user.name }));
     } else
-      return log.fail('You are not login yet?');
+      return log.fail(JSON.stringify({ code: -7, msg: 'You are not login yet?' }));
   }
 };
 

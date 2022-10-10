@@ -37,7 +37,32 @@ const cmd = {
   }
 };
 
-function printResult(actual, extra, k) {
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().option('i', {
+    alias: 'interactive',
+    type: 'boolean',
+    default: false,
+    describe: 'Provide test case interactively'
+  })
+    .option('t', {
+      alias: 'testcase',
+      type: 'string',
+      default: '',
+      describe: 'Provide test case'
+    })
+    .positional('filename', {
+      type: 'string',
+      default: '',
+      describe: 'Code file to test'
+    })
+
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
+
+function printResult(actual, extra, k, log_obj) {
   if (!actual.hasOwnProperty(k)) return;
   // HACk: leetcode still return 'Accepted' even the answer is wrong!!
   const v = actual[k] || '';
@@ -48,8 +73,16 @@ function printResult(actual, extra, k) {
   const lines = Array.isArray(v) ? v : [v];
   for (let line of lines) {
     const extraInfo = extra ? ` (${extra})` : '';
-    if (k !== 'state') line = lodash.startCase(k) + extraInfo + ': ' + line;
-    log.info('  ' + h.prettyText(' ' + line, ok));
+    if (k !== 'state') {
+      var new_kk = lodash.startCase(k) + extraInfo;
+      if (!log_obj.hasOwnProperty(new_kk)) {
+        log_obj[new_kk] = [line]
+      } else {
+        log_obj[new_kk].push(line)
+      }
+    } else {
+      log_obj.messages.push(line)
+    }
   }
 }
 
@@ -59,17 +92,20 @@ function runTest(argv) {
 
   const meta = file.meta(argv.filename);
 
+  // [key: string]: string[];
+  // messages: string[];
+
   core.getProblem(meta, true, function (e, problem) {
-    if (e) return log.fail(e);
+    if (e) return log.fail(JSON.stringify({ messages: ["error"], code: [-1], error: [e.msg || e] }));
 
     if (!problem.testable)
-      return log.fail('not testable? please submit directly!');
+      return log.fail(JSON.stringify({ messages: ["error"], code: [-2], error: ['not testable? please submit directly!'] }));
 
     if (argv.testcase)
       problem.testcase = argv.testcase.replace(/\\n/g, '\n');
 
     if (!problem.testcase)
-      return log.fail('missing testcase?');
+      return log.fail(JSON.stringify({ messages: ["error"], code: [-3], error: ['missing testcase?'] }));
 
     problem.file = argv.filename;
     problem.lang = meta.lang;
@@ -77,11 +113,14 @@ function runTest(argv) {
     core.testProblem(problem, function (e, results) {
       if (e) return log.fail(e);
 
+      var log_obj = {}
+      log_obj.messages = []
       results = _.sortBy(results, x => x.type);
+
       if (results[0].state === 'Accepted')
         results[0].state = 'Finished';
-      printResult(results[0], null, 'state');
-      printResult(results[0], null, 'error');
+      printResult(results[0], null, 'state', log_obj);
+      printResult(results[0], null, 'error', log_obj);
 
       results[0].your_input = problem.testcase;
       results[0].output = results[0].answer;
@@ -90,10 +129,11 @@ function runTest(argv) {
         results[0].expected_answer = results[1].answer;
       }
       results[0].stdout = results[0].stdout.slice(1, -1).replace(/\\n/g, '\n');
-      printResult(results[0], null, 'your_input');
-      printResult(results[0], results[0].runtime, 'output');
-      printResult(results[0], null, 'expected_answer');
-      printResult(results[0], null, 'stdout');
+      printResult(results[0], null, 'your_input', log_obj);
+      printResult(results[0], results[0].runtime, 'output', log_obj);
+      printResult(results[0], null, 'expected_answer', log_obj);
+      printResult(results[0], null, 'stdout', log_obj);
+      log.info(JSON.stringify(log_obj));
     });
   });
 }

@@ -59,6 +59,48 @@ const cmd = {
   }
 };
 
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().option('a', {
+    alias: 'all',
+    type: 'boolean',
+    default: false,
+    describe: 'Download all questions'
+  })
+    .option('l', {
+      alias: 'lang',
+      type: 'string',
+      default: 'all',
+      describe: 'Filter by programming language'
+    })
+    .option('o', {
+      alias: 'outdir',
+      type: 'string',
+      describe: 'Where to save submission code',
+      default: '.'
+    })
+    .option('x', {
+      alias: 'extra',
+      type: 'boolean',
+      default: false,
+      describe: 'Show extra question details in submission code'
+    })
+    .option('T', {
+      alias: 'dontTranslate',
+      type: 'boolean',
+      default: false,
+      describe: 'Set to true to disable endpoint\'s translation',
+    })
+    .positional('keyword', {
+      type: 'string',
+      default: '',
+      describe: 'Download specific question by id'
+    })
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
+
 function doTask(problem, queue, cb) {
   const argv = queue.ctx.argv;
 

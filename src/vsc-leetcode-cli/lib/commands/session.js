@@ -45,6 +45,7 @@ const cmd = {
   }
 };
 
+
 function printSessions(e, sessions) {
   if (e) return log.fail(e);
 

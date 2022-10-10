@@ -79,11 +79,17 @@ function runCommand() {
     .wrap(Math.min(h.width, 120))
     .argv;
 }
+function runCommand_new() {
+  var com_str = process.argv[2]
+  var auto_js = require("./commands/" + com_str)
+  auto_js.handler(auto_js.process_argv(process.argv))
+}
 
 cli.run = function () {
   process.stdout.on('error', function (e) {
     if (e.code === 'EPIPE') process.exit();
   });
+  var test_argv = process.argv
 
   config.init();
 
@@ -94,7 +100,8 @@ cli.run = function () {
   initPlugins(function (e) {
     if (e) return log.fatal(e);
     cache.init();
-    runCommand();
+    runCommand_new();
+    // runCommand()
   });
 };
 

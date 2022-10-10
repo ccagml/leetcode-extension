@@ -49,6 +49,39 @@ const cmd = {
   }
 };
 
+
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().option('q', core.filters.query)
+    .option('s', {
+      alias: 'stat',
+      type: 'boolean',
+      default: false,
+      describe: 'Show statistics of listed questions'
+    })
+    .option('t', core.filters.tag)
+    .option('x', {
+      alias: 'extra',
+      type: 'boolean',
+      default: false,
+      describe: 'Show extra details: category, companies, tags.'
+    })
+    .option('T', {
+      alias: 'dontTranslate',
+      type: 'boolean',
+      default: false,
+      describe: 'Set to true to disable endpoint\'s translation',
+    })
+    .positional('keyword', {
+      type: 'string',
+      default: '',
+      describe: 'Filter questions by keyword'
+    })
+
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
 cmd.handler = function (argv) {
   session.argv = argv;
   core.filterProblems(argv, function (e, problems) {

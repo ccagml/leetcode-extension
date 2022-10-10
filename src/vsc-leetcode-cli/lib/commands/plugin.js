@@ -4,7 +4,6 @@ var config = require('../config');
 var log = require('../log');
 var Plugin = require('../plugin');
 var session = require('../session');
-var sprintf = require('../sprintf');
 
 const cmd = {
   command: 'plugin [name]',
@@ -59,15 +58,32 @@ const cmd = {
   }
 };
 
-function print(plugins) {
-  // log.info(sprintf(' %6s  %-18s %-15s %s', 'Active', 'Name', 'Version', 'Desc'));
-  // log.info('-'.repeat(100));
 
-  // plugins = plugins || Plugin.plugins;
-  // for (let p of plugins)
-  //   log.printf('   %s     %-18s %-15s %s',
-  //     h.prettyText('', p.enabled && !p.missing),
-  //     p.name, p.ver, p.desc);
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().option('d', {
+    alias: 'disable',
+    type: 'boolean',
+    describe: 'Disable plugin',
+    default: false
+  }).option('e', {
+    alias: 'enable',
+    type: 'boolean',
+    describe: 'Enable plugin',
+    default: false
+  }).option('i', {
+    alias: 'install',
+    type: 'boolean',
+    describe: 'Install plugin',
+    default: false
+  }).positional('name', {
+    type: 'string',
+    describe: 'Filter plugin by name',
+    default: ''
+  })
+
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
 }
 
 cmd.handler = function (argv) {
@@ -82,7 +98,6 @@ cmd.handler = function (argv) {
       p.help();
       p.save();
       Plugin.init();
-      // print();
     };
 
     if (name) {
@@ -103,20 +118,16 @@ cmd.handler = function (argv) {
   if (argv.enable) {
     p.enabled = true;
     p.save();
-    // print();
   } else if (argv.disable) {
     p.enabled = false;
     p.save();
-    // print();
   } else if (argv.delete) {
     p.delete();
     p.save();
     Plugin.init();
-    // print();
   } else if (argv.config) {
     log.info(JSON.stringify(config.plugins[name] || {}, null, 2));
   } else {
-    // print(plugins);
   }
 };
 

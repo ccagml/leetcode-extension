@@ -24,22 +24,42 @@ const cmd = {
   }
 };
 
-function printResult(actual, k) {
+
+cmd.process_argv = function (argv) {
+  var argv_config = h.base_argv().positional('filename', {
+    type: 'string',
+    describe: 'Code file to submit',
+    default: ''
+  })
+  argv_config.process_argv(argv)
+
+  return argv_config.get_result()
+}
+
+
+function printResult(actual, k, log_obj) {
   if (!actual.hasOwnProperty(k)) return;
 
   const v = actual[k] || '';
   const lines = Array.isArray(v) ? v : [v];
   for (let line of lines) {
-    if (k !== 'state') line = lodash.startCase(k) + ': ' + line;
-    log.info('  ' + h.prettyText(' ' + line, actual.ok));
+    if (k !== 'state') {
+      if (!log_obj.hasOwnProperty(lodash.startCase(k))) {
+        log_obj[lodash.startCase(k)] = [line]
+      } else {
+        log_obj[lodash.startCase(k)].push(line)
+      }
+    } else {
+      log_obj.messages.push(line)
+    }
   }
 }
 
-function printLine() {
-  const args = Array.from(arguments);
+function printLine(log_obj) {
+  const args = Array.from(arguments).slice(1);
   const actual = args.shift();
   const line = util.format.apply(util, args);
-  log.info('  ' + h.prettyText(' ' + line, actual.ok));
+  log_obj.messages.push(line)
 }
 
 cmd.handler = function (argv) {
@@ -61,8 +81,11 @@ cmd.handler = function (argv) {
 
       const result = results[0];
 
-      printResult(result, 'state');
-      printLine(result, '%d/%d cases passed (%s)',
+      var log_obj = {}
+      log_obj.messages = []
+
+      printResult(result, 'state', log_obj);
+      printLine(log_obj, result, '%d/%d cases passed (%s)',
         result.passed, result.total, result.runtime);
 
       if (result.ok) {
@@ -71,45 +94,25 @@ cmd.handler = function (argv) {
 
         (function () {
           if (result.runtime_percentile)
-            printLine(result, 'Your runtime beats %d %% of %s submissions',
+            printLine(log_obj, result, 'Your runtime beats %d %% of %s submissions',
               result.runtime_percentile.toFixed(2), result.lang);
           else
             return log.warn('Failed to get runtime percentile.');
           if (result.memory && result.memory_percentile)
-            printLine(result, 'Your memory usage beats %d %% of %s submissions (%s)',
+            printLine(log_obj, result, 'Your memory usage beats %d %% of %s submissions (%s)',
               result.memory_percentile.toFixed(2), result.lang, result.memory);
           else
             return log.warn('Failed to get memory percentile.');
         })();
-
-        // core.getSubmission({id: result.id}, function(e, submission) {
-        //   if (e || !submission || !submission.distributionChart)
-        //     return log.warn('Failed to get submission beat ratio.');
-
-        //   const lang = submission.distributionChart.lang;
-        //   const scores = submission.distributionChart.distribution;
-        //   const myRuntime = parseFloat(result.runtime);
-
-        //   let ratio = 0.0;
-        //   for (let score of scores) {
-        //     if (parseFloat(score[0]) > myRuntime)
-        //       ratio += parseFloat(score[1]);
-        //   }
-
-        //   printLine(result, 'Your runtime beats %d %% of %s submissions',
-        //       ratio.toFixed(2), lang);
-        // });
       } else {
         result.testcase = result.testcase.slice(1, -1).replace(/\\n/g, '\n');
-        printResult(result, 'error');
-        printResult(result, 'testcase');
-        printResult(result, 'answer');
-        printResult(result, 'expected_answer');
-        printResult(result, 'stdout');
+        printResult(result, 'error', log_obj);
+        printResult(result, 'testcase', log_obj);
+        printResult(result, 'answer', log_obj);
+        printResult(result, 'expected_answer', log_obj);
+        printResult(result, 'stdout', log_obj);
       }
-      // log.info(JSON.stringify(result))
-
-      // update this problem status in local cache
+      log.info(JSON.stringify(log_obj))
       core.updateProblem(problem, { state: (result.ok ? 'ac' : 'notac') });
     });
   });
