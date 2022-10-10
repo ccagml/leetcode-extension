@@ -11,8 +11,12 @@
 </p>
 
 # 概要设计(Outline design)
+- 在 VS Code 中解决 Leetcode 问题
 - Leetcode 只提供了简单、中等、困难的难度区分。题目与题目之间难度差别很大，因此需要客观的分数对题目难度进行打分
-- Leetcode only provides easy, medium, and hard difficulty distinctions. Difficulty varies greatly from subject to subject, so objective scores are required to rate the difficulty of the subject
+- 增加中文官方的每日一题
+- 修复tag分类错误
+- 增加精选分类
+
 # 项目地址(project address)
 - https://github.com/ccagml/vscode-leetcode-problem-rating/
 # 报告问题(report problem)
@@ -29,6 +33,9 @@
 - Added difficulty score display, query, and filter operations to the basic plug-in
 
 # 更新内容(update)
+
+## version 1.0.17
+- 更新312、313、双周88期
 
 ## version 1.0.16
 - 修复测试用例字符串问题
