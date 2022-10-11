@@ -41,6 +41,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
             leetCodeTreeDataProvider.checkSubmit(e);
         });
 
+        leetCodeManager.on("searchUserContest", () => {
+            leetCodeStatusBarController.updateStatusBar(leetCodeManager.getStatus(), leetCodeManager.getUser(), leetCodeManager.getUserContestInfo());
+        });
+
         leetCodeTreeDataProvider.initialize(context);
 
         context.subscriptions.push(

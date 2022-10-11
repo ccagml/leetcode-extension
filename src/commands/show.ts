@@ -243,7 +243,7 @@ export async function searchUserContest(): Promise<void> {
         const query_result = JSON.parse(solution);
         const tt: userContestRanKingBase = Object.assign({}, userContestRankingObj, query_result.userContestRanking)
         await leetCodeManager.insertCurrentUserContestInfo(tt);
-
+        leetCodeManager.emit("searchUserContest")
     } catch (error) {
         leetCodeChannel.appendLine(error.toString());
         await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
