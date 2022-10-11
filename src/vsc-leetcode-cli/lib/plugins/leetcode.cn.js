@@ -12,7 +12,7 @@ var session = require('../session');
 //
 // https://github.com/skygragon/leetcode-cli-plugins/blob/master/docs/leetcode.cn.md
 //
-var plugin = new Plugin(15, 'leetcode.cn', '2018.11.25',
+var plugin = new Plugin(15, 'leetcode.cn', '',
   'Plugin to talk with leetcode-cn APIs.');
 
 plugin.init = function () {
