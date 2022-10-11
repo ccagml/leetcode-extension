@@ -661,7 +661,8 @@
                         "type": "array",
                         "default": [
                             "submit",
-                            "test"
+                            "test",
+                            "solution"
                         ],
                         "scope": "application",
                         "items": {
