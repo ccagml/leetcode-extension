@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ConfigurationChangeEvent, Disposable, workspace, WorkspaceConfiguration } from "vscode";
-import { UserStatus } from "../shared";
+import { UserStatus, userContestRanKingBase } from "../shared";
 import { LeetCodeStatusBarItem } from "./LeetCodeStatusBarItem";
 
 class LeetCodeStatusBarController implements Disposable {
@@ -20,8 +20,8 @@ class LeetCodeStatusBarController implements Disposable {
         }, this);
     }
 
-    public updateStatusBar(status: UserStatus, user?: string): void {
-        this.statusBar.updateStatusBar(status, user);
+    public updateStatusBar(status: UserStatus, user?: string, UserContestInfo?: userContestRanKingBase | undefined): void {
+        this.statusBar.updateStatusBar(status, user, UserContestInfo);
     }
 
     public dispose(): void {
