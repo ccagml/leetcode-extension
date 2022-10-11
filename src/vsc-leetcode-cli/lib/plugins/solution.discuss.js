@@ -9,7 +9,7 @@ var session = require('../session');
 //
 // https://github.com/skygragon/leetcode-cli-plugins/blob/master/docs/solution.discuss.md
 //
-var plugin = new Plugin(200, 'solution.discuss', '2019.02.03',
+var plugin = new Plugin(200, 'solution.discuss', '1111',
   'Plugin to fetch most voted solution in discussions.');
 
 var URL_DISCUSSES = 'https://leetcode.com/graphql';
