@@ -2,7 +2,7 @@ name: auto_build
 
 on:
   push:
-    branches: [dev]
+    branches: [main]
   pull_request:
     branches: [main]
 
