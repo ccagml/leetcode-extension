@@ -60,11 +60,11 @@ export function getWorkspaceFolder(): string {
 }
 
 export function getEditorShortcuts(): string[] {
-    return getWorkspaceConfiguration().get<string[]>("editor.shortcuts", ["submit", "test"]);
+    return getWorkspaceConfiguration().get<string[]>("editor.shortcuts", ["submit", "case", "allcase", "test", "solution"]);
 }
 
 export function hasStarShortcut(): boolean {
-    const shortcuts: string[] = getWorkspaceConfiguration().get<string[]>("editor.shortcuts", ["submit", "test"]);
+    const shortcuts: string[] = getWorkspaceConfiguration().get<string[]>("editor.shortcuts", ["submit", "case", "allcase", "test", "solution"]);
     return shortcuts.indexOf("star") >= 0;
 }
 

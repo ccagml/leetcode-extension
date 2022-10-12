@@ -55,6 +55,21 @@ export class CustomCodeLensProvider implements vscode.CodeLensProvider {
             }));
         }
 
+        if (shortcuts.indexOf("case") >= 0) {
+            codeLens.push(new vscode.CodeLens(range, {
+                title: "case",
+                command: "leetcode.testSolutionDefault",
+                arguments: [document.uri, false],
+            }));
+        }
+        if (shortcuts.indexOf("allcase") >= 0) {
+            codeLens.push(new vscode.CodeLens(range, {
+                title: "allcase",
+                command: "leetcode.testSolutionDefault",
+                arguments: [document.uri, true],
+            }));
+        }
+
         if (shortcuts.indexOf("test") >= 0) {
             codeLens.push(new vscode.CodeLens(range, {
                 title: "Test",
