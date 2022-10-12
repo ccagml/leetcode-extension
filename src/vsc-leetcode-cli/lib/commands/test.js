@@ -118,39 +118,61 @@ function runTest(argv) {
       // NOTE: wordwrap internally uses '\n' as EOL, so here we have to
       // remove all '\r' in the raw string.
       new_desc = new_desc.replace(/\r\n/g, '\n').replace(/^ /mg, '⁠');
-      let input = new_desc.split('\n');
+      var input = (require('wordwrap')(120))(new_desc).split('\n');
       var temp_test = []
-      input.forEach(element => {
+      var start_flag = false;
+      var temp_collect = "";
+      for (let all_input = 0; all_input < input.length; all_input++) {
+        const element = input[all_input];
         var check_index = element.indexOf("输入");
         if (check_index == -1) {
           check_index = element.indexOf("Input:");
         }
         if (check_index != -1) {
-          var new_ele = element.substring(check_index + 1);
-          var temp_case = []
-          var wait_cur = ""
-          var no_need_flag = false
-          for (let index = new_ele.length - 1; index >= 0; index--) {
-            if (no_need_flag) {
-              if (new_ele[index] == ",") {
-                no_need_flag = false;
-              }
-            } else {
-              if (new_ele[index] == "=") {
-                temp_case.push(wait_cur.trim())
-                no_need_flag = true;
-                wait_cur = ""
+          temp_collect += element.substring(check_index + 1)
+          start_flag = true;
+          continue;
+        }
+
+        var check_index = element.indexOf("输出");
+        if (check_index == -1) {
+          check_index = element.indexOf("Output:");
+        }
+        if (check_index != -1) {
+          start_flag = false;
+        }
+        if (start_flag) {
+          temp_collect += element;
+        } else {
+          if (temp_collect.length > 0) {
+            var new_ele = temp_collect;
+            var temp_case = []
+            var wait_cur = ""
+            var no_need_flag = false
+            for (let index = new_ele.length - 1; index >= 0; index--) {
+              if (no_need_flag) {
+                if (new_ele[index] == ",") {
+                  no_need_flag = false;
+                }
               } else {
-                wait_cur = new_ele[index] + wait_cur
+                if (new_ele[index] == "=") {
+                  temp_case.push(wait_cur.trim())
+                  no_need_flag = true;
+                  wait_cur = ""
+                } else {
+                  wait_cur = new_ele[index] + wait_cur
+                }
               }
             }
-          }
-          for (let index = temp_case.length - 1; index >= 0; index--) {
-            temp_test.push(temp_case[index])
-
+            for (let index = temp_case.length - 1; index >= 0; index--) {
+              temp_test.push(temp_case[index])
+            }
+            temp_collect = "";
           }
         }
-      });
+
+      }
+
       if (temp_test.length < 1) {
         return;
       }
