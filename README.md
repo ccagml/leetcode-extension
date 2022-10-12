@@ -16,6 +16,8 @@
 - 增加中文官方的每日一题
 - 修复tag分类错误
 - 增加精选分类
+- 增加剑指Offer、面试金典相关内容
+- 增加一键提交全部题目测试用例功能
 
 # 项目地址(project address)
 - https://github.com/ccagml/vscode-leetcode-problem-rating/
