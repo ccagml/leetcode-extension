@@ -72,7 +72,7 @@ export class LeetCodeNode {
     }
 
     public get acceptanceRate(): number {
-        return Number(this.passRate.slice(0, -1).trim());
+        return Number(this.passRate) || 50;
     }
 
     public get uri(): Uri {
