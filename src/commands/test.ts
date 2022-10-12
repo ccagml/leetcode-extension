@@ -42,6 +42,12 @@ export async function testSolution(uri?: vscode.Uri): Promise<void> {
                 detail: "Test with the written cases in file",
                 value: ":file",
             },
+            {
+                label: "All Default test cases...",
+                description: "",
+                detail: "Test with the all default cases",
+                value: ":alldefault",
+            },
         );
         const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks);
         if (!choice) {
@@ -75,6 +81,9 @@ export async function testSolution(uri?: vscode.Uri): Promise<void> {
                     }
                 }
                 break;
+            case ":alldefault":
+                result = await leetCodeExecutor.testSolution(filePath, undefined, true);
+                break;
             default:
                 break;
         }
@@ -87,6 +96,29 @@ export async function testSolution(uri?: vscode.Uri): Promise<void> {
         await promptForOpenOutputChannel("Failed to test the solution. Please open the output channel for details.", DialogType.error);
     }
 }
+
+export async function testSolutionDefault(uri?: vscode.Uri, allCase?: boolean): Promise<void> {
+    try {
+        if (leetCodeManager.getStatus() === UserStatus.SignedOut) {
+            return;
+        }
+
+        const filePath: string | undefined = await getActiveFilePath(uri);
+        if (!filePath) {
+            return;
+        }
+
+        let result: string | undefined = await leetCodeExecutor.testSolution(filePath, undefined, allCase || false);
+        if (!result) {
+            return;
+        }
+        leetCodeSubmissionProvider.show(result);
+        leetCodeManager.emit("submit", leetCodeSubmissionProvider.getSubmitEvent());
+    } catch (error) {
+        await promptForOpenOutputChannel("Failed to test the solution. Please open the output channel for details.", DialogType.error);
+    }
+}
+
 
 function parseTestString(test: string): string {
     if (wsl.useWsl() || !isWindows()) {

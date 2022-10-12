@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode problem rating",
     "description": "为LeetCode题目难度进行打分。避免只有简单、中等、困难三种难度",
-    "version": "1.0.19",
+    "version": "1.0.20",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -661,6 +661,8 @@
                         "type": "array",
                         "default": [
                             "submit",
+                            "case",
+                            "allcase",
                             "test",
                             "solution"
                         ],
@@ -672,14 +674,18 @@
                                 "test",
                                 "star",
                                 "solution",
-                                "description"
+                                "description",
+                                "case",
+                                "allcase"
                             ],
                             "enumDescriptions": [
                                 "Submit your answer to LeetCode.",
                                 "Test your answer with customized test cases.",
                                 "Star or unstar the current problem.",
                                 "Show the top voted solution for the current problem.",
-                                "Show the problem description page."
+                                "Show the problem description page.",
+                                "Test default case",
+                                "Test all default case"
                             ]
                         },
                         "description": "Customize the shortcuts in editors."
