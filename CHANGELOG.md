@@ -1,5 +1,8 @@
 
 
+## version 1.0.23
+- 修复README.md中GIF无法显示
+
 ## version 1.0.22
 - 修复排序错误
 - 增加README.md说明
