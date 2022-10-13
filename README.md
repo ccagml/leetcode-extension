@@ -25,6 +25,14 @@
 - [疑难解答](https://github.com/LeetCode-OpenSource/vscode-leetcode/wiki/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94)
 - [常见问题](https://github.com/LeetCode-OpenSource/vscode-leetcode/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
 
+## 快速开始
+![quickstart](https://github.com/ccagml/vscode-leetcode-problem-rating/resources/mygif/quickstart.gif)
+## tag分类
+![tag](https://github.com/ccagml/vscode-leetcode-problem-rating/resources/mygif/tag.gif)
+## 查询功能
+![search](https://github.com/ccagml/vscode-leetcode-problem-rating/resources/mygif/search.gif)
+
+
 ## ❗️ 注意 ❗️- 无法登录 LeetCode 节点的临时解决办法
 > 注意：如果使用的是 `leetcode.cn` 账户，可以跳过此段落。
 
