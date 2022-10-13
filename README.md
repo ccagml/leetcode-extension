@@ -29,11 +29,11 @@
 - 为什么不改成自动获取data.json,因为上一点
 
 ## 快速开始
-![quickstart](https://github.com/ccagml/vscode-leetcode-problem-rating/blob/main/resources/mygif/quickstart.gif)
+![quickstart](https://www.ccagml.com/wp-content/uploads/2022/10/quickstart.gif)
 ## tag分类
-![tag](https://github.com/ccagml/vscode-leetcode-problem-rating/blob/main/resources/mygif/tag.gif)
+![tag](https://www.ccagml.com/wp-content/uploads/2022/10/tag.gif)
 ## 查询功能
-![search](https://github.com/ccagml/vscode-leetcode-problem-rating/blob/main/resources/mygif/search.gif)
+![search](https://www.ccagml.com/wp-content/uploads/2022/10/search.gif)
 
 
 ## ❗️ 注意 ❗️- 无法登录 LeetCode 节点的临时解决办法
