@@ -24,6 +24,9 @@
 - [报告问题](https://github.com/ccagml/vscode-leetcode-problem-rating/issues)
 - [疑难解答](https://github.com/LeetCode-OpenSource/vscode-leetcode/wiki/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94)
 - [常见问题](https://github.com/LeetCode-OpenSource/vscode-leetcode/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+- 趁着现在只有<img src="https://img.shields.io/github/stars/ccagml/vscode-leetcode-problem-rating" alt="">提交一个PR就能成为项目元老了
+- 每周当[zerotrac](https://github.com/zerotrac/leetcode_problem_rating/)项目更新数据data.json,可以将新数据放到本项目的resources/data.json即可提交PR
+- 为什么不改成自动获取data.json,因为上一点
 
 ## 快速开始
 ![quickstart](https://github.com/ccagml/vscode-leetcode-problem-rating/blob/main/resources/mygif/quickstart.gif)
