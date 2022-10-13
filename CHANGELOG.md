@@ -1,5 +1,8 @@
 
 
+## version 1.0.22
+- 修复排序错误
+- 增加README.md说明
 ## version 1.0.21
 - 修复提交全部用例问题
 ## version 1.0.20
