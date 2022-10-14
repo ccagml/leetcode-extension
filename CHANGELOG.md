@@ -1,4 +1,5 @@
-
+## version 1.0.24
+- 增加314期数据
 
 ## version 1.0.23
 - 修复README.md中GIF无法显示
