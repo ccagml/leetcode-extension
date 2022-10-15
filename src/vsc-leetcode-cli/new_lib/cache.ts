@@ -1,4 +1,3 @@
-'use strict';
 var path = require('path');
 
 import { file } from "./file";
