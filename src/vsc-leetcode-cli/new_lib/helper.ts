@@ -1,4 +1,4 @@
-var _ = require('underscore');
+// var underscore = require('underscore');
 var ora = require('ora');
 
 import { file } from "./file";
@@ -26,6 +26,7 @@ export function getUnit(units, v) {
       return [v, units[i]];
     v /= units[i].count;
   }
+  return [];
 }
 
 export const LANGS = [
@@ -229,6 +230,7 @@ class HELPER {
         } else {
           this.all_base_data[key] = true;
         }
+        return false;
       },
       set_posi(value, index) {
         var cfg_key = this.positional_key[index]

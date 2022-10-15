@@ -1,4 +1,4 @@
-import { FILE } from "dns";
+// import { FILE } from "dns";
 
 var fs = require('fs');
 var os = require('os');

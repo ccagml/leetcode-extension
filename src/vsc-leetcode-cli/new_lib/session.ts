@@ -15,39 +15,39 @@ class Session {
     }
   };
   constructor() {
-    
+
   }
- 
+
 
   public getUser = function () {
     return cache.get(h.KEYS.user);
   };
-  
+
   public saveUser = function (user) {
     // when auto login enabled, have to save password to re-login later
     // otherwise don't dump password for the sake of security.
     const _user = underscore.omit(user, config.autologin.enable ? [] : ['pass']);
     cache.set(h.KEYS.user, _user);
   };
-  
+
   public deleteUser = function () {
     cache.del(h.KEYS.user);
   };
-  
+
   public deleteCodingSession = function () {
     cache.del(h.KEYS.problems);
   };
-  
-  public isLogin = function () {
+
+  public isLogin() {
     return this.getUser() !== null;
   };
-  
+
   public updateStat = function (k, v) {
     // TODO: use other storage if too many stat data
     const today = moment_out().format('YYYY-MM-DD');
     const stats = cache.get(h.KEYS.stat) || {};
     const stat = stats[today] = stats[today] || {};
-  
+
     if (k.endsWith('.set')) {
       const s = new Set(stat[k] || []);
       s.add(v);
@@ -55,10 +55,10 @@ class Session {
     } else {
       stat[k] = (stat[k] || 0) + v;
     }
-  
+
     cache.set(h.KEYS.stat, stats);
   };
-  
+
 
 }
 export const session: Session = new Session();

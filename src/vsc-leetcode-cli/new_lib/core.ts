@@ -7,36 +7,150 @@ var log = require('./log');
 var h = require('./helper');
 var file = require('./file');
 
-import { EXPlugin } from "./my_plugin_base";
-const core = EXPlugin(99999999, 'core', '20170722', 'Plugins manager', undefined);
-
-core.filters = {
-  query: {
-    alias: 'query',
-    type: 'string',
-    default: '',
-    describe: [
-      'Filter questions by condition:',
-      'Uppercase means negative',
-      'e = easy     E = m+h',
-      'm = medium   M = e+h',
-      'h = hard     H = e+m',
-      'd = done     D = not done',
-      'l = locked   L = non locked',
-      's = starred  S = not starred'
-    ].join('\n')
-  },
-  tag: {
-    alias: 'tag',
-    type: 'array',
-    default: [],
-    describe: 'Filter questions by tag'
-  }
-};
+import { MyPluginBase } from "./my_plugin_base";
 
 function hasTag(o, tag) {
   return Array.isArray(o) && o.some(x => x.indexOf(tag.toLowerCase()) >= 0);
 }
+
+class CorePlugin extends MyPluginBase {
+  id = 99999999
+  name = 'core'
+  filters = {
+    query: {
+      alias: 'query',
+      type: 'string',
+      default: '',
+      describe: [
+        'Filter questions by condition:',
+        'Uppercase means negative',
+        'e = easy     E = m+h',
+        'm = medium   M = e+h',
+        'h = hard     H = e+m',
+        'd = done     D = not done',
+        'l = locked   L = non locked',
+        's = starred  S = not starred'
+      ].join('\n')
+    },
+    tag: {
+      alias: 'tag',
+      type: 'array',
+      default: [],
+      describe: 'Filter questions by tag'
+    }
+  };
+
+  constructor() {
+    super();
+  }
+
+  public init() {
+
+  }
+  public save() {
+
+  }
+
+  public filterProblems(opts, cb) {
+    this.getProblems(!opts.dontTranslate, function (e, problems) {
+      if (e) return cb(e);
+
+      for (let q of (opts.query || '').split('')) {
+        const f = QUERY_HANDLERS[q];
+        if (!f) continue;
+        problems = problems.filter(x => f(x, q));
+      }
+
+      for (let t of (opts.tag || [])) {
+        problems = problems.filter(function (x) {
+          return x.category === t ||
+            hasTag(x.companies, t) ||
+            hasTag(x.tags, t);
+        });
+      }
+
+      return cb(null, problems);
+    });
+  };
+  public getProblem(keyword, needTranslation, cb) {
+    var that = this;
+    this.getProblems(needTranslation, function (e, problems) {
+      if (e) return cb(e);
+      keyword = Number(keyword) || keyword;
+      // const metaFid = file.exist(keyword) ? Number(file.meta(keyword).id) : NaN;
+      const problem = problems.find(function (x) {
+        if (keyword?.fid) {
+          return x.fid + '' === keyword.fid + ''
+        } else if (keyword?.qid) {
+          return x.id + '' === keyword.qid + ''
+        } else {
+          return x.id + '' === keyword + '' || x.name === keyword || x.slug === keyword;
+        }
+      });
+      if (!problem) return cb('Problem not found!');
+      that.next.getProblem(problem, needTranslation, cb);
+    });
+  };
+
+  public starProblem(problem, starred, cb) {
+    if (problem.starred === starred) {
+      log.debug('problem is already ' + (starred ? 'starred' : 'unstarred'));
+      return cb(null, starred);
+    }
+
+    this.next.starProblem(problem, starred, cb);
+  };
+
+  public exportProblem(problem, opts) {
+    const data = _.extend({}, problem);
+
+    // unify format before rendering
+    data.app = require('./config').app || 'leetcode';
+    if (!data.fid) data.fid = data.id;
+    if (!data.lang) data.lang = opts.lang;
+    data.code = (opts.code || data.code || '').replace(/\r\n/g, '\n');
+    data.comment = h.langToCommentStyle(data.lang);
+    data.percent = data.percent.toFixed(2);
+    data.testcase = util.inspect(data.testcase || '');
+
+    if (opts.tpl === 'detailed') {
+      let desc = data.desc;
+      // Replace <sup/> with '^' as the power operator
+      desc = desc.replace(/<\/sup>/gm, '').replace(/<sup>/gm, '^');
+      desc = require('he').decode(cheerio.load(desc).root().text());
+      // NOTE: wordwrap internally uses '\n' as EOL, so here we have to
+      // remove all '\r' in the raw string.
+      desc = desc.replace(/\r\n/g, '\n').replace(/^ /mg, '⁠');
+      const wrap = require('wordwrap')(79 - data.comment.line.length);
+      data.desc = wrap(desc).split('\n');
+    }
+    return file.render(opts.tpl, data);
+  };
+
+  public getTodayQuestion(cb) {
+    this.getQuestionOfToday(function (e, result) {
+      if (e) return cb(e);
+      return cb(null, result);
+    });
+  }
+  public getQueryZ(username, cb) {
+    this.getTestApi(username, function (e, result) {
+      if (e) return cb(e);
+      return cb(null, result);
+    });
+  }
+
+  public getUserContest(username, cb) {
+    this.getUserContestP(username, function (e, result) {
+      if (e) return cb(e);
+      return cb(null, result);
+    });
+  }
+}
+
+// const core = EXPlugin(99999999, 'core', '20170722', 'Plugins manager', undefined);
+
+
 
 const isLevel = (x, q) => x.level[0].toLowerCase() === q.toLowerCase();
 const isACed = x => x.state === 'ac';
@@ -58,105 +172,4 @@ const QUERY_HANDLERS = {
   S: _.negate(isStarred)
 };
 
-core.filterProblems = function (opts, cb) {
-  this.getProblems(!opts.dontTranslate, function (e, problems) {
-    if (e) return cb(e);
-
-    for (let q of (opts.query || '').split('')) {
-      const f = QUERY_HANDLERS[q];
-      if (!f) continue;
-      problems = problems.filter(x => f(x, q));
-    }
-
-    for (let t of (opts.tag || [])) {
-      problems = problems.filter(function (x) {
-        return x.category === t ||
-          hasTag(x.companies, t) ||
-          hasTag(x.tags, t);
-      });
-    }
-
-    return cb(null, problems);
-  });
-};
-
-core.getProblem = function (keyword, needTranslation, cb) {
-  // if (keyword.id)
-  //   return core.next.getProblem(keyword, needTranslation, cb);
-
-  this.getProblems(needTranslation, function (e, problems) {
-    if (e) return cb(e);
-
-    keyword = Number(keyword) || keyword;
-    // const metaFid = file.exist(keyword) ? Number(file.meta(keyword).id) : NaN;
-    const problem = problems.find(function (x) {
-      if (keyword?.fid) {
-        return x.fid + '' === keyword.fid + ''
-      } else if (keyword?.qid) {
-        return x.id + '' === keyword.qid + ''
-      } else {
-        return x.id + '' === keyword + '' || x.name === keyword || x.slug === keyword;
-      }
-    });
-    if (!problem) return cb('Problem not found!');
-    core.next.getProblem(problem, needTranslation, cb);
-  });
-};
-
-core.starProblem = function (problem, starred, cb) {
-  if (problem.starred === starred) {
-    log.debug('problem is already ' + (starred ? 'starred' : 'unstarred'));
-    return cb(null, starred);
-  }
-
-  core.next.starProblem(problem, starred, cb);
-};
-
-core.exportProblem = function (problem, opts) {
-  const data = _.extend({}, problem);
-
-  // unify format before rendering
-  data.app = require('./config').app || 'leetcode';
-  if (!data.fid) data.fid = data.id;
-  if (!data.lang) data.lang = opts.lang;
-  data.code = (opts.code || data.code || '').replace(/\r\n/g, '\n');
-  data.comment = h.langToCommentStyle(data.lang);
-  data.percent = data.percent.toFixed(2);
-  data.testcase = util.inspect(data.testcase || '');
-
-  if (opts.tpl === 'detailed') {
-    let desc = data.desc;
-    // Replace <sup/> with '^' as the power operator
-    desc = desc.replace(/<\/sup>/gm, '').replace(/<sup>/gm, '^');
-    desc = require('he').decode(cheerio.load(desc).root().text());
-    // NOTE: wordwrap internally uses '\n' as EOL, so here we have to
-    // remove all '\r' in the raw string.
-    desc = desc.replace(/\r\n/g, '\n').replace(/^ /mg, '⁠');
-    const wrap = require('wordwrap')(79 - data.comment.line.length);
-    data.desc = wrap(desc).split('\n');
-  }
-
-  return file.render(opts.tpl, data);
-};
-
-core.getTodayQuestion = function (cb) {
-  this.getQuestionOfToday(function (e, result) {
-    if (e) return cb(e);
-    return cb(null, result);
-  });
-}
-core.getUserContest = function (username, cb) {
-  this.getUserContestP(username, function (e, result) {
-    if (e) return cb(e);
-    return cb(null, result);
-  });
-}
-
-core.getQueryZ = function (username, cb) {
-  this.getTestApi(username, function (e, result) {
-    if (e) return cb(e);
-    return cb(null, result);
-  });
-}
-
-module.exports = core;
+export const corePlugin: CorePlugin = new CorePlugin();

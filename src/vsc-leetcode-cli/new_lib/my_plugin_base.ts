@@ -3,12 +3,12 @@ var underscore = require('underscore');
 
 import { config } from "./config";
 import { file } from "./file";
-import { log } from "./log";
+// import { log } from "./log";
 import { cache } from "./cache";
 import { helper } from "./helper";
 
 
-class MyPluginBase {
+export class MyPluginBase {
   id;
   name;
   ver;
@@ -19,12 +19,28 @@ class MyPluginBase {
   builtin;
   deps;
   next;
-  plugins = [];
+  plugins: Array<any> = [];
   head; // 插件头 是core
+  config;
   constructor() {
   }
 
-  public init(head?) {
+  public save() {
+    const stats = cache.get(helper.KEYS.plugins) || {};
+
+    if (this.deleted) delete stats[this.name];
+    else if (this.missing) return;
+    else stats[this.name] = this.enabled;
+
+    cache.set(helper.KEYS.plugins, stats);
+  };
+
+  public init() {
+    this.config = config.plugins[this.name] || {};
+    this.next = null;
+  };
+
+  public base_init(head?) {
     head = head || require('./core');
     const stats = cache.get(helper.KEYS.plugins) || {};
     let installed: Array<MyPluginBase> = [];
@@ -52,7 +68,7 @@ class MyPluginBase {
       }
     }
     // 连成链表状
-    const plugins = installed.filter(x => x.enabled);
+    const plugins: Array<any> = installed.filter(x => x.enabled);
     let last = head;
     for (let p of plugins) {
       last.setNext(p);
@@ -61,32 +77,31 @@ class MyPluginBase {
     return true;
   };
 
-  setNext(next) {
+  public setNext(next) {
     Object.setPrototypeOf(this, next);
     this.next = next;
   };
-  save_all() {
+  public save_all() {
     for (let p of this.plugins) {
       p.save();
     }
   };
+
+  public getProblems(Translate: boolean, cb) {
+    this.next.getProblems(Translate, cb)
+  }
+  public getQuestionOfToday(cb) {
+    this.next.getQuestionOfToday(cb)
+  }
+  public getTestApi(username, cb) {
+    this.next.getTestApi(username, cb)
+  }
+  public getUserContestP(username, cb) {
+    this.next.getUserContestP(username, cb)
+  }
 }
 
 
-// save() {
-//   const stats = cache.get(h.KEYS.plugins) || {};
-
-//   if (this.deleted) delete stats[this.name];
-//   else if (this.missing) return;
-//   else stats[this.name] = this.enabled;
-
-//   cache.set(h.KEYS.plugins, stats);
-// };
-
-// EXPlugin.prototype.init() {
-//   this.config = config.plugins[this.name] || {};
-//   this.next = null;
-// };
 
 
 export const myPluginBase: MyPluginBase = new MyPluginBase();
