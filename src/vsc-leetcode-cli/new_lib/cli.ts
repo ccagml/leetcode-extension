@@ -2,12 +2,13 @@
 // var h = require('./helper');
 
 
-var ex_plugin = require('./plugin');
+import { myPluginBase } from "./my_plugin_base";
 import { config } from "./config";
 import { log } from "./log";
 import { file } from "./file";
 class NewCli {
     constructor() {
+        this.run()
     }
     public run() {
         process.stdout.on('error', function (e) {
@@ -33,8 +34,8 @@ class NewCli {
     }
 
     private initPlugins(cb) {
-        if (ex_plugin.init()) {
-            ex_plugin.save();
+        if (myPluginBase.base_init()) {
+            myPluginBase.save();
             return cb();
         }
     }

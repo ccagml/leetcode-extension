@@ -15,6 +15,8 @@ import { MyPluginBase } from "../my_plugin_base";
 
 
 class SolutionDiscuss extends MyPluginBase {
+  id = 200
+  name = "solution.discuss"
   constructor() {
     super()
   }

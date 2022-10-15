@@ -41,7 +41,7 @@ export class MyPluginBase {
   };
 
   public base_init(head?) {
-    head = head || require('./core');
+    head = head || require('./core').corePlugin;
     const stats = cache.get(helper.KEYS.plugins) || {};
     let installed: Array<MyPluginBase> = [];
     for (let f of file.listCodeDir('lib/plugins')) {
