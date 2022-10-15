@@ -1,16 +1,55 @@
 var request = require('request');
 
-var log = require('../log');
-var Plugin = require('../plugin');
-var session = require('../session');
+
+import { log } from "../log";
+import { session } from "../session";
+import { MyPluginBase } from "../my_plugin_base";
 
 //
 // [Usage]
 //
 // https://github.com/skygragon/leetcode-cli-plugins/blob/master/docs/solution.discuss.md
 //
-var plugin = new Plugin(200, 'solution.discuss', '',
-  'Plugin to fetch most voted solution in discussions.');
+// var plugin = new Plugin(200, 'solution.discuss', '',
+//   'Plugin to fetch most voted solution in discussions.');
+
+
+class SolutionDiscuss extends MyPluginBase {
+  constructor() {
+    super()
+  }
+
+
+  getProblem(problem, needTranslation, cb) {
+
+    this.next.getProblem(problem, needTranslation, function (e, problem) {
+      if (e || !session.argv.solution) return cb(e, problem);
+
+      var lang = session.argv.lang;
+      getSolution(problem, lang, function (e, solution) {
+        if (e) return cb(e);
+        if (!solution) return log.error('Solution not found for ' + lang);
+
+        var link = URL_DISCUSS.replace('$slug', problem.slug).replace('$id', solution.id);
+        var content = solution.post.content.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
+
+        log.info();
+        log.info(problem.name);
+        log.info();
+        log.info(solution.title);
+        log.info();
+        log.info(link);
+        log.info();
+        log.info('* Lang:    ' + lang);
+        log.info('* Author:  ' + solution.post.author.username);
+        log.info('* Votes:   ' + solution.post.voteCount);
+        log.info();
+        log.info(content);
+      });
+    });
+  };
+
+}
 
 var URL_DISCUSSES = 'https://leetcode.com/graphql';
 var URL_DISCUSS = 'https://leetcode.com/problems/$slug/discuss/$id';
@@ -70,32 +109,4 @@ function getSolution(problem, lang, cb) {
   });
 }
 
-plugin.getProblem = function (problem, needTranslation, cb) {
-  plugin.next.getProblem(problem, needTranslation, function (e, problem) {
-    if (e || !session.argv.solution) return cb(e, problem);
-
-    var lang = session.argv.lang;
-    getSolution(problem, lang, function (e, solution) {
-      if (e) return cb(e);
-      if (!solution) return log.error('Solution not found for ' + lang);
-
-      var link = URL_DISCUSS.replace('$slug', problem.slug).replace('$id', solution.id);
-      var content = solution.post.content.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
-
-      log.info();
-      log.info(problem.name);
-      log.info();
-      log.info(solution.title);
-      log.info();
-      log.info(link);
-      log.info();
-      log.info('* Lang:    ' + lang);
-      log.info('* Author:  ' + solution.post.author.username);
-      log.info('* Votes:   ' + solution.post.voteCount);
-      log.info();
-      log.info(content);
-    });
-  });
-};
-
-module.exports = plugin;
+export const solutionDiscuss: SolutionDiscuss = new SolutionDiscuss();

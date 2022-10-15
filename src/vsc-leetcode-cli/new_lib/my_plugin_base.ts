@@ -99,6 +99,9 @@ export class MyPluginBase {
   public getUserContestP(username, cb) {
     this.next.getUserContestP(username, cb)
   }
+  public getProblemsTitle(cb) {
+    this.next.getProblemsTitle(cb)
+  }
 }
 
 

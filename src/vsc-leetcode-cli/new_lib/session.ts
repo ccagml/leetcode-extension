@@ -14,6 +14,9 @@ class Session {
       statusCode: -1
     }
   };
+  argv: any = {
+
+  }
   constructor() {
 
   }

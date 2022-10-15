@@ -1,126 +1,125 @@
-'use strict';
-var _ = require('underscore');
-var nconf = require('nconf');
-
-var file = require('./file');
+var underscore = require('underscore');
 
 class Config {
-  /**
-   * init
-   */
-  DEFAULT_CONFIG = {
-    // usually you don't wanna change those
-    sys: {
-      categories: [
-        'algorithms',
-        'LCCI',
-        'LCOF',
-        'LCOF2'
-      ],
-      langs: [
-        'bash',
-        'c',
-        'cpp',
-        'csharp',
-        'golang',
-        'java',
-        'javascript',
-        'kotlin',
-        'mysql',
-        'php',
-        'python',
-        'python3',
-        'ruby',
-        'rust',
-        'scala',
-        'swift',
-        'typescript'
-      ],
-      urls: {
-        // base urls
-        base: 'https://leetcode.com',
-        graphql: 'https://leetcode.com/graphql',
-        login: 'https://leetcode.com/accounts/login/',
-        // third part login base urls. TODO facebook google
-        github_login: 'https://leetcode.com/accounts/github/login/?next=%2F',
-        facebook_login: 'https://leetcode.com/accounts/facebook/login/?next=%2F',
-        linkedin_login: 'https://leetcode.com/accounts/linkedin_oauth2/login/?next=%2F',
-        // redirect urls
-        leetcode_redirect: 'https://leetcode.com/',
-        github_tf_redirect: 'https://github.com/sessions/two-factor',
-        // simulate login urls
-        github_login_request: 'https://github.com/login',
-        github_session_request: 'https://github.com/session',
-        github_tf_session_request: 'https://github.com/sessions/two-factor',
-        linkedin_login_request: 'https://www.linkedin.com/login',
-        linkedin_session_request: 'https://www.linkedin.com/checkpoint/lg/login-submit',
-        // questions urls
-        problems: 'https://leetcode.com/api/problems/$category/',
-        problem: 'https://leetcode.com/problems/$slug/description/',
-        test: 'https://leetcode.com/problems/$slug/interpret_solution/',
-        session: 'https://leetcode.com/session/',
-        submit: 'https://leetcode.com/problems/$slug/submit/',
-        submissions: 'https://leetcode.com/api/submissions/$slug',
-        submission: 'https://leetcode.com/submissions/detail/$id/',
-        verify: 'https://leetcode.com/submissions/detail/$id/check/',
-        favorites: 'https://leetcode.com/list/api/questions',
-        favorite_delete: 'https://leetcode.com/list/api/questions/$hash/$id',
-        plugin: 'https://raw.githubusercontent.com/leetcode-tools/leetcode-cli/master/lib/plugins/$name.js'
-      },
+  app
+  sys = {
+    categories: [
+      'algorithms',
+      'LCCI',
+      'LCOF',
+      'LCOF2'
+    ],
+    langs: [
+      'bash',
+      'c',
+      'cpp',
+      'csharp',
+      'golang',
+      'java',
+      'javascript',
+      'kotlin',
+      'mysql',
+      'php',
+      'python',
+      'python3',
+      'ruby',
+      'rust',
+      'scala',
+      'swift',
+      'typescript'
+    ],
+    urls: {
+      // base urls
+      base: 'https://leetcode.com',
+      graphql: 'https://leetcode.com/graphql',
+      login: 'https://leetcode.com/accounts/login/',
+      // third part login base urls. TODO facebook google
+      github_login: 'https://leetcode.com/accounts/github/login/?next=%2F',
+      facebook_login: 'https://leetcode.com/accounts/facebook/login/?next=%2F',
+      linkedin_login: 'https://leetcode.com/accounts/linkedin_oauth2/login/?next=%2F',
+      // redirect urls
+      leetcode_redirect: 'https://leetcode.com/',
+      github_tf_redirect: 'https://github.com/sessions/two-factor',
+      // simulate login urls
+      github_login_request: 'https://github.com/login',
+      github_session_request: 'https://github.com/session',
+      github_tf_session_request: 'https://github.com/sessions/two-factor',
+      linkedin_login_request: 'https://www.linkedin.com/login',
+      linkedin_session_request: 'https://www.linkedin.com/checkpoint/lg/login-submit',
+      // questions urls
+      problems: 'https://leetcode.com/api/problems/$category/',
+      problem: 'https://leetcode.com/problems/$slug/description/',
+      test: 'https://leetcode.com/problems/$slug/interpret_solution/',
+      session: 'https://leetcode.com/session/',
+      submit: 'https://leetcode.com/problems/$slug/submit/',
+      submissions: 'https://leetcode.com/api/submissions/$slug',
+      submission: 'https://leetcode.com/submissions/detail/$id/',
+      verify: 'https://leetcode.com/submissions/detail/$id/check/',
+      favorites: 'https://leetcode.com/list/api/questions',
+      favorite_delete: 'https://leetcode.com/list/api/questions/$hash/$id',
+      plugin: 'https://raw.githubusercontent.com/leetcode-tools/leetcode-cli/master/lib/plugins/$name.js',
+      problem_detail: '',
+      noj_go: '',
+      u: '',
     },
+  }
 
-    // but you will want change these
-    autologin: {
-      enable: false,
-      retry: 2
-    },
-    code: {
-      editor: 'vim',
-      lang: 'cpp'
-    },
-    file: {
-      show: '${fid}.${slug}',
-      submission: '${fid}.${slug}.${sid}.${ac}'
-    },
-    color: {
-      enable: true,
-      theme: 'default'
-    },
-    icon: {
-      theme: ''
-    },
-    network: {
-      concurrency: 10,
-      delay: 1
-    },
-    plugins: {},
-  };
-
+  // but you will want change these
+  autologin: {
+    enable: false,
+    retry: 2
+  }
+  code: {
+    editor: 'vim',
+    lang: 'cpp'
+  }
+  file: {
+    show: '${fid}.${slug}',
+    submission: '${fid}.${slug}.${sid}.${ac}'
+  }
+  color: {
+    enable: true,
+    theme: 'default'
+  }
+  icon: {
+    theme: ''
+  }
+  network: {
+    concurrency: 10,
+    delay: 1
+  }
   plugins: {}
   init() {
-    nconf.file('local', file.configFile())
-      .add('global', { type: 'literal', store: this.DEFAULT_CONFIG })
-      .defaults({});
-
-    const cfg = nconf.get();
-    nconf.remove('local');
-    nconf.remove('global');
-
-    // HACK: remove old style configs
-    for (const x in cfg) {
-      if (x === x.toUpperCase()) delete cfg[x];
-    }
-    // delete this.DEFAULT_CONFIG.type;
-    delete cfg.type;
-
-    _.extendOwn(this, cfg);
   };
 
   getAll(useronly) {
-    const cfg = _.extendOwn({}, this);
+    const cfg = underscore.extendOwn({}, this);
     if (useronly) delete cfg.sys;
     return cfg;
   };
+
+  fix_cn() {
+    this.app = 'leetcode.cn';
+    this.sys.urls.base = 'https://leetcode.cn';
+    this.sys.urls.login = 'https://leetcode.cn/accounts/login/';
+    this.sys.urls.problems = 'https://leetcode.cn/api/problems/$category/';
+    this.sys.urls.problem = 'https://leetcode.cn/problems/$slug/description/';
+    this.sys.urls.graphql = 'https://leetcode.cn/graphql';
+    this.sys.urls.problem_detail = 'https://leetcode.cn/graphql';
+    this.sys.urls.test = 'https://leetcode.cn/problems/$slug/interpret_solution/';
+    this.sys.urls.session = 'https://leetcode.cn/session/';
+    this.sys.urls.submit = 'https://leetcode.cn/problems/$slug/submit/';
+    this.sys.urls.submissions = 'https://leetcode.cn/api/submissions/$slug';
+    this.sys.urls.submission = 'https://leetcode.cn/submissions/detail/$id/';
+    this.sys.urls.verify = 'https://leetcode.cn/submissions/detail/$id/check/';
+    this.sys.urls.favorites = 'https://leetcode.cn/list/api/questions';
+    this.sys.urls.favorite_delete = 'https://leetcode.cn/list/api/questions/$hash/$id';
+    this.sys.urls.noj_go = 'https://leetcode.cn/graphql/noj-go/'
+    this.sys.urls.u = 'https://leetcode.cn/u/$username/'
+    this.sys.urls.github_login = 'https://leetcode.cn/accounts/github/login/?next=%2F';
+    this.sys.urls.linkedin_login = 'https://leetcode.cn/accounts/linkedin_oauth2/login/?next=%2F';
+    this.sys.urls.leetcode_redirect = 'https://leetcode.cn/';
+  }
 }
 
 
