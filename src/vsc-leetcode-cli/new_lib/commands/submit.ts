@@ -48,8 +48,8 @@ class SubmitCommand {
   }
 
   printLine(log_obj, ...ret: any[]) {
-    // const args = Array.from(arguments).slice(1);
-    const line = util.format.apply(util, ret);
+    const args = ret.slice(1);
+    const line = util.format.apply(util, args);
     log_obj.messages.push(line)
   }
 
