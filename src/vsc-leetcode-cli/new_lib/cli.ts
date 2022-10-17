@@ -19,7 +19,7 @@ class NewCli {
         this.initDir()
         this.initPlugins((e) => {
             if (e) return log.fatal(e);
-            require('./cache').init();
+            require('./cache').cache.init();
             this.runCommand_new();
             return;
         });

@@ -2,26 +2,15 @@
 var util = require('util');
 var lodash = require('lodash');
 
-var h = require('../helper');
-var file = require('../file');
+var h = require('../helper').helper;
+var file = require('../file').file;
 
-var log = require('../log');
-var core = require('../core');
-var session = require('../session');
+var log = require('../log').log;
+var core = require('../core').corePlugin;
+var session = require('../session').session;
 
 const cmd = {
-  command: 'submit <filename>',
-  aliases: ['push', 'commit'],
-  desc: 'Submit code',
-  builder: function (yargs) {
-    return yargs
-      .positional('filename', {
-        type: 'string',
-        describe: 'Code file to submit',
-        default: ''
-      })
-      .example('leetcode submit 1.two-sum.cpp', 'Submit code');
-  }
+
 };
 
 

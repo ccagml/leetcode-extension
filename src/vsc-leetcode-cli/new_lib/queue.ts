@@ -1,9 +1,9 @@
-'use strict';
+
 var underscore = require('underscore');
 
 import { config } from "./config";
 
-class Queue {
+export class Queue {
   tasks
   ctx
   onTask
@@ -55,5 +55,4 @@ class Queue {
     });
   };
 }
-module.exports = Queue;
 

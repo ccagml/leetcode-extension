@@ -1,4 +1,4 @@
-'use strict';
+
 var util = require('util');
 
 var underscore = require('underscore');
@@ -11,9 +11,9 @@ import { file } from "../file";
 import { log } from "../log";
 import { session } from "../session";
 import { MyPluginBase } from "../my_plugin_base";
+import { Queue } from "../queue";
 var spin;
 
-var Queue = require('../queue');
 
 class LeetCode extends MyPluginBase {
   id = 10

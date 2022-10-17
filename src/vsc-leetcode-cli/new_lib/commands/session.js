@@ -1,48 +1,13 @@
 'use strict';
 var prompt = require('prompt');
 
-var h = require('../helper');
-var log = require('../log');
-var core = require('../core');
-var session = require('../session');
-var sprintf = require('../sprintf');
+var h = require('../helper').helper;
+var log = require('../log').log;
+var core = require('../core').corePlugin;
+var session = require('../session').session;
+var sprintf = require('../sprintf').sprintf;
 
 const cmd = {
-  command: 'session [keyword]',
-  aliases: ['branch'],
-  desc: 'Manage sessions',
-  builder: function (yargs) {
-    return yargs
-      .option('c', {
-        alias: 'create',
-        type: 'boolean',
-        describe: 'Create session',
-        default: false
-      })
-      .option('d', {
-        alias: 'delete',
-        type: 'boolean',
-        describe: 'Delete session',
-        default: false
-      })
-      .option('e', {
-        alias: 'enable',
-        type: 'boolean',
-        describe: 'Enable/activate session',
-        default: false
-      })
-      .positional('keyword', {
-        type: 'string',
-        describe: 'Session name or id',
-        default: ''
-      })
-      .example('leetcode session', 'Show all cache')
-      .example('leetcode session xxx', 'Show session by keyword')
-      .example('', '')
-      .example('leetcode session -c xxx', 'Create session with name')
-      .example('leetcode session -e xxx', 'Enable session by keyword')
-      .example('leetcode session -d xxx', 'Delete session by keyword');
-  }
 };
 
 

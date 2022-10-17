@@ -3,60 +3,17 @@ var path = require('path');
 
 var _ = require('underscore');
 
-var h = require('../helper');
-var file = require('../file');
+var h = require('../helper').helper;
+var file = require('../file').file;
 
-var config = require('../config');
-var log = require('../log');
-var Queue = require('../queue');
-var core = require('../core');
-var session = require('../session');
+var config = require('../config').config;
+var log = require('../log').log;
+var Queue = require('../queue').Queue;
+var core = require('../core').corePlugin;
+var session = require('../session').session;
 
 const cmd = {
-  command: 'submission [keyword]',
-  aliases: ['pull'],
-  desc: 'Download submission code',
-  builder: function (yargs) {
-    return yargs
-      .option('a', {
-        alias: 'all',
-        type: 'boolean',
-        default: false,
-        describe: 'Download all questions'
-      })
-      .option('l', {
-        alias: 'lang',
-        type: 'string',
-        default: 'all',
-        describe: 'Filter by programming language'
-      })
-      .option('o', {
-        alias: 'outdir',
-        type: 'string',
-        describe: 'Where to save submission code',
-        default: '.'
-      })
-      .option('x', {
-        alias: 'extra',
-        type: 'boolean',
-        default: false,
-        describe: 'Show extra question details in submission code'
-      })
-      .option('T', {
-        alias: 'dontTranslate',
-        type: 'boolean',
-        default: false,
-        describe: 'Set to true to disable endpoint\'s translation',
-      })
-      .positional('keyword', {
-        type: 'string',
-        default: '',
-        describe: 'Download specific question by id'
-      })
-      .example('leetcode submission -a -o mydir', 'Download all to folder mydir')
-      .example('leetcode submission -x -a', 'Add descriptions in the downloaded codes')
-      .example('leetcode submission -l cpp 1', 'Download cpp submission of question 1');
-  }
+
 };
 
 cmd.process_argv = function (argv) {

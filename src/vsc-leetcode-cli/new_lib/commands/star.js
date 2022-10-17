@@ -1,30 +1,12 @@
 'use strict';
 
-var icon = require('../icon');
-var log = require('../log');
-var core = require('../core');
-var session = require('../session');
+var icon = require('../icon').icon;
+var log = require('../log').log;
+var core = require('../core').corePlugin;
+var session = require('../session').session;
 
 const cmd = {
-  command: 'star <keyword>',
-  aliases: ['like', 'favorite'],
-  desc: 'Star favorite question',
-  builder: function (yargs) {
-    return yargs
-      .option('d', {
-        alias: 'delete',
-        type: 'boolean',
-        describe: 'Unstar question',
-        default: false
-      })
-      .positional('keyword', {
-        type: 'string',
-        describe: 'Question name or id',
-        default: ''
-      })
-      .example('leetcode star 1', 'Mark favorite to question 1')
-      .example('leetcode star 1 -d', 'Unmark favorite to question 1');
-  }
+
 };
 
 

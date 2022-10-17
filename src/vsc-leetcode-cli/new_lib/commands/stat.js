@@ -3,47 +3,15 @@ var moment = require('moment');
 var _ = require('underscore');
 
 
-var icon = require('../icon');
-var log = require('../log');
-var core = require('../core');
-var session = require('../session');
-var sprintf = require('../sprintf');
-var h = require('../helper');
+var icon = require('../icon').icon;
+var log = require('../log').log;
+var core = require('../core').core;
+var session = require('../session').session;
+var sprintf = require('../sprintf').sprintf;
+var h = require('../helper').helper;
 
 const cmd = {
-  command: 'stat',
-  desc: 'Show statistics',
-  aliases: ['stats', 'progress', 'report'],
-  builder: function (yargs) {
-    return yargs
-      .option('c', {
-        alias: 'cal',
-        type: 'boolean',
-        default: false,
-        describe: 'Show calendar statistics'
-      })
-      .option('g', {
-        alias: 'graph',
-        type: 'boolean',
-        default: false,
-        describe: 'Show graphic statistics'
-      })
-      .option('l', {
-        alias: 'lock',
-        type: 'boolean',
-        default: true,
-        describe: 'Include locked questions'
-      })
-      .option('q', core.filters.query)
-      .option('t', core.filters.tag)
-      .example('leetcode stat', 'Show progress status')
-      .example('leetcode stat -g', 'Show detailed status in graph')
-      .example('leetcode stat -c', 'Show accepted status in calendar')
-      .example('', '')
-      .example('leetcode stat --no-lock', 'Show status without locked questions')
-      .example('leetcode stat -t algorithms', 'Show status of algorithms questions only')
-      .example('leetcode stat -q h', 'Show status of hard questions only');
-  }
+
 };
 
 cmd.process_argv = function (argv) {

@@ -1,9 +1,9 @@
 'use strict';
-var h = require('../helper');
-var config = require('../config');
-var log = require('../log');
-var Plugin = require('../my_plugin_base');
-var session = require('../session');
+var h = require('../helper').helper;
+var config = require('../config').config;
+var log = require('../log').log;
+var Plugin = require('../my_plugin_base').myPluginBase;
+var session = require('../session').session;
 
 const cmd = {
 

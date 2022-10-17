@@ -1,5 +1,5 @@
 
-const { MyPluginBase } = require('../my_plugin_base');
+import { MyPluginBase } from "../my_plugin_base";
 import { config } from "../config";
 import { session } from "../session";
 
@@ -70,7 +70,7 @@ class RetryPlugin extends MyPluginBase {
       return cb();
     }
 
-    this.login(user, function (e) {
+    this.next.login(user, function (e) {
       if (e) {
 
       } else {

@@ -1,43 +1,13 @@
 'use strict';
 var _ = require('underscore');
 
-var h = require('../helper');
+var h = require('../helper').helper;
 
-var log = require('../log');
-var core = require('../core');
-var session = require('../session');
+var log = require('../log').log;
+var core = require('../core').corePlugin;
+var session = require('../session').session;
 
 const cmd = {
-    command: 'query [keyword]',
-    aliases: ['ls'],
-    desc: 'query something',
-    builder: function (yargs) {
-        return yargs
-            .option('T', {
-                alias: 'dontTranslate',
-                type: 'boolean',
-                default: false,
-                describe: 'Set to true to disable endpoint\'s translation',
-            })
-            .option('a', {
-                alias: 'getTodayQuestion',
-                type: 'boolean',
-                default: false,
-                describe: 'getTodayQuestion',
-            })
-            .option('b', {
-                alias: 'username',
-                type: 'string',
-                default: "",
-                describe: 'user name',
-            }).option('z', {
-                alias: 'test',
-                type: 'string',
-                default: "",
-                describe: 'test',
-            })
-            .example('leetcode query today', 'query today question')
-    }
 };
 
 cmd.process_argv = function (argv) {

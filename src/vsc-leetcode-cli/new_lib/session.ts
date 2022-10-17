@@ -1,11 +1,11 @@
-'use strict';
+
 var moment_out = require('moment');
 var underscore = require('underscore');
 
-var cache = require('./cache');
-var config = require('./config');
-var h = require('./helper');
 
+import { cache } from "./cache";
+import { config } from "./config";
+import { helper } from "./helper";
 
 class Session {
   errors = {
@@ -23,22 +23,22 @@ class Session {
 
 
   public getUser = function () {
-    return cache.get(h.KEYS.user);
+    return cache.get(helper.KEYS.user);
   };
 
   public saveUser = function (user) {
     // when auto login enabled, have to save password to re-login later
     // otherwise don't dump password for the sake of security.
     const _user = underscore.omit(user, config.autologin.enable ? [] : ['pass']);
-    cache.set(h.KEYS.user, _user);
+    cache.set(helper.KEYS.user, _user);
   };
 
   public deleteUser = function () {
-    cache.del(h.KEYS.user);
+    cache.del(helper.KEYS.user);
   };
 
   public deleteCodingSession = function () {
-    cache.del(h.KEYS.problems);
+    cache.del(helper.KEYS.problems);
   };
 
   public isLogin() {
@@ -48,7 +48,7 @@ class Session {
   public updateStat = function (k, v) {
     // TODO: use other storage if too many stat data
     const today = moment_out().format('YYYY-MM-DD');
-    const stats = cache.get(h.KEYS.stat) || {};
+    const stats = cache.get(helper.KEYS.stat) || {};
     const stat = stats[today] = stats[today] || {};
 
     if (k.endsWith('.set')) {
@@ -59,7 +59,7 @@ class Session {
       stat[k] = (stat[k] || 0) + v;
     }
 
-    cache.set(h.KEYS.stat, stats);
+    cache.set(helper.KEYS.stat, stats);
   };
 
 

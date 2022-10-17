@@ -1,56 +1,15 @@
 'use strict';
 var prompt = require('prompt');
 
-var h = require('../helper');
-var config = require('../config');
-var log = require('../log');
-var core = require('../core');
-var session = require('../session');
-var sprintf = require('../sprintf');
+var h = require('../helper').helper;
+var config = require('../config').config;
+var log = require('../log').log;
+var core = require('../core').corePlugin;
+var session = require('../session').session;
+var sprintf = require('../sprintf').sprintf;
 
 const cmd = {
-  command: 'user',
-  aliases: ['account'],
-  desc: 'Manage account',
-  builder: function (yargs) {
-    return yargs
-      .option('l', {
-        alias: 'login',
-        type: 'boolean',
-        default: false,
-        describe: 'Login'
-      })
-      .option('c', {
-        alias: 'cookie',
-        type: 'boolean',
-        default: false,
-        describe: 'cookieLogin'
-      })
-      .option('g', {
-        alias: 'github',
-        type: 'boolean',
-        default: false,
-        describe: 'githubLogin'
-      })
-      .option('i', {
-        alias: 'linkedin',
-        type: 'boolean',
-        default: false,
-        describe: 'linkedinLogin'
-      })
-      .option('L', {
-        alias: 'logout',
-        type: 'boolean',
-        default: false,
-        describe: 'Logout'
-      })
-      .example('leetcode user', 'Show current user')
-      .example('leetcode user -l', 'User login')
-      .example('leetcode user -c', 'User Cookie login')
-      .example('leetcode user -g', 'User GitHub login')
-      .example('leetcode user -i', 'User LinkedIn login')
-      .example('leetcode user -L', 'User logout');
-  }
+
 };
 
 cmd.process_argv = function (argv) {

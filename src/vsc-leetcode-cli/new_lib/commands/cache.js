@@ -1,34 +1,14 @@
 'use strict';
 var _ = require('underscore');
 
-var h = require('../helper');
-var log = require('../log');
-var cache = require('../cache');
-var session = require('../session');
-var sprintf = require('../sprintf');
+var h = require('../helper').helper;
+var log = require('../log').log;
+var cache = require('../cache').cache;
+var session = require('../session').session;
+var sprintf = require('../sprintf').sprintf;
 
 const cmd = {
-  command: 'cache [keyword]',
-  desc: 'Manage local cache',
-  builder: function (yargs) {
-    return yargs
-      .option('d', {
-        alias: 'delete',
-        type: 'boolean',
-        describe: 'Delete cache by keyword',
-        default: false
-      })
-      .positional('keyword', {
-        type: 'string',
-        describe: 'Cache name or question id',
-        default: ''
-      })
-      .example('leetcode cache', 'Show all cache')
-      .example('leetcode cache 1', 'Show cache of question 1')
-      .example('', '')
-      .example('leetcode cache -d', 'Delete all cache')
-      .example('leetcode cache 1 -d', 'Delete cache of question 1');
-  }
+
 };
 
 cmd.process_argv = function (argv) {

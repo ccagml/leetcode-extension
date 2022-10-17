@@ -7,7 +7,6 @@ import { file } from "./file";
 import { cache } from "./cache";
 import { helper } from "./helper";
 
-
 export class MyPluginBase {
   id;
   name;
@@ -68,9 +67,9 @@ export class MyPluginBase {
       }
     }
     // 连成链表状
-    const plugins: Array<any> = installed.filter(x => x.enabled);
+    this.plugins = installed.filter(x => x.enabled);
     let last = head;
-    for (let p of plugins) {
+    for (let p of this.plugins) {
       last.setNext(p);
       last = p;
     }

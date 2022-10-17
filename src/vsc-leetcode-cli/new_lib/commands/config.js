@@ -2,46 +2,13 @@
 var _ = require('underscore');
 var nconf = require('nconf');
 
-var file = require('../file');
-var config = require('../config');
-var log = require('../log');
-var session = require('../session');
+var file = require('../file').file;
+var config = require('../config').config;
+var log = require('../log').log;
+var session = require('../session').session;
 
 const cmd = {
-  command: 'config [key] [value]',
-  aliases: ['conf', 'cfg', 'setting'],
-  desc: 'Manage user configs',
-  builder: function (yargs) {
-    return yargs
-      .option('a', {
-        alias: 'all',
-        type: 'boolean',
-        describe: 'Show all config',
-        default: false
-      })
-      .option('d', {
-        alias: 'delete',
-        type: 'boolean',
-        describe: 'Delete config by key',
-        default: false
-      })
-      .positional('key', {
-        type: 'string',
-        describe: 'Config key, delimited by colon',
-        default: ''
-      })
-      .positional('value', {
-        type: 'string',
-        describe: 'Config value',
-        default: ''
-      })
-      .example('leetcode config', 'Show user configs')
-      .example('leetcode config -a', 'Show all configs = user + default')
-      .example('leetcode config plugins:github', 'Show config by key')
-      .example('', '')
-      .example('leetcode config plugins:github:repo "your repo URL"', 'Set config by key')
-      .example('leetcode config plugins:github -d', 'Delete config by key');
-  }
+
 };
 
 

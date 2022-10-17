@@ -3,50 +3,13 @@ var _ = require('underscore');
 
 var h = require('../helper');
 
-var icon = require('../icon');
-var log = require('../log');
-var core = require('../core');
-var session = require('../session');
+var icon = require('../icon').icon;
+var log = require('../log').log;
+var core = require('../core').corePlugin;
+var session = require('../session').session;
 
 const cmd = {
-  command: 'list [keyword]',
-  aliases: ['ls'],
-  desc: 'List questions',
-  builder: function (yargs) {
-    return yargs
-      .option('q', core.filters.query)
-      .option('s', {
-        alias: 'stat',
-        type: 'boolean',
-        default: false,
-        describe: 'Show statistics of listed questions'
-      })
-      .option('t', core.filters.tag)
-      .option('x', {
-        alias: 'extra',
-        type: 'boolean',
-        default: false,
-        describe: 'Show extra details: category, companies, tags.'
-      })
-      .option('T', {
-        alias: 'dontTranslate',
-        type: 'boolean',
-        default: false,
-        describe: 'Set to true to disable endpoint\'s translation',
-      })
-      .positional('keyword', {
-        type: 'string',
-        default: '',
-        describe: 'Filter questions by keyword'
-      })
-      .example('leetcode list', 'List all questions')
-      .example('leetcode list -x', 'Show extra info of questions, e.g. tags')
-      .example('', '')
-      .example('leetcode list array', 'List questions that has "array" in name')
-      .example('leetcode list -q eD', 'List questions that with easy level and not done')
-      .example('leetcode list -t google', 'List questions from Google company (require plugin)')
-      .example('leetcode list -t stack', 'List questions realted to stack (require plugin)');
-  }
+
 };
 
 

@@ -3,9 +3,9 @@ var util = require('util');
 var _ = require('underscore');
 var cheerio = require('cheerio');
 
-var log = require('./log');
-var h = require('./helper');
-var file = require('./file');
+// import { log } from "./log";
+import { helper } from "./helper";
+import { file } from "./file";
 
 import { MyPluginBase } from "./my_plugin_base";
 
@@ -94,7 +94,7 @@ class CorePlugin extends MyPluginBase {
 
   public starProblem(problem, starred, cb) {
     if (problem.starred === starred) {
-      log.debug('problem is already ' + (starred ? 'starred' : 'unstarred'));
+
       return cb(null, starred);
     }
 
@@ -105,11 +105,12 @@ class CorePlugin extends MyPluginBase {
     const data = _.extend({}, problem);
 
     // unify format before rendering
+
     data.app = require('./config').app || 'leetcode';
     if (!data.fid) data.fid = data.id;
     if (!data.lang) data.lang = opts.lang;
     data.code = (opts.code || data.code || '').replace(/\r\n/g, '\n');
-    data.comment = h.langToCommentStyle(data.lang);
+    data.comment = helper.langToCommentStyle(data.lang);
     data.percent = data.percent.toFixed(2);
     data.testcase = util.inspect(data.testcase || '');
 

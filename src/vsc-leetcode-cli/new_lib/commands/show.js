@@ -4,77 +4,16 @@ var util = require('util');
 var _ = require('underscore');
 var childProcess = require('child_process');
 
-var h = require('../helper');
-var file = require('../file');
-var icon = require('../icon');
-var log = require('../log');
-var config = require('../config');
-var core = require('../core');
-var session = require('../session');
+var h = require('../helper').helper;
+var file = require('../file').file;
+var icon = require('../icon').icon;
+var log = require('../log').log;
+var config = require('../config').config;
+var core = require('../core').corePlugin;
+var session = require('../session').session;
 
 const cmd = {
-  command: 'show [keyword]',
-  aliases: ['view', 'pick'],
-  desc: 'Show question',
-  builder: function (yargs) {
-    return yargs
-      .option('c', {
-        alias: 'codeonly',
-        type: 'boolean',
-        default: false,
-        describe: 'Only show code template'
-      })
-      .option('e', {
-        alias: 'editor',
-        type: 'string',
-        describe: 'Open source code in editor'
-      })
-      .option('g', {
-        alias: 'gen',
-        type: 'boolean',
-        default: false,
-        describe: 'Generate source code'
-      })
-      .option('l', {
-        alias: 'lang',
-        type: 'string',
-        default: config.code.lang,
-        describe: 'Programming language of the source code',
-        choices: config.sys.langs
-      })
-      .option('o', {
-        alias: 'outdir',
-        type: 'string',
-        describe: 'Where to save source code',
-        default: '.'
-      })
-      .option('q', core.filters.query)
-      .option('t', core.filters.tag)
-      .option('x', {
-        alias: 'extra',
-        type: 'boolean',
-        default: false,
-        describe: 'Show extra question details in source code'
-      })
-      .option('T', {
-        alias: 'dontTranslate',
-        type: 'boolean',
-        default: false,
-        describe: 'Set to true to disable endpoint\'s translation',
-      })
-      .positional('keyword', {
-        type: 'string',
-        default: '',
-        describe: 'Show question by name or id'
-      })
-      .example('leetcode show 1', 'Show question 1')
-      .example('leetcode show 1 -gx -l java', 'Show question 1 and generate Java code')
-      .example('leetcode show 1 -gxe', 'Open generated code in editor')
-      .example('', '')
-      .example('leetcode show', 'Show random question')
-      .example('leetcode show -q h', 'Show random hard question')
-      .example('leetcode show -t google', 'Show random question from Google (require plugin)');
-  }
+
 };
 
 cmd.process_argv = function (argv) {

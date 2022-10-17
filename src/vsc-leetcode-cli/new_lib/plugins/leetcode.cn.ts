@@ -1,4 +1,4 @@
-'use strict';
+
 
 import { MyPluginBase } from "../my_plugin_base";
 

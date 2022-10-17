@@ -3,38 +3,14 @@ var _ = require('underscore');
 var lodash = require('lodash');
 var util = require('util');
 
-var h = require('../helper');
-var file = require('../file');
-var log = require('../log');
-var core = require('../core');
-var session = require('../session');
+var h = require('../helper').helper;
+var file = require('../file').file;
+var log = require('../log').log;
+var core = require('../core').corePlugin;
+var session = require('../session').session;
 
 const cmd = {
-  command: 'test <filename>',
-  aliases: ['run'],
-  desc: 'Test code',
-  builder: function (yargs) {
-    return yargs
-      .option('i', {
-        alias: 'interactive',
-        type: 'boolean',
-        default: false,
-        describe: 'Provide test case interactively'
-      })
-      .option('t', {
-        alias: 'testcase',
-        type: 'string',
-        default: '',
-        describe: 'Provide test case'
-      })
-      .positional('filename', {
-        type: 'string',
-        default: '',
-        describe: 'Code file to test'
-      })
-      .example('leetcode test 1.two-sum.cpp', 'Test code with default test case')
-      .example('leetcode test 1.two-sum.cpp -t "[1,2,3]\\n4"', 'Test code with customized test case');
-  }
+
 };
 
 cmd.process_argv = function (argv) {
