@@ -42,7 +42,7 @@ class NewCli {
 
     private runCommand_new() {
         var com_str = process.argv[2]
-        var auto_js = require("./commands/" + com_str)
+        var auto_js = require("./commands/" + com_str)[com_str + "Command"]
         auto_js.handler(auto_js.process_argv(process.argv))
     }
 }

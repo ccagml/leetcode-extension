@@ -153,4 +153,4 @@ class SubMission {
 
 
 
-export const subMission: SubMission = new SubMission();
+export const subMissionCommand: SubMission = new SubMission();

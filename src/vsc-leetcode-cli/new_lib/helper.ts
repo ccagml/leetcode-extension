@@ -50,17 +50,18 @@ export const LANGS = [
 ];
 
 class HELPER {
+  KEYS
   constructor() {
-
+    this.KEYS = {
+      user: '../user',
+      stat: '../stat',
+      plugins: '../../plugins',
+      problems: 'problems',
+      translation: 'translationConfig',
+      problem: p => p.fid + '.' + p.slug + '.' + p.category
+    };
   }
-  KEYS = {
-    user: '../user',
-    stat: '../stat',
-    plugins: '../../plugins',
-    problems: 'problems',
-    translation: 'translationConfig',
-    problem: p => p.fid + '.' + p.slug + '.' + p.category
-  };
+
   prettyState(state) {
     switch (state) {
       case 'ac': return this.prettyText('', true);

@@ -1,7 +1,6 @@
 var underscore = require('underscore');
 
-
-import { config } from "./config";
+import { config as out_config } from "./config";
 import { file } from "./file";
 // import { log } from "./log";
 import { cache } from "./cache";
@@ -35,7 +34,7 @@ export class MyPluginBase {
   };
 
   public init() {
-    this.config = config.plugins[this.name] || {};
+    this.config = out_config.plugins[this.name] || {};
     this.next = null;
   };
 
@@ -146,7 +145,6 @@ export class MyPluginBase {
   }
 
 }
-
 
 
 
