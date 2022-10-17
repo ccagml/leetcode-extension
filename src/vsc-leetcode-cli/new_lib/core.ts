@@ -73,14 +73,14 @@ class CorePlugin extends MyPluginBase {
     this.getProblems(needTranslation, function (e, problems) {
       if (e) return cb(e);
       keyword = Number(keyword) || keyword;
-      // const metaFid = file.exist(keyword) ? Number(file.meta(keyword).id) : NaN;
+      const metaFid = file.exist(keyword) ? file.meta(keyword).id : NaN;
       const problem = problems.find(function (x) {
         if (keyword?.fid) {
           return x.fid + '' === keyword.fid + ''
         } else if (keyword?.qid) {
           return x.id + '' === keyword.qid + ''
         } else {
-          return x.id + '' === keyword + '' || x.name === keyword || x.slug === keyword;
+          return x.id + '' === keyword + '' || x.fid + '' === metaFid + '' || x.name === keyword || x.slug === keyword;
         }
       });
       if (!problem) return cb('Problem not found!');
