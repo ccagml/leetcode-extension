@@ -27,7 +27,7 @@ export class Queue {
     return this;
   };
 
-  run(concurrency, onDone) {
+  run(concurrency?, onDone?) {
     this.concurrency = concurrency || config.network.concurrency || 1;
     this.onDone = onDone;
 

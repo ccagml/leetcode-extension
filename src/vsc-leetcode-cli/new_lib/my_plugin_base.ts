@@ -101,6 +101,49 @@ export class MyPluginBase {
   public getProblemsTitle(cb) {
     this.next.getProblemsTitle(cb)
   }
+  public createSession(a, cb) {
+    this.next.createSession(a, cb)
+  }
+  public getSessions(cb) {
+    this.next.getSessions(cb)
+  }
+  public activateSession(s, cb) {
+    this.next.activateSession(s, cb)
+  }
+  public deleteSession(s, cb) {
+    this.next.deleteSession(s, cb)
+  }
+  public updateProblem(a, b) {
+    this.next.updateProblem(a, b)
+  }
+  public getSubmissions(s, cb) {
+    this.next.getSubmissions(s, cb)
+  }
+  public getSubmission(s, cb) {
+    this.next.getSubmission(s, cb)
+  }
+  public submitProblem(s, cb) {
+    this.next.submitProblem(s, cb)
+  }
+  public testProblem(s, cb) {
+    this.next.testProblem(s, cb)
+  }
+  public login(user, cb) {
+    this.next.login(user, cb)
+  }
+  public logout(user, cb) {
+    this.next.logout(user, cb)
+  }
+  public githubLogin(user, cb) {
+    this.next.githubLogin(user, cb)
+  }
+  public linkedinLogin(user, cb) {
+    this.next.linkedinLogin(user, cb)
+  }
+  public cookieLogin(user, cb) {
+    this.next.cookieLogin(user, cb)
+  }
+
 }
 
 
