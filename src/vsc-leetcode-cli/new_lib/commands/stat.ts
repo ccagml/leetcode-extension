@@ -192,7 +192,7 @@ class StatCommand {
     session.argv = argv;
     var that = this;
     corePlugin.filterProblems(argv, function (e, problems) {
-      if (e) return log.fail(e);
+      if (e) return log.info(e);
 
       if (!argv.lock)
         problems = problems.filter(x => !x.locked);

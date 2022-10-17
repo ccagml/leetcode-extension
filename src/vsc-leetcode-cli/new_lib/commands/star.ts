@@ -32,10 +32,10 @@ class StarCommand {
     session.argv = argv;
     // translation doesn't affect question lookup
     corePlugin.getProblem(argv.keyword, true, function (e, problem) {
-      if (e) return log.fail(e);
+      if (e) return log.info(e);
 
       corePlugin.starProblem(problem, !argv.delete, function (e, starred) {
-        if (e) return log.fail(e);
+        if (e) return log.info(e);
 
         log.info('[%s] %s %s', problem.fid, problem.name,
           starred ? 'icon.like' : 'icon.unlike');

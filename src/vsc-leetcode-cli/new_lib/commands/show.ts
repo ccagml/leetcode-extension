@@ -108,7 +108,7 @@ class ShowCommand {
     if (needcode) {
       const template = problem.templates.find(x => x.value === argv.lang);
       if (!template) {
-        log.fail('Not supported language "' + argv.lang + '"');
+        log.info('Not supported language "' + argv.lang + '"');
         log.warn('Supported languages: ' + langlist);
         return;
       }
@@ -180,7 +180,7 @@ class ShowCommand {
     if (argv.keyword.length > 0) {
       // show specific one
       corePlugin.getProblem(argv.keyword, !argv.dontTranslate, function (e, problem) {
-        if (e) return log.fail(e);
+        if (e) return log.info(e);
         that.showProblem(problem, argv);
       });
     } else {

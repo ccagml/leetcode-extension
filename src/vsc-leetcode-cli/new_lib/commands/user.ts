@@ -61,12 +61,12 @@ class UserCommand {
         { name: 'pass', required: true, hidden: true }
       ], function (e, user) {
         if (e) {
-          return log.fail(JSON.stringify({ code: -1, msg: e.msg || e }));
+          return log.info(JSON.stringify({ code: -1, msg: e.msg || e }));
         }
 
         corePlugin.login(user, function (e, user) {
           if (e) {
-            return log.fail(JSON.stringify({ code: -2, msg: e.msg || e }));
+            return log.info(JSON.stringify({ code: -2, msg: e.msg || e }));
           }
           log.info(JSON.stringify({ code: 100, user_name: user.name }));
         });
@@ -77,7 +77,7 @@ class UserCommand {
       if (user)
         log.info(JSON.stringify({ code: 100, user_name: user.name }));
       else
-        log.fail(JSON.stringify({ code: -3, msg: 'You are not login yet?' }));
+        log.info(JSON.stringify({ code: -3, msg: 'You are not login yet?' }));
       // third parties
     } else if (argv.github || argv.linkedin) {
       // add future third parties here
@@ -99,9 +99,9 @@ class UserCommand {
           { name: 'login', required: true },
           { name: 'pass', required: true, hidden: true }
         ], function (e, user) {
-          if (e) return log.fail(JSON.stringify({ code: -4, msg: e.msg || e }));
+          if (e) return log.info(JSON.stringify({ code: -4, msg: e.msg || e }));
           coreFunction(user, function (e, user) {
-            if (e) return log.fail(JSON.stringify({ code: -5, msg: e.msg || e }));
+            if (e) return log.info(JSON.stringify({ code: -5, msg: e.msg || e }));
             log.info(JSON.stringify({ code: 100, user_name: user.name }));
           });
         });
@@ -116,9 +116,9 @@ class UserCommand {
         { name: 'login', required: true },
         { name: 'cookie', required: true }
       ], function (e, user) {
-        if (e) return log.fail(e);
+        if (e) return log.info(e);
         corePlugin.cookieLogin(user, function (e, user) {
-          if (e) return log.fail(JSON.stringify({ code: -6, msg: e.msg || e }));
+          if (e) return log.info(JSON.stringify({ code: -6, msg: e.msg || e }));
           log.info(JSON.stringify({ code: 100, user_name: user.name }));
         });
       });
@@ -128,7 +128,7 @@ class UserCommand {
       if (user) {
         log.info(JSON.stringify({ code: 100, user_name: user.name }));
       } else
-        return log.fail(JSON.stringify({ code: -7, msg: 'You are not login yet?' }));
+        return log.info(JSON.stringify({ code: -7, msg: 'You are not login yet?' }));
     }
   };
 }

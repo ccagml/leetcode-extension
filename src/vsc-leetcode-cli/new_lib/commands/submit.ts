@@ -62,13 +62,13 @@ class SubmitCommand {
     var that = this;
     // translation doesn't affect problem lookup
     corePlugin.getProblem(meta, true, function (e, problem) {
-      if (e) return log.fail(e);
+      if (e) return log.info(e);
 
       problem.file = argv.filename;
       problem.lang = meta.lang;
 
       corePlugin.submitProblem(problem, function (e, results) {
-        if (e) return log.fail(e);
+        if (e) return log.info(e);
 
         const result = results[0];
 

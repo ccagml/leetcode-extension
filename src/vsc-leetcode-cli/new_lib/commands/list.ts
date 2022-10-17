@@ -44,7 +44,7 @@ class ListCommand {
   handler(argv) {
     session.argv = argv;
     corePlugin.filterProblems(argv, function (e, problems) {
-      if (e) return log.fail(e);
+      if (e) return log.info(e);
 
 
       log.info(JSON.stringify(problems));

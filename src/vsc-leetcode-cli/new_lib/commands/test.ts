@@ -82,10 +82,10 @@ class TestCommand {
     // messages: string[];
 
     corePlugin.getProblem(meta, true, function (e, problem) {
-      if (e) return log.fail(JSON.stringify({ messages: ["error"], code: [-1], error: [e.msg || e] }));
+      if (e) return log.info(JSON.stringify({ messages: ["error"], code: [-1], error: [e.msg || e] }));
 
       if (!problem.testable)
-        return log.fail(JSON.stringify({ messages: ["error"], code: [-2], error: ['not testable? please submit directly!'] }));
+        return log.info(JSON.stringify({ messages: ["error"], code: [-2], error: ['not testable? please submit directly!'] }));
 
       if (argv.testcase) {
         problem.testcase = argv.testcase.replace(/\\n/g, '\n');
@@ -161,13 +161,13 @@ class TestCommand {
       }
 
       if (!problem.testcase)
-        return log.fail(JSON.stringify({ messages: ["error"], code: [-3], error: ['missing testcase?'] }));
+        return log.info(JSON.stringify({ messages: ["error"], code: [-3], error: ['missing testcase?'] }));
 
       problem.file = argv.filename;
       problem.lang = meta.lang;
 
       corePlugin.testProblem(problem, function (e, results) {
-        if (e) return log.fail(e);
+        if (e) return log.info(e);
 
 
         results = _.sortBy(results, x => x.type);
@@ -211,7 +211,7 @@ class TestCommand {
       return that.runTest(argv);
 
     helper.readStdin(function (e, data) {
-      if (e) return log.fail(e);
+      if (e) return log.info(e);
 
       argv.testcase = data;
       return that.runTest(argv);

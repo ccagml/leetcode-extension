@@ -12,7 +12,7 @@ class SessionCommand {
 
 
   printSessions(e, sessions) {
-    if (e) return log.fail(e);
+    if (e) return log.info(e);
 
     log.info(' %6s %5s %18s %28s %16s',
       'Active', 'Id', 'Name', 'AC Questions', 'AC Submits');
@@ -45,19 +45,19 @@ class SessionCommand {
 
     var that = this;
     corePlugin.getSessions(function (e, sessions) {
-      if (e) return log.fail(e);
+      if (e) return log.info(e);
 
       if (argv.keyword) {
         const id = Number(argv.keyword);
         sessions = sessions.filter(x => x.name === argv.keyword || x.id === id);
-        if (sessions.length > 1) return log.fail('Ambiguous sessions?');
+        if (sessions.length > 1) return log.info('Ambiguous sessions?');
 
         const session = sessions[0];
-        if (!session) return log.fail('Session not found!');
+        if (!session) return log.info('Session not found!');
 
         if (argv.enable && !session.is_active) {
           corePlugin.activateSession(session, function (e, sessions) {
-            if (e) return log.fail(e);
+            if (e) return log.info(e);
             require('../session').session.deleteCodingSession();
             that.printSessions(e, sessions);
           });

@@ -12,8 +12,6 @@ import { log } from "../log";
 import { session } from "../session";
 import { MyPluginBase } from "../my_plugin_base";
 import { Queue } from "../queue";
-var spin;
-
 
 class LeetCode extends MyPluginBase {
   id = 10
@@ -646,7 +644,7 @@ class LeetCode extends MyPluginBase {
             required: true
           }
         ], function (e, result) {
-          if (e) return log.fail(e);
+          if (e) return log.info(e);
           const authenticityTokenTwoFactor = body.match(/name="authenticity_token" value="(.*?)"/);
           if (authenticityTokenTwoFactor === null) {
             return cb('Get GitHub two-factor token failed');

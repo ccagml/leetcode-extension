@@ -134,7 +134,7 @@ class SubMission {
 
     if (argv.all) {
       corePlugin.getProblems(false, function (e, problems) {
-        if (e) return log.fail(e);
+        if (e) return log.info(e);
         problems = problems.filter(x => x.state === 'ac' || x.state === 'notac');
         q.addTasks(problems).run();
       });
@@ -142,10 +142,10 @@ class SubMission {
     }
 
     if (!argv.keyword)
-      return log.fail('missing keyword?');
+      return log.info('missing keyword?');
 
     corePlugin.getProblem(argv.keyword, !argv.dontTranslate, function (e, problem) {
-      if (e) return log.fail(e);
+      if (e) return log.info(e);
       q.addTask(problem).run();
     });
   };
