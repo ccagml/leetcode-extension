@@ -82,13 +82,15 @@ class LeetCodeManager extends EventEmitter {
 
                 const leetCodeBinaryPath: string = await leetCodeExecutor.getLeetCodeBinaryPath();
 
-                const childProc: cp.ChildProcess = wsl.useWsl()
-                    ? cp.spawn("wsl", [leetCodeExecutor.node, leetCodeBinaryPath, "user", commandArg], { shell: true })
-                    : cp.spawn(leetCodeExecutor.node, [leetCodeBinaryPath, "user", commandArg], {
+                var childProc: cp.ChildProcess;
+                if (wsl.useWsl()) {
+                    childProc = cp.spawn("wsl", [leetCodeExecutor.node, leetCodeBinaryPath, "user", commandArg], { shell: true })
+                } else {
+                    childProc = cp.spawn(leetCodeExecutor.node, [leetCodeBinaryPath, "user", commandArg], {
                         shell: true,
                         env: createEnvOption(),
                     });
-
+                }
                 childProc.stdout?.on("data", async (data: string | Buffer) => {
                     data = data.toString();
                     // vscode.window.showInformationMessage(`cc login msg ${data}.`);

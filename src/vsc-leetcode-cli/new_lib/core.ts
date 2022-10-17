@@ -16,6 +16,7 @@ function hasTag(o, tag) {
 class CorePlugin extends MyPluginBase {
   id = 99999999
   name = 'core'
+  builtin = true;
   filters = {
     query: {
       alias: 'query',

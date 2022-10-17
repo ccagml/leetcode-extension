@@ -18,6 +18,7 @@ var spin;
 class LeetCode extends MyPluginBase {
   id = 10
   name = 'leetcode'
+  builtin = true;
   constructor() {
     super()
   }
@@ -740,4 +741,4 @@ class LeetCode extends MyPluginBase {
 
 
 
-export const leetCode: LeetCode = new LeetCode();
+export const pluginObj: LeetCode = new LeetCode();

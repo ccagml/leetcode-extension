@@ -8,6 +8,7 @@ import { session } from "../session";
 class RetryPlugin extends MyPluginBase {
   id = 30
   name = 'retry'
+  builtin = true;
   count = {};
 
   canRetry(e, name) {
@@ -83,4 +84,4 @@ class RetryPlugin extends MyPluginBase {
 }
 
 
-export const retryPlugin: RetryPlugin = new RetryPlugin();
+export const pluginObj: RetryPlugin = new RetryPlugin();

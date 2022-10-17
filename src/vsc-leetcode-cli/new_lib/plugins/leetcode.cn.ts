@@ -16,6 +16,7 @@ import { session } from "../session";
 class LeetCodeCn extends MyPluginBase {
   id = 15
   name = 'leetcode.cn'
+  builtin = true;
   constructor() {
     super()
   }
@@ -270,4 +271,4 @@ function checkError(e, resp, expectedStatus) {
   return e;
 }
 
-export const leetCodeCn: LeetCodeCn = new LeetCodeCn();
+export const pluginObj: LeetCodeCn = new LeetCodeCn();

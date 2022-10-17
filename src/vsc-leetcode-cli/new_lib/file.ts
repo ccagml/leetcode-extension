@@ -74,7 +74,7 @@ class File {
 
       let data = null;
       switch (ext) {
-        case '.js': data = require(fullpath); break;
+        case '.js': data = require(fullpath).pluginObj; break;
         case '.json': data = JSON.parse(file.data(fullpath)); break;
       }
       return { name: name, data: data, file: f };

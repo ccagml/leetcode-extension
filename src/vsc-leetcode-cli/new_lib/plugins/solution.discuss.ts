@@ -17,6 +17,7 @@ import { MyPluginBase } from "../my_plugin_base";
 class SolutionDiscuss extends MyPluginBase {
   id = 200
   name = "solution.discuss"
+  builtin = true;
   constructor() {
     super()
   }
@@ -111,4 +112,4 @@ function getSolution(problem, lang, cb) {
   });
 }
 
-export const solutionDiscuss: SolutionDiscuss = new SolutionDiscuss();
+export const pluginObj: SolutionDiscuss = new SolutionDiscuss();

@@ -13,6 +13,7 @@ import { session } from "../session";
 class CachePlugin extends MyPluginBase {
     id = 50
     name = 'cache'
+    builtin = true;
     constructor() {
         super()
     }
@@ -102,4 +103,4 @@ class CachePlugin extends MyPluginBase {
 }
 
 
-export const cachePlugin: CachePlugin = new CachePlugin();
+export const pluginObj: CachePlugin = new CachePlugin();
