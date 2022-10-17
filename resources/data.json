@@ -3762,6 +3762,17 @@
         "ContestID_zh": "\u7b2c 220 \u573a\u5468\u8d5b"
     },
     {
+        "Rating": 1953.137726744,
+        "ID": 2434,
+        "Title": "Using a Robot to Print the Lexicographically Smallest String",
+        "TitleZH": "\u4f7f\u7528\u673a\u5668\u4eba\u6253\u5370\u5b57\u5178\u5e8f\u6700\u5c0f\u7684\u5b57\u7b26\u4e32",
+        "TitleSlug": "using-a-robot-to-print-the-lexicographically-smallest-string",
+        "ContestSlug": "weekly-contest-314",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 314",
+        "ContestID_zh": "\u7b2c 314 \u573a\u5468\u8d5b"
+    },
+    {
         "Rating": 1952.7073399331,
         "ID": 1737,
         "Title": "Change Minimum Characters to Satisfy One of Three Conditions",
@@ -3771,6 +3782,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 225",
         "ContestID_zh": "\u7b2c 225 \u573a\u5468\u8d5b"
+    },
+    {
+        "Rating": 1951.5918682146,
+        "ID": 2435,
+        "Title": "Paths in Matrix Whose Sum Is Divisible by K",
+        "TitleZH": "\u77e9\u9635\u4e2d\u548c\u80fd\u88ab K \u6574\u9664\u7684\u8def\u5f84",
+        "TitleSlug": "paths-in-matrix-whose-sum-is-divisible-by-k",
+        "ContestSlug": "weekly-contest-314",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 314",
+        "ContestID_zh": "\u7b2c 314 \u573a\u5468\u8d5b"
     },
     {
         "Rating": 1951.3509259668,
@@ -11066,6 +11088,17 @@
         "ContestID_zh": "\u7b2c 205 \u573a\u5468\u8d5b"
     },
     {
+        "Rating": 1366.6789652398,
+        "ID": 2433,
+        "Title": "Find The Original Array of Prefix Xor",
+        "TitleZH": "\u627e\u51fa\u524d\u7f00\u5f02\u6216\u7684\u539f\u59cb\u6570\u7ec4",
+        "TitleSlug": "find-the-original-array-of-prefix-xor",
+        "ContestSlug": "weekly-contest-314",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 314",
+        "ContestID_zh": "\u7b2c 314 \u573a\u5468\u8d5b"
+    },
+    {
         "Rating": 1365.2269076492,
         "ID": 2231,
         "Title": "Largest Number After Digit Swaps by Parity",
@@ -12901,6 +12934,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 166",
         "ContestID_zh": "\u7b2c 166 \u573a\u5468\u8d5b"
+    },
+    {
+        "Rating": 1266.7001363197,
+        "ID": 2432,
+        "Title": "The Employee That Worked on the Longest Task",
+        "TitleZH": "\u5904\u7406\u7528\u65f6\u6700\u957f\u7684\u90a3\u4e2a\u4efb\u52a1\u7684\u5458\u5de5",
+        "TitleSlug": "the-employee-that-worked-on-the-longest-task",
+        "ContestSlug": "weekly-contest-314",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 314",
+        "ContestID_zh": "\u7b2c 314 \u573a\u5468\u8d5b"
     },
     {
         "Rating": 1266.341468955,
