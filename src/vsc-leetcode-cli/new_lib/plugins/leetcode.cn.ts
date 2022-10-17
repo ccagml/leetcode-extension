@@ -5,7 +5,7 @@ import { MyPluginBase } from "../my_plugin_base";
 var request = require('request');
 
 import { config } from "../config";
-import { helper } from "../helper";
+
 // import { log } from "../log";
 import { session } from "../session";
 
@@ -24,7 +24,7 @@ class LeetCodeCn extends MyPluginBase {
     config.fix_cn()
   };
 
-  getProblems(needTranslation, cb) {
+  getProblems = (needTranslation, cb) => {
     var that = this;
     this.next.getProblems(needTranslation, function (e, problems) {
       if (e) return cb(e);
@@ -48,7 +48,7 @@ class LeetCodeCn extends MyPluginBase {
     });
   };
 
-  getProblemsTitle = function (cb) {
+  getProblemsTitle = (cb) => {
 
     const opts = makeOpts(config.sys.urls.graphql);
     opts.headers.Origin = config.sys.urls.base;
@@ -69,9 +69,9 @@ class LeetCodeCn extends MyPluginBase {
       operationName: 'getQuestionTranslation'
     };
 
-    const spin = helper.spin('Downloading questions titles');
+
     request.post(opts, function (e, resp, body) {
-      spin.stop();
+
       e = checkError(e, resp, 200);
       if (e) return cb(e);
 
@@ -84,7 +84,7 @@ class LeetCodeCn extends MyPluginBase {
     });
   };
 
-  getQuestionOfToday = function (cb) {
+  getQuestionOfToday = (cb) => {
 
     const opts = makeOpts(config.sys.urls.graphql);
     opts.headers.Origin = config.sys.urls.base;
@@ -120,9 +120,9 @@ class LeetCodeCn extends MyPluginBase {
       ].join('\n'),
     };
 
-    const spin = helper.spin('Downloading today question');
+
     request.post(opts, function (e, resp, body) {
-      spin.stop();
+
       e = checkError(e, resp, 200);
       if (e) return cb(e);
       var result: any = {}
@@ -134,7 +134,7 @@ class LeetCodeCn extends MyPluginBase {
       return cb(null, result);
     });
   };
-  getUserContestP = function (username, cb) {
+  getUserContestP = (username, cb) => {
 
     const opts = makeOpts(config.sys.urls.noj_go);
     opts.headers.Origin = config.sys.urls.base;
@@ -174,9 +174,9 @@ class LeetCodeCn extends MyPluginBase {
       ].join('\n'),
     };
 
-    const spin = helper.spin('Downloading userContest');
+
     request.post(opts, function (e, resp, body) {
-      spin.stop();
+
       e = checkError(e, resp, 200);
       if (e) return cb(e);
 
@@ -184,7 +184,7 @@ class LeetCodeCn extends MyPluginBase {
     });
   };
 
-  getTestApi = function (value, cb) {
+  getTestApi = (value, cb) => {
 
     const opts = makeOpts(config.sys.urls.graphql);
     opts.headers.Origin = config.sys.urls.base;
@@ -220,9 +220,9 @@ class LeetCodeCn extends MyPluginBase {
       ].join('\n'),
     };
 
-    const spin = helper.spin('Downloading ');
+
     request.post(opts, function (e, resp, body) {
-      spin.stop();
+
       e = checkError(e, resp, 200);
       if (e) return cb(e);
       let result = {}

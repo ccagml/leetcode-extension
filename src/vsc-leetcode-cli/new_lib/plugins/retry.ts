@@ -11,12 +11,12 @@ class RetryPlugin extends MyPluginBase {
   builtin = true;
   count = {};
 
-  canRetry(e, name) {
+  canRetry = (e, name) => {
     return config.autologin.enable &&
       (e === session.errors.EXPIRED) &&
       (this.count[name] || 0) < config.autologin.retry;
   }
-  init() {
+  init = () => {
     const names = [
       'activateSession',
       'createSession',
@@ -63,7 +63,7 @@ class RetryPlugin extends MyPluginBase {
   // which means once you login on web, your cli session will get
   // expired immediately. In that case we will try to re-login in
   // the backend to give a seamless user experience.
-  relogin(cb) {
+  relogin = (cb) => {
 
     const user = session.getUser();
     if (!user) {

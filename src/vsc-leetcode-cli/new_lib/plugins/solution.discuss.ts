@@ -23,7 +23,7 @@ class SolutionDiscuss extends MyPluginBase {
   }
 
 
-  getProblem(problem, needTranslation, cb) {
+  getProblem = (problem, needTranslation, cb) => {
 
     this.next.getProblem(problem, needTranslation, function (e, problem) {
       if (e || !session.argv.solution) return cb(e, problem);

@@ -4,14 +4,12 @@ import { log } from "../log";
 import { corePlugin } from "../core";
 import { session } from "../session";
 
-
-
 class ListCommand {
   constructor() {
 
   }
 
-  process_argv = function (argv) {
+  process_argv(argv) {
     var argv_config = helper.base_argv().option('q', corePlugin.filters.query)
       .option('s', {
         alias: 'stat',
@@ -43,9 +41,8 @@ class ListCommand {
     return argv_config.get_result()
   }
 
-  handler = function (argv) {
+  handler(argv) {
     session.argv = argv;
-    var a = corePlugin
     corePlugin.filterProblems(argv, function (e, problems) {
       if (e) return log.fail(e);
 

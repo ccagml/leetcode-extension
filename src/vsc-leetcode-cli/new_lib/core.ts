@@ -45,14 +45,9 @@ class CorePlugin extends MyPluginBase {
     super();
   }
 
-  init() {
 
-  }
-  save() {
 
-  }
-
-  filterProblems(opts, cb) {
+  filterProblems = (opts, cb) => {
     this.getProblems(!opts.dontTranslate, function (e, problems) {
       if (e) return cb(e);
 
@@ -73,7 +68,7 @@ class CorePlugin extends MyPluginBase {
       return cb(null, problems);
     });
   };
-  getProblem(keyword, needTranslation, cb) {
+  public getProblem = (keyword, needTranslation, cb) => {
     var that = this;
     this.getProblems(needTranslation, function (e, problems) {
       if (e) return cb(e);
@@ -93,7 +88,7 @@ class CorePlugin extends MyPluginBase {
     });
   };
 
-  starProblem(problem, starred, cb) {
+  starProblem = (problem, starred, cb) => {
     if (problem.starred === starred) {
 
       return cb(null, starred);
@@ -102,7 +97,7 @@ class CorePlugin extends MyPluginBase {
     this.next.starProblem(problem, starred, cb);
   };
 
-  exportProblem(problem, opts) {
+  exportProblem = (problem, opts) => {
     const data = _.extend({}, problem);
 
     // unify format before rendering
@@ -129,29 +124,26 @@ class CorePlugin extends MyPluginBase {
     return file.render(opts.tpl, data);
   };
 
-  getTodayQuestion(cb) {
+  getTodayQuestion = (cb) => {
     this.getQuestionOfToday(function (e, result) {
       if (e) return cb(e);
       return cb(null, result);
     });
   }
-  getQueryZ(username, cb) {
+  getQueryZ = (username, cb) => {
     this.getTestApi(username, function (e, result) {
       if (e) return cb(e);
       return cb(null, result);
     });
   }
 
-  getUserContest(username, cb) {
+  getUserContest = (username, cb) => {
     this.getUserContestP(username, function (e, result) {
       if (e) return cb(e);
       return cb(null, result);
     });
   }
 }
-
-// const core = EXPlugin(99999999, 'core', '20170722', 'Plugins manager', undefined);
-
 
 
 const isLevel = (x, q) => x.level[0].toLowerCase() === q.toLowerCase();

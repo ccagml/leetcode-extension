@@ -61,7 +61,7 @@ class LeetCode extends MyPluginBase {
     config.app = 'leetcode';
   };
 
-  getProblems(needTranslation, cb) {
+  getProblems = (needTranslation, cb) => {
     this.test_sub(needTranslation)
     var that = this;
     let problems = [];
@@ -78,19 +78,18 @@ class LeetCode extends MyPluginBase {
       });
     };
 
-    spin = helper.spin('Downloading problems');
+
     const q = new Queue(config.sys.categories, {}, getCategory);
     q.run(null, function (e) {
-      spin.stop();
+
       return cb(e, problems);
     });
   };
 
-  getCategoryProblems(category, cb) {
+  getCategoryProblems = (category, cb) => {
 
     const opts = this.makeOpts(config.sys.urls.problems.replace('$category', category));
 
-    spin.text = 'Downloading category ' + category;
     var that = this
     request(opts, function (e, resp, body) {
       e = that.checkError(e, resp, 200);
@@ -126,7 +125,7 @@ class LeetCode extends MyPluginBase {
     });
   };
 
-  getProblem(problem, needTranslation, cb) {
+  getProblem = (problem, needTranslation, cb) => {
 
     const user = session.getUser();
     if (problem.locked && !user.paid) return cb('failed to load locked problem!');
@@ -156,10 +155,10 @@ class LeetCode extends MyPluginBase {
       operationName: 'getQuestionDetail'
     };
 
-    const spin = helper.spin('Downloading ' + problem.slug);
+
     var that = this
     request.post(opts, function (e, resp, body) {
-      spin.stop();
+
       e = that.checkError(e, resp, 200);
       if (e) return cb(e);
 
@@ -183,7 +182,7 @@ class LeetCode extends MyPluginBase {
       return cb(null, problem);
     });
   };
-  runCode(opts, problem, cb) {
+  runCode = (opts, problem, cb) => {
     opts.method = 'POST';
     opts.headers.Origin = config.sys.urls.base;
     opts.headers.Referer = problem.link;
@@ -198,10 +197,10 @@ class LeetCode extends MyPluginBase {
       typed_code: file.codeData(problem.file)
     });
 
-    const spin = helper.spin('Sending code to judge');
+
     var that = this
     request(opts, function (e, resp, body) {
-      spin.stop();
+
       e = that.checkError(e, resp, 200);
       if (e) return cb(e);
 
@@ -224,15 +223,15 @@ class LeetCode extends MyPluginBase {
   }
 
 
-  verifyResult(task, queue, cb) {
+  verifyResult = (task, queue, cb) => {
     const opts = queue.ctx.opts;
     opts.method = 'GET';
     opts.url = config.sys.urls.verify.replace('$id', task.id);
 
-    const spin = helper.spin('Waiting for judge result');
+
     var that = this;
     request(opts, function (e, resp, body) {
-      spin.stop();
+
       e = that.checkError(e, resp, 200);
       if (e) return cb(e);
 
@@ -248,7 +247,7 @@ class LeetCode extends MyPluginBase {
     });
   }
 
-  formatResult(result) {
+  formatResult = (result) => {
     const x: any = {
       ok: result.run_success,
       lang: result.lang,
@@ -292,7 +291,7 @@ class LeetCode extends MyPluginBase {
     return x;
   }
 
-  testProblem(problem, cb) {
+  testProblem = (problem, cb) => {
 
     const opts = this.makeOpts(config.sys.urls.test.replace('$slug', problem.slug));
     opts.body = { data_input: problem.testcase };
@@ -315,7 +314,7 @@ class LeetCode extends MyPluginBase {
     });
   };
 
-  submitProblem(problem, cb) {
+  submitProblem = (problem, cb) => {
 
     const opts = this.makeOpts(config.sys.urls.submit.replace('$slug', problem.slug));
     opts.body = { judge_type: 'large' };
@@ -331,7 +330,7 @@ class LeetCode extends MyPluginBase {
     });
   };
 
-  getSubmissions(problem, cb) {
+  getSubmissions = (problem, cb) => {
 
     const opts = this.makeOpts(config.sys.urls.submissions.replace('$slug', problem.slug));
     opts.headers.Referer = config.sys.urls.problem.replace('$slug', problem.slug);
@@ -349,7 +348,7 @@ class LeetCode extends MyPluginBase {
     });
   };
 
-  getSubmission(submission, cb) {
+  getSubmission = (submission, cb) => {
 
     const opts = this.makeOpts(config.sys.urls.submission.replace('$id', submission.id));
     var that = this
@@ -366,7 +365,7 @@ class LeetCode extends MyPluginBase {
     });
   };
 
-  starProblem(problem, starred, cb) {
+  starProblem = (problem, starred, cb) => {
 
     const user = session.getUser();
     const operationName = starred ? 'addQuestionToFavorite' : 'removeQuestionFromFavorite';
@@ -381,25 +380,25 @@ class LeetCode extends MyPluginBase {
       operationName: operationName
     };
 
-    const spin = helper.spin(starred ? 'star' : 'unstar' + 'problem');
+
     var that = this;
     request.post(opts, function (e, resp, body) {
       that.test_sub(body)
-      spin.stop();
+
       e = that.checkError(e, resp, 200);
       if (e) return cb(e);
       return cb(null, starred);
     });
   };
 
-  getFavorites(cb) {
+  getFavorites = (cb) => {
 
     const opts = this.makeOpts(config.sys.urls.favorites);
 
-    const spin = helper.spin('Retrieving user favorites');
+
     var that = this;
     request(opts, function (e, resp, body) {
-      spin.stop();
+
       e = that.checkError(e, resp, 200);
       if (e) return cb(e);
 
@@ -408,7 +407,7 @@ class LeetCode extends MyPluginBase {
     });
   };
 
-  getUserInfo(cb) {
+  getUserInfo = (cb) => {
     var that = this;
     const opts = this.makeOpts(config.sys.urls.graphql);
     opts.headers.Origin = config.sys.urls.base;
@@ -426,9 +425,9 @@ class LeetCode extends MyPluginBase {
       variables: {}
     };
 
-    const spin = helper.spin('Retrieving user profile');
+
     request.post(opts, function (e, resp, body) {
-      spin.stop();
+
       e = that.checkError(e, resp, 200);
       if (e) return cb(e);
 
@@ -438,16 +437,16 @@ class LeetCode extends MyPluginBase {
   };
 
 
-  runSession(method, data, cb) {
+  runSession = (method, data, cb) => {
     const opts = this.makeOpts(config.sys.urls.session);
     opts.json = true;
     opts.method = method;
     opts.body = data;
 
-    const spin = helper.spin('Waiting session result');
+
     var that = this;
     request(opts, function (e, resp, body) {
-      spin.stop();
+
       e = that.checkError(e, resp, 200);
       if (e && e.statusCode === 302) e = session.errors.EXPIRED;
 
@@ -455,29 +454,29 @@ class LeetCode extends MyPluginBase {
     });
   }
 
-  getSessions(cb) {
+  getSessions = (cb) => {
 
     this.runSession('POST', {}, cb);
   };
 
-  activateSession(session, cb) {
+  activateSession = (session, cb) => {
     const data = { func: 'activate', target: session.id };
     this.runSession('PUT', data, cb);
   };
 
-  createSession(name, cb) {
+  createSession = (name, cb) => {
 
     const data = { func: 'create', name: name };
     this.runSession('PUT', data, cb);
   };
 
-  deleteSession(session, cb) {
+  deleteSession = (session, cb) => {
 
     const data = { target: session.id };
     this.runSession('DELETE', data, cb);
   };
 
-  signin(user, cb) {
+  signin = (user, cb) => {
     const isCN = config.app === 'leetcode.cn';
     const spin = isCN ? helper.spin('Signing in leetcode.cn') : helper.spin('Signing in leetcode.com');
     var that = this;
@@ -515,7 +514,7 @@ class LeetCode extends MyPluginBase {
     });
   };
 
-  getUser(user, cb) {
+  getUser = (user, cb) => {
     var that = this;
     this.getFavorites(function (e, favorites) {
       if (!e) {
@@ -541,7 +540,7 @@ class LeetCode extends MyPluginBase {
     });
   };
 
-  login(user, cb) {
+  login = (user, cb) => {
     var that = this;
     that.signin(user, function (e, user) {
       if (e) return cb(e);
@@ -549,7 +548,7 @@ class LeetCode extends MyPluginBase {
     });
   };
 
-  parseCookie(cookie, cb) {
+  parseCookie = (cookie, cb) => {
     const SessionPattern = /LEETCODE_SESSION=(.+?)(;|$)/;
     const csrfPattern = /csrftoken=(.+?)(;|$)/;
     const reCsrfResult = csrfPattern.exec(cookie);
@@ -563,7 +562,7 @@ class LeetCode extends MyPluginBase {
     };
   }
 
-  requestLeetcodeAndSave(request, leetcodeUrl, user, cb) {
+  requestLeetcodeAndSave = (request, leetcodeUrl, user, cb) => {
     var that = this;
     request.get({ url: leetcodeUrl }, function (e, resp, body) {
       that.test_sub(e)
@@ -580,7 +579,7 @@ class LeetCode extends MyPluginBase {
     });
   }
 
-  cookieLogin(user, cb) {
+  cookieLogin = (user, cb) => {
     const cookieData = this.parseCookie(user.cookie, cb);
     user.sessionId = cookieData.sessionId;
     user.sessionCSRF = cookieData.sessionCSRF;
@@ -588,7 +587,7 @@ class LeetCode extends MyPluginBase {
     this.getUser(user, cb);
   };
 
-  githubLogin(user, cb) {
+  githubLogin = (user, cb) => {
     const urls = config.sys.urls;
     const leetcodeUrl = urls.github_login;
     const _request = request.defaults({ jar: true });
@@ -678,7 +677,7 @@ class LeetCode extends MyPluginBase {
     });
   };
 
-  linkedinLogin(user, cb) {
+  linkedinLogin = (user, cb) => {
     const urls = config.sys.urls;
     const leetcodeUrl = urls.linkedin_login;
     const _request = request.defaults({

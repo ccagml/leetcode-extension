@@ -18,7 +18,7 @@ class CachePlugin extends MyPluginBase {
         super()
     }
 
-    clearCacheIfTchanged(needTranslation) {
+    clearCacheIfTchanged = (needTranslation) => {
         const translationConfig = cache.get(helper.KEYS.translation);
         if (!translationConfig || translationConfig['useEndpointTranslation'] != needTranslation) {
             cache.deleteAll();
@@ -27,7 +27,7 @@ class CachePlugin extends MyPluginBase {
         }
     }
 
-    public getProblems(needTranslation, cb) {
+    public getProblems = (needTranslation, cb) => {
         this.clearCacheIfTchanged(needTranslation);
         const problems = cache.get(helper.KEYS.problems);
         if (problems) {
@@ -41,7 +41,7 @@ class CachePlugin extends MyPluginBase {
         });
     };
 
-    public getProblem(problem, needTranslation, cb) {
+    public getProblem = (problem, needTranslation, cb) => {
         this.clearCacheIfTchanged(needTranslation);
         const k = helper.KEYS.problem(problem);
         const _problem = cache.get(k);
@@ -65,7 +65,7 @@ class CachePlugin extends MyPluginBase {
         });
     };
 
-    saveProblem(problem) {
+    saveProblem = (problem) => {
         // it would be better to leave specific problem cache being user
         // independent, thus try to reuse existing cache as much as possible
         // after changing user.
@@ -73,7 +73,7 @@ class CachePlugin extends MyPluginBase {
         return cache.set(helper.KEYS.problem(problem), _problem);
     };
 
-    updateProblem(problem, kv) {
+    updateProblem = (problem, kv) => {
         const problems = cache.get(helper.KEYS.problems);
         if (!problems) return false;
 
@@ -84,7 +84,7 @@ class CachePlugin extends MyPluginBase {
         return cache.set(helper.KEYS.problems, problems);
     };
 
-    login(user, cb) {
+    login = (user, cb) => {
         this.logout(user, false);
         this.next.login(user, function (e, user) {
             if (e) return cb(e);
@@ -93,7 +93,7 @@ class CachePlugin extends MyPluginBase {
         });
     };
 
-    logout = function (user, purge) {
+    logout = (user, purge) => {
         if (!user) user = session.getUser();
         if (purge) session.deleteUser();
         // NOTE: need invalidate any user related cache
