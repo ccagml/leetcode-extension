@@ -34,6 +34,9 @@ class LeetCodeManager extends EventEmitter {
             const result: string = await leetCodeExecutor.getUserInfo();
             this.currentUser = this.tryParseUserName(result);
             this.userStatus = UserStatus.SignedIn;
+            if (this.currentUser == undefined) {
+                this.userStatus = UserStatus.SignedOut;
+            }
         } catch (error) {
             this.currentUser = undefined;
             this.userStatus = UserStatus.SignedOut;
@@ -82,13 +85,15 @@ class LeetCodeManager extends EventEmitter {
 
                 const leetCodeBinaryPath: string = await leetCodeExecutor.getLeetCodeBinaryPath();
 
-                const childProc: cp.ChildProcess = wsl.useWsl()
-                    ? cp.spawn("wsl", [leetCodeExecutor.node, leetCodeBinaryPath, "user", commandArg], { shell: true })
-                    : cp.spawn(leetCodeExecutor.node, [leetCodeBinaryPath, "user", commandArg], {
+                var childProc: cp.ChildProcess;
+                if (wsl.useWsl()) {
+                    childProc = cp.spawn("wsl", [leetCodeExecutor.node, leetCodeBinaryPath, "user", commandArg], { shell: true })
+                } else {
+                    childProc = cp.spawn(leetCodeExecutor.node, [leetCodeBinaryPath, "user", commandArg], {
                         shell: true,
                         env: createEnvOption(),
                     });
-
+                }
                 childProc.stdout?.on("data", async (data: string | Buffer) => {
                     data = data.toString();
                     // vscode.window.showInformationMessage(`cc login msg ${data}.`);
@@ -191,7 +196,7 @@ class LeetCodeManager extends EventEmitter {
         return this.currentUser;
     }
 
-    private tryParseUserName(output: string): string {
+    private tryParseUserName(output: string): string | undefined {
         var successMatch;
         try {
             successMatch = JSON.parse(output);
@@ -201,7 +206,7 @@ class LeetCodeManager extends EventEmitter {
         if (successMatch.code == 100) {
             return successMatch.user_name;
         }
-        return "Unknown";
+        return undefined;
     }
 }
 
