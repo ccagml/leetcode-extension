@@ -167,7 +167,7 @@ class TestCommand {
       problem.lang = meta.lang;
 
       corePlugin.testProblem(problem, function (e, results) {
-        if (e) return log.info(e);
+        if (e) return log.info(JSON.stringify(e));
 
 
         results = _.sortBy(results, x => x.type);
