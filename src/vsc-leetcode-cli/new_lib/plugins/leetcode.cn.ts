@@ -6,12 +6,7 @@ var request = require('request');
 
 import { config } from "../config";
 
-// import { log } from "../log";
 import { session } from "../session";
-
-
-// var plugin = new Plugin(15, 'leetcode.cn', '',
-//   'Plugin to talk with leetcode-cn APIs.');
 
 class LeetCodeCn extends MyPluginBase {
   id = 15

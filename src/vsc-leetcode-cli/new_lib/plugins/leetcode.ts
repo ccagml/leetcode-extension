@@ -21,10 +21,6 @@ class LeetCode extends MyPluginBase {
     super()
   }
 
-  test_sub(a) {
-    log.info(a)
-  }
-
   signOpts(opts, user) {
     opts.headers.Cookie = 'LEETCODE_SESSION=' + user.sessionId +
       ';csrftoken=' + user.sessionCSRF + ';';
@@ -59,12 +55,10 @@ class LeetCode extends MyPluginBase {
     config.app = 'leetcode';
   };
 
-  getProblems = (needTranslation, cb) => {
-    this.test_sub(needTranslation)
+  getProblems = (_, cb) => {
     var that = this;
     let problems = [];
-    const getCategory = function (category, queue, cb) {
-      that.test_sub(queue)
+    const getCategory = function (category, _, cb) {
       that.getCategoryProblems(category, function (e, _problems) {
         if (e) {
 
@@ -380,8 +374,7 @@ class LeetCode extends MyPluginBase {
 
 
     var that = this;
-    request.post(opts, function (e, resp, body) {
-      that.test_sub(body)
+    request.post(opts, function (e, resp, _) {
 
       e = that.checkError(e, resp, 200);
       if (e) return cb(e);
@@ -478,8 +471,7 @@ class LeetCode extends MyPluginBase {
     const isCN = config.app === 'leetcode.cn';
     const spin = isCN ? helper.spin('Signing in leetcode.cn') : helper.spin('Signing in leetcode.com');
     var that = this;
-    request(config.sys.urls.login, function (e, resp, body) {
-      that.test_sub(body)
+    request(config.sys.urls.login, function (e, resp, _) {
       spin.stop();
       e = that.checkError(e, resp, 200);
       if (e) return cb(e);
@@ -499,8 +491,7 @@ class LeetCode extends MyPluginBase {
           password: user.pass
         }
       };
-      request.post(opts, function (e, resp, body) {
-        that.test_sub(body)
+      request.post(opts, function (e, resp, _) {
         if (e) return cb(e);
         if (resp.statusCode !== 302) return cb('invalid password?');
 
@@ -562,9 +553,7 @@ class LeetCode extends MyPluginBase {
 
   requestLeetcodeAndSave = (request, leetcodeUrl, user, cb) => {
     var that = this;
-    request.get({ url: leetcodeUrl }, function (e, resp, body) {
-      that.test_sub(e)
-      that.test_sub(body)
+    request.get({ url: leetcodeUrl }, function (_, resp, __) {
       const redirectUri = resp.request.uri.href;
       if (redirectUri !== config.sys.urls.leetcode_redirect) {
         return cb('Login failed. Please make sure the credential is correct.');
@@ -590,9 +579,8 @@ class LeetCode extends MyPluginBase {
     const leetcodeUrl = urls.github_login;
     const _request = request.defaults({ jar: true });
     var that = this;
-    _request(urls.github_login_request, function (e, resp, body) {
-      that.test_sub(e)
-      that.test_sub(resp)
+    _request(urls.github_login_request, function (_, __, body) {
+
       const authenticityToken = body.match(/name="authenticity_token" value="(.*?)"/);
       let gaId = body.match(/name="ga_id" value="(.*?)"/);
       if (!gaId) {
@@ -627,8 +615,8 @@ class LeetCode extends MyPluginBase {
           'timestamp_secret': timestampSecret[1],
         },
       };
-      _request(options, function (e, resp, body) {
-        that.test_sub(e)
+      _request(options, function (_, resp, body) {
+
         if (resp.statusCode !== 200) {
           return cb('GitHub login failed');
         }
@@ -662,9 +650,8 @@ class LeetCode extends MyPluginBase {
               'utf8': encodeURIComponent('✓'),
             },
           };
-          _request(optionsTwoFactor, function (e, resp, body) {
-            that.test_sub(e)
-            that.test_sub(body)
+          _request(optionsTwoFactor, function (_, resp, __) {
+
             if (resp.request.uri.href === urls.github_tf_session_request) {
               return cb('Invalid two-factor code please check');
             }
@@ -685,8 +672,8 @@ class LeetCode extends MyPluginBase {
       }
     });
     var that = this;
-    _request(urls.linkedin_login_request, function (e, resp, body) {
-      that.test_sub(e)
+    _request(urls.linkedin_login_request, function (_, resp, body) {
+
       if (resp.statusCode !== 200) {
         return cb('Get LinkedIn session failed');
       }
@@ -723,9 +710,8 @@ class LeetCode extends MyPluginBase {
           'loginFlow': 'REMEMBER_ME_OPTIN'
         },
       };
-      _request(options, function (e, resp, body) {
-        that.test_sub(body)
-        that.test_sub(e)
+      _request(options, function (_, resp, __) {
+
         if (resp.statusCode !== 200) {
           return cb('LinkedIn login failed');
         }
