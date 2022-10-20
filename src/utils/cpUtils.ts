@@ -26,7 +26,14 @@ export async function executeCommand(command: string, args: string[], options: c
         childProc.on("error", reject);
 
         childProc.on("close", (code: number) => {
-            if (code !== 0 || result.indexOf("ERROR") > -1) {
+
+            var try_result_json;
+            try {
+                try_result_json = JSON.parse(result);
+            } catch (e) {
+                try_result_json;
+            }
+            if (code !== 0 || (try_result_json ? try_result_json.code < 0 : (result.indexOf("ERROR") > -1))) {
                 const error: IExecError = new Error(`Command "${command} ${args.toString()}" failed with exit code "${code}".`);
                 if (result) {
                     error.result = result; // leetcode-cli may print useful content by exit with error code
