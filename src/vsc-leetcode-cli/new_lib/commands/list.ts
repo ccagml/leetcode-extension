@@ -45,10 +45,17 @@ class ListCommand {
     session.argv = argv;
     corePlugin.filterProblems(argv, function (e, problems) {
       if (e) return log.info(e);
-
-
-      log.info(JSON.stringify(problems));
-
+      let new_objcet: Array<any> = [];
+      problems.forEach(element => {
+        let temp_ele: any = {}
+        for (const key in element) {
+          if (key != "link") {
+            temp_ele[key] = element[key]
+          }
+        }
+        new_objcet.push(temp_ele);
+      });
+      log.info(JSON.stringify(new_objcet));
     });
   };
 }
