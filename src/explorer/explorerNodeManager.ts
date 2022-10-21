@@ -71,6 +71,8 @@ class ExplorerNodeManager implements Disposable {
             if (element.type == SearchSetType.Day) {
                 if (day_start <= element.time && element.time <= day_end) {
                     need_get_today = false;
+                } else {
+                    this.waitTodayQuestion = false
                 }
             }
         });
