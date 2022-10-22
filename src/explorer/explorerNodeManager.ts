@@ -145,7 +145,7 @@ class ExplorerNodeManager implements Disposable {
         ];
         this.searchSet.forEach(element => {
             if (element.type == SearchSetType.Day) {
-                const curDate = new Date()
+                const curDate = new Date(element.time * 1000)
                 baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
                     id: element.type,
                     name: "[" + (curDate.getFullYear()) + "-" + (curDate.getMonth() + 1) + "-" + (curDate.getDate()) + "]" + SearchSetTypeName[SearchSetType.Day],
