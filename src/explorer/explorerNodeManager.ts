@@ -71,6 +71,8 @@ class ExplorerNodeManager implements Disposable {
             if (element.type == SearchSetType.Day) {
                 if (day_start <= element.time && element.time <= day_end) {
                     need_get_today = false;
+                } else {
+                    this.waitTodayQuestion = false
                 }
             }
         });
@@ -143,7 +145,7 @@ class ExplorerNodeManager implements Disposable {
         ];
         this.searchSet.forEach(element => {
             if (element.type == SearchSetType.Day) {
-                const curDate = new Date()
+                const curDate = new Date(element.time * 1000)
                 baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
                     id: element.type,
                     name: "[" + (curDate.getFullYear()) + "-" + (curDate.getMonth() + 1) + "-" + (curDate.getDate()) + "]" + SearchSetTypeName[SearchSetType.Day],

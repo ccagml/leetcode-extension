@@ -16,7 +16,7 @@ export class LeetCodeStatusBarItem implements vscode.Disposable {
         switch (status) {
             case UserStatus.SignedIn:
                 if (UserContestInfo && UserContestInfo.attendedContestsCount > 0) {
-                    this.statusBarItem.text = `用户: ${user}, 积分: ${UserContestInfo.rating}, 名次: ${UserContestInfo.localRanking} / ${UserContestInfo.localTotalParticipants} (${UserContestInfo.topPercentage}%), 全部名次: ${UserContestInfo.globalRanking} / ${UserContestInfo.globalTotalParticipants}`;
+                    this.statusBarItem.text = `用户: ${user}, 积分: ${Math.floor(UserContestInfo.rating)}, 名次: ${UserContestInfo.localRanking} / ${UserContestInfo.localTotalParticipants} (${UserContestInfo.topPercentage}%), 全部名次: ${UserContestInfo.globalRanking} / ${UserContestInfo.globalTotalParticipants}`;
                 } else {
                     this.statusBarItem.text = `user: ${user}`;
                 }

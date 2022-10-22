@@ -33,25 +33,25 @@ export async function getSessionList(): Promise<ISession[]> {
 }
 
 export async function manageSessions(): Promise<void> {
-    const choice: IQuickItemEx<ISession | string> | undefined = await vscode.window.showQuickPick(parseSessionsToPicks(true /* includeOperation */));
-    if (!choice || choice.description === "Active") {
-        return;
-    }
-    if (choice.value === ":createSession") {
-        await createSession();
-        return;
-    }
-    if (choice.value === ":deleteSession") {
-        await deleteSession();
-        return;
-    }
-    try {
-        await leetCodeExecutor.enableSession((choice.value as ISession).id);
-        vscode.window.showInformationMessage(`Successfully switched to session '${choice.label}'.`);
-        await vscode.commands.executeCommand("leetcode.refreshExplorer");
-    } catch (error) {
-        await promptForOpenOutputChannel("Failed to switch session. Please open the output channel for details.", DialogType.error);
-    }
+    // const choice: IQuickItemEx<ISession | string> | undefined = await vscode.window.showQuickPick(parseSessionsToPicks(true /* includeOperation */));
+    // if (!choice || choice.description === "Active") {
+    //     return;
+    // }
+    // if (choice.value === ":createSession") {
+    //     await createSession();
+    //     return;
+    // }
+    // if (choice.value === ":deleteSession") {
+    //     await deleteSession();
+    //     return;
+    // }
+    // try {
+    //     await leetCodeExecutor.enableSession((choice.value as ISession).id);
+    //     vscode.window.showInformationMessage(`Successfully switched to session '${choice.label}'.`);
+    //     await vscode.commands.executeCommand("leetcode.refreshExplorer");
+    // } catch (error) {
+    //     await promptForOpenOutputChannel("Failed to switch session. Please open the output channel for details.", DialogType.error);
+    // }
 }
 
 async function parseSessionsToPicks(includeOperations: boolean = false): Promise<Array<IQuickItemEx<ISession | string>>> {
