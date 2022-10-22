@@ -605,6 +605,17 @@
         "ContestID_zh": "\u7b2c 60 \u573a\u53cc\u5468\u8d5b"
     },
     {
+        "Rating": 2460.3152437576,
+        "ID": 2440,
+        "Title": "Create Components With Same Value",
+        "TitleZH": "\u521b\u5efa\u4ef7\u503c\u76f8\u540c\u7684\u8fde\u901a\u5757",
+        "TitleSlug": "create-components-with-same-value",
+        "ContestSlug": "biweekly-contest-89",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 89",
+        "ContestID_zh": "\u7b2c 89 \u573a\u53cc\u5468\u8d5b"
+    },
+    {
         "Rating": 2457.115574186,
         "ID": 1782,
         "Title": "Count Pairs Of Nodes",
@@ -2442,6 +2453,17 @@
         "ContestID_zh": "\u7b2c 309 \u573a\u5468\u8d5b"
     },
     {
+        "Rating": 2092.5366031561,
+        "ID": 2444,
+        "Title": "Count Subarrays With Fixed Bounds",
+        "TitleZH": "\u7edf\u8ba1\u5b9a\u754c\u5b50\u6570\u7ec4\u7684\u6570\u76ee",
+        "TitleSlug": "count-subarrays-with-fixed-bounds",
+        "ContestSlug": "weekly-contest-315",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 315",
+        "ContestID_zh": "\u7b2c 315 \u573a\u5468\u8d5b"
+    },
+    {
         "Rating": 2092.4861692502,
         "ID": 1049,
         "Title": "Last Stone Weight II",
@@ -3672,6 +3694,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Weekly Contest 254",
         "ContestID_zh": "\u7b2c 254 \u573a\u5468\u8d5b"
+    },
+    {
+        "Rating": 1965.1266122355,
+        "ID": 2439,
+        "Title": "Minimize Maximum of Array",
+        "TitleZH": "\u6700\u5c0f\u5316\u6570\u7ec4\u4e2d\u7684\u6700\u5927\u503c",
+        "TitleSlug": "minimize-maximum-of-array",
+        "ContestSlug": "biweekly-contest-89",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 89",
+        "ContestID_zh": "\u7b2c 89 \u573a\u53cc\u5468\u8d5b"
     },
     {
         "Rating": 1964.3793590858,
@@ -7777,6 +7810,17 @@
         "ContestID_zh": "\u7b2c 40 \u573a\u53cc\u5468\u8d5b"
     },
     {
+        "Rating": 1609.7858209851,
+        "ID": 2438,
+        "Title": "Range Product Queries of Powers",
+        "TitleZH": "\u4e8c\u7684\u5e42\u6570\u7ec4\u4e2d\u67e5\u8be2\u8303\u56f4\u5185\u7684\u4e58\u79ef",
+        "TitleSlug": "range-product-queries-of-powers",
+        "ContestSlug": "biweekly-contest-89",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 89",
+        "ContestID_zh": "\u7b2c 89 \u573a\u53cc\u5468\u8d5b"
+    },
+    {
         "Rating": 1607.80608595,
         "ID": 962,
         "Title": "Maximum Width Ramp",
@@ -10087,6 +10131,17 @@
         "ContestID_zh": "\u7b2c 244 \u573a\u5468\u8d5b"
     },
     {
+        "Rating": 1426.9800910361,
+        "ID": 2437,
+        "Title": "Number of Valid Clock Times",
+        "TitleZH": "\u6709\u6548\u65f6\u95f4\u7684\u6570\u76ee",
+        "TitleSlug": "number-of-valid-clock-times",
+        "ContestSlug": "biweekly-contest-89",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 89",
+        "ContestID_zh": "\u7b2c 89 \u573a\u53cc\u5468\u8d5b"
+    },
+    {
         "Rating": 1426.948379305,
         "ID": 1315,
         "Title": "Sum of Nodes with Even-Valued Grandparent",
@@ -10932,6 +10987,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Weekly Contest 77",
         "ContestID_zh": "\u7b2c 77 \u573a\u5468\u8d5b"
+    },
+    {
+        "Rating": 1376.0047008182,
+        "ID": 2443,
+        "Title": "Sum of Number and Its Reverse",
+        "TitleZH": "\u53cd\u8f6c\u4e4b\u540e\u7684\u6570\u5b57\u548c",
+        "TitleSlug": "sum-of-number-and-its-reverse",
+        "ContestSlug": "weekly-contest-315",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 315",
+        "ContestID_zh": "\u7b2c 315 \u573a\u5468\u8d5b"
     },
     {
         "Rating": 1375.0376362104,
@@ -13937,6 +14003,17 @@
         "ContestID_zh": "\u7b2c 16 \u573a\u53cc\u5468\u8d5b"
     },
     {
+        "Rating": 1218.9011436003,
+        "ID": 2442,
+        "Title": "Count Number of Distinct Integers After Reverse Operations",
+        "TitleZH": "\u53cd\u8f6c\u4e4b\u540e\u4e0d\u540c\u6574\u6570\u7684\u6570\u76ee",
+        "TitleSlug": "count-number-of-distinct-integers-after-reverse-operations",
+        "ContestSlug": "weekly-contest-315",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 315",
+        "ContestID_zh": "\u7b2c 315 \u573a\u5468\u8d5b"
+    },
+    {
         "Rating": 1217.1184374247,
         "ID": 1662,
         "Title": "Check If Two String Arrays are Equivalent",
@@ -14584,6 +14661,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 265",
         "ContestID_zh": "\u7b2c 265 \u573a\u5468\u8d5b"
+    },
+    {
+        "Rating": 1167.647122501,
+        "ID": 2441,
+        "Title": "Largest Positive Integer That Exists With Its Negative",
+        "TitleZH": "\u4e0e\u5bf9\u5e94\u8d1f\u6570\u540c\u65f6\u5b58\u5728\u7684\u6700\u5927\u6b63\u6574\u6570",
+        "TitleSlug": "largest-positive-integer-that-exists-with-its-negative",
+        "ContestSlug": "weekly-contest-315",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 315",
+        "ContestID_zh": "\u7b2c 315 \u573a\u5468\u8d5b"
     },
     {
         "Rating": 1167.1331831913,
