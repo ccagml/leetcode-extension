@@ -140,8 +140,7 @@ class ShowCommand {
       }
     }
 
-    log.info('[%s] %s %s', problem.fid, problem.name,
-      (problem.starred ? ' icon.like' : 'icon.empty'));
+    log.info(`[${problem.fid}] ${problem.name}`);
     log.info();
     log.info(problem.link);
     if (argv.extra) {
@@ -152,23 +151,25 @@ class ShowCommand {
     }
 
     log.info();
-    log.info('* %s', problem.category);
-    log.info('* %s (%s%%)', helper.prettyLevel(problem.level), problem.percent.toFixed(2));
+    log.info(`* ${problem.category}`);
+    log.info(`* ${helper.prettyLevel(problem.level)} (${problem.percent.toFixed(2)}%)`);
 
     if (problem.likes)
-      log.info('* Likes:    %s', problem.likes);
+      log.info(`* Likes:    ${problem.likes}`);
     if (problem.dislikes)
-      log.info('* Dislikes: %s', problem.dislikes);
+      log.info(`* Dislikes: ${problem.dislikes}`);
     else
-      log.info('* Dislikes: -');
+      log.info(`* Dislikes: -`);
     if (problem.totalAC)
-      log.info('* Total Accepted:    %s', problem.totalAC);
+      log.info(`* Total Accepted:    ${problem.totalAC}`);
     if (problem.totalSubmit)
-      log.info('* Total Submissions: %s', problem.totalSubmit);
-    if (problem.testable && problem.testcase)
-      log.info('* Testcase Example:  %s', util.inspect(problem.testcase));
+      log.info(`* Total Submissions: ${problem.totalSubmit}`);
+    if (problem.testable && problem.testcase) {
+      var testcase_value = util.inspect(problem.testcase)
+      log.info(`* Testcase Example:  ${testcase_value}`);
+    }
     if (filename)
-      log.info('* Source Code:       %s', filename);
+      log.info(`* Source Code:       ${filename}`);
 
     log.info();
     log.info(problem.desc);

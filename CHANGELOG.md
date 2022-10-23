@@ -1,3 +1,6 @@
+## version 1.1.5
+- 修复PreView Problem 题目元数据显示出错
+
 ## version 1.1.4
 - BWC89 & WC315 数据
 
