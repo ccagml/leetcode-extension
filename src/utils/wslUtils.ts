@@ -5,6 +5,13 @@ import * as vscode from "vscode";
 import { executeCommand } from "./cpUtils";
 import { isWindows } from "./osUtils";
 
+// 用wsl命令的时候,好像没办法用vscode的node
+// 相当于使用fork,而不是之前的 spawn(node xxx
+export function useVscodeNode(): boolean {
+    const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
+    return !useWsl() && leetCodeConfig.get<boolean>("useVscodeNode") === true;
+}
+
 export function useWsl(): boolean {
     const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
     return isWindows() && leetCodeConfig.get<boolean>("useWsl") === true;

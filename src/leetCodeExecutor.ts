@@ -22,7 +22,9 @@ class LeetCodeExecutor implements Disposable {
 
     constructor() {
         // this.leetCodeCliResourcesRootPath = path.join(__dirname, "..", "..", "node_modules", "vsc-leetcode-cli");
-        this.leetCodeCliResourcesRootPath = path.join(__dirname, "..", "..", "resources");
+        if (!wsl.useVscodeNode()) {
+            this.leetCodeCliResourcesRootPath = path.join(__dirname, "..", "..", "resources");
+        }
         this.leetCodeCliRootPath = path.join(__dirname, "..", "..", "out", "src", "vsc-leetcode-cli");
         this.nodeExecutable = this.getNodePath();
         this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
@@ -33,10 +35,14 @@ class LeetCodeExecutor implements Disposable {
     }
 
     public async getLeetCodeBinaryPath(): Promise<string> {
-        if (wsl.useWsl()) {
-            return `${await wsl.toWslPath(`"${path.join(this.leetCodeCliResourcesRootPath, "bin", "leetcode")}"`)}`;
+        if (wsl.useVscodeNode()) {
+            return `${path.join(this.leetCodeCliRootPath, "new_lib", "cli.js")}`;
+        } else {
+            if (wsl.useWsl()) {
+                return `${await wsl.toWslPath(`"${path.join(this.leetCodeCliResourcesRootPath, "bin", "leetcode")}"`)}`;
+            }
+            return `"${path.join(this.leetCodeCliResourcesRootPath, "bin", "leetcode")}"`;
         }
-        return `"${path.join(this.leetCodeCliResourcesRootPath, "bin", "leetcode")}"`;
     }
 
     public async meetRequirements(context: ExtensionContext): Promise<boolean> {
@@ -195,6 +201,9 @@ class LeetCodeExecutor implements Disposable {
 
     public async submitSolution(filePath: string): Promise<string> {
         try {
+            if (wsl.useVscodeNode()) {
+                return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "submit", `${filePath}`]);
+            }
             return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "submit", `"${filePath}"`]);
         } catch (error) {
             if (error.result) {
@@ -206,10 +215,19 @@ class LeetCodeExecutor implements Disposable {
 
     public async testSolution(filePath: string, testString?: string, allCase?: boolean): Promise<string> {
         if (testString) {
+            if (wsl.useVscodeNode()) {
+                return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "test", `${filePath}`, "-t", `${testString}`]);
+            }
             return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "test", `"${filePath}"`, "-t", `${testString}`]);
         }
         if (allCase) {
+            if (wsl.useVscodeNode()) {
+                return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "test", `${filePath}`, "-a"]);
+            }
             return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "test", `"${filePath}"`, "-a"]);
+        }
+        if (wsl.useVscodeNode()) {
+            return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "test", `${filePath}`]);
         }
         return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "test", `"${filePath}"`]);
     }
@@ -252,6 +270,9 @@ class LeetCodeExecutor implements Disposable {
     }
 
     private getNodePath(): string {
+        if (wsl.useVscodeNode()) {
+            return "node"
+        }
         const extensionConfig: WorkspaceConfiguration = workspace.getConfiguration("leetcode-problem-rating", null);
         return extensionConfig.get<string>("nodePath", "node" /* default value */);
     }

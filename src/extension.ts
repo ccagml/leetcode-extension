@@ -25,12 +25,18 @@ import { leetCodeSolutionProvider } from "./webview/leetCodeSolutionProvider";
 import { leetCodeSubmissionProvider } from "./webview/leetCodeSubmissionProvider";
 import { markdownEngine } from "./webview/markdownEngine";
 import { ISubmitEvent } from "./shared";
+import * as wsl from "./utils/wslUtils";
+
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
     try {
-        if (!await leetCodeExecutor.meetRequirements(context)) {
-            throw new Error("The environment doesn't meet requirements.");
+
+        if (!wsl.useVscodeNode()) {
+            if (!await leetCodeExecutor.meetRequirements(context)) {
+                throw new Error("The environment doesn't meet requirements.");
+            }
         }
+
 
         leetCodeManager.on("statusChanged", () => {
             leetCodeStatusBarController.updateStatusBar(leetCodeManager.getStatus(), leetCodeManager.getUser());
@@ -91,4 +97,8 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
 export function deactivate(): void {
     // Do nothing.
+    if (0) {
+        var a = 0;
+        console.log(a);
+    }
 }
