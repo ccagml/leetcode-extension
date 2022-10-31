@@ -43,6 +43,25 @@
                 "${workspaceRoot}/out/test/**/*.js"
             ],
             "preLaunchTask": "npm"
-        }
+        },
+        {
+            "name": "windows_master",
+            // "type": "extensionHost",
+            "type": "extensionHost",
+            "request": "launch",
+            "runtimeExecutable": "${execPath}",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceRoot}",
+                "--trace-warnings"
+            ],
+            // "autoAttachChildProcesses": true,
+            // "stopOnEntry": false,
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceRoot}/out/src/**/*.js"
+            ],
+            "trace": true,
+            "preLaunchTask": "window_npm"
+        },
     ]
 }

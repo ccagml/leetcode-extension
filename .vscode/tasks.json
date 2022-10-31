@@ -9,6 +9,43 @@
             ]
         },
         {
+            "label": "window_npm",
+            "dependsOn": [
+                "window_npm_rm",
+                "window_npm_do"
+            ]
+        },
+        {
+            "label": "window_npm_rm",
+            "type": "shell",
+            "command": "Remove-item",
+            "args": [
+                "out",
+                "-recurse"
+            ],
+            // "isBackground": true,
+        },
+        {
+            "label": "window_npm_do",
+            "type": "shell",
+            "command": "npm",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "args": [
+                "run",
+                "compile",
+                "--loglevel",
+                "silent"
+            ],
+            "isBackground": true,
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$tsc-watch"
+        },
+        {
             "label": "npm_rm",
             "type": "shell",
             "command": "rm",
