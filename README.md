@@ -18,6 +18,7 @@
 - 增加精选分类
 - 增加剑指Offer、面试金典相关内容
 - 增加一键提交全部题目测试用例功能
+- 尝试不需要额外安装node环境,使用vscode自带的node版本
 
 # 关于本项目
 - [项目地址:https://github.com/ccagml/vscode-leetcode-problem-rating/](https://github.com/ccagml/vscode-leetcode-problem-rating/)
