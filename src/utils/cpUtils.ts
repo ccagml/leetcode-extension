@@ -21,6 +21,9 @@ export async function executeCommand(command: string, args: string[], options: c
                 newargs.push(args[arg_index])
             }
             var new_opt = { silent: true, ...options, env: createEnvOption() }
+            if (false) {
+                new_opt["execArgv"] = ['--inspect=43210']
+            }
             childProc = cp.fork(command, newargs, new_opt);
         } else {
             childProc = cp.spawn(command, args, { ...options, env: createEnvOption() });
