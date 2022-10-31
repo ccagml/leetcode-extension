@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode problem rating",
     "description": "为LeetCode题目难度进行打分。避免只有简单、中等、困难三种难度",
-    "version": "1.1.5",
+    "version": "1.1.6",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -381,6 +381,12 @@
                         "default": true,
                         "scope": "application",
                         "description": "Show a hint to configure commands key binding."
+                    },
+                    "leetcode-problem-rating.useVscodeNode": {
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "machine",
+                        "description": "Try the node version of vecode."
                     },
                     "leetcode-problem-rating.useWsl": {
                         "type": "boolean",

@@ -122,6 +122,9 @@ export async function testSolutionDefault(uri?: vscode.Uri, allCase?: boolean): 
 
 function parseTestString(test: string): string {
     if (wsl.useWsl() || !isWindows()) {
+        if (wsl.useVscodeNode()) {
+            return `${test}`;
+        }
         return `'${test}'`;
     }
 

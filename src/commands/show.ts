@@ -284,7 +284,14 @@ export async function showSolution(input: LeetCodeNode | vscode.Uri): Promise<vo
     if (input instanceof LeetCodeNode) { // Triggerred from explorer
         problemInput = input.qid;
     } else if (input instanceof vscode.Uri) { // Triggerred from Code Lens/context menu
-        problemInput = `"${input.fsPath}"`;
+        if (wsl.useVscodeNode()) {
+            problemInput = `${input.fsPath}`;
+        } else {
+            problemInput = `"${input.fsPath}"`;
+            if (wsl.useWsl()) {
+                problemInput = await wsl.toWslPath(input.fsPath);
+            }
+        }
     } else if (!input) { // Triggerred from command
         problemInput = await getActiveFilePath();
     }

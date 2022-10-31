@@ -4,6 +4,7 @@
 import * as cp from "child_process";
 import * as vscode from "vscode";
 import { leetCodeChannel } from "../leetCodeChannel";
+import * as wsl from "../utils/wslUtils";
 
 interface IExecError extends Error {
     result?: string;
@@ -12,8 +13,21 @@ interface IExecError extends Error {
 export async function executeCommand(command: string, args: string[], options: cp.SpawnOptions = { shell: true }): Promise<string> {
     return new Promise((resolve: (res: string) => void, reject: (e: Error) => void): void => {
         let result: string = "";
-
-        const childProc: cp.ChildProcess = cp.spawn(command, args, { ...options, env: createEnvOption() });
+        var childProc: cp.ChildProcess
+        if (wsl.useVscodeNode() && command == "node") {
+            var newargs: string[] = []
+            command = args[0];
+            for (let arg_index = 1; arg_index < args.length; arg_index++) {
+                newargs.push(args[arg_index])
+            }
+            var new_opt = { silent: true, ...options, env: createEnvOption() }
+            if (false) {
+                new_opt["execArgv"] = ['--inspect=43210']
+            }
+            childProc = cp.fork(command, newargs, new_opt);
+        } else {
+            childProc = cp.spawn(command, args, { ...options, env: createEnvOption() });
+        }
 
         childProc.stdout?.on("data", (data: string | Buffer) => {
             data = data.toString();
@@ -43,6 +57,25 @@ export async function executeCommand(command: string, args: string[], options: c
                 resolve(result);
             }
         });
+
+        // childProc.on("exit", function (code) {
+        //     console.log("disconnect", code)
+        //     if (code !== 0) {
+        //         console.log('child exit code (spawn)', code);
+        //         return reject(new Error(`Command "${command} ${args.toString()}" failed with exit code "${code}".`))
+        //     }
+        //     resolve(result);
+        // });
+
+        // childProc.on("disconnect", function () {
+        //     console.log("disconnect")
+        //     resolve(result);
+        // });
+        // childProc.on("message", function (message) {
+        //     console.log("message", message)
+        //     resolve(result);
+        // });
+
     });
 }
 
