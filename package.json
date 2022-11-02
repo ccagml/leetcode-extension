@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode problem rating",
     "description": "为LeetCode题目难度进行打分。避免只有简单、中等、困难三种难度",
-    "version": "1.1.7",
+    "version": "1.1.8",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",

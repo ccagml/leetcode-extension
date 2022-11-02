@@ -1,3 +1,6 @@
+## version 1.1.8
+- WC316 数据
+
 ## version 1.1.7
 - Windows环境使用VsCode自带node环境,测试用例解析问题
 
