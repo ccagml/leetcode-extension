@@ -2706,6 +2706,17 @@
         "ContestID_zh": "\u7b2c 2 \u573a\u53cc\u5468\u8d5b"
     },
     {
+        "Rating": 2076.0155978787,
+        "ID": 2449,
+        "Title": "Minimum Number of Operations to Make Arrays Similar",
+        "TitleZH": "\u4f7f\u6570\u7ec4\u76f8\u4f3c\u7684\u6700\u5c11\u64cd\u4f5c\u6b21\u6570",
+        "TitleSlug": "minimum-number-of-operations-to-make-arrays-similar",
+        "ContestSlug": "weekly-contest-316",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 316",
+        "ContestID_zh": "\u7b2c 316 \u573a\u5468\u8d5b"
+    },
+    {
         "Rating": 2075.9046975409,
         "ID": 2354,
         "Title": "Number of Excellent Pairs",
@@ -3353,6 +3364,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Weekly Contest 244",
         "ContestID_zh": "\u7b2c 244 \u573a\u5468\u8d5b"
+    },
+    {
+        "Rating": 2005.3737929084,
+        "ID": 2448,
+        "Title": "Minimum Cost to Make Array Equal",
+        "TitleZH": "\u4f7f\u6570\u7ec4\u76f8\u7b49\u7684\u6700\u5c0f\u5f00\u9500",
+        "TitleSlug": "minimum-cost-to-make-array-equal",
+        "ContestSlug": "weekly-contest-316",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 316",
+        "ContestID_zh": "\u7b2c 316 \u573a\u5468\u8d5b"
     },
     {
         "Rating": 2005.2755755378,
@@ -7909,6 +7931,17 @@
         "ContestID_zh": "\u7b2c 81 \u573a\u53cc\u5468\u8d5b"
     },
     {
+        "Rating": 1602.7742849665,
+        "ID": 2447,
+        "Title": "Number of Subarrays With GCD Equal to K",
+        "TitleZH": "\u6700\u5927\u516c\u56e0\u6570\u7b49\u4e8e K \u7684\u5b50\u6570\u7ec4\u6570\u76ee",
+        "TitleSlug": "number-of-subarrays-with-gcd-equal-to-k",
+        "ContestSlug": "weekly-contest-316",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 316",
+        "ContestID_zh": "\u7b2c 316 \u573a\u5468\u8d5b"
+    },
+    {
         "Rating": 1602.7242171967,
         "ID": 2249,
         "Title": "Count Lattice Points Inside a Circle",
@@ -11955,6 +11988,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 250",
         "ContestID_zh": "\u7b2c 250 \u573a\u5468\u8d5b"
+    },
+    {
+        "Rating": 1322.3886921778,
+        "ID": 2446,
+        "Title": "Determine if Two Events Have Conflict",
+        "TitleZH": "\u5224\u65ad\u4e24\u4e2a\u4e8b\u4ef6\u662f\u5426\u5b58\u5728\u51b2\u7a81",
+        "TitleSlug": "determine-if-two-events-have-conflict",
+        "ContestSlug": "weekly-contest-316",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 316",
+        "ContestID_zh": "\u7b2c 316 \u573a\u5468\u8d5b"
     },
     {
         "Rating": 1321.9346201204,
