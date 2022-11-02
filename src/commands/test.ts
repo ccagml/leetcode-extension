@@ -130,9 +130,15 @@ function parseTestString(test: string): string {
 
     // In windows and not using WSL
     if (usingCmd()) {
+        // 一般需要走进这里, 除非改了 环境变量ComSpec的值
+        if (wsl.useVscodeNode()) {
+            return `${test.replace(/"/g, '\"')}`;
+        }
         return `"${test.replace(/"/g, '\\"')}"`;
     } else {
-        // Assume using PowerShell
+        if (wsl.useVscodeNode()) {
+            return `${test.replace(/"/g, '\"')}`;
+        }
         return `'${test.replace(/"/g, '\\"')}'`;
     }
 }
