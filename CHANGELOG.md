@@ -1,3 +1,6 @@
+## version 1.1.9
+- BWC90 & WC317 数据
+
 ## version 1.1.8
 - WC316 数据
 
