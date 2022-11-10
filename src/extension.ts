@@ -24,7 +24,7 @@ import { submissionService } from "./service/SubmissionService";
 import { markdownService } from "./service/MarkdownService";
 import { mainContorller } from "./controller/MainController";
 import { loginContorller } from "./controller/LoginController";
-import { getLeetCodeEndpoint } from "./utils/configUtils";
+import { getLeetCodeEndpoint } from "./utils/ConfigUtils";
 import { DialogType } from "./model/Model";
 
 

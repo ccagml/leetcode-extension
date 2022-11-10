@@ -10,7 +10,7 @@
 
 import { commands, ViewColumn } from "vscode";
 import { Endpoint, IProblem, IWebViewOption } from "../model/Model";
-import { getLeetCodeEndpoint } from "../utils/configUtils";
+import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
 import { BaseWebViewService } from "./BaseWebviewService";
 import { markdownService } from "./MarkdownService";
 

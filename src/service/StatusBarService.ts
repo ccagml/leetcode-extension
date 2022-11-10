@@ -10,7 +10,7 @@
 
 import { ConfigurationChangeEvent, Disposable, workspace, StatusBarItem, window } from "vscode";
 import { UserStatus, userContestRanKingBase } from "../model/Model";
-import { enableStatusBar } from "../utils/configUtils";
+import { enableStatusBar } from "../utils/ConfigUtils";
 import { eventService } from "./EventService";
 import { executeService } from "./ExecuteService";
 

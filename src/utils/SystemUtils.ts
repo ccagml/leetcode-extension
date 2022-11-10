@@ -12,8 +12,8 @@ import * as fse from "fs-extra";
 import * as _ from "lodash";
 import * as path from "path";
 import { IProblem, langExt } from "../model/Model";
-import { executeCommand } from "./cliUtils";
-import { isUseVscodeNode, isUseWsl } from "./configUtils";
+import { executeCommand } from "./CliUtils";
+import { isUseVscodeNode, isUseWsl } from "./ConfigUtils";
 
 export function isWindows(): boolean {
     return process.platform === "win32";

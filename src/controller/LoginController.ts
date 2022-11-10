@@ -12,13 +12,13 @@ import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
 
 import { DialogType, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
-import { createEnvOption } from "../utils/cliUtils";
+import { createEnvOption } from "../utils/CliUtils";
 import { logOutput, promptForOpenOutputChannel } from "../utils/OutputUtils";
 import { eventService } from "../service/EventService";
 import { window } from "vscode";
 import { statusBarService } from "../service/StatusBarService";
 import { treeDataService } from "../service/TreeDataService";
-import { getLeetCodeEndpoint } from "../utils/configUtils";
+import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
 
 
 // 登录

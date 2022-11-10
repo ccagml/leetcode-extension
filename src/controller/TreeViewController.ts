@@ -12,7 +12,7 @@ import * as _ from "lodash";
 import { toNumber } from "lodash";
 import { Disposable, Uri, window, QuickPickItem, workspace, WorkspaceConfiguration } from "vscode";
 import { SearchNode, userContestRankingObj, userContestRanKingBase, UserStatus, IProblem, IQuickItemEx, languages, Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType, ISubmitEvent, SORT_ORDER, Endpoint, OpenOption, DialogType, DialogOptions } from "../model/Model";
-import { isHideSolvedProblem, isHideScoreProblem, getDescriptionConfiguration, isUseEndpointTranslation, enableSideMode, getPickOneByRankRangeMin, getPickOneByRankRangeMax, isShowLocked, updateSortingStrategy, getSortingStrategy, getLeetCodeEndpoint, openSettingsEditor } from "../utils/configUtils";
+import { isHideSolvedProblem, isHideScoreProblem, getDescriptionConfiguration, isUseEndpointTranslation, enableSideMode, getPickOneByRankRangeMin, getPickOneByRankRangeMax, isShowLocked, updateSortingStrategy, getSortingStrategy, getLeetCodeEndpoint, openSettingsEditor } from "../utils/ConfigUtils";
 import { NodeModel } from "../model/NodeModel";
 import { ISearchSet } from "../model/Model";
 import { resourcesData } from "../ResourcesData";
@@ -27,7 +27,7 @@ import * as vscode from "vscode";
 import { logOutput, promptForOpenOutputChannel, promptForSignIn, promptHintMessage } from "../utils/OutputUtils";
 import { treeDataService } from "../service/TreeDataService";
 import { genFileExt, genFileName } from "../utils/SystemUtils";
-import { IDescriptionConfiguration, isStarShortcut } from "../utils/configUtils";
+import { IDescriptionConfiguration, isStarShortcut } from "../utils/ConfigUtils";
 import * as systemUtils from "../utils/SystemUtils";
 import { solutionService } from "../service/SolutionService";
 import { eventService } from "../service/EventService";
@@ -38,7 +38,7 @@ import { submissionService } from "../service/SubmissionService";
 
 
 import * as os from "os";
-import { getVsCodeConfig, getWorkspaceFolder } from "../utils/configUtils";
+import { getVsCodeConfig, getWorkspaceFolder } from "../utils/ConfigUtils";
 
 
 

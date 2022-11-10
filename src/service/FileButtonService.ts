@@ -10,7 +10,7 @@
 import * as vscode from "vscode";
 import { treeViewController } from "../controller/TreeViewController";
 import { NodeModel } from "../model/NodeModel";
-import { getEditorShortcuts } from "../utils/configUtils";
+import { getEditorShortcuts } from "../utils/ConfigUtils";
 
 export class FileButtonService implements vscode.CodeLensProvider {
 

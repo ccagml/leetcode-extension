@@ -12,7 +12,7 @@
 
 import * as vscode from "vscode";
 import { DialogOptions, DialogType } from "../model/Model";
-import { getLeetCodeEndpoint, getVsCodeConfig } from "./configUtils";
+import { getLeetCodeEndpoint, getVsCodeConfig } from "./ConfigUtils";
 
 export async function openUrl(url: string): Promise<void> {
     vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(url));
