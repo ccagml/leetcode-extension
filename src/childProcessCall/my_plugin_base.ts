@@ -23,11 +23,11 @@ export class MyPluginBase {
   desc;
   enabled;
   deleted;
-  missing;
   builtin;
   deps;
   next;
   plugins: Array<any> = [];
+  installed: Array<MyPluginBase> = [];
   head; // 插件头 是core
   config;
   constructor() {
@@ -37,7 +37,6 @@ export class MyPluginBase {
     const stats = cache.get(helper.KEYS.plugins) || {};
 
     if (this.deleted) delete stats[this.name];
-    else if (this.missing) return;
     else stats[this.name] = this.enabled;
 
     cache.set(helper.KEYS.plugins, stats);
@@ -51,8 +50,8 @@ export class MyPluginBase {
   public base_init(head?) {
     head = head || require('./core').corePlugin;
     const stats = cache.get(helper.KEYS.plugins) || {};
-    let installed: Array<MyPluginBase> = [];
     let file_plugin: Array<any> = file.listCodeDir('plugins');
+    this.installed = [];
     for (let f of file_plugin) {
       const p = f.data;
       if (!p) continue;
@@ -65,19 +64,19 @@ export class MyPluginBase {
           p.enabled = false;
         }
       }
-      installed.push(p);
+      this.installed.push(p);
     }
     // 根据id大小排序, 大的前面
-    installed = underscore.sortBy(installed, x => -x.id);
+    this.installed = underscore.sortBy(this.installed, x => -x.id);
     // 从小的开始init
-    for (let i = installed.length - 1; i >= 0; --i) {
-      const p = installed[i];
+    for (let i = this.installed.length - 1; i >= 0; --i) {
+      const p = this.installed[i];
       if (p.enabled) {
         p.init();
       }
     }
     // 连成链表状
-    this.plugins = installed.filter(x => x.enabled);
+    this.plugins = this.installed.filter(x => x.enabled);
     let last = head;
     for (let p of this.plugins) {
       last.setNext(p);

@@ -9,23 +9,21 @@
 
 
 import { ConfigurationChangeEvent, Disposable, languages, workspace } from "vscode";
-import { fileButtonService, FileButtonService } from "../service/FileButtonService";
-
+import { fileButtonService } from "../service/FileButtonService";
+// 文件按钮的控制器
 class FileButtonController implements Disposable {
-    private internalProvider: FileButtonService;
+
     private registeredProvider: Disposable | undefined;
     private configurationChangeListener: Disposable;
 
     constructor() {
-        this.internalProvider = fileButtonService;
-
         this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
             if (event.affectsConfiguration("leetcode-problem-rating.editor.shortcuts")) {
-                this.internalProvider.refresh();
+                fileButtonService.refresh();
             }
         }, this);
 
-        this.registeredProvider = languages.registerCodeLensProvider({ scheme: "file" }, this.internalProvider);
+        this.registeredProvider = languages.registerCodeLensProvider({ scheme: "file" }, fileButtonService);
     }
 
     public dispose(): void {

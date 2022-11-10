@@ -50,7 +50,7 @@ class PluginCommand {
   handler = function (argv) {
     session.argv = argv;
 
-    let plugins = myPluginBase.plugins;
+    let all_plugin = myPluginBase.installed;
     const name = argv.name;
 
     // if (argv.install) {
@@ -64,13 +64,14 @@ class PluginCommand {
     //   return;
     // }
 
-    if (name) plugins = plugins.filter(x => x.name === name);
-    if (plugins.length === 0) return log.fatal('Plugin not found!');
+    if (name) {
+      all_plugin = all_plugin.filter(x => x.name === name);
+    };
+    if (all_plugin.length === 0) {
+      return log.fatal('Plugin not found!');
+    }
 
-    const p = plugins[0];
-    if (p.missing && (argv.enable || argv.disable))
-      return log.fatal('Plugin missing, install it first');
-
+    const p = all_plugin[0];
     if (argv.enable) {
       p.enabled = true;
       p.save();
@@ -78,7 +79,7 @@ class PluginCommand {
       p.enabled = false;
       p.save();
     } else if (argv.delete) {
-      p.delete();
+      // p.delete();
       p.save();
       myPluginBase.init();
     } else if (argv.config) {

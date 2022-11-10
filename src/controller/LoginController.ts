@@ -30,7 +30,7 @@ class LoginContorller {
         picks.push(
             {
                 label: "LeetCode Account",
-                detail: "Use LeetCode account to login (US endpoint is not supported)",
+                detail: "只能登录leetcode.cn",
                 value: "LeetCode",
             },
             {
@@ -157,7 +157,7 @@ class LoginContorller {
             window.showInformationMessage("Successfully signed out.");
             eventService.emit("statusChanged", UserStatus.SignedOut, undefined);
         } catch (error) {
-            promptForOpenOutputChannel(`Failed to signOut. Please open the output channel for details`, DialogType.error);
+            // promptForOpenOutputChannel(`Failed to signOut. Please open the output channel for details`, DialogType.error);
         }
     }
 

@@ -27,14 +27,18 @@ import { loginContorller } from "./controller/LoginController";
 import { getLeetCodeEndpoint } from "./utils/ConfigUtils";
 import { DialogType } from "./model/Model";
 
-
+// 激活插件
 export async function activate(context: ExtensionContext): Promise<void> {
     try {
 
-        await mainContorller.checkNodeEnv(context);
-        eventController.add_event();
+        // 初始化控制器
         mainContorller.initialize(context);
+        // 检查node环境
+        await mainContorller.checkNodeEnv(context);
+        // 事件监听
+        eventController.add_event();
 
+        // 资源管理
         context.subscriptions.push(
             statusBarService,
             logOutput,
@@ -68,7 +72,9 @@ export async function activate(context: ExtensionContext): Promise<void> {
             commands.registerCommand("leetcode.problems.sort", () => treeViewController.switchSortingStrategy()),
         );
 
+        // 设置站点
         await executeService.switchEndpoint(getLeetCodeEndpoint());
+        // 获取登录状态
         await loginContorller.getLoginStatus();
     } catch (error) {
         logOutput.appendLine(error.toString());

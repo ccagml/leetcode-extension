@@ -51,7 +51,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
                 collapsibleState: vscode.TreeItemCollapsibleState.None,
                 command: {
                     command: "leetcode.signin",
-                    title: "Sign in to LeetCode",
+                    title: "未登录",
                 },
             };
         }
@@ -80,7 +80,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
             return [
                 new NodeModel(Object.assign({}, defaultProblem, {
                     id: "notSignIn",
-                    name: "Sign in to LeetCode",
+                    name: "未登录",
                 }), false),
             ];
         }

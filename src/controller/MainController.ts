@@ -27,14 +27,13 @@ class MainContorller {
         }
     }
 
+    // 初始化上下文
     public initialize(context: ExtensionContext) {
         treeDataService.initialize(context);
     }
 
 
-    /**
-     * name
-     */
+    // 删除缓存
     public async deleteCache() {
         await executeService.deleteCache();
     }

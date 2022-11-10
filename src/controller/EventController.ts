@@ -8,6 +8,7 @@
  */
 
 import { eventService } from "../service/EventService";
+// 事件的控制器
 class EventContorller {
     /**
      * 监听事件

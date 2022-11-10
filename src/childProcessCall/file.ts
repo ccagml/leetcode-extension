@@ -69,10 +69,6 @@ class File {
     return path.join(this.homeDir(), 'config.json');
   };
 
-  public pluginFile(name) {
-    return path.join(this.codeDir('lib/plugins'), path.basename(name));
-  };
-
   public listCodeDir(dir) {
     dir = this.codeDir(dir);
     return this.list(dir).map(function (f) {
@@ -145,7 +141,7 @@ class File {
   };
 
   public render(tpl, data) {
-    const tplfile = path.join(__dirname, "..", "..", "..", "..", "resources", "templates", tpl + '.tpl');
+    const tplfile = path.join(__dirname, "..", "..", "..", "resources", "templates", tpl + '.tpl');
     let result = _.template(this.data(tplfile).replace(/\r\n/g, '\n'))(data);
     if (this.isWindows()) {
       result = result.replace(/\n/g, '\r\n');
