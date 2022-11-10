@@ -8,8 +8,8 @@
  */
 
 
-var underscore = require('underscore');
-var nconf = require('nconf');
+let underscore = require('underscore');
+let nconf = require('nconf');
 
 
 import { config } from "../config";
@@ -25,7 +25,7 @@ class ConfigCommand {
 
 
   process_argv(argv) {
-    var argv_config = helper.base_argv().option('a', {
+    let argv_config = helper.base_argv().option('a', {
       alias: 'all',
       type: 'boolean',
       describe: 'Show all config',
@@ -46,10 +46,10 @@ class ConfigCommand {
         type: 'string',
         describe: 'Config value',
         default: ''
-      })
-    argv_config.process_argv(argv)
+      });
+    argv_config.process_argv(argv);
 
-    return argv_config.get_result()
+    return argv_config.get_result();
   }
 
 

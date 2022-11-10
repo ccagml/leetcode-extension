@@ -8,8 +8,8 @@
  */
 
 
-var moment_out = require('moment');
-var underscore = require('underscore');
+let moment_out = require('moment');
+let underscore = require('underscore');
 
 import { helper } from "../helper";
 import { log } from "../log";
@@ -22,7 +22,7 @@ class StatCommand {
   }
 
   process_argv(argv) {
-    var argv_config = helper.base_argv().option('c', {
+    let argv_config = helper.base_argv().option('c', {
       alias: 'cal',
       type: 'boolean',
       default: false,
@@ -41,10 +41,10 @@ class StatCommand {
         describe: 'Include locked questions'
       })
       .option('q', corePlugin.filters.query)
-      .option('t', corePlugin.filters.tag)
-    argv_config.process_argv(argv)
+      .option('t', corePlugin.filters.tag);
+    argv_config.process_argv(argv);
 
-    return argv_config.get_result()
+    return argv_config.get_result();
   }
 
   printLine(key, done, all) {
@@ -200,7 +200,7 @@ class StatCommand {
 
   handler(argv) {
     session.argv = argv;
-    var that = this;
+    let that = this;
     corePlugin.filterProblems(argv, function (e, problems) {
       if (e) return log.info(e);
 

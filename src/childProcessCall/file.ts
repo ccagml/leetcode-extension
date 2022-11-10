@@ -8,12 +8,12 @@
  */
 
 
-var fs = require('fs');
-var os = require('os');
-var path = require('path');
+let fs = require('fs');
+let os = require('os');
+let path = require('path');
 
-var _ = require('underscore');
-var mkdirp = require('mkdirp');
+let _ = require('underscore');
+let mkdirp = require('mkdirp');
 
 export interface IMETA {
   id: string
@@ -145,7 +145,7 @@ class File {
   };
 
   public render(tpl, data) {
-    const tplfile = path.join(__dirname, "..", "..", "..", "..", "resources", "templates", tpl + '.tpl')
+    const tplfile = path.join(__dirname, "..", "..", "..", "..", "resources", "templates", tpl + '.tpl');
     let result = _.template(this.data(tplfile).replace(/\r\n/g, '\n'))(data);
     if (this.isWindows()) {
       result = result.replace(/\n/g, '\r\n');
@@ -160,7 +160,7 @@ class File {
   };
 
   public metaByName(filename) {
-    const m = Object.assign({}, defaultMETA, {})
+    const m = Object.assign({}, defaultMETA, {});
 
     m.id = file.name(filename).split('.')[0];
 
@@ -174,7 +174,7 @@ class File {
   };
 
   public meta(filename) {
-    const m = Object.assign({}, defaultMETA, {})
+    const m = Object.assign({}, defaultMETA, {});
 
 
     const line = this.data(filename).split('\n')
@@ -182,13 +182,13 @@ class File {
 
     // @lc app=leetcode.cn id=剑指 Offer II 116 lang=cpp
 
-    var id_right = line.split('id=')[1]
-    var lang_cat = id_right.split('lang=')
-    var id = lang_cat[0].trim();
-    var lang = lang_cat[1].trim();
-    m.id = id
-    m.fid = id
-    m.lang = lang
+    let id_right = line.split('id=')[1];
+    let lang_cat = id_right.split('lang=');
+    let id = lang_cat[0].trim();
+    let lang = lang_cat[1].trim();
+    m.id = id;
+    m.fid = id;
+    m.lang = lang;
     return m;
   };
 

@@ -20,7 +20,7 @@ class QueryCommand {
 
 
     process_argv = function (argv) {
-        var argv_config = helper.base_argv().option('T', {
+        let argv_config = helper.base_argv().option('T', {
             alias: 'dontTranslate',
             type: 'boolean',
             default: false,
@@ -42,12 +42,12 @@ class QueryCommand {
                 type: 'string',
                 default: "",
                 describe: 'test',
-            })
+            });
 
-        argv_config.process_argv(argv)
+        argv_config.process_argv(argv);
 
-        return argv_config.get_result()
-    }
+        return argv_config.get_result();
+    };
 
     handler = function (argv) {
         session.argv = argv;

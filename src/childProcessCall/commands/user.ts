@@ -8,7 +8,7 @@
  */
 
 
-var prompt_out = require('prompt');
+let prompt_out = require('prompt');
 import { helper } from "../helper";
 import { log } from "../log";
 import { corePlugin } from "../core";
@@ -20,7 +20,7 @@ class UserCommand {
   }
 
   process_argv(argv) {
-    var argv_config = helper.base_argv().option('l', {
+    let argv_config = helper.base_argv().option('l', {
       alias: 'login',
       type: 'boolean',
       default: false,
@@ -49,11 +49,11 @@ class UserCommand {
         type: 'boolean',
         default: false,
         describe: 'Logout'
-      })
+      });
 
-    argv_config.process_argv(argv)
+    argv_config.process_argv(argv);
 
-    return argv_config.get_result()
+    return argv_config.get_result();
   }
 
 

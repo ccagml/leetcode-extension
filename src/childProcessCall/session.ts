@@ -8,8 +8,8 @@
  */
 
 
-var moment_out = require('moment');
-var underscore = require('underscore');
+let moment_out = require('moment');
+let underscore = require('underscore');
 
 
 import { cache } from "./cache";
@@ -25,7 +25,7 @@ class Session {
   };
   argv: any = {
 
-  }
+  };
   constructor() {
 
   }

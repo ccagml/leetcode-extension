@@ -8,7 +8,7 @@
  */
 
 
-var underscore = require('underscore');
+let underscore = require('underscore');
 
 
 import { helper } from "../helper";
@@ -21,7 +21,7 @@ class CacheCommand {
   }
 
   process_argv = function (argv) {
-    var argv_config = helper.base_argv().option('d', {
+    let argv_config = helper.base_argv().option('d', {
       alias: 'delete',
       type: 'boolean',
       describe: 'Delete cache by keyword',
@@ -31,11 +31,11 @@ class CacheCommand {
         type: 'string',
         describe: 'Cache name or question id',
         default: ''
-      })
-    argv_config.process_argv(argv)
+      });
+    argv_config.process_argv(argv);
 
-    return argv_config.get_result()
-  }
+    return argv_config.get_result();
+  };
 
 
   handler = function (argv) {

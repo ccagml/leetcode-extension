@@ -9,8 +9,8 @@
 
 
 
-var util = require('util');
-var lodash = require('lodash');
+let util = require('util');
+let lodash = require('lodash');
 
 
 import { helper } from "../helper";
@@ -28,14 +28,14 @@ class SubmitCommand {
 
 
   process_argv(argv) {
-    var argv_config = helper.base_argv().positional('filename', {
+    let argv_config = helper.base_argv().positional('filename', {
       type: 'string',
       describe: 'Code file to submit',
       default: ''
-    })
-    argv_config.process_argv(argv)
+    });
+    argv_config.process_argv(argv);
 
-    return argv_config.get_result()
+    return argv_config.get_result();
   }
 
 
@@ -47,12 +47,12 @@ class SubmitCommand {
     for (let line of lines) {
       if (k !== 'state') {
         if (!log_obj.hasOwnProperty(lodash.startCase(k))) {
-          log_obj[lodash.startCase(k)] = [line]
+          log_obj[lodash.startCase(k)] = [line];
         } else {
-          log_obj[lodash.startCase(k)].push(line)
+          log_obj[lodash.startCase(k)].push(line);
         }
       } else {
-        log_obj.messages.push(line)
+        log_obj.messages.push(line);
       }
     }
   }
@@ -60,7 +60,7 @@ class SubmitCommand {
   printLine(log_obj, ...ret: any[]) {
     const args = ret.slice(1);
     const line = util.format.apply(util, args);
-    log_obj.messages.push(line)
+    log_obj.messages.push(line);
   }
 
   handler(argv) {
@@ -69,7 +69,7 @@ class SubmitCommand {
       return log.fatal('File ' + argv.filename + ' not exist!');
 
     const meta = file.meta(argv.filename);
-    var that = this;
+    let that = this;
     // translation doesn't affect problem lookup
     corePlugin.getProblem(meta, true, function (e, problem) {
       if (e) return log.info(e);
@@ -82,13 +82,13 @@ class SubmitCommand {
 
         const result = results[0];
 
-        var log_obj: any = {}
-        log_obj.messages = []
-        log_obj.system_message = {}
-        log_obj.system_message.fid = problem.fid
-        log_obj.system_message.id = problem.id
-        log_obj.system_message.qid = problem.id
-        log_obj.system_message.sub_type = "submit"
+        let log_obj: any = {};
+        log_obj.messages = [];
+        log_obj.system_message = {};
+        log_obj.system_message.fid = problem.fid;
+        log_obj.system_message.id = problem.id;
+        log_obj.system_message.qid = problem.id;
+        log_obj.system_message.sub_type = "submit";
         log_obj.system_message.accepted = false;
 
         that.printResult(result, 'state', log_obj);
@@ -120,7 +120,7 @@ class SubmitCommand {
           that.printResult(result, 'expected_answer', log_obj);
           that.printResult(result, 'stdout', log_obj);
         }
-        log.info(JSON.stringify(log_obj))
+        log.info(JSON.stringify(log_obj));
         corePlugin.updateProblem(problem, { state: (result.ok ? 'ac' : 'notac') });
       });
     });

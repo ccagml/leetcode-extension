@@ -8,7 +8,7 @@
  */
 
 
-var path = require('path');
+let path = require('path');
 
 import { file } from "./file";
 
@@ -21,7 +21,7 @@ class Cache {
   public deleteAll() {
     this.list().forEach(value => {
       this.del(value.name);
-    })
+    });
   };
 
   public get(k) {

@@ -20,7 +20,7 @@ class StarCommand {
   }
 
   process_argv(argv) {
-    var argv_config = helper.base_argv().option('d', {
+    let argv_config = helper.base_argv().option('d', {
       alias: 'delete',
       type: 'boolean',
       describe: 'Unstar question',
@@ -30,12 +30,12 @@ class StarCommand {
         type: 'string',
         describe: 'Question name or id',
         default: ''
-      })
+      });
 
 
-    argv_config.process_argv(argv)
+    argv_config.process_argv(argv);
 
-    return argv_config.get_result()
+    return argv_config.get_result();
   }
 
   handler(argv) {

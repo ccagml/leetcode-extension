@@ -9,8 +9,8 @@
 
 
 
-var _ = require('underscore');
-var lodash = require('lodash');
+let _ = require('underscore');
+let lodash = require('lodash');
 
 
 import { helper } from "../helper";
@@ -27,7 +27,7 @@ class TestCommand {
 
 
   process_argv(argv) {
-    var argv_config = helper.base_argv().option('i', {
+    let argv_config = helper.base_argv().option('i', {
       alias: 'interactive',
       type: 'boolean',
       default: false,
@@ -49,11 +49,11 @@ class TestCommand {
         type: 'string',
         default: '',
         describe: 'Code file to test'
-      })
+      });
 
-    argv_config.process_argv(argv)
+    argv_config.process_argv(argv);
 
-    return argv_config.get_result()
+    return argv_config.get_result();
   }
 
 
@@ -69,20 +69,20 @@ class TestCommand {
     for (let line of lines) {
       const extraInfo = extra ? ` (${extra})` : '';
       if (k !== 'state') {
-        var new_kk = lodash.startCase(k) + extraInfo;
+        let new_kk = lodash.startCase(k) + extraInfo;
         if (!log_obj.hasOwnProperty(new_kk)) {
-          log_obj[new_kk] = [line]
+          log_obj[new_kk] = [line];
         } else {
-          log_obj[new_kk].push(line)
+          log_obj[new_kk].push(line);
         }
       } else {
-        log_obj.messages.push(line)
+        log_obj.messages.push(line);
       }
     }
   }
 
   runTest(argv) {
-    var that = this
+    let that = this;
     if (!file.exist(argv.filename))
       return log.fatal('File ' + argv.filename + ' not exist!');
 
@@ -108,10 +108,10 @@ class TestCommand {
         // NOTE: wordwrap internally uses '\n' as EOL, so here we have to
         // remove all '\r' in the raw string.
         new_desc = new_desc.replace(/\r\n/g, '\n').replace(/^ /mg, '⁠');
-        var input = (require('wordwrap')(120))(new_desc).split('\n');
-        var temp_test: Array<any> = []
-        var start_flag = false;
-        var temp_collect = "";
+        let input = (require('wordwrap')(120))(new_desc).split('\n');
+        let temp_test: Array<any> = [];
+        let start_flag = false;
+        let temp_collect = "";
         for (let all_input = 0; all_input < input.length; all_input++) {
           const element = input[all_input];
           var check_index = element.indexOf("输入");
@@ -119,7 +119,7 @@ class TestCommand {
             check_index = element.indexOf("Input:");
           }
           if (check_index != -1) {
-            temp_collect += element.substring(check_index + 1)
+            temp_collect += element.substring(check_index + 1);
             start_flag = true;
             continue;
           }
@@ -135,10 +135,10 @@ class TestCommand {
             temp_collect += element;
           } else {
             if (temp_collect.length > 0) {
-              var new_ele = temp_collect;
-              var temp_case: Array<any> = []
-              var wait_cur = ""
-              var no_need_flag = false
+              let new_ele = temp_collect;
+              let temp_case: Array<any> = [];
+              let wait_cur = "";
+              let no_need_flag = false;
               for (let index = new_ele.length - 1; index >= 0; index--) {
                 if (no_need_flag) {
                   if (new_ele[index] == ",") {
@@ -146,16 +146,16 @@ class TestCommand {
                   }
                 } else {
                   if (new_ele[index] == "=") {
-                    temp_case.push(wait_cur.trim())
+                    temp_case.push(wait_cur.trim());
                     no_need_flag = true;
-                    wait_cur = ""
+                    wait_cur = "";
                   } else {
-                    wait_cur = new_ele[index] + wait_cur
+                    wait_cur = new_ele[index] + wait_cur;
                   }
                 }
               }
               for (let index = temp_case.length - 1; index >= 0; index--) {
-                temp_test.push(temp_case[index])
+                temp_test.push(temp_case[index]);
               }
               temp_collect = "";
             }
@@ -166,8 +166,8 @@ class TestCommand {
         if (temp_test.length < 1) {
           return;
         }
-        var all_case = temp_test.join("\n")
-        problem.testcase = all_case
+        let all_case = temp_test.join("\n");
+        problem.testcase = all_case;
       }
 
       if (!problem.testcase)
@@ -182,13 +182,13 @@ class TestCommand {
 
         results = _.sortBy(results, x => x.type);
 
-        var log_obj: any = {}
-        log_obj.messages = []
-        log_obj.system_message = {}
-        log_obj.system_message.fid = problem.fid
-        log_obj.system_message.id = problem.id
-        log_obj.system_message.qid = problem.id
-        log_obj.system_message.sub_type = "test"
+        let log_obj: any = {};
+        log_obj.messages = [];
+        log_obj.system_message = {};
+        log_obj.system_message.fid = problem.fid;
+        log_obj.system_message.id = problem.id;
+        log_obj.system_message.qid = problem.id;
+        log_obj.system_message.sub_type = "test";
         log_obj.system_message.accepted = false;
 
         if (results[0].state === 'Accepted') {
@@ -215,7 +215,7 @@ class TestCommand {
   }
 
   handler(argv) {
-    var that = this;
+    let that = this;
     session.argv = argv;
     if (!argv.i)
       return that.runTest(argv);

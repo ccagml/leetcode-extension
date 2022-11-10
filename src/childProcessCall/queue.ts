@@ -9,17 +9,17 @@
 
 
 
-var underscore = require('underscore');
+let underscore = require('underscore');
 
 import { config } from "./config";
 
 export class Queue {
-  tasks
-  ctx
-  onTask
-  error
-  concurrency
-  onDone
+  tasks;
+  ctx;
+  onTask;
+  error;
+  concurrency;
+  onDone;
   constructor(tasks, ctx, onTask) {
     this.tasks = underscore.clone(tasks) || [];
     this.ctx = ctx || {};

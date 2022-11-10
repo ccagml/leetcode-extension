@@ -9,9 +9,9 @@
 
 
 
-var path = require('path');
+let path = require('path');
 
-var _ = require('underscore');
+let _ = require('underscore');
 
 
 
@@ -30,7 +30,7 @@ class SubMission {
   }
 
   process_argv = function (argv) {
-    var argv_config = helper.base_argv().option('a', {
+    let argv_config = helper.base_argv().option('a', {
       alias: 'all',
       type: 'boolean',
       default: false,
@@ -64,15 +64,15 @@ class SubMission {
         type: 'string',
         default: '',
         describe: 'Download specific question by id'
-      })
-    argv_config.process_argv(argv)
+      });
+    argv_config.process_argv(argv);
 
-    return argv_config.get_result()
-  }
+    return argv_config.get_result();
+  };
 
 
   doTask(problem, queue, cb) {
-    var that = this;
+    let that = this;
     const argv = queue.ctx.argv;
 
     function onTaskDone(e, msg) {

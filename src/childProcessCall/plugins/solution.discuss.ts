@@ -8,7 +8,7 @@
  */
 
 
-var request = require('request');
+let request = require('request');
 
 
 import { log } from "../log";
@@ -18,11 +18,11 @@ import { MyPluginBase } from "../my_plugin_base";
 
 
 class SolutionDiscuss extends MyPluginBase {
-  id = 200
-  name = "solution.discuss"
+  id = 200;
+  name = "solution.discuss";
   builtin = true;
   constructor() {
-    super()
+    super();
   }
 
 
@@ -31,13 +31,13 @@ class SolutionDiscuss extends MyPluginBase {
     this.next.getProblem(problem, needTranslation, function (e, problem) {
       if (e || !session.argv.solution) return cb(e, problem);
 
-      var lang = session.argv.lang;
+      let lang = session.argv.lang;
       getSolution(problem, lang, function (e, solution) {
         if (e) return cb(e);
         if (!solution) return log.error('Solution not found for ' + lang);
 
-        var link = URL_DISCUSS.replace('$slug', problem.slug).replace('$id', solution.id);
-        var content = solution.post.content.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
+        let link = URL_DISCUSS.replace('$slug', problem.slug).replace('$id', solution.id);
+        let content = solution.post.content.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
 
         log.info();
         log.info(problem.name);
@@ -57,15 +57,15 @@ class SolutionDiscuss extends MyPluginBase {
 
 }
 
-var URL_DISCUSSES = 'https://leetcode.com/graphql';
-var URL_DISCUSS = 'https://leetcode.com/problems/$slug/discuss/$id';
+let URL_DISCUSSES = 'https://leetcode.com/graphql';
+let URL_DISCUSS = 'https://leetcode.com/problems/$slug/discuss/$id';
 
 function getSolution(problem, lang, cb) {
   if (!problem) return cb();
 
   if (lang === 'python3') lang = 'python';
 
-  var opts = {
+  let opts = {
     url: URL_DISCUSSES,
     json: true,
     body: {

@@ -21,7 +21,7 @@ class PluginCommand {
   }
 
   process_argv = function (argv) {
-    var argv_config = helper.base_argv().option('d', {
+    let argv_config = helper.base_argv().option('d', {
       alias: 'disable',
       type: 'boolean',
       describe: 'Disable plugin',
@@ -40,12 +40,12 @@ class PluginCommand {
       type: 'string',
       describe: 'Filter plugin by name',
       default: ''
-    })
+    });
 
-    argv_config.process_argv(argv)
+    argv_config.process_argv(argv);
 
-    return argv_config.get_result()
-  }
+    return argv_config.get_result();
+  };
 
   handler = function (argv) {
     session.argv = argv;
@@ -83,7 +83,6 @@ class PluginCommand {
       myPluginBase.init();
     } else if (argv.config) {
       log.info(JSON.stringify(config.plugins[name] || {}, null, 2));
-    } else {
     }
   };
 }

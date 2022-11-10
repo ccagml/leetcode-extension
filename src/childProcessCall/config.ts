@@ -8,18 +8,18 @@
  */
 
 
-var underscore = require('underscore');
+let underscore = require('underscore');
 
 class Config {
-  app
-  sys
-  autologin
-  code
-  file
-  color
-  icon
-  network
-  plugins
+  app;
+  sys;
+  autologin;
+  code;
+  file;
+  color;
+  icon;
+  network;
+  plugins;
   constructor() {
     this.sys = {
       categories: [
@@ -80,32 +80,32 @@ class Config {
         noj_go: '',
         u: '',
       },
-    }
+    };
 
     this.autologin = {
       enable: false,
       retry: 2
-    }
+    };
     this.code = {
       editor: 'vim',
       lang: 'cpp'
-    }
+    };
     this.file = {
       show: '${fid}.${slug}',
       submission: '${fid}.${slug}.${sid}.${ac}'
-    }
+    };
     this.color = {
       enable: true,
       theme: 'default'
-    }
+    };
     this.icon = {
       theme: ''
-    }
+    };
     this.network = {
       concurrency: 10,
       delay: 1
-    }
-    this.plugins = {}
+    };
+    this.plugins = {};
   }
 
   init() {
@@ -133,8 +133,8 @@ class Config {
     this.sys.urls.verify = 'https://leetcode.cn/submissions/detail/$id/check/';
     this.sys.urls.favorites = 'https://leetcode.cn/list/api/questions';
     this.sys.urls.favorite_delete = 'https://leetcode.cn/list/api/questions/$hash/$id';
-    this.sys.urls.noj_go = 'https://leetcode.cn/graphql/noj-go/'
-    this.sys.urls.u = 'https://leetcode.cn/u/$username/'
+    this.sys.urls.noj_go = 'https://leetcode.cn/graphql/noj-go/';
+    this.sys.urls.u = 'https://leetcode.cn/u/$username/';
     this.sys.urls.github_login = 'https://leetcode.cn/accounts/github/login/?next=%2F';
     this.sys.urls.linkedin_login = 'https://leetcode.cn/accounts/linkedin_oauth2/login/?next=%2F';
     this.sys.urls.leetcode_redirect = 'https://leetcode.cn/';

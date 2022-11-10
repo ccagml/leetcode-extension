@@ -20,7 +20,7 @@ class ListCommand {
   }
 
   process_argv(argv) {
-    var argv_config = helper.base_argv().option('q', corePlugin.filters.query)
+    let argv_config = helper.base_argv().option('q', corePlugin.filters.query)
       .option('s', {
         alias: 'stat',
         type: 'boolean',
@@ -44,11 +44,11 @@ class ListCommand {
         type: 'string',
         default: '',
         describe: 'Filter questions by keyword'
-      })
+      });
 
-    argv_config.process_argv(argv)
+    argv_config.process_argv(argv);
 
-    return argv_config.get_result()
+    return argv_config.get_result();
   }
 
   handler(argv) {
@@ -57,10 +57,10 @@ class ListCommand {
       if (e) return log.info(e);
       let new_objcet: Array<any> = [];
       problems.forEach(element => {
-        let temp_ele: any = {}
+        let temp_ele: any = {};
         for (const key in element) {
           if (key != "link") {
-            temp_ele[key] = element[key]
+            temp_ele[key] = element[key];
           }
         }
         new_objcet.push(temp_ele);

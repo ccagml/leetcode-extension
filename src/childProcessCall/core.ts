@@ -8,10 +8,10 @@
  */
 
 
-var util = require('util');
+let util = require('util');
 
-var _ = require('underscore');
-var cheerio = require('cheerio');
+let _ = require('underscore');
+let cheerio = require('cheerio');
 
 // import { log } from "./log";
 import { helper } from "./helper";
@@ -24,8 +24,8 @@ function hasTag(o, tag) {
 }
 
 class CorePlugin extends MyPluginBase {
-  id = 99999999
-  name = 'core'
+  id = 99999999;
+  name = 'core';
   builtin = true;
   filters = {
     query: {
@@ -79,16 +79,16 @@ class CorePlugin extends MyPluginBase {
     });
   };
   public getProblem = (keyword, needTranslation, cb) => {
-    var that = this;
+    let that = this;
     this.getProblems(needTranslation, function (e, problems) {
       if (e) return cb(e);
       keyword = Number(keyword) || keyword;
       const metaFid = file.exist(keyword) ? file.meta(keyword).id : NaN;
       const problem = problems.find(function (x) {
         if (keyword?.fid) {
-          return x.fid + '' === keyword.fid + ''
+          return x.fid + '' === keyword.fid + '';
         } else if (keyword?.qid) {
-          return x.id + '' === keyword.qid + ''
+          return x.id + '' === keyword.qid + '';
         } else {
           return x.id + '' === keyword + '' || x.fid + '' === metaFid + '' || x.name === keyword || x.slug === keyword;
         }
@@ -139,20 +139,20 @@ class CorePlugin extends MyPluginBase {
       if (e) return cb(e);
       return cb(null, result);
     });
-  }
+  };
   getQueryZ = (username, cb) => {
     this.getTestApi(username, function (e, result) {
       if (e) return cb(e);
       return cb(null, result);
     });
-  }
+  };
 
   getUserContest = (username, cb) => {
     this.getUserContestP(username, function (e, result) {
       if (e) return cb(e);
       return cb(null, result);
     });
-  }
+  };
 }
 
 

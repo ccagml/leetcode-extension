@@ -10,25 +10,25 @@
 
 import { MyPluginBase } from "../my_plugin_base";
 
-var request = require('request');
+let request = require('request');
 
 import { config } from "../config";
 
 import { session } from "../session";
 
 class LeetCodeCn extends MyPluginBase {
-  id = 15
-  name = 'leetcode.cn'
+  id = 15;
+  name = 'leetcode.cn';
   builtin = true;
   constructor() {
-    super()
+    super();
   }
   init() {
-    config.fix_cn()
+    config.fix_cn();
   };
 
   getProblems = (needTranslation, cb) => {
-    var that = this;
+    let that = this;
     this.next.getProblems(needTranslation, function (e, problems) {
       if (e) return cb(e);
 
@@ -128,12 +128,12 @@ class LeetCodeCn extends MyPluginBase {
 
       e = checkError(e, resp, 200);
       if (e) return cb(e);
-      var result: any = {}
-      result.titleSlug = body.data.todayRecord[0].question.titleSlug
-      result.questionId = body.data.todayRecord[0].question.questionId
-      result.fid = body.data.todayRecord[0].question.questionFrontendId
-      result.date = body.data.todayRecord[0].data
-      result.userStatus = body.data.todayRecord[0].userStatus
+      let result: any = {};
+      result.titleSlug = body.data.todayRecord[0].question.titleSlug;
+      result.questionId = body.data.todayRecord[0].question.questionId;
+      result.fid = body.data.todayRecord[0].question.questionFrontendId;
+      result.date = body.data.todayRecord[0].data;
+      result.userStatus = body.data.todayRecord[0].userStatus;
       return cb(null, result);
     });
   };
@@ -192,7 +192,7 @@ class LeetCodeCn extends MyPluginBase {
     const opts = makeOpts(config.sys.urls.graphql);
     opts.headers.Origin = config.sys.urls.base;
 
-    const value_array = value.split("-")
+    const value_array = value.split("-");
 
     opts.json = true;
     opts.body = {
@@ -228,13 +228,13 @@ class LeetCodeCn extends MyPluginBase {
 
       e = checkError(e, resp, 200);
       if (e) return cb(e);
-      let result = {}
+      let result = {};
       body.data.problemsetQuestionList.questions.forEach(element => {
         result[element.frontendQuestionId] = {
           topicTags: element.topicTags.map(function (p) { return p.slug; }),
           CompanyTags: element.extra.topCompanyTags.map(function (p) { return p.slug; }),
-        }
-      })
+        };
+      });
       return cb(null, result);
     });
   };
@@ -251,7 +251,7 @@ function signOpts(opts, user) {
 }
 
 function makeOpts(url) {
-  var opts: any = {};
+  let opts: any = {};
   opts.url = url;
   opts.headers = {};
 

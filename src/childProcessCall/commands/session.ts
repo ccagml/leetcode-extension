@@ -53,7 +53,7 @@ class SessionCommand {
     if (argv.create)
       return corePlugin.createSession(argv.keyword, this.printSessions);
 
-    var that = this;
+    let that = this;
     corePlugin.getSessions(function (e, sessions) {
       if (e) return log.info(e);
 

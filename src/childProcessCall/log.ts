@@ -8,17 +8,17 @@
  */
 
 
-var _ = require('underscore');
+let _ = require('underscore');
 
 
 class LOG {
-  output = _.bind(console.log, console)
-  level
+  output = _.bind(console.log, console);
+  level;
   levels = new Map([
     ['INFO', { value: 2 }],
     ['WARN', { value: 3 }],
     ['ERROR', { value: 4 }],
-  ])
+  ]);
   setLevel(name) {
     this.level = this.levels.get(name) || this.levels.get('INFO');
   };
@@ -41,19 +41,19 @@ class LOG {
   };
 
   info(...rest: any[]) {
-    const args = rest //Array.from(arguments);
+    const args = rest; //Array.from(arguments);
     let s = args.map(x => x.toString()).join(' ');
     this.output(s);
   };
   warn(...rest: any[]) {
-    const args = rest //Array.from(arguments);
+    const args = rest; //Array.from(arguments);
     args.unshift('[' + "warn" + ']');
 
     let s = args.map(x => x.toString()).join(' ');
     this.output(s);
   };
   error(...rest: any[]) {
-    const args = rest //Array.from(arguments);
+    const args = rest; //Array.from(arguments);
     args.unshift('[' + "error" + ']');
 
     let s = args.map(x => x.toString()).join(' ');

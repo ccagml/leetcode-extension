@@ -8,7 +8,7 @@
  */
 
 
-var underscore = require('underscore');
+let underscore = require('underscore');
 
 import { config as out_config } from "./config";
 import { file } from "./file";
@@ -52,7 +52,7 @@ export class MyPluginBase {
     head = head || require('./core').corePlugin;
     const stats = cache.get(helper.KEYS.plugins) || {};
     let installed: Array<MyPluginBase> = [];
-    let file_plugin: Array<any> = file.listCodeDir('plugins')
+    let file_plugin: Array<any> = file.listCodeDir('plugins');
     for (let f of file_plugin) {
       const p = f.data;
       if (!p) continue;
@@ -192,98 +192,98 @@ export class MyPluginBase {
   // }
 
   public getProblems(Translate: boolean, cb) {
-    this.next.getProblems(Translate, cb)
+    this.next.getProblems(Translate, cb);
   }
   public getQuestionOfToday(cb) {
-    this.next.getQuestionOfToday(cb)
+    this.next.getQuestionOfToday(cb);
   }
   public getTestApi(username, cb) {
-    this.next.getTestApi(username, cb)
+    this.next.getTestApi(username, cb);
   }
   public getUserContestP(username, cb) {
-    this.next.getUserContestP(username, cb)
+    this.next.getUserContestP(username, cb);
   }
   public getProblemsTitle(cb) {
-    this.next.getProblemsTitle(cb)
+    this.next.getProblemsTitle(cb);
   }
   public createSession(a, cb) {
-    this.next.createSession(a, cb)
+    this.next.createSession(a, cb);
   }
   public getSessions(cb) {
-    this.next.getSessions(cb)
+    this.next.getSessions(cb);
   }
   public activateSession(s, cb) {
-    this.next.activateSession(s, cb)
+    this.next.activateSession(s, cb);
 
   }
   public deleteSession(s, cb) {
-    this.next.deleteSession(s, cb)
+    this.next.deleteSession(s, cb);
 
   }
   public updateProblem(a, b) {
-    this.next.updateProblem(a, b)
+    this.next.updateProblem(a, b);
 
   }
   public getSubmissions(s, cb) {
-    this.next.getSubmissions(s, cb)
+    this.next.getSubmissions(s, cb);
 
   }
   public getSubmission(s, cb) {
-    this.next.getSubmission(s, cb)
+    this.next.getSubmission(s, cb);
 
   }
   public submitProblem(s, cb) {
-    this.next.submitProblem(s, cb)
+    this.next.submitProblem(s, cb);
 
   }
   public testProblem(s, cb) {
-    this.next.testProblem(s, cb)
+    this.next.testProblem(s, cb);
 
   }
   public login(user, cb) {
-    this.next.login(user, cb)
+    this.next.login(user, cb);
 
   }
   public logout(user, cb) {
-    this.next.logout(user, cb)
+    this.next.logout(user, cb);
 
   }
   public githubLogin(user, cb) {
-    this.next.githubLogin(user, cb)
+    this.next.githubLogin(user, cb);
 
   }
   public linkedinLogin(user, cb) {
-    this.next.linkedinLogin(user, cb)
+    this.next.linkedinLogin(user, cb);
 
   }
   public cookieLogin(user, cb) {
-    this.next.cookieLogin(user, cb)
+    this.next.cookieLogin(user, cb);
   }
   public filterProblems(opts, cb) {
-    this.next.filterProblems(opts, cb)
+    this.next.filterProblems(opts, cb);
   }
 
   public getProblem(keyword, needTranslation, cb) {
-    this.next.getProblem(keyword, needTranslation, cb)
+    this.next.getProblem(keyword, needTranslation, cb);
   }
 
   public starProblem(problem, starred, cb) {
-    this.next.starProblem(problem, starred, cb)
+    this.next.starProblem(problem, starred, cb);
   }
   public exportProblem(problem, opts) {
-    this.next.exportProblem(problem, opts)
+    this.next.exportProblem(problem, opts);
   }
 
   public getTodayQuestion(cb) {
-    this.next.getTodayQuestion(cb)
+    this.next.getTodayQuestion(cb);
   }
 
   public getQueryZ(username, cb) {
-    this.next.getQueryZ(username, cb)
+    this.next.getQueryZ(username, cb);
   }
 
   public getUserContest(username, cb) {
-    this.next.getUserContest(username, cb)
+    this.next.getUserContest(username, cb);
   }
 }
 

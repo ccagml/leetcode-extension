@@ -15,8 +15,8 @@ import { session } from "../session";
 
 
 class RetryPlugin extends MyPluginBase {
-  id = 30
-  name = 'retry'
+  id = 30;
+  name = 'retry';
   builtin = true;
   count = {};
 
@@ -24,7 +24,7 @@ class RetryPlugin extends MyPluginBase {
     return config.autologin.enable &&
       (e === session.errors.EXPIRED) &&
       (this.count[name] || 0) < config.autologin.retry;
-  }
+  };
   init = () => {
     const names = [
       'activateSession',
@@ -40,7 +40,7 @@ class RetryPlugin extends MyPluginBase {
       'submitProblem',
       'starProblem'
     ];
-    var that = this;
+    let that = this;
     for (let name of names) {
       that.count[name] = 0;
       this[name] = function () {

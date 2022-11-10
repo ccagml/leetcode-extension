@@ -8,8 +8,8 @@
  */
 
 
-var util = require('util');
-var childProcess = require('child_process');
+let util = require('util');
+let childProcess = require('child_process');
 
 
 import { helper } from "../helper";
@@ -27,7 +27,7 @@ class ShowCommand {
 
 
   process_argv = function (argv) {
-    var argv_config = helper.base_argv().option('c', {
+    let argv_config = helper.base_argv().option('c', {
       alias: 'codeonly',
       type: 'boolean',
       default: false,
@@ -75,13 +75,13 @@ class ShowCommand {
         type: 'string',
         default: '',
         describe: 'Show question by name or id'
-      })
+      });
 
 
-    argv_config.process_argv(argv)
+    argv_config.process_argv(argv);
 
-    return argv_config.get_result()
-  }
+    return argv_config.get_result();
+  };
 
 
   genFileName(problem, opts) {
@@ -174,7 +174,7 @@ class ShowCommand {
     if (problem.totalSubmit)
       log.info(`* Total Submissions: ${problem.totalSubmit}`);
     if (problem.testable && problem.testcase) {
-      var testcase_value = util.inspect(problem.testcase)
+      let testcase_value = util.inspect(problem.testcase);
       log.info(`* Testcase Example:  ${testcase_value}`);
     }
     if (filename)
@@ -185,7 +185,7 @@ class ShowCommand {
   }
 
   handler(argv) {
-    var that = this
+    let that = this;
     session.argv = argv;
     if (argv.keyword.length > 0) {
       // show specific one

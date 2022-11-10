@@ -10,7 +10,7 @@
 
 import { MyPluginBase } from "../my_plugin_base";
 
-var underscore = require('underscore');
+let underscore = require('underscore');
 
 
 import { cache } from "../cache";
@@ -21,11 +21,11 @@ import { session } from "../session";
 
 
 class CachePlugin extends MyPluginBase {
-    id = 50
-    name = 'cache'
+    id = 50;
+    name = 'cache';
     builtin = true;
     constructor() {
-        super()
+        super();
     }
 
     clearCacheIfTchanged = (needTranslation) => {
@@ -35,7 +35,7 @@ class CachePlugin extends MyPluginBase {
             cache.set(helper.KEYS.translation, { useEndpointTranslation: needTranslation });
 
         }
-    }
+    };
 
     public getProblems = (needTranslation, cb) => {
         this.clearCacheIfTchanged(needTranslation);
@@ -55,7 +55,7 @@ class CachePlugin extends MyPluginBase {
         this.clearCacheIfTchanged(needTranslation);
         const k = helper.KEYS.problem(problem);
         const _problem = cache.get(k);
-        var that = this;
+        let that = this;
         if (_problem) {
             if (!_problem.desc.includes('<pre>')) {
 

@@ -8,7 +8,7 @@
  */
 
 
-var ora = require('ora');
+let ora = require('ora');
 
 import { file } from "./file";
 
@@ -59,7 +59,7 @@ export const LANGS = [
 ];
 
 class HELPER {
-  KEYS
+  KEYS;
   constructor() {
     this.KEYS = {
       user: '../user',
@@ -151,7 +151,7 @@ class HELPER {
 
   readStdin(cb) {
     const stdin = process.stdin;
-    var bufs: Array<any> = [];
+    let bufs: Array<any> = [];
 
     console.log('NOTE: to finish the input, press ' +
       (file.isWindows() ? '<Ctrl-D> and <Return>' : '<Ctrl-D>'));
@@ -203,26 +203,26 @@ class HELPER {
   };
 
   base_argv() {
-    var base = {
+    let base = {
       all_base_data: {},
       positional_index: 0,
       positional_key: {},
       option: function (key, value) {
-        this.all_base_data[key] = value.default
-        this.all_base_data[value.alias] = value.default
-        this[key] = value
-        return this
+        this.all_base_data[key] = value.default;
+        this.all_base_data[value.alias] = value.default;
+        this[key] = value;
+        return this;
       },
       positional: function (key, value) {
-        this.positional_key[this.positional_index] = key
+        this.positional_key[this.positional_index] = key;
         this.positional_index = this.positional_index + 1;
-        this.all_base_data[key] = value.default
-        this.all_base_data[value.alias] = value.default
-        this[key] = value
-        return this
+        this.all_base_data[key] = value.default;
+        this.all_base_data[value.alias] = value.default;
+        this[key] = value;
+        return this;
       },
       set_opt(key, temp_val?) {
-        var cfg = this[key]
+        let cfg = this[key];
         if (cfg) {
           if (cfg.type == "boolean") {
             this.all_base_data[key] = true;
@@ -243,8 +243,8 @@ class HELPER {
         return false;
       },
       set_posi(value, index) {
-        var cfg_key = this.positional_key[index]
-        var cfg = this[cfg_key]
+        let cfg_key = this.positional_key[index];
+        let cfg = this[cfg_key];
         if (cfg) {
           this.all_base_data[cfg_key] = value;
           if (cfg.alias) {
@@ -253,11 +253,11 @@ class HELPER {
         }
       },
       process_argv(argv) {
-        var all_posi = 0
+        let all_posi = 0;
         for (let index = 3; index < argv.length; index++) {
-          var con = argv[index]
+          let con = argv[index];
           if (con[0] == '-' && con[1] == '-') {
-            this.set_opt(con.substring(2))
+            this.set_opt(con.substring(2));
           }
           else if (con[0] == '-') {
             for (let con_index = 1; con_index < con.length; con_index++) {
@@ -272,9 +272,9 @@ class HELPER {
         }
       },
       get_result: function () {
-        return this.all_base_data
+        return this.all_base_data;
       }
-    }
+    };
     return base;
   }
 }
