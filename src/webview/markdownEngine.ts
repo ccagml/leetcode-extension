@@ -6,7 +6,7 @@ import * as MarkdownIt from "markdown-it";
 import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
-import { leetCodeChannel } from "../leetCodeChannel";
+import { logOutput } from "../utils/logOutput";
 import { isWindows } from "../utils/osUtils";
 
 class MarkdownEngine implements vscode.Disposable {
@@ -54,7 +54,7 @@ class MarkdownEngine implements vscode.Disposable {
             const stylePaths: string[] = require(path.join(this.config.extRoot, "package.json"))["contributes"]["markdown.previewStyles"];
             styles = stylePaths.map((p: string) => vscode.Uri.file(path.join(this.config.extRoot, p)).with({ scheme: "vscode-resource" }));
         } catch (error) {
-            leetCodeChannel.appendLine("[Error] Fail to load built-in markdown style file.");
+            logOutput.appendLine("[Error] Fail to load built-in markdown style file.");
         }
         return styles.map((style: vscode.Uri) => `<link rel="stylesheet" type="text/css" href="${style.toString()}">`).join(os.EOL);
     }

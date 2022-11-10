@@ -21,12 +21,8 @@ export async function listProblems(): Promise<IProblem[]> {
         const result: string = await leetCodeExecutor.listProblems(showLocked, useEndpointTranslation);
         const all_problem_info = JSON.parse(result);
         const problems: IProblem[] = [];
-        // const lines: string[] = result.split("\n");
-        // const reg: RegExp = /^(.)\s(.{1,2})\s(.)\s\[\s*(\d*)\s*\]\s*(.*)\s*(Easy|Medium|Hard)\s*\((\s*\d+\.\d+ %)\)/;
-        // const { companies, tags } = await leetCodeExecutor.getCompaniesAndTags();
         const AllScoreData = leetCodeTreeDataProvider.getScoreData();
         for (const p of all_problem_info) {
-            // console.log(p)
             problems.push({
                 id: p.fid,
                 qid: p.id,

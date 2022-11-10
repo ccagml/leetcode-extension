@@ -7,7 +7,7 @@ import * as unescapeJS from "unescape-js";
 import * as vscode from "vscode";
 import { explorerNodeManager } from "../explorer/explorerNodeManager";
 import { LeetCodeNode } from "../explorer/LeetCodeNode";
-import { leetCodeChannel } from "../leetCodeChannel";
+import { logOutput } from "../utils/logOutput";
 import { leetCodeExecutor } from "../leetCodeExecutor";
 import { leetCodeManager } from "../leetCodeManager";
 import { IProblem, IQuickItemEx, languages, ProblemState, SearchNode, SearchSetType, userContestRankingObj, userContestRanKingBase } from "../shared";
@@ -227,7 +227,7 @@ export async function testapi(): Promise<void> {
         const query_result = JSON.parse(solution);
         console.log(query_result);
     } catch (error) {
-        leetCodeChannel.appendLine(error.toString());
+        logOutput.appendLine(error.toString());
         await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
     }
 }
@@ -245,7 +245,7 @@ export async function searchUserContest(): Promise<void> {
         await leetCodeManager.insertCurrentUserContestInfo(tt);
         leetCodeManager.emit("searchUserContest")
     } catch (error) {
-        leetCodeChannel.appendLine(error.toString());
+        logOutput.appendLine(error.toString());
         await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
     }
 }
@@ -273,7 +273,7 @@ export async function searchToday(): Promise<void> {
         }
 
     } catch (error) {
-        leetCodeChannel.appendLine(error.toString());
+        logOutput.appendLine(error.toString());
         await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
     }
 }
@@ -310,7 +310,7 @@ export async function showSolution(input: LeetCodeNode | vscode.Uri): Promise<vo
         const solution: string = await leetCodeExecutor.showSolution(problemInput, language, needTranslation);
         leetCodeSolutionProvider.show(unescapeJS(solution));
     } catch (error) {
-        leetCodeChannel.appendLine(error.toString());
+        logOutput.appendLine(error.toString());
         await promptForOpenOutputChannel("Failed to fetch the top voted solution. Please open the output channel for details.", DialogType.error);
     }
 }
@@ -369,7 +369,7 @@ async function showProblemInternal(node: IProblem): Promise<void> {
         if (finalPath) {
             finalPath = await resolveRelativePath(finalPath, node, language);
             if (!finalPath) {
-                leetCodeChannel.appendLine("Showing problem canceled by user.");
+                logOutput.appendLine("Showing problem canceled by user.");
                 return;
             }
         }
@@ -465,7 +465,7 @@ async function resolveRelativePath(relativePath: string, node: IProblem, selecte
                 return company;
             default:
                 const errorMsg: string = `The config '${placeholder}' is not supported.`;
-                leetCodeChannel.appendLine(errorMsg);
+                logOutput.appendLine(errorMsg);
                 throw new Error(errorMsg);
         }
     });

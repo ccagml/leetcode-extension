@@ -6,7 +6,6 @@ import { codeLensController } from "./codelens/CodeLensController";
 import * as cache from "./commands/cache";
 import { switchDefaultLanguage } from "./commands/language";
 import * as plugin from "./commands/plugin";
-import * as session from "./commands/session";
 import * as show from "./commands/show";
 import * as star from "./commands/star";
 import * as submit from "./commands/submit";
@@ -15,7 +14,7 @@ import { explorerNodeManager } from "./explorer/explorerNodeManager";
 import { LeetCodeNode } from "./explorer/LeetCodeNode";
 import { leetCodeTreeDataProvider } from "./explorer/LeetCodeTreeDataProvider";
 import { leetCodeTreeItemDecorationProvider } from "./explorer/LeetCodeTreeItemDecorationProvider";
-import { leetCodeChannel } from "./leetCodeChannel";
+import { logOutput } from "./utils/logOutput";
 import { leetCodeExecutor } from "./leetCodeExecutor";
 import { leetCodeManager } from "./leetCodeManager";
 import { leetCodeStatusBarController } from "./statusbar/leetCodeStatusBarController";
@@ -32,12 +31,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     try {
 
         if (!wsl.useVscodeNode()) {
-            if (!await leetCodeExecutor.meetRequirements(context)) {
+            if (!await leetCodeExecutor.checkNodeEnv(context)) {
                 throw new Error("The environment doesn't meet requirements.");
             }
         }
-
-
         leetCodeManager.on("statusChanged", () => {
             leetCodeStatusBarController.updateStatusBar(leetCodeManager.getStatus(), leetCodeManager.getUser());
             leetCodeTreeDataProvider.cleanUserScore();
@@ -55,7 +52,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
         context.subscriptions.push(
             leetCodeStatusBarController,
-            leetCodeChannel,
+            logOutput,
             leetCodePreviewProvider,
             leetCodeSubmissionProvider,
             leetCodeSolutionProvider,
@@ -69,7 +66,6 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
             vscode.commands.registerCommand("leetcode.toggleLeetCodeCn", () => plugin.switchEndpoint()),
             vscode.commands.registerCommand("leetcode.signin", () => leetCodeManager.signIn()),
             vscode.commands.registerCommand("leetcode.signout", () => leetCodeManager.signOut()),
-            vscode.commands.registerCommand("leetcode.manageSessions", () => session.manageSessions()),
             vscode.commands.registerCommand("leetcode.previewProblem", (node: LeetCodeNode) => show.previewProblem(node)),
             vscode.commands.registerCommand("leetcode.showProblem", (node: LeetCodeNode) => show.showProblem(node)),
             vscode.commands.registerCommand("leetcode.pickOne", () => show.pickOne()),
@@ -90,7 +86,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         await leetCodeExecutor.switchEndpoint(plugin.getLeetCodeEndpoint());
         await leetCodeManager.getLoginStatus();
     } catch (error) {
-        leetCodeChannel.appendLine(error.toString());
+        logOutput.appendLine(error.toString());
         promptForOpenOutputChannel("Extension initialization failed. Please open output channel for details.", DialogType.error);
     }
 }

@@ -3,7 +3,7 @@
 
 import * as cp from "child_process";
 import * as vscode from "vscode";
-import { leetCodeChannel } from "../leetCodeChannel";
+import { logOutput } from "./logOutput";
 import * as wsl from "../utils/wslUtils";
 
 interface IExecError extends Error {
@@ -32,10 +32,10 @@ export async function executeCommand(command: string, args: string[], options: c
         childProc.stdout?.on("data", (data: string | Buffer) => {
             data = data.toString();
             result = result.concat(data);
-            leetCodeChannel.append(data);
+            logOutput.append(data);
         });
 
-        childProc.stderr?.on("data", (data: string | Buffer) => leetCodeChannel.append(data.toString()));
+        childProc.stderr?.on("data", (data: string | Buffer) => logOutput.append(data.toString()));
 
         childProc.on("error", reject);
 

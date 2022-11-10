@@ -5,7 +5,6 @@ import * as cp from "child_process";
 import * as fse from "fs-extra";
 import * as os from "os";
 import * as path from "path";
-import * as requireFromString from "require-from-string";
 import { ExtensionContext } from "vscode";
 import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace, WorkspaceConfiguration } from "vscode";
 import { Endpoint, IProblem, leetcodeHasInited } from "./shared";
@@ -45,7 +44,7 @@ class LeetCodeExecutor implements Disposable {
         }
     }
 
-    public async meetRequirements(context: ExtensionContext): Promise<boolean> {
+    public async checkNodeEnv(context: ExtensionContext): Promise<boolean> {
         const hasInited: boolean | undefined = context.globalState.get(leetcodeHasInited);
         if (!hasInited) {
             await this.removeOldCache();
@@ -183,21 +182,6 @@ class LeetCodeExecutor implements Disposable {
         return await this.executeCommandWithProgressEx("Fetching problem description...", this.nodeExecutable, cmd);
     }
 
-    public async listSessions(): Promise<string> {
-        return await this.executeCommandEx(this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "session"]);
-    }
-
-    public async enableSession(name: string): Promise<string> {
-        return await this.executeCommandEx(this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "session", "-e", name]);
-    }
-
-    public async createSession(id: string): Promise<string> {
-        return await this.executeCommandEx(this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "session", "-c", id]);
-    }
-
-    public async deleteSession(id: string): Promise<string> {
-        return await this.executeCommandEx(this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "session", "-d", id]);
-    }
 
     public async submitSolution(filePath: string): Promise<string> {
         try {
@@ -249,17 +233,7 @@ class LeetCodeExecutor implements Disposable {
         }
         await this.executeCommandWithProgressEx("Updating the favorite list...", "node", commandParams);
     }
-    // 读取tag 编号看着只有钱1148才有
-    public async getCompaniesAndTags(): Promise<{ companies: { [key: string]: string[] }, tags: { [key: string]: string[] } }> {
-        // preprocess the plugin source
-        const companiesTagsPath: string = path.join(this.leetCodeCliRootPath, "lib", "plugins", "company.js");
-        const companiesTagsSrc: string = (await fse.readFile(companiesTagsPath, "utf8")).replace(
-            "module.exports = plugin",
-            "module.exports = { COMPONIES, TAGS }",
-        );
-        const { COMPONIES, TAGS } = requireFromString(companiesTagsSrc, companiesTagsPath);
-        return { companies: COMPONIES, tags: TAGS };
-    }
+
 
     public get node(): string {
         return this.nodeExecutable;

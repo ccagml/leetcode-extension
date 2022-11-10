@@ -2,12 +2,6 @@ import { URLSearchParams } from "url";
 import { FileDecoration, FileDecorationProvider, ProviderResult, ThemeColor, Uri, workspace, WorkspaceConfiguration } from "vscode";
 
 export class LeetCodeTreeItemDecorationProvider implements FileDecorationProvider {
-    // private readonly DIFFICULTY_BADGE_LABEL: { [key: string]: string } = {
-    //     easy: "E",
-    //     medium: "M",
-    //     hard: "H",
-    // };
-
     private readonly ITEM_COLOR: { [key: string]: ThemeColor } = {
         easy: new ThemeColor("charts.green"),
         medium: new ThemeColor("charts.yellow"),

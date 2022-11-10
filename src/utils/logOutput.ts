@@ -1,10 +1,7 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
-
 import * as vscode from "vscode";
 
-class LeetCodeChannel implements vscode.Disposable {
-    private readonly channel: vscode.OutputChannel = vscode.window.createOutputChannel("LeetCode");
+class LogOutput implements vscode.Disposable {
+    private readonly channel: vscode.OutputChannel = vscode.window.createOutputChannel("LeetCodeProblemRating");
 
     public appendLine(message: string): void {
         this.channel.appendLine(message);
@@ -23,4 +20,4 @@ class LeetCodeChannel implements vscode.Disposable {
     }
 }
 
-export const leetCodeChannel: LeetCodeChannel = new LeetCodeChannel();
+export const logOutput: LogOutput = new LogOutput();

@@ -29,7 +29,6 @@
         "onCommand:leetcode.toggleLeetCodeCn",
         "onCommand:leetcode.signin",
         "onCommand:leetcode.signout",
-        "onCommand:leetcode.manageSessions",
         "onCommand:leetcode.refreshExplorer",
         "onCommand:leetcode.pickOne",
         "onCommand:leetcode.deleteAllCache",
@@ -65,11 +64,6 @@
             {
                 "command": "leetcode.signout",
                 "title": "Sign Out",
-                "category": "LeetCode"
-            },
-            {
-                "command": "leetcode.manageSessions",
-                "title": "Manage Sessions",
                 "category": "LeetCode"
             },
             {
@@ -773,7 +767,6 @@
         "@types/lodash": "^4.14.170",
         "@types/markdown-it": "0.0.7",
         "@types/node": "^14.14.33",
-        "@types/require-from-string": "^1.2.0",
         "@types/vscode": "1.57.0",
         "tslint": "^5.20.1",
         "typescript": "^4.3.2",
@@ -784,7 +777,6 @@
         "highlight.js": "^10.7.2",
         "lodash": "^4.17.21",
         "markdown-it": "12.3.2",
-        "require-from-string": "^2.0.2",
         "unescape-js": "^1.1.4",
         "ansi-styles": "3.2.1",
         "cheerio": "1.0.0-rc.12",

@@ -4,7 +4,7 @@
 import * as cp from "child_process";
 import { EventEmitter } from "events";
 import * as vscode from "vscode";
-import { leetCodeChannel } from "./leetCodeChannel";
+import { logOutput } from "./utils/logOutput";
 import { leetCodeExecutor } from "./leetCodeExecutor";
 import { IQuickItemEx, loginArgsMapping, UserStatus, userContestRanKingBase, userContestRankingObj } from "./shared";
 import { createEnvOption } from "./utils/cpUtils";
@@ -107,7 +107,7 @@ class LeetCodeManager extends EventEmitter {
                 childProc.stdout?.on("data", async (data: string | Buffer) => {
                     data = data.toString();
                     // vscode.window.showInformationMessage(`cc login msg ${data}.`);
-                    leetCodeChannel.append(data);
+                    logOutput.append(data);
                     if (data.includes("twoFactorCode")) {
                         const twoFactor: string | undefined = await vscode.window.showInputBox({
                             prompt: "Enter two-factor code.",
@@ -136,7 +136,7 @@ class LeetCodeManager extends EventEmitter {
                     }
                 });
 
-                childProc.stderr?.on("data", (data: string | Buffer) => leetCodeChannel.append(data.toString()));
+                childProc.stderr?.on("data", (data: string | Buffer) => logOutput.append(data.toString()));
 
                 childProc.on("error", reject);
                 const name: string | undefined = await vscode.window.showInputBox({

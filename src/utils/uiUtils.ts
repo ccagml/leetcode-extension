@@ -3,7 +3,7 @@
 
 import * as vscode from "vscode";
 import { getLeetCodeEndpoint } from "../commands/plugin";
-import { leetCodeChannel } from "../leetCodeChannel";
+import { logOutput } from "./logOutput";
 import { getWorkspaceConfiguration } from "./settingUtils";
 
 export namespace DialogOptions {
@@ -31,7 +31,7 @@ export async function promptForOpenOutputChannel(message: string, type: DialogTy
     }
 
     if (result === DialogOptions.open) {
-        leetCodeChannel.show();
+        logOutput.show();
     }
 }
 
