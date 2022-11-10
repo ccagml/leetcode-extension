@@ -38,9 +38,9 @@ class EventService extends EventEmitter {
         });
 
         this.on("searchUserContest", (tt) => {
-            statusBarService.update_UserContestInfo(tt)
+            statusBarService.update_UserContestInfo(tt);
             statusBarService.update();
-            treeDataService.refresh()
+            treeDataService.refresh();
         });
     }
 }

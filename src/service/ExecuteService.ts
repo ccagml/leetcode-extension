@@ -245,9 +245,9 @@ class ExecuteService implements Disposable {
 
     private initNodePath(): string {
         if (systemUtils.useVscodeNode()) {
-            return "node"
+            return "node";
         }
-        return getNodePath()
+        return getNodePath();
     }
 
     private async executeCommandEx(command: string, args: string[], options: cp.SpawnOptions = { shell: true }): Promise<string> {

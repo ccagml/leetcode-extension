@@ -10,7 +10,7 @@
 class ChoiceDao {
 
     public getChoiceData() {
-        return this.choiceData
+        return this.choiceData;
     }
 
     private choiceData = [
@@ -2082,7 +2082,7 @@ class ChoiceDao {
             ],
 
         }
-    ]
+    ];
 }
 
 

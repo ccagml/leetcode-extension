@@ -136,12 +136,14 @@ class TreeViewController implements Disposable {
             }
 
             let result: string | undefined;
+            let testString: string | undefined;
+            let testFile: vscode.Uri[] | undefined;
             switch (choice.value) {
                 case ":default":
                     result = await executeService.testSolution(filePath);
                     break;
                 case ":direct":
-                    const testString: string | undefined = await vscode.window.showInputBox({
+                    testString = await vscode.window.showInputBox({
                         prompt: "Enter the test cases.",
                         validateInput: (s: string): string | undefined => s && s.trim() ? undefined : "Test case must not be empty.",
                         placeHolder: "Example: [1,2,3]\\n4",
@@ -152,7 +154,7 @@ class TreeViewController implements Disposable {
                     }
                     break;
                 case ":file":
-                    const testFile: vscode.Uri[] | undefined = await this.showFileSelectDialog(filePath);
+                    testFile = await this.showFileSelectDialog(filePath);
                     if (testFile && testFile.length) {
                         const input: string = (await fse.readFile(testFile[0].fsPath, "utf-8")).trim();
                         if (input) {
@@ -236,11 +238,13 @@ class TreeViewController implements Disposable {
         if (this.usingCmd()) {
             // 一般需要走进这里, 除非改了 环境变量ComSpec的值
             if (systemUtils.useVscodeNode()) {
+                //eslint-disable-next-line
                 return `${test.replace(/"/g, '\"')}`;
             }
             return `"${test.replace(/"/g, '\\"')}"`;
         } else {
             if (systemUtils.useVscodeNode()) {
+                //eslint-disable-next-line
                 return `${test.replace(/"/g, '\"')}`;
             }
             return `'${test.replace(/"/g, '\\"')}'`;
@@ -306,7 +310,7 @@ class TreeViewController implements Disposable {
             return;
         }
 
-        await updateSortingStrategy(choice.value, true)
+        await updateSortingStrategy(choice.value, true);
         await treeDataService.refresh();
     }
 
@@ -341,7 +345,7 @@ class TreeViewController implements Disposable {
                 return [];
             }
 
-            const showLockedFlag: boolean = isShowLocked()
+            const showLockedFlag: boolean = isShowLocked();
             const useEndpointTranslation: boolean = isUseEndpointTranslation();
             const result: string = await executeService.listProblems(showLockedFlag, useEndpointTranslation);
             const all_problem_info = JSON.parse(result);
@@ -541,7 +545,7 @@ class TreeViewController implements Disposable {
             { title: "选择查询选项" },
         );
         if (!choice) {
-            return
+            return;
         }
         if (choice.value == "byid") {
             await this.searchProblemByID();
@@ -610,7 +614,7 @@ class TreeViewController implements Disposable {
             });
 
             // vscode.window.showErrorMessage(twoFactor || "输入错误");
-            const solution: string = await executeService.getTestApi(twoFactor || "")
+            const solution: string = await executeService.getTestApi(twoFactor || "");
             const query_result = JSON.parse(solution);
             console.log(query_result);
         } catch (error) {
@@ -649,14 +653,14 @@ class TreeViewController implements Disposable {
 
     public async pickOne(): Promise<void> {
         const problems: IProblem[] = await this.listProblems();
-        var randomProblem: IProblem;
+        let randomProblem: IProblem;
 
-        const user_score = statusBarService.getUserContestScore()
+        const user_score = statusBarService.getUserContestScore();
         if (user_score > 0) {
 
             let min_score: number = getPickOneByRankRangeMin();
             let max_score: number = getPickOneByRankRangeMax();
-            let temp_problems: IProblem[] = new Array();
+            let temp_problems: IProblem[] = [];
             const need_min = user_score + min_score;
             const need_max = user_score + max_score;
             problems.forEach(element => {
@@ -851,9 +855,9 @@ class TreeViewController implements Disposable {
             value: twoFactor,
             type: SearchSetType.ScoreRange,
             time: Math.floor(Date.now() / 1000)
-        })
+        });
         treeViewController.insertSearchSet(tt);
-        await treeDataService.refresh()
+        await treeDataService.refresh();
     }
 
     public async searchContest(): Promise<void> {
@@ -868,9 +872,9 @@ class TreeViewController implements Disposable {
             value: twoFactor,
             type: SearchSetType.Context,
             time: Math.floor(Date.now() / 1000)
-        })
+        });
         treeViewController.insertSearchSet(tt);
-        await treeDataService.refresh()
+        await treeDataService.refresh();
     }
 
 
@@ -884,8 +888,8 @@ class TreeViewController implements Disposable {
             const needTranslation: boolean = isUseEndpointTranslation();
             const solution: string = await executeService.getUserContest(needTranslation, statusBarService.getUser() || "");
             const query_result = JSON.parse(solution);
-            const tt: userContestRanKingBase = Object.assign({}, userContestRankingObj, query_result.userContestRanking)
-            eventService.emit("searchUserContest", tt)
+            const tt: userContestRanKingBase = Object.assign({}, userContestRankingObj, query_result.userContestRanking);
+            eventService.emit("searchUserContest", tt);
         } catch (error) {
             logOutput.appendLine(error.toString());
             await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
@@ -902,16 +906,16 @@ class TreeViewController implements Disposable {
             const query_result = JSON.parse(solution);
             // const titleSlug: string = query_result.titleSlug
             // const questionId: string = query_result.questionId
-            const fid: string = query_result.fid
+            const fid: string = query_result.fid;
             if (fid) {
                 const tt = Object.assign({}, SearchNode, {
                     value: fid,
                     type: SearchSetType.Day,
                     time: Math.floor(Date.now() / 1000),
                     todayData: query_result,
-                })
+                });
                 treeViewController.insertSearchSet(tt);
-                await treeDataService.refresh()
+                await treeDataService.refresh();
             }
 
         } catch (error) {
@@ -948,7 +952,7 @@ class TreeViewController implements Disposable {
 
     public async resolveRelativePath(relativePath: string, node: IProblem, selectedLanguage: string): Promise<string> {
         let tag: string = "";
-        if (/\$\{ tag\ } /i.test(relativePath)) {
+        if (/\$\{ tag \} /i.test(relativePath)) {
             tag = (await this.resolveTagForProblem(node)) || "";
         }
 
@@ -957,6 +961,7 @@ class TreeViewController implements Disposable {
             company = (await this.resolveCompanyForProblem(node)) || "";
         }
 
+        let errorMsg: string;
         return relativePath.replace(/\$\{(.*?)\}/g, (_substring: string, ...args: string[]) => {
             const placeholder: string = args[0].toLowerCase().trim();
             switch (placeholder) {
@@ -985,7 +990,7 @@ class TreeViewController implements Disposable {
                 case "company":
                     return company;
                 default:
-                    const errorMsg: string = `The config '${placeholder}' is not supported.`;
+                    errorMsg = `The config '${placeholder}' is not supported.`;
                     logOutput.appendLine(errorMsg);
                     throw new Error(errorMsg);
             }
@@ -1031,7 +1036,7 @@ class TreeViewController implements Disposable {
         if (e.sub_type == "submit" && e.accepted) {
             const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000; //获取当天零点的时间
             const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime() / 1000; //获取当天23:59:59的时间
-            var need_get_today: boolean = false;
+            let need_get_today: boolean = false;
             this.searchSet.forEach(element => {
                 if (element.type == SearchSetType.Day) {
                     if (day_start <= element.time && element.time <= day_end) {
@@ -1053,21 +1058,21 @@ class TreeViewController implements Disposable {
         }
         const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000; //获取当天零点的时间
         const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime() / 1000; //获取当天23:59:59的时间
-        var need_get_today: boolean = true;
+        let need_get_today: boolean = true;
         this.searchSet.forEach(element => {
             if (element.type == SearchSetType.Day) {
                 if (day_start <= element.time && element.time <= day_end) {
                     need_get_today = false;
                 } else {
-                    this.waitTodayQuestion = false
+                    this.waitTodayQuestion = false;
                 }
             }
         });
         if (need_get_today && !this.waitTodayQuestion) {
-            this.waitTodayQuestion = true
+            this.waitTodayQuestion = true;
             await this.searchToday();
         }
-        var user_score = statusBarService.getUserContestScore()
+        let user_score = statusBarService.getUserContestScore();
         if (!user_score && !this.waitUserContest) {
             this.waitUserContest = true;
             await this.searchUserContest();
@@ -1075,11 +1080,11 @@ class TreeViewController implements Disposable {
     }
 
     public async refreshCache(): Promise<void> {
-        const temp_searchSet: Map<string, ISearchSet> = this.searchSet
-        const temp_waitTodayQuestion: boolean = this.waitTodayQuestion
-        const temp_waitUserContest: boolean = this.waitUserContest
+        const temp_searchSet: Map<string, ISearchSet> = this.searchSet;
+        const temp_waitTodayQuestion: boolean = this.waitTodayQuestion;
+        const temp_waitUserContest: boolean = this.waitUserContest;
         this.dispose();
-        var user_score = statusBarService.getUserContestScore()
+        let user_score = statusBarService.getUserContestScore();
         for (const problem of await this.listProblems()) {
             this.explorerNodeMap.set(problem.id, new NodeModel(problem, true, user_score));
             for (const company of problem.companies) {
@@ -1090,12 +1095,12 @@ class TreeViewController implements Disposable {
             }
         }
         this.searchSet = temp_searchSet;
-        this.waitTodayQuestion = temp_waitTodayQuestion
-        this.waitUserContest = temp_waitUserContest
+        this.waitTodayQuestion = temp_waitTodayQuestion;
+        this.waitUserContest = temp_waitUserContest;
     }
 
     public getRootNodes(): NodeModel[] {
-        var user_score = statusBarService.getUserContestScore()
+        let user_score = statusBarService.getUserContestScore();
         const baseNode: NodeModel[] = [
             new NodeModel(Object.assign({}, defaultProblem, {
                 id: Category.All,
@@ -1135,7 +1140,7 @@ class TreeViewController implements Disposable {
         ];
         this.searchSet.forEach(element => {
             if (element.type == SearchSetType.Day) {
-                const curDate = new Date(element.time * 1000)
+                const curDate = new Date(element.time * 1000);
                 baseNode.push(new NodeModel(Object.assign({}, defaultProblem, {
                     id: element.type,
                     name: "[" + (curDate.getFullYear()) + "-" + (curDate.getMonth() + 1) + "-" + (curDate.getDate()) + "]" + SearchSetTypeName[SearchSetType.Day],
@@ -1158,23 +1163,23 @@ class TreeViewController implements Disposable {
             if (a.rootNodeSortId < b.rootNodeSortId) {
                 return -1;
             } else if (a.rootNodeSortId > b.rootNodeSortId) {
-                return 1
+                return 1;
             }
             return 0;
-        })
+        });
         return baseNode;
     }
 
     public getScoreRangeNodes(rank_range: string): NodeModel[] {
-        const sorceNode: NodeModel[] = []
-        const rank_r: Array<string> = rank_range.split("-")
-        var rank_a = Number(rank_r[0])
-        var rank_b = Number(rank_r[1])
+        const sorceNode: NodeModel[] = [];
+        const rank_r: Array<string> = rank_range.split("-");
+        let rank_a = Number(rank_r[0]);
+        let rank_b = Number(rank_r[1]);
         if (rank_a > 0 && rank_b > 0) {
             if (rank_a > rank_b) {
-                const rank_c: number = rank_a
-                rank_a = rank_b
-                rank_b = rank_c
+                const rank_c: number = rank_a;
+                rank_a = rank_b;
+                rank_b = rank_c;
             }
 
             this.explorerNodeMap.forEach(element => {
@@ -1182,7 +1187,7 @@ class TreeViewController implements Disposable {
                     return;
                 }
                 if (rank_a <= Number(element.score) && Number(element.score) <= rank_b) {
-                    sorceNode.push(element)
+                    sorceNode.push(element);
                 }
             });
         }
@@ -1200,34 +1205,34 @@ class TreeViewController implements Disposable {
     }
 
     public getContextNodes(rank_range: string): NodeModel[] {
-        const sorceNode: NodeModel[] = []
-        const rank_r: Array<string> = rank_range.split("-")
-        var rank_a = Number(rank_r[0])
-        var rank_b = Number(rank_r[1])
+        const sorceNode: NodeModel[] = [];
+        const rank_r: Array<string> = rank_range.split("-");
+        let rank_a = Number(rank_r[0]);
+        let rank_b = Number(rank_r[1]);
         if (rank_a > 0) {
             this.explorerNodeMap.forEach(element => {
                 if (!this.canShow(element)) {
                     return;
                 }
                 const slu = element.ContestSlug;
-                const slu_arr: Array<string> = slu.split("-")
+                const slu_arr: Array<string> = slu.split("-");
                 const slu_id = Number(slu_arr[slu_arr.length - 1]);
                 if (rank_b > 0 && rank_a <= slu_id && slu_id <= rank_b) {
-                    sorceNode.push(element)
+                    sorceNode.push(element);
                 } else if (rank_a == slu_id) {
-                    sorceNode.push(element)
+                    sorceNode.push(element);
                 }
             });
         }
         return this.applySortingStrategy(sorceNode);
     }
     public getDayNodes(element: NodeModel | undefined): NodeModel[] {
-        const rank_range: string = element?.input || ""
-        const sorceNode: NodeModel[] = []
+        const rank_range: string = element?.input || "";
+        const sorceNode: NodeModel[] = [];
         if (rank_range) {
             this.explorerNodeMap.forEach(new_node => {
                 if (new_node.id == rank_range) {
-                    new_node.todayData = element?.todayData
+                    new_node.todayData = element?.todayData;
                     sorceNode.push(new_node);
                 }
             });
@@ -1266,14 +1271,14 @@ class TreeViewController implements Disposable {
         const score_array: Array<string> = ["3300", "3200", "3100", "3000", "2900", "2800", "2700", "2600", "2500", "2400", "2300", "2200", "2100", "2000", "1900", "1800", "1700", "1600", "1500", "1400", "1300", "1200", "1100"];
         score_array.forEach(element => {
             const temp_num = Number(element);
-            const diff = Math.abs(temp_num - user_score)
+            const diff = Math.abs(temp_num - user_score);
             if (diff <= 200) {
                 res.push(new NodeModel(Object.assign({}, defaultProblem, {
                     id: `${Category.Score}.${element}`,
                     name: `${element}`,
-                }), false, user_score))
+                }), false, user_score));
             }
-        })
+        });
 
         this.sortSubCategoryNodes(res, Category.Score);
         return res;
@@ -1287,8 +1292,8 @@ class TreeViewController implements Disposable {
             res.push(new NodeModel(Object.assign({}, defaultProblem, {
                 id: `${Category.Choice}.${element.id}`,
                 name: `${element.name}`,
-            }), false))
-        })
+            }), false));
+        });
         this.sortSubCategoryNodes(res, Category.Choice);
         return res;
     }
@@ -1339,17 +1344,17 @@ class TreeViewController implements Disposable {
         const metaInfo: string[] = id.split(".");
         const res: NodeModel[] = [];
 
-        const choiceQuestionId: Map<number, boolean> = new Map<number, boolean>()
+        const choiceQuestionId: Map<number, boolean> = new Map<number, boolean>();
         if (metaInfo[0] == Category.Choice) {
             const all_choice = treeDataService.getChoiceData();
             all_choice.forEach(element => {
                 if (element.id == metaInfo[1]) {
                     element.questions.forEach(kk => {
-                        choiceQuestionId[kk] = true
-                    })
-                    return
+                        choiceQuestionId[kk] = true;
+                    });
+                    return;
                 }
-            })
+            });
         }
 
         for (const node of this.explorerNodeMap.values()) {
@@ -1385,8 +1390,6 @@ class TreeViewController implements Disposable {
                     if (choiceQuestionId[Number(node.qid)]) {
                         res.push(node);
                     }
-                default:
-                    break;
             }
         }
         return this.applySortingStrategy(res);

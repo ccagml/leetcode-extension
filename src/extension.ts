@@ -33,7 +33,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
         await mainContorller.checkNodeEnv(context);
         eventController.add_event();
-        mainContorller.initialize(context)
+        mainContorller.initialize(context);
 
         context.subscriptions.push(
             statusBarService,
@@ -79,7 +79,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 export function deactivate(): void {
     // Do nothing.
     if (0) {
-        var a = 0;
+        let a = 0;
         console.log(a);
     }
 }

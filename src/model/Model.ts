@@ -215,7 +215,7 @@ export const SearchNode: ISearchSet = {
     type: SearchSetType.ScoreRange,
     time: 0,
     todayData: undefined
-}
+};
 
 export interface userContestRanKingBase {
     attendedContestsCount: number, // 参与次数
@@ -280,4 +280,4 @@ export const DialogOptions = {
     no: Object.assign({}, MessageItemObj, { title: "No", isCloseAffordance: true }),
     never: Object.assign({}, MessageItemObj, { title: "Never" }),
     singUp: Object.assign({}, MessageItemObj, { title: "Sign up" }),
-}
+};

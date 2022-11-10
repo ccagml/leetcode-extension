@@ -55,27 +55,27 @@ export class TreeItemDecorationService implements FileDecorationProvider {
                 // yellow: new ThemeColor("charts.yellow"),    // 图表中黄色元素的颜色。 // 高于玩家50 - 199
                 // red: new ThemeColor("charts.red"),   // 图表中红色元素的颜色。   // 高于200
                 if (diff_num < -200) {
-                    file_color.color = this.ITEM_COLOR.green
-                    file_color.tooltip = "秒杀难度"
+                    file_color.color = this.ITEM_COLOR.green;
+                    file_color.tooltip = "秒杀难度";
                 } else if (diff_num < -50) {
-                    file_color.color = this.ITEM_COLOR.blue
-                    file_color.tooltip = "热身难度"
+                    file_color.color = this.ITEM_COLOR.blue;
+                    file_color.tooltip = "热身难度";
                 } else if (diff_num < 50) {
-                    file_color.color = this.ITEM_COLOR.purple
-                    file_color.tooltip = "普通难度"
+                    file_color.color = this.ITEM_COLOR.purple;
+                    file_color.tooltip = "普通难度";
                 } else if (diff_num < 199) {
-                    file_color.color = this.ITEM_COLOR.yellow
-                    file_color.tooltip = "吃力难度"
+                    file_color.color = this.ITEM_COLOR.yellow;
+                    file_color.tooltip = "吃力难度";
                 } else {
-                    file_color.color = this.ITEM_COLOR.red
-                    file_color.tooltip = "劝退难度"
+                    file_color.color = this.ITEM_COLOR.red;
+                    file_color.tooltip = "劝退难度";
                 }
             } else {
-                file_color.tooltip = "还没有竞赛分"
+                file_color.tooltip = "还没有竞赛分";
             }
 
         }
-        return file_color
+        return file_color;
     }
 
     private isDifficultyBadgeEnabled(): boolean {

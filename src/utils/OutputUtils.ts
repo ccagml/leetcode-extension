@@ -8,8 +8,6 @@
  */
 
 
-
-
 import * as vscode from "vscode";
 import { DialogOptions, DialogType } from "../model/Model";
 import { getLeetCodeEndpoint, getVsCodeConfig } from "./ConfigUtils";

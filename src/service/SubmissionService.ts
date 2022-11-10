@@ -26,7 +26,7 @@ class SubmissionService extends BaseWebViewService {
         this.showKeybindingsHint();
     }
     public getSubmitEvent(): ISubmitEvent {
-        return this.result.system_message as unknown as ISubmitEvent
+        return this.result.system_message as unknown as ISubmitEvent;
     }
 
     protected getWebviewOption(): IWebViewOption {
@@ -74,7 +74,7 @@ class SubmissionService extends BaseWebViewService {
     }
 
     private async showKeybindingsHint(): Promise<void> {
-        var that = this;
+        let that = this;
         await promptHintMessage(
             "hint.commandShortcut",
             'You can customize shortcut key bindings in File > Preferences > Keyboard Shortcuts with query "leetcode".',

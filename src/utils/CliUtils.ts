@@ -20,16 +20,16 @@ interface IExecError extends Error {
 export async function executeCommand(command: string, args: string[], options: cp.SpawnOptions = { shell: true }): Promise<string> {
     return new Promise((resolve: (res: string) => void, reject: (e: Error) => void): void => {
         let result: string = "";
-        var childProc: cp.ChildProcess
+        let childProc: cp.ChildProcess;
         if (systemUtils.useVscodeNode() && command == "node") {
-            var newargs: string[] = []
+            let newargs: string[] = [];
             command = args[0];
             for (let arg_index = 1; arg_index < args.length; arg_index++) {
-                newargs.push(args[arg_index])
+                newargs.push(args[arg_index]);
             }
-            var new_opt = { silent: true, ...options, env: createEnvOption() }
+            let new_opt = { silent: true, ...options, env: createEnvOption() };
             if (false) {
-                new_opt["execArgv"] = ['--inspect=43210']
+                new_opt["execArgv"] = ['--inspect=43210'];
             }
             childProc = cp.fork(command, newargs, new_opt);
         } else {
@@ -48,7 +48,7 @@ export async function executeCommand(command: string, args: string[], options: c
 
         childProc.on("close", (code: number) => {
 
-            var try_result_json;
+            let try_result_json;
             try {
                 try_result_json = JSON.parse(result);
             } catch (e) {

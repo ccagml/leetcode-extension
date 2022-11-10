@@ -24,11 +24,11 @@ export function isHideSolvedProblem(): boolean {
 
 // 隐藏分数
 export function isHideScoreProblem(problem: IProblem, user_score: number): boolean {
-    // "None",
-    // "Score",
-    // "NoScore",
-    // "ScoreRange"
     const config_value: string = getVsCodeConfig().get<string>("hideScore", "None");
+    const min_v = getPickOneByRankRangeMin();
+    const max_v = getPickOneByRankRangeMax();
+    const p_score = problem?.scoreData?.Rating || 0;
+    const u_score = user_score > 0 ? user_score : 1500;
     switch (config_value) {
         case "Score":
             if ((problem?.scoreData?.Rating || 0) > 0) {
@@ -41,10 +41,6 @@ export function isHideScoreProblem(problem: IProblem, user_score: number): boole
             }
             break;
         case "ScoreRange":
-            const min_v = getPickOneByRankRangeMin();
-            const max_v = getPickOneByRankRangeMax();
-            const p_score = problem?.scoreData?.Rating || 0;
-            const u_score = user_score > 0 ? user_score : 1500;
             if (p_score < u_score + min_v) {
                 return true;
             }
@@ -130,7 +126,7 @@ export interface IDescriptionConfiguration {
 }
 
 export function enableSideMode(): boolean {
-    return getVsCodeConfig().get<boolean>("enableSideMode", true)
+    return getVsCodeConfig().get<boolean>("enableSideMode", true);
 }
 
 export function getNodePath() {

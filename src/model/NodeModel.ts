@@ -28,11 +28,11 @@ export class NodeModel {
 
         // 每日一题的修正
         if (this.todayData) {
-            const us = this.todayDataUserStatus
+            const us = this.todayDataUserStatus;
             if (us == "FINISH") {
-                return ProblemState.AC
+                return ProblemState.AC;
             } else {
-                return ProblemState.Unknown
+                return ProblemState.Unknown;
             }
         }
 
@@ -116,28 +116,28 @@ export class NodeModel {
         return this.data.scoreData?.ContestSlug || "";
     }
     public get scoreData(): IScoreData | undefined {
-        return this.data.scoreData
+        return this.data.scoreData;
     }
     public get isSearchResult(): boolean {
-        return this.data.isSearchResult
+        return this.data.isSearchResult;
     }
     public get input(): string {
         return this.data.input || "";
     }
     // 每日一题的一些信息
     public get todayData(): ITodayData | undefined {
-        return this.data.todayData
+        return this.data.todayData;
     }
     public set todayData(s: ITodayData | undefined) {
-        this.data.todayData = s
+        this.data.todayData = s;
     }
     public get todayDataDate(): string {
-        return this.data.todayData?.date || ""
+        return this.data.todayData?.date || "";
     }
     public get todayDataUserStatus(): string {
-        return this.data.todayData?.userStatus || ""
+        return this.data.todayData?.userStatus || "";
     }
     public get qid(): string {
-        return this.data.qid || ""
+        return this.data.qid || "";
     }
 }

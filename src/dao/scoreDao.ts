@@ -13,20 +13,20 @@ import { IScoreData } from "../model/Model";
 
 
 class ScoreDao {
-    private scoreBase = require("../../../resources/data.json")
+    private scoreBase = require("../../../resources/data.json");
 
     public getScoreData(): Map<string, IScoreData> {
 
         let nameSiteMapping = new Map<string, IScoreData>();
-        const temp = this.scoreBase as IScoreData[]
+        const temp = this.scoreBase as IScoreData[];
         temp.forEach(element => {
             // Rating
             // ID
             // ContestSlug
             element.score = "" + Math.floor(element.Rating || 0);
-            nameSiteMapping.set("" + element.ID, element)
+            nameSiteMapping.set("" + element.ID, element);
         });
-        return nameSiteMapping
+        return nameSiteMapping;
     }
 }
 

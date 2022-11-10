@@ -13,7 +13,7 @@ class EventContorller {
      * 监听事件
      */
     public add_event() {
-        eventService.add_event()
+        eventService.add_event();
     }
 }
 

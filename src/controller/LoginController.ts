@@ -65,7 +65,7 @@ class LoginContorller {
 
                 const leetCodeBinaryPath: string = await executeService.getLeetCodeBinaryPath();
 
-                var childProc: cp.ChildProcess;
+                let childProc: cp.ChildProcess;
 
                 if (systemUtils.useVscodeNode()) {
                     childProc = cp.fork(await executeService.getLeetCodeBinaryPath(), ["user", commandArg], {
@@ -74,7 +74,7 @@ class LoginContorller {
                     });
                 } else {
                     if (systemUtils.useWsl()) {
-                        childProc = cp.spawn("wsl", [executeService.node, leetCodeBinaryPath, "user", commandArg], { shell: true })
+                        childProc = cp.spawn("wsl", [executeService.node, leetCodeBinaryPath, "user", commandArg], { shell: true });
                     } else {
                         childProc = cp.spawn(executeService.node, [leetCodeBinaryPath, "user", commandArg], {
                             shell: true,
@@ -101,7 +101,7 @@ class LoginContorller {
                         childProc.stdin?.write(`${twoFactor}\n`);
                     }
 
-                    var successMatch;
+                    let successMatch;
                     try {
                         successMatch = JSON.parse(data);
                     } catch (e) {
@@ -157,18 +157,19 @@ class LoginContorller {
             window.showInformationMessage("Successfully signed out.");
             eventService.emit("statusChanged", UserStatus.SignedOut, undefined);
         } catch (error) {
+            promptForOpenOutputChannel(`Failed to signOut. Please open the output channel for details`, DialogType.error);
         }
     }
 
     public async getLoginStatus() {
-        return await statusBarService.getLoginStatus()
+        return await statusBarService.getLoginStatus();
     }
 
     public async deleteAllCache(): Promise<void> {
         await this.signOut();
         await executeService.removeOldCache();
         await executeService.switchEndpoint(getLeetCodeEndpoint());
-        await treeDataService.refresh()
+        await treeDataService.refresh();
     }
 
 }

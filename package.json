@@ -768,19 +768,21 @@
         "@types/markdown-it": "0.0.7",
         "@types/node": "^14.14.33",
         "@types/vscode": "1.57.0",
+        "@typescript-eslint/eslint-plugin": "^5.42.1",
+        "@typescript-eslint/parser": "^5.42.1",
+        "chai": "4.2.0",
+        "eslint": "^8.27.0",
         "tslint": "^5.20.1",
-        "typescript": "^4.3.2",
-        "chai": "4.2.0"
+        "typescript": "^4.8.4"
     },
     "dependencies": {
+        "ansi-styles": "3.2.1",
+        "cheerio": "1.0.0-rc.12",
         "fs-extra": "^10.0.0",
+        "he": "1.2.0",
         "highlight.js": "^10.7.2",
         "lodash": "^4.17.21",
         "markdown-it": "12.3.2",
-        "unescape-js": "^1.1.4",
-        "ansi-styles": "3.2.1",
-        "cheerio": "1.0.0-rc.12",
-        "he": "1.2.0",
         "mkdirp": "^1.0.4",
         "moment": "^2.29.1",
         "nconf": "^0.11.2",
@@ -788,6 +790,7 @@
         "prompt": "^1.2.0",
         "request": "2.88.0",
         "underscore": "1.12.1",
+        "unescape-js": "^1.1.4",
         "wordwrap": "1.0.0"
     }
 }

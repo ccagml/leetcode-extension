@@ -31,11 +31,11 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     }
 
     public checkSubmit(e: ISubmitEvent) {
-        treeViewController.checkSubmit(e)
+        treeViewController.checkSubmit(e);
     }
 
     public cleanUserScore() {
-        treeViewController.clearUserScore()
+        treeViewController.clearUserScore();
     }
 
     public async refresh(): Promise<void> {
@@ -71,7 +71,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
             command: element.isProblem ? element.previewCommand : undefined,
             resourceUri: element.uri,
             contextValue,
-        }
+        };
         return result;
     }
 
@@ -129,17 +129,16 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
         }
     }
 
-
     public getChoiceData() {
-        return choiceDao.getChoiceData()
+        return choiceDao.getChoiceData();
     }
-    public getTagsData(fid: string) {
-        return tagsDao.getTagsData(fid) || ["Unknown"]
+    public getTagsData(fid: string): Array<string> {
+        return tagsDao.getTagsData(fid) || ["Unknown"];
     }
 
     // 返回题目id的数据
     public getScoreData(): Map<string, IScoreData> {
-        return scoreDao.getScoreData()
+        return scoreDao.getScoreData();
     }
     private parseIconPathFromProblemState(element: NodeModel): string {
         if (!element.isProblem) {

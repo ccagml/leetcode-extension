@@ -25,7 +25,7 @@ class StatusBarService implements Disposable {
     // 获取竞赛分
     public getUserContestScore(): number {
         if (this.currentUserContestInfo && this.currentUserContestInfo.rating > 0) {
-            return this.currentUserContestInfo.rating
+            return this.currentUserContestInfo.rating;
         }
         return 0;
     }
@@ -60,7 +60,7 @@ class StatusBarService implements Disposable {
         }
     }
     private tryParseUserName(output: string): string | undefined {
-        var successMatch;
+        let successMatch;
         try {
             successMatch = JSON.parse(output);
         } catch (e) {
@@ -104,11 +104,11 @@ class StatusBarService implements Disposable {
     }
 
     public update_status(status: UserStatus, user?: string) {
-        this.userStatus = status
-        this.currentUser = user
+        this.userStatus = status;
+        this.currentUser = user;
     }
     public update_UserContestInfo(UserContestInfo?: userContestRanKingBase | undefined) {
-        this.currentUserContestInfo = UserContestInfo
+        this.currentUserContestInfo = UserContestInfo;
     }
 
     // 更新数据

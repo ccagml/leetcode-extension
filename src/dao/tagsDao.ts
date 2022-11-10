@@ -2804,7 +2804,7 @@ class TagsDao {
         "面试题 17.26": { "topicTags": ["array", "hash-table", "sorting"] },
         "面试题13": { "topicTags": ["depth-first-search", "breadth-first-search", "dynamic-programming"] },
         "面试题59 - II": { "topicTags": ["design", "queue", "monotonic-queue"] }
-    }
+    };
 
     private tags_name = {
         'array': '数组',
@@ -2879,11 +2879,11 @@ class TagsDao {
         'biconnected-component': '双连接组件',
         'strongly-connected-component': '强连接组件'
 
-    }
+    };
     public getTagsData(fid: string): Array<string> {
         return (this.tagsData[fid]?.topicTags || []).map(p => {
-            return this.tags_name[p]
-        })
+            return this.tags_name[p];
+        });
     }
 
 }
