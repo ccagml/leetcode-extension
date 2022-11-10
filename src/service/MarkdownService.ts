@@ -14,7 +14,7 @@ import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
 import { logOutput } from "../utils/logOutput";
-import { isWindows } from "../utils/osUtils";
+import { isWindows } from "../utils/wslUtils";
 
 class MarkdownService implements vscode.Disposable {
 

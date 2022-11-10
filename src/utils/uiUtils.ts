@@ -4,14 +4,9 @@
 import * as vscode from "vscode";
 import { logOutput } from "./logOutput";
 import { getLeetCodeEndpoint, getVsCodeConfig } from "./configUtils";
+import { DialogOptions, DialogType } from "../model/Model";
 
-export namespace DialogOptions {
-    export const open: vscode.MessageItem = { title: "Open" };
-    export const yes: vscode.MessageItem = { title: "Yes" };
-    export const no: vscode.MessageItem = { title: "No", isCloseAffordance: true };
-    export const never: vscode.MessageItem = { title: "Never" };
-    export const singUp: vscode.MessageItem = { title: "Sign up" };
-}
+
 
 export async function promptForOpenOutputChannel(message: string, type: DialogType): Promise<void> {
     let result: vscode.MessageItem | undefined;
@@ -118,8 +113,4 @@ export async function openUrl(url: string): Promise<void> {
     vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(url));
 }
 
-export enum DialogType {
-    info = "info",
-    warning = "warning",
-    error = "error",
-}
+

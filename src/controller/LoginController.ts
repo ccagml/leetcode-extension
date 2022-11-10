@@ -11,9 +11,9 @@ import * as cp from "child_process";
 import * as wsl from "../utils/wslUtils";
 import { executeService } from "../service/ExecuteService";
 
-import { IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
+import { DialogType, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
 import { createEnvOption } from "../utils/cliUtils";
-import { DialogType, promptForOpenOutputChannel } from "../utils/uiUtils";
+import { promptForOpenOutputChannel } from "../utils/uiUtils";
 import { logOutput } from "../utils/logOutput";
 import { eventService } from "../service/EventService";
 import { window } from "vscode";

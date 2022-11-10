@@ -8,7 +8,7 @@
  */
 
 
-import { ViewColumn, QuickPickItem } from "vscode";
+import { ViewColumn, QuickPickItem, MessageItem } from "vscode";
 
 export interface IQuickItemEx<T> extends QuickPickItem {
     value: T;
@@ -251,4 +251,33 @@ export interface IWebViewOption {
     title: string;
     viewColumn: ViewColumn;
     preserveFocus?: boolean;
+}
+
+
+export enum OpenOption {
+    justOpenFile = "仅打开问题文件",
+    openInCurrentWindow = "在当前VsCode窗口打开",
+    openInNewWindow = "在新的VsCode窗口打开",
+    addToWorkspace = "添加到工作空间",
+}
+
+export enum DialogType {
+    info = "info",
+    warning = "warning",
+    error = "error",
+}
+
+
+export const MessageItemObj: MessageItem = {
+    title: "",
+    isCloseAffordance: false,
+};
+
+
+export const DialogOptions = {
+    open: Object.assign({}, MessageItemObj, { title: "Open" }),
+    yes: Object.assign({}, MessageItemObj, { title: "Yes" }),
+    no: Object.assign({}, MessageItemObj, { title: "No", isCloseAffordance: true }),
+    never: Object.assign({}, MessageItemObj, { title: "Never" }),
+    singUp: Object.assign({}, MessageItemObj, { title: "Sign up" }),
 }

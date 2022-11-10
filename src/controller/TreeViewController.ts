@@ -11,7 +11,7 @@
 import * as _ from "lodash";
 import { toNumber } from "lodash";
 import { Disposable, Uri, window, QuickPickItem, workspace, WorkspaceConfiguration } from "vscode";
-import { SearchNode, userContestRankingObj, userContestRanKingBase, UserStatus, IProblem, IQuickItemEx, languages, Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType, ISubmitEvent, SORT_ORDER, Endpoint } from "../model/Model";
+import { SearchNode, userContestRankingObj, userContestRanKingBase, UserStatus, IProblem, IQuickItemEx, languages, Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType, ISubmitEvent, SORT_ORDER, Endpoint, OpenOption, DialogType, DialogOptions } from "../model/Model";
 import { isHideSolvedProblem, isHideScoreProblem, getDescriptionConfiguration, isUseEndpointTranslation, enableSideMode, getPickOneByRankRangeMin, getPickOneByRankRangeMax, isShowLocked, updateSortingStrategy, getSortingStrategy, getLeetCodeEndpoint } from "../utils/configUtils";
 import { NodeModel } from "../model/NodeModel";
 import { ISearchSet } from "../model/Model";
@@ -28,17 +28,19 @@ import { logOutput } from "../utils/logOutput";
 import { treeDataService } from "../service/TreeDataService";
 import { genFileExt, genFileName } from "../utils/problemUtils";
 import { IDescriptionConfiguration, isStarShortcut } from "../utils/configUtils";
-import { DialogOptions, DialogType, openSettingsEditor, promptForOpenOutputChannel, promptForSignIn, promptHintMessage, showFileSelectDialog } from "../utils/uiUtils";
-import { getActiveFilePath, selectWorkspaceFolder } from "../utils/workspaceUtils";
+import { openSettingsEditor, promptForOpenOutputChannel, promptForSignIn, promptHintMessage, showFileSelectDialog } from "../utils/uiUtils";
 import * as wsl from "../utils/wslUtils";
 import { solutionService } from "../service/SolutionService";
 import { eventService } from "../service/EventService";
 import { fileButtonService } from "../service/FileButtonService";
 
 import * as fse from "fs-extra";
-import { isWindows, usingCmd } from "../utils/osUtils";
 import { submissionService } from "../service/SubmissionService";
 
+
+import * as os from "os";
+import { getVsCodeConfig, getWorkspaceFolder } from "../utils/configUtils";
+import { showDirectorySelectDialog } from "../utils/uiUtils";
 
 
 
@@ -51,13 +53,32 @@ class TreeViewController implements Disposable {
     private waitUserContest: boolean;
 
 
+
+    public async getActiveFilePath(uri?: vscode.Uri): Promise<string | undefined> {
+        let textEditor: vscode.TextEditor | undefined;
+        if (uri) {
+            textEditor = await vscode.window.showTextDocument(uri, { preview: false });
+        } else {
+            textEditor = vscode.window.activeTextEditor;
+        }
+
+        if (!textEditor) {
+            return undefined;
+        }
+        if (textEditor.document.isDirty && !await textEditor.document.save()) {
+            vscode.window.showWarningMessage("Please save the solution file first.");
+            return undefined;
+        }
+        return wsl.useWsl() ? wsl.toWslPath(textEditor.document.uri.fsPath) : textEditor.document.uri.fsPath;
+    }
+
     public async submitSolution(uri?: vscode.Uri): Promise<void> {
         if (!statusBarService.getUser()) {
             promptForSignIn();
             return;
         }
 
-        const filePath: string | undefined = await getActiveFilePath(uri);
+        const filePath: string | undefined = await this.getActiveFilePath(uri);
         if (!filePath) {
             return;
         }
@@ -81,7 +102,7 @@ class TreeViewController implements Disposable {
                 return;
             }
 
-            const filePath: string | undefined = await getActiveFilePath(uri);
+            const filePath: string | undefined = await this.getActiveFilePath(uri);
             if (!filePath) {
                 return;
             }
@@ -166,7 +187,7 @@ class TreeViewController implements Disposable {
                 return;
             }
 
-            const filePath: string | undefined = await getActiveFilePath(uri);
+            const filePath: string | undefined = await this.getActiveFilePath(uri);
             if (!filePath) {
                 return;
             }
@@ -182,17 +203,28 @@ class TreeViewController implements Disposable {
         }
     }
 
+    public usingCmd(): boolean {
+        const comSpec: string | undefined = process.env.ComSpec;
+        // 'cmd.exe' is used as a fallback if process.env.ComSpec is unavailable.
+        if (!comSpec) {
+            return true;
+        }
+
+        if (comSpec.indexOf("cmd.exe") > -1) {
+            return true;
+        }
+        return false;
+    }
 
     public parseTestString(test: string): string {
-        if (wsl.useWsl() || !isWindows()) {
+        if (wsl.useWsl() || !wsl.isWindows()) {
             if (wsl.useVscodeNode()) {
                 return `${test}`;
             }
             return `'${test}'`;
         }
 
-        // In windows and not using WSL
-        if (usingCmd()) {
+        if (this.usingCmd()) {
             // 一般需要走进这里, 除非改了 环境变量ComSpec的值
             if (wsl.useVscodeNode()) {
                 return `${test.replace(/"/g, '\"')}`;
@@ -387,6 +419,52 @@ class TreeViewController implements Disposable {
     }
 
 
+    public isSubFolder(from: string, to: string): boolean {
+        const relative: string = path.relative(from, to);
+        if (relative === "") {
+            return true;
+        }
+        return !relative.startsWith("..") && !path.isAbsolute(relative);
+    }
+
+    public async determineLeetCodeFolder(): Promise<string> {
+        let result: string;
+        const picks: Array<IQuickItemEx<string>> = [];
+        picks.push(
+            {
+                label: `Default location`,
+                detail: `${path.join(os.homedir(), ".leetcode")}`,
+                value: `${path.join(os.homedir(), ".leetcode")}`,
+            },
+            {
+                label: "$(file-directory) Browse...",
+                value: ":browse",
+            },
+        );
+        const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(
+            picks,
+            { placeHolder: "Select where you would like to save your LeetCode files" },
+        );
+        if (!choice) {
+            result = "";
+        } else if (choice.value === ":browse") {
+            const directory: vscode.Uri[] | undefined = await showDirectorySelectDialog();
+            if (!directory || directory.length < 1) {
+                result = "";
+            } else {
+                result = directory[0].fsPath;
+            }
+        } else {
+            result = choice.value;
+        }
+
+        getVsCodeConfig().update("workspaceFolder", result, vscode.ConfigurationTarget.Global);
+
+        return result;
+    }
+
+
+
     public async searchProblem(): Promise<void> {
         if (!statusBarService.getUser()) {
             promptForSignIn();
@@ -464,7 +542,7 @@ class TreeViewController implements Disposable {
                 }
             }
         } else if (!input) { // Triggerred from command
-            problemInput = await getActiveFilePath();
+            problemInput = await this.getActiveFilePath();
         }
 
         if (!problemInput) {
@@ -593,6 +671,55 @@ class TreeViewController implements Disposable {
         return language;
     }
 
+    public async selectWorkspaceFolder(): Promise<string> {
+        let workspaceFolderSetting: string = getWorkspaceFolder();
+        if (workspaceFolderSetting.trim() === "") {
+            workspaceFolderSetting = await this.determineLeetCodeFolder();
+            if (workspaceFolderSetting === "") {
+                // User cancelled
+                return workspaceFolderSetting;
+            }
+        }
+        let needAsk: boolean = true;
+        await fse.ensureDir(workspaceFolderSetting);
+        for (const folder of vscode.workspace.workspaceFolders || []) {
+            if (this.isSubFolder(folder.uri.fsPath, workspaceFolderSetting)) {
+                needAsk = false;
+            }
+        }
+
+        if (needAsk) {
+            const choice: string | undefined = await vscode.window.showQuickPick(
+                [
+                    OpenOption.justOpenFile,
+                    OpenOption.openInCurrentWindow,
+                    OpenOption.openInNewWindow,
+                    OpenOption.addToWorkspace,
+                ],
+                { placeHolder: "The LeetCode workspace folder is not opened in VS Code, would you like to open it?" },
+            );
+
+            // Todo: generate file first
+            switch (choice) {
+                case OpenOption.justOpenFile:
+                    return workspaceFolderSetting;
+                case OpenOption.openInCurrentWindow:
+                    await vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(workspaceFolderSetting), false);
+                    return "";
+                case OpenOption.openInNewWindow:
+                    await vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(workspaceFolderSetting), true);
+                    return "";
+                case OpenOption.addToWorkspace:
+                    vscode.workspace.updateWorkspaceFolders(vscode.workspace.workspaceFolders?.length ?? 0, 0, { uri: vscode.Uri.file(workspaceFolderSetting) });
+                    break;
+                default:
+                    return "";
+            }
+        }
+
+        return wsl.useWsl() ? wsl.toWslPath(workspaceFolderSetting) : workspaceFolderSetting;
+    }
+
     public async showProblemInternal(node: IProblem): Promise<void> {
         try {
             const language: string | undefined = await this.fetchProblemLanguage();
@@ -601,7 +728,7 @@ class TreeViewController implements Disposable {
             }
 
             const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
-            const workspaceFolder: string = await selectWorkspaceFolder();
+            const workspaceFolder: string = await this.selectWorkspaceFolder();
             if (!workspaceFolder) {
                 return;
             }

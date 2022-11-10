@@ -14,10 +14,10 @@ import * as os from "os";
 import * as path from "path";
 import { ExtensionContext } from "vscode";
 import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace } from "vscode";
-import { Endpoint, IProblem, leetcodeHasInited } from "../model/Model";
+import { DialogOptions, DialogType, Endpoint, IProblem, leetcodeHasInited } from "../model/Model";
 import { executeCommand, executeCommandWithProgress } from "../utils/cliUtils";
 import { getNodePath } from "../utils/configUtils";
-import { DialogOptions, openUrl, DialogType, promptForOpenOutputChannel } from "../utils/uiUtils";
+import { openUrl, promptForOpenOutputChannel } from "../utils/uiUtils";
 import * as wsl from "../utils/wslUtils";
 import { toWslPath, useWsl } from "../utils/wslUtils";
 

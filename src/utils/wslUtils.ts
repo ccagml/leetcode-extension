@@ -3,7 +3,11 @@
 
 import { executeCommand } from "./cliUtils";
 import { isUseVscodeNode, isUseWsl } from "./configUtils";
-import { isWindows } from "./osUtils";
+
+
+export function isWindows(): boolean {
+    return process.platform === "win32";
+}
 
 // 用wsl命令的时候,好像没办法用vscode的node
 // 相当于使用fork,而不是之前的 spawn(node xxx
