@@ -85,7 +85,7 @@ export function isUseEndpointTranslation(): boolean {
 }
 
 // 状态栏状态设置
-export function isStatusBar(): boolean {
+export function enableStatusBar(): boolean {
     return getVsCodeConfig().get<boolean>("enableStatusBar", true);
 }
 

@@ -9,10 +9,10 @@
 
 import { ConfigurationChangeEvent, Disposable, workspace, StatusBarItem, window } from "vscode";
 import { UserStatus, userContestRanKingBase } from "../shared";
-import { isStatusBar } from "../utils/configUtils";
+import { enableStatusBar } from "../utils/configUtils";
 
 // 状态栏工具
-class StatusBar implements Disposable {
+class StatusBarManager implements Disposable {
     private instance: StatusBarItem;
     private configurationChangeListener: Disposable;
 
@@ -58,7 +58,7 @@ class StatusBar implements Disposable {
 
     // 设置可见性
     private setStatusBarVisibility(): void {
-        if (isStatusBar()) {
+        if (enableStatusBar()) {
             this.instance.show();
         } else {
             this.instance.hide();
@@ -67,4 +67,4 @@ class StatusBar implements Disposable {
 
 }
 
-export const statusBar: StatusBar = new StatusBar();
+export const statusBarManager: StatusBarManager = new StatusBarManager();
