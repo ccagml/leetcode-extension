@@ -15,7 +15,6 @@ import { SearchNode, userContestRankingObj, userContestRanKingBase, UserStatus, 
 import { isHideSolvedProblem, isHideScoreProblem, getDescriptionConfiguration, isUseEndpointTranslation, enableSideMode, getPickOneByRankRangeMin, getPickOneByRankRangeMax, isShowLocked, updateSortingStrategy, getSortingStrategy, getLeetCodeEndpoint, openSettingsEditor } from "../utils/ConfigUtils";
 import { NodeModel } from "../model/NodeModel";
 import { ISearchSet } from "../model/Model";
-import { resourcesData } from "../ResourcesData";
 import { statusBarService } from "../service/StatusBarService";
 import { previewService } from "../service/PreviewService";
 import { executeService } from "../service/ExecuteService";
@@ -359,7 +358,7 @@ class TreeViewController implements Disposable {
                     difficulty: p.level,
                     passRate: p.percent,
                     companies: p.companies || [],
-                    tags: resourcesData.getTagsData(p.fid) || ["Unknown"],
+                    tags: treeDataService.getTagsData(p.fid),
                     scoreData: AllScoreData.get(p.fid),
                     isSearchResult: false,
                     input: "",
@@ -1283,7 +1282,7 @@ class TreeViewController implements Disposable {
     public getAllChoiceNodes(): NodeModel[] {
         const res: NodeModel[] = [];
 
-        const all_choice = resourcesData.getChoiceData();
+        const all_choice = treeDataService.getChoiceData();
         all_choice.forEach(element => {
             res.push(new NodeModel(Object.assign({}, defaultProblem, {
                 id: `${Category.Choice}.${element.id}`,
@@ -1342,7 +1341,7 @@ class TreeViewController implements Disposable {
 
         const choiceQuestionId: Map<number, boolean> = new Map<number, boolean>()
         if (metaInfo[0] == Category.Choice) {
-            const all_choice = resourcesData.getChoiceData();
+            const all_choice = treeDataService.getChoiceData();
             all_choice.forEach(element => {
                 if (element.id == metaInfo[1]) {
                     element.questions.forEach(kk => {

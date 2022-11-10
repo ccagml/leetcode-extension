@@ -14,8 +14,10 @@ import * as vscode from "vscode";
 import { Category, defaultProblem, IScoreData, ProblemState, SearchSetType, ISubmitEvent } from "../model/Model";
 import { treeViewController } from "../controller/TreeViewController";
 import { NodeModel } from "../model/NodeModel";
-import { resourcesData } from "../ResourcesData";
 import { statusBarService } from "./StatusBarService";
+import { scoreDao } from "../dao/scoreDao";
+import { choiceDao } from "../dao/choiceDao";
+import { tagsDao } from "../dao/tagsDao";
 
 export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
 
@@ -126,9 +128,18 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
 
         }
     }
+
+
+    public getChoiceData() {
+        return choiceDao.getChoiceData()
+    }
+    public getTagsData(fid: string) {
+        return tagsDao.getTagsData(fid) || ["Unknown"]
+    }
+
     // 返回题目id的数据
     public getScoreData(): Map<string, IScoreData> {
-        return resourcesData.getScoreData()
+        return scoreDao.getScoreData()
     }
     private parseIconPathFromProblemState(element: NodeModel): string {
         if (!element.isProblem) {
