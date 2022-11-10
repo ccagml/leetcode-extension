@@ -76,7 +76,6 @@ class Config {
         verify: 'https://leetcode.com/submissions/detail/$id/check/',
         favorites: 'https://leetcode.com/list/api/questions',
         favorite_delete: 'https://leetcode.com/list/api/questions/$hash/$id',
-        plugin: 'https://raw.githubusercontent.com/leetcode-tools/leetcode-cli/master/lib/plugins/$name.js',
         problem_detail: '',
         noj_go: '',
         u: '',

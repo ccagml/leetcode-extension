@@ -20,7 +20,7 @@ class FileButtonController implements Disposable {
         this.internalProvider = fileButtonService;
 
         this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
-            if (event.affectsConfiguration("leetcode.editor.shortcuts")) {
+            if (event.affectsConfiguration("leetcode-problem-rating.editor.shortcuts")) {
                 this.internalProvider.refresh();
             }
         }, this);
