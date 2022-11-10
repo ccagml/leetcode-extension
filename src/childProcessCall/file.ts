@@ -58,7 +58,7 @@ class File {
   };
 
   public codeDir(dir) {
-    return path.join(__dirname, '..', dir || '');
+    return path.join(__dirname, dir || '');
   };
 
   public cacheFile(k) {
