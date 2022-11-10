@@ -1,3 +1,12 @@
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/commands/user.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 var prompt_out = require('prompt');
 import { helper } from "../helper";

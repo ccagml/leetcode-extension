@@ -1,10 +1,19 @@
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/plugins/retry.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
+
 
 import { MyPluginBase } from "../my_plugin_base";
 import { config } from "../config";
 import { session } from "../session";
 
-// var plugin = new Plugin(30, 'retry', '',
-//   'Plugin to retry last failed request if autologin.enable is on.');
+
 class RetryPlugin extends MyPluginBase {
   id = 30
   name = 'retry'

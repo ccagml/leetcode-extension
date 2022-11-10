@@ -1,4 +1,12 @@
-// import { FILE } from "dns";
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/file.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 var fs = require('fs');
 var os = require('os');

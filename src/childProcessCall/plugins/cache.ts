@@ -1,3 +1,13 @@
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/plugins/cache.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
+
 import { MyPluginBase } from "../my_plugin_base";
 
 var underscore = require('underscore');
@@ -8,7 +18,7 @@ import { helper } from "../helper";
 // import { log } from "../log";
 import { session } from "../session";
 
-// const plugin = new Plugin(50, 'cache', '', 'Plugin to provide local cache.');
+
 
 class CachePlugin extends MyPluginBase {
     id = 50

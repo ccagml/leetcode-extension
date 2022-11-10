@@ -1,3 +1,13 @@
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/plugins/solution.discuss.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
+
 var request = require('request');
 
 
@@ -5,13 +15,6 @@ import { log } from "../log";
 import { session } from "../session";
 import { MyPluginBase } from "../my_plugin_base";
 
-//
-// [Usage]
-//
-// https://github.com/skygragon/leetcode-cli-plugins/blob/master/docs/solution.discuss.md
-//
-// var plugin = new Plugin(200, 'solution.discuss', '',
-//   'Plugin to fetch most voted solution in discussions.');
 
 
 class SolutionDiscuss extends MyPluginBase {

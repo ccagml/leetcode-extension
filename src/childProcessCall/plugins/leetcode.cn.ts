@@ -1,3 +1,11 @@
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/plugins/leetcode.cn.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
 
 
 import { MyPluginBase } from "../my_plugin_base";
