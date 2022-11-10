@@ -1,5 +1,11 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/controller/ShowController.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, October 31st 2022, 10:16:47 am
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
 
 import * as _ from "lodash";
 import * as path from "path";
