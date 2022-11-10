@@ -5,7 +5,7 @@ import * as vscode from "vscode";
 import { leetCodeExecutor } from "../leetCodeExecutor";
 import { leetCodeManager } from "../leetCodeManager";
 import { IProblem, ProblemState, RootNodeSort, UserStatus } from "../shared";
-import * as settingUtils from "../utils/configUtils";
+import { isUseEndpointTranslation } from "../utils/configUtils";
 import { DialogType, promptForOpenOutputChannel } from "../utils/uiUtils";
 import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
 import { resourcesData } from "../ResourcesData";
@@ -17,7 +17,7 @@ export async function listProblems(): Promise<IProblem[]> {
         }
         const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
         const showLocked: boolean = !!leetCodeConfig.get<boolean>("showLocked");
-        const useEndpointTranslation: boolean = settingUtils.isUseEndpointTranslation();
+        const useEndpointTranslation: boolean = isUseEndpointTranslation();
         const result: string = await leetCodeExecutor.listProblems(showLocked, useEndpointTranslation);
         const all_problem_info = JSON.parse(result);
         const problems: IProblem[] = [];
