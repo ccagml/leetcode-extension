@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode problem rating",
     "description": "为LeetCode题目难度进行打分。避免只有简单、中等、困难三种难度",
-    "version": "1.1.9",
+    "version": "2.0.0",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -29,7 +29,6 @@
         "onCommand:leetcode.toggleLeetCodeCn",
         "onCommand:leetcode.signin",
         "onCommand:leetcode.signout",
-        "onCommand:leetcode.manageSessions",
         "onCommand:leetcode.refreshExplorer",
         "onCommand:leetcode.pickOne",
         "onCommand:leetcode.deleteAllCache",
@@ -65,11 +64,6 @@
             {
                 "command": "leetcode.signout",
                 "title": "Sign Out",
-                "category": "LeetCode"
-            },
-            {
-                "command": "leetcode.manageSessions",
-                "title": "Manage Sessions",
                 "category": "LeetCode"
             },
             {
@@ -773,22 +767,22 @@
         "@types/lodash": "^4.14.170",
         "@types/markdown-it": "0.0.7",
         "@types/node": "^14.14.33",
-        "@types/require-from-string": "^1.2.0",
         "@types/vscode": "1.57.0",
+        "@typescript-eslint/eslint-plugin": "^5.42.1",
+        "@typescript-eslint/parser": "^5.42.1",
+        "chai": "4.2.0",
+        "eslint": "^8.27.0",
         "tslint": "^5.20.1",
-        "typescript": "^4.3.2",
-        "chai": "4.2.0"
+        "typescript": "^4.8.4"
     },
     "dependencies": {
+        "ansi-styles": "3.2.1",
+        "cheerio": "1.0.0-rc.12",
         "fs-extra": "^10.0.0",
+        "he": "1.2.0",
         "highlight.js": "^10.7.2",
         "lodash": "^4.17.21",
         "markdown-it": "12.3.2",
-        "require-from-string": "^2.0.2",
-        "unescape-js": "^1.1.4",
-        "ansi-styles": "3.2.1",
-        "cheerio": "1.0.0-rc.12",
-        "he": "1.2.0",
         "mkdirp": "^1.0.4",
         "moment": "^2.29.1",
         "nconf": "^0.11.2",
@@ -796,6 +790,7 @@
         "prompt": "^1.2.0",
         "request": "2.88.0",
         "underscore": "1.12.1",
+        "unescape-js": "^1.1.4",
         "wordwrap": "1.0.0"
     }
 }
