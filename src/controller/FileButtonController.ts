@@ -1,16 +1,23 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/controller/FileButtonController.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 import { ConfigurationChangeEvent, Disposable, languages, workspace } from "vscode";
-import { customCodeLensProvider, CustomCodeLensProvider } from "./CustomCodeLensProvider";
+import { fileButtonService, FileButtonService } from "../service/FileButtonService";
 
-class CodeLensController implements Disposable {
-    private internalProvider: CustomCodeLensProvider;
+class FileButtonController implements Disposable {
+    private internalProvider: FileButtonService;
     private registeredProvider: Disposable | undefined;
     private configurationChangeListener: Disposable;
 
     constructor() {
-        this.internalProvider = customCodeLensProvider;
+        this.internalProvider = fileButtonService;
 
         this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
             if (event.affectsConfiguration("leetcode.editor.shortcuts")) {
@@ -29,4 +36,4 @@ class CodeLensController implements Disposable {
     }
 }
 
-export const codeLensController: CodeLensController = new CodeLensController();
+export const fileButtonController: FileButtonController = new FileButtonController();

@@ -1,12 +1,18 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/service/FileButtonService.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
 
 import * as vscode from "vscode";
 import { treeViewController } from "../controller/TreeViewController";
 import { NodeModel } from "../model/NodeModel";
 import { getEditorShortcuts } from "../utils/configUtils";
 
-export class CustomCodeLensProvider implements vscode.CodeLensProvider {
+export class FileButtonService implements vscode.CodeLensProvider {
 
     private onDidChangeCodeLensesEmitter: vscode.EventEmitter<void> = new vscode.EventEmitter<void>();
 
@@ -106,4 +112,4 @@ export class CustomCodeLensProvider implements vscode.CodeLensProvider {
     }
 }
 
-export const customCodeLensProvider: CustomCodeLensProvider = new CustomCodeLensProvider();
+export const fileButtonService: FileButtonService = new FileButtonService();

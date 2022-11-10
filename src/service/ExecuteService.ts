@@ -16,7 +16,7 @@ import { ExtensionContext } from "vscode";
 import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace, WorkspaceConfiguration } from "vscode";
 import { Endpoint, IProblem, leetcodeHasInited } from "../model/Model";
 import { executeCommand, executeCommandWithProgress } from "../utils/cliUtils";
-import { DialogOptions, openUrl } from "../utils/uiUtils";
+import { DialogOptions, openUrl, DialogType, promptForOpenOutputChannel } from "../utils/uiUtils";
 import * as wsl from "../utils/wslUtils";
 import { toWslPath, useWsl } from "../utils/wslUtils";
 
@@ -91,8 +91,12 @@ class ExecuteService implements Disposable {
         return true;
     }
 
-    public async deleteCache(): Promise<string> {
-        return await this.executeCommandEx(this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "cache", "-d"]);
+    public async deleteCache() {
+        try {
+            await this.executeCommandEx(this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "cache", "-d"]);
+        } catch (error) {
+            await promptForOpenOutputChannel("Failed to delete cache. Please open the output channel for details.", DialogType.error);
+        }
     }
 
     public async getUserInfo(): Promise<string> {

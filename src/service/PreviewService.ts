@@ -11,8 +11,8 @@
 import { commands, ViewColumn } from "vscode";
 import { getLeetCodeEndpoint } from "../commands/plugin";
 import { Endpoint, IProblem, IWebViewOption } from "../model/Model";
-import { BaseWebViewService } from "./baseWebviewService";
-import { markdownService } from "./markdownService";
+import { BaseWebViewService } from "./BaseWebviewService";
+import { markdownService } from "./MarkdownService";
 
 class PreviewService extends BaseWebViewService {
 

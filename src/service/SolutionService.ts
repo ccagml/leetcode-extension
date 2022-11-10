@@ -10,8 +10,8 @@
 
 import { ViewColumn } from "vscode";
 import { previewService } from "./PreviewService";
-import { BaseWebViewService } from "./baseWebviewService";
-import { markdownService } from "./markdownService";
+import { BaseWebViewService } from "./BaseWebviewService";
+import { markdownService } from "./MarkdownService";
 import { IWebViewOption } from "../model/Model";
 
 

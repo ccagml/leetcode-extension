@@ -7,7 +7,6 @@ import { executeService } from "../service/ExecuteService";
 import { IQuickItemEx } from "../model/Model";
 import { Endpoint, SortingStrategy } from "../model/Model";
 import { DialogType, promptForOpenOutputChannel, promptForSignIn } from "../utils/uiUtils";
-import { deleteCache } from "./cache";
 
 export async function switchEndpoint(): Promise<void> {
     const isCnEnabled: boolean = getLeetCodeEndpoint() === Endpoint.LeetCodeCN;
@@ -42,7 +41,7 @@ export async function switchEndpoint(): Promise<void> {
 
     try {
         await vscode.commands.executeCommand("leetcode.signout");
-        await deleteCache();
+        await executeService.deleteCache();
         await promptForSignIn();
     } catch (error) {
         await promptForOpenOutputChannel("Failed to sign in. Please open the output channel for details.", DialogType.error);

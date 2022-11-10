@@ -5,12 +5,11 @@ import * as _ from "lodash";
 import * as path from "path";
 import * as unescapeJS from "unescape-js";
 import * as vscode from "vscode";
-import { treeViewController } from "../controller/TreeViewController";
+import { treeViewController } from "./TreeViewController";
 import { NodeModel } from "../model/NodeModel";
 import { logOutput } from "../utils/logOutput";
 import { executeService } from "../service/ExecuteService";
-import { eventContorller } from "../controller/EventController";
-import { loginContorller } from "../controller/LoginController";
+import { eventContorller } from "./EventController";
 import { IProblem, IQuickItemEx, languages, ProblemState, SearchNode, SearchSetType, userContestRankingObj, userContestRanKingBase } from "../model/Model";
 import { treeDataService } from "../service/TreeDataService";
 import { genFileExt, genFileName, getNodeIdFromFile } from "../utils/problemUtils";
@@ -22,8 +21,7 @@ import * as wsl from "../utils/wslUtils";
 import { previewService } from "../service/PreviewService";
 import { solutionService } from "../service/SolutionService";
 import { getPickOneByRankRangeMin, getPickOneByRankRangeMax } from "../utils/configUtils";
-import * as list from "./list";
-import { getLeetCodeEndpoint } from "./plugin";
+import * as list from "../commands/list";
 import { statusBarService } from "../service/StatusBarService";
 
 export async function previewProblem(input: IProblem | vscode.Uri, isSideMode: boolean = false): Promise<void> {
@@ -49,13 +47,6 @@ export async function previewProblem(input: IProblem | vscode.Uri, isSideMode: b
     const needTranslation: boolean = isUseEndpointTranslation();
     const descString: string = await executeService.getDescription(node.qid, needTranslation);
     previewService.show(descString, node, isSideMode);
-}
-
-export async function deleteAllCache(): Promise<void> {
-    await loginContorller.signOut();
-    await executeService.removeOldCache();
-    await executeService.switchEndpoint(getLeetCodeEndpoint());
-    await treeDataService.refresh()
 }
 
 

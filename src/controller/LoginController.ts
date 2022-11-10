@@ -18,6 +18,9 @@ import { logOutput } from "../utils/logOutput";
 import { eventService } from "../service/EventService";
 import { window } from "vscode";
 import { statusBarService } from "../service/StatusBarService";
+import { treeDataService } from "../service/TreeDataService";
+import { getLeetCodeEndpoint } from "../commands/plugin";
+
 
 // 登录
 class LoginContorller {
@@ -161,6 +164,14 @@ class LoginContorller {
     public async getLoginStatus() {
         return await statusBarService.getLoginStatus()
     }
+
+    public async deleteAllCache(): Promise<void> {
+        await this.signOut();
+        await executeService.removeOldCache();
+        await executeService.switchEndpoint(getLeetCodeEndpoint());
+        await treeDataService.refresh()
+    }
+
 }
 
 export const loginContorller: LoginContorller = new LoginContorller();

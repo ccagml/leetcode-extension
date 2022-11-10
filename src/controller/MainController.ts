@@ -30,6 +30,14 @@ class MainContorller {
     public initialize(context: ExtensionContext) {
         treeDataService.initialize(context);
     }
+
+
+    /**
+     * name
+     */
+    public async deleteCache() {
+        await executeService.deleteCache();
+    }
 }
 
 export const mainContorller: MainContorller = new MainContorller();

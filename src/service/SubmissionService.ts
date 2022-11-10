@@ -10,8 +10,8 @@
 
 import { ViewColumn } from "vscode";
 import { openKeybindingsEditor, promptHintMessage } from "../utils/uiUtils";
-import { BaseWebViewService } from "./baseWebviewService";
-import { markdownService } from "./markdownService";
+import { BaseWebViewService } from "./BaseWebviewService";
+import { markdownService } from "./MarkdownService";
 import { ISubmitEvent } from "../model/Model";
 import { IWebViewOption } from "../model/Model";
 

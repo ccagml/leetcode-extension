@@ -1,12 +1,18 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/extension.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, October 31st 2022, 10:16:47 am
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 import { ExtensionContext, window, commands, Uri } from "vscode";
-import { codeLensController } from "./codelens/CodeLensController";
-import * as cache from "./commands/cache";
+import { fileButtonController } from "./controller/FileButtonController";
 import { switchDefaultLanguage } from "./commands/language";
 import * as plugin from "./commands/plugin";
-import * as show from "./commands/show";
+import * as show from "./controller/ShowController";
 import * as star from "./commands/star";
 import * as submit from "./commands/submit";
 import * as test from "./commands/test";
@@ -22,7 +28,7 @@ import { DialogType, promptForOpenOutputChannel } from "./utils/uiUtils";
 import { previewService } from "./service/PreviewService";
 import { solutionService } from "./service/SolutionService";
 import { submissionService } from "./service/SubmissionService";
-import { markdownService } from "./service/markdownService";
+import { markdownService } from "./service/MarkdownService";
 import { mainContorller } from "./controller/MainController";
 import { loginContorller } from "./controller/LoginController";
 
@@ -42,18 +48,18 @@ export async function activate(context: ExtensionContext): Promise<void> {
             solutionService,
             executeService,
             markdownService,
-            codeLensController,
+            fileButtonController,
             treeViewController,
             window.registerFileDecorationProvider(treeItemDecorationService),
             window.createTreeView("leetCodeExplorer", { treeDataProvider: treeDataService, showCollapseAll: true }),
-            commands.registerCommand("leetcode.deleteCache", () => cache.deleteCache()),
+            commands.registerCommand("leetcode.deleteCache", () => mainContorller.deleteCache()),
             commands.registerCommand("leetcode.toggleLeetCodeCn", () => plugin.switchEndpoint()),
             commands.registerCommand("leetcode.signin", () => loginContorller.signIn()),
             commands.registerCommand("leetcode.signout", () => loginContorller.signOut()),
             commands.registerCommand("leetcode.previewProblem", (node: NodeModel) => show.previewProblem(node)),
             commands.registerCommand("leetcode.showProblem", (node: NodeModel) => show.showProblem(node)),
             commands.registerCommand("leetcode.pickOne", () => show.pickOne()),
-            commands.registerCommand("leetcode.deleteAllCache", () => show.deleteAllCache()),
+            commands.registerCommand("leetcode.deleteAllCache", () => loginContorller.deleteAllCache()),
             commands.registerCommand("leetcode.searchScoreRange", () => show.searchScoreRange()),
             commands.registerCommand("leetcode.searchProblem", () => show.searchProblem()),
             commands.registerCommand("leetcode.showSolution", (input: NodeModel | Uri) => show.showSolution(input)),

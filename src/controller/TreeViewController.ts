@@ -17,7 +17,7 @@ import { Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeN
 import { isHideSolvedProblem, isHideScoreProblem } from "../utils/configUtils";
 import { NodeModel } from "../model/NodeModel";
 import { ISearchSet } from "../model/Model";
-import { searchToday, searchUserContest } from "../commands/show";
+import { searchToday, searchUserContest } from "./ShowController";
 import { resourcesData } from "../ResourcesData";
 import { statusBarService } from "../service/StatusBarService";
 
