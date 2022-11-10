@@ -4,7 +4,7 @@
 import * as vscode from "vscode";
 import { getLeetCodeEndpoint } from "../commands/plugin";
 import { logOutput } from "./logOutput";
-import { getWorkspaceConfiguration } from "./settingUtils";
+import { getVsCodeConfig } from "./configUtils";
 
 export namespace DialogOptions {
     export const open: vscode.MessageItem = { title: "Open" };
@@ -59,7 +59,7 @@ export async function promptForSignIn(): Promise<void> {
 }
 
 export async function promptHintMessage(config: string, message: string, choiceConfirm: string, onConfirm: () => Promise<any>): Promise<void> {
-    if (getWorkspaceConfiguration().get<boolean>(config)) {
+    if (getVsCodeConfig().get<boolean>(config)) {
         const choiceNoShowAgain: string = "Don't show again";
         const choice: string | undefined = await vscode.window.showInformationMessage(
             message, choiceConfirm, choiceNoShowAgain,
@@ -67,7 +67,7 @@ export async function promptHintMessage(config: string, message: string, choiceC
         if (choice === choiceConfirm) {
             await onConfirm();
         } else if (choice === choiceNoShowAgain) {
-            await getWorkspaceConfiguration().update(config, false, true /* UserSetting */);
+            await getVsCodeConfig().update(config, false, true /* UserSetting */);
         }
     }
 }

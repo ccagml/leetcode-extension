@@ -6,7 +6,7 @@ import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
 import { IQuickItemEx } from "../shared";
-import { getWorkspaceConfiguration, getWorkspaceFolder } from "./settingUtils";
+import { getVsCodeConfig, getWorkspaceFolder } from "./configUtils";
 import { showDirectorySelectDialog } from "./uiUtils";
 import * as wsl from "./wslUtils";
 
@@ -116,7 +116,7 @@ async function determineLeetCodeFolder(): Promise<string> {
         result = choice.value;
     }
 
-    getWorkspaceConfiguration().update("workspaceFolder", result, vscode.ConfigurationTarget.Global);
+    getVsCodeConfig().update("workspaceFolder", result, vscode.ConfigurationTarget.Global);
 
     return result;
 }

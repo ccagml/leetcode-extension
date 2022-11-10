@@ -4,7 +4,7 @@
 import * as vscode from "vscode";
 import { explorerNodeManager } from "../explorer/explorerNodeManager";
 import { LeetCodeNode } from "../explorer/LeetCodeNode";
-import { getEditorShortcuts } from "../utils/settingUtils";
+import { getEditorShortcuts } from "../utils/configUtils";
 
 export class CustomCodeLensProvider implements vscode.CodeLensProvider {
 

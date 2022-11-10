@@ -1,24 +1,33 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/utils/configUtils.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 import { workspace, WorkspaceConfiguration } from "vscode";
 import { DescriptionConfiguration, IProblem } from "../shared";
 
-export function getWorkspaceConfiguration(): WorkspaceConfiguration {
+// vscode的配置
+export function getVsCodeConfig(): WorkspaceConfiguration {
     return workspace.getConfiguration("leetcode-problem-rating");
 }
 
-export function shouldHideSolvedProblem(): boolean {
-    return getWorkspaceConfiguration().get<boolean>("hideSolved", false);
+// 隐藏解决题目
+export function isHideSolvedProblem(): boolean {
+    return getVsCodeConfig().get<boolean>("hideSolved", false);
 }
 
-
-export function shouldHideScoreProblem(problem: IProblem, user_score: number): boolean {
+// 隐藏分数
+export function isHideScoreProblem(problem: IProblem, user_score: number): boolean {
     // "None",
     // "Score",
     // "NoScore",
     // "ScoreRange"
-    const config_value: string = getWorkspaceConfiguration().get<string>("hideScore", "None");
+    const config_value: string = getVsCodeConfig().get<string>("hideScore", "None");
     switch (config_value) {
         case "Score":
             if ((problem?.scoreData?.Rating || 0) > 0) {
@@ -48,32 +57,41 @@ export function shouldHideScoreProblem(problem: IProblem, user_score: number): b
     return false;
 }
 
+// 随机题目最小分数
 export function getPickOneByRankRangeMin(): number {
-    return getWorkspaceConfiguration().get<number>("pickOneByRankRangeMin") || 50;
+    return getVsCodeConfig().get<number>("pickOneByRankRangeMin") || 50;
 }
+// 随机题目最大分数
 export function getPickOneByRankRangeMax(): number {
-    return getWorkspaceConfiguration().get<number>("pickOneByRankRangeMax") || 150;
+    return getVsCodeConfig().get<number>("pickOneByRankRangeMax") || 150;
 }
-
+// 工作目录
 export function getWorkspaceFolder(): string {
-    return getWorkspaceConfiguration().get<string>("workspaceFolder", "");
+    return getVsCodeConfig().get<string>("workspaceFolder", "");
 }
 
+// 快捷操作
 export function getEditorShortcuts(): string[] {
-    return getWorkspaceConfiguration().get<string[]>("editor.shortcuts", ["submit", "case", "allcase", "test", "solution"]);
+    return getVsCodeConfig().get<string[]>("editor.shortcuts", ["submit", "case", "allcase", "test", "solution"]);
 }
 
-export function hasStarShortcut(): boolean {
-    const shortcuts: string[] = getWorkspaceConfiguration().get<string[]>("editor.shortcuts", ["submit", "case", "allcase", "test", "solution"]);
+export function isStarShortcut(): boolean {
+    const shortcuts: string[] = getVsCodeConfig().get<string[]>("editor.shortcuts", ["submit", "case", "allcase", "test", "solution"]);
     return shortcuts.indexOf("star") >= 0;
 }
 
-export function shouldUseEndpointTranslation(): boolean {
-    return getWorkspaceConfiguration().get<boolean>("useEndpointTranslation", true);
+export function isUseEndpointTranslation(): boolean {
+    return getVsCodeConfig().get<boolean>("useEndpointTranslation", true);
 }
 
+// 状态栏状态设置
+export function isStatusBar(): boolean {
+    return getVsCodeConfig().get<boolean>("enableStatusBar", true);
+}
+
+// 展示方式
 export function getDescriptionConfiguration(): IDescriptionConfiguration {
-    const setting: string = getWorkspaceConfiguration().get<string>("showDescription", DescriptionConfiguration.InWebView);
+    const setting: string = getVsCodeConfig().get<string>("showDescription", DescriptionConfiguration.InWebView);
     const config: IDescriptionConfiguration = {
         showInComment: false,
         showInWebview: true,
@@ -98,7 +116,7 @@ export function getDescriptionConfiguration(): IDescriptionConfiguration {
     }
 
     // To be compatible with the deprecated setting:
-    if (getWorkspaceConfiguration().get<boolean>("showCommentDescription")) {
+    if (getVsCodeConfig().get<boolean>("showCommentDescription")) {
         config.showInComment = true;
     }
 

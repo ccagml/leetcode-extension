@@ -6,14 +6,14 @@ import { customCodeLensProvider } from "../codelens/CustomCodeLensProvider";
 import { LeetCodeNode } from "../explorer/LeetCodeNode";
 import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
 import { leetCodeExecutor } from "../leetCodeExecutor";
-import { hasStarShortcut } from "../utils/settingUtils";
+import { isStarShortcut } from "../utils/configUtils";
 import { DialogType, promptForOpenOutputChannel } from "../utils/uiUtils";
 
 export async function addFavorite(node: LeetCodeNode): Promise<void> {
     try {
         await leetCodeExecutor.toggleFavorite(node, true);
         await leetCodeTreeDataProvider.refresh();
-        if (hasStarShortcut()) {
+        if (isStarShortcut()) {
             customCodeLensProvider.refresh();
         }
     } catch (error) {
@@ -25,7 +25,7 @@ export async function removeFavorite(node: LeetCodeNode): Promise<void> {
     try {
         await leetCodeExecutor.toggleFavorite(node, false);
         await leetCodeTreeDataProvider.refresh();
-        if (hasStarShortcut()) {
+        if (isStarShortcut()) {
             customCodeLensProvider.refresh();
         }
     } catch (error) {

@@ -1,17 +1,23 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/statusbar/StatusBarItem.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
 
 import * as vscode from "vscode";
 import { UserStatus, userContestRanKingBase } from "../shared";
 
-export class LeetCodeStatusBarItem implements vscode.Disposable {
+export class StatusBarItem implements vscode.Disposable {
     private readonly statusBarItem: vscode.StatusBarItem;
 
     constructor() {
         this.statusBarItem = vscode.window.createStatusBarItem();
     }
 
-    public updateStatusBar(status: UserStatus, user?: string, UserContestInfo?: userContestRanKingBase | undefined): void {
+    public update(status: UserStatus, user?: string, UserContestInfo?: userContestRanKingBase | undefined): void {
         switch (status) {
             case UserStatus.SignedIn:
                 if (UserContestInfo && UserContestInfo.attendedContestsCount > 0) {

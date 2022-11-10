@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as vscode from "vscode";
-import { executeCommand } from "./cpUtils";
+import { executeCommand } from "./cliUtils";
 import { isWindows } from "./osUtils";
 
 // 用wsl命令的时候,好像没办法用vscode的node

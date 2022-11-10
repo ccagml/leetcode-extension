@@ -17,7 +17,7 @@ import { leetCodeTreeItemDecorationProvider } from "./explorer/LeetCodeTreeItemD
 import { logOutput } from "./utils/logOutput";
 import { leetCodeExecutor } from "./leetCodeExecutor";
 import { leetCodeManager } from "./leetCodeManager";
-import { leetCodeStatusBarController } from "./statusbar/leetCodeStatusBarController";
+import { statusBar } from "./statusbar/StatusBar";
 import { DialogType, promptForOpenOutputChannel } from "./utils/uiUtils";
 import { leetCodePreviewProvider } from "./webview/leetCodePreviewProvider";
 import { leetCodeSolutionProvider } from "./webview/leetCodeSolutionProvider";
@@ -36,7 +36,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
             }
         }
         leetCodeManager.on("statusChanged", () => {
-            leetCodeStatusBarController.updateStatusBar(leetCodeManager.getStatus(), leetCodeManager.getUser());
+            statusBar.update(leetCodeManager.getStatus(), leetCodeManager.getUser());
             leetCodeTreeDataProvider.cleanUserScore();
             leetCodeTreeDataProvider.refresh();
         });
@@ -45,13 +45,13 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         });
 
         leetCodeManager.on("searchUserContest", () => {
-            leetCodeStatusBarController.updateStatusBar(leetCodeManager.getStatus(), leetCodeManager.getUser(), leetCodeManager.getUserContestInfo());
+            statusBar.update(leetCodeManager.getStatus(), leetCodeManager.getUser(), leetCodeManager.getUserContestInfo());
         });
 
         leetCodeTreeDataProvider.initialize(context);
 
         context.subscriptions.push(
-            leetCodeStatusBarController,
+            statusBar,
             logOutput,
             leetCodePreviewProvider,
             leetCodeSubmissionProvider,

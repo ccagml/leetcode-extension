@@ -1,10 +1,17 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/utils/cliUtils.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, October 31st 2022, 10:16:47 am
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 import * as cp from "child_process";
 import * as vscode from "vscode";
 import { logOutput } from "./logOutput";
-import * as wsl from "../utils/wslUtils";
+import * as wsl from "./wslUtils";
 
 interface IExecError extends Error {
     result?: string;
@@ -57,25 +64,6 @@ export async function executeCommand(command: string, args: string[], options: c
                 resolve(result);
             }
         });
-
-        // childProc.on("exit", function (code) {
-        //     console.log("disconnect", code)
-        //     if (code !== 0) {
-        //         console.log('child exit code (spawn)', code);
-        //         return reject(new Error(`Command "${command} ${args.toString()}" failed with exit code "${code}".`))
-        //     }
-        //     resolve(result);
-        // });
-
-        // childProc.on("disconnect", function () {
-        //     console.log("disconnect")
-        //     resolve(result);
-        // });
-        // childProc.on("message", function (message) {
-        //     console.log("message", message)
-        //     resolve(result);
-        // });
-
     });
 }
 

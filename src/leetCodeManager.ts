@@ -7,7 +7,7 @@ import * as vscode from "vscode";
 import { logOutput } from "./utils/logOutput";
 import { leetCodeExecutor } from "./leetCodeExecutor";
 import { IQuickItemEx, loginArgsMapping, UserStatus, userContestRanKingBase, userContestRankingObj } from "./shared";
-import { createEnvOption } from "./utils/cpUtils";
+import { createEnvOption } from "./utils/cliUtils";
 import { DialogType, promptForOpenOutputChannel } from "./utils/uiUtils";
 import * as wsl from "./utils/wslUtils";
 import { explorerNodeManager } from "./explorer/explorerNodeManager";

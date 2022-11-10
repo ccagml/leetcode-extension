@@ -13,14 +13,14 @@ import { leetCodeManager } from "../leetCodeManager";
 import { IProblem, IQuickItemEx, languages, ProblemState, SearchNode, SearchSetType, userContestRankingObj, userContestRanKingBase } from "../shared";
 import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
 import { genFileExt, genFileName, getNodeIdFromFile } from "../utils/problemUtils";
-import * as settingUtils from "../utils/settingUtils";
-import { IDescriptionConfiguration } from "../utils/settingUtils";
+import * as settingUtils from "../utils/configUtils";
+import { IDescriptionConfiguration } from "../utils/configUtils";
 import { DialogOptions, DialogType, openSettingsEditor, promptForOpenOutputChannel, promptForSignIn, promptHintMessage } from "../utils/uiUtils";
 import { getActiveFilePath, selectWorkspaceFolder } from "../utils/workspaceUtils";
 import * as wsl from "../utils/wslUtils";
 import { leetCodePreviewProvider } from "../webview/leetCodePreviewProvider";
 import { leetCodeSolutionProvider } from "../webview/leetCodeSolutionProvider";
-import { getPickOneByRankRangeMin, getPickOneByRankRangeMax } from "../utils/settingUtils";
+import { getPickOneByRankRangeMin, getPickOneByRankRangeMax } from "../utils/configUtils";
 import * as list from "./list";
 import { getLeetCodeEndpoint } from "./plugin";
 
@@ -44,7 +44,7 @@ export async function previewProblem(input: IProblem | vscode.Uri, isSideMode: b
     } else {
         node = input;
     }
-    const needTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
+    const needTranslation: boolean = settingUtils.isUseEndpointTranslation();
     const descString: string = await leetCodeExecutor.getDescription(node.qid, needTranslation);
     leetCodePreviewProvider.show(descString, node, isSideMode);
 }
@@ -238,7 +238,7 @@ export async function searchUserContest(): Promise<void> {
         return;
     }
     try {
-        const needTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
+        const needTranslation: boolean = settingUtils.isUseEndpointTranslation();
         const solution: string = await leetCodeExecutor.getUserContest(needTranslation, leetCodeManager.getUser() || "");
         const query_result = JSON.parse(solution);
         const tt: userContestRanKingBase = Object.assign({}, userContestRankingObj, query_result.userContestRanking)
@@ -255,7 +255,7 @@ export async function searchToday(): Promise<void> {
         return;
     }
     try {
-        const needTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
+        const needTranslation: boolean = settingUtils.isUseEndpointTranslation();
         const solution: string = await leetCodeExecutor.getTodayQuestion(needTranslation);
         const query_result = JSON.parse(solution);
         // const titleSlug: string = query_result.titleSlug
@@ -306,7 +306,7 @@ export async function showSolution(input: LeetCodeNode | vscode.Uri): Promise<vo
         return;
     }
     try {
-        const needTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
+        const needTranslation: boolean = settingUtils.isUseEndpointTranslation();
         const solution: string = await leetCodeExecutor.showSolution(problemInput, language, needTranslation);
         leetCodeSolutionProvider.show(unescapeJS(solution));
     } catch (error) {
@@ -377,7 +377,7 @@ async function showProblemInternal(node: IProblem): Promise<void> {
         finalPath = wsl.useWsl() ? await wsl.toWinPath(finalPath) : finalPath;
 
         const descriptionConfig: IDescriptionConfiguration = settingUtils.getDescriptionConfiguration();
-        const needTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
+        const needTranslation: boolean = settingUtils.isUseEndpointTranslation();
 
         await leetCodeExecutor.showProblem(node, language, finalPath, descriptionConfig.showInComment, needTranslation);
         const promises: any[] = [

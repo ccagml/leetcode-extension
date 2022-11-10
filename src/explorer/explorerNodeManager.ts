@@ -7,7 +7,7 @@ import { Disposable } from "vscode";
 import * as list from "../commands/list";
 import { getSortingStrategy } from "../commands/plugin";
 import { Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType, ISubmitEvent } from "../shared";
-import { shouldHideSolvedProblem, shouldHideScoreProblem } from "../utils/settingUtils";
+import { isHideSolvedProblem, isHideScoreProblem } from "../utils/configUtils";
 import { LeetCodeNode } from "./LeetCodeNode";
 import { ISearchSet } from "../shared";
 import { searchToday, searchUserContest } from "../commands/show";
@@ -200,10 +200,10 @@ class ExplorerNodeManager implements Disposable {
     }
 
     public canShow(element: LeetCodeNode) {
-        if (shouldHideSolvedProblem() && element.state === ProblemState.AC) {
+        if (isHideSolvedProblem() && element.state === ProblemState.AC) {
             return false;
         }
-        if (shouldHideScoreProblem(element, element.user_score)) {
+        if (isHideScoreProblem(element, element.user_score)) {
             return false;
         }
         return true;

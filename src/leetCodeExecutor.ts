@@ -8,7 +8,7 @@ import * as path from "path";
 import { ExtensionContext } from "vscode";
 import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace, WorkspaceConfiguration } from "vscode";
 import { Endpoint, IProblem, leetcodeHasInited } from "./shared";
-import { executeCommand, executeCommandWithProgress } from "./utils/cpUtils";
+import { executeCommand, executeCommandWithProgress } from "./utils/cliUtils";
 import { DialogOptions, openUrl } from "./utils/uiUtils";
 import * as wsl from "./utils/wslUtils";
 import { toWslPath, useWsl } from "./utils/wslUtils";
