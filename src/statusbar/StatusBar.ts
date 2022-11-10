@@ -7,7 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { ConfigurationChangeEvent, Disposable, workspace, WorkspaceConfiguration } from "vscode";
+import { ConfigurationChangeEvent, Disposable, workspace } from "vscode";
 import { UserStatus, userContestRanKingBase } from "../shared";
 import { StatusBarItem } from "./StatusBarItem";
 import { isStatusBar } from "../utils/configUtils";
