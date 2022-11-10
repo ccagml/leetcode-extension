@@ -1,6 +1,6 @@
 /*
- * Filename: /home/cc/vscode-leetcode-problem-rating/src/controller/LoginController.ts
- * Path: /home/cc/vscode-leetcode-problem-rating
+ * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/controller/LoginController.ts
+ * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
  * Created Date: Thursday, November 10th 2022, 3:06:12 pm
  * Author: ccagml
  *

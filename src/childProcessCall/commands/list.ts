@@ -1,7 +1,7 @@
 
 /*
- * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/commands/list.ts
- * Path: /home/cc/vscode-leetcode-problem-rating
+ * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/commands/list.ts
+ * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
  * Created Date: Thursday, October 27th 2022, 7:43:29 pm
  * Author: ccagml
  *

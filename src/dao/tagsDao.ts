@@ -1,6 +1,6 @@
 /*
- * Filename: /home/cc/vscode-leetcode-problem-rating/src/dao/tagsDao.ts
- * Path: /home/cc/vscode-leetcode-problem-rating
+ * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/dao/tagsDao.ts
+ * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
  * Created Date: Thursday, November 10th 2022, 11:38:10 pm
  * Author: ccagml
  *

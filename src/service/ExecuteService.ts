@@ -1,6 +1,6 @@
 /*
- * Filename: /home/cc/vscode-leetcode-problem-rating/src/service/executeService.ts
- * Path: /home/cc/vscode-leetcode-problem-rating
+ * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/service/executeService.ts
+ * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
  * Created Date: Monday, October 31st 2022, 10:16:47 am
  * Author: ccagml
  *
