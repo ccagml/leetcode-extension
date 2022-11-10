@@ -27,6 +27,7 @@ class StatusBar implements Disposable {
         }, this);
     }
 
+    // 更新状态栏的数据
     public update_instance(status: UserStatus, user?: string, UserContestInfo?: userContestRanKingBase | undefined): void {
         switch (status) {
             case UserStatus.SignedIn:
