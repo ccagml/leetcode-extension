@@ -96,7 +96,7 @@ class ExecuteService implements Disposable {
         try {
             await this.executeCommandEx(this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "cache", "-d"]);
         } catch (error) {
-            await promptForOpenOutputChannel("Failed to delete cache. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("Failed to delete cache. 请查看控制台信息~", DialogType.error);
         }
     }
 

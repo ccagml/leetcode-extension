@@ -21,10 +21,11 @@ import { treeDataService } from "../service/TreeDataService";
 import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
 
 
-// 登录
+// 登录控制器
 class LoginContorller {
     constructor() { }
 
+    // 登录操作
     public async signIn(): Promise<void> {
         const picks: Array<IQuickItemEx<string>> = [];
         picks.push(
@@ -56,10 +57,10 @@ class LoginContorller {
         const loginMethod: string = choice.value;
         const commandArg: string | undefined = loginArgsMapping.get(loginMethod);
         if (!commandArg) {
-            throw new Error(`The login method "${loginMethod}" is not supported.`);
+            throw new Error(`不支持 "${loginMethod}" 方式登录`);
         }
         const isByCookie: boolean = loginMethod === "Cookie";
-        const inMessage: string = isByCookie ? "sign in by cookie" : "sign in";
+        const inMessage: string = isByCookie ? " 通过cookie登录" : "登录";
         try {
             const userName: string | undefined = await new Promise(async (resolve: (res: string | undefined) => void, reject: (e: Error) => void): Promise<void> => {
 
@@ -142,29 +143,32 @@ class LoginContorller {
                 childProc.stdin?.write(`${pwd}\n`);
             });
             if (userName) {
-                window.showInformationMessage(`Successfully ${inMessage}.`);
+                window.showInformationMessage(`${inMessage} 成功`);
                 eventService.emit("statusChanged", UserStatus.SignedIn, userName);
             }
         } catch (error) {
-            promptForOpenOutputChannel(`Failed to ${inMessage}. Please open the output channel for details`, DialogType.error);
+            promptForOpenOutputChannel(`${inMessage}失败. 请看看控制台输出信息`, DialogType.error);
         }
 
     }
 
+    // 登出
     public async signOut(): Promise<void> {
         try {
             await executeService.signOut();
-            window.showInformationMessage("Successfully signed out.");
+            window.showInformationMessage("成功登出");
             eventService.emit("statusChanged", UserStatus.SignedOut, undefined);
         } catch (error) {
             // promptForOpenOutputChannel(`Failed to signOut. Please open the output channel for details`, DialogType.error);
         }
     }
 
+    // 获取登录状态
     public async getLoginStatus() {
         return await statusBarService.getLoginStatus();
     }
 
+    // 删除所有缓存
     public async deleteAllCache(): Promise<void> {
         await this.signOut();
         await executeService.removeOldCache();

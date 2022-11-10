@@ -8,7 +8,10 @@
  */
 
 
-import * as _ from "lodash";
+import * as lodash from "lodash";
+import * as path from "path";
+import * as unescapeJS from "unescape-js";
+import * as vscode from "vscode";
 import { toNumber } from "lodash";
 import { Disposable, Uri, window, QuickPickItem, workspace, WorkspaceConfiguration } from "vscode";
 import { SearchNode, userContestRankingObj, userContestRanKingBase, UserStatus, IProblem, IQuickItemEx, languages, Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType, ISubmitEvent, SORT_ORDER, Endpoint, OpenOption, DialogType, DialogOptions } from "../model/Model";
@@ -19,10 +22,6 @@ import { statusBarService } from "../service/StatusBarService";
 import { previewService } from "../service/PreviewService";
 import { executeService } from "../service/ExecuteService";
 import { getNodeIdFromFile } from "../utils/SystemUtils";
-
-import * as path from "path";
-import * as unescapeJS from "unescape-js";
-import * as vscode from "vscode";
 import { logOutput, promptForOpenOutputChannel, promptForSignIn, promptHintMessage } from "../utils/OutputUtils";
 import { treeDataService } from "../service/TreeDataService";
 import { genFileExt, genFileName } from "../utils/SystemUtils";
@@ -40,7 +39,7 @@ import * as os from "os";
 import { getVsCodeConfig, getWorkspaceFolder } from "../utils/ConfigUtils";
 
 
-
+// 视图控制器
 class TreeViewController implements Disposable {
     private explorerNodeMap: Map<string, NodeModel> = new Map<string, NodeModel>();
     private companySet: Set<string> = new Set<string>();
@@ -49,8 +48,7 @@ class TreeViewController implements Disposable {
     private waitTodayQuestion: boolean;
     private waitUserContest: boolean;
 
-
-
+    // 获取当前文件的路径
     public async getActiveFilePath(uri?: vscode.Uri): Promise<string | undefined> {
         let textEditor: vscode.TextEditor | undefined;
         if (uri) {
@@ -63,12 +61,13 @@ class TreeViewController implements Disposable {
             return undefined;
         }
         if (textEditor.document.isDirty && !await textEditor.document.save()) {
-            vscode.window.showWarningMessage("Please save the solution file first.");
+            vscode.window.showWarningMessage("请先保存当前文件");
             return undefined;
         }
         return systemUtils.useWsl() ? systemUtils.toWslPath(textEditor.document.uri.fsPath) : textEditor.document.uri.fsPath;
     }
 
+    // 提交问题
     public async submitSolution(uri?: vscode.Uri): Promise<void> {
         if (!statusBarService.getUser()) {
             promptForSignIn();
@@ -85,7 +84,7 @@ class TreeViewController implements Disposable {
             submissionService.show(result);
             eventService.emit("submit", submissionService.getSubmitEvent());
         } catch (error) {
-            await promptForOpenOutputChannel("Failed to submit the solution. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("提交出错了. 请查看控制台信息~", DialogType.error);
             return;
         }
 
@@ -93,6 +92,7 @@ class TreeViewController implements Disposable {
     }
 
 
+    // 提交测试用例
     public async testSolution(uri?: vscode.Uri): Promise<void> {
         try {
             if (statusBarService.getStatus() === UserStatus.SignedOut) {
@@ -108,25 +108,25 @@ class TreeViewController implements Disposable {
                 {
                     label: "$(three-bars) Default test cases",
                     description: "",
-                    detail: "Test with the default cases",
+                    detail: "默认用例",
                     value: ":default",
                 },
                 {
                     label: "$(pencil) Write directly...",
                     description: "",
-                    detail: "Write test cases in input box",
+                    detail: "输入框的测试用例",
                     value: ":direct",
                 },
                 {
                     label: "$(file-text) Browse...",
                     description: "",
-                    detail: "Test with the written cases in file",
+                    detail: "文件中的测试用例",
                     value: ":file",
                 },
                 {
                     label: "All Default test cases...",
                     description: "",
-                    detail: "Test with the all default cases",
+                    detail: "所有的测试用例",
                     value: ":alldefault",
                 },
             );
@@ -176,7 +176,7 @@ class TreeViewController implements Disposable {
             submissionService.show(result);
             eventService.emit("submit", submissionService.getSubmitEvent());
         } catch (error) {
-            await promptForOpenOutputChannel("Failed to test the solution. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", DialogType.error);
         }
     }
     public async showFileSelectDialog(fsPath?: string): Promise<vscode.Uri[] | undefined> {
@@ -210,7 +210,7 @@ class TreeViewController implements Disposable {
             submissionService.show(result);
             eventService.emit("submit", submissionService.getSubmitEvent());
         } catch (error) {
-            await promptForOpenOutputChannel("Failed to test the solution. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", DialogType.error);
         }
     }
 
@@ -259,13 +259,13 @@ class TreeViewController implements Disposable {
             {
                 label: `${isCnEnabled ? "" : "$(check) "}LeetCode`,
                 description: "leetcode.com",
-                detail: `Enable LeetCode US`,
+                detail: `Enable LeetCode.com US`,
                 value: Endpoint.LeetCode,
             },
             {
                 label: `${isCnEnabled ? "$(check) " : ""}力扣`,
                 description: "leetcode.cn",
-                detail: `启用中国版 LeetCode`,
+                detail: `启用中国版 LeetCode.cn`,
                 value: Endpoint.LeetCodeCN,
             },
         );
@@ -280,7 +280,7 @@ class TreeViewController implements Disposable {
             await leetCodeConfig.update("endpoint", endpoint, true /* UserSetting */);
             vscode.window.showInformationMessage(`Switched the endpoint to ${endpoint}`);
         } catch (error) {
-            await promptForOpenOutputChannel("Failed to switch endpoint. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("切换站点出错. 请查看控制台信息~", DialogType.error);
         }
 
         try {
@@ -288,7 +288,7 @@ class TreeViewController implements Disposable {
             await executeService.deleteCache();
             await promptForSignIn();
         } catch (error) {
-            await promptForOpenOutputChannel("Failed to sign in. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("登录失败. 请查看控制台信息~", DialogType.error);
         }
     }
 
@@ -323,7 +323,7 @@ class TreeViewController implements Disposable {
                 fileButtonService.refresh();
             }
         } catch (error) {
-            await promptForOpenOutputChannel("Failed to add the problem to favorite. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("添加喜欢题目失败. 请查看控制台信息~", DialogType.error);
         }
     }
 
@@ -335,7 +335,7 @@ class TreeViewController implements Disposable {
                 fileButtonService.refresh();
             }
         } catch (error) {
-            await promptForOpenOutputChannel("Failed to remove the problem from favorite. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("移除喜欢题目失败. 请查看控制台信息~", DialogType.error);
         }
     }
 
@@ -372,7 +372,7 @@ class TreeViewController implements Disposable {
             }
             return problems.reverse();
         } catch (error) {
-            await promptForOpenOutputChannel("Failed to list problems. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("获取题目失败. 请查看控制台信息~", DialogType.error);
             return [];
         }
     }
@@ -419,7 +419,7 @@ class TreeViewController implements Disposable {
         });
 
         const selectedItem: QuickPickItem | undefined = await window.showQuickPick(languageItems, {
-            placeHolder: "Please the default language",
+            placeHolder: "请设置默认语言",
             ignoreFocusOut: true,
         });
 
@@ -428,7 +428,7 @@ class TreeViewController implements Disposable {
         }
 
         leetCodeConfig.update("defaultLanguage", selectedItem.label, true /* Global */);
-        window.showInformationMessage(`Successfully set the default language to ${selectedItem.label}`);
+        window.showInformationMessage(`设置默认语言 ${selectedItem.label} 成功`);
     }
 
 
@@ -595,7 +595,7 @@ class TreeViewController implements Disposable {
             solutionService.show(unescapeJS(solution));
         } catch (error) {
             logOutput.appendLine(error.toString());
-            await promptForOpenOutputChannel("Failed to fetch the top voted solution. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("Failed to fetch the top voted solution. 请查看控制台信息~", DialogType.error);
         }
     }
 
@@ -619,7 +619,7 @@ class TreeViewController implements Disposable {
             console.log(query_result);
         } catch (error) {
             logOutput.appendLine(error.toString());
-            await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", DialogType.error);
         }
     }
 
@@ -809,7 +809,7 @@ class TreeViewController implements Disposable {
 
             await Promise.all(promises);
         } catch (error) {
-            await promptForOpenOutputChannel(`${error} Please open the output channel for details.`, DialogType.error);
+            await promptForOpenOutputChannel(`${error} 请查看控制台信息~`, DialogType.error);
         }
     }
 
@@ -892,7 +892,7 @@ class TreeViewController implements Disposable {
             eventService.emit("searchUserContest", tt);
         } catch (error) {
             logOutput.appendLine(error.toString());
-            await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", DialogType.error);
         }
     }
     public async searchToday(): Promise<void> {
@@ -920,7 +920,7 @@ class TreeViewController implements Disposable {
 
         } catch (error) {
             logOutput.appendLine(error.toString());
-            await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
+            await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", DialogType.error);
         }
     }
 
@@ -970,15 +970,15 @@ class TreeViewController implements Disposable {
                 case "name":
                     return node.name;
                 case "camelcasename":
-                    return _.camelCase(node.name);
+                    return lodash.camelCase(node.name);
                 case "pascalcasename":
-                    return _.upperFirst(_.camelCase(node.name));
+                    return lodash.upperFirst(lodash.camelCase(node.name));
                 case "kebabcasename":
                 case "kebab-case-name":
-                    return _.kebabCase(node.name);
+                    return lodash.kebabCase(node.name);
                 case "snakecasename":
                 case "snake_case_name":
-                    return _.snakeCase(node.name);
+                    return lodash.snakeCase(node.name);
                 case "ext":
                     return genFileExt(selectedLanguage);
                 case "language":
@@ -1303,7 +1303,7 @@ class TreeViewController implements Disposable {
         for (const company of this.companySet.values()) {
             res.push(new NodeModel(Object.assign({}, defaultProblem, {
                 id: `${Category.Company}.${company}`,
-                name: _.startCase(company),
+                name: lodash.startCase(company),
             }), false));
         }
         this.sortSubCategoryNodes(res, Category.Company);
@@ -1315,7 +1315,7 @@ class TreeViewController implements Disposable {
         for (const tag of this.tagSet.values()) {
             res.push(new NodeModel(Object.assign({}, defaultProblem, {
                 id: `${Category.Tag}.${tag}`,
-                name: _.startCase(tag),
+                name: lodash.startCase(tag),
             }), false));
         }
         this.sortSubCategoryNodes(res, Category.Tag);
