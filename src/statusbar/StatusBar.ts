@@ -7,9 +7,8 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { ConfigurationChangeEvent, Disposable, workspace } from "vscode";
+import { ConfigurationChangeEvent, Disposable, workspace, StatusBarItem, window } from "vscode";
 import { UserStatus, userContestRanKingBase } from "../shared";
-import { StatusBarItem } from "./StatusBarItem";
 import { isStatusBar } from "../utils/configUtils";
 
 // 状态栏工具
@@ -18,7 +17,7 @@ class StatusBar implements Disposable {
     private configurationChangeListener: Disposable;
 
     constructor() {
-        this.instance = new StatusBarItem();
+        this.instance = window.createStatusBarItem();
         this.setStatusBarVisibility();
 
         this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
@@ -28,9 +27,26 @@ class StatusBar implements Disposable {
         }, this);
     }
 
+    public update_instance(status: UserStatus, user?: string, UserContestInfo?: userContestRanKingBase | undefined): void {
+        switch (status) {
+            case UserStatus.SignedIn:
+                if (UserContestInfo && UserContestInfo.attendedContestsCount > 0) {
+                    this.instance.text = `用户: ${user}, 积分: ${Math.floor(UserContestInfo.rating)}, 名次: ${UserContestInfo.localRanking} / ${UserContestInfo.localTotalParticipants} (${UserContestInfo.topPercentage}%), 全部名次: ${UserContestInfo.globalRanking} / ${UserContestInfo.globalTotalParticipants}`;
+                } else {
+                    this.instance.text = `user: ${user}`;
+                }
+                break;
+            case UserStatus.SignedOut:
+            default:
+                this.instance.text = "";
+                break;
+        }
+    }
+
+
     // 更新数据
     public update(status: UserStatus, user?: string, UserContestInfo?: userContestRanKingBase | undefined): void {
-        this.instance.update(status, user, UserContestInfo);
+        this.update_instance(status, user, UserContestInfo);
     }
 
     //销毁数据
