@@ -180,6 +180,17 @@ export enum SortingStrategy {
     IDDesc = "ID (Descending)"
 }
 
+
+export const SORT_ORDER: SortingStrategy[] = [
+    SortingStrategy.None,
+    SortingStrategy.AcceptanceRateAsc,
+    SortingStrategy.AcceptanceRateDesc,
+    SortingStrategy.ScoreAsc,
+    SortingStrategy.ScoreDesc,
+    SortingStrategy.IDDesc,
+];
+
+
 export enum SearchSetType {
     ScoreRange = "ScoreRange",
     Context = "Context",

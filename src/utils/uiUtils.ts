@@ -2,9 +2,8 @@
 // Licensed under the MIT license.
 
 import * as vscode from "vscode";
-import { getLeetCodeEndpoint } from "../commands/plugin";
 import { logOutput } from "./logOutput";
-import { getVsCodeConfig } from "./configUtils";
+import { getLeetCodeEndpoint, getVsCodeConfig } from "./configUtils";
 
 export namespace DialogOptions {
     export const open: vscode.MessageItem = { title: "Open" };

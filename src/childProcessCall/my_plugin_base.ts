@@ -42,7 +42,7 @@ export class MyPluginBase {
     head = head || require('./core').corePlugin;
     const stats = cache.get(helper.KEYS.plugins) || {};
     let installed: Array<MyPluginBase> = [];
-    let file_plugin: Array<any> = file.listCodeDir('new_lib/plugins')
+    let file_plugin: Array<any> = file.listCodeDir('plugins')
     for (let f of file_plugin) {
       const p = f.data;
       if (!p) continue;

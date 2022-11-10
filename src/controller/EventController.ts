@@ -7,14 +7,8 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
-import { EventEmitter } from "events";
 import { eventService } from "../service/EventService";
-class EventContorller extends EventEmitter {
-
-    constructor() {
-        super();
-    }
+class EventContorller {
     /**
      * 监听事件
      */
@@ -23,4 +17,4 @@ class EventContorller extends EventEmitter {
     }
 }
 
-export const eventContorller: EventContorller = new EventContorller();
+export const eventController: EventContorller = new EventContorller();

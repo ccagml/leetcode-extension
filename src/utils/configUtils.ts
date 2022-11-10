@@ -9,7 +9,7 @@
 
 
 import { workspace, WorkspaceConfiguration } from "vscode";
-import { DescriptionConfiguration, IProblem } from "../model/Model";
+import { DescriptionConfiguration, Endpoint, IProblem, SortingStrategy } from "../model/Model";
 
 // vscode的配置
 export function getVsCodeConfig(): WorkspaceConfiguration {
@@ -126,4 +126,36 @@ export function getDescriptionConfiguration(): IDescriptionConfiguration {
 export interface IDescriptionConfiguration {
     showInComment: boolean;
     showInWebview: boolean;
+}
+
+export function enableSideMode(): boolean {
+    return getVsCodeConfig().get<boolean>("enableSideMode", true)
+}
+
+export function getNodePath() {
+    return getVsCodeConfig().get<string>("nodePath", "node" /* default value */);
+}
+
+export function isShowLocked() {
+    return !!getVsCodeConfig().get<boolean>("showLocked");
+}
+
+export function isUseVscodeNode() {
+    return getVsCodeConfig().get<boolean>("useVscodeNode") === true;
+}
+
+export function isUseWsl() {
+    return getVsCodeConfig().get<boolean>("useWsl") === true;
+}
+
+export function getSortingStrategy(): SortingStrategy {
+    return getVsCodeConfig().get<SortingStrategy>("problems.sortStrategy", SortingStrategy.None);
+}
+
+export async function updateSortingStrategy(value: string, flag: boolean) {
+    await getVsCodeConfig().update("problems.sortStrategy", value, flag);
+}
+
+export function getLeetCodeEndpoint(): string {
+    return getVsCodeConfig().get<string>("endpoint", Endpoint.LeetCodeCN);
 }

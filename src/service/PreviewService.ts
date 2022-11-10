@@ -9,8 +9,8 @@
 
 
 import { commands, ViewColumn } from "vscode";
-import { getLeetCodeEndpoint } from "../commands/plugin";
 import { Endpoint, IProblem, IWebViewOption } from "../model/Model";
+import { getLeetCodeEndpoint } from "../utils/configUtils";
 import { BaseWebViewService } from "./BaseWebviewService";
 import { markdownService } from "./MarkdownService";
 

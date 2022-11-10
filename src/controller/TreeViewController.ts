@@ -10,16 +10,37 @@
 
 import * as _ from "lodash";
 import { toNumber } from "lodash";
-import { Disposable } from "vscode";
-import * as list from "../commands/list";
-import { getSortingStrategy } from "../commands/plugin";
-import { Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType, ISubmitEvent } from "../model/Model";
-import { isHideSolvedProblem, isHideScoreProblem } from "../utils/configUtils";
+import { Disposable, Uri, window, QuickPickItem, workspace, WorkspaceConfiguration } from "vscode";
+import { SearchNode, userContestRankingObj, userContestRanKingBase, UserStatus, IProblem, IQuickItemEx, languages, Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType, ISubmitEvent, SORT_ORDER, Endpoint } from "../model/Model";
+import { isHideSolvedProblem, isHideScoreProblem, getDescriptionConfiguration, isUseEndpointTranslation, enableSideMode, getPickOneByRankRangeMin, getPickOneByRankRangeMax, isShowLocked, updateSortingStrategy, getSortingStrategy, getLeetCodeEndpoint } from "../utils/configUtils";
 import { NodeModel } from "../model/NodeModel";
 import { ISearchSet } from "../model/Model";
-import { searchToday, searchUserContest } from "./ShowController";
 import { resourcesData } from "../ResourcesData";
 import { statusBarService } from "../service/StatusBarService";
+import { previewService } from "../service/PreviewService";
+import { executeService } from "../service/ExecuteService";
+import { getNodeIdFromFile } from "../utils/problemUtils";
+
+import * as path from "path";
+import * as unescapeJS from "unescape-js";
+import * as vscode from "vscode";
+import { logOutput } from "../utils/logOutput";
+import { treeDataService } from "../service/TreeDataService";
+import { genFileExt, genFileName } from "../utils/problemUtils";
+import { IDescriptionConfiguration, isStarShortcut } from "../utils/configUtils";
+import { DialogOptions, DialogType, openSettingsEditor, promptForOpenOutputChannel, promptForSignIn, promptHintMessage, showFileSelectDialog } from "../utils/uiUtils";
+import { getActiveFilePath, selectWorkspaceFolder } from "../utils/workspaceUtils";
+import * as wsl from "../utils/wslUtils";
+import { solutionService } from "../service/SolutionService";
+import { eventService } from "../service/EventService";
+import { fileButtonService } from "../service/FileButtonService";
+
+import * as fse from "fs-extra";
+import { isWindows, usingCmd } from "../utils/osUtils";
+import { submissionService } from "../service/SubmissionService";
+
+
+
 
 class TreeViewController implements Disposable {
     private explorerNodeMap: Map<string, NodeModel> = new Map<string, NodeModel>();
@@ -28,6 +49,816 @@ class TreeViewController implements Disposable {
     private searchSet: Map<string, ISearchSet> = new Map<string, ISearchSet>();
     private waitTodayQuestion: boolean;
     private waitUserContest: boolean;
+
+
+    public async submitSolution(uri?: vscode.Uri): Promise<void> {
+        if (!statusBarService.getUser()) {
+            promptForSignIn();
+            return;
+        }
+
+        const filePath: string | undefined = await getActiveFilePath(uri);
+        if (!filePath) {
+            return;
+        }
+
+        try {
+            const result: string = await executeService.submitSolution(filePath);
+            submissionService.show(result);
+            eventService.emit("submit", submissionService.getSubmitEvent());
+        } catch (error) {
+            await promptForOpenOutputChannel("Failed to submit the solution. Please open the output channel for details.", DialogType.error);
+            return;
+        }
+
+        treeDataService.refresh();
+    }
+
+
+    public async testSolution(uri?: vscode.Uri): Promise<void> {
+        try {
+            if (statusBarService.getStatus() === UserStatus.SignedOut) {
+                return;
+            }
+
+            const filePath: string | undefined = await getActiveFilePath(uri);
+            if (!filePath) {
+                return;
+            }
+            const picks: Array<IQuickItemEx<string>> = [];
+            picks.push(
+                {
+                    label: "$(three-bars) Default test cases",
+                    description: "",
+                    detail: "Test with the default cases",
+                    value: ":default",
+                },
+                {
+                    label: "$(pencil) Write directly...",
+                    description: "",
+                    detail: "Write test cases in input box",
+                    value: ":direct",
+                },
+                {
+                    label: "$(file-text) Browse...",
+                    description: "",
+                    detail: "Test with the written cases in file",
+                    value: ":file",
+                },
+                {
+                    label: "All Default test cases...",
+                    description: "",
+                    detail: "Test with the all default cases",
+                    value: ":alldefault",
+                },
+            );
+            const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks);
+            if (!choice) {
+                return;
+            }
+
+            let result: string | undefined;
+            switch (choice.value) {
+                case ":default":
+                    result = await executeService.testSolution(filePath);
+                    break;
+                case ":direct":
+                    const testString: string | undefined = await vscode.window.showInputBox({
+                        prompt: "Enter the test cases.",
+                        validateInput: (s: string): string | undefined => s && s.trim() ? undefined : "Test case must not be empty.",
+                        placeHolder: "Example: [1,2,3]\\n4",
+                        ignoreFocusOut: true,
+                    });
+                    if (testString) {
+                        result = await executeService.testSolution(filePath, this.parseTestString(testString));
+                    }
+                    break;
+                case ":file":
+                    const testFile: vscode.Uri[] | undefined = await showFileSelectDialog(filePath);
+                    if (testFile && testFile.length) {
+                        const input: string = (await fse.readFile(testFile[0].fsPath, "utf-8")).trim();
+                        if (input) {
+                            result = await executeService.testSolution(filePath, this.parseTestString(input.replace(/\r?\n/g, "\\n")));
+                        } else {
+                            vscode.window.showErrorMessage("The selected test file must not be empty.");
+                        }
+                    }
+                    break;
+                case ":alldefault":
+                    result = await executeService.testSolution(filePath, undefined, true);
+                    break;
+                default:
+                    break;
+            }
+            if (!result) {
+                return;
+            }
+            submissionService.show(result);
+            eventService.emit("submit", submissionService.getSubmitEvent());
+        } catch (error) {
+            await promptForOpenOutputChannel("Failed to test the solution. Please open the output channel for details.", DialogType.error);
+        }
+    }
+
+    public async testSolutionDefault(uri?: vscode.Uri, allCase?: boolean): Promise<void> {
+        try {
+            if (statusBarService.getStatus() === UserStatus.SignedOut) {
+                return;
+            }
+
+            const filePath: string | undefined = await getActiveFilePath(uri);
+            if (!filePath) {
+                return;
+            }
+
+            let result: string | undefined = await executeService.testSolution(filePath, undefined, allCase || false);
+            if (!result) {
+                return;
+            }
+            submissionService.show(result);
+            eventService.emit("submit", submissionService.getSubmitEvent());
+        } catch (error) {
+            await promptForOpenOutputChannel("Failed to test the solution. Please open the output channel for details.", DialogType.error);
+        }
+    }
+
+
+    public parseTestString(test: string): string {
+        if (wsl.useWsl() || !isWindows()) {
+            if (wsl.useVscodeNode()) {
+                return `${test}`;
+            }
+            return `'${test}'`;
+        }
+
+        // In windows and not using WSL
+        if (usingCmd()) {
+            // 一般需要走进这里, 除非改了 环境变量ComSpec的值
+            if (wsl.useVscodeNode()) {
+                return `${test.replace(/"/g, '\"')}`;
+            }
+            return `"${test.replace(/"/g, '\\"')}"`;
+        } else {
+            if (wsl.useVscodeNode()) {
+                return `${test.replace(/"/g, '\"')}`;
+            }
+            return `'${test.replace(/"/g, '\\"')}'`;
+        }
+    }
+
+
+    public async switchEndpoint(): Promise<void> {
+        const isCnEnabled: boolean = getLeetCodeEndpoint() === Endpoint.LeetCodeCN;
+        const picks: Array<IQuickItemEx<string>> = [];
+        picks.push(
+            {
+                label: `${isCnEnabled ? "" : "$(check) "}LeetCode`,
+                description: "leetcode.com",
+                detail: `Enable LeetCode US`,
+                value: Endpoint.LeetCode,
+            },
+            {
+                label: `${isCnEnabled ? "$(check) " : ""}力扣`,
+                description: "leetcode.cn",
+                detail: `启用中国版 LeetCode`,
+                value: Endpoint.LeetCodeCN,
+            },
+        );
+        const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks);
+        if (!choice || choice.value === getLeetCodeEndpoint()) {
+            return;
+        }
+        const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
+        try {
+            const endpoint: string = choice.value;
+            await executeService.switchEndpoint(endpoint);
+            await leetCodeConfig.update("endpoint", endpoint, true /* UserSetting */);
+            vscode.window.showInformationMessage(`Switched the endpoint to ${endpoint}`);
+        } catch (error) {
+            await promptForOpenOutputChannel("Failed to switch endpoint. Please open the output channel for details.", DialogType.error);
+        }
+
+        try {
+            await vscode.commands.executeCommand("leetcode.signout");
+            await executeService.deleteCache();
+            await promptForSignIn();
+        } catch (error) {
+            await promptForOpenOutputChannel("Failed to sign in. Please open the output channel for details.", DialogType.error);
+        }
+    }
+
+
+    public async switchSortingStrategy(): Promise<void> {
+        const currentStrategy: SortingStrategy = getSortingStrategy();
+        const picks: Array<IQuickItemEx<string>> = [];
+        picks.push(
+            ...SORT_ORDER.map((s: SortingStrategy) => {
+                return {
+                    label: `${currentStrategy === s ? "$(check)" : "    "} ${s}`,
+                    value: s,
+                };
+            }),
+        );
+
+        const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks);
+        if (!choice || choice.value === currentStrategy) {
+            return;
+        }
+
+        await updateSortingStrategy(choice.value, true)
+        await treeDataService.refresh();
+    }
+
+
+    public async addFavorite(node: NodeModel): Promise<void> {
+        try {
+            await executeService.toggleFavorite(node, true);
+            await treeDataService.refresh();
+            if (isStarShortcut()) {
+                fileButtonService.refresh();
+            }
+        } catch (error) {
+            await promptForOpenOutputChannel("Failed to add the problem to favorite. Please open the output channel for details.", DialogType.error);
+        }
+    }
+
+    public async removeFavorite(node: NodeModel): Promise<void> {
+        try {
+            await executeService.toggleFavorite(node, false);
+            await treeDataService.refresh();
+            if (isStarShortcut()) {
+                fileButtonService.refresh();
+            }
+        } catch (error) {
+            await promptForOpenOutputChannel("Failed to remove the problem from favorite. Please open the output channel for details.", DialogType.error);
+        }
+    }
+
+    public async listProblems(): Promise<IProblem[]> {
+        try {
+            if (statusBarService.getStatus() === UserStatus.SignedOut) {
+                return [];
+            }
+
+            const showLockedFlag: boolean = isShowLocked()
+            const useEndpointTranslation: boolean = isUseEndpointTranslation();
+            const result: string = await executeService.listProblems(showLockedFlag, useEndpointTranslation);
+            const all_problem_info = JSON.parse(result);
+            const problems: IProblem[] = [];
+            const AllScoreData = treeDataService.getScoreData();
+            for (const p of all_problem_info) {
+                problems.push({
+                    id: p.fid,
+                    qid: p.id,
+                    isFavorite: p.starred,
+                    locked: p.locked,
+                    state: this.parseProblemState(p.state),
+                    name: p.name,
+                    difficulty: p.level,
+                    passRate: p.percent,
+                    companies: p.companies || [],
+                    tags: resourcesData.getTagsData(p.fid) || ["Unknown"],
+                    scoreData: AllScoreData.get(p.fid),
+                    isSearchResult: false,
+                    input: "",
+                    rootNodeSortId: RootNodeSort.ZERO,
+                    todayData: undefined,
+                });
+            }
+            return problems.reverse();
+        } catch (error) {
+            await promptForOpenOutputChannel("Failed to list problems. Please open the output channel for details.", DialogType.error);
+            return [];
+        }
+    }
+
+    public parseProblemState(stateOutput: string): ProblemState {
+        if (!stateOutput) {
+            return ProblemState.Unknown;
+        }
+        switch (stateOutput.trim()) {
+            case "v":
+            case "✔":
+            case "√":
+            case "ac":
+                return ProblemState.AC;
+            case "X":
+            case "✘":
+            case "×":
+            case "notac":
+                return ProblemState.NotAC;
+            default:
+                return ProblemState.Unknown;
+        }
+    }
+
+
+    public async switchDefaultLanguage(): Promise<void> {
+        const leetCodeConfig: WorkspaceConfiguration = workspace.getConfiguration("leetcode-problem-rating");
+        const defaultLanguage: string | undefined = leetCodeConfig.get<string>("defaultLanguage");
+        const languageItems: QuickPickItem[] = [];
+        for (const language of languages) {
+            languageItems.push({
+                label: language,
+                description: defaultLanguage === language ? "Currently used" : undefined,
+            });
+        }
+        // Put the default language at the top of the list
+        languageItems.sort((a: QuickPickItem, b: QuickPickItem) => {
+            if (a.description) {
+                return Number.MIN_SAFE_INTEGER;
+            } else if (b.description) {
+                return Number.MAX_SAFE_INTEGER;
+            }
+            return a.label.localeCompare(b.label);
+        });
+
+        const selectedItem: QuickPickItem | undefined = await window.showQuickPick(languageItems, {
+            placeHolder: "Please the default language",
+            ignoreFocusOut: true,
+        });
+
+        if (!selectedItem) {
+            return;
+        }
+
+        leetCodeConfig.update("defaultLanguage", selectedItem.label, true /* Global */);
+        window.showInformationMessage(`Successfully set the default language to ${selectedItem.label}`);
+    }
+
+
+    public async searchProblem(): Promise<void> {
+        if (!statusBarService.getUser()) {
+            promptForSignIn();
+            return;
+        }
+
+        const picks: Array<IQuickItemEx<string>> = [];
+        picks.push(
+            {
+                label: `题目id查询`,
+                detail: `通过题目id查询`,
+                value: `byid`,
+            },
+            {
+                label: `分数范围查询`,
+                detail: `例如 1500-1600`,
+                value: `range`,
+            },
+            {
+                label: `周赛期数查询`,
+                detail: `周赛期数查询`,
+                value: `contest`,
+            },
+            // {
+            //     label: `测试api`,
+            //     detail: `测试api`,
+            //     value: `testapi`,
+            // }
+            // ,
+            // {
+            //     label: `每日一题`,
+            //     detail: `每日一题`,
+            //     value: `today`,
+            // },
+            // {
+            //     label: `查询自己竞赛信息`,
+            //     detail: `查询自己竞赛信息`,
+            //     value: `userContest`,
+            // }
+        );
+        const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(
+            picks,
+            { title: "选择查询选项" },
+        );
+        if (!choice) {
+            return
+        }
+        if (choice.value == "byid") {
+            await this.searchProblemByID();
+        } else if (choice.value == "range") {
+            await this.searchScoreRange();
+        } else if (choice.value == "contest") {
+            await this.searchContest();
+        } else if (choice.value == "today") {
+            await this.searchToday();
+        } else if (choice.value == "userContest") {
+            await this.searchUserContest();
+        } else if (choice.value == "testapi") {
+            await this.testapi();
+        }
+
+    }
+
+    public async showSolution(input: NodeModel | vscode.Uri): Promise<void> {
+        let problemInput: string | undefined;
+        if (input instanceof NodeModel) { // Triggerred from explorer
+            problemInput = input.qid;
+        } else if (input instanceof vscode.Uri) { // Triggerred from Code Lens/context menu
+            if (wsl.useVscodeNode()) {
+                problemInput = `${input.fsPath}`;
+            } else {
+                problemInput = `"${input.fsPath}"`;
+                if (wsl.useWsl()) {
+                    problemInput = await wsl.toWslPath(input.fsPath);
+                }
+            }
+        } else if (!input) { // Triggerred from command
+            problemInput = await getActiveFilePath();
+        }
+
+        if (!problemInput) {
+            vscode.window.showErrorMessage("Invalid input to fetch the solution data.");
+            return;
+        }
+
+        const language: string | undefined = await this.fetchProblemLanguage();
+        if (!language) {
+            return;
+        }
+        try {
+            const needTranslation: boolean = isUseEndpointTranslation();
+            const solution: string = await executeService.showSolution(problemInput, language, needTranslation);
+            solutionService.show(unescapeJS(solution));
+        } catch (error) {
+            logOutput.appendLine(error.toString());
+            await promptForOpenOutputChannel("Failed to fetch the top voted solution. Please open the output channel for details.", DialogType.error);
+        }
+    }
+
+
+
+    public async testapi(): Promise<void> {
+        if (!statusBarService.getUser()) {
+            promptForSignIn();
+            return;
+        }
+        try {
+            const twoFactor: string | undefined = await vscode.window.showInputBox({
+                prompt: "测试数据",
+                ignoreFocusOut: true,
+                validateInput: (s: string): string | undefined => s && s.trim() ? undefined : "The input must not be empty",
+            });
+
+            // vscode.window.showErrorMessage(twoFactor || "输入错误");
+            const solution: string = await executeService.getTestApi(twoFactor || "")
+            const query_result = JSON.parse(solution);
+            console.log(query_result);
+        } catch (error) {
+            logOutput.appendLine(error.toString());
+            await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
+        }
+    }
+
+
+    public async searchProblemByID(): Promise<void> {
+        if (!statusBarService.getUser()) {
+            promptForSignIn();
+            return;
+        }
+        const choice: IQuickItemEx<IProblem> | undefined = await vscode.window.showQuickPick(
+            this.parseProblemsToPicks(this.listProblems()),
+            {
+                matchOnDetail: true,
+                matchOnDescription: true,
+                placeHolder: "Select one problem",
+            },
+        );
+        if (!choice) {
+            return;
+        }
+        await this.showProblemInternal(choice.value);
+    }
+
+    public async showProblem(node?: NodeModel): Promise<void> {
+        if (!node) {
+            return;
+        }
+        await this.showProblemInternal(node);
+    }
+
+
+    public async pickOne(): Promise<void> {
+        const problems: IProblem[] = await this.listProblems();
+        var randomProblem: IProblem;
+
+        const user_score = statusBarService.getUserContestScore()
+        if (user_score > 0) {
+
+            let min_score: number = getPickOneByRankRangeMin();
+            let max_score: number = getPickOneByRankRangeMax();
+            let temp_problems: IProblem[] = new Array();
+            const need_min = user_score + min_score;
+            const need_max = user_score + max_score;
+            problems.forEach(element => {
+                if (element.scoreData?.Rating) {
+                    if (element.scoreData.Rating >= need_min && element.scoreData.Rating <= need_max) {
+                        temp_problems.push(element);
+                    }
+                }
+            });
+            randomProblem = temp_problems[Math.floor(Math.random() * temp_problems.length)];
+
+        } else {
+            randomProblem = problems[Math.floor(Math.random() * problems.length)];
+        }
+        if (randomProblem) {
+            await this.showProblemInternal(randomProblem);
+        }
+    }
+
+    public async fetchProblemLanguage(): Promise<string | undefined> {
+        const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
+        let defaultLanguage: string | undefined = leetCodeConfig.get<string>("defaultLanguage");
+        if (defaultLanguage && languages.indexOf(defaultLanguage) < 0) {
+            defaultLanguage = undefined;
+        }
+        const language: string | undefined = defaultLanguage || await vscode.window.showQuickPick(languages, { placeHolder: "Select the language you want to use", ignoreFocusOut: true });
+        // fire-and-forget default language query
+        (async (): Promise<void> => {
+            if (language && !defaultLanguage && leetCodeConfig.get<boolean>("hint.setDefaultLanguage")) {
+                const choice: vscode.MessageItem | undefined = await vscode.window.showInformationMessage(
+                    `Would you like to set '${language}' as your default language?`,
+                    DialogOptions.yes,
+                    DialogOptions.no,
+                    DialogOptions.never,
+                );
+                if (choice === DialogOptions.yes) {
+                    leetCodeConfig.update("defaultLanguage", language, true /* UserSetting */);
+                } else if (choice === DialogOptions.never) {
+                    leetCodeConfig.update("hint.setDefaultLanguage", false, true /* UserSetting */);
+                }
+            }
+        })();
+        return language;
+    }
+
+    public async showProblemInternal(node: IProblem): Promise<void> {
+        try {
+            const language: string | undefined = await this.fetchProblemLanguage();
+            if (!language) {
+                return;
+            }
+
+            const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
+            const workspaceFolder: string = await selectWorkspaceFolder();
+            if (!workspaceFolder) {
+                return;
+            }
+
+            const fileFolder: string = leetCodeConfig
+                .get<string>(`filePath.${language}.folder`, leetCodeConfig.get<string>(`filePath.default.folder`, ""))
+                .trim();
+            const fileName: string = leetCodeConfig
+                .get<string>(
+                    `filePath.${language}.filename`,
+                    leetCodeConfig.get<string>(`filePath.default.filename`) || genFileName(node, language),
+                )
+                .trim();
+
+            let finalPath: string = path.join(workspaceFolder, fileFolder, fileName);
+
+            if (finalPath) {
+                finalPath = await this.resolveRelativePath(finalPath, node, language);
+                if (!finalPath) {
+                    logOutput.appendLine("Showing problem canceled by user.");
+                    return;
+                }
+            }
+
+            finalPath = wsl.useWsl() ? await wsl.toWinPath(finalPath) : finalPath;
+
+            const descriptionConfig: IDescriptionConfiguration = getDescriptionConfiguration();
+            const needTranslation: boolean = isUseEndpointTranslation();
+
+            await executeService.showProblem(node, language, finalPath, descriptionConfig.showInComment, needTranslation);
+            const promises: any[] = [
+                vscode.window.showTextDocument(vscode.Uri.file(finalPath), { preview: false, viewColumn: vscode.ViewColumn.One }),
+                promptHintMessage(
+                    "hint.commentDescription",
+                    'You can config how to show the problem description through "leetcode.showDescription".',
+                    "Open settings",
+                    (): Promise<any> => openSettingsEditor("leetcode.showDescription"),
+                ),
+            ];
+            if (descriptionConfig.showInWebview) {
+                promises.push(this.showDescriptionView(node));
+            }
+
+            await Promise.all(promises);
+        } catch (error) {
+            await promptForOpenOutputChannel(`${error} Please open the output channel for details.`, DialogType.error);
+        }
+    }
+
+
+    public async showDescriptionView(node: IProblem): Promise<void> {
+        return this.previewProblem(node, enableSideMode());
+    }
+
+    public async previewProblem(input: IProblem | Uri, isSideMode: boolean = false): Promise<void> {
+        let node: IProblem;
+        if (input instanceof Uri) {
+            const activeFilePath: string = input.fsPath;
+            const id: string = await getNodeIdFromFile(activeFilePath);
+            if (!id) {
+                window.showErrorMessage(`Failed to resolve the problem id from file: ${activeFilePath}.`);
+                return;
+            }
+            const cachedNode: IProblem | undefined = treeViewController.getNodeById(id);
+            if (!cachedNode) {
+                window.showErrorMessage(`Failed to resolve the problem with id: ${id}.`);
+                return;
+            }
+            node = cachedNode;
+            // Move the preview page aside if it's triggered from Code Lens
+            isSideMode = true;
+        } else {
+            node = input;
+        }
+        const needTranslation: boolean = isUseEndpointTranslation();
+        const descString: string = await executeService.getDescription(node.qid, needTranslation);
+        previewService.show(descString, node, isSideMode);
+    }
+
+
+    public async searchScoreRange(): Promise<void> {
+        const twoFactor: string | undefined = await vscode.window.showInputBox({
+            prompt: "输入分数范围 低分-高分 例如: 1500-1600",
+            ignoreFocusOut: true,
+            validateInput: (s: string): string | undefined => s && s.trim() ? undefined : "The input must not be empty",
+        });
+
+        // vscode.window.showErrorMessage(twoFactor || "输入错误");
+        const tt = Object.assign({}, SearchNode, {
+            value: twoFactor,
+            type: SearchSetType.ScoreRange,
+            time: Math.floor(Date.now() / 1000)
+        })
+        treeViewController.insertSearchSet(tt);
+        await treeDataService.refresh()
+    }
+
+    public async searchContest(): Promise<void> {
+        const twoFactor: string | undefined = await vscode.window.showInputBox({
+            prompt: "单期数 例如: 300 或者 输入期数范围 低期数-高期数 例如: 303-306",
+            ignoreFocusOut: true,
+            validateInput: (s: string): string | undefined => s && s.trim() ? undefined : "The input must not be empty",
+        });
+
+        // vscode.window.showErrorMessage(twoFactor || "输入错误");
+        const tt = Object.assign({}, SearchNode, {
+            value: twoFactor,
+            type: SearchSetType.Context,
+            time: Math.floor(Date.now() / 1000)
+        })
+        treeViewController.insertSearchSet(tt);
+        await treeDataService.refresh()
+    }
+
+
+
+    public async searchUserContest(): Promise<void> {
+        if (!statusBarService.getUser()) {
+            promptForSignIn();
+            return;
+        }
+        try {
+            const needTranslation: boolean = isUseEndpointTranslation();
+            const solution: string = await executeService.getUserContest(needTranslation, statusBarService.getUser() || "");
+            const query_result = JSON.parse(solution);
+            const tt: userContestRanKingBase = Object.assign({}, userContestRankingObj, query_result.userContestRanking)
+            eventService.emit("searchUserContest", tt)
+        } catch (error) {
+            logOutput.appendLine(error.toString());
+            await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
+        }
+    }
+    public async searchToday(): Promise<void> {
+        if (!statusBarService.getUser()) {
+            promptForSignIn();
+            return;
+        }
+        try {
+            const needTranslation: boolean = isUseEndpointTranslation();
+            const solution: string = await executeService.getTodayQuestion(needTranslation);
+            const query_result = JSON.parse(solution);
+            // const titleSlug: string = query_result.titleSlug
+            // const questionId: string = query_result.questionId
+            const fid: string = query_result.fid
+            if (fid) {
+                const tt = Object.assign({}, SearchNode, {
+                    value: fid,
+                    type: SearchSetType.Day,
+                    time: Math.floor(Date.now() / 1000),
+                    todayData: query_result,
+                })
+                treeViewController.insertSearchSet(tt);
+                await treeDataService.refresh()
+            }
+
+        } catch (error) {
+            logOutput.appendLine(error.toString());
+            await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
+        }
+    }
+
+
+
+
+    public async parseProblemsToPicks(p: Promise<IProblem[]>): Promise<Array<IQuickItemEx<IProblem>>> {
+        return new Promise(async (resolve: (res: Array<IQuickItemEx<IProblem>>) => void): Promise<void> => {
+            const picks: Array<IQuickItemEx<IProblem>> = (await p).map((problem: IProblem) => Object.assign({}, {
+                label: `${this.parseProblemDecorator(problem.state, problem.locked)}${problem.id}.${problem.name}`,
+                description: `QID:${problem.qid}`,
+                detail: ((problem.scoreData?.score || "0") > "0" ? ("score: " + problem.scoreData?.score + " , ") : "") + `AC rate: ${problem.passRate}, Difficulty: ${problem.difficulty}`,
+                value: problem,
+            }));
+            resolve(picks);
+        });
+    }
+
+    public parseProblemDecorator(state: ProblemState, locked: boolean): string {
+        switch (state) {
+            case ProblemState.AC:
+                return "$(check) ";
+            case ProblemState.NotAC:
+                return "$(x) ";
+            default:
+                return locked ? "$(lock) " : "";
+        }
+    }
+
+    public async resolveRelativePath(relativePath: string, node: IProblem, selectedLanguage: string): Promise<string> {
+        let tag: string = "";
+        if (/\$\{ tag\ } /i.test(relativePath)) {
+            tag = (await this.resolveTagForProblem(node)) || "";
+        }
+
+        let company: string = "";
+        if (/\$\{company\}/i.test(relativePath)) {
+            company = (await this.resolveCompanyForProblem(node)) || "";
+        }
+
+        return relativePath.replace(/\$\{(.*?)\}/g, (_substring: string, ...args: string[]) => {
+            const placeholder: string = args[0].toLowerCase().trim();
+            switch (placeholder) {
+                case "id":
+                    return node.id;
+                case "name":
+                    return node.name;
+                case "camelcasename":
+                    return _.camelCase(node.name);
+                case "pascalcasename":
+                    return _.upperFirst(_.camelCase(node.name));
+                case "kebabcasename":
+                case "kebab-case-name":
+                    return _.kebabCase(node.name);
+                case "snakecasename":
+                case "snake_case_name":
+                    return _.snakeCase(node.name);
+                case "ext":
+                    return genFileExt(selectedLanguage);
+                case "language":
+                    return selectedLanguage;
+                case "difficulty":
+                    return node.difficulty.toLocaleLowerCase();
+                case "tag":
+                    return tag;
+                case "company":
+                    return company;
+                default:
+                    const errorMsg: string = `The config '${placeholder}' is not supported.`;
+                    logOutput.appendLine(errorMsg);
+                    throw new Error(errorMsg);
+            }
+        });
+    }
+
+    public async resolveTagForProblem(problem: IProblem): Promise<string | undefined> {
+        if (problem.tags.length === 1) {
+            return problem.tags[0];
+        }
+        return await vscode.window.showQuickPick(
+            problem.tags,
+            {
+                matchOnDetail: true,
+                placeHolder: "Multiple tags available, please select one",
+                ignoreFocusOut: true,
+            },
+        );
+    }
+
+    public async resolveCompanyForProblem(problem: IProblem): Promise<string | undefined> {
+        if (problem.companies.length === 1) {
+            return problem.companies[0];
+        }
+        return await vscode.window.showQuickPick(problem.companies, {
+            matchOnDetail: true,
+            placeHolder: "Multiple tags available, please select one",
+            ignoreFocusOut: true,
+        });
+    }
 
 
     public insertSearchSet(tt: ISearchSet) {
@@ -54,7 +885,7 @@ class TreeViewController implements Disposable {
                 }
             });
             if (need_get_today) {
-                searchToday();
+                this.searchToday();
             }
         }
     }
@@ -77,12 +908,12 @@ class TreeViewController implements Disposable {
         });
         if (need_get_today && !this.waitTodayQuestion) {
             this.waitTodayQuestion = true
-            await searchToday();
+            await this.searchToday();
         }
         var user_score = statusBarService.getUserContestScore()
         if (!user_score && !this.waitUserContest) {
             this.waitUserContest = true;
-            await searchUserContest();
+            await this.searchUserContest();
         }
     }
 
@@ -92,7 +923,7 @@ class TreeViewController implements Disposable {
         const temp_waitUserContest: boolean = this.waitUserContest
         this.dispose();
         var user_score = statusBarService.getUserContestScore()
-        for (const problem of await list.listProblems()) {
+        for (const problem of await this.listProblems()) {
             this.explorerNodeMap.set(problem.id, new NodeModel(problem, true, user_score));
             for (const company of problem.companies) {
                 this.companySet.add(company);

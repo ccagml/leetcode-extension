@@ -1,20 +1,18 @@
 // Copyright (c) jdneo. All rights reserved.
 // Licensed under the MIT license.
 
-import * as vscode from "vscode";
 import { executeCommand } from "./cliUtils";
+import { isUseVscodeNode, isUseWsl } from "./configUtils";
 import { isWindows } from "./osUtils";
 
 // 用wsl命令的时候,好像没办法用vscode的node
 // 相当于使用fork,而不是之前的 spawn(node xxx
 export function useVscodeNode(): boolean {
-    const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
-    return !useWsl() && leetCodeConfig.get<boolean>("useVscodeNode") === true;
+    return !useWsl() && isUseVscodeNode();
 }
 
 export function useWsl(): boolean {
-    const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
-    return isWindows() && leetCodeConfig.get<boolean>("useWsl") === true;
+    return isWindows() && isUseWsl();
 }
 
 export async function toWslPath(path: string): Promise<string> {

@@ -13,9 +13,10 @@ import * as fse from "fs-extra";
 import * as os from "os";
 import * as path from "path";
 import { ExtensionContext } from "vscode";
-import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace, WorkspaceConfiguration } from "vscode";
+import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace } from "vscode";
 import { Endpoint, IProblem, leetcodeHasInited } from "../model/Model";
 import { executeCommand, executeCommandWithProgress } from "../utils/cliUtils";
+import { getNodePath } from "../utils/configUtils";
 import { DialogOptions, openUrl, DialogType, promptForOpenOutputChannel } from "../utils/uiUtils";
 import * as wsl from "../utils/wslUtils";
 import { toWslPath, useWsl } from "../utils/wslUtils";
@@ -27,22 +28,22 @@ class ExecuteService implements Disposable {
     private configurationChangeListener: Disposable;
 
     constructor() {
-        // this.leetCodeCliResourcesRootPath = path.join(__dirname, "..", "..", "node_modules", "vsc-leetcode-cli");
+        // this.leetCodeCliResourcesRootPath = path.join(__dirname, "..", "..", "node_modules", "childProcessCall");
         if (!wsl.useVscodeNode()) {
             this.leetCodeCliResourcesRootPath = path.join(__dirname, "..", "..", "resources");
         }
-        this.leetCodeCliRootPath = path.join(__dirname, "..", "..", "out", "src", "vsc-leetcode-cli");
-        this.nodeExecutable = this.getNodePath();
+        this.leetCodeCliRootPath = path.join(__dirname, "..", "..", "out", "src", "childProcessCall");
+        this.nodeExecutable = this.initNodePath();
         this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
             if (event.affectsConfiguration("leetcode.nodePath")) {
-                this.nodeExecutable = this.getNodePath();
+                this.nodeExecutable = this.initNodePath();
             }
         }, this);
     }
 
     public async getLeetCodeBinaryPath(): Promise<string> {
         if (wsl.useVscodeNode()) {
-            return `${path.join(this.leetCodeCliRootPath, "new_lib", "cli.js")}`;
+            return `${path.join(this.leetCodeCliRootPath, "cli.js")}`;
         } else {
             if (wsl.useWsl()) {
                 return `${await wsl.toWslPath(`"${path.join(this.leetCodeCliResourcesRootPath, "bin", "leetcode")}"`)}`;
@@ -134,19 +135,7 @@ class ExecuteService implements Disposable {
         }
     }
 
-    /**
-     * This function returns solution of a problem identified by input
-     *
-     * @remarks
-     * Even though this function takes the needTranslation flag, it is important to note
-     * that as of vsc-leetcode-cli 2.8.0, leetcode-cli doesn't support querying solution
-     * on CN endpoint yet. So this flag doesn't have any effect right now.
-     *
-     * @param input - parameter to pass to cli that can identify a problem
-     * @param language - the source code language of the solution desired
-     * @param needTranslation - whether or not to use endPoint translation on solution query
-     * @returns promise of the solution string
-     */
+
     public async showSolution(input: string, language: string, needTranslation: boolean): Promise<string> {
         // solution don't support translation
         const cmd: string[] = [await this.getLeetCodeBinaryPath(), "show", input, "--solution", "-l", language];
@@ -254,12 +243,11 @@ class ExecuteService implements Disposable {
         this.configurationChangeListener.dispose();
     }
 
-    private getNodePath(): string {
+    private initNodePath(): string {
         if (wsl.useVscodeNode()) {
             return "node"
         }
-        const extensionConfig: WorkspaceConfiguration = workspace.getConfiguration("leetcode-problem-rating", null);
-        return extensionConfig.get<string>("nodePath", "node" /* default value */);
+        return getNodePath()
     }
 
     private async executeCommandEx(command: string, args: string[], options: cp.SpawnOptions = { shell: true }): Promise<string> {

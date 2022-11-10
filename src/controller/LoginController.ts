@@ -19,7 +19,8 @@ import { eventService } from "../service/EventService";
 import { window } from "vscode";
 import { statusBarService } from "../service/StatusBarService";
 import { treeDataService } from "../service/TreeDataService";
-import { getLeetCodeEndpoint } from "../commands/plugin";
+import { getLeetCodeEndpoint } from "../utils/configUtils";
+
 
 
 // 登录
