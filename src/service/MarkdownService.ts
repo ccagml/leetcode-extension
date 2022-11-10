@@ -13,8 +13,8 @@ import * as MarkdownIt from "markdown-it";
 import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
-import { logOutput } from "../utils/logOutput";
-import { isWindows } from "../utils/wslUtils";
+import { logOutput } from "../utils/OutputUtils";
+import { isWindows } from "../utils/SystemUtils";
 
 class MarkdownService implements vscode.Disposable {
 

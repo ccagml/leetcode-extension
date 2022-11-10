@@ -8,7 +8,8 @@
  */
 
 
-import { workspace, WorkspaceConfiguration } from "vscode";
+
+import { workspace, WorkspaceConfiguration, commands } from "vscode";
 import { DescriptionConfiguration, Endpoint, IProblem, SortingStrategy } from "../model/Model";
 
 // vscode的配置
@@ -158,4 +159,8 @@ export async function updateSortingStrategy(value: string, flag: boolean) {
 
 export function getLeetCodeEndpoint(): string {
     return getVsCodeConfig().get<string>("endpoint", Endpoint.LeetCodeCN);
+}
+
+export async function openSettingsEditor(query?: string): Promise<void> {
+    await commands.executeCommand("workbench.action.openSettings", query);
 }

@@ -12,24 +12,23 @@ import * as _ from "lodash";
 import { toNumber } from "lodash";
 import { Disposable, Uri, window, QuickPickItem, workspace, WorkspaceConfiguration } from "vscode";
 import { SearchNode, userContestRankingObj, userContestRanKingBase, UserStatus, IProblem, IQuickItemEx, languages, Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType, ISubmitEvent, SORT_ORDER, Endpoint, OpenOption, DialogType, DialogOptions } from "../model/Model";
-import { isHideSolvedProblem, isHideScoreProblem, getDescriptionConfiguration, isUseEndpointTranslation, enableSideMode, getPickOneByRankRangeMin, getPickOneByRankRangeMax, isShowLocked, updateSortingStrategy, getSortingStrategy, getLeetCodeEndpoint } from "../utils/configUtils";
+import { isHideSolvedProblem, isHideScoreProblem, getDescriptionConfiguration, isUseEndpointTranslation, enableSideMode, getPickOneByRankRangeMin, getPickOneByRankRangeMax, isShowLocked, updateSortingStrategy, getSortingStrategy, getLeetCodeEndpoint, openSettingsEditor } from "../utils/configUtils";
 import { NodeModel } from "../model/NodeModel";
 import { ISearchSet } from "../model/Model";
 import { resourcesData } from "../ResourcesData";
 import { statusBarService } from "../service/StatusBarService";
 import { previewService } from "../service/PreviewService";
 import { executeService } from "../service/ExecuteService";
-import { getNodeIdFromFile } from "../utils/problemUtils";
+import { getNodeIdFromFile } from "../utils/SystemUtils";
 
 import * as path from "path";
 import * as unescapeJS from "unescape-js";
 import * as vscode from "vscode";
-import { logOutput } from "../utils/logOutput";
+import { logOutput, promptForOpenOutputChannel, promptForSignIn, promptHintMessage } from "../utils/OutputUtils";
 import { treeDataService } from "../service/TreeDataService";
-import { genFileExt, genFileName } from "../utils/problemUtils";
+import { genFileExt, genFileName } from "../utils/SystemUtils";
 import { IDescriptionConfiguration, isStarShortcut } from "../utils/configUtils";
-import { openSettingsEditor, promptForOpenOutputChannel, promptForSignIn, promptHintMessage, showFileSelectDialog } from "../utils/uiUtils";
-import * as wsl from "../utils/wslUtils";
+import * as systemUtils from "../utils/SystemUtils";
 import { solutionService } from "../service/SolutionService";
 import { eventService } from "../service/EventService";
 import { fileButtonService } from "../service/FileButtonService";
@@ -40,7 +39,6 @@ import { submissionService } from "../service/SubmissionService";
 
 import * as os from "os";
 import { getVsCodeConfig, getWorkspaceFolder } from "../utils/configUtils";
-import { showDirectorySelectDialog } from "../utils/uiUtils";
 
 
 
@@ -69,7 +67,7 @@ class TreeViewController implements Disposable {
             vscode.window.showWarningMessage("Please save the solution file first.");
             return undefined;
         }
-        return wsl.useWsl() ? wsl.toWslPath(textEditor.document.uri.fsPath) : textEditor.document.uri.fsPath;
+        return systemUtils.useWsl() ? systemUtils.toWslPath(textEditor.document.uri.fsPath) : textEditor.document.uri.fsPath;
     }
 
     public async submitSolution(uri?: vscode.Uri): Promise<void> {
@@ -155,7 +153,7 @@ class TreeViewController implements Disposable {
                     }
                     break;
                 case ":file":
-                    const testFile: vscode.Uri[] | undefined = await showFileSelectDialog(filePath);
+                    const testFile: vscode.Uri[] | undefined = await this.showFileSelectDialog(filePath);
                     if (testFile && testFile.length) {
                         const input: string = (await fse.readFile(testFile[0].fsPath, "utf-8")).trim();
                         if (input) {
@@ -180,6 +178,18 @@ class TreeViewController implements Disposable {
             await promptForOpenOutputChannel("Failed to test the solution. Please open the output channel for details.", DialogType.error);
         }
     }
+    public async showFileSelectDialog(fsPath?: string): Promise<vscode.Uri[] | undefined> {
+        const defaultUri: vscode.Uri | undefined = this.getBelongingWorkspaceFolderUri(fsPath);
+        const options: vscode.OpenDialogOptions = {
+            defaultUri,
+            canSelectFiles: true,
+            canSelectFolders: false,
+            canSelectMany: false,
+            openLabel: "Select",
+        };
+        return await vscode.window.showOpenDialog(options);
+    }
+
 
     public async testSolutionDefault(uri?: vscode.Uri, allCase?: boolean): Promise<void> {
         try {
@@ -217,8 +227,8 @@ class TreeViewController implements Disposable {
     }
 
     public parseTestString(test: string): string {
-        if (wsl.useWsl() || !wsl.isWindows()) {
-            if (wsl.useVscodeNode()) {
+        if (systemUtils.useWsl() || !systemUtils.isWindows()) {
+            if (systemUtils.useVscodeNode()) {
                 return `${test}`;
             }
             return `'${test}'`;
@@ -226,12 +236,12 @@ class TreeViewController implements Disposable {
 
         if (this.usingCmd()) {
             // 一般需要走进这里, 除非改了 环境变量ComSpec的值
-            if (wsl.useVscodeNode()) {
+            if (systemUtils.useVscodeNode()) {
                 return `${test.replace(/"/g, '\"')}`;
             }
             return `"${test.replace(/"/g, '\\"')}"`;
         } else {
-            if (wsl.useVscodeNode()) {
+            if (systemUtils.useVscodeNode()) {
                 return `${test.replace(/"/g, '\"')}`;
             }
             return `'${test.replace(/"/g, '\\"')}'`;
@@ -448,7 +458,7 @@ class TreeViewController implements Disposable {
         if (!choice) {
             result = "";
         } else if (choice.value === ":browse") {
-            const directory: vscode.Uri[] | undefined = await showDirectorySelectDialog();
+            const directory: vscode.Uri[] | undefined = await this.showDirectorySelectDialog();
             if (!directory || directory.length < 1) {
                 result = "";
             } else {
@@ -463,6 +473,28 @@ class TreeViewController implements Disposable {
         return result;
     }
 
+    public async showDirectorySelectDialog(fsPath?: string): Promise<vscode.Uri[] | undefined> {
+        const defaultUri: vscode.Uri | undefined = this.getBelongingWorkspaceFolderUri(fsPath);
+        const options: vscode.OpenDialogOptions = {
+            defaultUri,
+            canSelectFiles: false,
+            canSelectFolders: true,
+            canSelectMany: false,
+            openLabel: "Select",
+        };
+        return await vscode.window.showOpenDialog(options);
+    }
+
+    public getBelongingWorkspaceFolderUri(fsPath: string | undefined): vscode.Uri | undefined {
+        let defaultUri: vscode.Uri | undefined;
+        if (fsPath) {
+            const workspaceFolder: vscode.WorkspaceFolder | undefined = vscode.workspace.getWorkspaceFolder(vscode.Uri.file(fsPath));
+            if (workspaceFolder) {
+                defaultUri = workspaceFolder.uri;
+            }
+        }
+        return defaultUri;
+    }
 
 
     public async searchProblem(): Promise<void> {
@@ -533,12 +565,12 @@ class TreeViewController implements Disposable {
         if (input instanceof NodeModel) { // Triggerred from explorer
             problemInput = input.qid;
         } else if (input instanceof vscode.Uri) { // Triggerred from Code Lens/context menu
-            if (wsl.useVscodeNode()) {
+            if (systemUtils.useVscodeNode()) {
                 problemInput = `${input.fsPath}`;
             } else {
                 problemInput = `"${input.fsPath}"`;
-                if (wsl.useWsl()) {
-                    problemInput = await wsl.toWslPath(input.fsPath);
+                if (systemUtils.useWsl()) {
+                    problemInput = await systemUtils.toWslPath(input.fsPath);
                 }
             }
         } else if (!input) { // Triggerred from command
@@ -717,7 +749,7 @@ class TreeViewController implements Disposable {
             }
         }
 
-        return wsl.useWsl() ? wsl.toWslPath(workspaceFolderSetting) : workspaceFolderSetting;
+        return systemUtils.useWsl() ? systemUtils.toWslPath(workspaceFolderSetting) : workspaceFolderSetting;
     }
 
     public async showProblemInternal(node: IProblem): Promise<void> {
@@ -753,7 +785,7 @@ class TreeViewController implements Disposable {
                 }
             }
 
-            finalPath = wsl.useWsl() ? await wsl.toWinPath(finalPath) : finalPath;
+            finalPath = systemUtils.useWsl() ? await systemUtils.toWinPath(finalPath) : finalPath;
 
             const descriptionConfig: IDescriptionConfiguration = getDescriptionConfiguration();
             const needTranslation: boolean = isUseEndpointTranslation();
@@ -763,9 +795,9 @@ class TreeViewController implements Disposable {
                 vscode.window.showTextDocument(vscode.Uri.file(finalPath), { preview: false, viewColumn: vscode.ViewColumn.One }),
                 promptHintMessage(
                     "hint.commentDescription",
-                    'You can config how to show the problem description through "leetcode.showDescription".',
+                    'You can config how to show the problem description through "leetcode-problem-rating.showDescription".',
                     "Open settings",
-                    (): Promise<any> => openSettingsEditor("leetcode.showDescription"),
+                    (): Promise<any> => openSettingsEditor("leetcode-problem-rating.showDescription"),
                 ),
             ];
             if (descriptionConfig.showInWebview) {
@@ -777,7 +809,6 @@ class TreeViewController implements Disposable {
             await promptForOpenOutputChannel(`${error} Please open the output channel for details.`, DialogType.error);
         }
     }
-
 
     public async showDescriptionView(node: IProblem): Promise<void> {
         return this.previewProblem(node, enableSideMode());

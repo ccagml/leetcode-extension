@@ -9,9 +9,10 @@
 
 
 import { commands, ConfigurationChangeEvent, Disposable, ViewColumn, WebviewPanel, window, workspace } from "vscode";
-import { openSettingsEditor, promptHintMessage } from "../utils/uiUtils";
 import { markdownService } from "./MarkdownService";
 import { IWebViewOption } from "../model/Model";
+import { openSettingsEditor } from "../utils/configUtils";
+import { promptHintMessage } from "../utils/OutputUtils";
 
 export abstract class BaseWebViewService implements Disposable {
 

@@ -8,12 +8,12 @@
  */
 
 
-import { ViewColumn } from "vscode";
-import { openKeybindingsEditor, promptHintMessage } from "../utils/uiUtils";
+import { ViewColumn, commands } from "vscode";
 import { BaseWebViewService } from "./BaseWebviewService";
 import { markdownService } from "./MarkdownService";
 import { ISubmitEvent } from "../model/Model";
 import { IWebViewOption } from "../model/Model";
+import { promptHintMessage } from "../utils/OutputUtils";
 
 class SubmissionService extends BaseWebViewService {
 
@@ -74,12 +74,17 @@ class SubmissionService extends BaseWebViewService {
     }
 
     private async showKeybindingsHint(): Promise<void> {
+        var that = this;
         await promptHintMessage(
             "hint.commandShortcut",
             'You can customize shortcut key bindings in File > Preferences > Keyboard Shortcuts with query "leetcode".',
             "Open Keybindings",
-            (): Promise<any> => openKeybindingsEditor("leetcode solution"),
+            (): Promise<any> => that.openKeybindingsEditor("leetcode solution"),
         );
+    }
+
+    private async openKeybindingsEditor(query?: string): Promise<void> {
+        await commands.executeCommand("workbench.action.openGlobalKeybindings", query);
     }
 
     private parseResult(raw: string): IResult {

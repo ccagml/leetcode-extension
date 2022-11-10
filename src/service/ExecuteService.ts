@@ -17,9 +17,9 @@ import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace } 
 import { DialogOptions, DialogType, Endpoint, IProblem, leetcodeHasInited } from "../model/Model";
 import { executeCommand, executeCommandWithProgress } from "../utils/cliUtils";
 import { getNodePath } from "../utils/configUtils";
-import { openUrl, promptForOpenOutputChannel } from "../utils/uiUtils";
-import * as wsl from "../utils/wslUtils";
-import { toWslPath, useWsl } from "../utils/wslUtils";
+import { openUrl, promptForOpenOutputChannel } from "../utils/OutputUtils";
+import * as systemUtils from "../utils/SystemUtils";
+import { toWslPath, useWsl } from "../utils/SystemUtils";
 
 class ExecuteService implements Disposable {
     private leetCodeCliResourcesRootPath: string;
@@ -29,7 +29,7 @@ class ExecuteService implements Disposable {
 
     constructor() {
         // this.leetCodeCliResourcesRootPath = path.join(__dirname, "..", "..", "node_modules", "childProcessCall");
-        if (!wsl.useVscodeNode()) {
+        if (!systemUtils.useVscodeNode()) {
             this.leetCodeCliResourcesRootPath = path.join(__dirname, "..", "..", "resources");
         }
         this.leetCodeCliRootPath = path.join(__dirname, "..", "..", "out", "src", "childProcessCall");
@@ -42,11 +42,11 @@ class ExecuteService implements Disposable {
     }
 
     public async getLeetCodeBinaryPath(): Promise<string> {
-        if (wsl.useVscodeNode()) {
+        if (systemUtils.useVscodeNode()) {
             return `${path.join(this.leetCodeCliRootPath, "cli.js")}`;
         } else {
-            if (wsl.useWsl()) {
-                return `${await wsl.toWslPath(`"${path.join(this.leetCodeCliResourcesRootPath, "bin", "leetcode")}"`)}`;
+            if (systemUtils.useWsl()) {
+                return `${await systemUtils.toWslPath(`"${path.join(this.leetCodeCliResourcesRootPath, "bin", "leetcode")}"`)}`;
             }
             return `"${path.join(this.leetCodeCliResourcesRootPath, "bin", "leetcode")}"`;
         }
@@ -185,7 +185,7 @@ class ExecuteService implements Disposable {
 
     public async submitSolution(filePath: string): Promise<string> {
         try {
-            if (wsl.useVscodeNode()) {
+            if (systemUtils.useVscodeNode()) {
                 return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "submit", `${filePath}`]);
             }
             return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "submit", `"${filePath}"`]);
@@ -199,18 +199,18 @@ class ExecuteService implements Disposable {
 
     public async testSolution(filePath: string, testString?: string, allCase?: boolean): Promise<string> {
         if (testString) {
-            if (wsl.useVscodeNode()) {
+            if (systemUtils.useVscodeNode()) {
                 return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "test", `${filePath}`, "-t", `${testString}`]);
             }
             return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "test", `"${filePath}"`, "-t", `${testString}`]);
         }
         if (allCase) {
-            if (wsl.useVscodeNode()) {
+            if (systemUtils.useVscodeNode()) {
                 return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "test", `${filePath}`, "-a"]);
             }
             return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "test", `"${filePath}"`, "-a"]);
         }
-        if (wsl.useVscodeNode()) {
+        if (systemUtils.useVscodeNode()) {
             return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "test", `${filePath}`]);
         }
         return await this.executeCommandWithProgressEx("Submitting to LeetCode...", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "test", `"${filePath}"`]);
@@ -244,21 +244,21 @@ class ExecuteService implements Disposable {
     }
 
     private initNodePath(): string {
-        if (wsl.useVscodeNode()) {
+        if (systemUtils.useVscodeNode()) {
             return "node"
         }
         return getNodePath()
     }
 
     private async executeCommandEx(command: string, args: string[], options: cp.SpawnOptions = { shell: true }): Promise<string> {
-        if (wsl.useWsl()) {
+        if (systemUtils.useWsl()) {
             return await executeCommand("wsl", [command].concat(args), options);
         }
         return await executeCommand(command, args, options);
     }
 
     private async executeCommandWithProgressEx(message: string, command: string, args: string[], options: cp.SpawnOptions = { shell: true }): Promise<string> {
-        if (wsl.useWsl()) {
+        if (systemUtils.useWsl()) {
             return await executeCommandWithProgress(message, "wsl", [command].concat(args), options);
         }
         return await executeCommandWithProgress(message, command, args, options);

@@ -7,7 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import * as wsl from "../utils/wslUtils";
+import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
 import { ExtensionContext } from "vscode";
 import { treeDataService } from "../service/TreeDataService";
@@ -20,7 +20,7 @@ class MainContorller {
      * 检查运行环境
      */
     public async checkNodeEnv(context: ExtensionContext) {
-        if (!wsl.useVscodeNode()) {
+        if (!systemUtils.useVscodeNode()) {
             if (!await executeService.checkNodeEnv(context)) {
                 throw new Error("The environment doesn't meet requirements.");
             }

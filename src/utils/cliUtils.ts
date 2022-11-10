@@ -10,8 +10,8 @@
 
 import * as cp from "child_process";
 import * as vscode from "vscode";
-import { logOutput } from "./logOutput";
-import * as wsl from "./wslUtils";
+import { logOutput } from "./OutputUtils";
+import * as systemUtils from "./SystemUtils";
 
 interface IExecError extends Error {
     result?: string;
@@ -21,7 +21,7 @@ export async function executeCommand(command: string, args: string[], options: c
     return new Promise((resolve: (res: string) => void, reject: (e: Error) => void): void => {
         let result: string = "";
         var childProc: cp.ChildProcess
-        if (wsl.useVscodeNode() && command == "node") {
+        if (systemUtils.useVscodeNode() && command == "node") {
             var newargs: string[] = []
             command = args[0];
             for (let arg_index = 1; arg_index < args.length; arg_index++) {

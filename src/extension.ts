@@ -14,11 +14,10 @@ import { treeViewController } from "./controller/TreeViewController";
 import { NodeModel } from "./model/NodeModel";
 import { treeDataService } from "./service/TreeDataService";
 import { treeItemDecorationService } from "./service/TreeItemDecorationService";
-import { logOutput } from "./utils/logOutput";
+import { logOutput, promptForOpenOutputChannel } from "./utils/OutputUtils";
 import { executeService } from "./service/ExecuteService";
 import { eventController } from "./controller/EventController";
 import { statusBarService } from "./service/StatusBarService";
-import { DialogType, promptForOpenOutputChannel } from "./utils/uiUtils";
 import { previewService } from "./service/PreviewService";
 import { solutionService } from "./service/SolutionService";
 import { submissionService } from "./service/SubmissionService";
@@ -26,6 +25,7 @@ import { markdownService } from "./service/MarkdownService";
 import { mainContorller } from "./controller/MainController";
 import { loginContorller } from "./controller/LoginController";
 import { getLeetCodeEndpoint } from "./utils/configUtils";
+import { DialogType } from "./model/Model";
 
 
 export async function activate(context: ExtensionContext): Promise<void> {

@@ -8,19 +8,17 @@
  */
 
 import * as cp from "child_process";
-import * as wsl from "../utils/wslUtils";
+import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
 
 import { DialogType, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
 import { createEnvOption } from "../utils/cliUtils";
-import { promptForOpenOutputChannel } from "../utils/uiUtils";
-import { logOutput } from "../utils/logOutput";
+import { logOutput, promptForOpenOutputChannel } from "../utils/OutputUtils";
 import { eventService } from "../service/EventService";
 import { window } from "vscode";
 import { statusBarService } from "../service/StatusBarService";
 import { treeDataService } from "../service/TreeDataService";
 import { getLeetCodeEndpoint } from "../utils/configUtils";
-
 
 
 // 登录
@@ -69,13 +67,13 @@ class LoginContorller {
 
                 var childProc: cp.ChildProcess;
 
-                if (wsl.useVscodeNode()) {
+                if (systemUtils.useVscodeNode()) {
                     childProc = cp.fork(await executeService.getLeetCodeBinaryPath(), ["user", commandArg], {
                         silent: true,
                         env: createEnvOption(),
                     });
                 } else {
-                    if (wsl.useWsl()) {
+                    if (systemUtils.useWsl()) {
                         childProc = cp.spawn("wsl", [executeService.node, leetCodeBinaryPath, "user", commandArg], { shell: true })
                     } else {
                         childProc = cp.spawn(executeService.node, [leetCodeBinaryPath, "user", commandArg], {
