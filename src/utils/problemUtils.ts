@@ -4,7 +4,7 @@
 import * as fse from "fs-extra";
 import * as _ from "lodash";
 import * as path from "path";
-import { IProblem, langExt } from "../shared";
+import { IProblem, langExt } from "../model/Model";
 
 export function genFileExt(language: string): string {
     const ext: string | undefined = langExt.get(language);

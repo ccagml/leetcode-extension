@@ -5,24 +5,26 @@ import * as _ from "lodash";
 import * as path from "path";
 import * as unescapeJS from "unescape-js";
 import * as vscode from "vscode";
-import { explorerNodeManager } from "../explorer/explorerNodeManager";
-import { LeetCodeNode } from "../explorer/LeetCodeNode";
+import { treeViewController } from "../controller/TreeViewController";
+import { NodeModel } from "../model/NodeModel";
 import { logOutput } from "../utils/logOutput";
-import { leetCodeExecutor } from "../leetCodeExecutor";
-import { leetCodeManager } from "../leetCodeManager";
-import { IProblem, IQuickItemEx, languages, ProblemState, SearchNode, SearchSetType, userContestRankingObj, userContestRanKingBase } from "../shared";
-import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
+import { executeService } from "../service/ExecuteService";
+import { eventContorller } from "../controller/EventController";
+import { loginContorller } from "../controller/LoginController";
+import { IProblem, IQuickItemEx, languages, ProblemState, SearchNode, SearchSetType, userContestRankingObj, userContestRanKingBase } from "../model/Model";
+import { treeDataService } from "../service/TreeDataService";
 import { genFileExt, genFileName, getNodeIdFromFile } from "../utils/problemUtils";
 import { isUseEndpointTranslation, getDescriptionConfiguration } from "../utils/configUtils";
 import { IDescriptionConfiguration } from "../utils/configUtils";
 import { DialogOptions, DialogType, openSettingsEditor, promptForOpenOutputChannel, promptForSignIn, promptHintMessage } from "../utils/uiUtils";
 import { getActiveFilePath, selectWorkspaceFolder } from "../utils/workspaceUtils";
 import * as wsl from "../utils/wslUtils";
-import { leetCodePreviewProvider } from "../webview/leetCodePreviewProvider";
-import { leetCodeSolutionProvider } from "../webview/leetCodeSolutionProvider";
+import { previewService } from "../service/PreviewService";
+import { solutionService } from "../service/SolutionService";
 import { getPickOneByRankRangeMin, getPickOneByRankRangeMax } from "../utils/configUtils";
 import * as list from "./list";
 import { getLeetCodeEndpoint } from "./plugin";
+import { statusBarService } from "../service/StatusBarService";
 
 export async function previewProblem(input: IProblem | vscode.Uri, isSideMode: boolean = false): Promise<void> {
     let node: IProblem;
@@ -33,7 +35,7 @@ export async function previewProblem(input: IProblem | vscode.Uri, isSideMode: b
             vscode.window.showErrorMessage(`Failed to resolve the problem id from file: ${activeFilePath}.`);
             return;
         }
-        const cachedNode: IProblem | undefined = explorerNodeManager.getNodeById(id);
+        const cachedNode: IProblem | undefined = treeViewController.getNodeById(id);
         if (!cachedNode) {
             vscode.window.showErrorMessage(`Failed to resolve the problem with id: ${id}.`);
             return;
@@ -45,15 +47,15 @@ export async function previewProblem(input: IProblem | vscode.Uri, isSideMode: b
         node = input;
     }
     const needTranslation: boolean = isUseEndpointTranslation();
-    const descString: string = await leetCodeExecutor.getDescription(node.qid, needTranslation);
-    leetCodePreviewProvider.show(descString, node, isSideMode);
+    const descString: string = await executeService.getDescription(node.qid, needTranslation);
+    previewService.show(descString, node, isSideMode);
 }
 
 export async function deleteAllCache(): Promise<void> {
-    await leetCodeManager.signOut();
-    await leetCodeExecutor.removeOldCache();
-    await leetCodeExecutor.switchEndpoint(getLeetCodeEndpoint());
-    await leetCodeTreeDataProvider.refresh()
+    await loginContorller.signOut();
+    await executeService.removeOldCache();
+    await executeService.switchEndpoint(getLeetCodeEndpoint());
+    await treeDataService.refresh()
 }
 
 
@@ -61,7 +63,7 @@ export async function pickOne(): Promise<void> {
     const problems: IProblem[] = await list.listProblems();
     var randomProblem: IProblem;
 
-    const user_score = leetCodeManager.getUserContestScore()
+    const user_score = statusBarService.getUserContestScore()
     if (user_score > 0) {
 
         let min_score: number = getPickOneByRankRangeMin();
@@ -98,8 +100,8 @@ export async function searchScoreRange(): Promise<void> {
         type: SearchSetType.ScoreRange,
         time: Math.floor(Date.now() / 1000)
     })
-    explorerNodeManager.insertSearchSet(tt);
-    await leetCodeTreeDataProvider.refresh()
+    treeViewController.insertSearchSet(tt);
+    await treeDataService.refresh()
 }
 
 export async function searchContest(): Promise<void> {
@@ -115,11 +117,11 @@ export async function searchContest(): Promise<void> {
         type: SearchSetType.Context,
         time: Math.floor(Date.now() / 1000)
     })
-    explorerNodeManager.insertSearchSet(tt);
-    await leetCodeTreeDataProvider.refresh()
+    treeViewController.insertSearchSet(tt);
+    await treeDataService.refresh()
 }
 
-export async function showProblem(node?: LeetCodeNode): Promise<void> {
+export async function showProblem(node?: NodeModel): Promise<void> {
     if (!node) {
         return;
     }
@@ -128,7 +130,7 @@ export async function showProblem(node?: LeetCodeNode): Promise<void> {
 
 
 export async function searchProblemByID(): Promise<void> {
-    if (!leetCodeManager.getUser()) {
+    if (!statusBarService.getUser()) {
         promptForSignIn();
         return;
     }
@@ -148,7 +150,7 @@ export async function searchProblemByID(): Promise<void> {
 
 
 export async function searchProblem(): Promise<void> {
-    if (!leetCodeManager.getUser()) {
+    if (!statusBarService.getUser()) {
         promptForSignIn();
         return;
     }
@@ -211,7 +213,7 @@ export async function searchProblem(): Promise<void> {
 }
 
 export async function testapi(): Promise<void> {
-    if (!leetCodeManager.getUser()) {
+    if (!statusBarService.getUser()) {
         promptForSignIn();
         return;
     }
@@ -223,7 +225,7 @@ export async function testapi(): Promise<void> {
         });
 
         // vscode.window.showErrorMessage(twoFactor || "输入错误");
-        const solution: string = await leetCodeExecutor.getTestApi(twoFactor || "")
+        const solution: string = await executeService.getTestApi(twoFactor || "")
         const query_result = JSON.parse(solution);
         console.log(query_result);
     } catch (error) {
@@ -233,30 +235,29 @@ export async function testapi(): Promise<void> {
 }
 
 export async function searchUserContest(): Promise<void> {
-    if (!leetCodeManager.getUser()) {
+    if (!statusBarService.getUser()) {
         promptForSignIn();
         return;
     }
     try {
         const needTranslation: boolean = isUseEndpointTranslation();
-        const solution: string = await leetCodeExecutor.getUserContest(needTranslation, leetCodeManager.getUser() || "");
+        const solution: string = await executeService.getUserContest(needTranslation, statusBarService.getUser() || "");
         const query_result = JSON.parse(solution);
         const tt: userContestRanKingBase = Object.assign({}, userContestRankingObj, query_result.userContestRanking)
-        await leetCodeManager.insertCurrentUserContestInfo(tt);
-        leetCodeManager.emit("searchUserContest")
+        eventContorller.emit("searchUserContest", tt)
     } catch (error) {
         logOutput.appendLine(error.toString());
         await promptForOpenOutputChannel("Failed to fetch today question. Please open the output channel for details.", DialogType.error);
     }
 }
 export async function searchToday(): Promise<void> {
-    if (!leetCodeManager.getUser()) {
+    if (!statusBarService.getUser()) {
         promptForSignIn();
         return;
     }
     try {
         const needTranslation: boolean = isUseEndpointTranslation();
-        const solution: string = await leetCodeExecutor.getTodayQuestion(needTranslation);
+        const solution: string = await executeService.getTodayQuestion(needTranslation);
         const query_result = JSON.parse(solution);
         // const titleSlug: string = query_result.titleSlug
         // const questionId: string = query_result.questionId
@@ -268,8 +269,8 @@ export async function searchToday(): Promise<void> {
                 time: Math.floor(Date.now() / 1000),
                 todayData: query_result,
             })
-            explorerNodeManager.insertSearchSet(tt);
-            await leetCodeTreeDataProvider.refresh()
+            treeViewController.insertSearchSet(tt);
+            await treeDataService.refresh()
         }
 
     } catch (error) {
@@ -279,9 +280,9 @@ export async function searchToday(): Promise<void> {
 }
 
 
-export async function showSolution(input: LeetCodeNode | vscode.Uri): Promise<void> {
+export async function showSolution(input: NodeModel | vscode.Uri): Promise<void> {
     let problemInput: string | undefined;
-    if (input instanceof LeetCodeNode) { // Triggerred from explorer
+    if (input instanceof NodeModel) { // Triggerred from explorer
         problemInput = input.qid;
     } else if (input instanceof vscode.Uri) { // Triggerred from Code Lens/context menu
         if (wsl.useVscodeNode()) {
@@ -307,8 +308,8 @@ export async function showSolution(input: LeetCodeNode | vscode.Uri): Promise<vo
     }
     try {
         const needTranslation: boolean = isUseEndpointTranslation();
-        const solution: string = await leetCodeExecutor.showSolution(problemInput, language, needTranslation);
-        leetCodeSolutionProvider.show(unescapeJS(solution));
+        const solution: string = await executeService.showSolution(problemInput, language, needTranslation);
+        solutionService.show(unescapeJS(solution));
     } catch (error) {
         logOutput.appendLine(error.toString());
         await promptForOpenOutputChannel("Failed to fetch the top voted solution. Please open the output channel for details.", DialogType.error);
@@ -379,7 +380,7 @@ async function showProblemInternal(node: IProblem): Promise<void> {
         const descriptionConfig: IDescriptionConfiguration = getDescriptionConfiguration();
         const needTranslation: boolean = isUseEndpointTranslation();
 
-        await leetCodeExecutor.showProblem(node, language, finalPath, descriptionConfig.showInComment, needTranslation);
+        await executeService.showProblem(node, language, finalPath, descriptionConfig.showInComment, needTranslation);
         const promises: any[] = [
             vscode.window.showTextDocument(vscode.Uri.file(finalPath), { preview: false, viewColumn: vscode.ViewColumn.One }),
             promptHintMessage(

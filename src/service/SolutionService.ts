@@ -1,13 +1,22 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/service/SolutionService.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 import { ViewColumn } from "vscode";
-import { leetCodePreviewProvider } from "./leetCodePreviewProvider";
-import { ILeetCodeWebviewOption, LeetCodeWebview } from "./LeetCodeWebview";
-import { markdownEngine } from "./markdownEngine";
+import { previewService } from "./PreviewService";
+import { BaseWebViewService } from "./baseWebviewService";
+import { markdownService } from "./markdownService";
+import { IWebViewOption } from "../model/Model";
 
-class LeetCodeSolutionProvider extends LeetCodeWebview {
 
+
+class SolutionService extends BaseWebViewService {
     protected readonly viewType: string = "leetcode.solution";
     private problemName: string;
     private solution: Solution;
@@ -17,8 +26,8 @@ class LeetCodeSolutionProvider extends LeetCodeWebview {
         this.showWebviewInternal();
     }
 
-    protected getWebviewOption(): ILeetCodeWebviewOption {
-        if (leetCodePreviewProvider.isSideMode()) {
+    protected getWebviewOption(): IWebViewOption {
+        if (previewService.isSideMode()) {
             return {
                 title: "Solution",
                 viewColumn: ViewColumn.Two,
@@ -33,16 +42,16 @@ class LeetCodeSolutionProvider extends LeetCodeWebview {
     }
 
     protected getWebviewContent(): string {
-        const styles: string = markdownEngine.getStyles();
+        const styles: string = markdownService.getStyles();
         const { title, url, lang, author, votes } = this.solution;
-        const head: string = markdownEngine.render(`# [${title}](${url})`);
+        const head: string = markdownService.render(`# [${title}](${url})`);
         const auth: string = `[${author}](https://leetcode.com/${author}/)`;
-        const info: string = markdownEngine.render([
+        const info: string = markdownService.render([
             `| Language |  Author  |  Votes   |`,
             `| :------: | :------: | :------: |`,
             `| ${lang}  | ${auth}  | ${votes} |`,
         ].join("\n"));
-        const body: string = markdownEngine.render(this.solution.body, {
+        const body: string = markdownService.render(this.solution.body, {
             lang: this.solution.lang,
             host: "https://discuss.leetcode.com/",
         });
@@ -91,4 +100,4 @@ class Solution {
     public body: string = ""; // Markdown supported
 }
 
-export const leetCodeSolutionProvider: LeetCodeSolutionProvider = new LeetCodeSolutionProvider();
+export const solutionService: SolutionService = new SolutionService();

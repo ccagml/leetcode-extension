@@ -1,5 +1,12 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/service/executeService.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, October 31st 2022, 10:16:47 am
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 import * as cp from "child_process";
 import * as fse from "fs-extra";
@@ -7,13 +14,13 @@ import * as os from "os";
 import * as path from "path";
 import { ExtensionContext } from "vscode";
 import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace, WorkspaceConfiguration } from "vscode";
-import { Endpoint, IProblem, leetcodeHasInited } from "./shared";
-import { executeCommand, executeCommandWithProgress } from "./utils/cliUtils";
-import { DialogOptions, openUrl } from "./utils/uiUtils";
-import * as wsl from "./utils/wslUtils";
-import { toWslPath, useWsl } from "./utils/wslUtils";
+import { Endpoint, IProblem, leetcodeHasInited } from "../model/Model";
+import { executeCommand, executeCommandWithProgress } from "../utils/cliUtils";
+import { DialogOptions, openUrl } from "../utils/uiUtils";
+import * as wsl from "../utils/wslUtils";
+import { toWslPath, useWsl } from "../utils/wslUtils";
 
-class LeetCodeExecutor implements Disposable {
+class ExecuteService implements Disposable {
     private leetCodeCliResourcesRootPath: string;
     private leetCodeCliRootPath: string;
     private nodeExecutable: string;
@@ -274,4 +281,4 @@ class LeetCodeExecutor implements Disposable {
 
 }
 
-export const leetCodeExecutor: LeetCodeExecutor = new LeetCodeExecutor();
+export const executeService: ExecuteService = new ExecuteService();

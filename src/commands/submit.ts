@@ -2,15 +2,16 @@
 // Licensed under the MIT license.
 
 import * as vscode from "vscode";
-import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
-import { leetCodeExecutor } from "../leetCodeExecutor";
-import { leetCodeManager } from "../leetCodeManager";
+import { treeDataService } from "../service/TreeDataService";
+import { executeService } from "../service/ExecuteService";
+import { eventContorller } from "../controller/EventController";
 import { DialogType, promptForOpenOutputChannel, promptForSignIn } from "../utils/uiUtils";
 import { getActiveFilePath } from "../utils/workspaceUtils";
-import { leetCodeSubmissionProvider } from "../webview/leetCodeSubmissionProvider";
+import { submissionService } from "../service/SubmissionService";
+import { statusBarService } from "../service/StatusBarService";
 
 export async function submitSolution(uri?: vscode.Uri): Promise<void> {
-    if (!leetCodeManager.getUser()) {
+    if (!statusBarService.getUser()) {
         promptForSignIn();
         return;
     }
@@ -21,13 +22,13 @@ export async function submitSolution(uri?: vscode.Uri): Promise<void> {
     }
 
     try {
-        const result: string = await leetCodeExecutor.submitSolution(filePath);
-        leetCodeSubmissionProvider.show(result);
-        leetCodeManager.emit("submit", leetCodeSubmissionProvider.getSubmitEvent());
+        const result: string = await executeService.submitSolution(filePath);
+        submissionService.show(result);
+        eventContorller.emit("submit", submissionService.getSubmitEvent());
     } catch (error) {
         await promptForOpenOutputChannel("Failed to submit the solution. Please open the output channel for details.", DialogType.error);
         return;
     }
 
-    leetCodeTreeDataProvider.refresh();
+    treeDataService.refresh();
 }

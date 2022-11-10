@@ -1,5 +1,12 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/service/markdownService.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 import * as hljs from "highlight.js";
 import * as MarkdownIt from "markdown-it";
@@ -9,7 +16,7 @@ import * as vscode from "vscode";
 import { logOutput } from "../utils/logOutput";
 import { isWindows } from "../utils/osUtils";
 
-class MarkdownEngine implements vscode.Disposable {
+class MarkdownService implements vscode.Disposable {
 
     private engine: MarkdownIt;
     private config: MarkdownConfiguration;
@@ -163,4 +170,4 @@ class MarkdownConfiguration {
     }
 }
 
-export const markdownEngine: MarkdownEngine = new MarkdownEngine();
+export const markdownService: MarkdownService = new MarkdownService();

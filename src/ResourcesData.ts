@@ -1,4 +1,4 @@
-import { IScoreData } from "./shared";
+import { IScoreData } from "./model/Model";
 
 class ResourcesData {
 

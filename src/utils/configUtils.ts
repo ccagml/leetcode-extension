@@ -9,7 +9,7 @@
 
 
 import { workspace, WorkspaceConfiguration } from "vscode";
-import { DescriptionConfiguration, IProblem } from "../shared";
+import { DescriptionConfiguration, IProblem } from "../model/Model";
 
 // vscode的配置
 export function getVsCodeConfig(): WorkspaceConfiguration {

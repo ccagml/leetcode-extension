@@ -1,49 +1,27 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/controller/LoginController.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, November 10th 2022, 3:06:12 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
 
 import * as cp from "child_process";
-import { EventEmitter } from "events";
-import * as vscode from "vscode";
-import { logOutput } from "./utils/logOutput";
-import { leetCodeExecutor } from "./leetCodeExecutor";
-import { IQuickItemEx, loginArgsMapping, UserStatus, userContestRanKingBase, userContestRankingObj } from "./shared";
-import { createEnvOption } from "./utils/cliUtils";
-import { DialogType, promptForOpenOutputChannel } from "./utils/uiUtils";
-import * as wsl from "./utils/wslUtils";
-import { explorerNodeManager } from "./explorer/explorerNodeManager";
+import * as wsl from "../utils/wslUtils";
+import { executeService } from "../service/ExecuteService";
 
-class LeetCodeManager extends EventEmitter {
-    private currentUser: string | undefined;
-    private userStatus: UserStatus;
-    // private readonly successRegex: RegExp = /(?:.*)Successfully .*login as (.*)/i;
-    // private readonly failRegex: RegExp = /.*\[ERROR\].*/i;
-    private currentUserContestInfo: userContestRanKingBase;
+import { IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
+import { createEnvOption } from "../utils/cliUtils";
+import { DialogType, promptForOpenOutputChannel } from "../utils/uiUtils";
+import { logOutput } from "../utils/logOutput";
+import { eventService } from "../service/EventService";
+import { window } from "vscode";
+import { statusBarService } from "../service/StatusBarService";
 
-    constructor() {
-        super();
-        this.currentUser = undefined;
-        this.userStatus = UserStatus.SignedOut;
-    }
-
-    public async insertCurrentUserContestInfo(tt: userContestRanKingBase) {
-        this.currentUserContestInfo = tt;
-        await explorerNodeManager.update_user_score(tt.rating);
-    }
-    public async getLoginStatus(): Promise<void> {
-        try {
-            const result: string = await leetCodeExecutor.getUserInfo();
-            this.currentUser = this.tryParseUserName(result);
-            this.userStatus = UserStatus.SignedIn;
-            if (this.currentUser == undefined) {
-                this.userStatus = UserStatus.SignedOut;
-            }
-        } catch (error) {
-            this.currentUser = undefined;
-            this.userStatus = UserStatus.SignedOut;
-        } finally {
-            this.emit("statusChanged");
-        }
-    }
+// 登录
+class LoginContorller {
+    constructor() { }
 
     public async signIn(): Promise<void> {
         const picks: Array<IQuickItemEx<string>> = [];
@@ -69,7 +47,7 @@ class LeetCodeManager extends EventEmitter {
                 value: "Cookie",
             },
         );
-        const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks);
+        const choice: IQuickItemEx<string> | undefined = await window.showQuickPick(picks);
         if (!choice) {
             return;
         }
@@ -83,20 +61,20 @@ class LeetCodeManager extends EventEmitter {
         try {
             const userName: string | undefined = await new Promise(async (resolve: (res: string | undefined) => void, reject: (e: Error) => void): Promise<void> => {
 
-                const leetCodeBinaryPath: string = await leetCodeExecutor.getLeetCodeBinaryPath();
+                const leetCodeBinaryPath: string = await executeService.getLeetCodeBinaryPath();
 
                 var childProc: cp.ChildProcess;
 
                 if (wsl.useVscodeNode()) {
-                    childProc = cp.fork(await leetCodeExecutor.getLeetCodeBinaryPath(), ["user", commandArg], {
+                    childProc = cp.fork(await executeService.getLeetCodeBinaryPath(), ["user", commandArg], {
                         silent: true,
                         env: createEnvOption(),
                     });
                 } else {
                     if (wsl.useWsl()) {
-                        childProc = cp.spawn("wsl", [leetCodeExecutor.node, leetCodeBinaryPath, "user", commandArg], { shell: true })
+                        childProc = cp.spawn("wsl", [executeService.node, leetCodeBinaryPath, "user", commandArg], { shell: true })
                     } else {
-                        childProc = cp.spawn(leetCodeExecutor.node, [leetCodeBinaryPath, "user", commandArg], {
+                        childProc = cp.spawn(executeService.node, [leetCodeBinaryPath, "user", commandArg], {
                             shell: true,
                             env: createEnvOption(),
                         });
@@ -109,7 +87,7 @@ class LeetCodeManager extends EventEmitter {
                     // vscode.window.showInformationMessage(`cc login msg ${data}.`);
                     logOutput.append(data);
                     if (data.includes("twoFactorCode")) {
-                        const twoFactor: string | undefined = await vscode.window.showInputBox({
+                        const twoFactor: string | undefined = await window.showInputBox({
                             prompt: "Enter two-factor code.",
                             ignoreFocusOut: true,
                             validateInput: (s: string): string | undefined => s && s.trim() ? undefined : "The input must not be empty",
@@ -139,7 +117,7 @@ class LeetCodeManager extends EventEmitter {
                 childProc.stderr?.on("data", (data: string | Buffer) => logOutput.append(data.toString()));
 
                 childProc.on("error", reject);
-                const name: string | undefined = await vscode.window.showInputBox({
+                const name: string | undefined = await window.showInputBox({
                     prompt: "Enter username or E-mail.",
                     ignoreFocusOut: true,
                     validateInput: (s: string): string | undefined => s && s.trim() ? undefined : "The input must not be empty",
@@ -149,7 +127,7 @@ class LeetCodeManager extends EventEmitter {
                     return resolve(undefined);
                 }
                 childProc.stdin?.write(`${name}\n`);
-                const pwd: string | undefined = await vscode.window.showInputBox({
+                const pwd: string | undefined = await window.showInputBox({
                     prompt: isByCookie ? "Enter cookie" : "Enter password.",
                     password: true,
                     ignoreFocusOut: true,
@@ -162,10 +140,8 @@ class LeetCodeManager extends EventEmitter {
                 childProc.stdin?.write(`${pwd}\n`);
             });
             if (userName) {
-                vscode.window.showInformationMessage(`Successfully ${inMessage}.`);
-                this.currentUser = userName;
-                this.userStatus = UserStatus.SignedIn;
-                this.emit("statusChanged");
+                window.showInformationMessage(`Successfully ${inMessage}.`);
+                eventService.emit("statusChanged", UserStatus.SignedIn, userName);
             }
         } catch (error) {
             promptForOpenOutputChannel(`Failed to ${inMessage}. Please open the output channel for details`, DialogType.error);
@@ -175,49 +151,16 @@ class LeetCodeManager extends EventEmitter {
 
     public async signOut(): Promise<void> {
         try {
-            await leetCodeExecutor.signOut();
-            vscode.window.showInformationMessage("Successfully signed out.");
-            this.currentUser = undefined;
-            this.userStatus = UserStatus.SignedOut;
-            this.currentUserContestInfo = Object.assign({}, userContestRankingObj, {})
-            this.emit("statusChanged");
+            await executeService.signOut();
+            window.showInformationMessage("Successfully signed out.");
+            eventService.emit("statusChanged", UserStatus.SignedOut, undefined);
         } catch (error) {
-            // swallow the error when sign out.
         }
     }
 
-    public getStatus(): UserStatus {
-        return this.userStatus;
-    }
-
-    // 获取竞赛分
-    public getUserContestScore(): number {
-        if (this.currentUserContestInfo.rating > 0) {
-            return this.currentUserContestInfo.rating
-        }
-        return 0;
-    }
-
-    public getUserContestInfo(): userContestRanKingBase | undefined {
-        return this.currentUserContestInfo;
-    }
-
-    public getUser(): string | undefined {
-        return this.currentUser;
-    }
-
-    private tryParseUserName(output: string): string | undefined {
-        var successMatch;
-        try {
-            successMatch = JSON.parse(output);
-        } catch (e) {
-            successMatch = {};
-        }
-        if (successMatch.code == 100) {
-            return successMatch.user_name;
-        }
-        return undefined;
+    public async getLoginStatus() {
+        return await statusBarService.getLoginStatus()
     }
 }
 
-export const leetCodeManager: LeetCodeManager = new LeetCodeManager();
+export const loginContorller: LoginContorller = new LoginContorller();

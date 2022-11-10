@@ -5,7 +5,7 @@ import * as fse from "fs-extra";
 import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
-import { IQuickItemEx } from "../shared";
+import { IQuickItemEx } from "../model/Model";
 import { getVsCodeConfig, getWorkspaceFolder } from "./configUtils";
 import { showDirectorySelectDialog } from "./uiUtils";
 import * as wsl from "./wslUtils";

@@ -1,7 +1,7 @@
 // Copyright (c) jdneo. All rights reserved.
 // Licensed under the MIT license.
 
-import * as vscode from "vscode";
+import { ExtensionContext, window, commands, Uri } from "vscode";
 import { codeLensController } from "./codelens/CodeLensController";
 import * as cache from "./commands/cache";
 import { switchDefaultLanguage } from "./commands/language";
@@ -10,81 +10,65 @@ import * as show from "./commands/show";
 import * as star from "./commands/star";
 import * as submit from "./commands/submit";
 import * as test from "./commands/test";
-import { explorerNodeManager } from "./explorer/explorerNodeManager";
-import { LeetCodeNode } from "./explorer/LeetCodeNode";
-import { leetCodeTreeDataProvider } from "./explorer/LeetCodeTreeDataProvider";
-import { leetCodeTreeItemDecorationProvider } from "./explorer/LeetCodeTreeItemDecorationProvider";
+import { treeViewController } from "./controller/TreeViewController";
+import { NodeModel } from "./model/NodeModel";
+import { treeDataService } from "./service/TreeDataService";
+import { treeItemDecorationService } from "./service/TreeItemDecorationService";
 import { logOutput } from "./utils/logOutput";
-import { leetCodeExecutor } from "./leetCodeExecutor";
-import { leetCodeManager } from "./leetCodeManager";
-import { statusBarManager } from "./manager/StatusBarManager";
+import { executeService } from "./service/ExecuteService";
+import { eventContorller } from "./controller/EventController";
+import { statusBarService } from "./service/StatusBarService";
 import { DialogType, promptForOpenOutputChannel } from "./utils/uiUtils";
-import { leetCodePreviewProvider } from "./webview/leetCodePreviewProvider";
-import { leetCodeSolutionProvider } from "./webview/leetCodeSolutionProvider";
-import { leetCodeSubmissionProvider } from "./webview/leetCodeSubmissionProvider";
-import { markdownEngine } from "./webview/markdownEngine";
-import { ISubmitEvent } from "./shared";
-import * as wsl from "./utils/wslUtils";
+import { previewService } from "./service/PreviewService";
+import { solutionService } from "./service/SolutionService";
+import { submissionService } from "./service/SubmissionService";
+import { markdownService } from "./service/markdownService";
+import { mainContorller } from "./controller/MainController";
+import { loginContorller } from "./controller/LoginController";
 
 
-export async function activate(context: vscode.ExtensionContext): Promise<void> {
+export async function activate(context: ExtensionContext): Promise<void> {
     try {
 
-        if (!wsl.useVscodeNode()) {
-            if (!await leetCodeExecutor.checkNodeEnv(context)) {
-                throw new Error("The environment doesn't meet requirements.");
-            }
-        }
-        leetCodeManager.on("statusChanged", () => {
-            statusBarManager.update(leetCodeManager.getStatus(), leetCodeManager.getUser());
-            leetCodeTreeDataProvider.cleanUserScore();
-            leetCodeTreeDataProvider.refresh();
-        });
-        leetCodeManager.on("submit", (e: ISubmitEvent) => {
-            leetCodeTreeDataProvider.checkSubmit(e);
-        });
-
-        leetCodeManager.on("searchUserContest", () => {
-            statusBarManager.update(leetCodeManager.getStatus(), leetCodeManager.getUser(), leetCodeManager.getUserContestInfo());
-        });
-
-        leetCodeTreeDataProvider.initialize(context);
+        await mainContorller.checkNodeEnv(context);
+        eventContorller.add_event();
+        mainContorller.initialize(context)
 
         context.subscriptions.push(
-            statusBarManager,
+            statusBarService,
             logOutput,
-            leetCodePreviewProvider,
-            leetCodeSubmissionProvider,
-            leetCodeSolutionProvider,
-            leetCodeExecutor,
-            markdownEngine,
+            previewService,
+            submissionService,
+            solutionService,
+            executeService,
+            markdownService,
             codeLensController,
-            explorerNodeManager,
-            vscode.window.registerFileDecorationProvider(leetCodeTreeItemDecorationProvider),
-            vscode.window.createTreeView("leetCodeExplorer", { treeDataProvider: leetCodeTreeDataProvider, showCollapseAll: true }),
-            vscode.commands.registerCommand("leetcode.deleteCache", () => cache.deleteCache()),
-            vscode.commands.registerCommand("leetcode.toggleLeetCodeCn", () => plugin.switchEndpoint()),
-            vscode.commands.registerCommand("leetcode.signin", () => leetCodeManager.signIn()),
-            vscode.commands.registerCommand("leetcode.signout", () => leetCodeManager.signOut()),
-            vscode.commands.registerCommand("leetcode.previewProblem", (node: LeetCodeNode) => show.previewProblem(node)),
-            vscode.commands.registerCommand("leetcode.showProblem", (node: LeetCodeNode) => show.showProblem(node)),
-            vscode.commands.registerCommand("leetcode.pickOne", () => show.pickOne()),
-            vscode.commands.registerCommand("leetcode.deleteAllCache", () => show.deleteAllCache()),
-            vscode.commands.registerCommand("leetcode.searchScoreRange", () => show.searchScoreRange()),
-            vscode.commands.registerCommand("leetcode.searchProblem", () => show.searchProblem()),
-            vscode.commands.registerCommand("leetcode.showSolution", (input: LeetCodeNode | vscode.Uri) => show.showSolution(input)),
-            vscode.commands.registerCommand("leetcode.refreshExplorer", () => leetCodeTreeDataProvider.refresh()),
-            vscode.commands.registerCommand("leetcode.testSolution", (uri?: vscode.Uri) => test.testSolution(uri)),
-            vscode.commands.registerCommand("leetcode.testSolutionDefault", (uri?: vscode.Uri, allCase?: boolean) => test.testSolutionDefault(uri, allCase)),
-            vscode.commands.registerCommand("leetcode.submitSolution", (uri?: vscode.Uri) => submit.submitSolution(uri)),
-            vscode.commands.registerCommand("leetcode.switchDefaultLanguage", () => switchDefaultLanguage()),
-            vscode.commands.registerCommand("leetcode.addFavorite", (node: LeetCodeNode) => star.addFavorite(node)),
-            vscode.commands.registerCommand("leetcode.removeFavorite", (node: LeetCodeNode) => star.removeFavorite(node)),
-            vscode.commands.registerCommand("leetcode.problems.sort", () => plugin.switchSortingStrategy()),
+            treeViewController,
+            window.registerFileDecorationProvider(treeItemDecorationService),
+            window.createTreeView("leetCodeExplorer", { treeDataProvider: treeDataService, showCollapseAll: true }),
+            commands.registerCommand("leetcode.deleteCache", () => cache.deleteCache()),
+            commands.registerCommand("leetcode.toggleLeetCodeCn", () => plugin.switchEndpoint()),
+            commands.registerCommand("leetcode.signin", () => loginContorller.signIn()),
+            commands.registerCommand("leetcode.signout", () => loginContorller.signOut()),
+            commands.registerCommand("leetcode.previewProblem", (node: NodeModel) => show.previewProblem(node)),
+            commands.registerCommand("leetcode.showProblem", (node: NodeModel) => show.showProblem(node)),
+            commands.registerCommand("leetcode.pickOne", () => show.pickOne()),
+            commands.registerCommand("leetcode.deleteAllCache", () => show.deleteAllCache()),
+            commands.registerCommand("leetcode.searchScoreRange", () => show.searchScoreRange()),
+            commands.registerCommand("leetcode.searchProblem", () => show.searchProblem()),
+            commands.registerCommand("leetcode.showSolution", (input: NodeModel | Uri) => show.showSolution(input)),
+            commands.registerCommand("leetcode.refreshExplorer", () => treeDataService.refresh()),
+            commands.registerCommand("leetcode.testSolution", (uri?: Uri) => test.testSolution(uri)),
+            commands.registerCommand("leetcode.testSolutionDefault", (uri?: Uri, allCase?: boolean) => test.testSolutionDefault(uri, allCase)),
+            commands.registerCommand("leetcode.submitSolution", (uri?: Uri) => submit.submitSolution(uri)),
+            commands.registerCommand("leetcode.switchDefaultLanguage", () => switchDefaultLanguage()),
+            commands.registerCommand("leetcode.addFavorite", (node: NodeModel) => star.addFavorite(node)),
+            commands.registerCommand("leetcode.removeFavorite", (node: NodeModel) => star.removeFavorite(node)),
+            commands.registerCommand("leetcode.problems.sort", () => plugin.switchSortingStrategy()),
         );
 
-        await leetCodeExecutor.switchEndpoint(plugin.getLeetCodeEndpoint());
-        await leetCodeManager.getLoginStatus();
+        await executeService.switchEndpoint(plugin.getLeetCodeEndpoint());
+        await loginContorller.getLoginStatus();
     } catch (error) {
         logOutput.appendLine(error.toString());
         promptForOpenOutputChannel("Extension initialization failed. Please open output channel for details.", DialogType.error);

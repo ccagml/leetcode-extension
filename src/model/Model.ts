@@ -1,9 +1,16 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/model/Model.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
 
-import * as vscode from "vscode";
 
-export interface IQuickItemEx<T> extends vscode.QuickPickItem {
+import { ViewColumn, QuickPickItem } from "vscode";
+
+export interface IQuickItemEx<T> extends QuickPickItem {
     value: T;
 }
 
@@ -226,4 +233,11 @@ export interface ISubmitEvent {
     id: string;
     sub_type: string; // test  submit
     accepted: boolean
+}
+
+
+export interface IWebViewOption {
+    title: string;
+    viewColumn: ViewColumn;
+    preserveFocus?: boolean;
 }

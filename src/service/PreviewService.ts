@@ -1,13 +1,20 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/service/previewService.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 import { commands, ViewColumn } from "vscode";
 import { getLeetCodeEndpoint } from "../commands/plugin";
-import { Endpoint, IProblem } from "../shared";
-import { ILeetCodeWebviewOption, LeetCodeWebview } from "./LeetCodeWebview";
-import { markdownEngine } from "./markdownEngine";
+import { Endpoint, IProblem, IWebViewOption } from "../model/Model";
+import { BaseWebViewService } from "./baseWebviewService";
+import { markdownService } from "./markdownService";
 
-class LeetCodePreviewProvider extends LeetCodeWebview {
+class PreviewService extends BaseWebViewService {
 
     protected readonly viewType: string = "leetcode.preview";
     private node: IProblem;
@@ -30,7 +37,7 @@ class LeetCodePreviewProvider extends LeetCodeWebview {
         // }
     }
 
-    protected getWebviewOption(): ILeetCodeWebviewOption {
+    protected getWebviewOption(): IWebViewOption {
         if (!this.sideMode) {
             return {
                 title: `${this.node.name}: Preview`,
@@ -72,8 +79,8 @@ class LeetCodePreviewProvider extends LeetCodeWebview {
                 </style>`,
         };
         const { title, url, category, difficulty, likes, dislikes, body } = this.description;
-        const head: string = markdownEngine.render(`# [${title}](${url})`);
-        const info: string = markdownEngine.render([
+        const head: string = markdownService.render(`# [${title}](${url})`);
+        const info: string = markdownService.render([
             `| Category | Difficulty | Likes | Dislikes |`,
             `| :------: | :--------: | :---: | :------: |`,
             `| ${category} | ${difficulty} | ${likes} | ${dislikes} |`,
@@ -81,7 +88,7 @@ class LeetCodePreviewProvider extends LeetCodeWebview {
         const tags: string = [
             `<details>`,
             `<summary><strong>Tags</strong></summary>`,
-            markdownEngine.render(
+            markdownService.render(
                 this.description.tags
                     .map((t: string) => `[\`${t}\`](https://leetcode.com/tag/${t})`)
                     .join(" | "),
@@ -91,20 +98,20 @@ class LeetCodePreviewProvider extends LeetCodeWebview {
         const companies: string = [
             `<details>`,
             `<summary><strong>Companies</strong></summary>`,
-            markdownEngine.render(
+            markdownService.render(
                 this.description.companies
                     .map((c: string) => `\`${c}\``)
                     .join(" | "),
             ),
             `</details>`,
         ].join("\n");
-        const links: string = markdownEngine.render(`[Discussion](${this.getDiscussionLink(url)}) | [Solution](${this.getSolutionLink(url)})`);
+        const links: string = markdownService.render(`[Discussion](${this.getDiscussionLink(url)}) | [Solution](${this.getSolutionLink(url)})`);
         return `
             <!DOCTYPE html>
             <html>
             <head>
                 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https:; script-src vscode-resource: 'unsafe-inline'; style-src vscode-resource: 'unsafe-inline';"/>
-                ${markdownEngine.getStyles()}
+                ${markdownService.getStyles()}
                 ${!this.sideMode ? button.style : ""}
                 <style>
                     code { white-space: pre-wrap; }
@@ -207,4 +214,4 @@ interface IWebViewMessage {
     command: string;
 }
 
-export const leetCodePreviewProvider: LeetCodePreviewProvider = new LeetCodePreviewProvider();
+export const previewService: PreviewService = new PreviewService();

@@ -1,7 +1,7 @@
 import { URLSearchParams } from "url";
 import { FileDecoration, FileDecorationProvider, ProviderResult, ThemeColor, Uri, workspace, WorkspaceConfiguration } from "vscode";
 
-export class LeetCodeTreeItemDecorationProvider implements FileDecorationProvider {
+export class TreeItemDecorationService implements FileDecorationProvider {
     private readonly ITEM_COLOR: { [key: string]: ThemeColor } = {
         easy: new ThemeColor("charts.green"),
         medium: new ThemeColor("charts.yellow"),
@@ -74,4 +74,4 @@ export class LeetCodeTreeItemDecorationProvider implements FileDecorationProvide
     }
 }
 
-export const leetCodeTreeItemDecorationProvider: LeetCodeTreeItemDecorationProvider = new LeetCodeTreeItemDecorationProvider();
+export const treeItemDecorationService: TreeItemDecorationService = new TreeItemDecorationService();

@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import * as vscode from "vscode";
-import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
-import { leetCodeExecutor } from "../leetCodeExecutor";
-import { IQuickItemEx } from "../shared";
-import { Endpoint, SortingStrategy } from "../shared";
+import { treeDataService } from "../service/TreeDataService";
+import { executeService } from "../service/ExecuteService";
+import { IQuickItemEx } from "../model/Model";
+import { Endpoint, SortingStrategy } from "../model/Model";
 import { DialogType, promptForOpenOutputChannel, promptForSignIn } from "../utils/uiUtils";
 import { deleteCache } from "./cache";
 
@@ -33,7 +33,7 @@ export async function switchEndpoint(): Promise<void> {
     const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
     try {
         const endpoint: string = choice.value;
-        await leetCodeExecutor.switchEndpoint(endpoint);
+        await executeService.switchEndpoint(endpoint);
         await leetCodeConfig.update("endpoint", endpoint, true /* UserSetting */);
         vscode.window.showInformationMessage(`Switched the endpoint to ${endpoint}`);
     } catch (error) {
@@ -82,7 +82,7 @@ export async function switchSortingStrategy(): Promise<void> {
 
     const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
     await leetCodeConfig.update("problems.sortStrategy", choice.value, true);
-    await leetCodeTreeDataProvider.refresh();
+    await treeDataService.refresh();
 }
 
 export function getSortingStrategy(): SortingStrategy {

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { QuickPickItem, window, workspace, WorkspaceConfiguration } from "vscode";
-import { languages } from "../shared";
+import { languages } from "../model/Model";
 
 export async function switchDefaultLanguage(): Promise<void> {
     const leetCodeConfig: WorkspaceConfiguration = workspace.getConfiguration("leetcode-problem-rating");

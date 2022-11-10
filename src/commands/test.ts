@@ -3,18 +3,19 @@
 
 import * as fse from "fs-extra";
 import * as vscode from "vscode";
-import { leetCodeExecutor } from "../leetCodeExecutor";
-import { leetCodeManager } from "../leetCodeManager";
-import { IQuickItemEx, UserStatus } from "../shared";
+import { executeService } from "../service/ExecuteService";
+import { eventContorller } from "../controller/EventController";
+import { IQuickItemEx, UserStatus } from "../model/Model";
 import { isWindows, usingCmd } from "../utils/osUtils";
 import { DialogType, promptForOpenOutputChannel, showFileSelectDialog } from "../utils/uiUtils";
 import { getActiveFilePath } from "../utils/workspaceUtils";
 import * as wsl from "../utils/wslUtils";
-import { leetCodeSubmissionProvider } from "../webview/leetCodeSubmissionProvider";
+import { submissionService } from "../service/SubmissionService";
+import { statusBarService } from "../service/StatusBarService";
 
 export async function testSolution(uri?: vscode.Uri): Promise<void> {
     try {
-        if (leetCodeManager.getStatus() === UserStatus.SignedOut) {
+        if (statusBarService.getStatus() === UserStatus.SignedOut) {
             return;
         }
 
@@ -57,7 +58,7 @@ export async function testSolution(uri?: vscode.Uri): Promise<void> {
         let result: string | undefined;
         switch (choice.value) {
             case ":default":
-                result = await leetCodeExecutor.testSolution(filePath);
+                result = await executeService.testSolution(filePath);
                 break;
             case ":direct":
                 const testString: string | undefined = await vscode.window.showInputBox({
@@ -67,7 +68,7 @@ export async function testSolution(uri?: vscode.Uri): Promise<void> {
                     ignoreFocusOut: true,
                 });
                 if (testString) {
-                    result = await leetCodeExecutor.testSolution(filePath, parseTestString(testString));
+                    result = await executeService.testSolution(filePath, parseTestString(testString));
                 }
                 break;
             case ":file":
@@ -75,14 +76,14 @@ export async function testSolution(uri?: vscode.Uri): Promise<void> {
                 if (testFile && testFile.length) {
                     const input: string = (await fse.readFile(testFile[0].fsPath, "utf-8")).trim();
                     if (input) {
-                        result = await leetCodeExecutor.testSolution(filePath, parseTestString(input.replace(/\r?\n/g, "\\n")));
+                        result = await executeService.testSolution(filePath, parseTestString(input.replace(/\r?\n/g, "\\n")));
                     } else {
                         vscode.window.showErrorMessage("The selected test file must not be empty.");
                     }
                 }
                 break;
             case ":alldefault":
-                result = await leetCodeExecutor.testSolution(filePath, undefined, true);
+                result = await executeService.testSolution(filePath, undefined, true);
                 break;
             default:
                 break;
@@ -90,8 +91,8 @@ export async function testSolution(uri?: vscode.Uri): Promise<void> {
         if (!result) {
             return;
         }
-        leetCodeSubmissionProvider.show(result);
-        leetCodeManager.emit("submit", leetCodeSubmissionProvider.getSubmitEvent());
+        submissionService.show(result);
+        eventContorller.emit("submit", submissionService.getSubmitEvent());
     } catch (error) {
         await promptForOpenOutputChannel("Failed to test the solution. Please open the output channel for details.", DialogType.error);
     }
@@ -99,7 +100,7 @@ export async function testSolution(uri?: vscode.Uri): Promise<void> {
 
 export async function testSolutionDefault(uri?: vscode.Uri, allCase?: boolean): Promise<void> {
     try {
-        if (leetCodeManager.getStatus() === UserStatus.SignedOut) {
+        if (statusBarService.getStatus() === UserStatus.SignedOut) {
             return;
         }
 
@@ -108,12 +109,12 @@ export async function testSolutionDefault(uri?: vscode.Uri, allCase?: boolean): 
             return;
         }
 
-        let result: string | undefined = await leetCodeExecutor.testSolution(filePath, undefined, allCase || false);
+        let result: string | undefined = await executeService.testSolution(filePath, undefined, allCase || false);
         if (!result) {
             return;
         }
-        leetCodeSubmissionProvider.show(result);
-        leetCodeManager.emit("submit", leetCodeSubmissionProvider.getSubmitEvent());
+        submissionService.show(result);
+        eventContorller.emit("submit", submissionService.getSubmitEvent());
     } catch (error) {
         await promptForOpenOutputChannel("Failed to test the solution. Please open the output channel for details.", DialogType.error);
     }

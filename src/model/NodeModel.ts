@@ -1,10 +1,17 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/model/NodeMOdel.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 import { Command, Uri } from "vscode";
-import { IProblem, IScoreData, ITodayData, ProblemState, RootNodeSort } from "../shared";
+import { IProblem, IScoreData, ITodayData, ProblemState, RootNodeSort } from "./Model";
 
-export class LeetCodeNode {
+export class NodeModel {
     private _u_score;
     constructor(private data: IProblem, private isProblemNode: boolean = true, userscore: number = 0) {
         this._u_score = userscore;

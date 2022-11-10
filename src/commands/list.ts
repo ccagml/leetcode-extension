@@ -2,26 +2,26 @@
 // Licensed under the MIT license.
 
 import * as vscode from "vscode";
-import { leetCodeExecutor } from "../leetCodeExecutor";
-import { leetCodeManager } from "../leetCodeManager";
-import { IProblem, ProblemState, RootNodeSort, UserStatus } from "../shared";
+import { executeService } from "../service/ExecuteService";
+import { statusBarService } from "../service/StatusBarService";
+import { IProblem, ProblemState, RootNodeSort, UserStatus } from "../model/Model";
 import { isUseEndpointTranslation } from "../utils/configUtils";
 import { DialogType, promptForOpenOutputChannel } from "../utils/uiUtils";
-import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
+import { treeDataService } from "../service/TreeDataService";
 import { resourcesData } from "../ResourcesData";
 
 export async function listProblems(): Promise<IProblem[]> {
     try {
-        if (leetCodeManager.getStatus() === UserStatus.SignedOut) {
+        if (statusBarService.getStatus() === UserStatus.SignedOut) {
             return [];
         }
         const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
         const showLocked: boolean = !!leetCodeConfig.get<boolean>("showLocked");
         const useEndpointTranslation: boolean = isUseEndpointTranslation();
-        const result: string = await leetCodeExecutor.listProblems(showLocked, useEndpointTranslation);
+        const result: string = await executeService.listProblems(showLocked, useEndpointTranslation);
         const all_problem_info = JSON.parse(result);
         const problems: IProblem[] = [];
-        const AllScoreData = leetCodeTreeDataProvider.getScoreData();
+        const AllScoreData = treeDataService.getScoreData();
         for (const p of all_problem_info) {
             problems.push({
                 id: p.fid,

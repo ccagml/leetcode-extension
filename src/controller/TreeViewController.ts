@@ -1,40 +1,39 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/controller/TreeViewController.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 import * as _ from "lodash";
 import { toNumber } from "lodash";
 import { Disposable } from "vscode";
 import * as list from "../commands/list";
 import { getSortingStrategy } from "../commands/plugin";
-import { Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType, ISubmitEvent } from "../shared";
+import { Category, defaultProblem, ProblemState, SortingStrategy, SearchSetTypeName, RootNodeSort, SearchSetType, ISubmitEvent } from "../model/Model";
 import { isHideSolvedProblem, isHideScoreProblem } from "../utils/configUtils";
-import { LeetCodeNode } from "./LeetCodeNode";
-import { ISearchSet } from "../shared";
+import { NodeModel } from "../model/NodeModel";
+import { ISearchSet } from "../model/Model";
 import { searchToday, searchUserContest } from "../commands/show";
-import { leetCodeTreeDataProvider } from "./LeetCodeTreeDataProvider";
 import { resourcesData } from "../ResourcesData";
-import { leetCodeManager } from "../leetCodeManager";
+import { statusBarService } from "../service/StatusBarService";
 
-class ExplorerNodeManager implements Disposable {
-    private explorerNodeMap: Map<string, LeetCodeNode> = new Map<string, LeetCodeNode>();
+class TreeViewController implements Disposable {
+    private explorerNodeMap: Map<string, NodeModel> = new Map<string, NodeModel>();
     private companySet: Set<string> = new Set<string>();
     private tagSet: Set<string> = new Set<string>();
     private searchSet: Map<string, ISearchSet> = new Map<string, ISearchSet>();
     private waitTodayQuestion: boolean;
     private waitUserContest: boolean;
-    private user_score: number;
 
-
-    public async update_user_score(user_score: number) {
-        this.user_score = user_score;
-        await leetCodeTreeDataProvider.refresh()
-    }
 
     public insertSearchSet(tt: ISearchSet) {
         this.searchSet.set(tt.value, tt);
     }
     public clearUserScore() {
-        this.user_score = 0;
         this.waitUserContest = false;
         this.waitTodayQuestion = false;
         this.searchSet = new Map<string, ISearchSet>();
@@ -61,7 +60,7 @@ class ExplorerNodeManager implements Disposable {
     }
 
     public async refreshCheck(): Promise<void> {
-        if (!leetCodeManager.getUser()) {
+        if (!statusBarService.getUser()) {
             return;
         }
         const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000; //获取当天零点的时间
@@ -80,7 +79,8 @@ class ExplorerNodeManager implements Disposable {
             this.waitTodayQuestion = true
             await searchToday();
         }
-        if (!this.user_score && !this.waitUserContest) {
+        var user_score = statusBarService.getUserContestScore()
+        if (!user_score && !this.waitUserContest) {
             this.waitUserContest = true;
             await searchUserContest();
         }
@@ -91,8 +91,9 @@ class ExplorerNodeManager implements Disposable {
         const temp_waitTodayQuestion: boolean = this.waitTodayQuestion
         const temp_waitUserContest: boolean = this.waitUserContest
         this.dispose();
+        var user_score = statusBarService.getUserContestScore()
         for (const problem of await list.listProblems()) {
-            this.explorerNodeMap.set(problem.id, new LeetCodeNode(problem, true, this.user_score));
+            this.explorerNodeMap.set(problem.id, new NodeModel(problem, true, user_score));
             for (const company of problem.companies) {
                 this.companySet.add(company);
             }
@@ -105,39 +106,40 @@ class ExplorerNodeManager implements Disposable {
         this.waitUserContest = temp_waitUserContest
     }
 
-    public getRootNodes(): LeetCodeNode[] {
-        const baseNode: LeetCodeNode[] = [
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
+    public getRootNodes(): NodeModel[] {
+        var user_score = statusBarService.getUserContestScore()
+        const baseNode: NodeModel[] = [
+            new NodeModel(Object.assign({}, defaultProblem, {
                 id: Category.All,
                 name: Category.All,
                 rootNodeSortId: RootNodeSort.All,
             }), false),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
+            new NodeModel(Object.assign({}, defaultProblem, {
                 id: Category.Difficulty,
                 name: Category.Difficulty,
                 rootNodeSortId: RootNodeSort.Difficulty,
             }), false),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
+            new NodeModel(Object.assign({}, defaultProblem, {
                 id: Category.Tag,
                 name: Category.Tag,
                 rootNodeSortId: RootNodeSort.Tag,
             }), false),
-            // new LeetCodeNode(Object.assign({}, defaultProblem, {
+            // new NodeModel(Object.assign({}, defaultProblem, {
             //     id: Category.Company,
             //     name: Category.Company,
             //     rootNodeSortId: RootNodeSort.Company,
             // }), false),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
+            new NodeModel(Object.assign({}, defaultProblem, {
                 id: Category.Favorite,
                 name: Category.Favorite,
                 rootNodeSortId: RootNodeSort.Favorite,
             }), false),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
+            new NodeModel(Object.assign({}, defaultProblem, {
                 id: Category.Score,
                 name: Category.Score,
                 rootNodeSortId: RootNodeSort.Score,
-            }), false, this.user_score),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
+            }), false, user_score),
+            new NodeModel(Object.assign({}, defaultProblem, {
                 id: Category.Choice,
                 name: Category.Choice,
                 rootNodeSortId: RootNodeSort.Choice,
@@ -146,7 +148,7 @@ class ExplorerNodeManager implements Disposable {
         this.searchSet.forEach(element => {
             if (element.type == SearchSetType.Day) {
                 const curDate = new Date(element.time * 1000)
-                baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+                baseNode.push(new NodeModel(Object.assign({}, defaultProblem, {
                     id: element.type,
                     name: "[" + (curDate.getFullYear()) + "-" + (curDate.getMonth() + 1) + "-" + (curDate.getDate()) + "]" + SearchSetTypeName[SearchSetType.Day],
                     input: element.value,
@@ -155,7 +157,7 @@ class ExplorerNodeManager implements Disposable {
                     todayData: element.todayData
                 }), false));
             } else {
-                baseNode.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+                baseNode.push(new NodeModel(Object.assign({}, defaultProblem, {
                     id: element.type,
                     name: SearchSetTypeName[element.type] + element.value,
                     input: element.value,
@@ -164,7 +166,7 @@ class ExplorerNodeManager implements Disposable {
                 }), false));
             }
         });
-        baseNode.sort(function (a: LeetCodeNode, b: LeetCodeNode): number {
+        baseNode.sort(function (a: NodeModel, b: NodeModel): number {
             if (a.rootNodeSortId < b.rootNodeSortId) {
                 return -1;
             } else if (a.rootNodeSortId > b.rootNodeSortId) {
@@ -175,8 +177,8 @@ class ExplorerNodeManager implements Disposable {
         return baseNode;
     }
 
-    public getScoreRangeNodes(rank_range: string): LeetCodeNode[] {
-        const sorceNode: LeetCodeNode[] = []
+    public getScoreRangeNodes(rank_range: string): NodeModel[] {
+        const sorceNode: NodeModel[] = []
         const rank_r: Array<string> = rank_range.split("-")
         var rank_a = Number(rank_r[0])
         var rank_b = Number(rank_r[1])
@@ -199,7 +201,7 @@ class ExplorerNodeManager implements Disposable {
         return this.applySortingStrategy(sorceNode);
     }
 
-    public canShow(element: LeetCodeNode) {
+    public canShow(element: NodeModel) {
         if (isHideSolvedProblem() && element.state === ProblemState.AC) {
             return false;
         }
@@ -209,8 +211,8 @@ class ExplorerNodeManager implements Disposable {
         return true;
     }
 
-    public getContextNodes(rank_range: string): LeetCodeNode[] {
-        const sorceNode: LeetCodeNode[] = []
+    public getContextNodes(rank_range: string): NodeModel[] {
+        const sorceNode: NodeModel[] = []
         const rank_r: Array<string> = rank_range.split("-")
         var rank_a = Number(rank_r[0])
         var rank_b = Number(rank_r[1])
@@ -231,9 +233,9 @@ class ExplorerNodeManager implements Disposable {
         }
         return this.applySortingStrategy(sorceNode);
     }
-    public getDayNodes(element: LeetCodeNode | undefined): LeetCodeNode[] {
+    public getDayNodes(element: NodeModel | undefined): NodeModel[] {
         const rank_range: string = element?.input || ""
-        const sorceNode: LeetCodeNode[] = []
+        const sorceNode: NodeModel[] = []
         if (rank_range) {
             this.explorerNodeMap.forEach(new_node => {
                 if (new_node.id == rank_range) {
@@ -245,24 +247,24 @@ class ExplorerNodeManager implements Disposable {
         return this.applySortingStrategy(sorceNode);
     }
 
-    public getAllNodes(): LeetCodeNode[] {
+    public getAllNodes(): NodeModel[] {
         return this.applySortingStrategy(
             Array.from(this.explorerNodeMap.values()).filter(p => this.canShow(p)),
         );
     }
 
-    public getAllDifficultyNodes(): LeetCodeNode[] {
-        const res: LeetCodeNode[] = [];
+    public getAllDifficultyNodes(): NodeModel[] {
+        const res: NodeModel[] = [];
         res.push(
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
+            new NodeModel(Object.assign({}, defaultProblem, {
                 id: `${Category.Difficulty}.Easy`,
                 name: "Easy",
             }), false),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
+            new NodeModel(Object.assign({}, defaultProblem, {
                 id: `${Category.Difficulty}.Medium`,
                 name: "Medium",
             }), false),
-            new LeetCodeNode(Object.assign({}, defaultProblem, {
+            new NodeModel(Object.assign({}, defaultProblem, {
                 id: `${Category.Difficulty}.Hard`,
                 name: "Hard",
             }), false),
@@ -271,14 +273,14 @@ class ExplorerNodeManager implements Disposable {
         return res;
     }
 
-    public getAllScoreNodes(user_score: number): LeetCodeNode[] {
-        const res: LeetCodeNode[] = [];
+    public getAllScoreNodes(user_score: number): NodeModel[] {
+        const res: NodeModel[] = [];
         const score_array: Array<string> = ["3300", "3200", "3100", "3000", "2900", "2800", "2700", "2600", "2500", "2400", "2300", "2200", "2100", "2000", "1900", "1800", "1700", "1600", "1500", "1400", "1300", "1200", "1100"];
         score_array.forEach(element => {
             const temp_num = Number(element);
             const diff = Math.abs(temp_num - user_score)
             if (diff <= 200) {
-                res.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+                res.push(new NodeModel(Object.assign({}, defaultProblem, {
                     id: `${Category.Score}.${element}`,
                     name: `${element}`,
                 }), false, user_score))
@@ -289,12 +291,12 @@ class ExplorerNodeManager implements Disposable {
         return res;
     }
 
-    public getAllChoiceNodes(): LeetCodeNode[] {
-        const res: LeetCodeNode[] = [];
+    public getAllChoiceNodes(): NodeModel[] {
+        const res: NodeModel[] = [];
 
         const all_choice = resourcesData.getChoiceData();
         all_choice.forEach(element => {
-            res.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+            res.push(new NodeModel(Object.assign({}, defaultProblem, {
                 id: `${Category.Choice}.${element.id}`,
                 name: `${element.name}`,
             }), false))
@@ -303,10 +305,10 @@ class ExplorerNodeManager implements Disposable {
         return res;
     }
 
-    public getAllCompanyNodes(): LeetCodeNode[] {
-        const res: LeetCodeNode[] = [];
+    public getAllCompanyNodes(): NodeModel[] {
+        const res: NodeModel[] = [];
         for (const company of this.companySet.values()) {
-            res.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+            res.push(new NodeModel(Object.assign({}, defaultProblem, {
                 id: `${Category.Company}.${company}`,
                 name: _.startCase(company),
             }), false));
@@ -315,10 +317,10 @@ class ExplorerNodeManager implements Disposable {
         return res;
     }
 
-    public getAllTagNodes(): LeetCodeNode[] {
-        const res: LeetCodeNode[] = [];
+    public getAllTagNodes(): NodeModel[] {
+        const res: NodeModel[] = [];
         for (const tag of this.tagSet.values()) {
-            res.push(new LeetCodeNode(Object.assign({}, defaultProblem, {
+            res.push(new NodeModel(Object.assign({}, defaultProblem, {
                 id: `${Category.Tag}.${tag}`,
                 name: _.startCase(tag),
             }), false));
@@ -327,12 +329,12 @@ class ExplorerNodeManager implements Disposable {
         return res;
     }
 
-    public getNodeById(id: string): LeetCodeNode | undefined {
+    public getNodeById(id: string): NodeModel | undefined {
         return this.explorerNodeMap.get(id);
     }
 
-    public getFavoriteNodes(): LeetCodeNode[] {
-        const res: LeetCodeNode[] = [];
+    public getFavoriteNodes(): NodeModel[] {
+        const res: NodeModel[] = [];
         for (const node of this.explorerNodeMap.values()) {
             if (!this.canShow(node)) {
                 continue;
@@ -344,10 +346,10 @@ class ExplorerNodeManager implements Disposable {
         return this.applySortingStrategy(res);
     }
 
-    public getChildrenNodesById(id: string): LeetCodeNode[] {
+    public getChildrenNodesById(id: string): NodeModel[] {
         // The sub-category node's id is named as {Category.SubName}
         const metaInfo: string[] = id.split(".");
-        const res: LeetCodeNode[] = [];
+        const res: NodeModel[] = [];
 
         const choiceQuestionId: Map<number, boolean> = new Map<number, boolean>()
         if (metaInfo[0] == Category.Choice) {
@@ -408,11 +410,11 @@ class ExplorerNodeManager implements Disposable {
         this.tagSet.clear();
     }
 
-    private sortSubCategoryNodes(subCategoryNodes: LeetCodeNode[], category: Category): void {
+    private sortSubCategoryNodes(subCategoryNodes: NodeModel[], category: Category): void {
         switch (category) {
             case Category.Difficulty:
-                subCategoryNodes.sort((a: LeetCodeNode, b: LeetCodeNode): number => {
-                    function getValue(input: LeetCodeNode): number {
+                subCategoryNodes.sort((a: NodeModel, b: NodeModel): number => {
+                    function getValue(input: NodeModel): number {
                         switch (input.name.toLowerCase()) {
                             case "easy":
                                 return 1;
@@ -429,7 +431,7 @@ class ExplorerNodeManager implements Disposable {
                 break;
             case Category.Tag:
             case Category.Company:
-                subCategoryNodes.sort((a: LeetCodeNode, b: LeetCodeNode): number => {
+                subCategoryNodes.sort((a: NodeModel, b: NodeModel): number => {
                     if (a.name === "Unknown") {
                         return 1;
                     } else if (b.name === "Unknown") {
@@ -444,17 +446,17 @@ class ExplorerNodeManager implements Disposable {
         }
     }
 
-    private applySortingStrategy(nodes: LeetCodeNode[]): LeetCodeNode[] {
+    private applySortingStrategy(nodes: NodeModel[]): NodeModel[] {
         const strategy: SortingStrategy = getSortingStrategy();
         switch (strategy) {
-            case SortingStrategy.AcceptanceRateAsc: return nodes.sort((x: LeetCodeNode, y: LeetCodeNode) => Number(x.acceptanceRate) - Number(y.acceptanceRate));
-            case SortingStrategy.AcceptanceRateDesc: return nodes.sort((x: LeetCodeNode, y: LeetCodeNode) => Number(y.acceptanceRate) - Number(x.acceptanceRate));
-            case SortingStrategy.ScoreAsc: return nodes.sort((x: LeetCodeNode, y: LeetCodeNode) => Number(x.score) - Number(y.score));
-            case SortingStrategy.ScoreDesc: return nodes.sort((x: LeetCodeNode, y: LeetCodeNode) => Number(y.score) - Number(x.score));
-            case SortingStrategy.IDDesc: return nodes.sort((x: LeetCodeNode, y: LeetCodeNode) => Number(y.id) - Number(x.id));
+            case SortingStrategy.AcceptanceRateAsc: return nodes.sort((x: NodeModel, y: NodeModel) => Number(x.acceptanceRate) - Number(y.acceptanceRate));
+            case SortingStrategy.AcceptanceRateDesc: return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.acceptanceRate) - Number(x.acceptanceRate));
+            case SortingStrategy.ScoreAsc: return nodes.sort((x: NodeModel, y: NodeModel) => Number(x.score) - Number(y.score));
+            case SortingStrategy.ScoreDesc: return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.score) - Number(x.score));
+            case SortingStrategy.IDDesc: return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.id) - Number(x.id));
             default: return nodes;
         }
     }
 }
 
-export const explorerNodeManager: ExplorerNodeManager = new ExplorerNodeManager();
+export const treeViewController: TreeViewController = new TreeViewController();

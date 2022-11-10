@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import * as vscode from "vscode";
-import { explorerNodeManager } from "../explorer/explorerNodeManager";
-import { LeetCodeNode } from "../explorer/LeetCodeNode";
+import { treeViewController } from "../controller/TreeViewController";
+import { NodeModel } from "../model/NodeModel";
 import { getEditorShortcuts } from "../utils/configUtils";
 
 export class CustomCodeLensProvider implements vscode.CodeLensProvider {
@@ -30,9 +30,9 @@ export class CustomCodeLensProvider implements vscode.CodeLensProvider {
             return undefined;
         }
         const nodeId: string | undefined = matchResult[1];
-        let node: LeetCodeNode | undefined;
+        let node: NodeModel | undefined;
         if (nodeId) {
-            node = explorerNodeManager.getNodeById(nodeId);
+            node = treeViewController.getNodeById(nodeId);
         }
 
         let codeLensLine: number = document.lineCount - 1;

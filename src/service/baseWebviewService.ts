@@ -1,11 +1,19 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/webview/BaseWebViewService.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 import { commands, ConfigurationChangeEvent, Disposable, ViewColumn, WebviewPanel, window, workspace } from "vscode";
 import { openSettingsEditor, promptHintMessage } from "../utils/uiUtils";
-import { markdownEngine } from "./markdownEngine";
+import { markdownService } from "./markdownService";
+import { IWebViewOption } from "../model/Model";
 
-export abstract class LeetCodeWebview implements Disposable {
+export abstract class BaseWebViewService implements Disposable {
 
     protected readonly viewType: string = "leetcode.webview";
     protected panel: WebviewPanel | undefined;
@@ -25,7 +33,7 @@ export abstract class LeetCodeWebview implements Disposable {
                 enableCommandUris: true,
                 enableFindWidget: true,
                 retainContextWhenHidden: true,
-                localResourceRoots: markdownEngine.localResourceRoots,
+                localResourceRoots: markdownService.localResourceRoots,
             });
             this.panel.onDidDispose(this.onDidDisposeWebview, this, this.listeners);
             this.panel.webview.onDidReceiveMessage(this.onDidReceiveMessage, this, this.listeners);
@@ -61,7 +69,7 @@ export abstract class LeetCodeWebview implements Disposable {
 
     protected async onDidReceiveMessage(_message: any): Promise<void> { /* no special rule */ }
 
-    protected abstract getWebviewOption(): ILeetCodeWebviewOption;
+    protected abstract getWebviewOption(): IWebViewOption;
 
     protected abstract getWebviewContent(): string;
 
@@ -75,8 +83,3 @@ export abstract class LeetCodeWebview implements Disposable {
     }
 }
 
-export interface ILeetCodeWebviewOption {
-    title: string;
-    viewColumn: ViewColumn;
-    preserveFocus?: boolean;
-}

@@ -1,13 +1,21 @@
-// Copyright (c) jdneo. All rights reserved.
-// Licensed under the MIT license.
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/service/SubmissionService.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 
 import { ViewColumn } from "vscode";
 import { openKeybindingsEditor, promptHintMessage } from "../utils/uiUtils";
-import { ILeetCodeWebviewOption, LeetCodeWebview } from "./LeetCodeWebview";
-import { markdownEngine } from "./markdownEngine";
-import { ISubmitEvent } from "../shared";
+import { BaseWebViewService } from "./baseWebviewService";
+import { markdownService } from "./markdownService";
+import { ISubmitEvent } from "../model/Model";
+import { IWebViewOption } from "../model/Model";
 
-class LeetCodeSubmissionProvider extends LeetCodeWebview {
+class SubmissionService extends BaseWebViewService {
 
     protected readonly viewType: string = "leetcode.submission";
     private result: IResult;
@@ -21,7 +29,7 @@ class LeetCodeSubmissionProvider extends LeetCodeWebview {
         return this.result.system_message as unknown as ISubmitEvent
     }
 
-    protected getWebviewOption(): ILeetCodeWebviewOption {
+    protected getWebviewOption(): IWebViewOption {
         return {
             title: "Submission",
             viewColumn: ViewColumn.Two,
@@ -29,7 +37,7 @@ class LeetCodeSubmissionProvider extends LeetCodeWebview {
     }
 
     protected getWebviewContent(): string {
-        const styles: string = markdownEngine.getStyles();
+        const styles: string = markdownService.getStyles();
         const title: string = `## ${this.result.messages[0]}`;
         const messages: string[] = this.result.messages.slice(1).map((m: string) => `* ${m}`);
         const sections: string[] = Object.keys(this.result)
@@ -40,7 +48,7 @@ class LeetCodeSubmissionProvider extends LeetCodeWebview {
                 this.result[key].join("\n"),
                 "```",
             ].join("\n"));
-        const body: string = markdownEngine.render([
+        const body: string = markdownService.render([
             title,
             ...messages,
             ...sections,
@@ -85,4 +93,4 @@ interface IResult {
 }
 
 
-export const leetCodeSubmissionProvider: LeetCodeSubmissionProvider = new LeetCodeSubmissionProvider();
+export const submissionService: SubmissionService = new SubmissionService();

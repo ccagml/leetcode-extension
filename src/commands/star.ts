@@ -3,16 +3,16 @@
 // Licensed under the MIT license.
 
 import { customCodeLensProvider } from "../codelens/CustomCodeLensProvider";
-import { LeetCodeNode } from "../explorer/LeetCodeNode";
-import { leetCodeTreeDataProvider } from "../explorer/LeetCodeTreeDataProvider";
-import { leetCodeExecutor } from "../leetCodeExecutor";
+import { NodeModel } from "../model/NodeModel";
+import { treeDataService } from "../service/TreeDataService";
+import { executeService } from "../service/ExecuteService";
 import { isStarShortcut } from "../utils/configUtils";
 import { DialogType, promptForOpenOutputChannel } from "../utils/uiUtils";
 
-export async function addFavorite(node: LeetCodeNode): Promise<void> {
+export async function addFavorite(node: NodeModel): Promise<void> {
     try {
-        await leetCodeExecutor.toggleFavorite(node, true);
-        await leetCodeTreeDataProvider.refresh();
+        await executeService.toggleFavorite(node, true);
+        await treeDataService.refresh();
         if (isStarShortcut()) {
             customCodeLensProvider.refresh();
         }
@@ -21,10 +21,10 @@ export async function addFavorite(node: LeetCodeNode): Promise<void> {
     }
 }
 
-export async function removeFavorite(node: LeetCodeNode): Promise<void> {
+export async function removeFavorite(node: NodeModel): Promise<void> {
     try {
-        await leetCodeExecutor.toggleFavorite(node, false);
-        await leetCodeTreeDataProvider.refresh();
+        await executeService.toggleFavorite(node, false);
+        await treeDataService.refresh();
         if (isStarShortcut()) {
             customCodeLensProvider.refresh();
         }
