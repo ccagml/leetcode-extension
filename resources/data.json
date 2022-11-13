@@ -660,6 +660,17 @@
         "ContestID_zh": "\u7b2c 245 \u573a\u5468\u8d5b"
     },
     {
+        "Rating": 2453.9054896968,
+        "ID": 2463,
+        "Title": "Minimum Total Distance Traveled",
+        "TitleZH": "\u6700\u5c0f\u79fb\u52a8\u603b\u8ddd\u79bb",
+        "TitleSlug": "minimum-total-distance-traveled",
+        "ContestSlug": "weekly-contest-318",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 318",
+        "ContestID_zh": "\u7b2c 318 \u573a\u5468\u8d5b"
+    },
+    {
         "Rating": 2449.1323757838,
         "ID": 2127,
         "Title": "Maximum Employees to Be Invited to a Meeting",
@@ -5929,6 +5940,17 @@
         "ContestID_zh": "\u7b2c 221 \u573a\u5468\u8d5b"
     },
     {
+        "Rating": 1763.6404758359,
+        "ID": 2462,
+        "Title": "Total Cost to Hire K Workers",
+        "TitleZH": "\u96c7\u4f63 K \u4f4d\u5de5\u4eba\u7684\u603b\u4ee3\u4ef7",
+        "TitleSlug": "total-cost-to-hire-k-workers",
+        "ContestSlug": "weekly-contest-318",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 318",
+        "ContestID_zh": "\u7b2c 318 \u573a\u5468\u8d5b"
+    },
+    {
         "Rating": 1762.3115124143,
         "ID": 948,
         "Title": "Bag of Tokens",
@@ -7737,7 +7759,7 @@
         "ID": 2086,
         "Title": "Minimum Number of Buckets Required to Collect Rainwater from Houses",
         "TitleZH": "\u4ece\u623f\u5c4b\u6536\u96c6\u96e8\u6c34\u9700\u8981\u7684\u6700\u5c11\u6c34\u6876\u6570",
-        "TitleSlug": "minimum-number-of-buckets-required-to-collect-rainwater-from-houses",
+        "TitleSlug": "minimum-number-of-food-buckets-to-feed-the-hamsters",
         "ContestSlug": "biweekly-contest-66",
         "ProblemIndex": "Q2",
         "ContestID_en": "Biweekly Contest 66",
@@ -8523,6 +8545,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Biweekly Contest 69",
         "ContestID_zh": "\u7b2c 69 \u573a\u53cc\u5468\u8d5b"
+    },
+    {
+        "Rating": 1552.8935571247,
+        "ID": 2461,
+        "Title": "Maximum Sum of Distinct Subarrays With Length K",
+        "TitleZH": "\u957f\u5ea6\u4e3a K \u5b50\u6570\u7ec4\u4e2d\u7684\u6700\u5927\u548c",
+        "TitleSlug": "maximum-sum-of-distinct-subarrays-with-length-k",
+        "ContestSlug": "weekly-contest-318",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 318",
+        "ContestID_zh": "\u7b2c 318 \u573a\u5468\u8d5b"
     },
     {
         "Rating": 1550.4297615307,
@@ -14047,6 +14080,17 @@
         "ContestID_zh": "\u7b2c 174 \u573a\u5468\u8d5b"
     },
     {
+        "Rating": 1223.9335618833,
+        "ID": 2460,
+        "Title": "Apply Operations to an Array",
+        "TitleZH": "\u5bf9\u6570\u7ec4\u6267\u884c\u64cd\u4f5c",
+        "TitleSlug": "apply-operations-to-an-array",
+        "ContestSlug": "weekly-contest-318",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 318",
+        "ContestID_zh": "\u7b2c 318 \u573a\u5468\u8d5b"
+    },
+    {
         "Rating": 1223.406570396,
         "ID": 2206,
         "Title": "Divide Array Into Equal Pairs",
@@ -14997,7 +15041,7 @@
         "ID": 1460,
         "Title": "Make Two Arrays Equal by Reversing Sub-arrays",
         "TitleZH": "\u901a\u8fc7\u7ffb\u8f6c\u5b50\u6570\u7ec4\u4f7f\u4e24\u4e2a\u6570\u7ec4\u76f8\u7b49",
-        "TitleSlug": "make-two-arrays-equal-by-reversing-sub-arrays",
+        "TitleSlug": "make-two-arrays-equal-by-reversing-subarrays",
         "ContestSlug": "biweekly-contest-27",
         "ProblemIndex": "Q1",
         "ContestID_en": "Biweekly Contest 27",
