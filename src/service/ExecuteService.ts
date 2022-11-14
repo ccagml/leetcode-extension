@@ -79,15 +79,6 @@ class ExecuteService implements Disposable {
             }
             return false;
         }
-        // for (const plugin of supportedPlugins) {
-        //     try { // Check plugin
-        //         // await this.executeCommandEx(this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "plugin", "-e", plugin]);
-        //     } catch (error) { // Remove old cache that may cause the error download plugin and activate
-        //         // await this.removeOldCache();
-        //         // await this.executeCommandEx(this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "plugin", "-i", plugin]);
-        //     }
-        // }
-        // Set the global state HasInited true to skip delete old cache after init
         context.globalState.update(leetcodeHasInited, true);
         return true;
     }
@@ -153,6 +144,13 @@ class ExecuteService implements Disposable {
             cmd.push("-T");
         }
         const solution: string = await this.executeCommandWithProgressEx("Fetching UserContest...", this.nodeExecutable, cmd);
+        return solution;
+    }
+
+    public async getScoreDataOnline(): Promise<string> {
+        // solution don't support translation
+        const cmd: string[] = [await this.getLeetCodeBinaryPath(), "query", "-c"];
+        const solution: string = await this.executeCommandWithProgressEx("get data from https://zerotrac.github.io/leetcode_problem_rating/data.json", this.nodeExecutable, cmd);
         return solution;
     }
 
@@ -265,7 +263,7 @@ class ExecuteService implements Disposable {
     }
 
     public async removeOldCache(): Promise<void> {
-        const oldPath: string = path.join(os.homedir(), ".lc");
+        const oldPath: string = path.join(os.homedir(), ".lcpr");
         if (await fse.pathExists(oldPath)) {
             await fse.remove(oldPath);
         }

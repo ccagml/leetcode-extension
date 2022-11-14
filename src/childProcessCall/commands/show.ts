@@ -13,7 +13,7 @@ let childProcess = require('child_process');
 
 
 import { helper } from "../helper";
-import { file } from "../file";
+import { storageUtils } from "../storageUtils";
 
 import { log } from "../log";
 import { config } from "../config";
@@ -32,62 +32,50 @@ class ShowCommand {
       type: 'boolean',
       default: false,
       describe: 'Only show code template'
-    })
-      .option('e', {
-        alias: 'editor',
-        type: 'string',
-        describe: 'Open source code in editor'
-      })
-      .option('g', {
-        alias: 'gen',
-        type: 'boolean',
-        default: false,
-        describe: 'Generate source code'
-      })
-      .option('l', {
-        alias: 'lang',
-        type: 'string',
-        default: config.code.lang,
-        describe: 'Programming language of the source code',
-        choices: config.sys.langs
-      })
-      .option('o', {
-        alias: 'outdir',
-        type: 'string',
-        describe: 'Where to save source code',
-        default: '.'
-      })
-      .option('q', corePlugin.filters.query)
+    }).option('e', {
+      alias: 'editor',
+      type: 'string',
+      describe: 'Open source code in editor'
+    }).option('g', {
+      alias: 'gen',
+      type: 'boolean',
+      default: false,
+      describe: 'Generate source code'
+    }).option('l', {
+      alias: 'lang',
+      type: 'string',
+      default: config.code.lang,
+      describe: 'Programming language of the source code',
+      choices: config.sys.langs
+    }).option('o', {
+      alias: 'outdir',
+      type: 'string',
+      describe: 'Where to save source code',
+      default: '.'
+    }).option('q', corePlugin.filters.query)
       .option('t', corePlugin.filters.tag)
       .option('x', {
         alias: 'extra',
         type: 'boolean',
         default: false,
         describe: 'Show extra question details in source code'
-      })
-      .option('T', {
+      }).option('T', {
         alias: 'dontTranslate',
         type: 'boolean',
         default: false,
         describe: 'Set to true to disable endpoint\'s translation',
-      })
-      .positional('keyword', {
+      }).positional('keyword', {
         type: 'string',
         default: '',
         describe: 'Show question by name or id'
       });
-
-
     argv_config.process_argv(argv);
-
     return argv_config.get_result();
   };
-
-
   genFileName(problem, opts) {
     const path = require('path');
     const params = [
-      file.fmt(config.file.show, problem),
+      storageUtils.fmt(config.file.show, problem),
       '',
       helper.langToExt(opts.lang)
     ];
@@ -95,7 +83,7 @@ class ShowCommand {
     // try new name to avoid overwrite by mistake
     for (let i = 0; ; ++i) {
       const name = path.join(opts.outdir, params.join('.').replace(/\.+/g, '.'));
-      if (!file.exist(name))
+      if (!storageUtils.exist(name))
         return name;
       params[1] = i;
     }
@@ -132,9 +120,9 @@ class ShowCommand {
 
     let filename;
     if (argv.gen) {
-      file.mkdir(argv.outdir);
+      storageUtils.mkdir(argv.outdir);
       filename = this.genFileName(problem, argv);
-      file.write(filename, code);
+      storageUtils.write(filename, code);
 
       if (argv.editor !== undefined) {
         childProcess.spawn(argv.editor || config.code.editor, [filename], {
@@ -194,7 +182,7 @@ class ShowCommand {
         that.showProblem(problem, argv);
       });
     } else {
-
+      //
     }
   };
 }

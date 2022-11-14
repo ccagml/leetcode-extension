@@ -351,6 +351,8 @@ class TreeViewController implements Disposable {
             const all_problem_info = JSON.parse(result);
             const problems: IProblem[] = [];
             const AllScoreData = treeDataService.getScoreData();
+            // 增加直接在线获取分数数据
+            const AllScoreDataOnline = await treeDataService.getScoreDataOnline();
             for (const p of all_problem_info) {
                 problems.push({
                     id: p.fid,
@@ -363,7 +365,7 @@ class TreeViewController implements Disposable {
                     passRate: p.percent,
                     companies: p.companies || [],
                     tags: treeDataService.getTagsData(p.fid),
-                    scoreData: AllScoreData.get(p.fid),
+                    scoreData: AllScoreDataOnline.get(p.fid) || AllScoreData.get(p.fid),
                     isSearchResult: false,
                     input: "",
                     rootNodeSortId: RootNodeSort.ZERO,
@@ -523,11 +525,11 @@ class TreeViewController implements Disposable {
                 detail: `周赛期数查询`,
                 value: `contest`,
             },
-            // {
-            //     label: `测试api`,
-            //     detail: `测试api`,
-            //     value: `testapi`,
-            // }
+            {
+                label: `测试api`,
+                detail: `测试api`,
+                value: `testapi`,
+            }
             // ,
             // {
             //     label: `每日一题`,

@@ -187,59 +187,26 @@ class LeetCodeCn extends MyPluginBase {
     });
   };
 
-  getTestApi = (value, cb) => {
 
-    const opts = makeOpts(config.sys.urls.graphql);
-    opts.headers.Origin = config.sys.urls.base;
-
-    const value_array = value.split("-");
-
-    opts.json = true;
-    opts.body = {
-      variables: {
-        categorySlug: "",
-        skip: value_array[0],
-        limit: value_array[1],
-        filters: {},
-      },
-      query: [
-        '    query problemsetQuestionList($categorySlug: String, $limit: Int, $skip: Int, $filters: QuestionListFilterInput) {',
-        '      problemsetQuestionList(',
-        '        categorySlug: $categorySlug',
-        '        limit: $limit',
-        '        skip: $skip',
-        '        filters: $filters',
-        '      ) {',
-        '        hasMore',
-        '        total',
-        '        questions {',
-        '          frontendQuestionId',
-        '          topicTags {',
-        '            slug',
-        '          }',
-        '        }',
-        '       }',
-        '  }',
-      ].join('\n'),
-    };
-
-
-    request.post(opts, function (e, resp, body) {
-
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
-      let result = {};
-      body.data.problemsetQuestionList.questions.forEach(element => {
-        result[element.frontendQuestionId] = {
-          topicTags: element.topicTags.map(function (p) { return p.slug; }),
-          CompanyTags: element.extra.topCompanyTags.map(function (p) { return p.slug; }),
-        };
-      });
-      return cb(null, result);
+  getRatingOnline = (cb) => {
+    const _request = request.defaults({ jar: true });
+    _request("https://zerotrac.github.io/leetcode_problem_rating/data.json", function (error, _, body) {
+      // console.log(error);
+      // console.log(info);
+      cb(error, body);
     });
   };
 
 
+  getTestApi = (value, _) => {
+    const _request = request.defaults({ jar: true });
+    _request("https://zerotrac.github.io/leetcode_problem_rating/data.json", function (error, info, body) {
+      console.log(error);
+      console.log(info);
+      let a = body;
+      console.log(a, value);
+    });
+  };
 }
 
 

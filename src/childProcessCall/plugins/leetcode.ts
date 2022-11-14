@@ -17,7 +17,7 @@ let prompt_out = require('prompt');
 
 import { config } from "../config";
 import { helper } from "../helper";
-import { file } from "../file";
+import { storageUtils } from "../storageUtils";
 import { log } from "../log";
 import { session } from "../session";
 import { MyPluginBase } from "../my_plugin_base";
@@ -71,7 +71,7 @@ class LeetCode extends MyPluginBase {
     const getCategory = function (category, _, cb) {
       that.getCategoryProblems(category, function (e, _problems) {
         if (e) {
-
+          //
         } else {
 
           problems = problems.concat(_problems);
@@ -196,7 +196,7 @@ class LeetCode extends MyPluginBase {
       lang: problem.lang,
       question_id: parseInt(problem.id, 10),
       test_mode: false,
-      typed_code: file.codeData(problem.file)
+      typed_code: storageUtils.codeData(problem.file)
     });
 
 

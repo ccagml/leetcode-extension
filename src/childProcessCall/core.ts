@@ -15,7 +15,7 @@ let cheerio = require('cheerio');
 
 // import { log } from "./log";
 import { helper } from "./helper";
-import { file } from "./file";
+import { storageUtils } from "./storageUtils";
 
 import { MyPluginBase } from "./my_plugin_base";
 
@@ -56,7 +56,6 @@ class CorePlugin extends MyPluginBase {
   }
 
 
-
   filterProblems = (opts, cb) => {
     this.getProblems(!opts.dontTranslate, function (e, problems) {
       if (e) return cb(e);
@@ -83,7 +82,7 @@ class CorePlugin extends MyPluginBase {
     this.getProblems(needTranslation, function (e, problems) {
       if (e) return cb(e);
       keyword = Number(keyword) || keyword;
-      const metaFid = file.exist(keyword) ? file.meta(keyword).id : NaN;
+      const metaFid = storageUtils.exist(keyword) ? storageUtils.meta(keyword).id : NaN;
       const problem = problems.find(function (x) {
         if (keyword?.fid) {
           return x.fid + '' === keyword.fid + '';
@@ -131,7 +130,7 @@ class CorePlugin extends MyPluginBase {
       const wrap = require('wordwrap')(79 - data.comment.line.length);
       data.desc = wrap(desc).split('\n');
     }
-    return file.render(opts.tpl, data);
+    return storageUtils.render(opts.tpl, data);
   };
 
   getTodayQuestion = (cb) => {
@@ -140,6 +139,14 @@ class CorePlugin extends MyPluginBase {
       return cb(null, result);
     });
   };
+
+  getRating = (cb) => {
+    this.getRatingOnline(function (e, result) {
+      if (e) return cb(e);
+      return cb(null, result);
+    });
+  };
+
   getQueryZ = (username, cb) => {
     this.getTestApi(username, function (e, result) {
       if (e) return cb(e);

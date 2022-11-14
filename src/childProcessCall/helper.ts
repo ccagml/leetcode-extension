@@ -10,33 +10,33 @@
 
 let ora = require('ora');
 
-import { file } from "./file";
+import { storageUtils } from "./storageUtils";
 
-export const UNITS_SIZE = [
-  { unit: 'B', name: 'Bytes', count: 1024 },
-  { unit: 'K', name: 'KBytes', count: 1024 },
-  { unit: 'M', name: 'MBytes', count: 1024 },
-  { unit: 'G', name: 'GBytes', count: -1 }
-];
+// export const UNITS_SIZE = [
+//   { unit: 'B', name: 'Bytes', count: 1024 },
+//   { unit: 'K', name: 'KBytes', count: 1024 },
+//   { unit: 'M', name: 'MBytes', count: 1024 },
+//   { unit: 'G', name: 'GBytes', count: -1 }
+// ];
 
-export const UNITS_TIME = [
-  { unit: 's', name: 'seconds', count: 60 },
-  { unit: 'm', name: 'minutes', count: 60 },
-  { unit: 'h', name: 'hours', count: 24 },
-  { unit: 'd', name: 'days', count: 7 },
-  { unit: 'w', name: 'weeks', count: 4 },
-  { unit: 'm', name: 'months', count: 12 },
-  { unit: 'y', name: 'years', count: -1 }
-];
+// export const UNITS_TIME = [
+//   { unit: 's', name: 'seconds', count: 60 },
+//   { unit: 'm', name: 'minutes', count: 60 },
+//   { unit: 'h', name: 'hours', count: 24 },
+//   { unit: 'd', name: 'days', count: 7 },
+//   { unit: 'w', name: 'weeks', count: 4 },
+//   { unit: 'm', name: 'months', count: 12 },
+//   { unit: 'y', name: 'years', count: -1 }
+// ];
 
-export function getUnit(units, v) {
-  for (let i = 0; i < units.length; ++i) {
-    if (units[i].count <= 0 || v < units[i].count)
-      return [v, units[i]];
-    v /= units[i].count;
-  }
-  return [];
-}
+// export function getUnit(units, v) {
+//   for (let i = 0; i < units.length; ++i) {
+//     if (units[i].count <= 0 || v < units[i].count)
+//       return [v, units[i]];
+//     v /= units[i].count;
+//   }
+//   return [];
+// }
 
 export const LANGS = [
   { lang: 'bash', ext: '.sh', style: '#' },
@@ -67,36 +67,37 @@ class HELPER {
       plugins: '../../plugins',
       problems: 'problems',
       translation: 'translationConfig',
+      ranting_path: '../../rating',
       problem: p => p.fid + '.' + p.slug + '.' + p.category
     };
   }
 
-  prettyState(state) {
-    switch (state) {
-      case 'ac': return this.prettyText('', true);
-      case 'notac': return this.prettyText('', false);
-      default: return ' ';
-    }
-  };
+  // prettyState(state) {
+  //   switch (state) {
+  //     case 'ac': return this.prettyText('', true);
+  //     case 'notac': return this.prettyText('', false);
+  //     default: return ' ';
+  //   }
+  // };
 
-  prettyText(text, yesNo) {
-    const icon = require('./icon');
-    switch (yesNo) {
-      case true: return (icon.yes + text);
-      case false: return (icon.no + text);
-      default: return text;
-    }
-  };
+  // prettyText(text, yesNo) {
+  //   const icon = require('./icon');
+  //   switch (yesNo) {
+  //     case true: return (icon.yes + text);
+  //     case false: return (icon.no + text);
+  //     default: return text;
+  //   }
+  // };
 
-  prettySize(n) {
-    const res = getUnit(UNITS_SIZE, n) || [];
-    return res[0].toFixed(2) + res[1].unit;
-  };
+  // prettySize(n) {
+  //   const res = getUnit(UNITS_SIZE, n) || [];
+  //   return res[0].toFixed(2) + res[1].unit;
+  // };
 
-  prettyTime(n) {
-    const res = getUnit(UNITS_TIME, n) || [];
-    return res[0].toFixed(0) + ' ' + res[1].name;
-  };
+  // prettyTime(n) {
+  //   const res = getUnit(UNITS_TIME, n) || [];
+  //   return res[0].toFixed(0) + ' ' + res[1].name;
+  // };
 
   prettyLevel(level) {
     switch (level.toLowerCase().trim()) {
@@ -154,13 +155,13 @@ class HELPER {
     let bufs: Array<any> = [];
 
     console.log('NOTE: to finish the input, press ' +
-      (file.isWindows() ? '<Ctrl-D> and <Return>' : '<Ctrl-D>'));
+      (storageUtils.isWindows() ? '<Ctrl-D> and <Return>' : '<Ctrl-D>'));
 
     stdin.on('readable', function () {
       const data = stdin.read();
       if (data) {
         // windows doesn't treat ctrl-D as EOF
-        if (file.isWindows() && data.toString() === '\x04\r\n') {
+        if (storageUtils.isWindows() && data.toString() === '\x04\r\n') {
           stdin.emit('end');
         } else {
           bufs.push(data);

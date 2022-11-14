@@ -82,9 +82,9 @@ class RetryPlugin extends MyPluginBase {
 
     this.next.login(user, function (e) {
       if (e) {
-
+        //
       } else {
-
+        //
       }
       return cb();
     });

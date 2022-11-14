@@ -11,13 +11,15 @@
 // import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
-import { Category, defaultProblem, IScoreData, ProblemState, SearchSetType, ISubmitEvent } from "../model/Model";
+import { Category, defaultProblem, IScoreData, ProblemState, SearchSetType, ISubmitEvent, DialogType } from "../model/Model";
 import { treeViewController } from "../controller/TreeViewController";
 import { NodeModel } from "../model/NodeModel";
 import { statusBarService } from "./StatusBarService";
 import { scoreDao } from "../dao/scoreDao";
 import { choiceDao } from "../dao/choiceDao";
 import { tagsDao } from "../dao/tagsDao";
+import { executeService } from "./ExecuteService";
+import { promptForOpenOutputChannel } from "../utils/OutputUtils";
 
 export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
 
@@ -140,6 +142,22 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     public getScoreData(): Map<string, IScoreData> {
         return scoreDao.getScoreData();
     }
+    // 在线获取题目数据
+    public async getScoreDataOnline() {
+        let stringData = await executeService.getScoreDataOnline();
+        let objData;
+        try {
+            objData = JSON.parse(stringData);
+        } catch (error) {
+            objData = {};
+        }
+        if (objData.code == 101) {
+            promptForOpenOutputChannel("从 https://zerotrac.github.io/leetcode_problem_rating/data.json 获取数据出错", DialogType.info);
+            objData = {};
+        }
+        return scoreDao.getScoreData(objData.data);
+    }
+
     private parseIconPathFromProblemState(element: NodeModel): string {
         if (!element.isProblem) {
             return "";

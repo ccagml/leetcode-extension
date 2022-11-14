@@ -8,12 +8,12 @@
  */
 
 
-let underscore = require('underscore');
+// let underscore = require('underscore');
 
 
 import { helper } from "../helper";
-import { log } from "../log";
-import { cache } from "../cache";
+// import { log } from "../log";
+import { storageUtils } from "../storageUtils";
 import { session } from "../session";
 
 class CacheCommand {
@@ -26,12 +26,7 @@ class CacheCommand {
       type: 'boolean',
       describe: 'Delete cache by keyword',
       default: false
-    })
-      .positional('keyword', {
-        type: 'string',
-        describe: 'Cache name or question id',
-        default: ''
-      });
+    });
     argv_config.process_argv(argv);
 
     return argv_config.get_result();
@@ -44,33 +39,18 @@ class CacheCommand {
     const name = argv.keyword;
     const isInteger = Number.isInteger(Number(name));
 
-    const caches = cache.list()
+    const all_data_file = storageUtils.listCache()
       .filter(function (f) {
         return (name.length === 0) ||
           (isInteger ? f.name.startsWith(name + '.') : f.name === name);
       });
 
     if (argv.delete) {
-      for (let f of caches) cache.del(f.name);
-    } else {
-      log.info(' %s %63s    %s', 'Cache', 'Size', 'Created');
-      log.info('-'.repeat(86));
-
-      underscore.sortBy(caches, function (f) {
-        let x = parseInt(f.name.split('.')[0], 10);
-        if (Number.isNaN(x)) x = 0;
-        return x;
-      })
-        .forEach(function (f) {
-          log.info(' %-60s %8s    %s ago',
-            f.name,
-            helper.prettySize(f.size),
-            helper.prettyTime((Date.now() - f.mtime) / 1000));
-        });
+      for (let f of all_data_file) {
+        storageUtils.delCache(f.name);
+      }
     }
   };
 }
-
-
 
 export const cacheCommand: CacheCommand = new CacheCommand();

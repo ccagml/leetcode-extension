@@ -15,10 +15,13 @@ import { IScoreData } from "../model/Model";
 class ScoreDao {
     private scoreBase = require("../../../resources/data.json");
 
-    public getScoreData(): Map<string, IScoreData> {
+    public getScoreData(onlineData?): Map<string, IScoreData> {
 
         let nameSiteMapping = new Map<string, IScoreData>();
-        const temp = this.scoreBase as IScoreData[];
+        let temp = this.scoreBase as IScoreData[];
+        if (onlineData) {
+            temp = onlineData;
+        }
         temp.forEach(element => {
             // Rating
             // ID

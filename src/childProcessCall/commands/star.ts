@@ -46,10 +46,7 @@ class StarCommand {
 
       corePlugin.starProblem(problem, !argv.delete, function (e, starred) {
         if (e) return log.info(e);
-
-        log.info('[%s] %s %s', problem.fid, problem.name,
-          starred ? 'icon.like' : 'icon.unlike');
-
+        log.info(`[${problem.fid}] ${problem.name} ${starred ? 'icon.like' : 'icon.unlike'}`);
         corePlugin.updateProblem(problem, { starred: starred });
       });
     });

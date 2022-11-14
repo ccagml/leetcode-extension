@@ -14,7 +14,7 @@ let lodash = require('lodash');
 
 
 import { helper } from "../helper";
-import { file } from "../file";
+import { storageUtils } from "../storageUtils";
 import { log } from "../log";
 import { corePlugin } from "../core";
 import { session } from "../session";
@@ -83,10 +83,10 @@ class TestCommand {
 
   runTest(argv) {
     let that = this;
-    if (!file.exist(argv.filename))
+    if (!storageUtils.exist(argv.filename))
       return log.fatal('File ' + argv.filename + ' not exist!');
 
-    const meta = file.meta(argv.filename);
+    const meta = storageUtils.meta(argv.filename);
 
     // [key: string]: string[];
     // messages: string[];

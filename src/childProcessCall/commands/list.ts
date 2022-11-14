@@ -70,7 +70,4 @@ class ListCommand {
   };
 }
 
-
-
-
 export const listCommand: ListCommand = new ListCommand();

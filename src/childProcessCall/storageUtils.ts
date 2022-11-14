@@ -1,5 +1,5 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/file.ts
+ * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/storageUtils.ts
  * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
  * Created Date: Thursday, October 27th 2022, 7:43:29 pm
  * Author: ccagml
@@ -28,12 +28,13 @@ export const defaultMETA: IMETA = {
   lang: "",
 };
 
-class File {
+class StorageUtils {
   public init() {
     _.templateSettings = {
       evaluate: /\{\{(.+?)\}\}/g,
       interpolate: /\$\{(.+?)\}/g
     };
+    this.mkdir(this.homeDir());
   };
 
   public isWindows() {
@@ -45,7 +46,7 @@ class File {
   };
 
   public homeDir() {
-    return path.join(this.userHomeDir(), '.lc');
+    return path.join(this.userHomeDir(), '.lcpr');
   };
 
   public appDir() {
@@ -53,24 +54,29 @@ class File {
     return path.join(this.homeDir(), config.app || 'leetcode');
   };
 
+  // 缓存目录
   public cacheDir() {
     return path.join(this.appDir(), 'cache');
   };
 
+  // 代码目录
   public codeDir(dir) {
     return path.join(__dirname, dir || '');
   };
 
+  // 缓存目录文件
   public cacheFile(k) {
     return path.join(this.cacheDir(), k + '.json');
   };
 
-  public configFile() {
-    return path.join(this.homeDir(), 'config.json');
-  };
+  // public configFile() {
+  //   return path.join(this.homeDir(), 'config.json');
+  // };
 
+  // 插件代码目录
   public listCodeDir(dir) {
     dir = this.codeDir(dir);
+    let that = this;
     return this.list(dir).map(function (f) {
       const fullpath = path.join(dir, f);
       const ext = path.extname(f);
@@ -79,10 +85,56 @@ class File {
       let data = null;
       switch (ext) {
         case '.js': data = require(fullpath).pluginObj; break;
-        case '.json': data = JSON.parse(file.data(fullpath)); break;
+        case '.json': data = JSON.parse(that.getData(fullpath)); break;
       }
       return { name: name, data: data, file: f };
     });
+  };
+
+
+  public initCache() {
+    this.mkdir(this.cacheDir());
+  };
+  public deleteAllCache() {
+    this.listCache().forEach(value => {
+      this.delCache(value.name);
+    });
+  };
+
+  public getCache(k) {
+    const fullpath = this.cacheFile(k);
+    if (!this.exist(fullpath)) return null;
+
+    return JSON.parse(this.getData(fullpath));
+  };
+
+  public setCache(k, v) {
+    const fullpath = this.cacheFile(k);
+    this.write(fullpath, JSON.stringify(v));
+    return true;
+  };
+
+  public delCache(k) {
+    const fullpath = this.cacheFile(k);
+    if (!this.exist(fullpath)) return false;
+
+    this.rm(fullpath);
+    return true;
+  };
+
+  public listCache(): Array<any> {
+    let that = this;
+    return this.list(this.cacheDir())
+      .filter(x => path.extname(x) === '.json')
+      .map(function (filename) {
+        const k = path.basename(filename, '.json');
+        const stat = that.stat(that.cacheFile(k));
+        return {
+          name: k,
+          size: stat.size,
+          mtime: stat.mtime
+        };
+      });
   };
 
   public mkdir(fullpath) {
@@ -118,12 +170,13 @@ class File {
     return path.basename(fullpath, path.extname(fullpath));
   };
 
-  public data(fullpath) {
+  public getData(fullpath) {
     return fs.existsSync(fullpath) ? fs.readFileSync(fullpath).toString() : null;
   };
 
+  // 获取要提交测试的数据
   public codeData(fullpath) {
-    const data = this.data(fullpath);
+    const data = this.getData(fullpath);
 
     if (data === null) {
       return null;
@@ -140,9 +193,10 @@ class File {
     return data;
   };
 
+  // 加载输出模板数据
   public render(tpl, data) {
     const tplfile = path.join(__dirname, "..", "..", "..", "resources", "templates", tpl + '.tpl');
-    let result = _.template(this.data(tplfile).replace(/\r\n/g, '\n'))(data);
+    let result = _.template(this.getData(tplfile).replace(/\r\n/g, '\n'))(data);
     if (this.isWindows()) {
       result = result.replace(/\n/g, '\r\n');
     } else {
@@ -155,29 +209,24 @@ class File {
     return _.template(format)(data);
   };
 
-  public metaByName(filename) {
-    const m = Object.assign({}, defaultMETA, {});
+  // public metaByName(filename) {
+  //   const m = Object.assign({}, defaultMETA, {});
 
-    m.id = file.name(filename).split('.')[0];
+  //   m.id = storageUtils.name(filename).split('.')[0];
 
 
-    if (filename.endsWith('.py3') || filename.endsWith('.python3.py'))
-      m.lang = 'python3';
-    else
-      m.lang = require('./helper').extToLang(filename);
+  //   if (filename.endsWith('.py3') || filename.endsWith('.python3.py'))
+  //     m.lang = 'python3';
+  //   else
+  //     m.lang = require('./helper').extToLang(filename);
 
-    return m;
-  };
+  //   return m;
+  // };
 
   public meta(filename) {
     const m = Object.assign({}, defaultMETA, {});
-
-
-    const line = this.data(filename).split('\n')
-      .find(x => x.indexOf(' @lc app=') >= 0) || '';
-
+    const line = this.getData(filename).split('\n').find(x => x.indexOf(' @lc app=') >= 0) || '';
     // @lc app=leetcode.cn id=剑指 Offer II 116 lang=cpp
-
     let id_right = line.split('id=')[1];
     let lang_cat = id_right.split('lang=');
     let id = lang_cat[0].trim();
@@ -190,4 +239,4 @@ class File {
 
 }
 
-export const file: File = new File();
+export const storageUtils: StorageUtils = new StorageUtils();
