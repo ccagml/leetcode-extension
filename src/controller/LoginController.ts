@@ -10,12 +10,11 @@
 import * as cp from "child_process";
 import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
-
-import { DialogType, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
+import { DialogType, Endpoint, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
 import { createEnvOption } from "../utils/CliUtils";
 import { logOutput, promptForOpenOutputChannel } from "../utils/OutputUtils";
 import { eventService } from "../service/EventService";
-import { window } from "vscode";
+import { window, QuickPickOptions } from "vscode";
 import { statusBarService } from "../service/StatusBarService";
 import { treeDataService } from "../service/TreeDataService";
 import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
@@ -28,12 +27,21 @@ class LoginContorller {
     // 登录操作
     public async signIn(): Promise<void> {
         const picks: Array<IQuickItemEx<string>> = [];
-        picks.push(
-            {
+        let qpOpiton: QuickPickOptions = {
+            title: "正在登录leetcode.com",
+            matchOnDescription: false,
+            matchOnDetail: false,
+            placeHolder: "请选择登录方式",
+        };
+        if (getLeetCodeEndpoint() == Endpoint.LeetCodeCN) {
+            picks.push({
                 label: "LeetCode Account",
                 detail: "只能登录leetcode.cn",
                 value: "LeetCode",
-            },
+            });
+            qpOpiton.title = "正在登录中文版leetcode.cn";
+        }
+        picks.push(
             {
                 label: "Third-Party: GitHub",
                 detail: "Use GitHub account to login",
@@ -50,7 +58,7 @@ class LoginContorller {
                 value: "Cookie",
             },
         );
-        const choice: IQuickItemEx<string> | undefined = await window.showQuickPick(picks);
+        const choice: IQuickItemEx<string> | undefined = await window.showQuickPick(picks, qpOpiton);
         if (!choice) {
             return;
         }
