@@ -1,5 +1,7 @@
 ## version 2.0.0
 - 重构
+## version 1.1.10
+- 更新数据
 
 ## version 1.1.9
 - BWC90 & WC317 数据
