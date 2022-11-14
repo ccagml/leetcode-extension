@@ -1,5 +1,6 @@
 ## version 2.0.0
 - 重构
+- 现在会从[zerotrac.github.io](https://zerotrac.github.io/leetcode_problem_rating/data.json)获取数据进行缓存
 ## version 1.1.10
 - 更新数据
 
