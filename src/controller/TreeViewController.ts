@@ -105,12 +105,12 @@ class TreeViewController implements Disposable {
             }
             const picks: Array<IQuickItemEx<string>> = [];
             picks.push(
-                {
-                    label: "$(three-bars) Default test cases",
-                    description: "",
-                    detail: "默认用例",
-                    value: ":default",
-                },
+                // {
+                //     label: "$(three-bars) Default test cases",
+                //     description: "",
+                //     detail: "默认用例",
+                //     value: ":default",
+                // },
                 {
                     label: "$(pencil) Write directly...",
                     description: "",
@@ -123,12 +123,12 @@ class TreeViewController implements Disposable {
                     detail: "文件中的测试用例",
                     value: ":file",
                 },
-                {
-                    label: "All Default test cases...",
-                    description: "",
-                    detail: "所有的测试用例",
-                    value: ":alldefault",
-                },
+                // {
+                //     label: "All Default test cases...",
+                //     description: "",
+                //     detail: "所有的测试用例",
+                //     value: ":alldefault",
+                // },
             );
             const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks);
             if (!choice) {

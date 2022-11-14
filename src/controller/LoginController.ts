@@ -31,7 +31,7 @@ class LoginContorller {
             title: "正在登录leetcode.com",
             matchOnDescription: false,
             matchOnDetail: false,
-            placeHolder: "请选择登录方式",
+            placeHolder: "请选择登录方式 正在登录leetcode.com",
         };
         if (getLeetCodeEndpoint() == Endpoint.LeetCodeCN) {
             picks.push({
@@ -40,6 +40,7 @@ class LoginContorller {
                 value: "LeetCode",
             });
             qpOpiton.title = "正在登录中文版leetcode.cn";
+            qpOpiton.placeHolder = "请选择登录方式 正在登录中文版leetcode.cn";
         }
         picks.push(
             {
