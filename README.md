@@ -19,6 +19,7 @@
 - 增加剑指Offer、面试金典相关内容
 - 增加一键提交全部题目测试用例功能
 - 尝试不需要额外安装node环境,使用vscode自带的node版本
+- 从[zerotrac.github.io](https://zerotrac.github.io/leetcode_problem_rating/data.json)获取数据进行缓存,数据更新时,可以尝试使用deleteAllCache,重新获取数据
 
 # 关于本项目
 - [项目地址:https://github.com/ccagml/vscode-leetcode-problem-rating/](https://github.com/ccagml/vscode-leetcode-problem-rating/)
@@ -26,8 +27,6 @@
 - [疑难解答](https://github.com/LeetCode-OpenSource/vscode-leetcode/wiki/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94)
 - [常见问题](https://github.com/LeetCode-OpenSource/vscode-leetcode/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
 - 趁着现在只有<img src="https://img.shields.io/github/stars/ccagml/vscode-leetcode-problem-rating" alt="">提交一个PR就能成为项目元老了
-- 每周当[zerotrac](https://github.com/zerotrac/leetcode_problem_rating/)项目更新数据data.json,可以将新数据放到本项目的resources/data.json即可提交PR
-- 为什么不改成自动获取data.json,因为上一点
 
 ## 快速开始
 ![quickstart](https://www.ccagml.com/wp-content/uploads/2022/10/quickstart.gif)
@@ -36,6 +35,17 @@
 ## 查询功能
 ![search](https://www.ccagml.com/wp-content/uploads/2022/10/search.gif)
 
+
+<!-- ## TODO 看到一些可能会用得上的功能
+  - 在文件里面插入一些测试用例? 提交答案与期望答案不同的地方?
+  - 做题目计时
+  - 不是中文站点,直接隐藏账号密码登录的方式
+  - 默认的工作目录修改 不再是.leetcode
+  - Test按钮应该不在需要 case 和 allcase 只要留下输入的功能
+  - 备忘录功能(数据直接放设置的工作目录?用github同步?)
+  - 获取提交历史(直接找官方的提交数据)
+  - 想做一个可以根据计算下次回顾本题的功能?(需要在设置的工作目录中存放多个文件?)
+  - 还没出分前周赛题目显示 未评分(需要官网获取最新几期的题目编号) -->
 
 ## ❗️ 注意 ❗️- 无法登录 LeetCode 节点的临时解决办法
 > 注意：如果使用的是 `leetcode.cn` 账户，可以跳过此段落。
