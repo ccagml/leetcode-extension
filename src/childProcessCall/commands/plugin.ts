@@ -7,7 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { helper } from "../helper";
+import { commUtils } from "../commUtils";
 import { config } from "../config";
 import { log } from "../log";
 import { myPluginBase } from "../my_plugin_base";
@@ -17,7 +17,7 @@ class PluginCommand {
   constructor() {}
 
   process_argv = function (argv) {
-    let argv_config = helper
+    let argv_config = commUtils
       .base_argv()
       .option("d", {
         alias: "disable",

@@ -7,7 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-// import { helper } from "../helper";
+// import { commUtils } from "../commUtils";
 // import { corePlugin } from "../core";
 // import { log } from "../log";
 // import { session } from "../session";
@@ -31,7 +31,7 @@ class SessionCommand {
   //       submissionRate = s.total_acs * 100 / s.total_submitted;
 
   //     log.info(
-  //       s.is_active ? helper.prettyState('ac') : ' ',
+  //       s.is_active ? commUtils.prettyState('ac') : ' ',
   //       s.id,
   //       s.name || 'Anonymous Session',
   //       s.ac_questions,

@@ -12,7 +12,7 @@ let underscore = require("underscore");
 import { config as out_config } from "./config";
 import { storageUtils } from "./storageUtils";
 // import { log } from "./log";
-import { helper } from "./helper";
+import { commUtils } from "./commUtils";
 
 export class MyPluginBase {
   id;
@@ -31,12 +31,12 @@ export class MyPluginBase {
   constructor() {}
 
   public save() {
-    const stats = storageUtils.getCache(helper.KEYS.plugins) || {};
+    const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
 
     if (this.deleted) delete stats[this.name];
     else stats[this.name] = this.enabled;
 
-    storageUtils.setCache(helper.KEYS.plugins, stats);
+    storageUtils.setCache(commUtils.KEYS.plugins, stats);
   }
 
   public init() {
@@ -46,7 +46,7 @@ export class MyPluginBase {
 
   public base_init(head?) {
     head = head || require("./core").corePlugin;
-    const stats = storageUtils.getCache(helper.KEYS.plugins) || {};
+    const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
     let file_plugin: Array<any> = storageUtils.listCodeDir("plugins");
     this.installed = [];
     for (let f of file_plugin) {

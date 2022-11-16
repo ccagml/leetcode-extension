@@ -9,7 +9,7 @@
 
 // let underscore = require('underscore');
 
-import { helper } from "../helper";
+import { commUtils } from "../commUtils";
 // import { log } from "../log";
 import { storageUtils } from "../storageUtils";
 import { session } from "../session";
@@ -18,7 +18,7 @@ class CacheCommand {
   constructor() {}
 
   process_argv = function (argv) {
-    let argv_config = helper.base_argv().option("d", {
+    let argv_config = commUtils.base_argv().option("d", {
       alias: "delete",
       type: "boolean",
       describe: "Delete cache by keyword",

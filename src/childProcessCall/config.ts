@@ -10,6 +10,7 @@
 let underscore = require("underscore");
 
 class Config {
+  LCPTCTX;
   app;
   sys;
   autologin;
@@ -105,7 +106,9 @@ class Config {
     this.plugins = {};
   }
 
-  init() {}
+  init(ctx) {
+    this.LCPTCTX = ctx;
+  }
 
   getAll(useronly) {
     const cfg = underscore.extendOwn({}, this);

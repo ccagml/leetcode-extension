@@ -10,7 +10,7 @@
 // let moment_out = require('moment');
 // let underscore = require('underscore');
 
-// import { helper } from "../helper";
+// import { commUtils } from "../commUtils";
 // import { log } from "../log";
 // import { corePlugin } from "../core";
 // import { session } from "../session";
@@ -19,7 +19,7 @@ class StatCommand {
   constructor() {}
 
   // process_argv(argv) {
-  //   let argv_config = helper.base_argv().option('c', {
+  //   let argv_config = commUtils.base_argv().option('c', {
   //     alias: 'cal',
   //     type: 'boolean',
   //     default: false,
@@ -49,7 +49,7 @@ class StatCommand {
   //   const percent = (all > 0) ? done / all : 0;
   //   const x = Math.ceil(n * percent);
   //   log.info(' %s\t%3s/%-3s (%6s %%)  %s%s',
-  //     helper.prettyLevel(key), done, all,
+  //     commUtils.prettyLevel(key), done, all,
   //     (100 * percent).toFixed(2),
   //     '█'.repeat(x),
   //     '░'.repeat(n - x));
@@ -141,7 +141,7 @@ class StatCommand {
 
   //   // load historical stats
   //   const graph: Array<any> = [];
-  //   const stats = require('../cache').get(helper.KEYS.stat) || {};
+  //   const stats = require('../cache').get(commUtils.KEYS.stat) || {};
   //   for (let k of underscore.keys(stats)) {
   //     const score = (stats[k]['ac.set'] || []).reduce(toScore, 0);
   //     if (score === 0) continue;

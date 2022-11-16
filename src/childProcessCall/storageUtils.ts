@@ -28,6 +28,138 @@ export const defaultMETA: IMETA = {
 };
 
 class StorageUtils {
+  public storageFileInfo = {
+    bash: {
+      ext: ".sh",
+      start: "#",
+      line: "#",
+      end: "#",
+      singleLine: "#",
+    },
+    c: {
+      ext: ".c",
+      start: "/*",
+      line: " *",
+      end: " */",
+      singleLine: "//",
+    },
+    cpp: {
+      ext: ".cpp",
+      start: "/*",
+      line: " *",
+      end: " */",
+      singleLine: "//",
+    },
+    csharp: {
+      ext: ".cs",
+      start: "/*",
+      line: " *",
+      end: " */",
+      singleLine: "//",
+    },
+    golang: {
+      ext: ".go",
+      start: "/*",
+      line: " *",
+      end: " */",
+      singleLine: "//",
+    },
+    java: {
+      ext: ".java",
+      start: "/*",
+      line: " *",
+      end: " */",
+      singleLine: "//",
+    },
+    javascript: {
+      ext: ".js",
+      start: "/*",
+      line: " *",
+      end: " */",
+      singleLine: "//",
+    },
+    kotlin: {
+      ext: ".kt",
+      start: "/*",
+      line: " *",
+      end: " */",
+      singleLine: "//",
+    },
+    mysql: {
+      ext: ".sql",
+      start: "--",
+      line: "--",
+      end: "--",
+      singleLine: "--",
+    },
+    php: {
+      ext: ".php",
+      start: "/*",
+      line: " *",
+      end: " */",
+      singleLine: "//",
+    },
+    python: {
+      ext: ".py",
+      start: "#",
+      line: "#",
+      end: "#",
+      singleLine: "#",
+    },
+    python3: {
+      ext: ".py",
+      start: "#",
+      line: "#",
+      end: "#",
+      singleLine: "#",
+    },
+    ruby: {
+      ext: ".rb",
+      start: "#",
+      line: "#",
+      end: "#",
+      singleLine: "#",
+    },
+    rust: {
+      ext: ".rs",
+      start: "/*",
+      line: " *",
+      end: " */",
+      singleLine: "//",
+    },
+    scala: {
+      ext: ".scala",
+      start: "/*",
+      line: " *",
+      end: " */",
+      singleLine: "//",
+    },
+    swift: {
+      ext: ".swift",
+      start: "/*",
+      line: " *",
+      end: " */",
+      singleLine: "//",
+    },
+    typescript: {
+      ext: ".ts",
+      start: "/*",
+      line: " *",
+      end: " */",
+      singleLine: "//",
+    },
+  };
+
+  getFileExtByLanguage(lang) {
+    const res = this.storageFileInfo[lang];
+    return res ? res.ext : ".raw";
+  }
+
+  getCommentStyleByLanguage(lang) {
+    const res = this.storageFileInfo[lang];
+    return res;
+  }
+
   public init() {
     _.templateSettings = {
       evaluate: /\{\{(.+?)\}\}/g,
@@ -220,19 +352,6 @@ class StorageUtils {
   public fmt(format, data) {
     return _.template(format)(data);
   }
-
-  // public metaByName(filename) {
-  //   const m = Object.assign({}, defaultMETA, {});
-
-  //   m.id = storageUtils.name(filename).split('.')[0];
-
-  //   if (filename.endsWith('.py3') || filename.endsWith('.python3.py'))
-  //     m.lang = 'python3';
-  //   else
-  //     m.lang = require('./helper').extToLang(filename);
-
-  //   return m;
-  // };
 
   public meta(filename) {
     const m = Object.assign({}, defaultMETA, {});

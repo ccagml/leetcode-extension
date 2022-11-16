@@ -10,7 +10,7 @@
 let _ = require("underscore");
 let lodash = require("lodash");
 
-import { helper } from "../helper";
+import { commUtils } from "../commUtils";
 import { storageUtils } from "../storageUtils";
 import { log } from "../log";
 import { corePlugin } from "../core";
@@ -20,7 +20,7 @@ class TestCommand {
   constructor() {}
 
   process_argv(argv) {
-    let argv_config = helper
+    let argv_config = commUtils
       .base_argv()
       .option("i", {
         alias: "interactive",
@@ -234,7 +234,7 @@ class TestCommand {
     session.argv = argv;
     if (!argv.i) return that.runTest(argv);
 
-    helper.readStdin(function (e, data) {
+    commUtils.readStdin(function (e, data) {
       if (e) return log.info(e);
 
       argv.testcase = data;

@@ -12,7 +12,7 @@ import { MyPluginBase } from "../my_plugin_base";
 let underscore = require("underscore");
 
 import { storageUtils } from "../storageUtils";
-import { helper } from "../helper";
+import { commUtils } from "../commUtils";
 // import { log } from "../log";
 import { session } from "../session";
 
@@ -25,13 +25,13 @@ class CachePlugin extends MyPluginBase {
   }
 
   clearCacheIfTchanged = (needTranslation) => {
-    const translationConfig = storageUtils.getCache(helper.KEYS.translation);
+    const translationConfig = storageUtils.getCache(commUtils.KEYS.translation);
     if (
       !translationConfig ||
       translationConfig["useEndpointTranslation"] != needTranslation
     ) {
       storageUtils.deleteAllCache();
-      storageUtils.setCache(helper.KEYS.translation, {
+      storageUtils.setCache(commUtils.KEYS.translation, {
         useEndpointTranslation: needTranslation,
       });
     }
@@ -39,13 +39,13 @@ class CachePlugin extends MyPluginBase {
 
   public getProblems = (needTranslation, cb) => {
     this.clearCacheIfTchanged(needTranslation);
-    const problems = storageUtils.getCache(helper.KEYS.problems);
+    const problems = storageUtils.getCache(commUtils.KEYS.problems);
     if (problems) {
       return cb(null, problems);
     }
     this.next.getProblems(needTranslation, function (e, problems) {
       if (e) return cb(e);
-      storageUtils.setCache(helper.KEYS.problems, problems);
+      storageUtils.setCache(commUtils.KEYS.problems, problems);
       return cb(null, problems);
     });
   };
@@ -54,7 +54,7 @@ class CachePlugin extends MyPluginBase {
    * getRatingOnline
    */
   public getRatingOnline = (cb) => {
-    const cacheRantingData = storageUtils.getCache(helper.KEYS.ranting_path);
+    const cacheRantingData = storageUtils.getCache(commUtils.KEYS.ranting_path);
     if (cacheRantingData) {
       return cb(null, cacheRantingData);
     }
@@ -66,14 +66,14 @@ class CachePlugin extends MyPluginBase {
       } catch (error) {
         return cb("JSON.parse(ratingData) error");
       }
-      storageUtils.setCache(helper.KEYS.ranting_path, ratingObj);
+      storageUtils.setCache(commUtils.KEYS.ranting_path, ratingObj);
       return cb(null, ratingObj);
     });
   };
 
   public getProblem = (problem, needTranslation, cb) => {
     this.clearCacheIfTchanged(needTranslation);
-    const k = helper.KEYS.problem(problem);
+    const k = commUtils.KEYS.problem(problem);
     const _problem = storageUtils.getCache(k);
     let that = this;
     if (_problem) {
@@ -96,18 +96,18 @@ class CachePlugin extends MyPluginBase {
 
   saveProblem = (problem) => {
     const _problem = underscore.omit(problem, ["locked", "state", "starred"]);
-    return storageUtils.setCache(helper.KEYS.problem(problem), _problem);
+    return storageUtils.setCache(commUtils.KEYS.problem(problem), _problem);
   };
 
   updateProblem = (problem, kv) => {
-    const problems = storageUtils.getCache(helper.KEYS.problems);
+    const problems = storageUtils.getCache(commUtils.KEYS.problems);
     if (!problems) return false;
 
     const _problem = problems.find((x) => x.id === problem.id);
     if (!_problem) return false;
 
     underscore.extend(_problem, kv);
-    return storageUtils.setCache(helper.KEYS.problems, problems);
+    return storageUtils.setCache(commUtils.KEYS.problems, problems);
   };
 
   login = (user, cb) => {

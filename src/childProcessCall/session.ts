@@ -12,7 +12,7 @@ let underscore = require("underscore");
 
 import { storageUtils } from "./storageUtils";
 import { config } from "./config";
-import { helper } from "./helper";
+import { commUtils } from "./commUtils";
 
 class Session {
   errors = {
@@ -24,7 +24,7 @@ class Session {
   argv: any = {};
   constructor() {}
   public getUser = function () {
-    return storageUtils.getCache(helper.KEYS.user);
+    return storageUtils.getCache(commUtils.KEYS.user);
   };
 
   public saveUser = function (user) {
@@ -34,15 +34,15 @@ class Session {
       user,
       config.autologin.enable ? [] : ["pass"]
     );
-    storageUtils.setCache(helper.KEYS.user, _user);
+    storageUtils.setCache(commUtils.KEYS.user, _user);
   };
 
   public deleteUser = function () {
-    storageUtils.delCache(helper.KEYS.user);
+    storageUtils.delCache(commUtils.KEYS.user);
   };
 
   public deleteCodingSession = function () {
-    storageUtils.delCache(helper.KEYS.problems);
+    storageUtils.delCache(commUtils.KEYS.problems);
   };
 
   public isLogin() {
@@ -52,7 +52,7 @@ class Session {
   public updateStat = function (k, v) {
     // TODO: use other storage if too many stat data
     const today = moment_out().format("YYYY-MM-DD");
-    const stats = storageUtils.getCache(helper.KEYS.stat) || {};
+    const stats = storageUtils.getCache(commUtils.KEYS.stat) || {};
     const stat = (stats[today] = stats[today] || {});
 
     if (k.endsWith(".set")) {
@@ -62,7 +62,7 @@ class Session {
     } else {
       stat[k] = (stat[k] || 0) + v;
     }
-    storageUtils.setCache(helper.KEYS.stat, stats);
+    storageUtils.setCache(commUtils.KEYS.stat, stats);
   };
 }
 export const session: Session = new Session();

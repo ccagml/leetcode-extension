@@ -7,7 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { helper } from "../helper";
+import { commUtils } from "../commUtils";
 import { log } from "../log";
 import { corePlugin } from "../core";
 import { session } from "../session";
@@ -16,7 +16,7 @@ class ListCommand {
   constructor() {}
 
   process_argv(argv) {
-    let argv_config = helper
+    let argv_config = commUtils
       .base_argv()
       .option("q", corePlugin.filters.query)
       .option("s", {

@@ -1,63 +1,15 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/helper.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/commUtils.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Wednesday, November 16th 2022, 4:50:55 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-let ora = require("ora");
-
 import { storageUtils } from "./storageUtils";
 
-// export const UNITS_SIZE = [
-//   { unit: 'B', name: 'Bytes', count: 1024 },
-//   { unit: 'K', name: 'KBytes', count: 1024 },
-//   { unit: 'M', name: 'MBytes', count: 1024 },
-//   { unit: 'G', name: 'GBytes', count: -1 }
-// ];
-
-// export const UNITS_TIME = [
-//   { unit: 's', name: 'seconds', count: 60 },
-//   { unit: 'm', name: 'minutes', count: 60 },
-//   { unit: 'h', name: 'hours', count: 24 },
-//   { unit: 'd', name: 'days', count: 7 },
-//   { unit: 'w', name: 'weeks', count: 4 },
-//   { unit: 'm', name: 'months', count: 12 },
-//   { unit: 'y', name: 'years', count: -1 }
-// ];
-
-// export function getUnit(units, v) {
-//   for (let i = 0; i < units.length; ++i) {
-//     if (units[i].count <= 0 || v < units[i].count)
-//       return [v, units[i]];
-//     v /= units[i].count;
-//   }
-//   return [];
-// }
-
-export const LANGS = [
-  { lang: "bash", ext: ".sh", style: "#" },
-  { lang: "c", ext: ".c", style: "c" },
-  { lang: "cpp", ext: ".cpp", style: "c" },
-  { lang: "csharp", ext: ".cs", style: "c" },
-  { lang: "golang", ext: ".go", style: "c" },
-  { lang: "java", ext: ".java", style: "c" },
-  { lang: "javascript", ext: ".js", style: "c" },
-  { lang: "kotlin", ext: ".kt", style: "c" },
-  { lang: "mysql", ext: ".sql", style: "--" },
-  { lang: "php", ext: ".php", style: "c" },
-  { lang: "python", ext: ".py", style: "#" },
-  { lang: "python3", ext: ".py", style: "#" },
-  { lang: "ruby", ext: ".rb", style: "#" },
-  { lang: "rust", ext: ".rs", style: "c" },
-  { lang: "scala", ext: ".scala", style: "c" },
-  { lang: "swift", ext: ".swift", style: "c" },
-  { lang: "typescript", ext: ".ts", style: "c" },
-];
-
-class HELPER {
+class CommUtils {
   KEYS;
   constructor() {
     this.KEYS = {
@@ -70,33 +22,6 @@ class HELPER {
       problem: (p) => p.fid + "." + p.slug + "." + p.category,
     };
   }
-
-  // prettyState(state) {
-  //   switch (state) {
-  //     case 'ac': return this.prettyText('', true);
-  //     case 'notac': return this.prettyText('', false);
-  //     default: return ' ';
-  //   }
-  // };
-
-  // prettyText(text, yesNo) {
-  //   const icon = require('./icon');
-  //   switch (yesNo) {
-  //     case true: return (icon.yes + text);
-  //     case false: return (icon.no + text);
-  //     default: return text;
-  //   }
-  // };
-
-  // prettySize(n) {
-  //   const res = getUnit(UNITS_SIZE, n) || [];
-  //   return res[0].toFixed(2) + res[1].unit;
-  // };
-
-  // prettyTime(n) {
-  //   const res = getUnit(UNITS_TIME, n) || [];
-  //   return res[0].toFixed(0) + ' ' + res[1].name;
-  // };
 
   prettyLevel(level) {
     switch (level.toLowerCase().trim()) {
@@ -149,29 +74,6 @@ class HELPER {
     }
   }
 
-  langToExt(lang) {
-    const res = LANGS.find((x) => x.lang === lang);
-    return res ? res.ext : ".raw";
-  }
-
-  extToLang(fullpath) {
-    const res = LANGS.find((x) => fullpath.endsWith(x.ext));
-    return res ? res.lang : "unknown";
-  }
-
-  langToCommentStyle(lang) {
-    const res = LANGS.find((x) => x.lang === lang);
-
-    return res && res.style === "c"
-      ? { start: "/*", line: " *", end: " */", singleLine: "//" }
-      : {
-          start: res?.style,
-          line: res?.style,
-          end: res?.style,
-          singleLine: res?.style,
-        };
-  }
-
   readStdin(cb) {
     const stdin = process.stdin;
     let bufs: Array<any> = [];
@@ -217,15 +119,6 @@ class HELPER {
       .replace(/(Cookie\s*:\s*)'.*?'/, "$1<hidden>")
       .replace(/('X-CSRFToken'\s*:\s*)'.*?'/, "$1<hidden>")
       .replace(/('set-cookie'\s*:\s*)\[.*?\]/, "$1<hidden>");
-  }
-
-  spin(s) {
-    return ora(s).start();
-  }
-
-  badge(s) {
-    s = " " + s + " ";
-    return s;
   }
 
   base_argv() {
@@ -304,4 +197,4 @@ class HELPER {
   }
 }
 
-export const helper: HELPER = new HELPER();
+export const commUtils: CommUtils = new CommUtils();

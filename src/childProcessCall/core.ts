@@ -13,7 +13,6 @@ let _ = require("underscore");
 let cheerio = require("cheerio");
 
 // import { log } from "./log";
-import { helper } from "./helper";
 import { storageUtils } from "./storageUtils";
 
 import { MyPluginBase } from "./my_plugin_base";
@@ -119,7 +118,7 @@ class CorePlugin extends MyPluginBase {
     if (!data.fid) data.fid = data.id;
     if (!data.lang) data.lang = opts.lang;
     data.code = (opts.code || data.code || "").replace(/\r\n/g, "\n");
-    data.comment = helper.langToCommentStyle(data.lang);
+    data.comment = storageUtils.getCommentStyleByLanguage(data.lang);
     data.percent = data.percent.toFixed(2);
     data.testcase = util.inspect(data.testcase || "");
 

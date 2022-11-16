@@ -6,7 +6,6 @@
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
-// var h = require('./helper');
 
 import { myPluginBase } from "./my_plugin_base";
 import { config } from "./config";
@@ -20,7 +19,7 @@ class NewCli {
     process.stdout.on("error", function (e) {
       if (e.code === "EPIPE") process.exit();
     });
-    config.init();
+    config.init(JSON.parse(process.env.ccagml || "{}"));
     log.init();
     storageUtils.init();
     if (myPluginBase.base_init()) {

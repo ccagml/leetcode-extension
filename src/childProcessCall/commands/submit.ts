@@ -10,7 +10,7 @@
 let util = require("util");
 let lodash = require("lodash");
 
-import { helper } from "../helper";
+import { commUtils } from "../commUtils";
 import { storageUtils } from "../storageUtils";
 import { log } from "../log";
 import { corePlugin } from "../core";
@@ -20,7 +20,7 @@ class SubmitCommand {
   constructor() {}
 
   process_argv(argv) {
-    let argv_config = helper.base_argv().positional("filename", {
+    let argv_config = commUtils.base_argv().positional("filename", {
       type: "string",
       describe: "Code file to submit",
       default: "",

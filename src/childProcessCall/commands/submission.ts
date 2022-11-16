@@ -11,7 +11,7 @@
 
 // let _ = require('underscore');
 
-// import { helper } from "../helper";
+// import { commUtils } from "../commUtils";
 // import { file } from "../file";
 // import { config } from "../config";
 // import { log } from "../log";
@@ -23,7 +23,7 @@ class SubMission {
   constructor() {}
 
   // process_argv = function (argv) {
-  //   let argv_config = helper.base_argv().option('a', {
+  //   let argv_config = commUtils.base_argv().option('a', {
   //     alias: 'all',
   //     type: 'boolean',
   //     default: false,
@@ -108,7 +108,7 @@ class SubMission {
   //     data.sid = submission.id;
   //     data.ac = submission.ac ? 'ac' : 'notac';
   //     const basename = storageUtils.fmt(config.storageUtils.submission, data);
-  //     const f = path.join(argv.outdir, basename + helper.langToExt(submission.lang));
+  //     const f = path.join(argv.outdir, basename + storageUtils.getFileExtByLanguage(submission.lang));
 
   //     storageUtils.mkdir(argv.outdir);
   //     // skip the existing cached submissions

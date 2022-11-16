@@ -101,6 +101,7 @@ class LogOutput implements vscode.Disposable {
   private readonly channel: vscode.OutputChannel =
     vscode.window.createOutputChannel("LeetCodeProblemRating");
 
+  private LCPTCTX = {};
   public appendLine(message: string): void {
     this.channel.appendLine(message);
   }
@@ -115,6 +116,18 @@ class LogOutput implements vscode.Disposable {
 
   public dispose(): void {
     this.channel.dispose();
+  }
+
+  public setLCPTCTX(k, v) {
+    this.LCPTCTX[k] = v;
+  }
+
+  public getLCPTCTX(k) {
+    return this.LCPTCTX[k];
+  }
+
+  public getLCPTCTXAll() {
+    return this.LCPTCTX;
   }
 }
 

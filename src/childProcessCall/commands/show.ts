@@ -10,7 +10,7 @@
 let util = require("util");
 let childProcess = require("child_process");
 
-import { helper } from "../helper";
+import { commUtils } from "../commUtils";
 import { storageUtils } from "../storageUtils";
 
 import { log } from "../log";
@@ -22,7 +22,7 @@ class ShowCommand {
   constructor() {}
 
   process_argv = function (argv) {
-    let argv_config = helper
+    let argv_config = commUtils
       .base_argv()
       .option("c", {
         alias: "codeonly",
@@ -81,7 +81,7 @@ class ShowCommand {
     const params = [
       storageUtils.fmt(config.file.show, problem),
       "",
-      helper.langToExt(opts.lang),
+      storageUtils.getFileExtByLanguage(opts.lang),
     ];
 
     // try new name to avoid overwrite by mistake
@@ -99,10 +99,10 @@ class ShowCommand {
     const taglist = [problem.category]
       .concat(problem.companies || [])
       .concat(problem.tags || [])
-      .map((x) => helper.badge(x))
+      .map((x) => " " + x + " ")
       .join(" ");
     const langlist = problem.templates
-      .map((x) => helper.badge(x.value))
+      .map((x) => " " + x.value + " ")
       .sort()
       .join(" ");
 
@@ -156,7 +156,9 @@ class ShowCommand {
     log.info();
     log.info(`* ${problem.category}`);
     log.info(
-      `* ${helper.prettyLevel(problem.level)} (${problem.percent.toFixed(2)}%)`
+      `* ${commUtils.prettyLevel(problem.level)} (${problem.percent.toFixed(
+        2
+      )}%)`
     );
 
     if (problem.likes) log.info(`* Likes:    ${problem.likes}`);

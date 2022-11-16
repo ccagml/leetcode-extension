@@ -14,7 +14,7 @@ let request = require("request");
 let prompt_out = require("prompt");
 
 import { config } from "../config";
-import { helper } from "../helper";
+import { commUtils } from "../commUtils";
 import { storageUtils } from "../storageUtils";
 import { log } from "../log";
 import { session } from "../session";
@@ -117,7 +117,7 @@ class LeetCode extends MyPluginBase {
             ),
             locked: p.paid_only,
             percent: (p.stat.total_acs * 100) / p.stat.total_submitted,
-            level: helper.levelToName(p.difficulty.level),
+            level: commUtils.levelToName(p.difficulty.level),
             starred: p.is_favor,
             category: json.category_slug,
           };
@@ -476,18 +476,11 @@ class LeetCode extends MyPluginBase {
   };
 
   signin = (user, cb) => {
-    const isCN = config.app === "leetcode.cn";
-    const spin = isCN
-      ? helper.spin("Signing in leetcode.cn")
-      : helper.spin("Signing in leetcode.com");
     let that = this;
     request(config.sys.urls.login, function (e, resp, _) {
-      spin.stop();
       e = that.checkError(e, resp, 200);
       if (e) return cb(e);
-
-      user.loginCSRF = helper.getSetCookieValue(resp, "csrftoken");
-
+      user.loginCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
       const opts = {
         url: config.sys.urls.login,
         headers: {
@@ -505,8 +498,8 @@ class LeetCode extends MyPluginBase {
         if (e) return cb(e);
         if (resp.statusCode !== 302) return cb("invalid password?");
 
-        user.sessionCSRF = helper.getSetCookieValue(resp, "csrftoken");
-        user.sessionId = helper.getSetCookieValue(resp, "LEETCODE_SESSION");
+        user.sessionCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
+        user.sessionId = commUtils.getSetCookieValue(resp, "LEETCODE_SESSION");
         session.saveUser(user);
         return cb(null, user);
       });

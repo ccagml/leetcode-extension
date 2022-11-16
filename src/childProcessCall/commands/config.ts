@@ -14,13 +14,13 @@
 // import { log } from "../log";
 // import { file } from "../file";
 // import { session } from "../session";
-// import { helper } from "../helper";
+// import { commUtils } from "../commUtils";
 
 class ConfigCommand {
   constructor() {}
 
   // process_argv(argv) {
-  //   let argv_config = helper.base_argv().option('a', {
+  //   let argv_config = commUtils.base_argv().option('a', {
   //     alias: 'all',
   //     type: 'boolean',
   //     describe: 'Show all config',
