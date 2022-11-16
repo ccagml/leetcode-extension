@@ -8,7 +8,7 @@
  */
 
 import { commUtils } from "../commUtils";
-import { log } from "../log";
+import { reply } from "../Reply";
 import { corePlugin } from "../core";
 import { session } from "../session";
 
@@ -52,7 +52,7 @@ class ListCommand {
   handler(argv) {
     session.argv = argv;
     corePlugin.filterProblems(argv, function (e, problems) {
-      if (e) return log.info(e);
+      if (e) return reply.info(e);
       let new_objcet: Array<any> = [];
       problems.forEach((element) => {
         let temp_ele: any = {};
@@ -63,7 +63,7 @@ class ListCommand {
         }
         new_objcet.push(temp_ele);
       });
-      log.info(JSON.stringify(new_objcet));
+      reply.info(JSON.stringify(new_objcet));
     });
   }
 }

@@ -9,7 +9,7 @@
 
 let request = require("request");
 
-import { log } from "../log";
+import { reply } from "../Reply";
 import { session } from "../session";
 import { MyPluginBase } from "../my_plugin_base";
 
@@ -28,7 +28,7 @@ class SolutionDiscuss extends MyPluginBase {
       let lang = session.argv.lang;
       getSolution(problem, lang, function (e, solution) {
         if (e) return cb(e);
-        if (!solution) return log.error("Solution not found for " + lang);
+        if (!solution) return reply.error("Solution not found for " + lang);
 
         let link = URL_DISCUSS.replace("$slug", problem.slug).replace(
           "$id",
@@ -38,18 +38,18 @@ class SolutionDiscuss extends MyPluginBase {
           .replace(/\\n/g, "\n")
           .replace(/\\t/g, "\t");
 
-        log.info();
-        log.info(problem.name);
-        log.info();
-        log.info(solution.title);
-        log.info();
-        log.info(link);
-        log.info();
-        log.info("* Lang:    " + lang);
-        log.info("* Author:  " + solution.post.author.username);
-        log.info("* Votes:   " + solution.post.voteCount);
-        log.info();
-        log.info(content);
+        reply.info();
+        reply.info(problem.name);
+        reply.info();
+        reply.info(solution.title);
+        reply.info();
+        reply.info(link);
+        reply.info();
+        reply.info("* Lang:    " + lang);
+        reply.info("* Author:  " + solution.post.author.username);
+        reply.info("* Votes:   " + solution.post.voteCount);
+        reply.info();
+        reply.info(content);
       });
     });
   };

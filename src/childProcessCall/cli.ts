@@ -9,7 +9,7 @@
 
 import { myPluginBase } from "./my_plugin_base";
 import { config } from "./config";
-import { log } from "./log";
+import { reply } from "./Reply";
 import { storageUtils } from "./storageUtils";
 class NewCli {
   constructor() {
@@ -20,7 +20,7 @@ class NewCli {
       if (e.code === "EPIPE") process.exit();
     });
     config.init(JSON.parse(process.env.ccagml || "{}"));
-    log.init();
+    reply.init();
     storageUtils.init();
     if (myPluginBase.base_init()) {
       myPluginBase.save();

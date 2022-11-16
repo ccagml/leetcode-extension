@@ -9,7 +9,7 @@
 
 import { commUtils } from "../commUtils";
 import { config } from "../config";
-import { log } from "../log";
+import { reply } from "../Reply";
 import { myPluginBase } from "../my_plugin_base";
 import { session } from "../session";
 
@@ -69,7 +69,7 @@ class PluginCommand {
       all_plugin = all_plugin.filter((x) => x.name === name);
     }
     if (all_plugin.length === 0) {
-      return log.fatal("Plugin not found!");
+      return reply.fatal("Plugin not found!");
     }
 
     const p = all_plugin[0];
@@ -84,7 +84,7 @@ class PluginCommand {
       p.save();
       myPluginBase.init();
     } else if (argv.config) {
-      log.info(JSON.stringify(config.plugins[name] || {}, null, 2));
+      reply.info(JSON.stringify(config.plugins[name] || {}, null, 2));
     }
   };
 }

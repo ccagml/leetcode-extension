@@ -16,7 +16,7 @@ let prompt_out = require("prompt");
 import { config } from "../config";
 import { commUtils } from "../commUtils";
 import { storageUtils } from "../storageUtils";
-import { log } from "../log";
+import { reply } from "../Reply";
 import { session } from "../session";
 import { MyPluginBase } from "../my_plugin_base";
 import { Queue } from "../queue";
@@ -517,10 +517,10 @@ class LeetCode extends MyPluginBase {
           user.hash = f.id_hash;
           user.name = favorites.user_name;
         } else {
-          log.warn("Favorite not found?");
+          reply.warn("Favorite not found?");
         }
       } else {
-        log.warn("Failed to retrieve user favorites: " + e);
+        reply.warn("Failed to retrieve user favorites: " + e);
       }
 
       that.getUserInfo(function (e, _user) {
@@ -643,7 +643,7 @@ class LeetCode extends MyPluginBase {
             },
           ],
           function (e, result) {
-            if (e) return log.info(e);
+            if (e) return reply.info(e);
             const authenticityTokenTwoFactor = body.match(
               /name="authenticity_token" value="(.*?)"/
             );

@@ -10,7 +10,6 @@
 // let underscore = require('underscore');
 
 import { commUtils } from "../commUtils";
-// import { log } from "../log";
 import { storageUtils } from "../storageUtils";
 import { session } from "../session";
 

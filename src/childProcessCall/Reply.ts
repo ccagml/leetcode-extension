@@ -1,7 +1,7 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/log.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/Response.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
@@ -9,7 +9,7 @@
 
 let _ = require("underscore");
 
-class LOG {
+class Reply {
   output = _.bind(console.log, console);
   level;
   levels = new Map([
@@ -59,4 +59,4 @@ class LOG {
   }
 }
 
-export const log: LOG = new LOG();
+export const reply: Reply = new Reply();

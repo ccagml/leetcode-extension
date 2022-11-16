@@ -8,7 +8,7 @@
  */
 
 import { commUtils } from "../commUtils";
-import { log } from "../log";
+import { reply } from "../Reply";
 import { corePlugin } from "../core";
 import { session } from "../session";
 
@@ -39,11 +39,11 @@ class StarCommand {
     session.argv = argv;
     // translation doesn't affect question lookup
     corePlugin.getProblem(argv.keyword, true, function (e, problem) {
-      if (e) return log.info(e);
+      if (e) return reply.info(e);
 
       corePlugin.starProblem(problem, !argv.delete, function (e, starred) {
-        if (e) return log.info(e);
-        log.info(
+        if (e) return reply.info(e);
+        reply.info(
           `[${problem.fid}] ${problem.name} ${
             starred ? "icon.like" : "icon.unlike"
           }`

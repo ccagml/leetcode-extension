@@ -12,7 +12,7 @@ let lodash = require("lodash");
 
 import { commUtils } from "../commUtils";
 import { storageUtils } from "../storageUtils";
-import { log } from "../log";
+import { reply } from "../Reply";
 import { corePlugin } from "../core";
 import { session } from "../session";
 
@@ -78,7 +78,7 @@ class TestCommand {
   runTest(argv) {
     let that = this;
     if (!storageUtils.exist(argv.filename))
-      return log.fatal("File " + argv.filename + " not exist!");
+      return reply.fatal("File " + argv.filename + " not exist!");
 
     const meta = storageUtils.meta(argv.filename);
 
@@ -87,7 +87,7 @@ class TestCommand {
 
     corePlugin.getProblem(meta, true, function (e, problem) {
       if (e)
-        return log.info(
+        return reply.info(
           JSON.stringify({
             messages: ["error"],
             code: [-1],
@@ -96,7 +96,7 @@ class TestCommand {
         );
 
       if (!problem.testable)
-        return log.info(
+        return reply.info(
           JSON.stringify({
             messages: ["error"],
             code: [-2],
@@ -123,7 +123,7 @@ class TestCommand {
         let temp_collect = "";
         for (let all_input = 0; all_input < input.length; all_input++) {
           const element = input[all_input];
-          var check_index = element.indexOf("输入");
+          let check_index = element.indexOf("输入");
           if (check_index == -1) {
             check_index = element.indexOf("Input:");
           }
@@ -133,7 +133,7 @@ class TestCommand {
             continue;
           }
 
-          var check_index = element.indexOf("输出");
+          check_index = element.indexOf("输出");
           if (check_index == -1) {
             check_index = element.indexOf("Output:");
           }
@@ -179,7 +179,7 @@ class TestCommand {
       }
 
       if (!problem.testcase)
-        return log.info(
+        return reply.info(
           JSON.stringify({
             messages: ["error"],
             code: [-3],
@@ -191,7 +191,7 @@ class TestCommand {
       problem.lang = meta.lang;
 
       corePlugin.testProblem(problem, function (e, results) {
-        if (e) return log.info(JSON.stringify(e));
+        if (e) return reply.info(JSON.stringify(e));
 
         results = _.sortBy(results, (x) => x.type);
 
@@ -224,7 +224,7 @@ class TestCommand {
         that.printResult(results[0], results[0].runtime, "output", log_obj);
         that.printResult(results[0], null, "expected_answer", log_obj);
         that.printResult(results[0], null, "stdout", log_obj);
-        log.info(JSON.stringify(log_obj));
+        reply.info(JSON.stringify(log_obj));
       });
     });
   }
@@ -235,7 +235,7 @@ class TestCommand {
     if (!argv.i) return that.runTest(argv);
 
     commUtils.readStdin(function (e, data) {
-      if (e) return log.info(e);
+      if (e) return reply.info(e);
 
       argv.testcase = data;
       return that.runTest(argv);

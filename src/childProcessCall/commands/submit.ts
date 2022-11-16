@@ -12,7 +12,7 @@ let lodash = require("lodash");
 
 import { commUtils } from "../commUtils";
 import { storageUtils } from "../storageUtils";
-import { log } from "../log";
+import { reply } from "../Reply";
 import { corePlugin } from "../core";
 import { session } from "../session";
 
@@ -57,19 +57,19 @@ class SubmitCommand {
   handler(argv) {
     session.argv = argv;
     if (!storageUtils.exist(argv.filename))
-      return log.fatal("File " + argv.filename + " not exist!");
+      return reply.fatal("File " + argv.filename + " not exist!");
 
     const meta = storageUtils.meta(argv.filename);
     let that = this;
     // translation doesn't affect problem lookup
     corePlugin.getProblem(meta, true, function (e, problem) {
-      if (e) return log.info(e);
+      if (e) return reply.info(e);
 
       problem.file = argv.filename;
       problem.lang = meta.lang;
 
       corePlugin.submitProblem(problem, function (e, results) {
-        if (e) return log.info(e);
+        if (e) return reply.info(e);
 
         const result = results[0];
 
@@ -106,7 +106,7 @@ class SubmitCommand {
                 result.runtime_percentile.toFixed(2),
                 result.lang
               );
-            else return log.warn("Failed to get runtime percentile.");
+            else return reply.warn("Failed to get runtime percentile.");
             if (result.memory && result.memory_percentile)
               that.printLine(
                 log_obj,
@@ -116,7 +116,7 @@ class SubmitCommand {
                 result.lang,
                 result.memory
               );
-            else return log.warn("Failed to get memory percentile.");
+            else return reply.warn("Failed to get memory percentile.");
           })();
         } else {
           result.testcase = result.testcase.slice(1, -1).replace(/\\n/g, "\n");
@@ -126,7 +126,7 @@ class SubmitCommand {
           that.printResult(result, "expected_answer", log_obj);
           that.printResult(result, "stdout", log_obj);
         }
-        log.info(JSON.stringify(log_obj));
+        reply.info(JSON.stringify(log_obj));
         corePlugin.updateProblem(problem, {
           state: result.ok ? "ac" : "notac",
         });

@@ -13,7 +13,7 @@ let childProcess = require("child_process");
 import { commUtils } from "../commUtils";
 import { storageUtils } from "../storageUtils";
 
-import { log } from "../log";
+import { reply } from "../Reply";
 import { config } from "../config";
 import { corePlugin } from "../core";
 import { session } from "../session";
@@ -111,8 +111,8 @@ class ShowCommand {
     if (needcode) {
       const template = problem.templates.find((x) => x.value === argv.lang);
       if (!template) {
-        log.info('Not supported language "' + argv.lang + '"');
-        log.warn("Supported languages: " + langlist);
+        reply.info('Not supported language "' + argv.lang + '"');
+        reply.warn("Supported languages: " + langlist);
         return;
       }
 
@@ -138,43 +138,43 @@ class ShowCommand {
       }
     } else {
       if (argv.codeonly) {
-        log.info(code);
+        reply.info(code);
         return;
       }
     }
 
-    log.info(`[${problem.fid}] ${problem.name}`);
-    log.info();
-    log.info(problem.link);
+    reply.info(`[${problem.fid}] ${problem.name}`);
+    reply.info();
+    reply.info(problem.link);
     if (argv.extra) {
-      log.info();
-      log.info("Tags:  " + taglist);
-      log.info();
-      log.info("Langs: " + langlist);
+      reply.info();
+      reply.info("Tags:  " + taglist);
+      reply.info();
+      reply.info("Langs: " + langlist);
     }
 
-    log.info();
-    log.info(`* ${problem.category}`);
-    log.info(
+    reply.info();
+    reply.info(`* ${problem.category}`);
+    reply.info(
       `* ${commUtils.prettyLevel(problem.level)} (${problem.percent.toFixed(
         2
       )}%)`
     );
 
-    if (problem.likes) log.info(`* Likes:    ${problem.likes}`);
-    if (problem.dislikes) log.info(`* Dislikes: ${problem.dislikes}`);
-    else log.info(`* Dislikes: -`);
-    if (problem.totalAC) log.info(`* Total Accepted:    ${problem.totalAC}`);
+    if (problem.likes) reply.info(`* Likes:    ${problem.likes}`);
+    if (problem.dislikes) reply.info(`* Dislikes: ${problem.dislikes}`);
+    else reply.info(`* Dislikes: -`);
+    if (problem.totalAC) reply.info(`* Total Accepted:    ${problem.totalAC}`);
     if (problem.totalSubmit)
-      log.info(`* Total Submissions: ${problem.totalSubmit}`);
+      reply.info(`* Total Submissions: ${problem.totalSubmit}`);
     if (problem.testable && problem.testcase) {
       let testcase_value = util.inspect(problem.testcase);
-      log.info(`* Testcase Example:  ${testcase_value}`);
+      reply.info(`* Testcase Example:  ${testcase_value}`);
     }
-    if (filename) log.info(`* Source Code:       ${filename}`);
+    if (filename) reply.info(`* Source Code:       ${filename}`);
 
-    log.info();
-    log.info(problem.desc);
+    reply.info();
+    reply.info(problem.desc);
   }
 
   handler(argv) {
@@ -186,7 +186,7 @@ class ShowCommand {
         argv.keyword,
         !argv.dontTranslate,
         function (e, problem) {
-          if (e) return log.info(e);
+          if (e) return reply.info(e);
           that.showProblem(problem, argv);
         }
       );

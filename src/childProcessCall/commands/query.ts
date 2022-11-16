@@ -8,7 +8,7 @@
  */
 
 import { commUtils } from "../commUtils";
-import { log } from "../log";
+import { reply } from "../Reply";
 import { corePlugin } from "../core";
 import { session } from "../session";
 
@@ -56,12 +56,12 @@ class QueryCommand {
     if (argv.a) {
       corePlugin.getTodayQuestion(function (e, result) {
         if (e) return;
-        log.info(JSON.stringify(result));
+        reply.info(JSON.stringify(result));
       });
     } else if (argv.b) {
       corePlugin.getUserContest(argv.b, function (e, result) {
         if (e) return;
-        log.info(JSON.stringify(result));
+        reply.info(JSON.stringify(result));
       });
     } else if (argv.c) {
       corePlugin.getRating(function (e, result) {
@@ -70,19 +70,19 @@ class QueryCommand {
             code: 101,
             data: {},
           };
-          log.info(JSON.stringify(log_data));
+          reply.info(JSON.stringify(log_data));
           return;
         }
         let log_data = {
           code: 100,
           data: result,
         };
-        log.info(JSON.stringify(log_data));
+        reply.info(JSON.stringify(log_data));
       });
     } else if (argv.z) {
       corePlugin.getQueryZ(argv.z, function (e, result) {
         if (e) return;
-        log.info(JSON.stringify(result));
+        reply.info(JSON.stringify(result));
       });
     }
   };

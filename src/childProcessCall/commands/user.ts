@@ -9,7 +9,7 @@
 
 let prompt_out = require("prompt");
 import { commUtils } from "../commUtils";
-import { log } from "../log";
+import { reply } from "../Reply";
 import { corePlugin } from "../core";
 import { session } from "../session";
 
@@ -70,23 +70,23 @@ class UserCommand {
         ],
         function (e, user) {
           if (e) {
-            return log.info(JSON.stringify({ code: -1, msg: e.msg || e }));
+            return reply.info(JSON.stringify({ code: -1, msg: e.msg || e }));
           }
 
           corePlugin.login(user, function (e, user) {
             if (e) {
-              return log.info(JSON.stringify({ code: -2, msg: e.msg || e }));
+              return reply.info(JSON.stringify({ code: -2, msg: e.msg || e }));
             }
-            log.info(JSON.stringify({ code: 100, user_name: user.name }));
+            reply.info(JSON.stringify({ code: 100, user_name: user.name }));
           });
         }
       );
     } else if (argv.logout) {
       // logout
       user = corePlugin.logout(user, true);
-      if (user) log.info(JSON.stringify({ code: 100, user_name: user.name }));
+      if (user) reply.info(JSON.stringify({ code: 100, user_name: user.name }));
       else
-        log.info(JSON.stringify({ code: -3, msg: "You are not login yet?" }));
+        reply.info(JSON.stringify({ code: -3, msg: "You are not login yet?" }));
       // third parties
     } else if (argv.github || argv.linkedin) {
       // add future third parties here
@@ -109,11 +109,13 @@ class UserCommand {
           ],
           function (e, user) {
             if (e)
-              return log.info(JSON.stringify({ code: -4, msg: e.msg || e }));
+              return reply.info(JSON.stringify({ code: -4, msg: e.msg || e }));
             coreFunction(user, function (e, user) {
               if (e)
-                return log.info(JSON.stringify({ code: -5, msg: e.msg || e }));
-              log.info(JSON.stringify({ code: 100, user_name: user.name }));
+                return reply.info(
+                  JSON.stringify({ code: -5, msg: e.msg || e })
+                );
+              reply.info(JSON.stringify({ code: 100, user_name: user.name }));
             });
           }
         );
@@ -129,11 +131,11 @@ class UserCommand {
           { name: "cookie", required: true },
         ],
         function (e, user) {
-          if (e) return log.info(e);
+          if (e) return reply.info(e);
           corePlugin.cookieLogin(user, function (e, user) {
             if (e)
-              return log.info(JSON.stringify({ code: -6, msg: e.msg || e }));
-            log.info(JSON.stringify({ code: 100, user_name: user.name }));
+              return reply.info(JSON.stringify({ code: -6, msg: e.msg || e }));
+            reply.info(JSON.stringify({ code: 100, user_name: user.name }));
           });
         }
       );
@@ -141,9 +143,9 @@ class UserCommand {
       // show current user
       user = session.getUser();
       if (user) {
-        log.info(JSON.stringify({ code: 100, user_name: user.name }));
+        reply.info(JSON.stringify({ code: 100, user_name: user.name }));
       } else
-        return log.info(
+        return reply.info(
           JSON.stringify({ code: -7, msg: "You are not login yet?" })
         );
     }

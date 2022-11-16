@@ -57,6 +57,9 @@ module.exports = {
     // get 和 set 是否必须放在一起：关闭。
     "@typescript-eslint/adjacent-overload-signatures": ["off"],
     "no-async-promise-executor": ["off"],
+    "prefer-spread": ["off"],
+    "prefer-rest-params": ["off"],
+    "@typescript-eslint/no-explicit-any": ["off"],
   },
   // 如果有 js 和 ts 需要分开指定的规则，就 js 写 rules 里，ts 写 overrides 里
   overrides: [

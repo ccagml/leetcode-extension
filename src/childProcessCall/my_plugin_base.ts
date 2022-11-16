@@ -11,7 +11,6 @@ let underscore = require("underscore");
 
 import { config as out_config } from "./config";
 import { storageUtils } from "./storageUtils";
-// import { log } from "./log";
 import { commUtils } from "./commUtils";
 
 export class MyPluginBase {
@@ -30,7 +29,7 @@ export class MyPluginBase {
   config;
   constructor() {}
 
-  public save() {
+  public save(): void {
     const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
 
     if (this.deleted) delete stats[this.name];
@@ -39,12 +38,12 @@ export class MyPluginBase {
     storageUtils.setCache(commUtils.KEYS.plugins, stats);
   }
 
-  public init() {
+  public init(): void {
     this.config = out_config.plugins[this.name] || {};
     this.next = null;
   }
 
-  public base_init(head?) {
+  public base_init(head?): Object {
     head = head || require("./core").corePlugin;
     const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
     let file_plugin: Array<any> = storageUtils.listCodeDir("plugins");
@@ -82,102 +81,102 @@ export class MyPluginBase {
     return true;
   }
 
-  public setNext(next) {
+  public setNext(next): void {
     Object.setPrototypeOf(this, next);
     this.next = next;
   }
-  public save_all() {
+  public save_all(): void {
     for (let p of this.plugins) {
       p.save();
     }
   }
 
-  public getProblems(Translate: boolean, cb) {
+  public getProblems(Translate: boolean, cb: Function): void {
     this.next.getProblems(Translate, cb);
   }
-  public getQuestionOfToday(cb) {
+  public getQuestionOfToday(cb: Function): void {
     this.next.getQuestionOfToday(cb);
   }
 
-  public getRatingOnline(cb) {
+  public getRatingOnline(cb: Function): void {
     this.next.getRatingOnline(cb);
   }
 
-  public getTestApi(username, cb) {
+  public getTestApi(username, cb: Function): void {
     this.next.getTestApi(username, cb);
   }
-  public getUserContestP(username, cb) {
+  public getUserContestP(username, cb: Function): void {
     this.next.getUserContestP(username, cb);
   }
-  public getProblemsTitle(cb) {
+  public getProblemsTitle(cb: Function): void {
     this.next.getProblemsTitle(cb);
   }
-  public createSession(a, cb) {
+  public createSession(a, cb: Function): void {
     this.next.createSession(a, cb);
   }
-  public getSessions(cb) {
+  public getSessions(cb: Function): void {
     this.next.getSessions(cb);
   }
-  public activateSession(s, cb) {
+  public activateSession(s, cb: Function): void {
     this.next.activateSession(s, cb);
   }
-  public deleteSession(s, cb) {
+  public deleteSession(s, cb: Function): void {
     this.next.deleteSession(s, cb);
   }
-  public updateProblem(a, b) {
+  public updateProblem(a, b): void {
     this.next.updateProblem(a, b);
   }
-  public getSubmissions(s, cb) {
+  public getSubmissions(s, cb: Function): void {
     this.next.getSubmissions(s, cb);
   }
-  public getSubmission(s, cb) {
+  public getSubmission(s, cb: Function): void {
     this.next.getSubmission(s, cb);
   }
-  public submitProblem(s, cb) {
+  public submitProblem(s, cb: Function): void {
     this.next.submitProblem(s, cb);
   }
-  public testProblem(s, cb) {
+  public testProblem(s, cb: Function): void {
     this.next.testProblem(s, cb);
   }
-  public login(user, cb) {
+  public login(user, cb: Function): void {
     this.next.login(user, cb);
   }
-  public logout(user, cb) {
+  public logout(user, cb): void {
     this.next.logout(user, cb);
   }
-  public githubLogin(user, cb) {
+  public githubLogin(user, cb: Function): void {
     this.next.githubLogin(user, cb);
   }
-  public linkedinLogin(user, cb) {
+  public linkedinLogin(user, cb: Function): void {
     this.next.linkedinLogin(user, cb);
   }
-  public cookieLogin(user, cb) {
+  public cookieLogin(user, cb: Function): void {
     this.next.cookieLogin(user, cb);
   }
-  public filterProblems(opts, cb) {
+  public filterProblems(opts, cb: Function): void {
     this.next.filterProblems(opts, cb);
   }
 
-  public getProblem(keyword, needTranslation, cb) {
+  public getProblem(keyword, needTranslation, cb: Function): void {
     this.next.getProblem(keyword, needTranslation, cb);
   }
 
-  public starProblem(problem, starred, cb) {
+  public starProblem(problem, starred, cb: Function): void {
     this.next.starProblem(problem, starred, cb);
   }
-  public exportProblem(problem, opts) {
+  public exportProblem(problem, opts): void {
     this.next.exportProblem(problem, opts);
   }
 
-  public getTodayQuestion(cb) {
+  public getTodayQuestion(cb: Function): void {
     this.next.getTodayQuestion(cb);
   }
 
-  public getQueryZ(username, cb) {
+  public getQueryZ(username, cb: Function): void {
     this.next.getQueryZ(username, cb);
   }
 
-  public getUserContest(username, cb) {
+  public getUserContest(username, cb: Function): void {
     this.next.getUserContest(username, cb);
   }
 }

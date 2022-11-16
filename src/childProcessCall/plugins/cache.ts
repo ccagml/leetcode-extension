@@ -13,7 +13,6 @@ let underscore = require("underscore");
 
 import { storageUtils } from "../storageUtils";
 import { commUtils } from "../commUtils";
-// import { log } from "../log";
 import { session } from "../session";
 
 class CachePlugin extends MyPluginBase {

@@ -12,7 +12,6 @@ let util = require("util");
 let _ = require("underscore");
 let cheerio = require("cheerio");
 
-// import { log } from "./log";
 import { storageUtils } from "./storageUtils";
 
 import { MyPluginBase } from "./my_plugin_base";
