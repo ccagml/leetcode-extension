@@ -7,18 +7,13 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
-
 // import { helper } from "../helper";
 // import { corePlugin } from "../core";
 // import { log } from "../log";
 // import { session } from "../session";
 
-
 class SessionCommand {
-  constructor() {
-
-  }
+  constructor() {}
 
   // printSessions(e, sessions) {
   //   if (e) return log.info(e);
@@ -81,6 +76,5 @@ class SessionCommand {
   //   });
   // };
 }
-
 
 export const sessionCommand: SessionCommand = new SessionCommand();

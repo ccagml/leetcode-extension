@@ -7,7 +7,6 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
 import { ViewColumn, commands } from "vscode";
 import { BaseWebViewService } from "./BaseWebviewService";
 import { markdownService } from "./MarkdownService";
@@ -16,44 +15,40 @@ import { IWebViewOption } from "../model/Model";
 import { promptHintMessage } from "../utils/OutputUtils";
 
 class SubmissionService extends BaseWebViewService {
+  protected readonly viewType: string = "leetcode.submission";
+  private result: IResult;
 
-    protected readonly viewType: string = "leetcode.submission";
-    private result: IResult;
+  public show(resultString: string): void {
+    this.result = this.parseResult(resultString);
+    this.showWebviewInternal();
+    this.showKeybindingsHint();
+  }
+  public getSubmitEvent(): ISubmitEvent {
+    return this.result.system_message as unknown as ISubmitEvent;
+  }
 
-    public show(resultString: string): void {
-        this.result = this.parseResult(resultString);
-        this.showWebviewInternal();
-        this.showKeybindingsHint();
-    }
-    public getSubmitEvent(): ISubmitEvent {
-        return this.result.system_message as unknown as ISubmitEvent;
-    }
+  protected getWebviewOption(): IWebViewOption {
+    return {
+      title: "Submission",
+      viewColumn: ViewColumn.Two,
+    };
+  }
 
-    protected getWebviewOption(): IWebViewOption {
-        return {
-            title: "Submission",
-            viewColumn: ViewColumn.Two,
-        };
-    }
-
-    protected getWebviewContent(): string {
-        const styles: string = markdownService.getStyles();
-        const title: string = `## ${this.result.messages[0]}`;
-        const messages: string[] = this.result.messages.slice(1).map((m: string) => `* ${m}`);
-        const sections: string[] = Object.keys(this.result)
-            .filter((key: string) => (key !== "messages" && key !== "system_message"))
-            .map((key: string) => [
-                `### ${key}`,
-                "```",
-                this.result[key].join("\n"),
-                "```",
-            ].join("\n"));
-        const body: string = markdownService.render([
-            title,
-            ...messages,
-            ...sections,
-        ].join("\n"));
-        return `
+  protected getWebviewContent(): string {
+    const styles: string = markdownService.getStyles();
+    const title: string = `## ${this.result.messages[0]}`;
+    const messages: string[] = this.result.messages
+      .slice(1)
+      .map((m: string) => `* ${m}`);
+    const sections: string[] = Object.keys(this.result)
+      .filter((key: string) => key !== "messages" && key !== "system_message")
+      .map((key: string) =>
+        [`### ${key}`, "```", this.result[key].join("\n"), "```"].join("\n")
+      );
+    const body: string = markdownService.render(
+      [title, ...messages, ...sections].join("\n")
+    );
+    return `
             <!DOCTYPE html>
             <html>
             <head>
@@ -67,35 +62,37 @@ class SubmissionService extends BaseWebViewService {
             </body>
             </html>
         `;
-    }
+  }
 
-    protected onDidDisposeWebview(): void {
-        super.onDidDisposeWebview();
-    }
+  protected onDidDisposeWebview(): void {
+    super.onDidDisposeWebview();
+  }
 
-    private async showKeybindingsHint(): Promise<void> {
-        let that = this;
-        await promptHintMessage(
-            "hint.commandShortcut",
-            'You can customize shortcut key bindings in File > Preferences > Keyboard Shortcuts with query "leetcode".',
-            "Open Keybindings",
-            (): Promise<any> => that.openKeybindingsEditor("leetcode solution"),
-        );
-    }
+  private async showKeybindingsHint(): Promise<void> {
+    let that = this;
+    await promptHintMessage(
+      "hint.commandShortcut",
+      'You can customize shortcut key bindings in File > Preferences > Keyboard Shortcuts with query "leetcode".',
+      "Open Keybindings",
+      (): Promise<any> => that.openKeybindingsEditor("leetcode solution")
+    );
+  }
 
-    private async openKeybindingsEditor(query?: string): Promise<void> {
-        await commands.executeCommand("workbench.action.openGlobalKeybindings", query);
-    }
+  private async openKeybindingsEditor(query?: string): Promise<void> {
+    await commands.executeCommand(
+      "workbench.action.openGlobalKeybindings",
+      query
+    );
+  }
 
-    private parseResult(raw: string): IResult {
-        return JSON.parse(raw);
-    }
+  private parseResult(raw: string): IResult {
+    return JSON.parse(raw);
+  }
 }
 
 interface IResult {
-    [key: string]: string[];
-    messages: string[];
+  [key: string]: string[];
+  messages: string[];
 }
-
 
 export const submissionService: SubmissionService = new SubmissionService();

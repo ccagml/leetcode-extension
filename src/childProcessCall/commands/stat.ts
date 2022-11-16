@@ -7,7 +7,6 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
 // let moment_out = require('moment');
 // let underscore = require('underscore');
 
@@ -17,9 +16,7 @@
 // import { session } from "../session";
 
 class StatCommand {
-  constructor() {
-
-  }
+  constructor() {}
 
   // process_argv(argv) {
   //   let argv_config = helper.base_argv().option('c', {
@@ -217,4 +214,3 @@ class StatCommand {
 }
 
 export const statCommand: StatCommand = new StatCommand();
-

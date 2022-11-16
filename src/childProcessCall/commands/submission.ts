@@ -7,13 +7,9 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
-
 // let path = require('path');
 
 // let _ = require('underscore');
-
-
 
 // import { helper } from "../helper";
 // import { file } from "../file";
@@ -23,11 +19,8 @@
 // import { corePlugin } from "../core";
 // import { session } from "../session";
 
-
 class SubMission {
-  constructor() {
-
-  }
+  constructor() {}
 
   // process_argv = function (argv) {
   //   let argv_config = helper.base_argv().option('a', {
@@ -69,7 +62,6 @@ class SubMission {
 
   //   return argv_config.get_result();
   // };
-
 
   // doTask(problem, queue, cb) {
   //   let that = this;
@@ -160,7 +152,5 @@ class SubMission {
   //   });
   // };
 }
-
-
 
 export const subMissionCommand: SubMission = new SubMission();

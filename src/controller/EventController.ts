@@ -10,12 +10,12 @@
 import { eventService } from "../service/EventService";
 // 事件的控制器
 class EventContorller {
-    /**
-     * 监听事件
-     */
-    public add_event() {
-        eventService.add_event();
-    }
+  /**
+   * 监听事件
+   */
+  public add_event() {
+    eventService.add_event();
+  }
 }
 
 export const eventController: EventContorller = new EventContorller();

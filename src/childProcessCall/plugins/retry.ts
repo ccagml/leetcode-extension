@@ -7,38 +7,37 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
-
 import { MyPluginBase } from "../my_plugin_base";
 import { config } from "../config";
 import { session } from "../session";
 
-
 class RetryPlugin extends MyPluginBase {
   id = 30;
-  name = 'retry';
+  name = "retry";
   builtin = true;
   count = {};
 
   canRetry = (e, name) => {
-    return config.autologin.enable &&
-      (e === session.errors.EXPIRED) &&
-      (this.count[name] || 0) < config.autologin.retry;
+    return (
+      config.autologin.enable &&
+      e === session.errors.EXPIRED &&
+      (this.count[name] || 0) < config.autologin.retry
+    );
   };
   init = () => {
     const names = [
-      'activateSession',
-      'createSession',
-      'deleteSession',
-      'getProblems',
-      'getProblem',
-      'getSessions',
-      'getSubmissions',
-      'getSubmission',
-      'getFavorites',
-      'testProblem',
-      'submitProblem',
-      'starProblem'
+      "activateSession",
+      "createSession",
+      "deleteSession",
+      "getProblems",
+      "getProblem",
+      "getSessions",
+      "getSubmissions",
+      "getSubmission",
+      "getFavorites",
+      "testProblem",
+      "submitProblem",
+      "starProblem",
     ];
     let that = this;
     for (let name of names) {
@@ -73,10 +72,8 @@ class RetryPlugin extends MyPluginBase {
   // expired immediately. In that case we will try to re-login in
   // the backend to give a seamless user experience.
   relogin = (cb) => {
-
     const user = session.getUser();
     if (!user) {
-
       return cb();
     }
 
@@ -89,8 +86,6 @@ class RetryPlugin extends MyPluginBase {
       return cb();
     });
   };
-
 }
-
 
 export const pluginObj: RetryPlugin = new RetryPlugin();

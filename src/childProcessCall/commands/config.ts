@@ -7,10 +7,8 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
 // let underscore = require('underscore');
 // let nconf = require('nconf');
-
 
 // import { config } from "../config";
 // import { log } from "../log";
@@ -19,9 +17,7 @@
 // import { helper } from "../helper";
 
 class ConfigCommand {
-  constructor() {
-
-  }
+  constructor() {}
 
   // process_argv(argv) {
   //   let argv_config = helper.base_argv().option('a', {
@@ -51,7 +47,6 @@ class ConfigCommand {
   //   return argv_config.get_result();
   // }
 
-
   // prettyConfig(cfg) {
   //   return JSON.stringify(cfg, null, 2);
   // }
@@ -72,7 +67,6 @@ class ConfigCommand {
   //   // show all
   //   if (argv.key.length === 0)
   //     return log.info(this.prettyConfig(this.loadConfig(argv.all)));
-
 
   //   const v = nconf.get(argv.key);
 
@@ -99,8 +93,4 @@ class ConfigCommand {
   // };
 }
 
-
-
-
 export const configCommand: ConfigCommand = new ConfigCommand();
-

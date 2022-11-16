@@ -7,10 +7,8 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
-let util = require('util');
-let childProcess = require('child_process');
-
+let util = require("util");
+let childProcess = require("child_process");
 
 import { helper } from "../helper";
 import { storageUtils } from "../storageUtils";
@@ -21,70 +19,78 @@ import { corePlugin } from "../core";
 import { session } from "../session";
 
 class ShowCommand {
-  constructor() {
-
-  }
-
+  constructor() {}
 
   process_argv = function (argv) {
-    let argv_config = helper.base_argv().option('c', {
-      alias: 'codeonly',
-      type: 'boolean',
-      default: false,
-      describe: 'Only show code template'
-    }).option('e', {
-      alias: 'editor',
-      type: 'string',
-      describe: 'Open source code in editor'
-    }).option('g', {
-      alias: 'gen',
-      type: 'boolean',
-      default: false,
-      describe: 'Generate source code'
-    }).option('l', {
-      alias: 'lang',
-      type: 'string',
-      default: config.code.lang,
-      describe: 'Programming language of the source code',
-      choices: config.sys.langs
-    }).option('o', {
-      alias: 'outdir',
-      type: 'string',
-      describe: 'Where to save source code',
-      default: '.'
-    }).option('q', corePlugin.filters.query)
-      .option('t', corePlugin.filters.tag)
-      .option('x', {
-        alias: 'extra',
-        type: 'boolean',
+    let argv_config = helper
+      .base_argv()
+      .option("c", {
+        alias: "codeonly",
+        type: "boolean",
         default: false,
-        describe: 'Show extra question details in source code'
-      }).option('T', {
-        alias: 'dontTranslate',
-        type: 'boolean',
+        describe: "Only show code template",
+      })
+      .option("e", {
+        alias: "editor",
+        type: "string",
+        describe: "Open source code in editor",
+      })
+      .option("g", {
+        alias: "gen",
+        type: "boolean",
         default: false,
-        describe: 'Set to true to disable endpoint\'s translation',
-      }).positional('keyword', {
-        type: 'string',
-        default: '',
-        describe: 'Show question by name or id'
+        describe: "Generate source code",
+      })
+      .option("l", {
+        alias: "lang",
+        type: "string",
+        default: config.code.lang,
+        describe: "Programming language of the source code",
+        choices: config.sys.langs,
+      })
+      .option("o", {
+        alias: "outdir",
+        type: "string",
+        describe: "Where to save source code",
+        default: ".",
+      })
+      .option("q", corePlugin.filters.query)
+      .option("t", corePlugin.filters.tag)
+      .option("x", {
+        alias: "extra",
+        type: "boolean",
+        default: false,
+        describe: "Show extra question details in source code",
+      })
+      .option("T", {
+        alias: "dontTranslate",
+        type: "boolean",
+        default: false,
+        describe: "Set to true to disable endpoint's translation",
+      })
+      .positional("keyword", {
+        type: "string",
+        default: "",
+        describe: "Show question by name or id",
       });
     argv_config.process_argv(argv);
     return argv_config.get_result();
   };
   genFileName(problem, opts) {
-    const path = require('path');
+    const path = require("path");
     const params = [
       storageUtils.fmt(config.file.show, problem),
-      '',
-      helper.langToExt(opts.lang)
+      "",
+      helper.langToExt(opts.lang),
     ];
 
     // try new name to avoid overwrite by mistake
     for (let i = 0; ; ++i) {
-      const name = path.join(opts.outdir, params.join('.').replace(/\.+/g, '.'));
-      if (!storageUtils.exist(name))
-        return name;
+      const name = path.join(
+        opts.outdir,
+        params.join(".").replace(/\.+/g, ".")
+      );
+      if (!storageUtils.exist(name)) return name;
       params[1] = i;
     }
   }
@@ -93,27 +99,27 @@ class ShowCommand {
     const taglist = [problem.category]
       .concat(problem.companies || [])
       .concat(problem.tags || [])
-      .map(x => helper.badge(x))
-      .join(' ');
+      .map((x) => helper.badge(x))
+      .join(" ");
     const langlist = problem.templates
-      .map(x => helper.badge(x.value))
+      .map((x) => helper.badge(x.value))
       .sort()
-      .join(' ');
+      .join(" ");
 
     let code;
     const needcode = argv.gen || argv.codeonly;
     if (needcode) {
-      const template = problem.templates.find(x => x.value === argv.lang);
+      const template = problem.templates.find((x) => x.value === argv.lang);
       if (!template) {
         log.info('Not supported language "' + argv.lang + '"');
-        log.warn('Supported languages: ' + langlist);
+        log.warn("Supported languages: " + langlist);
         return;
       }
 
       const opts = {
         lang: argv.lang,
         code: template.defaultCode,
-        tpl: argv.extra ? 'detailed' : 'codeonly'
+        tpl: argv.extra ? "detailed" : "codeonly",
       };
       code = corePlugin.exportProblem(problem, opts);
     }
@@ -127,7 +133,7 @@ class ShowCommand {
       if (argv.editor !== undefined) {
         childProcess.spawn(argv.editor || config.code.editor, [filename], {
           // in case your editor of choice is vim or emacs
-          stdio: 'inherit'
+          stdio: "inherit",
         });
       }
     } else {
@@ -142,31 +148,28 @@ class ShowCommand {
     log.info(problem.link);
     if (argv.extra) {
       log.info();
-      log.info('Tags:  ' + taglist);
+      log.info("Tags:  " + taglist);
       log.info();
-      log.info('Langs: ' + langlist);
+      log.info("Langs: " + langlist);
     }
 
     log.info();
     log.info(`* ${problem.category}`);
-    log.info(`* ${helper.prettyLevel(problem.level)} (${problem.percent.toFixed(2)}%)`);
+    log.info(
+      `* ${helper.prettyLevel(problem.level)} (${problem.percent.toFixed(2)}%)`
+    );
 
-    if (problem.likes)
-      log.info(`* Likes:    ${problem.likes}`);
-    if (problem.dislikes)
-      log.info(`* Dislikes: ${problem.dislikes}`);
-    else
-      log.info(`* Dislikes: -`);
-    if (problem.totalAC)
-      log.info(`* Total Accepted:    ${problem.totalAC}`);
+    if (problem.likes) log.info(`* Likes:    ${problem.likes}`);
+    if (problem.dislikes) log.info(`* Dislikes: ${problem.dislikes}`);
+    else log.info(`* Dislikes: -`);
+    if (problem.totalAC) log.info(`* Total Accepted:    ${problem.totalAC}`);
     if (problem.totalSubmit)
       log.info(`* Total Submissions: ${problem.totalSubmit}`);
     if (problem.testable && problem.testcase) {
       let testcase_value = util.inspect(problem.testcase);
       log.info(`* Testcase Example:  ${testcase_value}`);
     }
-    if (filename)
-      log.info(`* Source Code:       ${filename}`);
+    if (filename) log.info(`* Source Code:       ${filename}`);
 
     log.info();
     log.info(problem.desc);
@@ -177,16 +180,18 @@ class ShowCommand {
     session.argv = argv;
     if (argv.keyword.length > 0) {
       // show specific one
-      corePlugin.getProblem(argv.keyword, !argv.dontTranslate, function (e, problem) {
-        if (e) return log.info(e);
-        that.showProblem(problem, argv);
-      });
+      corePlugin.getProblem(
+        argv.keyword,
+        !argv.dontTranslate,
+        function (e, problem) {
+          if (e) return log.info(e);
+          that.showProblem(problem, argv);
+        }
+      );
     } else {
       //
     }
-  };
+  }
 }
 
 export const showCommand: ShowCommand = new ShowCommand();
-
-

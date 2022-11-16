@@ -7,8 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
-let underscore = require('underscore');
+let underscore = require("underscore");
 
 import { config as out_config } from "./config";
 import { storageUtils } from "./storageUtils";
@@ -29,8 +28,7 @@ export class MyPluginBase {
   installed: Array<MyPluginBase> = [];
   head; // 插件头 是core
   config;
-  constructor() {
-  }
+  constructor() {}
 
   public save() {
     const stats = storageUtils.getCache(helper.KEYS.plugins) || {};
@@ -39,17 +37,17 @@ export class MyPluginBase {
     else stats[this.name] = this.enabled;
 
     storageUtils.setCache(helper.KEYS.plugins, stats);
-  };
+  }
 
   public init() {
     this.config = out_config.plugins[this.name] || {};
     this.next = null;
-  };
+  }
 
   public base_init(head?) {
-    head = head || require('./core').corePlugin;
+    head = head || require("./core").corePlugin;
     const stats = storageUtils.getCache(helper.KEYS.plugins) || {};
-    let file_plugin: Array<any> = storageUtils.listCodeDir('plugins');
+    let file_plugin: Array<any> = storageUtils.listCodeDir("plugins");
     this.installed = [];
     for (let f of file_plugin) {
       const p = f.data;
@@ -66,7 +64,7 @@ export class MyPluginBase {
       this.installed.push(p);
     }
     // 根据id大小排序, 大的前面
-    this.installed = underscore.sortBy(this.installed, x => -x.id);
+    this.installed = underscore.sortBy(this.installed, (x) => -x.id);
     // 从小的开始init
     for (let i = this.installed.length - 1; i >= 0; --i) {
       const p = this.installed[i];
@@ -75,24 +73,24 @@ export class MyPluginBase {
       }
     }
     // 连成链表状
-    this.plugins = this.installed.filter(x => x.enabled);
+    this.plugins = this.installed.filter((x) => x.enabled);
     let last = head;
     for (let p of this.plugins) {
       last.setNext(p);
       last = p;
     }
     return true;
-  };
+  }
 
   public setNext(next) {
     Object.setPrototypeOf(this, next);
     this.next = next;
-  };
+  }
   public save_all() {
     for (let p of this.plugins) {
       p.save();
     }
-  };
+  }
 
   public getProblems(Translate: boolean, cb) {
     this.next.getProblems(Translate, cb);
@@ -122,47 +120,36 @@ export class MyPluginBase {
   }
   public activateSession(s, cb) {
     this.next.activateSession(s, cb);
-
   }
   public deleteSession(s, cb) {
     this.next.deleteSession(s, cb);
-
   }
   public updateProblem(a, b) {
     this.next.updateProblem(a, b);
-
   }
   public getSubmissions(s, cb) {
     this.next.getSubmissions(s, cb);
-
   }
   public getSubmission(s, cb) {
     this.next.getSubmission(s, cb);
-
   }
   public submitProblem(s, cb) {
     this.next.submitProblem(s, cb);
-
   }
   public testProblem(s, cb) {
     this.next.testProblem(s, cb);
-
   }
   public login(user, cb) {
     this.next.login(user, cb);
-
   }
   public logout(user, cb) {
     this.next.logout(user, cb);
-
   }
   public githubLogin(user, cb) {
     this.next.githubLogin(user, cb);
-
   }
   public linkedinLogin(user, cb) {
     this.next.linkedinLogin(user, cb);
-
   }
   public cookieLogin(user, cb) {
     this.next.cookieLogin(user, cb);
@@ -194,7 +181,5 @@ export class MyPluginBase {
     this.next.getUserContest(username, cb);
   }
 }
-
-
 
 export const myPluginBase: MyPluginBase = new MyPluginBase();

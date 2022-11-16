@@ -7,11 +7,8 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
-
-let util = require('util');
-let lodash = require('lodash');
-
+let util = require("util");
+let lodash = require("lodash");
 
 import { helper } from "../helper";
 import { storageUtils } from "../storageUtils";
@@ -19,33 +16,27 @@ import { log } from "../log";
 import { corePlugin } from "../core";
 import { session } from "../session";
 
-
-
 class SubmitCommand {
-  constructor() {
-
-  }
-
+  constructor() {}
 
   process_argv(argv) {
-    let argv_config = helper.base_argv().positional('filename', {
-      type: 'string',
-      describe: 'Code file to submit',
-      default: ''
+    let argv_config = helper.base_argv().positional("filename", {
+      type: "string",
+      describe: "Code file to submit",
+      default: "",
     });
     argv_config.process_argv(argv);
 
     return argv_config.get_result();
   }
 
-
   printResult(actual, k, log_obj) {
     if (!actual.hasOwnProperty(k)) return;
 
-    const v = actual[k] || '';
+    const v = actual[k] || "";
     const lines = Array.isArray(v) ? v : [v];
     for (let line of lines) {
-      if (k !== 'state') {
+      if (k !== "state") {
         if (!log_obj.hasOwnProperty(lodash.startCase(k))) {
           log_obj[lodash.startCase(k)] = [line];
         } else {
@@ -66,7 +57,7 @@ class SubmitCommand {
   handler(argv) {
     session.argv = argv;
     if (!storageUtils.exist(argv.filename))
-      return log.fatal('File ' + argv.filename + ' not exist!');
+      return log.fatal("File " + argv.filename + " not exist!");
 
     const meta = storageUtils.meta(argv.filename);
     let that = this;
@@ -91,41 +82,57 @@ class SubmitCommand {
         log_obj.system_message.sub_type = "submit";
         log_obj.system_message.accepted = false;
 
-        that.printResult(result, 'state', log_obj);
-        that.printLine(log_obj, result, '%d/%d cases passed (%s)',
-          result.passed, result.total, result.runtime);
+        that.printResult(result, "state", log_obj);
+        that.printLine(
+          log_obj,
+          result,
+          "%d/%d cases passed (%s)",
+          result.passed,
+          result.total,
+          result.runtime
+        );
 
         if (result.ok) {
-          session.updateStat('ac', 1);
-          session.updateStat('ac.set', problem.fid);
+          session.updateStat("ac", 1);
+          session.updateStat("ac.set", problem.fid);
           log_obj.system_message.accepted = true;
 
           (function () {
             if (result.runtime_percentile)
-              that.printLine(log_obj, result, 'Your runtime beats %d %% of %s submissions',
-                result.runtime_percentile.toFixed(2), result.lang);
-            else
-              return log.warn('Failed to get runtime percentile.');
+              that.printLine(
+                log_obj,
+                result,
+                "Your runtime beats %d %% of %s submissions",
+                result.runtime_percentile.toFixed(2),
+                result.lang
+              );
+            else return log.warn("Failed to get runtime percentile.");
             if (result.memory && result.memory_percentile)
-              that.printLine(log_obj, result, 'Your memory usage beats %d %% of %s submissions (%s)',
-                result.memory_percentile.toFixed(2), result.lang, result.memory);
-            else
-              return log.warn('Failed to get memory percentile.');
+              that.printLine(
+                log_obj,
+                result,
+                "Your memory usage beats %d %% of %s submissions (%s)",
+                result.memory_percentile.toFixed(2),
+                result.lang,
+                result.memory
+              );
+            else return log.warn("Failed to get memory percentile.");
           })();
         } else {
-          result.testcase = result.testcase.slice(1, -1).replace(/\\n/g, '\n');
-          that.printResult(result, 'error', log_obj);
-          that.printResult(result, 'testcase', log_obj);
-          that.printResult(result, 'answer', log_obj);
-          that.printResult(result, 'expected_answer', log_obj);
-          that.printResult(result, 'stdout', log_obj);
+          result.testcase = result.testcase.slice(1, -1).replace(/\\n/g, "\n");
+          that.printResult(result, "error", log_obj);
+          that.printResult(result, "testcase", log_obj);
+          that.printResult(result, "answer", log_obj);
+          that.printResult(result, "expected_answer", log_obj);
+          that.printResult(result, "stdout", log_obj);
         }
         log.info(JSON.stringify(log_obj));
-        corePlugin.updateProblem(problem, { state: (result.ok ? 'ac' : 'notac') });
+        corePlugin.updateProblem(problem, {
+          state: result.ok ? "ac" : "notac",
+        });
       });
     });
-  };
+  }
 }
-
 
 export const submitCommand: SubmitCommand = new SubmitCommand();

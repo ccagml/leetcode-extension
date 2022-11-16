@@ -7,9 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
-
-let underscore = require('underscore');
+let underscore = require("underscore");
 
 import { config } from "./config";
 
@@ -30,12 +28,12 @@ export class Queue {
   addTask(task) {
     this.tasks.push(task);
     return this;
-  };
+  }
 
   addTasks(tasks) {
     this.tasks = this.tasks.concat(tasks);
     return this;
-  };
+  }
 
   run(concurrency?, onDone?) {
     this.concurrency = concurrency || config.network.concurrency || 1;
@@ -43,9 +41,11 @@ export class Queue {
 
     const self = this;
     for (let i = 0; i < this.concurrency; ++i) {
-      setImmediate(function () { self.workerRun(); });
+      setImmediate(function () {
+        self.workerRun();
+      });
     }
-  };
+  }
 
   workerRun() {
     // no more tasks, quit now
@@ -61,8 +61,9 @@ export class Queue {
       if (e) self.error = e;
 
       // TODO: could retry failed task here.
-      setImmediate(function () { self.workerRun(); });
+      setImmediate(function () {
+        self.workerRun();
+      });
     });
-  };
+  }
 }
-

@@ -1,4 +1,3 @@
-
 /*
  * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/commands/star.ts
  * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
@@ -8,30 +7,28 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
 import { helper } from "../helper";
 import { log } from "../log";
 import { corePlugin } from "../core";
 import { session } from "../session";
 
 class StarCommand {
-  constructor() {
-
-  }
+  constructor() {}
 
   process_argv(argv) {
-    let argv_config = helper.base_argv().option('d', {
-      alias: 'delete',
-      type: 'boolean',
-      describe: 'Unstar question',
-      default: false
-    })
-      .positional('keyword', {
-        type: 'string',
-        describe: 'Question name or id',
-        default: ''
+    let argv_config = helper
+      .base_argv()
+      .option("d", {
+        alias: "delete",
+        type: "boolean",
+        describe: "Unstar question",
+        default: false,
+      })
+      .positional("keyword", {
+        type: "string",
+        describe: "Question name or id",
+        default: "",
       });
-
 
     argv_config.process_argv(argv);
 
@@ -46,13 +43,15 @@ class StarCommand {
 
       corePlugin.starProblem(problem, !argv.delete, function (e, starred) {
         if (e) return log.info(e);
-        log.info(`[${problem.fid}] ${problem.name} ${starred ? 'icon.like' : 'icon.unlike'}`);
+        log.info(
+          `[${problem.fid}] ${problem.name} ${
+            starred ? "icon.like" : "icon.unlike"
+          }`
+        );
         corePlugin.updateProblem(problem, { starred: starred });
       });
     });
-  };
-
+  }
 }
-
 
 export const starCommand: StarCommand = new StarCommand();

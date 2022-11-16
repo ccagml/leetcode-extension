@@ -7,40 +7,41 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
 import { helper } from "../helper";
 import { config } from "../config";
 import { log } from "../log";
 import { myPluginBase } from "../my_plugin_base";
 import { session } from "../session";
 
-
 class PluginCommand {
-  constructor() {
-
-  }
+  constructor() {}
 
   process_argv = function (argv) {
-    let argv_config = helper.base_argv().option('d', {
-      alias: 'disable',
-      type: 'boolean',
-      describe: 'Disable plugin',
-      default: false
-    }).option('e', {
-      alias: 'enable',
-      type: 'boolean',
-      describe: 'Enable plugin',
-      default: false
-    }).option('i', {
-      alias: 'install',
-      type: 'boolean',
-      describe: 'Install plugin',
-      default: false
-    }).positional('name', {
-      type: 'string',
-      describe: 'Filter plugin by name',
-      default: ''
-    });
+    let argv_config = helper
+      .base_argv()
+      .option("d", {
+        alias: "disable",
+        type: "boolean",
+        describe: "Disable plugin",
+        default: false,
+      })
+      .option("e", {
+        alias: "enable",
+        type: "boolean",
+        describe: "Enable plugin",
+        default: false,
+      })
+      .option("i", {
+        alias: "install",
+        type: "boolean",
+        describe: "Install plugin",
+        default: false,
+      })
+      .positional("name", {
+        type: "string",
+        describe: "Filter plugin by name",
+        default: "",
+      });
 
     argv_config.process_argv(argv);
 
@@ -65,10 +66,10 @@ class PluginCommand {
     // }
 
     if (name) {
-      all_plugin = all_plugin.filter(x => x.name === name);
-    };
+      all_plugin = all_plugin.filter((x) => x.name === name);
+    }
     if (all_plugin.length === 0) {
-      return log.fatal('Plugin not found!');
+      return log.fatal("Plugin not found!");
     }
 
     const p = all_plugin[0];
@@ -87,6 +88,5 @@ class PluginCommand {
     }
   };
 }
-
 
 export const pluginCommand: PluginCommand = new PluginCommand();

@@ -7,11 +7,8 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
-
-let _ = require('underscore');
-let lodash = require('lodash');
-
+let _ = require("underscore");
+let lodash = require("lodash");
 
 import { helper } from "../helper";
 import { storageUtils } from "../storageUtils";
@@ -19,36 +16,34 @@ import { log } from "../log";
 import { corePlugin } from "../core";
 import { session } from "../session";
 
-
 class TestCommand {
-  constructor() {
-
-  }
-
+  constructor() {}
 
   process_argv(argv) {
-    let argv_config = helper.base_argv().option('i', {
-      alias: 'interactive',
-      type: 'boolean',
-      default: false,
-      describe: 'Provide test case interactively'
-    })
-      .option('t', {
-        alias: 'testcase',
-        type: 'string',
-        default: '',
-        describe: 'Provide test case'
-      })
-      .option('a', {
-        alias: 'allcase',
-        type: 'boolean',
+    let argv_config = helper
+      .base_argv()
+      .option("i", {
+        alias: "interactive",
+        type: "boolean",
         default: false,
-        describe: 'Provide all test case'
+        describe: "Provide test case interactively",
       })
-      .positional('filename', {
-        type: 'string',
-        default: '',
-        describe: 'Code file to test'
+      .option("t", {
+        alias: "testcase",
+        type: "string",
+        default: "",
+        describe: "Provide test case",
+      })
+      .option("a", {
+        alias: "allcase",
+        type: "boolean",
+        default: false,
+        describe: "Provide all test case",
+      })
+      .positional("filename", {
+        type: "string",
+        default: "",
+        describe: "Code file to test",
       });
 
     argv_config.process_argv(argv);
@@ -56,19 +51,18 @@ class TestCommand {
     return argv_config.get_result();
   }
 
-
   printResult(actual, extra, k, log_obj) {
     if (!actual.hasOwnProperty(k)) return;
     // HACk: leetcode still return 'Accepted' even the answer is wrong!!
-    const v = actual[k] || '';
-    if (k === 'state' && v === 'Accepted') return;
+    const v = actual[k] || "";
+    if (k === "state" && v === "Accepted") return;
 
     // let ok = actual.ok;
 
     const lines = Array.isArray(v) ? v : [v];
     for (let line of lines) {
-      const extraInfo = extra ? ` (${extra})` : '';
-      if (k !== 'state') {
+      const extraInfo = extra ? ` (${extra})` : "";
+      if (k !== "state") {
         let new_kk = lodash.startCase(k) + extraInfo;
         if (!log_obj.hasOwnProperty(new_kk)) {
           log_obj[new_kk] = [line];
@@ -84,7 +78,7 @@ class TestCommand {
   runTest(argv) {
     let that = this;
     if (!storageUtils.exist(argv.filename))
-      return log.fatal('File ' + argv.filename + ' not exist!');
+      return log.fatal("File " + argv.filename + " not exist!");
 
     const meta = storageUtils.meta(argv.filename);
 
@@ -92,23 +86,38 @@ class TestCommand {
     // messages: string[];
 
     corePlugin.getProblem(meta, true, function (e, problem) {
-      if (e) return log.info(JSON.stringify({ messages: ["error"], code: [-1], error: [e.msg || e] }));
+      if (e)
+        return log.info(
+          JSON.stringify({
+            messages: ["error"],
+            code: [-1],
+            error: [e.msg || e],
+          })
+        );
 
       if (!problem.testable)
-        return log.info(JSON.stringify({ messages: ["error"], code: [-2], error: ['not testable? please submit directly!'] }));
+        return log.info(
+          JSON.stringify({
+            messages: ["error"],
+            code: [-2],
+            error: ["not testable? please submit directly!"],
+          })
+        );
 
       if (argv.testcase) {
-        problem.testcase = argv.testcase.replace(/\\n/g, '\n');
+        problem.testcase = argv.testcase.replace(/\\n/g, "\n");
       }
 
       if (argv.allcase) {
         let new_desc = problem.desc;
-        new_desc = new_desc.replace(/<\/sup>/gm, '').replace(/<sup>/gm, '^');
-        new_desc = require('he').decode(require('cheerio').load(new_desc).root().text());
+        new_desc = new_desc.replace(/<\/sup>/gm, "").replace(/<sup>/gm, "^");
+        new_desc = require("he").decode(
+          require("cheerio").load(new_desc).root().text()
+        );
         // NOTE: wordwrap internally uses '\n' as EOL, so here we have to
         // remove all '\r' in the raw string.
-        new_desc = new_desc.replace(/\r\n/g, '\n').replace(/^ /mg, '⁠');
-        let input = (require('wordwrap')(120))(new_desc).split('\n');
+        new_desc = new_desc.replace(/\r\n/g, "\n").replace(/^ /gm, "⁠");
+        let input = require("wordwrap")(120)(new_desc).split("\n");
         let temp_test: Array<any> = [];
         let start_flag = false;
         let temp_collect = "";
@@ -160,7 +169,6 @@ class TestCommand {
               temp_collect = "";
             }
           }
-
         }
 
         if (temp_test.length < 1) {
@@ -171,7 +179,13 @@ class TestCommand {
       }
 
       if (!problem.testcase)
-        return log.info(JSON.stringify({ messages: ["error"], code: [-3], error: ['missing testcase?'] }));
+        return log.info(
+          JSON.stringify({
+            messages: ["error"],
+            code: [-3],
+            error: ["missing testcase?"],
+          })
+        );
 
       problem.file = argv.filename;
       problem.lang = meta.lang;
@@ -179,8 +193,7 @@ class TestCommand {
       corePlugin.testProblem(problem, function (e, results) {
         if (e) return log.info(JSON.stringify(e));
 
-
-        results = _.sortBy(results, x => x.type);
+        results = _.sortBy(results, (x) => x.type);
 
         let log_obj: any = {};
         log_obj.messages = [];
@@ -191,12 +204,12 @@ class TestCommand {
         log_obj.system_message.sub_type = "test";
         log_obj.system_message.accepted = false;
 
-        if (results[0].state === 'Accepted') {
-          results[0].state = 'Finished';
+        if (results[0].state === "Accepted") {
+          results[0].state = "Finished";
           log_obj.system_message.accepted = true;
         }
-        that.printResult(results[0], null, 'state', log_obj);
-        that.printResult(results[0], null, 'error', log_obj);
+        that.printResult(results[0], null, "state", log_obj);
+        that.printResult(results[0], null, "error", log_obj);
 
         results[0].your_input = problem.testcase;
         results[0].output = results[0].answer;
@@ -204,11 +217,13 @@ class TestCommand {
         if (results[1]) {
           results[0].expected_answer = results[1].answer;
         }
-        results[0].stdout = results[0].stdout.slice(1, -1).replace(/\\n/g, '\n');
-        that.printResult(results[0], null, 'your_input', log_obj);
-        that.printResult(results[0], results[0].runtime, 'output', log_obj);
-        that.printResult(results[0], null, 'expected_answer', log_obj);
-        that.printResult(results[0], null, 'stdout', log_obj);
+        results[0].stdout = results[0].stdout
+          .slice(1, -1)
+          .replace(/\\n/g, "\n");
+        that.printResult(results[0], null, "your_input", log_obj);
+        that.printResult(results[0], results[0].runtime, "output", log_obj);
+        that.printResult(results[0], null, "expected_answer", log_obj);
+        that.printResult(results[0], null, "stdout", log_obj);
         log.info(JSON.stringify(log_obj));
       });
     });
@@ -217,8 +232,7 @@ class TestCommand {
   handler(argv) {
     let that = this;
     session.argv = argv;
-    if (!argv.i)
-      return that.runTest(argv);
+    if (!argv.i) return that.runTest(argv);
 
     helper.readStdin(function (e, data) {
       if (e) return log.info(e);
@@ -226,8 +240,7 @@ class TestCommand {
       argv.testcase = data;
       return that.runTest(argv);
     });
-  };
+  }
 }
-
 
 export const testCommand: TestCommand = new TestCommand();
