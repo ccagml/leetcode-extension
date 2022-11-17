@@ -55,17 +55,6 @@ class PluginApi extends ApiBase {
     let all_plugin = chainMgr.installed;
     const name = argv.name;
 
-    // if (argv.install) {
-    //   const cb = function (e, p) {
-    //     if (e) return log.fatal(e);
-    //     p.help();
-    //     p.save();
-    //     chainMgr.init();
-    //   };
-
-    //   return;
-    // }
-
     if (name) {
       all_plugin = all_plugin.filter((x) => x.name === name);
     }
@@ -83,7 +72,7 @@ class PluginApi extends ApiBase {
     } else if (argv.delete) {
       // p.delete();
       p.save();
-      chainMgr.init();
+      chainMgr.init(undefined);
     } else if (argv.config) {
       reply.info(JSON.stringify(configUtils.plugins[name] || {}, null, 2));
     }

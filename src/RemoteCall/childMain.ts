@@ -26,9 +26,8 @@ class Main {
     configUtils.init(JSON.parse(process.env.ccagml || "{}"));
     reply.init();
     storageUtils.init();
+    chainMgr.init(corePlugin);
 
-    chainMgr.base_init(corePlugin);
-    chainMgr.save();
     let com_str: string = process.argv[2];
     let curApi: IApi | undefined = apiFactory.getApi(com_str);
     curApi?.call(curApi?.callArg(process.argv));

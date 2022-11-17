@@ -9,7 +9,6 @@
 
 let underscore = require("underscore");
 
-import { configUtils } from "../utils/configUtils";
 import { storageUtils } from "../utils/storageUtils";
 import { commUtils } from "../utils/commUtils";
 import { ChainNodeBase } from "./chainNodeBase";
@@ -19,36 +18,21 @@ export class ChainManager {
   name;
   ver;
   desc;
-  enabled;
-  deleted;
-  builtin;
-  deps;
-  next;
-  plugins: Array<any> = [];
+
+  plugins: Array<ChainNodeBase> = [];
   installed: Array<ChainNodeBase> = [];
-  head; // 插件头 是core
-  config;
+  head: ChainNodeBase; // 插件头 是core
+
   constructor() {}
-
-  public save(): void {
-    const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
-
-    if (this.deleted) delete stats[this.name];
-    else stats[this.name] = this.enabled;
-
-    storageUtils.setCache(commUtils.KEYS.plugins, stats);
-  }
-
-  public init(): void {
-    this.config = configUtils.plugins[this.name] || {};
-  }
 
   public getChainHead(): ChainNodeBase {
     return this.head;
   }
 
-  public base_init(head: ChainNodeBase): Object {
-    this.head = head;
+  public init(head: ChainNodeBase | undefined): Object | undefined {
+    if (head) {
+      this.head = head;
+    }
     const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
     let fileChainNode: Array<any> = storageUtils.listCodeDir(
       "../actionChain/chainNode"
@@ -80,10 +64,13 @@ export class ChainManager {
     // 连成链表状
     this.plugins = this.installed.filter((x) => x.enabled);
     let last = head;
-    for (let p of this.plugins) {
-      last.setNext(p);
-      last = p;
+    if (last) {
+      for (let p of this.plugins) {
+        last.setNext(p);
+        last = p;
+      }
     }
+
     return true;
   }
 

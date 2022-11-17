@@ -1,8 +1,24 @@
+import { commUtils } from "../utils/commUtils";
+import { storageUtils } from "../utils/storageUtils";
+
 export class ChainNodeBase {
-  public init() {}
-  next: ChainNodeBase;
+  next: ChainNodeBase; // 下一个点
   enabled: boolean;
   builtin: boolean = true;
+  name: string; // 点的名称
+  deleted: boolean;
+
+  public init() {}
+
+  public save(): void {
+    const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
+
+    if (this.deleted) delete stats[this.name];
+    else stats[this.name] = this.enabled;
+
+    storageUtils.setCache(commUtils.KEYS.plugins, stats);
+  }
+
   public setNext(next: ChainNodeBase): void {
     Object.setPrototypeOf(this, next);
     this.next = next;
