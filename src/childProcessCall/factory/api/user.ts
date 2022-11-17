@@ -12,7 +12,7 @@ let prompt_out = require("prompt");
 import { reply } from "../../Reply";
 
 import { session } from "../../session";
-import { ApiBase } from "../apiFactory";
+import { ApiBase } from "../baseApi";
 
 import { chain } from "../../actionChain/chain";
 

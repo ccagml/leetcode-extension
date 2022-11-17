@@ -89,7 +89,7 @@ class CorePlugin extends Chain {
 
     // unify format before rendering
 
-    data.app = require("./config").app || "leetcode";
+    data.app = require("./../../config").app || "leetcode";
     if (!data.fid) data.fid = data.id;
     if (!data.lang) data.lang = opts.lang;
     data.code = (opts.code || data.code || "").replace(/\r\n/g, "\n");

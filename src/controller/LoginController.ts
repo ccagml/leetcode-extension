@@ -185,8 +185,8 @@ class LoginContorller {
         }
       );
       if (userName) {
-        window.showInformationMessage(`${inMessage} 成功`);
         eventService.emit("statusChanged", UserStatus.SignedIn, userName);
+        window.showInformationMessage(`${inMessage} 成功`);
       }
     } catch (error) {
       promptForOpenOutputChannel(

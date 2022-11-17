@@ -14,7 +14,7 @@ import { storageUtils } from "../../storageUtils";
 import { reply } from "../../Reply";
 
 import { session } from "../../session";
-import { ApiBase } from "../apiFactory";
+import { ApiBase } from "../baseApi";
 import { commUtils } from "../../commUtils";
 import { chain } from "../../actionChain/chain";
 

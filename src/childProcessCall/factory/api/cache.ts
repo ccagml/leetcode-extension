@@ -9,7 +9,7 @@
 
 import { storageUtils } from "../../storageUtils";
 import { session } from "../../session";
-import { ApiBase } from "../apiFactory";
+import { ApiBase } from "../baseApi";
 
 class CacheApi extends ApiBase {
   constructor() {
@@ -31,7 +31,7 @@ class CacheApi extends ApiBase {
   call(argv) {
     session.argv = argv;
 
-    const name = argv.keyword;
+    const name = argv.keyword || "";
     const isInteger = Number.isInteger(Number(name));
 
     const all_data_file = storageUtils.listCache().filter(function (f) {

@@ -12,7 +12,8 @@ import { corePlugin } from "./actionChain/chainNode/core";
 import { config } from "./config";
 import { reply } from "./Reply";
 import { storageUtils } from "./storageUtils";
-import { IApi, apiFactory } from "./factory/apiFactory";
+import { apiFactory } from "./factory/apiFactory";
+import { IApi } from "./factory/baseApi";
 
 class NewCli {
   constructor() {

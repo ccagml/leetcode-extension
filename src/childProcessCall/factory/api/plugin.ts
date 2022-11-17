@@ -11,7 +11,7 @@ import { config } from "../../config";
 import { reply } from "../../Reply";
 import { chain } from "../../actionChain/chain";
 import { session } from "../../session";
-import { ApiBase } from "../apiFactory";
+import { ApiBase } from "../baseApi";
 
 class PluginApi extends ApiBase {
   constructor() {
