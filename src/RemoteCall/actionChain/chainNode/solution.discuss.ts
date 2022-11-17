@@ -10,7 +10,7 @@
 let request = require("request");
 
 import { reply } from "../../utils/ReplyUtils";
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 import { Chain } from "./../chain";
 
 class SolutionDiscuss extends Chain {
@@ -23,9 +23,9 @@ class SolutionDiscuss extends Chain {
 
   getProblem = (problem, needTranslation, cb) => {
     this.next.getProblem(problem, needTranslation, function (e, problem) {
-      if (e || !session.argv.solution) return cb(e, problem);
+      if (e || !sessionUtils.argv.solution) return cb(e, problem);
 
-      let lang = session.argv.lang;
+      let lang = sessionUtils.argv.lang;
       getSolution(problem, lang, function (e, solution) {
         if (e) return cb(e);
         if (!solution) return reply.error("Solution not found for " + lang);

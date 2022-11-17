@@ -10,7 +10,7 @@
 import { configUtils } from "../../utils/configUtils";
 import { reply } from "../../utils/ReplyUtils";
 import { chain } from "../../actionChain/chain";
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 
 class PluginApi extends ApiBase {
@@ -50,7 +50,7 @@ class PluginApi extends ApiBase {
   }
 
   call(argv) {
-    session.argv = argv;
+    sessionUtils.argv = argv;
 
     let all_plugin = chain.installed;
     const name = argv.name;

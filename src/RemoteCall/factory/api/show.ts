@@ -15,7 +15,7 @@ import { storageUtils } from "../../utils/storageUtils";
 import { reply } from "../../utils/ReplyUtils";
 import { configUtils } from "../../utils/configUtils";
 
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 import { chain } from "../../actionChain/chain";
 
@@ -196,7 +196,7 @@ class ShowApi extends ApiBase {
 
   call(argv) {
     let that = this;
-    session.argv = argv;
+    sessionUtils.argv = argv;
     if (argv.keyword.length > 0) {
       // show specific one
       chain

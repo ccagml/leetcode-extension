@@ -8,7 +8,7 @@
  */
 
 import { reply } from "../../utils/ReplyUtils";
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 import { chain } from "../../actionChain/chain";
 
@@ -70,7 +70,7 @@ class ListApi extends ApiBase {
   }
 
   call(argv) {
-    session.argv = argv;
+    sessionUtils.argv = argv;
     chain.getChainHead().filterProblems(argv, function (e, problems) {
       if (e) return reply.info(e);
       let new_objcet: Array<any> = [];

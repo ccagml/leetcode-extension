@@ -8,7 +8,7 @@
  */
 
 import { storageUtils } from "../../utils/storageUtils";
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 
 class CacheApi extends ApiBase {
@@ -29,7 +29,7 @@ class CacheApi extends ApiBase {
   }
 
   call(argv) {
-    session.argv = argv;
+    sessionUtils.argv = argv;
 
     const name = argv.keyword || "";
     const isInteger = Number.isInteger(Number(name));

@@ -65,4 +65,4 @@ class Session {
     storageUtils.setCache(commUtils.KEYS.stat, stats);
   };
 }
-export const session: Session = new Session();
+export const sessionUtils: Session = new Session();

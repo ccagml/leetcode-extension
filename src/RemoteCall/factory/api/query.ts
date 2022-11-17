@@ -8,7 +8,7 @@
  */
 
 import { reply } from "../../utils/ReplyUtils";
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 
 import { chain } from "../../actionChain/chain";
@@ -54,7 +54,7 @@ class QueryApi extends ApiBase {
   }
 
   call(argv) {
-    session.argv = argv;
+    sessionUtils.argv = argv;
     if (argv.a) {
       chain.getChainHead().getTodayQuestion(function (e, result) {
         if (e) return;

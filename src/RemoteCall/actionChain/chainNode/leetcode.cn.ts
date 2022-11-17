@@ -13,7 +13,7 @@ let request = require("request");
 
 import { configUtils } from "../../utils/configUtils";
 
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 
 class LeetCodeCn extends Chain {
   id = 15;
@@ -222,7 +222,7 @@ function makeOpts(url: any) {
   opts.url = url;
   opts.headers = {};
 
-  if (session.isLogin()) signOpts(opts, session.getUser());
+  if (sessionUtils.isLogin()) signOpts(opts, sessionUtils.getUser());
   return opts;
 }
 
@@ -231,7 +231,7 @@ function checkError(e: any, resp: any, expectedStatus: any) {
     const code = resp.statusCode;
 
     if (code === 403 || code === 401) {
-      e = session.errors.EXPIRED;
+      e = sessionUtils.errors.EXPIRED;
     } else {
       e = { msg: "http error", statusCode: code };
     }

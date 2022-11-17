@@ -51,7 +51,7 @@ export class Chain {
     this.head = head;
     const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
     let file_plugin: Array<any> = storageUtils.listCodeDir(
-      "actionChain/chainNode"
+      "../actionChain/chainNode"
     );
     this.installed = [];
     for (let f of file_plugin) {

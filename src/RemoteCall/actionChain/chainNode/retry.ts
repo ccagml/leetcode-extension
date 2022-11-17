@@ -9,7 +9,7 @@
 
 import { Chain } from "./../chain";
 import { configUtils } from "../../utils/configUtils";
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 
 class RetryPlugin extends Chain {
   id = 30;
@@ -20,7 +20,7 @@ class RetryPlugin extends Chain {
   canRetry = (e, name) => {
     return (
       configUtils.autologin.enable &&
-      e === session.errors.EXPIRED &&
+      e === sessionUtils.errors.EXPIRED &&
       (this.count[name] || 0) < configUtils.autologin.retry
     );
   };
@@ -72,7 +72,7 @@ class RetryPlugin extends Chain {
   // expired immediately. In that case we will try to re-login in
   // the backend to give a seamless user experience.
   relogin = (cb) => {
-    const user = session.getUser();
+    const user = sessionUtils.getUser();
     if (!user) {
       return cb();
     }

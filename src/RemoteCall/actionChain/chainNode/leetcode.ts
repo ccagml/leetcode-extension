@@ -17,7 +17,7 @@ import { configUtils } from "../../utils/configUtils";
 import { commUtils } from "../../utils/commUtils";
 import { storageUtils } from "../../utils/storageUtils";
 import { reply } from "../../utils/ReplyUtils";
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 import { Chain } from "./../chain";
 import { Queue } from "../../utils/queueUtils";
 
@@ -45,7 +45,7 @@ class LeetCode extends Chain {
     opts.url = url;
     opts.headers = {};
 
-    if (session.isLogin()) this.signOpts(opts, session.getUser());
+    if (sessionUtils.isLogin()) this.signOpts(opts, sessionUtils.getUser());
     return opts;
   }
 
@@ -54,7 +54,7 @@ class LeetCode extends Chain {
       const code = resp.statusCode;
 
       if (code === 403 || code === 401) {
-        e = session.errors.EXPIRED;
+        e = sessionUtils.errors.EXPIRED;
       } else {
         e = { msg: "http error", statusCode: code };
       }
@@ -99,7 +99,7 @@ class LeetCode extends Chain {
       const json = JSON.parse(body);
 
       if (json.user_name.length === 0) {
-        return cb(session.errors.EXPIRED);
+        return cb(sessionUtils.errors.EXPIRED);
       }
 
       const problems = json.stat_status_pairs
@@ -128,7 +128,7 @@ class LeetCode extends Chain {
   };
 
   getProblem = (problem, needTranslation, cb) => {
-    const user = session.getUser();
+    const user = sessionUtils.getUser();
     if (problem.locked && !user.paid)
       return cb("failed to load locked problem!");
 
@@ -378,7 +378,7 @@ class LeetCode extends Chain {
   };
 
   starProblem = (problem, starred, cb) => {
-    const user = session.getUser();
+    const user = sessionUtils.getUser();
     const operationName = starred
       ? "addQuestionToFavorite"
       : "removeQuestionFromFavorite";
@@ -451,7 +451,7 @@ class LeetCode extends Chain {
     let that = this;
     request(opts, function (e, resp, body) {
       e = that.checkError(e, resp, 200);
-      if (e && e.statusCode === 302) e = session.errors.EXPIRED;
+      if (e && e.statusCode === 302) e = sessionUtils.errors.EXPIRED;
 
       return e ? cb(e) : cb(null, body.sessions);
     });
@@ -503,7 +503,7 @@ class LeetCode extends Chain {
 
         user.sessionCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
         user.sessionId = commUtils.getSetCookieValue(resp, "LEETCODE_SESSION");
-        session.saveUser(user);
+        sessionUtils.saveUser(user);
         return cb(null, user);
       });
     });
@@ -531,7 +531,7 @@ class LeetCode extends Chain {
           user.paid = _user.isCurrentUserPremium;
           user.name = _user.username;
         }
-        session.saveUser(user);
+        sessionUtils.saveUser(user);
         return cb(null, user);
       });
     });
@@ -570,7 +570,7 @@ class LeetCode extends Chain {
       const cookieData = that.parseCookie(resp.request.headers.cookie, cb);
       user.sessionId = cookieData.sessionId;
       user.sessionCSRF = cookieData.sessionCSRF;
-      session.saveUser(user);
+      sessionUtils.saveUser(user);
       that.getUser(user, cb);
     });
   };
@@ -579,7 +579,7 @@ class LeetCode extends Chain {
     const cookieData = this.parseCookie(user.cookie, cb);
     user.sessionId = cookieData.sessionId;
     user.sessionCSRF = cookieData.sessionCSRF;
-    session.saveUser(user);
+    sessionUtils.saveUser(user);
     this.getUser(user, cb);
   };
 

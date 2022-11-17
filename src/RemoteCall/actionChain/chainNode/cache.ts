@@ -13,7 +13,7 @@ let underscore = require("underscore");
 
 import { storageUtils } from "../../utils/storageUtils";
 import { commUtils } from "../../utils/commUtils";
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 
 class CachePlugin extends Chain {
   id = 50;
@@ -113,16 +113,16 @@ class CachePlugin extends Chain {
     this.logout(user, false);
     this.next.login(user, function (e, user) {
       if (e) return cb(e);
-      session.saveUser(user);
+      sessionUtils.saveUser(user);
       return cb(null, user);
     });
   };
 
   logout = (user, purge) => {
-    if (!user) user = session.getUser();
-    if (purge) session.deleteUser();
+    if (!user) user = sessionUtils.getUser();
+    if (purge) sessionUtils.deleteUser();
     // NOTE: need invalidate any user related cache
-    session.deleteCodingSession();
+    sessionUtils.deleteCodingSession();
     return user;
   };
 }

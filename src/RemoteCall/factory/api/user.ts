@@ -11,7 +11,7 @@ let prompt_out = require("prompt");
 
 import { reply } from "../../utils/ReplyUtils";
 
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 
 import { chain } from "../../actionChain/chain";
@@ -60,7 +60,7 @@ class UserApi extends ApiBase {
   }
 
   call(argv) {
-    session.argv = argv;
+    sessionUtils.argv = argv;
     let user: any = null;
     if (argv.login) {
       // login
@@ -145,7 +145,7 @@ class UserApi extends ApiBase {
       );
     } else {
       // show current user
-      user = session.getUser();
+      user = sessionUtils.getUser();
       if (user) {
         reply.info(JSON.stringify({ code: 100, user_name: user.name }));
       } else

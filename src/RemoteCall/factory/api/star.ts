@@ -9,7 +9,7 @@
 
 import { reply } from "../../utils/ReplyUtils";
 
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 import { chain } from "../../actionChain/chain";
 
@@ -38,7 +38,7 @@ class StarApi extends ApiBase {
   }
 
   call(argv) {
-    session.argv = argv;
+    sessionUtils.argv = argv;
     // translation doesn't affect question lookup
     chain.getChainHead().getProblem(argv.keyword, true, function (e, problem) {
       if (e) return reply.info(e);

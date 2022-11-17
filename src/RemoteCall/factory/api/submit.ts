@@ -13,7 +13,7 @@ let lodash = require("lodash");
 import { storageUtils } from "../../utils/storageUtils";
 import { reply } from "../../utils/ReplyUtils";
 
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 import { chain } from "../../actionChain/chain";
 
@@ -58,7 +58,7 @@ class SubmitApi extends ApiBase {
   }
 
   call(argv) {
-    session.argv = argv;
+    sessionUtils.argv = argv;
     if (!storageUtils.exist(argv.filename))
       return reply.fatal("File " + argv.filename + " not exist!");
 
@@ -96,8 +96,8 @@ class SubmitApi extends ApiBase {
         );
 
         if (result.ok) {
-          session.updateStat("ac", 1);
-          session.updateStat("ac.set", problem.fid);
+          sessionUtils.updateStat("ac", 1);
+          sessionUtils.updateStat("ac.set", problem.fid);
           log_obj.system_message.accepted = true;
 
           (function () {

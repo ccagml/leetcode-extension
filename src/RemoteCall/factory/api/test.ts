@@ -13,7 +13,7 @@ let lodash = require("lodash");
 import { storageUtils } from "../../utils/storageUtils";
 import { reply } from "../../utils/ReplyUtils";
 
-import { session } from "../../utils/sessionUtils";
+import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 import { commUtils } from "../../utils/commUtils";
 import { chain } from "../../actionChain/chain";
@@ -234,7 +234,7 @@ class TestApi extends ApiBase {
 
   call(argv) {
     let that = this;
-    session.argv = argv;
+    sessionUtils.argv = argv;
     if (!argv.i) return that.runTest(argv);
 
     commUtils.readStdin(function (e, data) {
