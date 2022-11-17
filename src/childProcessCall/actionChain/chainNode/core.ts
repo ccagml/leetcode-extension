@@ -1,7 +1,7 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/core.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/actionChain/core.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
@@ -12,42 +12,18 @@ let util = require("util");
 let _ = require("underscore");
 let cheerio = require("cheerio");
 
-import { storageUtils } from "./storageUtils";
+import { storageUtils } from "../../storageUtils";
 
-import { MyPluginBase } from "./my_plugin_base";
+import { Chain } from "../chain";
 
 function hasTag(o, tag) {
   return Array.isArray(o) && o.some((x) => x.indexOf(tag.toLowerCase()) >= 0);
 }
 
-class CorePlugin extends MyPluginBase {
+class CorePlugin extends Chain {
   id = 99999999;
   name = "core";
   builtin = true;
-  filters = {
-    query: {
-      alias: "query",
-      type: "string",
-      default: "",
-      describe: [
-        "Filter questions by condition:",
-        "Uppercase means negative",
-        "e = easy     E = m+h",
-        "m = medium   M = e+h",
-        "h = hard     H = e+m",
-        "d = done     D = not done",
-        "l = locked   L = non locked",
-        "s = starred  S = not starred",
-      ].join("\n"),
-    },
-    tag: {
-      alias: "tag",
-      type: "array",
-      default: [],
-      describe: "Filter questions by tag",
-    },
-  };
-
   constructor() {
     super();
   }

@@ -1,7 +1,7 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/plugins/solution.discuss.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/actionChain/solution.discuss.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
@@ -9,11 +9,11 @@
 
 let request = require("request");
 
-import { reply } from "../Reply";
-import { session } from "../session";
-import { MyPluginBase } from "../my_plugin_base";
+import { reply } from "../../Reply";
+import { session } from "../../session";
+import { Chain } from "./../chain";
 
-class SolutionDiscuss extends MyPluginBase {
+class SolutionDiscuss extends Chain {
   id = 200;
   name = "solution.discuss";
   builtin = true;

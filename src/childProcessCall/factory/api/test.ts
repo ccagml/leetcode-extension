@@ -1,7 +1,7 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/commands/test.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/factory/api/test.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Wednesday, November 16th 2022, 3:13:59 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
@@ -10,18 +10,21 @@
 let _ = require("underscore");
 let lodash = require("lodash");
 
-import { commUtils } from "../commUtils";
-import { storageUtils } from "../storageUtils";
-import { reply } from "../Reply";
-import { corePlugin } from "../core";
-import { session } from "../session";
+import { storageUtils } from "../../storageUtils";
+import { reply } from "../../Reply";
 
-class TestCommand {
-  constructor() {}
+import { session } from "../../session";
+import { ApiBase } from "../apiFactory";
+import { commUtils } from "../../commUtils";
+import { chain } from "../../actionChain/chain";
 
-  process_argv(argv) {
-    let argv_config = commUtils
-      .base_argv()
+class TestApi extends ApiBase {
+  constructor() {
+    super();
+  }
+
+  callArg(argv) {
+    let argv_config = this.api_argv()
       .option("i", {
         alias: "interactive",
         type: "boolean",
@@ -46,7 +49,7 @@ class TestCommand {
         describe: "Code file to test",
       });
 
-    argv_config.process_argv(argv);
+    argv_config.parseArgFromCmd(argv);
 
     return argv_config.get_result();
   }
@@ -85,7 +88,7 @@ class TestCommand {
     // [key: string]: string[];
     // messages: string[];
 
-    corePlugin.getProblem(meta, true, function (e, problem) {
+    chain.getChainHead().getProblem(meta, true, function (e, problem) {
       if (e)
         return reply.info(
           JSON.stringify({
@@ -190,7 +193,7 @@ class TestCommand {
       problem.file = argv.filename;
       problem.lang = meta.lang;
 
-      corePlugin.testProblem(problem, function (e, results) {
+      chain.getChainHead().testProblem(problem, function (e, results) {
         if (e) return reply.info(JSON.stringify(e));
 
         results = _.sortBy(results, (x) => x.type);
@@ -229,7 +232,7 @@ class TestCommand {
     });
   }
 
-  handler(argv) {
+  call(argv) {
     let that = this;
     session.argv = argv;
     if (!argv.i) return that.runTest(argv);
@@ -243,4 +246,4 @@ class TestCommand {
   }
 }
 
-export const testCommand: TestCommand = new TestCommand();
+export const testApi: TestApi = new TestApi();

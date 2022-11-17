@@ -1,21 +1,21 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/plugins/leetcode.cn.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/actionChain/leetcode.cn.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { MyPluginBase } from "../my_plugin_base";
+import { Chain } from "./../chain";
 
 let request = require("request");
 
-import { config } from "../config";
+import { config } from "../../config";
 
-import { session } from "../session";
+import { session } from "../../session";
 
-class LeetCodeCn extends MyPluginBase {
+class LeetCodeCn extends Chain {
   id = 15;
   name = "leetcode.cn";
   builtin = true;
@@ -180,7 +180,7 @@ class LeetCodeCn extends MyPluginBase {
     const _request = request.defaults({ jar: true });
     _request(
       "https://zerotrac.github.io/leetcode_problem_rating/data.json",
-      function (error, _, body) {
+      function (error: any, _, body: any) {
         // console.log(error);
         // console.log(info);
         cb(error, body);
@@ -188,11 +188,11 @@ class LeetCodeCn extends MyPluginBase {
     );
   };
 
-  getTestApi = (value, _) => {
+  getTestApi = (value: any, _) => {
     const _request = request.defaults({ jar: true });
     _request(
       "https://zerotrac.github.io/leetcode_problem_rating/data.json",
-      function (error, info, body) {
+      function (error: any, info: any, body: any) {
         console.log(error);
         console.log(info);
         let a = body;
@@ -202,7 +202,7 @@ class LeetCodeCn extends MyPluginBase {
   };
 }
 
-function signOpts(opts, user) {
+function signOpts(opts: any, user: any) {
   opts.headers.Cookie =
     "LEETCODE_SESSION=" +
     user.sessionId +
@@ -213,7 +213,7 @@ function signOpts(opts, user) {
   opts.headers["X-Requested-With"] = "XMLHttpRequest";
 }
 
-function makeOpts(url) {
+function makeOpts(url: any) {
   let opts: any = {};
   opts.url = url;
   opts.headers = {};
@@ -222,7 +222,7 @@ function makeOpts(url) {
   return opts;
 }
 
-function checkError(e, resp, expectedStatus) {
+function checkError(e: any, resp: any, expectedStatus: any) {
   if (!e && resp && resp.statusCode !== expectedStatus) {
     const code = resp.statusCode;
 

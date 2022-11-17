@@ -1,17 +1,17 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/plugins/retry.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/actionChain/retry.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { MyPluginBase } from "../my_plugin_base";
-import { config } from "../config";
-import { session } from "../session";
+import { Chain } from "./../chain";
+import { config } from "../../config";
+import { session } from "../../session";
 
-class RetryPlugin extends MyPluginBase {
+class RetryPlugin extends Chain {
   id = 30;
   name = "retry";
   builtin = true;

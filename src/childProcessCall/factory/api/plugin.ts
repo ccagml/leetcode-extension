@@ -1,24 +1,25 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/commands/plugin.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/factory/api/plugin.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { commUtils } from "../commUtils";
-import { config } from "../config";
-import { reply } from "../Reply";
-import { myPluginBase } from "../my_plugin_base";
-import { session } from "../session";
+import { config } from "../../config";
+import { reply } from "../../Reply";
+import { chain } from "../../actionChain/chain";
+import { session } from "../../session";
+import { ApiBase } from "../apiFactory";
 
-class PluginCommand {
-  constructor() {}
+class PluginApi extends ApiBase {
+  constructor() {
+    super();
+  }
 
-  process_argv = function (argv) {
-    let argv_config = commUtils
-      .base_argv()
+  callArg(argv) {
+    let argv_config = this.api_argv()
       .option("d", {
         alias: "disable",
         type: "boolean",
@@ -43,15 +44,15 @@ class PluginCommand {
         default: "",
       });
 
-    argv_config.process_argv(argv);
+    argv_config.parseArgFromCmd(argv);
 
     return argv_config.get_result();
-  };
+  }
 
-  handler = function (argv) {
+  call(argv) {
     session.argv = argv;
 
-    let all_plugin = myPluginBase.installed;
+    let all_plugin = chain.installed;
     const name = argv.name;
 
     // if (argv.install) {
@@ -59,7 +60,7 @@ class PluginCommand {
     //     if (e) return log.fatal(e);
     //     p.help();
     //     p.save();
-    //     myPluginBase.init();
+    //     chain.init();
     //   };
 
     //   return;
@@ -82,11 +83,11 @@ class PluginCommand {
     } else if (argv.delete) {
       // p.delete();
       p.save();
-      myPluginBase.init();
+      chain.init();
     } else if (argv.config) {
       reply.info(JSON.stringify(config.plugins[name] || {}, null, 2));
     }
-  };
+  }
 }
 
-export const pluginCommand: PluginCommand = new PluginCommand();
+export const pluginApi: PluginApi = new PluginApi();

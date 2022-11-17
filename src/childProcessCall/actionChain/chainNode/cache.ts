@@ -1,21 +1,21 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/plugins/cache.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/actionChain/cache.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { MyPluginBase } from "../my_plugin_base";
+import { Chain } from "../chain";
 
 let underscore = require("underscore");
 
-import { storageUtils } from "../storageUtils";
-import { commUtils } from "../commUtils";
-import { session } from "../session";
+import { storageUtils } from "../../storageUtils";
+import { commUtils } from "../../commUtils";
+import { session } from "../../session";
 
-class CachePlugin extends MyPluginBase {
+class CachePlugin extends Chain {
   id = 50;
   name = "cache";
   builtin = true;

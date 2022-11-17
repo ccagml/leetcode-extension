@@ -1,7 +1,7 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/commands/show.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/factory/api/show.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
@@ -10,20 +10,23 @@
 let util = require("util");
 let childProcess = require("child_process");
 
-import { commUtils } from "../commUtils";
-import { storageUtils } from "../storageUtils";
+import { storageUtils } from "../../storageUtils";
 
-import { reply } from "../Reply";
-import { config } from "../config";
-import { corePlugin } from "../core";
-import { session } from "../session";
+import { reply } from "../../Reply";
+import { config } from "../../config";
 
-class ShowCommand {
-  constructor() {}
+import { session } from "../../session";
+import { ApiBase } from "../apiFactory";
+import { commUtils } from "../../commUtils";
+import { chain } from "../../actionChain/chain";
 
-  process_argv = function (argv) {
-    let argv_config = commUtils
-      .base_argv()
+class ShowApi extends ApiBase {
+  constructor() {
+    super();
+  }
+
+  callArg(argv) {
+    let argv_config = this.api_argv()
       .option("c", {
         alias: "codeonly",
         type: "boolean",
@@ -54,8 +57,27 @@ class ShowCommand {
         describe: "Where to save source code",
         default: ".",
       })
-      .option("q", corePlugin.filters.query)
-      .option("t", corePlugin.filters.tag)
+      .option("q", {
+        alias: "query",
+        type: "string",
+        default: "",
+        describe: [
+          "Filter questions by condition:",
+          "Uppercase means negative",
+          "e = easy     E = m+h",
+          "m = medium   M = e+h",
+          "h = hard     H = e+m",
+          "d = done     D = not done",
+          "l = locked   L = non locked",
+          "s = starred  S = not starred",
+        ].join("\n"),
+      })
+      .option("t", {
+        alias: "tag",
+        type: "array",
+        default: [],
+        describe: "Filter questions by tag",
+      })
       .option("x", {
         alias: "extra",
         type: "boolean",
@@ -73,9 +95,9 @@ class ShowCommand {
         default: "",
         describe: "Show question by name or id",
       });
-    argv_config.process_argv(argv);
+    argv_config.parseArgFromCmd(argv);
     return argv_config.get_result();
-  };
+  }
   genFileName(problem, opts) {
     const path = require("path");
     const params = [
@@ -121,7 +143,7 @@ class ShowCommand {
         code: template.defaultCode,
         tpl: argv.extra ? "detailed" : "codeonly",
       };
-      code = corePlugin.exportProblem(problem, opts);
+      code = chain.getChainHead().exportProblem(problem, opts);
     }
 
     let filename;
@@ -177,23 +199,21 @@ class ShowCommand {
     reply.info(problem.desc);
   }
 
-  handler(argv) {
+  call(argv) {
     let that = this;
     session.argv = argv;
     if (argv.keyword.length > 0) {
       // show specific one
-      corePlugin.getProblem(
-        argv.keyword,
-        !argv.dontTranslate,
-        function (e, problem) {
+      chain
+        .getChainHead()
+        .getProblem(argv.keyword, !argv.dontTranslate, function (e, problem) {
           if (e) return reply.info(e);
           that.showProblem(problem, argv);
-        }
-      );
+        });
     } else {
       //
     }
   }
 }
 
-export const showCommand: ShowCommand = new ShowCommand();
+export const showApi: ShowApi = new ShowApi();

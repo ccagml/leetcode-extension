@@ -7,10 +7,13 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { myPluginBase } from "./my_plugin_base";
+import { chain } from "./actionChain/chain";
+import { corePlugin } from "./actionChain/chainNode/core";
 import { config } from "./config";
 import { reply } from "./Reply";
 import { storageUtils } from "./storageUtils";
+import { IApi, apiFactory } from "./factory/apiFactory";
+
 class NewCli {
   constructor() {
     this.run();
@@ -22,16 +25,18 @@ class NewCli {
     config.init(JSON.parse(process.env.ccagml || "{}"));
     reply.init();
     storageUtils.init();
-    if (myPluginBase.base_init()) {
-      myPluginBase.save();
+    if (chain.base_init(corePlugin)) {
+      chain.save();
       storageUtils.initCache();
-      this.runCommand_new();
+      this.doApi();
     }
   }
-  private runCommand_new() {
+  private doApi() {
     let com_str = process.argv[2];
-    let auto_js = require("./commands/" + com_str)[com_str + "Command"];
-    auto_js.handler(auto_js.process_argv(process.argv));
+    let curApi: IApi | undefined = apiFactory.getApi(com_str);
+    if (curApi != undefined) {
+      curApi.call(curApi.callArg(process.argv));
+    }
   }
 }
 

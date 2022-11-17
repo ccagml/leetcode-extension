@@ -1,22 +1,24 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/commands/query.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/factory/api/query.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { commUtils } from "../commUtils";
-import { reply } from "../Reply";
-import { corePlugin } from "../core";
-import { session } from "../session";
+import { reply } from "../../Reply";
+import { session } from "../../session";
+import { ApiBase } from "../apiFactory";
 
-class QueryCommand {
-  constructor() {}
-  process_argv = function (argv) {
-    let argv_config = commUtils
-      .base_argv()
+import { chain } from "../../actionChain/chain";
+
+class QueryApi extends ApiBase {
+  constructor() {
+    super();
+  }
+  callArg(argv) {
+    let argv_config = this.api_argv()
       .option("T", {
         alias: "dontTranslate",
         type: "boolean",
@@ -47,24 +49,24 @@ class QueryCommand {
         default: "",
         describe: "test",
       });
-    argv_config.process_argv(argv);
+    argv_config.parseArgFromCmd(argv);
     return argv_config.get_result();
-  };
+  }
 
-  handler = function (argv) {
+  call(argv) {
     session.argv = argv;
     if (argv.a) {
-      corePlugin.getTodayQuestion(function (e, result) {
+      chain.getChainHead().getTodayQuestion(function (e, result) {
         if (e) return;
         reply.info(JSON.stringify(result));
       });
     } else if (argv.b) {
-      corePlugin.getUserContest(argv.b, function (e, result) {
+      chain.getChainHead().getUserContest(argv.b, function (e, result) {
         if (e) return;
         reply.info(JSON.stringify(result));
       });
     } else if (argv.c) {
-      corePlugin.getRating(function (e, result) {
+      chain.getChainHead().getRating(function (e, result) {
         if (e) {
           let log_data = {
             code: 101,
@@ -80,12 +82,12 @@ class QueryCommand {
         reply.info(JSON.stringify(log_data));
       });
     } else if (argv.z) {
-      corePlugin.getQueryZ(argv.z, function (e, result) {
+      chain.getChainHead().getQueryZ(argv.z, function (e, result) {
         if (e) return;
         reply.info(JSON.stringify(result));
       });
     }
-  };
+  }
 }
 
-export const queryCommand: QueryCommand = new QueryCommand();
+export const queryApi: QueryApi = new QueryApi();

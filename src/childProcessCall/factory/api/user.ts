@@ -1,24 +1,28 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/commands/user.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/factory/api/user.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
 let prompt_out = require("prompt");
-import { commUtils } from "../commUtils";
-import { reply } from "../Reply";
-import { corePlugin } from "../core";
-import { session } from "../session";
 
-class UserCommand {
-  constructor() {}
+import { reply } from "../../Reply";
 
-  process_argv(argv) {
-    let argv_config = commUtils
-      .base_argv()
+import { session } from "../../session";
+import { ApiBase } from "../apiFactory";
+
+import { chain } from "../../actionChain/chain";
+
+class UserApi extends ApiBase {
+  constructor() {
+    super();
+  }
+
+  callArg(argv) {
+    let argv_config = this.api_argv()
       .option("l", {
         alias: "login",
         type: "boolean",
@@ -50,12 +54,12 @@ class UserCommand {
         describe: "Logout",
       });
 
-    argv_config.process_argv(argv);
+    argv_config.parseArgFromCmd(argv);
 
     return argv_config.get_result();
   }
 
-  handler(argv) {
+  call(argv) {
     session.argv = argv;
     let user: any = null;
     if (argv.login) {
@@ -73,7 +77,7 @@ class UserCommand {
             return reply.info(JSON.stringify({ code: -1, msg: e.msg || e }));
           }
 
-          corePlugin.login(user, function (e, user) {
+          chain.getChainHead().login(user, function (e, user) {
             if (e) {
               return reply.info(JSON.stringify({ code: -2, msg: e.msg || e }));
             }
@@ -83,7 +87,7 @@ class UserCommand {
       );
     } else if (argv.logout) {
       // logout
-      user = corePlugin.logout(user, true);
+      user = chain.getChainHead().logout(user, true);
       if (user) reply.info(JSON.stringify({ code: 100, user_name: user.name }));
       else
         reply.info(JSON.stringify({ code: -3, msg: "You are not login yet?" }));
@@ -91,10 +95,10 @@ class UserCommand {
     } else if (argv.github || argv.linkedin) {
       // add future third parties here
       const functionMap = new Map([
-        ["g", corePlugin.githubLogin],
-        ["github", corePlugin.githubLogin],
-        ["i", corePlugin.linkedinLogin],
-        ["linkedin", corePlugin.linkedinLogin],
+        ["g", chain.getChainHead().githubLogin],
+        ["github", chain.getChainHead().githubLogin],
+        ["i", chain.getChainHead().linkedinLogin],
+        ["linkedin", chain.getChainHead().linkedinLogin],
       ]);
       const keyword = Object.entries(argv).filter((i) => i[1] === true)[0][0];
       const coreFunction = functionMap.get(keyword);
@@ -132,7 +136,7 @@ class UserCommand {
         ],
         function (e, user) {
           if (e) return reply.info(e);
-          corePlugin.cookieLogin(user, function (e, user) {
+          chain.getChainHead().cookieLogin(user, function (e, user) {
             if (e)
               return reply.info(JSON.stringify({ code: -6, msg: e.msg || e }));
             reply.info(JSON.stringify({ code: 100, user_name: user.name }));
@@ -152,4 +156,4 @@ class UserCommand {
   }
 }
 
-export const userCommand: UserCommand = new UserCommand();
+export const userApi: UserApi = new UserApi();

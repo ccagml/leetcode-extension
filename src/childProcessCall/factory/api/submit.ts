@@ -1,7 +1,7 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/commands/submit.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/factory/api/submit.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
@@ -10,22 +10,25 @@
 let util = require("util");
 let lodash = require("lodash");
 
-import { commUtils } from "../commUtils";
-import { storageUtils } from "../storageUtils";
-import { reply } from "../Reply";
-import { corePlugin } from "../core";
-import { session } from "../session";
+import { storageUtils } from "../../storageUtils";
+import { reply } from "../../Reply";
 
-class SubmitCommand {
-  constructor() {}
+import { session } from "../../session";
+import { ApiBase } from "../apiFactory";
+import { chain } from "../../actionChain/chain";
 
-  process_argv(argv) {
-    let argv_config = commUtils.base_argv().positional("filename", {
+class SubmitApi extends ApiBase {
+  constructor() {
+    super();
+  }
+
+  callArg(argv) {
+    let argv_config = this.api_argv().positional("filename", {
       type: "string",
       describe: "Code file to submit",
       default: "",
     });
-    argv_config.process_argv(argv);
+    argv_config.parseArgFromCmd(argv);
 
     return argv_config.get_result();
   }
@@ -54,7 +57,7 @@ class SubmitCommand {
     log_obj.messages.push(line);
   }
 
-  handler(argv) {
+  call(argv) {
     session.argv = argv;
     if (!storageUtils.exist(argv.filename))
       return reply.fatal("File " + argv.filename + " not exist!");
@@ -62,13 +65,13 @@ class SubmitCommand {
     const meta = storageUtils.meta(argv.filename);
     let that = this;
     // translation doesn't affect problem lookup
-    corePlugin.getProblem(meta, true, function (e, problem) {
+    chain.getChainHead().getProblem(meta, true, function (e, problem) {
       if (e) return reply.info(e);
 
       problem.file = argv.filename;
       problem.lang = meta.lang;
 
-      corePlugin.submitProblem(problem, function (e, results) {
+      chain.getChainHead().submitProblem(problem, function (e, results) {
         if (e) return reply.info(e);
 
         const result = results[0];
@@ -127,7 +130,7 @@ class SubmitCommand {
           that.printResult(result, "stdout", log_obj);
         }
         reply.info(JSON.stringify(log_obj));
-        corePlugin.updateProblem(problem, {
+        chain.getChainHead().updateProblem(problem, {
           state: result.ok ? "ac" : "notac",
         });
       });
@@ -135,4 +138,4 @@ class SubmitCommand {
   }
 }
 
-export const submitCommand: SubmitCommand = new SubmitCommand();
+export const submitApi: SubmitApi = new SubmitApi();

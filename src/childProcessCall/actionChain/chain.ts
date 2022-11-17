@@ -1,7 +1,7 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/my_plugin_base.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/actionChain/chain.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
@@ -9,11 +9,11 @@
 
 let underscore = require("underscore");
 
-import { config as out_config } from "./config";
-import { storageUtils } from "./storageUtils";
-import { commUtils } from "./commUtils";
+import { config as out_config } from "../config";
+import { storageUtils } from "../storageUtils";
+import { commUtils } from "../commUtils";
 
-export class MyPluginBase {
+export class Chain {
   id;
   name;
   ver;
@@ -24,7 +24,7 @@ export class MyPluginBase {
   deps;
   next;
   plugins: Array<any> = [];
-  installed: Array<MyPluginBase> = [];
+  installed: Array<Chain> = [];
   head; // 插件头 是core
   config;
   constructor() {}
@@ -43,8 +43,12 @@ export class MyPluginBase {
     this.next = null;
   }
 
-  public base_init(head?): Object {
-    head = head || require("./core").corePlugin;
+  public getChainHead(): Chain {
+    return this.head;
+  }
+
+  public base_init(head): Object {
+    this.head = head;
     const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
     let file_plugin: Array<any> = storageUtils.listCodeDir("plugins");
     this.installed = [];
@@ -179,6 +183,9 @@ export class MyPluginBase {
   public getUserContest(username, cb: Function): void {
     this.next.getUserContest(username, cb);
   }
+  public getRating(cb: Function): void {
+    this.next.getRating(cb);
+  }
 }
 
-export const myPluginBase: MyPluginBase = new MyPluginBase();
+export const chain: Chain = new Chain();

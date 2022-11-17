@@ -1,7 +1,7 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/commands/submission.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/factory/api/submission.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
@@ -22,8 +22,8 @@
 class SubMission {
   constructor() {}
 
-  // process_argv = function (argv) {
-  //   let argv_config = commUtils.base_argv().option('a', {
+  // callArg = function (argv) {
+  //   let argv_config = this.api_argv().option('a', {
   //     alias: 'all',
   //     type: 'boolean',
   //     default: false,
@@ -58,7 +58,7 @@ class SubMission {
   //       default: '',
   //       describe: 'Download specific question by id'
   //     });
-  //   argv_config.process_argv(argv);
+  //   argv_config.parseArgFromCmd(argv);
 
   //   return argv_config.get_result();
   // };

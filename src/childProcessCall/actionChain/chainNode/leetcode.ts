@@ -1,7 +1,7 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/childProcessCall/plugins/leetcode.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/actionChain/leetcode.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.
@@ -13,15 +13,15 @@ let underscore = require("underscore");
 let request = require("request");
 let prompt_out = require("prompt");
 
-import { config } from "../config";
-import { commUtils } from "../commUtils";
-import { storageUtils } from "../storageUtils";
-import { reply } from "../Reply";
-import { session } from "../session";
-import { MyPluginBase } from "../my_plugin_base";
-import { Queue } from "../queue";
+import { config } from "../../config";
+import { commUtils } from "../../commUtils";
+import { storageUtils } from "../../storageUtils";
+import { reply } from "../../Reply";
+import { session } from "../../session";
+import { Chain } from "./../chain";
+import { Queue } from "../../queue";
 
-class LeetCode extends MyPluginBase {
+class LeetCode extends Chain {
   id = 10;
   name = "leetcode";
   builtin = true;
