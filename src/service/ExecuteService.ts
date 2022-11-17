@@ -39,7 +39,7 @@ class ExecuteService implements Disposable {
   private configurationChangeListener: Disposable;
 
   constructor() {
-    // this.leetCodeCliResourcesRootPath = path.join(__dirname, "..", "..", "node_modules", "RemoteCall");
+    // this.leetCodeCliResourcesRootPath = path.join(__dirname, "..", "..", "node_modules", "rpc");
     if (!systemUtils.useVscodeNode()) {
       this.leetCodeCliResourcesRootPath = path.join(
         __dirname,
@@ -56,7 +56,7 @@ class ExecuteService implements Disposable {
       "..",
       "out",
       "src",
-      "RemoteCall"
+      "rpc"
     );
     this.nodeExecutable = this.initNodePath();
     this.configurationChangeListener = workspace.onDidChangeConfiguration(

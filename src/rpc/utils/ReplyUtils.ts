@@ -1,5 +1,5 @@
 /*
- * Filename: /home/cc/vscode-leetcode-problem-rating/src/RemoteCall/Response.ts
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/rpc/Response.ts
  * Path: /home/cc/vscode-leetcode-problem-rating
  * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml

@@ -1,5 +1,5 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/RemoteCall/session.ts
+ * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/rpc/session.ts
  * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
  * Created Date: Thursday, October 27th 2022, 7:43:29 pm
  * Author: ccagml
