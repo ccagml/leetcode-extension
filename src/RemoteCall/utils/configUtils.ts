@@ -10,16 +10,16 @@
 let underscore = require("underscore");
 
 class Config {
-  LCPTCTX;
-  app;
-  sys;
-  autologin;
-  code;
-  file;
-  color;
-  icon;
-  network;
-  plugins;
+  LCPTCTX: any;
+  app: any;
+  sys: any;
+  autologin: any;
+  code: any;
+  file: any;
+  color: any;
+  icon: any;
+  network: any;
+  plugins: any;
   constructor() {
     this.sys = {
       categories: ["algorithms", "LCCI", "LCOF", "LCOF2"],

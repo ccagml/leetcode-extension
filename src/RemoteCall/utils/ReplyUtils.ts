@@ -11,17 +11,17 @@ let _ = require("underscore");
 
 class Reply {
   output = _.bind(console.log, console);
-  level;
+  level: any;
   levels = new Map([
     ["INFO", { value: 2 }],
     ["WARN", { value: 3 }],
     ["ERROR", { value: 4 }],
   ]);
-  setLevel(name) {
+  setLevel(name: any) {
     this.level = this.levels.get(name) || this.levels.get("INFO");
   }
 
-  fail(e) {
+  fail(e: any) {
     let msg = e.msg || e;
     if (e.statusCode) {
       msg += " [code=" + e.statusCode + "]";
@@ -29,7 +29,7 @@ class Reply {
     this.error(msg);
   }
 
-  fatal(e) {
+  fatal(e: any) {
     this.error(e);
     process.exit(1);
   }

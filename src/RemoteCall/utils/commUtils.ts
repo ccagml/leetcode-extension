@@ -23,7 +23,7 @@ class CommUtils {
     };
   }
 
-  getNameByLevel(level) {
+  getNameByLevel(level: any) {
     switch (level) {
       case 1:
         return "Easy";
@@ -62,7 +62,7 @@ class CommUtils {
     stdin.on("error", cb);
   }
 
-  getSetCookieValue(resp, key) {
+  getSetCookieValue(resp: any, key: any) {
     const cookies = resp.headers["set-cookie"];
     if (!cookies) return null;
 
@@ -76,7 +76,7 @@ class CommUtils {
     return null;
   }
 
-  printSafeHTTP(msg) {
+  printSafeHTTP(msg: any) {
     return msg
       .replace(/(Cookie\s*:\s*)'.*?'/, "$1<hidden>")
       .replace(/('X-CSRFToken'\s*:\s*)'.*?'/, "$1<hidden>")
