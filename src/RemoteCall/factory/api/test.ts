@@ -10,12 +10,12 @@
 let _ = require("underscore");
 let lodash = require("lodash");
 
-import { storageUtils } from "../../storageUtils";
-import { reply } from "../../Reply";
+import { storageUtils } from "../../utils/storageUtils";
+import { reply } from "../../utils/ReplyUtils";
 
-import { session } from "../../session";
+import { session } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
-import { commUtils } from "../../commUtils";
+import { commUtils } from "../../utils/commUtils";
 import { chain } from "../../actionChain/chain";
 
 class TestApi extends ApiBase {

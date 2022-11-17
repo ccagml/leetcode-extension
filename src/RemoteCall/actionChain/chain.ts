@@ -9,9 +9,9 @@
 
 let underscore = require("underscore");
 
-import { config as out_config } from "../config";
-import { storageUtils } from "../storageUtils";
-import { commUtils } from "../commUtils";
+import { configUtils } from "../utils/configUtils";
+import { storageUtils } from "../utils/storageUtils";
+import { commUtils } from "../utils/commUtils";
 
 export class Chain {
   id;
@@ -39,7 +39,7 @@ export class Chain {
   }
 
   public init(): void {
-    this.config = out_config.plugins[this.name] || {};
+    this.config = configUtils.plugins[this.name] || {};
     this.next = null;
   }
 

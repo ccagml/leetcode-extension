@@ -8,8 +8,8 @@
  */
 
 import { Chain } from "./../chain";
-import { config } from "../../config";
-import { session } from "../../session";
+import { configUtils } from "../../utils/configUtils";
+import { session } from "../../utils/sessionUtils";
 
 class RetryPlugin extends Chain {
   id = 30;
@@ -19,9 +19,9 @@ class RetryPlugin extends Chain {
 
   canRetry = (e, name) => {
     return (
-      config.autologin.enable &&
+      configUtils.autologin.enable &&
       e === session.errors.EXPIRED &&
-      (this.count[name] || 0) < config.autologin.retry
+      (this.count[name] || 0) < configUtils.autologin.retry
     );
   };
   init = () => {

@@ -7,10 +7,10 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { config } from "../../config";
-import { reply } from "../../Reply";
+import { configUtils } from "../../utils/configUtils";
+import { reply } from "../../utils/ReplyUtils";
 import { chain } from "../../actionChain/chain";
-import { session } from "../../session";
+import { session } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 
 class PluginApi extends ApiBase {
@@ -85,7 +85,7 @@ class PluginApi extends ApiBase {
       p.save();
       chain.init();
     } else if (argv.config) {
-      reply.info(JSON.stringify(config.plugins[name] || {}, null, 2));
+      reply.info(JSON.stringify(configUtils.plugins[name] || {}, null, 2));
     }
   }
 }

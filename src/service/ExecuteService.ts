@@ -71,7 +71,7 @@ class ExecuteService implements Disposable {
 
   public async getLeetCodeBinaryPath(): Promise<string> {
     if (systemUtils.useVscodeNode()) {
-      return `${path.join(this.leetCodeCliRootPath, "cli.js")}`;
+      return `${path.join(this.leetCodeCliRootPath, "childMain.js")}`;
     } else {
       if (systemUtils.useWsl()) {
         return `${await systemUtils.toWslPath(

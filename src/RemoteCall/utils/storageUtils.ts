@@ -181,7 +181,7 @@ class StorageUtils {
   }
 
   public appDir() {
-    const config = require("./config");
+    const config = require("./configUtils");
     return path.join(this.homeDir(), config.app || "leetcode");
   }
 

@@ -9,8 +9,8 @@
 
 let request = require("request");
 
-import { reply } from "../../Reply";
-import { session } from "../../session";
+import { reply } from "../../utils/ReplyUtils";
+import { session } from "../../utils/sessionUtils";
 import { Chain } from "./../chain";
 
 class SolutionDiscuss extends Chain {

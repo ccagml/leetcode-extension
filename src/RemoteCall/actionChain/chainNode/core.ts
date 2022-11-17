@@ -12,7 +12,8 @@ let util = require("util");
 let _ = require("underscore");
 let cheerio = require("cheerio");
 
-import { storageUtils } from "../../storageUtils";
+import { storageUtils } from "../../utils/storageUtils";
+import { configUtils } from "../../utils/configUtils";
 
 import { Chain } from "../chain";
 
@@ -89,7 +90,7 @@ class CorePlugin extends Chain {
 
     // unify format before rendering
 
-    data.app = require("./../../config").app || "leetcode";
+    data.app = configUtils.app || "leetcode";
     if (!data.fid) data.fid = data.id;
     if (!data.lang) data.lang = opts.lang;
     data.code = (opts.code || data.code || "").replace(/\r\n/g, "\n");

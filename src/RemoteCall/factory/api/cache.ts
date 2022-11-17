@@ -7,8 +7,8 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { storageUtils } from "../../storageUtils";
-import { session } from "../../session";
+import { storageUtils } from "../../utils/storageUtils";
+import { session } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 
 class CacheApi extends ApiBase {

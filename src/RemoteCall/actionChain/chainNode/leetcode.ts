@@ -13,13 +13,13 @@ let underscore = require("underscore");
 let request = require("request");
 let prompt_out = require("prompt");
 
-import { config } from "../../config";
-import { commUtils } from "../../commUtils";
-import { storageUtils } from "../../storageUtils";
-import { reply } from "../../Reply";
-import { session } from "../../session";
+import { configUtils } from "../../utils/configUtils";
+import { commUtils } from "../../utils/commUtils";
+import { storageUtils } from "../../utils/storageUtils";
+import { reply } from "../../utils/ReplyUtils";
+import { session } from "../../utils/sessionUtils";
 import { Chain } from "./../chain";
-import { Queue } from "../../queue";
+import { Queue } from "../../utils/queueUtils";
 
 class LeetCode extends Chain {
   id = 10;
@@ -63,7 +63,7 @@ class LeetCode extends Chain {
   }
 
   init() {
-    config.app = "leetcode";
+    configUtils.app = "leetcode";
   }
 
   getProblems = (_, cb) => {
@@ -80,7 +80,7 @@ class LeetCode extends Chain {
       });
     };
 
-    const q = new Queue(config.sys.categories, {}, getCategory);
+    const q = new Queue(configUtils.sys.categories, {}, getCategory);
     q.run(null, function (e) {
       return cb(e, problems);
     });
@@ -88,7 +88,7 @@ class LeetCode extends Chain {
 
   getCategoryProblems = (category, cb) => {
     const opts = this.makeOpts(
-      config.sys.urls.problems.replace("$category", category)
+      configUtils.sys.urls.problems.replace("$category", category)
     );
 
     let that = this;
@@ -111,7 +111,7 @@ class LeetCode extends Chain {
             fid: p.stat.frontend_question_id,
             name: p.stat.question__title,
             slug: p.stat.question__title_slug,
-            link: config.sys.urls.problem.replace(
+            link: configUtils.sys.urls.problem.replace(
               "$slug",
               p.stat.question__title_slug
             ),
@@ -132,8 +132,8 @@ class LeetCode extends Chain {
     if (problem.locked && !user.paid)
       return cb("failed to load locked problem!");
 
-    const opts = this.makeOpts(config.sys.urls.graphql);
-    opts.headers.Origin = config.sys.urls.base;
+    const opts = this.makeOpts(configUtils.sys.urls.graphql);
+    opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = problem.link;
 
     opts.json = true;
@@ -187,10 +187,10 @@ class LeetCode extends Chain {
   };
   runCode = (opts, problem, cb) => {
     opts.method = "POST";
-    opts.headers.Origin = config.sys.urls.base;
+    opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = problem.link;
     opts.json = true;
-    opts._delay = opts._delay || config.network.delay || 1; // in seconds
+    opts._delay = opts._delay || configUtils.network.delay || 1; // in seconds
 
     opts.body = opts.body || {};
     underscore.extendOwn(opts.body, {
@@ -224,7 +224,7 @@ class LeetCode extends Chain {
   verifyResult = (task, queue, cb) => {
     const opts = queue.ctx.opts;
     opts.method = "GET";
-    opts.url = config.sys.urls.verify.replace("$id", task.id);
+    opts.url = configUtils.sys.urls.verify.replace("$id", task.id);
 
     let that = this;
     request(opts, function (e, resp, body) {
@@ -290,7 +290,7 @@ class LeetCode extends Chain {
 
   testProblem = (problem, cb) => {
     const opts = this.makeOpts(
-      config.sys.urls.test.replace("$slug", problem.slug)
+      configUtils.sys.urls.test.replace("$slug", problem.slug)
     );
     opts.body = { data_input: problem.testcase };
     let that = this;
@@ -316,7 +316,7 @@ class LeetCode extends Chain {
 
   submitProblem = (problem, cb) => {
     const opts = this.makeOpts(
-      config.sys.urls.submit.replace("$slug", problem.slug)
+      configUtils.sys.urls.submit.replace("$slug", problem.slug)
     );
     opts.body = { judge_type: "large" };
     let that = this;
@@ -337,9 +337,9 @@ class LeetCode extends Chain {
 
   getSubmissions = (problem, cb) => {
     const opts = this.makeOpts(
-      config.sys.urls.submissions.replace("$slug", problem.slug)
+      configUtils.sys.urls.submissions.replace("$slug", problem.slug)
     );
-    opts.headers.Referer = config.sys.urls.problem.replace(
+    opts.headers.Referer = configUtils.sys.urls.problem.replace(
       "$slug",
       problem.slug
     );
@@ -361,7 +361,7 @@ class LeetCode extends Chain {
 
   getSubmission = (submission, cb) => {
     const opts = this.makeOpts(
-      config.sys.urls.submission.replace("$id", submission.id)
+      configUtils.sys.urls.submission.replace("$id", submission.id)
     );
     let that = this;
     request(opts, function (e, resp, body) {
@@ -382,8 +382,8 @@ class LeetCode extends Chain {
     const operationName = starred
       ? "addQuestionToFavorite"
       : "removeQuestionFromFavorite";
-    const opts = this.makeOpts(config.sys.urls.graphql);
-    opts.headers.Origin = config.sys.urls.base;
+    const opts = this.makeOpts(configUtils.sys.urls.graphql);
+    opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = problem.link;
 
     opts.json = true;
@@ -403,7 +403,7 @@ class LeetCode extends Chain {
   };
 
   getFavorites = (cb: any) => {
-    const opts = this.makeOpts(config.sys.urls.favorites);
+    const opts = this.makeOpts(configUtils.sys.urls.favorites);
 
     let that = this;
     request(opts, function (e, resp, body) {
@@ -417,9 +417,9 @@ class LeetCode extends Chain {
 
   getUserInfo = (cb: any) => {
     let that = this;
-    const opts = this.makeOpts(config.sys.urls.graphql);
-    opts.headers.Origin = config.sys.urls.base;
-    opts.headers.Referer = config.sys.urls.base;
+    const opts = this.makeOpts(configUtils.sys.urls.graphql);
+    opts.headers.Origin = configUtils.sys.urls.base;
+    opts.headers.Referer = configUtils.sys.urls.base;
     opts.json = true;
     opts.body = {
       query: [
@@ -443,7 +443,7 @@ class LeetCode extends Chain {
   };
 
   runSession = (method: any, data: any, cb: any) => {
-    const opts = this.makeOpts(config.sys.urls.session);
+    const opts = this.makeOpts(configUtils.sys.urls.session);
     opts.json = true;
     opts.method = method;
     opts.body = data;
@@ -479,15 +479,15 @@ class LeetCode extends Chain {
   signin = (user: any, cb: any) => {
     let that = this;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    request(config.sys.urls.login, function (e: any, resp: any, _) {
+    request(configUtils.sys.urls.login, function (e: any, resp: any, _) {
       e = that.checkError(e, resp, 200);
       if (e) return cb(e);
       user.loginCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
       const opts = {
-        url: config.sys.urls.login,
+        url: configUtils.sys.urls.login,
         headers: {
-          Origin: config.sys.urls.base,
-          Referer: config.sys.urls.login,
+          Origin: configUtils.sys.urls.base,
+          Referer: configUtils.sys.urls.login,
           Cookie: "csrftoken=" + user.loginCSRF + ";",
         },
         form: {
@@ -564,7 +564,7 @@ class LeetCode extends Chain {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     request.get({ url: leetcodeUrl }, function (_, resp, __) {
       const redirectUri = resp.request.uri.href;
-      if (redirectUri !== config.sys.urls.leetcode_redirect) {
+      if (redirectUri !== configUtils.sys.urls.leetcode_redirect) {
         return cb("Login failed. Please make sure the credential is correct.");
       }
       const cookieData = that.parseCookie(resp.request.headers.cookie, cb);
@@ -584,7 +584,7 @@ class LeetCode extends Chain {
   };
 
   githubLogin = (user, cb) => {
-    const urls = config.sys.urls;
+    const urls = configUtils.sys.urls;
     const leetcodeUrl = urls.github_login;
     const _request = request.defaults({ jar: true });
     let that = this;
@@ -681,7 +681,7 @@ class LeetCode extends Chain {
   };
 
   linkedinLogin = (user, cb) => {
-    const urls = config.sys.urls;
+    const urls = configUtils.sys.urls;
     const leetcodeUrl = urls.linkedin_login;
     const _request = request.defaults({
       jar: true,

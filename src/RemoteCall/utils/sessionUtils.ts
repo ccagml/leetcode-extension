@@ -11,7 +11,7 @@ let moment_out = require("moment");
 let underscore = require("underscore");
 
 import { storageUtils } from "./storageUtils";
-import { config } from "./config";
+import { configUtils } from "./configUtils";
 import { commUtils } from "./commUtils";
 
 class Session {
@@ -32,7 +32,7 @@ class Session {
     // otherwise don't dump password for the sake of security.
     const _user = underscore.omit(
       user,
-      config.autologin.enable ? [] : ["pass"]
+      configUtils.autologin.enable ? [] : ["pass"]
     );
     storageUtils.setCache(commUtils.KEYS.user, _user);
   };

@@ -11,9 +11,9 @@ import { Chain } from "./../chain";
 
 let request = require("request");
 
-import { config } from "../../config";
+import { configUtils } from "../../utils/configUtils";
 
-import { session } from "../../session";
+import { session } from "../../utils/sessionUtils";
 
 class LeetCodeCn extends Chain {
   id = 15;
@@ -23,7 +23,7 @@ class LeetCodeCn extends Chain {
     super();
   }
   init() {
-    config.fix_cn();
+    configUtils.fix_cn();
   }
 
   getProblems = (needTranslation, cb) => {
@@ -50,8 +50,8 @@ class LeetCodeCn extends Chain {
   };
 
   getProblemsTitle = (cb) => {
-    const opts = makeOpts(config.sys.urls.graphql);
-    opts.headers.Origin = config.sys.urls.base;
+    const opts = makeOpts(configUtils.sys.urls.graphql);
+    opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = "https://leetcode.cn/api/problems/algorithms/";
 
     opts.json = true;
@@ -83,8 +83,8 @@ class LeetCodeCn extends Chain {
   };
 
   getQuestionOfToday = (cb) => {
-    const opts = makeOpts(config.sys.urls.graphql);
-    opts.headers.Origin = config.sys.urls.base;
+    const opts = makeOpts(configUtils.sys.urls.graphql);
+    opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = "https://leetcode.cn/";
 
     opts.json = true;
@@ -130,9 +130,12 @@ class LeetCodeCn extends Chain {
     });
   };
   getUserContestP = (username, cb) => {
-    const opts = makeOpts(config.sys.urls.noj_go);
-    opts.headers.Origin = config.sys.urls.base;
-    opts.headers.Referer = config.sys.urls.u.replace("$username", username);
+    const opts = makeOpts(configUtils.sys.urls.noj_go);
+    opts.headers.Origin = configUtils.sys.urls.base;
+    opts.headers.Referer = configUtils.sys.urls.u.replace(
+      "$username",
+      username
+    );
 
     opts.json = true;
     opts.body = {

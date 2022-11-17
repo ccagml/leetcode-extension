@@ -144,4 +144,4 @@ class Config {
   }
 }
 
-export const config: Config = new Config();
+export const configUtils: Config = new Config();

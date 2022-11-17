@@ -9,7 +9,7 @@
 
 let underscore = require("underscore");
 
-import { config } from "./config";
+import { configUtils } from "./configUtils";
 
 export class Queue {
   tasks;
@@ -36,7 +36,7 @@ export class Queue {
   }
 
   run(concurrency?, onDone?) {
-    this.concurrency = concurrency || config.network.concurrency || 1;
+    this.concurrency = concurrency || configUtils.network.concurrency || 1;
     this.onDone = onDone;
 
     const self = this;

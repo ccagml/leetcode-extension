@@ -10,12 +10,12 @@
 let util = require("util");
 let childProcess = require("child_process");
 
-import { storageUtils } from "../../storageUtils";
+import { storageUtils } from "../../utils/storageUtils";
 
-import { reply } from "../../Reply";
-import { config } from "../../config";
+import { reply } from "../../utils/ReplyUtils";
+import { configUtils } from "../../utils/configUtils";
 
-import { session } from "../../session";
+import { session } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 import { chain } from "../../actionChain/chain";
 
@@ -46,9 +46,9 @@ class ShowApi extends ApiBase {
       .option("l", {
         alias: "lang",
         type: "string",
-        default: config.code.lang,
+        default: configUtils.code.lang,
         describe: "Programming language of the source code",
-        choices: config.sys.langs,
+        choices: configUtils.sys.langs,
       })
       .option("o", {
         alias: "outdir",
@@ -100,7 +100,7 @@ class ShowApi extends ApiBase {
   genFileName(problem, opts) {
     const path = require("path");
     const params = [
-      storageUtils.fmt(config.file.show, problem),
+      storageUtils.fmt(configUtils.file.show, problem),
       "",
       storageUtils.getFileExtByLanguage(opts.lang),
     ];
@@ -152,7 +152,7 @@ class ShowApi extends ApiBase {
       storageUtils.write(filename, code);
 
       if (argv.editor !== undefined) {
-        childProcess.spawn(argv.editor || config.code.editor, [filename], {
+        childProcess.spawn(argv.editor || configUtils.code.editor, [filename], {
           // in case your editor of choice is vim or emacs
           stdio: "inherit",
         });

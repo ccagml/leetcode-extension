@@ -11,9 +11,9 @@ import { Chain } from "../chain";
 
 let underscore = require("underscore");
 
-import { storageUtils } from "../../storageUtils";
-import { commUtils } from "../../commUtils";
-import { session } from "../../session";
+import { storageUtils } from "../../utils/storageUtils";
+import { commUtils } from "../../utils/commUtils";
+import { session } from "../../utils/sessionUtils";
 
 class CachePlugin extends Chain {
   id = 50;
