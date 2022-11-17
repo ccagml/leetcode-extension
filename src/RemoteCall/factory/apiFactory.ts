@@ -7,7 +7,7 @@ import { starApi } from "./api/star";
 import { submitApi } from "./api/submit";
 import { testApi } from "./api/test";
 import { userApi } from "./api/user";
-import { IApi } from "./baseApi";
+import { IApi } from "./apiBase";
 
 class ApiFactory {
   constructor() {}

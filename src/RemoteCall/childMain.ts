@@ -13,7 +13,7 @@ import { configUtils } from "./utils/configUtils";
 import { reply } from "./utils/ReplyUtils";
 import { storageUtils } from "./utils/storageUtils";
 import { apiFactory } from "./factory/apiFactory";
-import { IApi } from "./factory/baseApi";
+import { IApi } from "./factory/apiBase";
 
 class Main {
   constructor() {

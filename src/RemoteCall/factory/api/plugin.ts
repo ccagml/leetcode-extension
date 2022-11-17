@@ -11,7 +11,7 @@ import { configUtils } from "../../utils/configUtils";
 import { reply } from "../../utils/ReplyUtils";
 import { chainMgr } from "../../actionChain/chainManager";
 import { sessionUtils } from "../../utils/sessionUtils";
-import { ApiBase } from "../baseApi";
+import { ApiBase } from "../apiBase";
 
 class PluginApi extends ApiBase {
   constructor() {

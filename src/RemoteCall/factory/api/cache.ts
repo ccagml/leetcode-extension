@@ -9,7 +9,7 @@
 
 import { storageUtils } from "../../utils/storageUtils";
 import { sessionUtils } from "../../utils/sessionUtils";
-import { ApiBase } from "../baseApi";
+import { ApiBase } from "../apiBase";
 
 class CacheApi extends ApiBase {
   constructor() {

@@ -16,7 +16,7 @@ import { reply } from "../../utils/ReplyUtils";
 import { configUtils } from "../../utils/configUtils";
 
 import { sessionUtils } from "../../utils/sessionUtils";
-import { ApiBase } from "../baseApi";
+import { ApiBase } from "../apiBase";
 import { chainMgr } from "../../actionChain/chainManager";
 
 class ShowApi extends ApiBase {

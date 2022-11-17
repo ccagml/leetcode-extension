@@ -1,3 +1,12 @@
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/RemoteCall/factory/apiBase.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Thursday, November 17th 2022, 11:44:14 am
+ * Author: ccagml
+ *
+ * Copyright (c) 2022 ccagml . All rights reserved.
+ */
+
 export interface IApi {
   callArg(arg);
   call(arg): void;
