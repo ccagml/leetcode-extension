@@ -1,5 +1,5 @@
 /*
- * Filename: /home/cc/vscode-leetcode-problem-rating/src/childProcessCall/factory/api/query.ts
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/RemoteCall/factory/api/query.ts
  * Path: /home/cc/vscode-leetcode-problem-rating
  * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
