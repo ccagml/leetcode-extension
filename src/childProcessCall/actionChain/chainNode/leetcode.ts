@@ -117,7 +117,7 @@ class LeetCode extends Chain {
             ),
             locked: p.paid_only,
             percent: (p.stat.total_acs * 100) / p.stat.total_submitted,
-            level: commUtils.levelToName(p.difficulty.level),
+            level: commUtils.getNameByLevel(p.difficulty.level),
             starred: p.is_favor,
             category: json.category_slug,
           };

@@ -177,11 +177,7 @@ class ShowApi extends ApiBase {
 
     reply.info();
     reply.info(`* ${problem.category}`);
-    reply.info(
-      `* ${commUtils.prettyLevel(problem.level)} (${problem.percent.toFixed(
-        2
-      )}%)`
-    );
+    reply.info(`* ${problem.level} (${problem.percent.toFixed(2)}%)`);
 
     if (problem.likes) reply.info(`* Likes:    ${problem.likes}`);
     if (problem.dislikes) reply.info(`* Dislikes: ${problem.dislikes}`);

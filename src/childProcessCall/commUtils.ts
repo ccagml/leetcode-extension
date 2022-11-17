@@ -23,20 +23,7 @@ class CommUtils {
     };
   }
 
-  prettyLevel(level) {
-    switch (level.toLowerCase().trim()) {
-      case "easy":
-        return level;
-      case "medium":
-        return level;
-      case "hard":
-        return level;
-      default:
-        return level;
-    }
-  }
-
-  levelToName(level) {
+  getNameByLevel(level) {
     switch (level) {
       case 1:
         return "Easy";
@@ -46,31 +33,6 @@ class CommUtils {
         return "Hard";
       default:
         return " ";
-    }
-  }
-
-  statusToName(sc) {
-    switch (sc) {
-      case 10:
-        return "Accepted";
-      case 11:
-        return "Wrong Answer";
-      case 12:
-        return "Memory Limit Exceeded";
-      case 13:
-        return "Output Limit Exceeded";
-      case 14:
-        return "Time Limit Exceeded";
-      case 15:
-        return "Runtime Error";
-      case 16:
-        return "Internal Error";
-      case 20:
-        return "Compile Error";
-      case 21:
-        return "Unknown Error";
-      default:
-        return "Unknown";
     }
   }
 
