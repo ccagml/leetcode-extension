@@ -1,7 +1,7 @@
 /*
- * Filename: /home/cc/vscode-leetcode-problem-rating/src/RemoteCall/factory/api/star.ts
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/RemoteCall/factory/api/starApi.ts
  * Path: /home/cc/vscode-leetcode-problem-rating
- * Created Date: Monday, November 14th 2022, 4:04:31 pm
+ * Created Date: Thursday, November 17th 2022, 11:44:14 am
  * Author: ccagml
  *
  * Copyright (c) 2022 ccagml . All rights reserved.

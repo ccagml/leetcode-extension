@@ -1,12 +1,12 @@
-import { cacheApi } from "./api/cache";
-import { listApi } from "./api/list";
-import { pluginApi } from "./api/plugin";
-import { queryApi } from "./api/query";
-import { showApi } from "./api/show";
-import { starApi } from "./api/star";
-import { submitApi } from "./api/submit";
-import { testApi } from "./api/test";
-import { userApi } from "./api/user";
+import { cacheApi } from "./api/cacheApi";
+import { listApi } from "./api/listApi";
+import { pluginApi } from "./api/pluginApi";
+import { queryApi } from "./api/queryApi";
+import { showApi } from "./api/showApi";
+import { starApi } from "./api/starApi";
+import { submitApi } from "./api/submitApi";
+import { testApi } from "./api/testApi";
+import { userApi } from "./api/userApi";
 import { IApi } from "./apiBase";
 
 class ApiFactory {
