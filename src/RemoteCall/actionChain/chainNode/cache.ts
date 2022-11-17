@@ -7,7 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { Chain } from "../chain";
+import { ChainNodeBase } from "../chainNodeBase";
 
 let underscore = require("underscore");
 
@@ -15,7 +15,7 @@ import { storageUtils } from "../../utils/storageUtils";
 import { commUtils } from "../../utils/commUtils";
 import { sessionUtils } from "../../utils/sessionUtils";
 
-class CachePlugin extends Chain {
+class CachePlugin extends ChainNodeBase {
   id = 50;
   name = "cache";
   builtin = true;

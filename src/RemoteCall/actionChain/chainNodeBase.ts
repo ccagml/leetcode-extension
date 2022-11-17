@@ -1,102 +1,12 @@
-/*
- * Filename: /home/cc/vscode-leetcode-problem-rating/src/RemoteCall/actionChain/chain.ts
- * Path: /home/cc/vscode-leetcode-problem-rating
- * Created Date: Monday, November 14th 2022, 4:04:31 pm
- * Author: ccagml
- *
- * Copyright (c) 2022 ccagml . All rights reserved.
- */
-
-let underscore = require("underscore");
-
-import { configUtils } from "../utils/configUtils";
-import { storageUtils } from "../utils/storageUtils";
-import { commUtils } from "../utils/commUtils";
-
-export class Chain {
-  id;
-  name;
-  ver;
-  desc;
-  enabled;
-  deleted;
-  builtin;
-  deps;
-  next;
-  plugins: Array<any> = [];
-  installed: Array<Chain> = [];
-  head; // 插件头 是core
-  config;
-  constructor() {}
-
-  public save(): void {
-    const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
-
-    if (this.deleted) delete stats[this.name];
-    else stats[this.name] = this.enabled;
-
-    storageUtils.setCache(commUtils.KEYS.plugins, stats);
-  }
-
-  public init(): void {
-    this.config = configUtils.plugins[this.name] || {};
-    this.next = null;
-  }
-
-  public getChainHead(): Chain {
-    return this.head;
-  }
-
-  public base_init(head: Chain): Object {
-    this.head = head;
-    const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
-    let file_plugin: Array<any> = storageUtils.listCodeDir(
-      "../actionChain/chainNode"
-    );
-    this.installed = [];
-    for (let f of file_plugin) {
-      const p = f.data;
-      if (!p) continue;
-      p.file = f.file;
-      p.enabled = stats[p.name];
-      if (!(p.name in stats)) {
-        if (p.builtin) {
-          p.enabled = true;
-        } else {
-          p.enabled = false;
-        }
-      }
-      this.installed.push(p);
-    }
-    // 根据id大小排序, 大的前面
-    this.installed = underscore.sortBy(this.installed, (x) => -x.id);
-    // 从小的开始init
-    for (let i = this.installed.length - 1; i >= 0; --i) {
-      const p = this.installed[i];
-      if (p.enabled) {
-        p.init();
-      }
-    }
-    // 连成链表状
-    this.plugins = this.installed.filter((x) => x.enabled);
-    let last = head;
-    for (let p of this.plugins) {
-      last.setNext(p);
-      last = p;
-    }
-    return true;
-  }
-
-  public setNext(next: Chain): void {
+export class ChainNodeBase {
+  public init() {}
+  next: ChainNodeBase;
+  enabled: boolean;
+  builtin: boolean = true;
+  public setNext(next: ChainNodeBase): void {
     Object.setPrototypeOf(this, next);
     this.next = next;
   }
-  public save_all(): void {
-    for (let p of this.plugins) {
-      p.save();
-    }
-  }
-
   public getProblems(Translate: boolean, cb: Function): void {
     this.next.getProblems(Translate, cb);
   }
@@ -189,5 +99,3 @@ export class Chain {
     this.next.getRating(cb);
   }
 }
-
-export const chain: Chain = new Chain();

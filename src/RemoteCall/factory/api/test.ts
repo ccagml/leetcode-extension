@@ -16,7 +16,7 @@ import { reply } from "../../utils/ReplyUtils";
 import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 import { commUtils } from "../../utils/commUtils";
-import { chain } from "../../actionChain/chain";
+import { chainMgr } from "../../actionChain/chainManager";
 
 class TestApi extends ApiBase {
   constructor() {
@@ -88,7 +88,7 @@ class TestApi extends ApiBase {
     // [key: string]: string[];
     // messages: string[];
 
-    chain.getChainHead().getProblem(meta, true, function (e, problem) {
+    chainMgr.getChainHead().getProblem(meta, true, function (e, problem) {
       if (e)
         return reply.info(
           JSON.stringify({
@@ -193,7 +193,7 @@ class TestApi extends ApiBase {
       problem.file = argv.filename;
       problem.lang = meta.lang;
 
-      chain.getChainHead().testProblem(problem, function (e, results) {
+      chainMgr.getChainHead().testProblem(problem, function (e, results) {
         if (e) return reply.info(JSON.stringify(e));
 
         results = _.sortBy(results, (x) => x.type);

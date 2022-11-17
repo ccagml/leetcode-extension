@@ -166,6 +166,7 @@ class StorageUtils {
       interpolate: /\$\{(.+?)\}/g,
     };
     this.mkdir(this.homeDir());
+    this.initCache();
   }
 
   public isWindows() {

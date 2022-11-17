@@ -7,7 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { Chain } from "./../chain";
+import { ChainNodeBase } from "../chainNodeBase";
 
 let request = require("request");
 
@@ -15,7 +15,7 @@ import { configUtils } from "../../utils/configUtils";
 
 import { sessionUtils } from "../../utils/sessionUtils";
 
-class LeetCodeCn extends Chain {
+class LeetCodeCn extends ChainNodeBase {
   id = 15;
   name = "leetcode.cn";
   builtin = true;

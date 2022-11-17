@@ -9,7 +9,7 @@
 
 import { configUtils } from "../../utils/configUtils";
 import { reply } from "../../utils/ReplyUtils";
-import { chain } from "../../actionChain/chain";
+import { chainMgr } from "../../actionChain/chainManager";
 import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 
@@ -52,7 +52,7 @@ class PluginApi extends ApiBase {
   call(argv) {
     sessionUtils.argv = argv;
 
-    let all_plugin = chain.installed;
+    let all_plugin = chainMgr.installed;
     const name = argv.name;
 
     // if (argv.install) {
@@ -60,7 +60,7 @@ class PluginApi extends ApiBase {
     //     if (e) return log.fatal(e);
     //     p.help();
     //     p.save();
-    //     chain.init();
+    //     chainMgr.init();
     //   };
 
     //   return;
@@ -83,7 +83,7 @@ class PluginApi extends ApiBase {
     } else if (argv.delete) {
       // p.delete();
       p.save();
-      chain.init();
+      chainMgr.init();
     } else if (argv.config) {
       reply.info(JSON.stringify(configUtils.plugins[name] || {}, null, 2));
     }

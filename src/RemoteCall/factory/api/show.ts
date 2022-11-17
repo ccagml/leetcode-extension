@@ -17,7 +17,7 @@ import { configUtils } from "../../utils/configUtils";
 
 import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
-import { chain } from "../../actionChain/chain";
+import { chainMgr } from "../../actionChain/chainManager";
 
 class ShowApi extends ApiBase {
   constructor() {
@@ -142,7 +142,7 @@ class ShowApi extends ApiBase {
         code: template.defaultCode,
         tpl: argv.extra ? "detailed" : "codeonly",
       };
-      code = chain.getChainHead().exportProblem(problem, opts);
+      code = chainMgr.getChainHead().exportProblem(problem, opts);
     }
 
     let filename;
@@ -199,7 +199,7 @@ class ShowApi extends ApiBase {
     sessionUtils.argv = argv;
     if (argv.keyword.length > 0) {
       // show specific one
-      chain
+      chainMgr
         .getChainHead()
         .getProblem(argv.keyword, !argv.dontTranslate, function (e, problem) {
           if (e) return reply.info(e);

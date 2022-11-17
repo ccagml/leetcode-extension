@@ -18,10 +18,10 @@ import { commUtils } from "../../utils/commUtils";
 import { storageUtils } from "../../utils/storageUtils";
 import { reply } from "../../utils/ReplyUtils";
 import { sessionUtils } from "../../utils/sessionUtils";
-import { Chain } from "./../chain";
+import { ChainNodeBase } from "../chainNodeBase";
 import { Queue } from "../../utils/queueUtils";
 
-class LeetCode extends Chain {
+class LeetCode extends ChainNodeBase {
   id = 10;
   name = "leetcode";
   builtin = true;

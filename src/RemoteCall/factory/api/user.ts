@@ -14,7 +14,7 @@ import { reply } from "../../utils/ReplyUtils";
 import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 
-import { chain } from "../../actionChain/chain";
+import { chainMgr } from "../../actionChain/chainManager";
 
 class UserApi extends ApiBase {
   constructor() {
@@ -77,7 +77,7 @@ class UserApi extends ApiBase {
             return reply.info(JSON.stringify({ code: -1, msg: e.msg || e }));
           }
 
-          chain.getChainHead().login(user, function (e, user) {
+          chainMgr.getChainHead().login(user, function (e, user) {
             if (e) {
               return reply.info(JSON.stringify({ code: -2, msg: e.msg || e }));
             }
@@ -87,7 +87,7 @@ class UserApi extends ApiBase {
       );
     } else if (argv.logout) {
       // logout
-      user = chain.getChainHead().logout(user, true);
+      user = chainMgr.getChainHead().logout(user, true);
       if (user) reply.info(JSON.stringify({ code: 100, user_name: user.name }));
       else
         reply.info(JSON.stringify({ code: -3, msg: "You are not login yet?" }));
@@ -95,10 +95,10 @@ class UserApi extends ApiBase {
     } else if (argv.github || argv.linkedin) {
       // add future third parties here
       const functionMap = new Map([
-        ["g", chain.getChainHead().githubLogin],
-        ["github", chain.getChainHead().githubLogin],
-        ["i", chain.getChainHead().linkedinLogin],
-        ["linkedin", chain.getChainHead().linkedinLogin],
+        ["g", chainMgr.getChainHead().githubLogin],
+        ["github", chainMgr.getChainHead().githubLogin],
+        ["i", chainMgr.getChainHead().linkedinLogin],
+        ["linkedin", chainMgr.getChainHead().linkedinLogin],
       ]);
       const keyword = Object.entries(argv).filter((i) => i[1] === true)[0][0];
       const coreFunction = functionMap.get(keyword);
@@ -136,7 +136,7 @@ class UserApi extends ApiBase {
         ],
         function (e, user) {
           if (e) return reply.info(e);
-          chain.getChainHead().cookieLogin(user, function (e, user) {
+          chainMgr.getChainHead().cookieLogin(user, function (e, user) {
             if (e)
               return reply.info(JSON.stringify({ code: -6, msg: e.msg || e }));
             reply.info(JSON.stringify({ code: 100, user_name: user.name }));

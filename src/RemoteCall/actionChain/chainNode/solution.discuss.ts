@@ -11,9 +11,9 @@ let request = require("request");
 
 import { reply } from "../../utils/ReplyUtils";
 import { sessionUtils } from "../../utils/sessionUtils";
-import { Chain } from "./../chain";
+import { ChainNodeBase } from "../chainNodeBase";
 
-class SolutionDiscuss extends Chain {
+class SolutionDiscuss extends ChainNodeBase {
   id = 200;
   name = "solution.discuss";
   builtin = true;

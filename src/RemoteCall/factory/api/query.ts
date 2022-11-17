@@ -11,7 +11,7 @@ import { reply } from "../../utils/ReplyUtils";
 import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
 
-import { chain } from "../../actionChain/chain";
+import { chainMgr } from "../../actionChain/chainManager";
 
 class QueryApi extends ApiBase {
   constructor() {
@@ -56,17 +56,17 @@ class QueryApi extends ApiBase {
   call(argv) {
     sessionUtils.argv = argv;
     if (argv.a) {
-      chain.getChainHead().getTodayQuestion(function (e, result) {
+      chainMgr.getChainHead().getTodayQuestion(function (e, result) {
         if (e) return;
         reply.info(JSON.stringify(result));
       });
     } else if (argv.b) {
-      chain.getChainHead().getUserContest(argv.b, function (e, result) {
+      chainMgr.getChainHead().getUserContest(argv.b, function (e, result) {
         if (e) return;
         reply.info(JSON.stringify(result));
       });
     } else if (argv.c) {
-      chain.getChainHead().getRating(function (e, result) {
+      chainMgr.getChainHead().getRating(function (e, result) {
         if (e) {
           let log_data = {
             code: 101,
@@ -82,7 +82,7 @@ class QueryApi extends ApiBase {
         reply.info(JSON.stringify(log_data));
       });
     } else if (argv.z) {
-      chain.getChainHead().getQueryZ(argv.z, function (e, result) {
+      chainMgr.getChainHead().getQueryZ(argv.z, function (e, result) {
         if (e) return;
         reply.info(JSON.stringify(result));
       });

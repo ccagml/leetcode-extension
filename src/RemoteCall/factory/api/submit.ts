@@ -15,7 +15,7 @@ import { reply } from "../../utils/ReplyUtils";
 
 import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
-import { chain } from "../../actionChain/chain";
+import { chainMgr } from "../../actionChain/chainManager";
 
 class SubmitApi extends ApiBase {
   constructor() {
@@ -65,13 +65,13 @@ class SubmitApi extends ApiBase {
     const meta = storageUtils.meta(argv.filename);
     let that = this;
     // translation doesn't affect problem lookup
-    chain.getChainHead().getProblem(meta, true, function (e, problem) {
+    chainMgr.getChainHead().getProblem(meta, true, function (e, problem) {
       if (e) return reply.info(e);
 
       problem.file = argv.filename;
       problem.lang = meta.lang;
 
-      chain.getChainHead().submitProblem(problem, function (e, results) {
+      chainMgr.getChainHead().submitProblem(problem, function (e, results) {
         if (e) return reply.info(e);
 
         const result = results[0];
@@ -130,7 +130,7 @@ class SubmitApi extends ApiBase {
           that.printResult(result, "stdout", log_obj);
         }
         reply.info(JSON.stringify(log_obj));
-        chain.getChainHead().updateProblem(problem, {
+        chainMgr.getChainHead().updateProblem(problem, {
           state: result.ok ? "ac" : "notac",
         });
       });

@@ -15,13 +15,13 @@ let cheerio = require("cheerio");
 import { storageUtils } from "../../utils/storageUtils";
 import { configUtils } from "../../utils/configUtils";
 
-import { Chain } from "../chain";
+import { ChainNodeBase } from "../chainNodeBase";
 
 function hasTag(o, tag) {
   return Array.isArray(o) && o.some((x) => x.indexOf(tag.toLowerCase()) >= 0);
 }
 
-class CorePlugin extends Chain {
+class CorePlugin extends ChainNodeBase {
   id = 99999999;
   name = "core";
   builtin = true;

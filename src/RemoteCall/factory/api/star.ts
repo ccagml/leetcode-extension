@@ -11,7 +11,7 @@ import { reply } from "../../utils/ReplyUtils";
 
 import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
-import { chain } from "../../actionChain/chain";
+import { chainMgr } from "../../actionChain/chainManager";
 
 class StarApi extends ApiBase {
   constructor() {
@@ -40,21 +40,25 @@ class StarApi extends ApiBase {
   call(argv) {
     sessionUtils.argv = argv;
     // translation doesn't affect question lookup
-    chain.getChainHead().getProblem(argv.keyword, true, function (e, problem) {
-      if (e) return reply.info(e);
+    chainMgr
+      .getChainHead()
+      .getProblem(argv.keyword, true, function (e, problem) {
+        if (e) return reply.info(e);
 
-      chain
-        .getChainHead()
-        .starProblem(problem, !argv.delete, function (e, starred) {
-          if (e) return reply.info(e);
-          reply.info(
-            `[${problem.fid}] ${problem.name} ${
-              starred ? "icon.like" : "icon.unlike"
-            }`
-          );
-          chain.getChainHead().updateProblem(problem, { starred: starred });
-        });
-    });
+        chainMgr
+          .getChainHead()
+          .starProblem(problem, !argv.delete, function (e, starred) {
+            if (e) return reply.info(e);
+            reply.info(
+              `[${problem.fid}] ${problem.name} ${
+                starred ? "icon.like" : "icon.unlike"
+              }`
+            );
+            chainMgr
+              .getChainHead()
+              .updateProblem(problem, { starred: starred });
+          });
+      });
   }
 }
 

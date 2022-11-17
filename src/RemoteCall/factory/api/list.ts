@@ -10,7 +10,7 @@
 import { reply } from "../../utils/ReplyUtils";
 import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../baseApi";
-import { chain } from "../../actionChain/chain";
+import { chainMgr } from "../../actionChain/chainManager";
 
 class ListApi extends ApiBase {
   constructor() {
@@ -71,7 +71,7 @@ class ListApi extends ApiBase {
 
   call(argv) {
     sessionUtils.argv = argv;
-    chain.getChainHead().filterProblems(argv, function (e, problems) {
+    chainMgr.getChainHead().filterProblems(argv, function (e, problems) {
       if (e) return reply.info(e);
       let new_objcet: Array<any> = [];
       problems.forEach((element) => {

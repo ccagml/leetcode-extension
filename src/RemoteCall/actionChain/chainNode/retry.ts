@@ -7,11 +7,11 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { Chain } from "./../chain";
+import { ChainNodeBase } from "../chainNodeBase";
 import { configUtils } from "../../utils/configUtils";
 import { sessionUtils } from "../../utils/sessionUtils";
 
-class RetryPlugin extends Chain {
+class RetryPlugin extends ChainNodeBase {
   id = 30;
   name = "retry";
   builtin = true;
