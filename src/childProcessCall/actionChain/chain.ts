@@ -47,7 +47,7 @@ export class Chain {
     return this.head;
   }
 
-  public base_init(head): Object {
+  public base_init(head: Chain): Object {
     this.head = head;
     const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
     let file_plugin: Array<any> = storageUtils.listCodeDir(
@@ -87,7 +87,7 @@ export class Chain {
     return true;
   }
 
-  public setNext(next): void {
+  public setNext(next: Chain): void {
     Object.setPrototypeOf(this, next);
     this.next = next;
   }

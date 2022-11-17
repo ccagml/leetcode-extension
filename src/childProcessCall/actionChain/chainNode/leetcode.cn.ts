@@ -188,6 +188,7 @@ class LeetCodeCn extends Chain {
     );
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getTestApi = (value: any, _) => {
     const _request = request.defaults({ jar: true });
     _request(

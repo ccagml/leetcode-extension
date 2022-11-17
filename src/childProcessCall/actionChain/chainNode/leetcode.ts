@@ -394,14 +394,15 @@ class LeetCode extends Chain {
     };
 
     let that = this;
-    request.post(opts, function (e, resp, _) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    request.post(opts, function (e: any, resp: any, _) {
       e = that.checkError(e, resp, 200);
       if (e) return cb(e);
       return cb(null, starred);
     });
   };
 
-  getFavorites = (cb) => {
+  getFavorites = (cb: any) => {
     const opts = this.makeOpts(config.sys.urls.favorites);
 
     let that = this;
@@ -414,7 +415,7 @@ class LeetCode extends Chain {
     });
   };
 
-  getUserInfo = (cb) => {
+  getUserInfo = (cb: any) => {
     let that = this;
     const opts = this.makeOpts(config.sys.urls.graphql);
     opts.headers.Origin = config.sys.urls.base;
@@ -441,7 +442,7 @@ class LeetCode extends Chain {
     });
   };
 
-  runSession = (method, data, cb) => {
+  runSession = (method: any, data: any, cb: any) => {
     const opts = this.makeOpts(config.sys.urls.session);
     opts.json = true;
     opts.method = method;
@@ -475,9 +476,10 @@ class LeetCode extends Chain {
     this.runSession("DELETE", data, cb);
   };
 
-  signin = (user, cb) => {
+  signin = (user: any, cb: any) => {
     let that = this;
-    request(config.sys.urls.login, function (e, resp, _) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    request(config.sys.urls.login, function (e: any, resp: any, _) {
       e = that.checkError(e, resp, 200);
       if (e) return cb(e);
       user.loginCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
@@ -494,7 +496,8 @@ class LeetCode extends Chain {
           password: user.pass,
         },
       };
-      request.post(opts, function (e, resp, _) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      request.post(opts, function (e: any, resp: any, _) {
         if (e) return cb(e);
         if (resp.statusCode !== 302) return cb("invalid password?");
 
@@ -558,6 +561,7 @@ class LeetCode extends Chain {
 
   requestLeetcodeAndSave = (request, leetcodeUrl, user, cb) => {
     let that = this;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     request.get({ url: leetcodeUrl }, function (_, resp, __) {
       const redirectUri = resp.request.uri.href;
       if (redirectUri !== config.sys.urls.leetcode_redirect) {
@@ -663,6 +667,7 @@ class LeetCode extends Chain {
                 utf8: encodeURIComponent("✓"),
               },
             };
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             _request(optionsTwoFactor, function (_, resp, __) {
               if (resp.request.uri.href === urls.github_tf_session_request) {
                 return cb("Invalid two-factor code please check");
@@ -731,6 +736,7 @@ class LeetCode extends Chain {
           loginFlow: "REMEMBER_ME_OPTIN",
         },
       };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       _request(options, function (_, resp, __) {
         if (resp.statusCode !== 200) {
           return cb("LinkedIn login failed");
