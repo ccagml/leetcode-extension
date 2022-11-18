@@ -341,7 +341,7 @@ class StorageUtils {
     let temp_collect = "";
     for (let all_input = 0; all_input < input.length; all_input++) {
       const element = input[all_input];
-      let check_index = element.indexOf("输入");
+      let check_index = element.indexOf("输入：");
       if (check_index == -1) {
         check_index = element.indexOf("Input:");
       }
@@ -350,8 +350,7 @@ class StorageUtils {
         start_flag = true;
         continue;
       }
-
-      check_index = element.indexOf("输出");
+      check_index = element.indexOf("输出：");
       if (check_index == -1) {
         check_index = element.indexOf("Output:");
       }
