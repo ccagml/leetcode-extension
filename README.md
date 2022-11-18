@@ -21,6 +21,7 @@
 - 增加一键提交全部题目测试用例功能
 - 尝试不需要额外安装 node 环境,使用 vscode 自带的 node 版本
 - 从[zerotrac.github.io](https://zerotrac.github.io/leetcode_problem_rating/data.json)获取数据进行缓存,数据更新时,可以尝试使用 deleteAllCache,重新获取数据
+- 将所有提供的测试用例单独存放到代码下方,一键提交也会收集这部分的测试用例(简单去重())
 
 # 关于本项目
 
@@ -42,24 +43,37 @@
 
 ![search](https://www.ccagml.com/wp-content/uploads/2022/10/search.gif)
 
+## 区块测试用例
+
+### 例子(cpp 文件为例)
+
+```
+// @lcpr case=start
+// "PAYPALISHIRINGGGG"\n3\n
+// @lcpr case=end
+```
+
+### 说明
+
+- 以 @lcpr case=start 开头
+- 第二行存放原本手动填写测试用例
+- 以 @lcpr case=end 结尾
+
+### 一键提交的用例去重
+
+- 简单的比较这些用例字符串是否相同
+
 <!-- ## TODO 看到一些可能会用得上的功能
-  - 在文件里面插入一些测试用例? 提交答案与期望答案不同的地方?
+  -  (完成) 在文件里面插入一些测试用例?
+  - 提交答案与期望答案不同的地方?
   - 做题目计时
-  - 不是中文站点,直接隐藏账号密码登录的方式
-  - 默认的工作目录修改 不再是.leetcode
-  - Test按钮应该不在需要 case 和 allcase 只要留下输入的功能
+  - (完成) 不是中文站点,直接隐藏账号密码登录的方式
+  - 默认的工作目录修改 不再是.leetcode(不改了)
+  - (完成) Test按钮应该不在需要 case 和 allcase 只要留下输入的功能
   - 备忘录功能(数据直接放设置的工作目录?用github同步?)
   - 获取提交历史(直接找官方的提交数据)
   - 想做一个可以根据计算下次回顾本题的功能?(需要在设置的工作目录中存放多个文件?)
   - 还没出分前周赛题目显示 未评分(需要官网获取最新几期的题目编号) -->
-
-## ❗️ 注意 ❗️- 无法登录 LeetCode 节点的临时解决办法
-
-> 注意：如果使用的是 `leetcode.cn` 账户，可以跳过此段落。
-
-近期我们发现插件出现了[无法登录 leetcode.com 节点的问题](https://github.com/LeetCode-OpenSource/vscode-leetcode/issues/478)。原因是因为近期 leetcode.com 改变了登录机制，目前我们暂时没有找到解决该问题的完美解决方案。你可以直接点击登录按钮并选择第三方登录或者 `Cookie` 登录。
-
-> 注意：如果你希望使用第三方登录（**推荐**），请确保你的账户已经与第三方账户连接。如果你希望通过 `Cookie` 登录，请点击[该连接](https://github.com/LeetCode-OpenSource/vscode-leetcode/issues/478#issuecomment-564757098)查看登录步骤。
 
 ## 运行条件
 
