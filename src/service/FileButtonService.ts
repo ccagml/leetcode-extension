@@ -182,7 +182,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
           .replace(/#/g, "")
           .replace(/\/\//g, "")
           .replace(/--/g, "")
-          .replace(/" "/g, "");
+          .replace(/\s+/g, "");
       }
       // 收集所有用例
       if (lineContent.indexOf("@lcpr case=start") >= 0) {

@@ -112,71 +112,25 @@ class TestApi extends ApiBase {
       }
 
       if (argv.allcase) {
+        let temp_test_set: Set<string> = new Set();
+
         let new_desc = problem.desc;
-        new_desc = new_desc.replace(/<\/sup>/gm, "").replace(/<sup>/gm, "^");
-        new_desc = require("he").decode(
-          require("cheerio").load(new_desc).root().text()
-        );
-        // NOTE: wordwrap internally uses '\n' as EOL, so here we have to
-        // remove all '\r' in the raw string.
-        new_desc = new_desc.replace(/\r\n/g, "\n").replace(/^ /gm, "⁠");
-        let input = require("wordwrap")(120)(new_desc).split("\n");
+        let calcCaseList = storageUtils.getAllCase(new_desc);
+        calcCaseList.forEach((x) => {
+          let xxx = x.join("\n");
+          temp_test_set.add(xxx);
+        });
+        if (meta.writeCase) {
+          meta.writeCase.forEach((xxx) => {
+            temp_test_set.add(xxx);
+          });
+        }
+
         let temp_test: Array<any> = [];
-        let start_flag = false;
-        let temp_collect = "";
-        for (let all_input = 0; all_input < input.length; all_input++) {
-          const element = input[all_input];
-          let check_index = element.indexOf("输入");
-          if (check_index == -1) {
-            check_index = element.indexOf("Input:");
-          }
-          if (check_index != -1) {
-            temp_collect += element.substring(check_index + 1);
-            start_flag = true;
-            continue;
-          }
+        temp_test_set.forEach((x) => {
+          temp_test.push(x);
+        });
 
-          check_index = element.indexOf("输出");
-          if (check_index == -1) {
-            check_index = element.indexOf("Output:");
-          }
-          if (check_index != -1) {
-            start_flag = false;
-          }
-          if (start_flag) {
-            temp_collect += element;
-          } else {
-            if (temp_collect.length > 0) {
-              let new_ele = temp_collect;
-              let temp_case: Array<any> = [];
-              let wait_cur = "";
-              let no_need_flag = false;
-              for (let index = new_ele.length - 1; index >= 0; index--) {
-                if (no_need_flag) {
-                  if (new_ele[index] == ",") {
-                    no_need_flag = false;
-                  }
-                } else {
-                  if (new_ele[index] == "=") {
-                    temp_case.push(wait_cur.trim());
-                    no_need_flag = true;
-                    wait_cur = "";
-                  } else {
-                    wait_cur = new_ele[index] + wait_cur;
-                  }
-                }
-              }
-              for (let index = temp_case.length - 1; index >= 0; index--) {
-                temp_test.push(temp_case[index]);
-              }
-              temp_collect = "";
-            }
-          }
-        }
-
-        if (temp_test.length < 1) {
-          return;
-        }
         let all_case = temp_test.join("\n");
         problem.testcase = all_case;
       }

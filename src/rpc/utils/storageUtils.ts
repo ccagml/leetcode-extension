@@ -18,6 +18,7 @@ export interface IMETA {
   id: string;
   fid: string;
   lang: string;
+  writeCase: Array<any>;
 }
 
 //Object.assign({}, defaultMETA, {})
@@ -25,6 +26,7 @@ export const defaultMETA: IMETA = {
   id: "",
   fid: "",
   lang: "",
+  writeCase: [],
 };
 
 class StorageUtils {
@@ -329,14 +331,14 @@ class StorageUtils {
   /**
    * name
    */
-  public getAllCase(new_desc) {
-    new_desc = new_desc.replace(/<\/sup>/gm, "").replace(/<sup>/gm, "^");
+  public getAllCase(a_desc) {
+    let new_desc = a_desc.replace(/<\/sup>/gm, "").replace(/<sup>/gm, "^");
     new_desc = require("he").decode(
       require("cheerio").load(new_desc).root().text()
     );
     // NOTE: wordwrap internally uses '\n' as EOL, so here we have to
     // remove all '\r' in the raw string.
-    new_desc = new_desc.replace(/\r\n/g, "\n").replace(/^ /gm, "⁠");
+    new_desc = new_desc.replace(/\r\n/g, "\n").replace(/^ /gm, "");
     let input = require("wordwrap")(120)(new_desc).split("\n");
     let temp_test: Array<any> = [];
     let start_flag = false;
@@ -421,20 +423,68 @@ class StorageUtils {
     return _.template(format)(data);
   }
 
+  // 去掉头尾的\n
+  public deleteWriteCaseHeadENDn(testCase) {
+    if (testCase.length < 3) {
+      return testCase;
+    }
+    let start = 0;
+    let end = testCase.length - 1;
+    let flag = false;
+    while (start < end - 1 && testCase[start] == "\n") {
+      start++;
+      flag = true;
+    }
+    while (end >= 1 && testCase[end] == "\n") {
+      end--;
+      flag = true;
+    }
+    if (flag) {
+      return testCase.substring(start, end + 1);
+    }
+    return testCase;
+  }
+
   public meta(filename) {
     const m = Object.assign({}, defaultMETA, {});
-    const line =
-      this.getData(filename)
-        .split("\n")
-        .find((x) => x.indexOf(" @lc app=") >= 0) || "";
-    // @lc app=leetcode.cn id=剑指 Offer II 116 lang=cpp
-    let id_right = line.split("id=")[1];
-    let lang_cat = id_right.split("lang=");
-    let id = lang_cat[0].trim();
-    let lang = lang_cat[1].trim();
-    m.id = id;
-    m.fid = id;
-    m.lang = lang;
+
+    let file_info = this.getData(filename).split("\n");
+
+    let temp_test: Array<any> = [];
+    let caseFlag: boolean = false;
+    let curCase = "";
+
+    for (let all_input = 0; all_input < file_info.length; all_input++) {
+      const lineContent = file_info[all_input];
+      if (caseFlag && lineContent.indexOf("@lcpr case=end") < 0) {
+        curCase += lineContent
+          .replace(/#/g, "")
+          .replace(/\/\//g, "")
+          .replace(/--/g, "")
+          .replace(/\s+/g, "")
+          .replace(/\\n/g, "\n");
+      }
+      // 收集所有用例
+      if (lineContent.indexOf("@lcpr case=start") >= 0) {
+        caseFlag = true;
+      }
+      if (caseFlag && lineContent.indexOf("@lcpr case=end") >= 0) {
+        temp_test.push(this.deleteWriteCaseHeadENDn(curCase));
+        curCase = "";
+        caseFlag = false;
+      }
+      if (lineContent.indexOf(" @lc app=") >= 0) {
+        // @lc app=leetcode.cn id=剑指 Offer II 116 lang=cpp
+        let id_right = lineContent.split("id=")[1];
+        let lang_cat = id_right.split("lang=");
+        let id = lang_cat[0].trim();
+        let lang = lang_cat[1].trim();
+        m.id = id;
+        m.fid = id;
+        m.lang = lang;
+      }
+      m.writeCase = temp_test;
+    }
     return m;
   }
 }
