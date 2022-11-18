@@ -7,15 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import {
-  commands,
-  ConfigurationChangeEvent,
-  Disposable,
-  ViewColumn,
-  WebviewPanel,
-  window,
-  workspace,
-} from "vscode";
+import { commands, ConfigurationChangeEvent, Disposable, ViewColumn, WebviewPanel, window, workspace } from "vscode";
 import { markdownService } from "./MarkdownService";
 import { IWebViewOption } from "../model/Model";
 import { openSettingsEditor } from "../utils/ConfigUtils";
@@ -48,25 +40,15 @@ export abstract class BaseWebViewService implements Disposable {
         }
       );
       this.panel.onDidDispose(this.onDidDisposeWebview, this, this.listeners);
-      this.panel.webview.onDidReceiveMessage(
-        this.onDidReceiveMessage,
-        this,
-        this.listeners
-      );
-      workspace.onDidChangeConfiguration(
-        this.onDidChangeConfiguration,
-        this,
-        this.listeners
-      );
+      this.panel.webview.onDidReceiveMessage(this.onDidReceiveMessage, this, this.listeners);
+      workspace.onDidChangeConfiguration(this.onDidChangeConfiguration, this, this.listeners);
     } else {
       this.panel.title = title;
       if (viewColumn === ViewColumn.Two) {
         // Make sure second group exists. See vscode#71608 issue
-        commands
-          .executeCommand("workbench.action.focusSecondEditorGroup")
-          .then(() => {
-            this.panel!.reveal(viewColumn, preserveFocus);
-          });
+        commands.executeCommand("workbench.action.focusSecondEditorGroup").then(() => {
+          this.panel!.reveal(viewColumn, preserveFocus);
+        });
       } else {
         this.panel.reveal(viewColumn, preserveFocus);
       }
@@ -83,9 +65,7 @@ export abstract class BaseWebViewService implements Disposable {
     this.listeners = [];
   }
 
-  protected async onDidChangeConfiguration(
-    event: ConfigurationChangeEvent
-  ): Promise<void> {
+  protected async onDidChangeConfiguration(event: ConfigurationChangeEvent): Promise<void> {
     if (this.panel && event.affectsConfiguration("markdown")) {
       this.panel.webview.html = this.getWebviewContent();
     }

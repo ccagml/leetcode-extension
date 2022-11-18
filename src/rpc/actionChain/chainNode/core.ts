@@ -41,9 +41,7 @@ class CorePlugin extends ChainNodeBase {
 
       for (let t of opts.tag || []) {
         problems = problems.filter(function (x) {
-          return (
-            x.category === t || hasTag(x.companies, t) || hasTag(x.tags, t)
-          );
+          return x.category === t || hasTag(x.companies, t) || hasTag(x.tags, t);
         });
       }
 
@@ -55,21 +53,14 @@ class CorePlugin extends ChainNodeBase {
     this.getProblems(needTranslation, function (e, problems) {
       if (e) return cb(e);
       keyword = Number(keyword) || keyword;
-      const metaFid = storageUtils.exist(keyword)
-        ? storageUtils.meta(keyword).id
-        : NaN;
+      const metaFid = storageUtils.exist(keyword) ? storageUtils.meta(keyword).id : NaN;
       const problem = problems.find(function (x) {
         if (keyword?.fid) {
           return x.fid + "" === keyword.fid + "";
         } else if (keyword?.qid) {
           return x.id + "" === keyword.qid + "";
         } else {
-          return (
-            x.id + "" === keyword + "" ||
-            x.fid + "" === metaFid + "" ||
-            x.name === keyword ||
-            x.slug === keyword
-          );
+          return x.id + "" === keyword + "" || x.fid + "" === metaFid + "" || x.name === keyword || x.slug === keyword;
         }
       });
       if (!problem) return cb("Problem not found!");

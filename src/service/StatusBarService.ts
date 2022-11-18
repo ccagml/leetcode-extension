@@ -7,13 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import {
-  ConfigurationChangeEvent,
-  Disposable,
-  workspace,
-  StatusBarItem,
-  window,
-} from "vscode";
+import { ConfigurationChangeEvent, Disposable, workspace, StatusBarItem, window } from "vscode";
 import { UserStatus, userContestRanKingBase } from "../model/Model";
 import { enableStatusBar } from "../utils/ConfigUtils";
 import { eventService } from "./EventService";
@@ -83,16 +77,11 @@ class StatusBarService implements Disposable {
     this.currentUser = undefined;
     this.userStatus = UserStatus.SignedOut;
 
-    this.configurationChangeListener = workspace.onDidChangeConfiguration(
-      (event: ConfigurationChangeEvent) => {
-        if (
-          event.affectsConfiguration("leetcode-problem-rating.enableStatusBar")
-        ) {
-          this.setStatusBarVisibility();
-        }
-      },
-      this
-    );
+    this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
+      if (event.affectsConfiguration("leetcode-problem-rating.enableStatusBar")) {
+        this.setStatusBarVisibility();
+      }
+    }, this);
   }
 
   // 更新状态栏的数据
@@ -104,11 +93,9 @@ class StatusBarService implements Disposable {
     switch (status) {
       case UserStatus.SignedIn:
         if (UserContestInfo && UserContestInfo.attendedContestsCount > 0) {
-          this.instance.text = `用户: ${user}, 积分: ${Math.floor(
-            UserContestInfo.rating
-          )}, 名次: ${UserContestInfo.localRanking} / ${
-            UserContestInfo.localTotalParticipants
-          } (${UserContestInfo.topPercentage}%), 全部名次: ${
+          this.instance.text = `用户: ${user}, 积分: ${Math.floor(UserContestInfo.rating)}, 名次: ${
+            UserContestInfo.localRanking
+          } / ${UserContestInfo.localTotalParticipants} (${UserContestInfo.topPercentage}%), 全部名次: ${
             UserContestInfo.globalRanking
           } / ${UserContestInfo.globalTotalParticipants}`;
         } else {
@@ -126,19 +113,13 @@ class StatusBarService implements Disposable {
     this.userStatus = status;
     this.currentUser = user;
   }
-  public update_UserContestInfo(
-    UserContestInfo?: userContestRanKingBase | undefined
-  ) {
+  public update_UserContestInfo(UserContestInfo?: userContestRanKingBase | undefined) {
     this.currentUserContestInfo = UserContestInfo;
   }
 
   // 更新数据
   public update(): void {
-    this.update_instance(
-      this.userStatus,
-      this.currentUser,
-      this.currentUserContestInfo
-    );
+    this.update_instance(this.userStatus, this.currentUser, this.currentUserContestInfo);
   }
 
   //销毁数据

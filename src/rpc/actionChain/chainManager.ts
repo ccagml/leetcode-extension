@@ -34,9 +34,7 @@ export class ChainManager {
       this.head = head;
     }
     const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
-    let fileChainNode: Array<any> = storageUtils.listCodeDir(
-      "../actionChain/chainNode"
-    );
+    let fileChainNode: Array<any> = storageUtils.listCodeDir("../actionChain/chainNode");
     this.installed = [];
     for (let f of fileChainNode) {
       const p = f.data;

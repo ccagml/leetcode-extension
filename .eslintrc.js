@@ -60,6 +60,8 @@ module.exports = {
     "prefer-spread": ["off"],
     "prefer-rest-params": ["off"],
     "@typescript-eslint/no-explicit-any": ["off"],
+    // "function-paren-newline": ["off", { minItems: 5 }],
+    "max-len": ["warn", { code: 120 }],
   },
   // 如果有 js 和 ts 需要分开指定的规则，就 js 写 rules 里，ts 写 overrides 里
   overrides: [

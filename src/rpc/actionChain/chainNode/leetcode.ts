@@ -30,12 +30,7 @@ class LeetCode extends ChainNodeBase {
   }
 
   signOpts(opts, user) {
-    opts.headers.Cookie =
-      "LEETCODE_SESSION=" +
-      user.sessionId +
-      ";csrftoken=" +
-      user.sessionCSRF +
-      ";";
+    opts.headers.Cookie = "LEETCODE_SESSION=" + user.sessionId + ";csrftoken=" + user.sessionCSRF + ";";
     opts.headers["X-CSRFToken"] = user.sessionCSRF;
     opts.headers["X-Requested-With"] = "XMLHttpRequest";
   }
@@ -87,9 +82,7 @@ class LeetCode extends ChainNodeBase {
   };
 
   getCategoryProblems = (category, cb) => {
-    const opts = this.makeOpts(
-      configUtils.sys.urls.problems.replace("$category", category)
-    );
+    const opts = this.makeOpts(configUtils.sys.urls.problems.replace("$category", category));
 
     let that = this;
     request(opts, function (e, resp, body) {
@@ -111,10 +104,7 @@ class LeetCode extends ChainNodeBase {
             fid: p.stat.frontend_question_id,
             name: p.stat.question__title,
             slug: p.stat.question__title_slug,
-            link: configUtils.sys.urls.problem.replace(
-              "$slug",
-              p.stat.question__title_slug
-            ),
+            link: configUtils.sys.urls.problem.replace("$slug", p.stat.question__title_slug),
             locked: p.paid_only,
             percent: (p.stat.total_acs * 100) / p.stat.total_submitted,
             level: commUtils.getNameByLevel(p.difficulty.level),
@@ -129,8 +119,7 @@ class LeetCode extends ChainNodeBase {
 
   getProblem = (problem, needTranslation, cb) => {
     const user = sessionUtils.getUser();
-    if (problem.locked && !user.paid)
-      return cb("failed to load locked problem!");
+    if (problem.locked && !user.paid) return cb("failed to load locked problem!");
 
     const opts = this.makeOpts(configUtils.sys.urls.graphql);
     opts.headers.Origin = configUtils.sys.urls.base;
@@ -170,10 +159,7 @@ class LeetCode extends ChainNodeBase {
       problem.likes = q.likes;
       problem.dislikes = q.dislikes;
 
-      problem.desc =
-        q.translatedContent && needTranslation
-          ? q.translatedContent
-          : q.content;
+      problem.desc = q.translatedContent && needTranslation ? q.translatedContent : q.content;
 
       problem.templates = JSON.parse(q.codeDefinition);
       problem.testcase = q.sampleTestCase;
@@ -289,9 +275,7 @@ class LeetCode extends ChainNodeBase {
   };
 
   testProblem = (problem, cb) => {
-    const opts = this.makeOpts(
-      configUtils.sys.urls.test.replace("$slug", problem.slug)
-    );
+    const opts = this.makeOpts(configUtils.sys.urls.test.replace("$slug", problem.slug));
     opts.body = { data_input: problem.testcase };
     let that = this;
     this.runCode(opts, problem, function (e, task) {
@@ -303,11 +287,7 @@ class LeetCode extends ChainNodeBase {
       if (task.interpret_expected_id) {
         tasks.push({ type: "Expected", id: task.interpret_expected_id });
       }
-      const q = new Queue(
-        tasks,
-        { opts: opts, results: [] },
-        that.verifyResult
-      );
+      const q = new Queue(tasks, { opts: opts, results: [] }, that.verifyResult);
       q.run(null, function (e, ctx) {
         return cb(e, ctx.results);
       });
@@ -315,20 +295,14 @@ class LeetCode extends ChainNodeBase {
   };
 
   submitProblem = (problem, cb) => {
-    const opts = this.makeOpts(
-      configUtils.sys.urls.submit.replace("$slug", problem.slug)
-    );
+    const opts = this.makeOpts(configUtils.sys.urls.submit.replace("$slug", problem.slug));
     opts.body = { judge_type: "large" };
     let that = this;
     this.runCode(opts, problem, function (e, task) {
       if (e) return cb(e);
 
       const tasks = [{ type: "Actual", id: task.submission_id }];
-      const q = new Queue(
-        tasks,
-        { opts: opts, results: [] },
-        that.verifyResult
-      );
+      const q = new Queue(tasks, { opts: opts, results: [] }, that.verifyResult);
       q.run(null, function (e, ctx) {
         return cb(e, ctx.results);
       });
@@ -336,13 +310,8 @@ class LeetCode extends ChainNodeBase {
   };
 
   getSubmissions = (problem, cb) => {
-    const opts = this.makeOpts(
-      configUtils.sys.urls.submissions.replace("$slug", problem.slug)
-    );
-    opts.headers.Referer = configUtils.sys.urls.problem.replace(
-      "$slug",
-      problem.slug
-    );
+    const opts = this.makeOpts(configUtils.sys.urls.submissions.replace("$slug", problem.slug));
+    opts.headers.Referer = configUtils.sys.urls.problem.replace("$slug", problem.slug);
     let that = this;
     request(opts, function (e, resp, body) {
       e = that.checkError(e, resp, 200);
@@ -351,18 +320,14 @@ class LeetCode extends ChainNodeBase {
       // FIXME: this only return the 1st 20 submissions, we should get next if necessary.
       const submissions = JSON.parse(body).submissions_dump;
       for (const submission of submissions)
-        submission.id = underscore.last(
-          underscore.compact(submission.url.split("/"))
-        );
+        submission.id = underscore.last(underscore.compact(submission.url.split("/")));
 
       return cb(null, submissions);
     });
   };
 
   getSubmission = (submission, cb) => {
-    const opts = this.makeOpts(
-      configUtils.sys.urls.submission.replace("$id", submission.id)
-    );
+    const opts = this.makeOpts(configUtils.sys.urls.submission.replace("$id", submission.id));
     let that = this;
     request(opts, function (e, resp, body) {
       e = that.checkError(e, resp, 200);
@@ -379,9 +344,7 @@ class LeetCode extends ChainNodeBase {
 
   starProblem = (problem, starred, cb) => {
     const user = sessionUtils.getUser();
-    const operationName = starred
-      ? "addQuestionToFavorite"
-      : "removeQuestionFromFavorite";
+    const operationName = starred ? "addQuestionToFavorite" : "removeQuestionFromFavorite";
     const opts = this.makeOpts(configUtils.sys.urls.graphql);
     opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = problem.link;
@@ -422,14 +385,7 @@ class LeetCode extends ChainNodeBase {
     opts.headers.Referer = configUtils.sys.urls.base;
     opts.json = true;
     opts.body = {
-      query: [
-        "{",
-        "  user {",
-        "    username",
-        "    isCurrentUserPremium",
-        "  }",
-        "}",
-      ].join("\n"),
+      query: ["{", "  user {", "    username", "    isCurrentUserPremium", "  }", "}"].join("\n"),
       variables: {},
     };
 
@@ -513,9 +469,7 @@ class LeetCode extends ChainNodeBase {
     let that = this;
     this.getFavorites(function (e, favorites) {
       if (!e) {
-        const f = favorites.favorites.private_favorites.find(
-          (f) => f.name === "Favorite"
-        );
+        const f = favorites.favorites.private_favorites.find((f) => f.name === "Favorite");
         if (f) {
           user.hash = f.id_hash;
           user.name = favorites.user_name;
@@ -589,22 +543,16 @@ class LeetCode extends ChainNodeBase {
     const _request = request.defaults({ jar: true });
     let that = this;
     _request(urls.github_login_request, function (_, __, body) {
-      const authenticityToken = body.match(
-        /name="authenticity_token" value="(.*?)"/
-      );
+      const authenticityToken = body.match(/name="authenticity_token" value="(.*?)"/);
       let gaId = body.match(/name="ga_id" value="(.*?)"/);
       if (!gaId) {
         gaId = "";
       }
       let requiredField = body.match(/name="required_field_(.*?)"/);
       const timestamp = body.match(/name="timestamp" value="(.*?)"/);
-      const timestampSecret = body.match(
-        /name="timestamp_secret" value="(.*?)"/
-      );
+      const timestampSecret = body.match(/name="timestamp_secret" value="(.*?)"/);
 
-      if (
-        !(authenticityToken && timestamp && timestampSecret && requiredField)
-      ) {
+      if (!(authenticityToken && timestamp && timestampSecret && requiredField)) {
         return cb("Get GitHub payload failed");
       }
       requiredField = "required_field_" + requiredField[1];
@@ -648,9 +596,7 @@ class LeetCode extends ChainNodeBase {
           ],
           function (e, result) {
             if (e) return reply.info(e);
-            const authenticityTokenTwoFactor = body.match(
-              /name="authenticity_token" value="(.*?)"/
-            );
+            const authenticityTokenTwoFactor = body.match(/name="authenticity_token" value="(.*?)"/);
             if (authenticityTokenTwoFactor === null) {
               return cb("Get GitHub two-factor token failed");
             }
@@ -695,18 +641,10 @@ class LeetCode extends ChainNodeBase {
       if (resp.statusCode !== 200) {
         return cb("Get LinkedIn session failed");
       }
-      const csrfToken = body.match(
-        /input type="hidden" name="csrfToken" value="(.*?)"/
-      );
-      const loginCsrfToken = body.match(
-        /input type="hidden" name="loginCsrfParam" value="(.*?)"/
-      );
-      const sIdString = body.match(
-        /input type="hidden" name="sIdString" value="(.*?)"/
-      );
-      const pageInstance = body.match(
-        /input type="hidden" name="pageInstance" value="(.*?)"/
-      );
+      const csrfToken = body.match(/input type="hidden" name="csrfToken" value="(.*?)"/);
+      const loginCsrfToken = body.match(/input type="hidden" name="loginCsrfParam" value="(.*?)"/);
+      const sIdString = body.match(/input type="hidden" name="sIdString" value="(.*?)"/);
+      const pageInstance = body.match(/input type="hidden" name="pageInstance" value="(.*?)"/);
       if (!(csrfToken && loginCsrfToken && sIdString && pageInstance)) {
         return cb("Get LinkedIn payload failed");
       }

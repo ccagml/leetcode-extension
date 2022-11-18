@@ -52,71 +52,32 @@ export async function activate(context: ExtensionContext): Promise<void> {
         treeDataProvider: treeDataService,
         showCollapseAll: true,
       }),
-      commands.registerCommand("leetcode.deleteCache", () =>
-        mainContorller.deleteCache()
+      commands.registerCommand("leetcode.deleteCache", () => mainContorller.deleteCache()),
+      commands.registerCommand("leetcode.toggleLeetCodeCn", () => treeViewController.switchEndpoint()),
+      commands.registerCommand("leetcode.signin", () => loginContorller.signIn()),
+      commands.registerCommand("leetcode.signout", () => loginContorller.signOut()),
+      commands.registerCommand("leetcode.previewProblem", (node: NodeModel) => treeViewController.previewProblem(node)),
+      commands.registerCommand("leetcode.showProblem", (node: NodeModel) => treeViewController.showProblem(node)),
+      commands.registerCommand("leetcode.pickOne", () => treeViewController.pickOne()),
+      commands.registerCommand("leetcode.deleteAllCache", () => loginContorller.deleteAllCache()),
+      commands.registerCommand("leetcode.searchScoreRange", () => treeViewController.searchScoreRange()),
+      commands.registerCommand("leetcode.searchProblem", () => treeViewController.searchProblem()),
+      commands.registerCommand("leetcode.showSolution", (input: NodeModel | Uri) =>
+        treeViewController.showSolution(input)
       ),
-      commands.registerCommand("leetcode.toggleLeetCodeCn", () =>
-        treeViewController.switchEndpoint()
+      commands.registerCommand("leetcode.refreshExplorer", () => treeDataService.refresh()),
+      commands.registerCommand("leetcode.testSolution", (uri?: Uri) => treeViewController.testSolution(uri)),
+      commands.registerCommand("leetcode.testSolutionDefault", (uri?: Uri, allCase?: boolean) =>
+        treeViewController.testSolutionDefault(uri, allCase)
       ),
-      commands.registerCommand("leetcode.signin", () =>
-        loginContorller.signIn()
+      commands.registerCommand("leetcode.testSolutionArea", (uri?: Uri, testCase?: string) =>
+        treeViewController.testSolutionArea(uri, testCase)
       ),
-      commands.registerCommand("leetcode.signout", () =>
-        loginContorller.signOut()
-      ),
-      commands.registerCommand("leetcode.previewProblem", (node: NodeModel) =>
-        treeViewController.previewProblem(node)
-      ),
-      commands.registerCommand("leetcode.showProblem", (node: NodeModel) =>
-        treeViewController.showProblem(node)
-      ),
-      commands.registerCommand("leetcode.pickOne", () =>
-        treeViewController.pickOne()
-      ),
-      commands.registerCommand("leetcode.deleteAllCache", () =>
-        loginContorller.deleteAllCache()
-      ),
-      commands.registerCommand("leetcode.searchScoreRange", () =>
-        treeViewController.searchScoreRange()
-      ),
-      commands.registerCommand("leetcode.searchProblem", () =>
-        treeViewController.searchProblem()
-      ),
-      commands.registerCommand(
-        "leetcode.showSolution",
-        (input: NodeModel | Uri) => treeViewController.showSolution(input)
-      ),
-      commands.registerCommand("leetcode.refreshExplorer", () =>
-        treeDataService.refresh()
-      ),
-      commands.registerCommand("leetcode.testSolution", (uri?: Uri) =>
-        treeViewController.testSolution(uri)
-      ),
-      commands.registerCommand(
-        "leetcode.testSolutionDefault",
-        (uri?: Uri, allCase?: boolean) =>
-          treeViewController.testSolutionDefault(uri, allCase)
-      ),
-      commands.registerCommand(
-        "leetcode.testSolutionArea",
-        (uri?: Uri, testCase?: string) =>
-          treeViewController.testSolutionArea(uri, testCase)
-      ),
-      commands.registerCommand("leetcode.submitSolution", (uri?: Uri) =>
-        treeViewController.submitSolution(uri)
-      ),
-      commands.registerCommand("leetcode.switchDefaultLanguage", () =>
-        treeViewController.switchDefaultLanguage()
-      ),
-      commands.registerCommand("leetcode.addFavorite", (node: NodeModel) =>
-        treeViewController.addFavorite(node)
-      ),
-      commands.registerCommand("leetcode.removeFavorite", (node: NodeModel) =>
-        treeViewController.removeFavorite(node)
-      ),
-      commands.registerCommand("leetcode.problems.sort", () =>
-        treeViewController.switchSortingStrategy()
-      )
+      commands.registerCommand("leetcode.submitSolution", (uri?: Uri) => treeViewController.submitSolution(uri)),
+      commands.registerCommand("leetcode.switchDefaultLanguage", () => treeViewController.switchDefaultLanguage()),
+      commands.registerCommand("leetcode.addFavorite", (node: NodeModel) => treeViewController.addFavorite(node)),
+      commands.registerCommand("leetcode.removeFavorite", (node: NodeModel) => treeViewController.removeFavorite(node)),
+      commands.registerCommand("leetcode.problems.sort", () => treeViewController.switchSortingStrategy())
     );
 
     // 设置站点

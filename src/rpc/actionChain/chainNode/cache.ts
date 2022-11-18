@@ -25,10 +25,7 @@ class CachePlugin extends ChainNodeBase {
 
   clearCacheIfTchanged = (needTranslation) => {
     const translationConfig = storageUtils.getCache(commUtils.KEYS.translation);
-    if (
-      !translationConfig ||
-      translationConfig["useEndpointTranslation"] != needTranslation
-    ) {
+    if (!translationConfig || translationConfig["useEndpointTranslation"] != needTranslation) {
       storageUtils.deleteAllCache();
       storageUtils.setCache(commUtils.KEYS.translation, {
         useEndpointTranslation: needTranslation,

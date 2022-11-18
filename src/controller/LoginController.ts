@@ -10,13 +10,7 @@
 import * as cp from "child_process";
 import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
-import {
-  DialogType,
-  Endpoint,
-  IQuickItemEx,
-  loginArgsMapping,
-  UserStatus,
-} from "../model/Model";
+import { DialogType, Endpoint, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
 import { createEnvOption } from "../utils/CliUtils";
 import { logOutput, promptForOpenOutputChannel } from "../utils/OutputUtils";
 import { eventService } from "../service/EventService";
@@ -64,10 +58,7 @@ class LoginContorller {
         value: "Cookie",
       }
     );
-    const choice: IQuickItemEx<string> | undefined = await window.showQuickPick(
-      picks,
-      qpOpiton
-    );
+    const choice: IQuickItemEx<string> | undefined = await window.showQuickPick(picks, qpOpiton);
     if (!choice) {
       return;
     }
@@ -80,40 +71,26 @@ class LoginContorller {
     const inMessage: string = isByCookie ? " 通过cookie登录" : "登录";
     try {
       const userName: string | undefined = await new Promise(
-        async (
-          resolve: (res: string | undefined) => void,
-          reject: (e: Error) => void
-        ): Promise<void> => {
-          const leetCodeBinaryPath: string =
-            await executeService.getLeetCodeBinaryPath();
+        async (resolve: (res: string | undefined) => void, reject: (e: Error) => void): Promise<void> => {
+          const leetCodeBinaryPath: string = await executeService.getLeetCodeBinaryPath();
 
           let childProc: cp.ChildProcess;
 
           if (systemUtils.useVscodeNode()) {
-            childProc = cp.fork(
-              await executeService.getLeetCodeBinaryPath(),
-              ["user", commandArg],
-              {
-                silent: true,
-                env: createEnvOption(),
-              }
-            );
+            childProc = cp.fork(await executeService.getLeetCodeBinaryPath(), ["user", commandArg], {
+              silent: true,
+              env: createEnvOption(),
+            });
           } else {
             if (systemUtils.useWsl()) {
-              childProc = cp.spawn(
-                "wsl",
-                [executeService.node, leetCodeBinaryPath, "user", commandArg],
-                { shell: true }
-              );
+              childProc = cp.spawn("wsl", [executeService.node, leetCodeBinaryPath, "user", commandArg], {
+                shell: true,
+              });
             } else {
-              childProc = cp.spawn(
-                executeService.node,
-                [leetCodeBinaryPath, "user", commandArg],
-                {
-                  shell: true,
-                  env: createEnvOption(),
-                }
-              );
+              childProc = cp.spawn(executeService.node, [leetCodeBinaryPath, "user", commandArg], {
+                shell: true,
+                env: createEnvOption(),
+              });
             }
           }
 
@@ -150,9 +127,7 @@ class LoginContorller {
             }
           });
 
-          childProc.stderr?.on("data", (data: string | Buffer) =>
-            logOutput.append(data.toString())
-          );
+          childProc.stderr?.on("data", (data: string | Buffer) => logOutput.append(data.toString()));
 
           childProc.on("error", reject);
           const name: string | undefined = await window.showInputBox({
@@ -171,11 +146,7 @@ class LoginContorller {
             password: true,
             ignoreFocusOut: true,
             validateInput: (s: string): string | undefined =>
-              s
-                ? undefined
-                : isByCookie
-                ? "Cookie must not be empty"
-                : "Password must not be empty",
+              s ? undefined : isByCookie ? "Cookie must not be empty" : "Password must not be empty",
           });
           if (!pwd) {
             childProc.kill();
@@ -189,10 +160,7 @@ class LoginContorller {
         window.showInformationMessage(`${inMessage} 成功`);
       }
     } catch (error) {
-      promptForOpenOutputChannel(
-        `${inMessage}失败. 请看看控制台输出信息`,
-        DialogType.error
-      );
+      promptForOpenOutputChannel(`${inMessage}失败. 请看看控制台输出信息`, DialogType.error);
     }
   }
 

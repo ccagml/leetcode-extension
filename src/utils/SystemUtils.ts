@@ -29,25 +29,14 @@ export function useWsl(): boolean {
 }
 
 export async function toWslPath(path: string): Promise<string> {
-  return (
-    await executeCommand("wsl", [
-      "wslpath",
-      "-u",
-      `"${path.replace(/\\/g, "/")}"`,
-    ])
-  ).trim();
+  return (await executeCommand("wsl", ["wslpath", "-u", `"${path.replace(/\\/g, "/")}"`])).trim();
 }
 
 export async function toWinPath(path: string): Promise<string> {
   if (path.startsWith("\\mnt\\")) {
     return (
-      (
-        await executeCommand("wsl", [
-          "wslpath",
-          "-w",
-          `"${path.replace(/\\/g, "/").substr(0, 6)}"`,
-        ])
-      ).trim() + path.substr(7)
+      (await executeCommand("wsl", ["wslpath", "-w", `"${path.replace(/\\/g, "/").substr(0, 6)}"`])).trim() +
+      path.substr(7)
     );
   }
   return (await executeCommand("wsl", ["wslpath", "-w", "/"])).trim() + path;
@@ -70,8 +59,7 @@ export function genFileName(node: IProblem, language: string): string {
 export async function getNodeIdFromFile(fsPath: string): Promise<string> {
   const fileContent: string = await fse.readFile(fsPath, "utf8");
   let id: string = "";
-  const matchResults: RegExpMatchArray | null =
-    fileContent.match(/@lc.+id=(.+?) /);
+  const matchResults: RegExpMatchArray | null = fileContent.match(/@lc.+id=(.+?) /);
   if (matchResults && matchResults.length === 2) {
     id = matchResults[1];
   }

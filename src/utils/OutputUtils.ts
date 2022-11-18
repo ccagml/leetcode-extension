@@ -23,12 +23,11 @@ export async function promptHintMessage(
 ): Promise<void> {
   if (getVsCodeConfig().get<boolean>(config)) {
     const choiceNoShowAgain: string = "Don't show again";
-    const choice: string | undefined =
-      await vscode.window.showInformationMessage(
-        message,
-        choiceConfirm,
-        choiceNoShowAgain
-      );
+    const choice: string | undefined = await vscode.window.showInformationMessage(
+      message,
+      choiceConfirm,
+      choiceNoShowAgain
+    );
     if (choice === choiceConfirm) {
       await onConfirm();
     } else if (choice === choiceNoShowAgain) {
@@ -38,13 +37,12 @@ export async function promptHintMessage(
 }
 
 export async function promptForSignIn(): Promise<void> {
-  const choice: vscode.MessageItem | undefined =
-    await vscode.window.showInformationMessage(
-      "Please sign in to LeetCode.",
-      DialogOptions.yes,
-      DialogOptions.no,
-      DialogOptions.singUp
-    );
+  const choice: vscode.MessageItem | undefined = await vscode.window.showInformationMessage(
+    "Please sign in to LeetCode.",
+    DialogOptions.yes,
+    DialogOptions.no,
+    DialogOptions.singUp
+  );
   switch (choice) {
     case DialogOptions.yes:
       await vscode.commands.executeCommand("leetcode.signin");
@@ -61,32 +59,17 @@ export async function promptForSignIn(): Promise<void> {
   }
 }
 
-export async function promptForOpenOutputChannel(
-  message: string,
-  type: DialogType
-): Promise<void> {
+export async function promptForOpenOutputChannel(message: string, type: DialogType): Promise<void> {
   let result: vscode.MessageItem | undefined;
   switch (type) {
     case DialogType.info:
-      result = await vscode.window.showInformationMessage(
-        message,
-        DialogOptions.open,
-        DialogOptions.no
-      );
+      result = await vscode.window.showInformationMessage(message, DialogOptions.open, DialogOptions.no);
       break;
     case DialogType.warning:
-      result = await vscode.window.showWarningMessage(
-        message,
-        DialogOptions.open,
-        DialogOptions.no
-      );
+      result = await vscode.window.showWarningMessage(message, DialogOptions.open, DialogOptions.no);
       break;
     case DialogType.error:
-      result = await vscode.window.showErrorMessage(
-        message,
-        DialogOptions.open,
-        DialogOptions.no
-      );
+      result = await vscode.window.showErrorMessage(message, DialogOptions.open, DialogOptions.no);
       break;
     default:
       break;
@@ -98,8 +81,7 @@ export async function promptForOpenOutputChannel(
 }
 
 class LogOutput implements vscode.Disposable {
-  private readonly channel: vscode.OutputChannel =
-    vscode.window.createOutputChannel("LeetCodeProblemRating");
+  private readonly channel: vscode.OutputChannel = vscode.window.createOutputChannel("LeetCodeProblemRating");
 
   private LCPTCTX = {};
   public appendLine(message: string): void {

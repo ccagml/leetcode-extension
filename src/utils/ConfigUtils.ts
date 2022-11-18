@@ -8,12 +8,7 @@
  */
 
 import { workspace, WorkspaceConfiguration, commands } from "vscode";
-import {
-  DescriptionConfiguration,
-  Endpoint,
-  IProblem,
-  SortingStrategy,
-} from "../model/Model";
+import { DescriptionConfiguration, Endpoint, IProblem, SortingStrategy } from "../model/Model";
 
 // vscode的配置
 export function getVsCodeConfig(): WorkspaceConfiguration {
@@ -26,14 +21,8 @@ export function isHideSolvedProblem(): boolean {
 }
 
 // 隐藏分数
-export function isHideScoreProblem(
-  problem: IProblem,
-  user_score: number
-): boolean {
-  const config_value: string = getVsCodeConfig().get<string>(
-    "hideScore",
-    "None"
-  );
+export function isHideScoreProblem(problem: IProblem, user_score: number): boolean {
+  const config_value: string = getVsCodeConfig().get<string>("hideScore", "None");
   const min_v = getPickOneByRankRangeMin();
   const max_v = getPickOneByRankRangeMax();
   const p_score = problem?.scoreData?.Rating || 0;
@@ -78,20 +67,17 @@ export function getWorkspaceFolder(): string {
 
 // 快捷操作
 export function getEditorShortcuts(): string[] {
-  return getVsCodeConfig().get<string[]>("editor.shortcuts", [
+  return getVsCodeConfig().get<string[]>("editor.shortcuts", ["submit", "case", "allcase", "test", "solution"]);
+}
+
+export function isStarShortcut(): boolean {
+  const shortcuts: string[] = getVsCodeConfig().get<string[]>("editor.shortcuts", [
     "submit",
     "case",
     "allcase",
     "test",
     "solution",
   ]);
-}
-
-export function isStarShortcut(): boolean {
-  const shortcuts: string[] = getVsCodeConfig().get<string[]>(
-    "editor.shortcuts",
-    ["submit", "case", "allcase", "test", "solution"]
-  );
   return shortcuts.indexOf("star") >= 0;
 }
 
@@ -106,10 +92,7 @@ export function enableStatusBar(): boolean {
 
 // 展示方式
 export function getDescriptionConfiguration(): IDescriptionConfiguration {
-  const setting: string = getVsCodeConfig().get<string>(
-    "showDescription",
-    DescriptionConfiguration.InWebView
-  );
+  const setting: string = getVsCodeConfig().get<string>("showDescription", DescriptionConfiguration.InWebView);
   const config: IDescriptionConfiguration = {
     showInComment: false,
     showInWebview: true,
@@ -167,10 +150,7 @@ export function isUseWsl() {
 }
 
 export function getSortingStrategy(): SortingStrategy {
-  return getVsCodeConfig().get<SortingStrategy>(
-    "problems.sortStrategy",
-    SortingStrategy.None
-  );
+  return getVsCodeConfig().get<SortingStrategy>("problems.sortStrategy", SortingStrategy.None);
 }
 
 export async function updateSortingStrategy(value: string, flag: boolean) {

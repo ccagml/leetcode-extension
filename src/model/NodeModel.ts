@@ -8,21 +8,11 @@
  */
 
 import { Command, Uri } from "vscode";
-import {
-  IProblem,
-  IScoreData,
-  ITodayData,
-  ProblemState,
-  RootNodeSort,
-} from "./Model";
+import { IProblem, IScoreData, ITodayData, ProblemState, RootNodeSort } from "./Model";
 
 export class NodeModel {
   private _u_score;
-  constructor(
-    private data: IProblem,
-    private isProblemNode: boolean = true,
-    userscore: number = 0
-  ) {
+  constructor(private data: IProblem, private isProblemNode: boolean = true, userscore: number = 0) {
     this._u_score = userscore;
   }
 

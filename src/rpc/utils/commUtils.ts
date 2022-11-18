@@ -41,8 +41,7 @@ class CommUtils {
     let bufs: Array<any> = [];
 
     console.log(
-      "NOTE: to finish the input, press " +
-        (storageUtils.isWindows() ? "<Ctrl-D> and <Return>" : "<Ctrl-D>")
+      "NOTE: to finish the input, press " + (storageUtils.isWindows() ? "<Ctrl-D> and <Return>" : "<Ctrl-D>")
     );
 
     stdin.on("readable", function () {

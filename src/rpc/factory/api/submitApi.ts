@@ -59,8 +59,7 @@ class SubmitApi extends ApiBase {
 
   call(argv) {
     sessionUtils.argv = argv;
-    if (!storageUtils.exist(argv.filename))
-      return reply.fatal("File " + argv.filename + " not exist!");
+    if (!storageUtils.exist(argv.filename)) return reply.fatal("File " + argv.filename + " not exist!");
 
     const meta = storageUtils.meta(argv.filename);
     let that = this;
@@ -86,14 +85,7 @@ class SubmitApi extends ApiBase {
         log_obj.system_message.accepted = false;
 
         that.printResult(result, "state", log_obj);
-        that.printLine(
-          log_obj,
-          result,
-          "%d/%d cases passed (%s)",
-          result.passed,
-          result.total,
-          result.runtime
-        );
+        that.printLine(log_obj, result, "%d/%d cases passed (%s)", result.passed, result.total, result.runtime);
 
         if (result.ok) {
           sessionUtils.updateStat("ac", 1);

@@ -12,14 +12,7 @@ import * as path from "path";
 import * as unescapeJS from "unescape-js";
 import * as vscode from "vscode";
 import { toNumber } from "lodash";
-import {
-  Disposable,
-  Uri,
-  window,
-  QuickPickItem,
-  workspace,
-  WorkspaceConfiguration,
-} from "vscode";
+import { Disposable, Uri, window, QuickPickItem, workspace, WorkspaceConfiguration } from "vscode";
 import {
   SearchNode,
   userContestRankingObj,
@@ -62,18 +55,10 @@ import { statusBarService } from "../service/StatusBarService";
 import { previewService } from "../service/PreviewService";
 import { executeService } from "../service/ExecuteService";
 import { getNodeIdFromFile } from "../utils/SystemUtils";
-import {
-  logOutput,
-  promptForOpenOutputChannel,
-  promptForSignIn,
-  promptHintMessage,
-} from "../utils/OutputUtils";
+import { logOutput, promptForOpenOutputChannel, promptForSignIn, promptHintMessage } from "../utils/OutputUtils";
 import { treeDataService } from "../service/TreeDataService";
 import { genFileExt, genFileName } from "../utils/SystemUtils";
-import {
-  IDescriptionConfiguration,
-  isStarShortcut,
-} from "../utils/ConfigUtils";
+import { IDescriptionConfiguration, isStarShortcut } from "../utils/ConfigUtils";
 import * as systemUtils from "../utils/SystemUtils";
 import { solutionService } from "../service/SolutionService";
 import { eventService } from "../service/EventService";
@@ -87,10 +72,7 @@ import { getVsCodeConfig, getWorkspaceFolder } from "../utils/ConfigUtils";
 
 // 视图控制器
 class TreeViewController implements Disposable {
-  private explorerNodeMap: Map<string, NodeModel> = new Map<
-    string,
-    NodeModel
-  >();
+  private explorerNodeMap: Map<string, NodeModel> = new Map<string, NodeModel>();
   private companySet: Set<string> = new Set<string>();
   private tagSet: Set<string> = new Set<string>();
   private searchSet: Map<string, ISearchSet> = new Map<string, ISearchSet>();
@@ -98,9 +80,7 @@ class TreeViewController implements Disposable {
   private waitUserContest: boolean;
 
   // 获取当前文件的路径
-  public async getActiveFilePath(
-    uri?: vscode.Uri
-  ): Promise<string | undefined> {
+  public async getActiveFilePath(uri?: vscode.Uri): Promise<string | undefined> {
     let textEditor: vscode.TextEditor | undefined;
     if (uri) {
       textEditor = await vscode.window.showTextDocument(uri, {
@@ -139,10 +119,7 @@ class TreeViewController implements Disposable {
       submissionService.show(result);
       eventService.emit("submit", submissionService.getSubmitEvent());
     } catch (error) {
-      await promptForOpenOutputChannel(
-        "提交出错了. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("提交出错了. 请查看控制台信息~", DialogType.error);
       return;
     }
 
@@ -187,8 +164,7 @@ class TreeViewController implements Disposable {
         //     value: ":alldefault",
         // },
       );
-      const choice: IQuickItemEx<string> | undefined =
-        await vscode.window.showQuickPick(picks);
+      const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks);
       if (!choice) {
         return;
       }
@@ -209,27 +185,20 @@ class TreeViewController implements Disposable {
             ignoreFocusOut: true,
           });
           if (testString) {
-            result = await executeService.testSolution(
-              filePath,
-              this.parseTestString(testString)
-            );
+            result = await executeService.testSolution(filePath, this.parseTestString(testString));
           }
           break;
         case ":file":
           testFile = await this.showFileSelectDialog(filePath);
           if (testFile && testFile.length) {
-            const input: string = (
-              await fse.readFile(testFile[0].fsPath, "utf-8")
-            ).trim();
+            const input: string = (await fse.readFile(testFile[0].fsPath, "utf-8")).trim();
             if (input) {
               result = await executeService.testSolution(
                 filePath,
                 this.parseTestString(input.replace(/\r?\n/g, "\\n"))
               );
             } else {
-              vscode.window.showErrorMessage(
-                "The selected test file must not be empty."
-              );
+              vscode.window.showErrorMessage("The selected test file must not be empty.");
             }
           }
           break;
@@ -245,17 +214,11 @@ class TreeViewController implements Disposable {
       submissionService.show(result);
       eventService.emit("submit", submissionService.getSubmitEvent());
     } catch (error) {
-      await promptForOpenOutputChannel(
-        "提交测试出错了. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", DialogType.error);
     }
   }
-  public async showFileSelectDialog(
-    fsPath?: string
-  ): Promise<vscode.Uri[] | undefined> {
-    const defaultUri: vscode.Uri | undefined =
-      this.getBelongingWorkspaceFolderUri(fsPath);
+  public async showFileSelectDialog(fsPath?: string): Promise<vscode.Uri[] | undefined> {
+    const defaultUri: vscode.Uri | undefined = this.getBelongingWorkspaceFolderUri(fsPath);
     const options: vscode.OpenDialogOptions = {
       defaultUri,
       canSelectFiles: true,
@@ -266,10 +229,7 @@ class TreeViewController implements Disposable {
     return await vscode.window.showOpenDialog(options);
   }
 
-  public async testSolutionDefault(
-    uri?: vscode.Uri,
-    allCase?: boolean
-  ): Promise<void> {
+  public async testSolutionDefault(uri?: vscode.Uri, allCase?: boolean): Promise<void> {
     try {
       if (statusBarService.getStatus() === UserStatus.SignedOut) {
         return;
@@ -280,28 +240,18 @@ class TreeViewController implements Disposable {
         return;
       }
 
-      let result: string | undefined = await executeService.testSolution(
-        filePath,
-        undefined,
-        allCase || false
-      );
+      let result: string | undefined = await executeService.testSolution(filePath, undefined, allCase || false);
       if (!result) {
         return;
       }
       submissionService.show(result);
       eventService.emit("submit", submissionService.getSubmitEvent());
     } catch (error) {
-      await promptForOpenOutputChannel(
-        "提交测试出错了. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", DialogType.error);
     }
   }
 
-  public async testSolutionArea(
-    uri?: vscode.Uri,
-    testcase?: string
-  ): Promise<void> {
+  public async testSolutionArea(uri?: vscode.Uri, testcase?: string): Promise<void> {
     try {
       if (statusBarService.getStatus() === UserStatus.SignedOut) {
         return;
@@ -312,21 +262,14 @@ class TreeViewController implements Disposable {
         return;
       }
 
-      let result: string | undefined = await executeService.testSolution(
-        filePath,
-        testcase,
-        false
-      );
+      let result: string | undefined = await executeService.testSolution(filePath, testcase, false);
       if (!result) {
         return;
       }
       submissionService.show(result);
       eventService.emit("submit", submissionService.getSubmitEvent());
     } catch (error) {
-      await promptForOpenOutputChannel(
-        "提交测试出错了. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", DialogType.error);
     }
   }
 
@@ -384,25 +327,18 @@ class TreeViewController implements Disposable {
         value: Endpoint.LeetCodeCN,
       }
     );
-    const choice: IQuickItemEx<string> | undefined =
-      await vscode.window.showQuickPick(picks);
+    const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks);
     if (!choice || choice.value === getLeetCodeEndpoint()) {
       return;
     }
-    const leetCodeConfig: vscode.WorkspaceConfiguration =
-      vscode.workspace.getConfiguration("leetcode-problem-rating");
+    const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
     try {
       const endpoint: string = choice.value;
       await executeService.switchEndpoint(endpoint);
       await leetCodeConfig.update("endpoint", endpoint, true /* UserSetting */);
-      vscode.window.showInformationMessage(
-        `Switched the endpoint to ${endpoint}`
-      );
+      vscode.window.showInformationMessage(`Switched the endpoint to ${endpoint}`);
     } catch (error) {
-      await promptForOpenOutputChannel(
-        "切换站点出错. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("切换站点出错. 请查看控制台信息~", DialogType.error);
     }
 
     try {
@@ -410,10 +346,7 @@ class TreeViewController implements Disposable {
       await executeService.deleteCache();
       await promptForSignIn();
     } catch (error) {
-      await promptForOpenOutputChannel(
-        "登录失败. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("登录失败. 请查看控制台信息~", DialogType.error);
     }
   }
 
@@ -429,8 +362,7 @@ class TreeViewController implements Disposable {
       })
     );
 
-    const choice: IQuickItemEx<string> | undefined =
-      await vscode.window.showQuickPick(picks);
+    const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks);
     if (!choice || choice.value === currentStrategy) {
       return;
     }
@@ -447,10 +379,7 @@ class TreeViewController implements Disposable {
         fileButtonService.refresh();
       }
     } catch (error) {
-      await promptForOpenOutputChannel(
-        "添加喜欢题目失败. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("添加喜欢题目失败. 请查看控制台信息~", DialogType.error);
     }
   }
 
@@ -462,10 +391,7 @@ class TreeViewController implements Disposable {
         fileButtonService.refresh();
       }
     } catch (error) {
-      await promptForOpenOutputChannel(
-        "移除喜欢题目失败. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("移除喜欢题目失败. 请查看控制台信息~", DialogType.error);
     }
   }
 
@@ -477,10 +403,7 @@ class TreeViewController implements Disposable {
 
       const showLockedFlag: boolean = isShowLocked();
       const useEndpointTranslation: boolean = isUseEndpointTranslation();
-      const result: string = await executeService.listProblems(
-        showLockedFlag,
-        useEndpointTranslation
-      );
+      const result: string = await executeService.listProblems(showLockedFlag, useEndpointTranslation);
       const all_problem_info = JSON.parse(result);
       const problems: IProblem[] = [];
       const AllScoreData = treeDataService.getScoreData();
@@ -507,10 +430,7 @@ class TreeViewController implements Disposable {
       }
       return problems.reverse();
     } catch (error) {
-      await promptForOpenOutputChannel(
-        "获取题目失败. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("获取题目失败. 请查看控制台信息~", DialogType.error);
       return [];
     }
   }
@@ -536,17 +456,13 @@ class TreeViewController implements Disposable {
   }
 
   public async switchDefaultLanguage(): Promise<void> {
-    const leetCodeConfig: WorkspaceConfiguration = workspace.getConfiguration(
-      "leetcode-problem-rating"
-    );
-    const defaultLanguage: string | undefined =
-      leetCodeConfig.get<string>("defaultLanguage");
+    const leetCodeConfig: WorkspaceConfiguration = workspace.getConfiguration("leetcode-problem-rating");
+    const defaultLanguage: string | undefined = leetCodeConfig.get<string>("defaultLanguage");
     const languageItems: QuickPickItem[] = [];
     for (const language of languages) {
       languageItems.push({
         label: language,
-        description:
-          defaultLanguage === language ? "Currently used" : undefined,
+        description: defaultLanguage === language ? "Currently used" : undefined,
       });
     }
     // Put the default language at the top of the list
@@ -559,23 +475,16 @@ class TreeViewController implements Disposable {
       return a.label.localeCompare(b.label);
     });
 
-    const selectedItem: QuickPickItem | undefined = await window.showQuickPick(
-      languageItems,
-      {
-        placeHolder: "请设置默认语言",
-        ignoreFocusOut: true,
-      }
-    );
+    const selectedItem: QuickPickItem | undefined = await window.showQuickPick(languageItems, {
+      placeHolder: "请设置默认语言",
+      ignoreFocusOut: true,
+    });
 
     if (!selectedItem) {
       return;
     }
 
-    leetCodeConfig.update(
-      "defaultLanguage",
-      selectedItem.label,
-      true /* Global */
-    );
+    leetCodeConfig.update("defaultLanguage", selectedItem.label, true /* Global */);
     window.showInformationMessage(`设置默认语言 ${selectedItem.label} 成功`);
   }
 
@@ -601,15 +510,13 @@ class TreeViewController implements Disposable {
         value: ":browse",
       }
     );
-    const choice: IQuickItemEx<string> | undefined =
-      await vscode.window.showQuickPick(picks, {
-        placeHolder: "Select where you would like to save your LeetCode files",
-      });
+    const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks, {
+      placeHolder: "Select where you would like to save your LeetCode files",
+    });
     if (!choice) {
       result = "";
     } else if (choice.value === ":browse") {
-      const directory: vscode.Uri[] | undefined =
-        await this.showDirectorySelectDialog();
+      const directory: vscode.Uri[] | undefined = await this.showDirectorySelectDialog();
       if (!directory || directory.length < 1) {
         result = "";
       } else {
@@ -619,20 +526,13 @@ class TreeViewController implements Disposable {
       result = choice.value;
     }
 
-    getVsCodeConfig().update(
-      "workspaceFolder",
-      result,
-      vscode.ConfigurationTarget.Global
-    );
+    getVsCodeConfig().update("workspaceFolder", result, vscode.ConfigurationTarget.Global);
 
     return result;
   }
 
-  public async showDirectorySelectDialog(
-    fsPath?: string
-  ): Promise<vscode.Uri[] | undefined> {
-    const defaultUri: vscode.Uri | undefined =
-      this.getBelongingWorkspaceFolderUri(fsPath);
+  public async showDirectorySelectDialog(fsPath?: string): Promise<vscode.Uri[] | undefined> {
+    const defaultUri: vscode.Uri | undefined = this.getBelongingWorkspaceFolderUri(fsPath);
     const options: vscode.OpenDialogOptions = {
       defaultUri,
       canSelectFiles: false,
@@ -643,13 +543,12 @@ class TreeViewController implements Disposable {
     return await vscode.window.showOpenDialog(options);
   }
 
-  public getBelongingWorkspaceFolderUri(
-    fsPath: string | undefined
-  ): vscode.Uri | undefined {
+  public getBelongingWorkspaceFolderUri(fsPath: string | undefined): vscode.Uri | undefined {
     let defaultUri: vscode.Uri | undefined;
     if (fsPath) {
-      const workspaceFolder: vscode.WorkspaceFolder | undefined =
-        vscode.workspace.getWorkspaceFolder(vscode.Uri.file(fsPath));
+      const workspaceFolder: vscode.WorkspaceFolder | undefined = vscode.workspace.getWorkspaceFolder(
+        vscode.Uri.file(fsPath)
+      );
       if (workspaceFolder) {
         defaultUri = workspaceFolder.uri;
       }
@@ -697,8 +596,9 @@ class TreeViewController implements Disposable {
       //     value: `userContest`,
       // }
     );
-    const choice: IQuickItemEx<string> | undefined =
-      await vscode.window.showQuickPick(picks, { title: "选择查询选项" });
+    const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks, {
+      title: "选择查询选项",
+    });
     if (!choice) {
       return;
     }
@@ -738,9 +638,7 @@ class TreeViewController implements Disposable {
     }
 
     if (!problemInput) {
-      vscode.window.showErrorMessage(
-        "Invalid input to fetch the solution data."
-      );
+      vscode.window.showErrorMessage("Invalid input to fetch the solution data.");
       return;
     }
 
@@ -750,18 +648,11 @@ class TreeViewController implements Disposable {
     }
     try {
       const needTranslation: boolean = isUseEndpointTranslation();
-      const solution: string = await executeService.showSolution(
-        problemInput,
-        language,
-        needTranslation
-      );
+      const solution: string = await executeService.showSolution(problemInput, language, needTranslation);
       solutionService.show(unescapeJS(solution));
     } catch (error) {
       logOutput.appendLine(error.toString());
-      await promptForOpenOutputChannel(
-        "Failed to fetch the top voted solution. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("Failed to fetch the top voted solution. 请查看控制台信息~", DialogType.error);
     }
   }
 
@@ -774,8 +665,7 @@ class TreeViewController implements Disposable {
       const twoFactor: string | undefined = await vscode.window.showInputBox({
         prompt: "测试数据",
         ignoreFocusOut: true,
-        validateInput: (s: string): string | undefined =>
-          s && s.trim() ? undefined : "The input must not be empty",
+        validateInput: (s: string): string | undefined => (s && s.trim() ? undefined : "The input must not be empty"),
       });
 
       // vscode.window.showErrorMessage(twoFactor || "输入错误");
@@ -784,10 +674,7 @@ class TreeViewController implements Disposable {
       console.log(query_result);
     } catch (error) {
       logOutput.appendLine(error.toString());
-      await promptForOpenOutputChannel(
-        "Failed to fetch today question. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", DialogType.error);
     }
   }
 
@@ -796,15 +683,14 @@ class TreeViewController implements Disposable {
       promptForSignIn();
       return;
     }
-    const choice: IQuickItemEx<IProblem> | undefined =
-      await vscode.window.showQuickPick(
-        this.parseProblemsToPicks(this.listProblems()),
-        {
-          matchOnDetail: true,
-          matchOnDescription: true,
-          placeHolder: "Select one problem",
-        }
-      );
+    const choice: IQuickItemEx<IProblem> | undefined = await vscode.window.showQuickPick(
+      this.parseProblemsToPicks(this.listProblems()),
+      {
+        matchOnDetail: true,
+        matchOnDescription: true,
+        placeHolder: "Select one problem",
+      }
+    );
     if (!choice) {
       return;
     }
@@ -831,16 +717,12 @@ class TreeViewController implements Disposable {
       const need_max = user_score + max_score;
       problems.forEach((element) => {
         if (element.scoreData?.Rating) {
-          if (
-            element.scoreData.Rating >= need_min &&
-            element.scoreData.Rating <= need_max
-          ) {
+          if (element.scoreData.Rating >= need_min && element.scoreData.Rating <= need_max) {
             temp_problems.push(element);
           }
         }
       });
-      randomProblem =
-        temp_problems[Math.floor(Math.random() * temp_problems.length)];
+      randomProblem = temp_problems[Math.floor(Math.random() * temp_problems.length)];
     } else {
       randomProblem = problems[Math.floor(Math.random() * problems.length)];
     }
@@ -850,10 +732,8 @@ class TreeViewController implements Disposable {
   }
 
   public async fetchProblemLanguage(): Promise<string | undefined> {
-    const leetCodeConfig: vscode.WorkspaceConfiguration =
-      vscode.workspace.getConfiguration("leetcode-problem-rating");
-    let defaultLanguage: string | undefined =
-      leetCodeConfig.get<string>("defaultLanguage");
+    const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
+    let defaultLanguage: string | undefined = leetCodeConfig.get<string>("defaultLanguage");
     if (defaultLanguage && languages.indexOf(defaultLanguage) < 0) {
       defaultLanguage = undefined;
     }
@@ -865,30 +745,17 @@ class TreeViewController implements Disposable {
       }));
     // fire-and-forget default language query
     (async (): Promise<void> => {
-      if (
-        language &&
-        !defaultLanguage &&
-        leetCodeConfig.get<boolean>("hint.setDefaultLanguage")
-      ) {
-        const choice: vscode.MessageItem | undefined =
-          await vscode.window.showInformationMessage(
-            `Would you like to set '${language}' as your default language?`,
-            DialogOptions.yes,
-            DialogOptions.no,
-            DialogOptions.never
-          );
+      if (language && !defaultLanguage && leetCodeConfig.get<boolean>("hint.setDefaultLanguage")) {
+        const choice: vscode.MessageItem | undefined = await vscode.window.showInformationMessage(
+          `Would you like to set '${language}' as your default language?`,
+          DialogOptions.yes,
+          DialogOptions.no,
+          DialogOptions.never
+        );
         if (choice === DialogOptions.yes) {
-          leetCodeConfig.update(
-            "defaultLanguage",
-            language,
-            true /* UserSetting */
-          );
+          leetCodeConfig.update("defaultLanguage", language, true /* UserSetting */);
         } else if (choice === DialogOptions.never) {
-          leetCodeConfig.update(
-            "hint.setDefaultLanguage",
-            false,
-            true /* UserSetting */
-          );
+          leetCodeConfig.update("hint.setDefaultLanguage", false, true /* UserSetting */);
         }
       }
     })();
@@ -921,8 +788,7 @@ class TreeViewController implements Disposable {
           OpenOption.addToWorkspace,
         ],
         {
-          placeHolder:
-            "The LeetCode workspace folder is not opened in VS Code, would you like to open it?",
+          placeHolder: "The LeetCode workspace folder is not opened in VS Code, would you like to open it?",
         }
       );
 
@@ -931,34 +797,22 @@ class TreeViewController implements Disposable {
         case OpenOption.justOpenFile:
           return workspaceFolderSetting;
         case OpenOption.openInCurrentWindow:
-          await vscode.commands.executeCommand(
-            "vscode.openFolder",
-            vscode.Uri.file(workspaceFolderSetting),
-            false
-          );
+          await vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(workspaceFolderSetting), false);
           return "";
         case OpenOption.openInNewWindow:
-          await vscode.commands.executeCommand(
-            "vscode.openFolder",
-            vscode.Uri.file(workspaceFolderSetting),
-            true
-          );
+          await vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(workspaceFolderSetting), true);
           return "";
         case OpenOption.addToWorkspace:
-          vscode.workspace.updateWorkspaceFolders(
-            vscode.workspace.workspaceFolders?.length ?? 0,
-            0,
-            { uri: vscode.Uri.file(workspaceFolderSetting) }
-          );
+          vscode.workspace.updateWorkspaceFolders(vscode.workspace.workspaceFolders?.length ?? 0, 0, {
+            uri: vscode.Uri.file(workspaceFolderSetting),
+          });
           break;
         default:
           return "";
       }
     }
 
-    return systemUtils.useWsl()
-      ? systemUtils.toWslPath(workspaceFolderSetting)
-      : workspaceFolderSetting;
+    return systemUtils.useWsl() ? systemUtils.toWslPath(workspaceFolderSetting) : workspaceFolderSetting;
   }
 
   public async showProblemInternal(node: IProblem): Promise<void> {
@@ -976,16 +830,12 @@ class TreeViewController implements Disposable {
       }
 
       const fileFolder: string = leetCodeConfig
-        .get<string>(
-          `filePath.${language}.folder`,
-          leetCodeConfig.get<string>(`filePath.default.folder`, "")
-        )
+        .get<string>(`filePath.${language}.folder`, leetCodeConfig.get<string>(`filePath.default.folder`, ""))
         .trim();
       const fileName: string = leetCodeConfig
         .get<string>(
           `filePath.${language}.filename`,
-          leetCodeConfig.get<string>(`filePath.default.filename`) ||
-            genFileName(node, language)
+          leetCodeConfig.get<string>(`filePath.default.filename`) || genFileName(node, language)
         )
         .trim();
 
@@ -999,21 +849,12 @@ class TreeViewController implements Disposable {
         }
       }
 
-      finalPath = systemUtils.useWsl()
-        ? await systemUtils.toWinPath(finalPath)
-        : finalPath;
+      finalPath = systemUtils.useWsl() ? await systemUtils.toWinPath(finalPath) : finalPath;
 
-      const descriptionConfig: IDescriptionConfiguration =
-        getDescriptionConfiguration();
+      const descriptionConfig: IDescriptionConfiguration = getDescriptionConfiguration();
       const needTranslation: boolean = isUseEndpointTranslation();
 
-      await executeService.showProblem(
-        node,
-        language,
-        finalPath,
-        descriptionConfig.showInComment,
-        needTranslation
-      );
+      await executeService.showProblem(node, language, finalPath, descriptionConfig.showInComment, needTranslation);
       const promises: any[] = [
         vscode.window.showTextDocument(vscode.Uri.file(finalPath), {
           preview: false,
@@ -1023,8 +864,7 @@ class TreeViewController implements Disposable {
           "hint.commentDescription",
           'You can config how to show the problem description through "leetcode-problem-rating.showDescription".',
           "Open settings",
-          (): Promise<any> =>
-            openSettingsEditor("leetcode-problem-rating.showDescription")
+          (): Promise<any> => openSettingsEditor("leetcode-problem-rating.showDescription")
         ),
       ];
       if (descriptionConfig.showInWebview) {
@@ -1033,10 +873,7 @@ class TreeViewController implements Disposable {
 
       await Promise.all(promises);
     } catch (error) {
-      await promptForOpenOutputChannel(
-        `${error} 请查看控制台信息~`,
-        DialogType.error
-      );
+      await promptForOpenOutputChannel(`${error} 请查看控制台信息~`, DialogType.error);
     }
   }
 
@@ -1044,26 +881,18 @@ class TreeViewController implements Disposable {
     return this.previewProblem(node, enableSideMode());
   }
 
-  public async previewProblem(
-    input: IProblem | Uri,
-    isSideMode: boolean = false
-  ): Promise<void> {
+  public async previewProblem(input: IProblem | Uri, isSideMode: boolean = false): Promise<void> {
     let node: IProblem;
     if (input instanceof Uri) {
       const activeFilePath: string = input.fsPath;
       const id: string = await getNodeIdFromFile(activeFilePath);
       if (!id) {
-        window.showErrorMessage(
-          `Failed to resolve the problem id from file: ${activeFilePath}.`
-        );
+        window.showErrorMessage(`Failed to resolve the problem id from file: ${activeFilePath}.`);
         return;
       }
-      const cachedNode: IProblem | undefined =
-        treeViewController.getNodeById(id);
+      const cachedNode: IProblem | undefined = treeViewController.getNodeById(id);
       if (!cachedNode) {
-        window.showErrorMessage(
-          `Failed to resolve the problem with id: ${id}.`
-        );
+        window.showErrorMessage(`Failed to resolve the problem with id: ${id}.`);
         return;
       }
       node = cachedNode;
@@ -1073,10 +902,7 @@ class TreeViewController implements Disposable {
       node = input;
     }
     const needTranslation: boolean = isUseEndpointTranslation();
-    const descString: string = await executeService.getDescription(
-      node.qid,
-      needTranslation
-    );
+    const descString: string = await executeService.getDescription(node.qid, needTranslation);
     previewService.show(descString, node, isSideMode);
   }
 
@@ -1084,8 +910,7 @@ class TreeViewController implements Disposable {
     const twoFactor: string | undefined = await vscode.window.showInputBox({
       prompt: "输入分数范围 低分-高分 例如: 1500-1600",
       ignoreFocusOut: true,
-      validateInput: (s: string): string | undefined =>
-        s && s.trim() ? undefined : "The input must not be empty",
+      validateInput: (s: string): string | undefined => (s && s.trim() ? undefined : "The input must not be empty"),
     });
 
     // vscode.window.showErrorMessage(twoFactor || "输入错误");
@@ -1102,8 +927,7 @@ class TreeViewController implements Disposable {
     const twoFactor: string | undefined = await vscode.window.showInputBox({
       prompt: "单期数 例如: 300 或者 输入期数范围 低期数-高期数 例如: 303-306",
       ignoreFocusOut: true,
-      validateInput: (s: string): string | undefined =>
-        s && s.trim() ? undefined : "The input must not be empty",
+      validateInput: (s: string): string | undefined => (s && s.trim() ? undefined : "The input must not be empty"),
     });
 
     // vscode.window.showErrorMessage(twoFactor || "输入错误");
@@ -1123,23 +947,13 @@ class TreeViewController implements Disposable {
     }
     try {
       const needTranslation: boolean = isUseEndpointTranslation();
-      const solution: string = await executeService.getUserContest(
-        needTranslation,
-        statusBarService.getUser() || ""
-      );
+      const solution: string = await executeService.getUserContest(needTranslation, statusBarService.getUser() || "");
       const query_result = JSON.parse(solution);
-      const tt: userContestRanKingBase = Object.assign(
-        {},
-        userContestRankingObj,
-        query_result.userContestRanking
-      );
+      const tt: userContestRanKingBase = Object.assign({}, userContestRankingObj, query_result.userContestRanking);
       eventService.emit("searchUserContest", tt);
     } catch (error) {
       logOutput.appendLine(error.toString());
-      await promptForOpenOutputChannel(
-        "Failed to fetch today question. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", DialogType.error);
     }
   }
   public async searchToday(): Promise<void> {
@@ -1149,9 +963,7 @@ class TreeViewController implements Disposable {
     }
     try {
       const needTranslation: boolean = isUseEndpointTranslation();
-      const solution: string = await executeService.getTodayQuestion(
-        needTranslation
-      );
+      const solution: string = await executeService.getTodayQuestion(needTranslation);
       const query_result = JSON.parse(solution);
       // const titleSlug: string = query_result.titleSlug
       // const questionId: string = query_result.questionId
@@ -1168,42 +980,27 @@ class TreeViewController implements Disposable {
       }
     } catch (error) {
       logOutput.appendLine(error.toString());
-      await promptForOpenOutputChannel(
-        "Failed to fetch today question. 请查看控制台信息~",
-        DialogType.error
-      );
+      await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", DialogType.error);
     }
   }
 
-  public async parseProblemsToPicks(
-    p: Promise<IProblem[]>
-  ): Promise<Array<IQuickItemEx<IProblem>>> {
-    return new Promise(
-      async (
-        resolve: (res: Array<IQuickItemEx<IProblem>>) => void
-      ): Promise<void> => {
-        const picks: Array<IQuickItemEx<IProblem>> = (await p).map(
-          (problem: IProblem) =>
-            Object.assign(
-              {},
-              {
-                label: `${this.parseProblemDecorator(
-                  problem.state,
-                  problem.locked
-                )}${problem.id}.${problem.name}`,
-                description: `QID:${problem.qid}`,
-                detail:
-                  ((problem.scoreData?.score || "0") > "0"
-                    ? "score: " + problem.scoreData?.score + " , "
-                    : "") +
-                  `AC rate: ${problem.passRate}, Difficulty: ${problem.difficulty}`,
-                value: problem,
-              }
-            )
-        );
-        resolve(picks);
-      }
-    );
+  public async parseProblemsToPicks(p: Promise<IProblem[]>): Promise<Array<IQuickItemEx<IProblem>>> {
+    return new Promise(async (resolve: (res: Array<IQuickItemEx<IProblem>>) => void): Promise<void> => {
+      const picks: Array<IQuickItemEx<IProblem>> = (await p).map((problem: IProblem) =>
+        Object.assign(
+          {},
+          {
+            label: `${this.parseProblemDecorator(problem.state, problem.locked)}${problem.id}.${problem.name}`,
+            description: `QID:${problem.qid}`,
+            detail:
+              ((problem.scoreData?.score || "0") > "0" ? "score: " + problem.scoreData?.score + " , " : "") +
+              `AC rate: ${problem.passRate}, Difficulty: ${problem.difficulty}`,
+            value: problem,
+          }
+        )
+      );
+      resolve(picks);
+    });
   }
 
   public parseProblemDecorator(state: ProblemState, locked: boolean): string {
@@ -1217,11 +1014,7 @@ class TreeViewController implements Disposable {
     }
   }
 
-  public async resolveRelativePath(
-    relativePath: string,
-    node: IProblem,
-    selectedLanguage: string
-  ): Promise<string> {
+  public async resolveRelativePath(relativePath: string, node: IProblem, selectedLanguage: string): Promise<string> {
     let tag: string = "";
     if (/\$\{ tag \} /i.test(relativePath)) {
       tag = (await this.resolveTagForProblem(node)) || "";
@@ -1233,47 +1026,42 @@ class TreeViewController implements Disposable {
     }
 
     let errorMsg: string;
-    return relativePath.replace(
-      /\$\{(.*?)\}/g,
-      (_substring: string, ...args: string[]) => {
-        const placeholder: string = args[0].toLowerCase().trim();
-        switch (placeholder) {
-          case "id":
-            return node.id;
-          case "name":
-            return node.name;
-          case "camelcasename":
-            return lodash.camelCase(node.name);
-          case "pascalcasename":
-            return lodash.upperFirst(lodash.camelCase(node.name));
-          case "kebabcasename":
-          case "kebab-case-name":
-            return lodash.kebabCase(node.name);
-          case "snakecasename":
-          case "snake_case_name":
-            return lodash.snakeCase(node.name);
-          case "ext":
-            return genFileExt(selectedLanguage);
-          case "language":
-            return selectedLanguage;
-          case "difficulty":
-            return node.difficulty.toLocaleLowerCase();
-          case "tag":
-            return tag;
-          case "company":
-            return company;
-          default:
-            errorMsg = `The config '${placeholder}' is not supported.`;
-            logOutput.appendLine(errorMsg);
-            throw new Error(errorMsg);
-        }
+    return relativePath.replace(/\$\{(.*?)\}/g, (_substring: string, ...args: string[]) => {
+      const placeholder: string = args[0].toLowerCase().trim();
+      switch (placeholder) {
+        case "id":
+          return node.id;
+        case "name":
+          return node.name;
+        case "camelcasename":
+          return lodash.camelCase(node.name);
+        case "pascalcasename":
+          return lodash.upperFirst(lodash.camelCase(node.name));
+        case "kebabcasename":
+        case "kebab-case-name":
+          return lodash.kebabCase(node.name);
+        case "snakecasename":
+        case "snake_case_name":
+          return lodash.snakeCase(node.name);
+        case "ext":
+          return genFileExt(selectedLanguage);
+        case "language":
+          return selectedLanguage;
+        case "difficulty":
+          return node.difficulty.toLocaleLowerCase();
+        case "tag":
+          return tag;
+        case "company":
+          return company;
+        default:
+          errorMsg = `The config '${placeholder}' is not supported.`;
+          logOutput.appendLine(errorMsg);
+          throw new Error(errorMsg);
       }
-    );
+    });
   }
 
-  public async resolveTagForProblem(
-    problem: IProblem
-  ): Promise<string | undefined> {
+  public async resolveTagForProblem(problem: IProblem): Promise<string | undefined> {
     if (problem.tags.length === 1) {
       return problem.tags[0];
     }
@@ -1284,9 +1072,7 @@ class TreeViewController implements Disposable {
     });
   }
 
-  public async resolveCompanyForProblem(
-    problem: IProblem
-  ): Promise<string | undefined> {
+  public async resolveCompanyForProblem(problem: IProblem): Promise<string | undefined> {
     if (problem.companies.length === 1) {
       return problem.companies[0];
     }
@@ -1308,12 +1094,8 @@ class TreeViewController implements Disposable {
 
   public checkSubmit(e: ISubmitEvent) {
     if (e.sub_type == "submit" && e.accepted) {
-      const day_start =
-        new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000; //获取当天零点的时间
-      const day_end =
-        new Date(
-          new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1
-        ).getTime() / 1000; //获取当天23:59:59的时间
+      const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000; //获取当天零点的时间
+      const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime() / 1000; //获取当天23:59:59的时间
       let need_get_today: boolean = false;
       this.searchSet.forEach((element) => {
         if (element.type == SearchSetType.Day) {
@@ -1334,12 +1116,8 @@ class TreeViewController implements Disposable {
     if (!statusBarService.getUser()) {
       return;
     }
-    const day_start =
-      new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000; //获取当天零点的时间
-    const day_end =
-      new Date(
-        new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1
-      ).getTime() / 1000; //获取当天23:59:59的时间
+    const day_start = new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000; //获取当天零点的时间
+    const day_end = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1).getTime() / 1000; //获取当天23:59:59的时间
     let need_get_today: boolean = true;
     this.searchSet.forEach((element) => {
       if (element.type == SearchSetType.Day) {
@@ -1368,10 +1146,7 @@ class TreeViewController implements Disposable {
     this.dispose();
     let user_score = statusBarService.getUserContestScore();
     for (const problem of await this.listProblems()) {
-      this.explorerNodeMap.set(
-        problem.id,
-        new NodeModel(problem, true, user_score)
-      );
+      this.explorerNodeMap.set(problem.id, new NodeModel(problem, true, user_score));
       for (const company of problem.companies) {
         this.companySet.add(company);
       }
@@ -1508,10 +1283,7 @@ class TreeViewController implements Disposable {
         if (!this.canShow(element)) {
           return;
         }
-        if (
-          rank_a <= Number(element.score) &&
-          Number(element.score) <= rank_b
-        ) {
+        if (rank_a <= Number(element.score) && Number(element.score) <= rank_b) {
           sorceNode.push(element);
         }
       });
@@ -1566,9 +1338,7 @@ class TreeViewController implements Disposable {
   }
 
   public getAllNodes(): NodeModel[] {
-    return this.applySortingStrategy(
-      Array.from(this.explorerNodeMap.values()).filter((p) => this.canShow(p))
-    );
+    return this.applySortingStrategy(Array.from(this.explorerNodeMap.values()).filter((p) => this.canShow(p)));
   }
 
   public getAllDifficultyNodes(): NodeModel[] {
@@ -1780,10 +1550,7 @@ class TreeViewController implements Disposable {
     this.tagSet.clear();
   }
 
-  private sortSubCategoryNodes(
-    subCategoryNodes: NodeModel[],
-    category: Category
-  ): void {
+  private sortSubCategoryNodes(subCategoryNodes: NodeModel[], category: Category): void {
     switch (category) {
       case Category.Difficulty:
         subCategoryNodes.sort((a: NodeModel, b: NodeModel): number => {
@@ -1823,27 +1590,15 @@ class TreeViewController implements Disposable {
     const strategy: SortingStrategy = getSortingStrategy();
     switch (strategy) {
       case SortingStrategy.AcceptanceRateAsc:
-        return nodes.sort(
-          (x: NodeModel, y: NodeModel) =>
-            Number(x.acceptanceRate) - Number(y.acceptanceRate)
-        );
+        return nodes.sort((x: NodeModel, y: NodeModel) => Number(x.acceptanceRate) - Number(y.acceptanceRate));
       case SortingStrategy.AcceptanceRateDesc:
-        return nodes.sort(
-          (x: NodeModel, y: NodeModel) =>
-            Number(y.acceptanceRate) - Number(x.acceptanceRate)
-        );
+        return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.acceptanceRate) - Number(x.acceptanceRate));
       case SortingStrategy.ScoreAsc:
-        return nodes.sort(
-          (x: NodeModel, y: NodeModel) => Number(x.score) - Number(y.score)
-        );
+        return nodes.sort((x: NodeModel, y: NodeModel) => Number(x.score) - Number(y.score));
       case SortingStrategy.ScoreDesc:
-        return nodes.sort(
-          (x: NodeModel, y: NodeModel) => Number(y.score) - Number(x.score)
-        );
+        return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.score) - Number(x.score));
       case SortingStrategy.IDDesc:
-        return nodes.sort(
-          (x: NodeModel, y: NodeModel) => Number(y.id) - Number(x.id)
-        );
+        return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.id) - Number(x.id));
       default:
         return nodes;
     }

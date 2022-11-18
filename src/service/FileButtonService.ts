@@ -13,8 +13,7 @@ import { NodeModel } from "../model/NodeModel";
 import { getEditorShortcuts } from "../utils/ConfigUtils";
 
 export class FileButtonService implements vscode.CodeLensProvider {
-  private onDidChangeCodeLensesEmitter: vscode.EventEmitter<void> =
-    new vscode.EventEmitter<void>();
+  private onDidChangeCodeLensesEmitter: vscode.EventEmitter<void> = new vscode.EventEmitter<void>();
 
   get onDidChangeCodeLenses(): vscode.Event<void> {
     return this.onDidChangeCodeLensesEmitter.event;
@@ -32,12 +31,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       return temp_result;
     }
 
-    const range: vscode.Range = new vscode.Range(
-      codeLensLine,
-      0,
-      codeLensLine,
-      0
-    );
+    const range: vscode.Range = new vscode.Range(codeLensLine, 0, codeLensLine, 0);
 
     if (shortcuts.indexOf("submit") >= 0) {
       temp_result.push(
@@ -82,9 +76,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       temp_result.push(
         new vscode.CodeLens(range, {
           title: node.isFavorite ? "Unstar" : "Star",
-          command: node.isFavorite
-            ? "leetcode.removeFavorite"
-            : "leetcode.addFavorite",
+          command: node.isFavorite ? "leetcode.removeFavorite" : "leetcode.addFavorite",
           arguments: [node],
         })
       );
@@ -116,12 +108,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
    * createCase
    */
   public createCase(codeLensLine, document, testCase) {
-    const range: vscode.Range = new vscode.Range(
-      codeLensLine,
-      0,
-      codeLensLine,
-      0
-    );
+    const range: vscode.Range = new vscode.Range(codeLensLine, 0, codeLensLine, 0);
 
     return new vscode.CodeLens(range, {
       title: "case",
@@ -150,13 +137,9 @@ export class FileButtonService implements vscode.CodeLensProvider {
     typescript: "//",
   };
 
-  public provideCodeLenses(
-    document: vscode.TextDocument
-  ): vscode.ProviderResult<vscode.CodeLens[]> {
+  public provideCodeLenses(document: vscode.TextDocument): vscode.ProviderResult<vscode.CodeLens[]> {
     const content: string = document.getText();
-    const matchResult: RegExpMatchArray | null = content.match(
-      /@lc app=.* id=(.*) lang=.*/
-    );
+    const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=.*/);
     if (!matchResult) {
       return undefined;
     }
@@ -172,17 +155,11 @@ export class FileButtonService implements vscode.CodeLensProvider {
     for (let i: number = 0; i < document.lineCount; i++) {
       const lineContent: string = document.lineAt(i).text;
       if (lineContent.indexOf("@lc code=end") >= 0) {
-        this.processCodeButton(i, document, node).forEach((x) =>
-          codeLens.push(x)
-        );
+        this.processCodeButton(i, document, node).forEach((x) => codeLens.push(x));
       }
 
       if (caseFlag && lineContent.indexOf("@lcpr case=end") < 0) {
-        curCase += lineContent
-          .replace(/#/g, "")
-          .replace(/\/\//g, "")
-          .replace(/--/g, "")
-          .replace(/\s+/g, "");
+        curCase += lineContent.replace(/#/g, "").replace(/\/\//g, "").replace(/--/g, "").replace(/\s+/g, "");
       }
       // 收集所有用例
       if (lineContent.indexOf("@lcpr case=start") >= 0) {

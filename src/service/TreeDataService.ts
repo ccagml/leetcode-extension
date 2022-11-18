@@ -30,12 +30,11 @@ import { promptForOpenOutputChannel } from "../utils/OutputUtils";
 
 export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
   private context: vscode.ExtensionContext;
-  private onDidChangeTreeDataEvent: vscode.EventEmitter<
+  private onDidChangeTreeDataEvent: vscode.EventEmitter<NodeModel | undefined | null> = new vscode.EventEmitter<
     NodeModel | undefined | null
-  > = new vscode.EventEmitter<NodeModel | undefined | null>();
+  >();
   // tslint:disable-next-line:member-ordering
-  public readonly onDidChangeTreeData: vscode.Event<any> =
-    this.onDidChangeTreeDataEvent.event;
+  public readonly onDidChangeTreeData: vscode.Event<any> = this.onDidChangeTreeDataEvent.event;
 
   public initialize(context: vscode.ExtensionContext): void {
     this.context = context;
@@ -55,9 +54,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     await treeViewController.refreshCheck();
   }
 
-  public getTreeItem(
-    element: NodeModel
-  ): vscode.TreeItem | Thenable<vscode.TreeItem> {
+  public getTreeItem(element: NodeModel): vscode.TreeItem | Thenable<vscode.TreeItem> {
     if (element.id === "notSignIn") {
       return {
         label: element.name,
@@ -78,8 +75,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
 
     const result: vscode.TreeItem | Thenable<vscode.TreeItem> = {
       label: element.isProblem
-        ? (element.score > "0" ? "[score:" + element.score + "]" : "") +
-          `ID:${element.id}.${element.name} `
+        ? (element.score > "0" ? "[score:" + element.score + "]" : "") + `ID:${element.id}.${element.name} `
         : element.name,
       tooltip: this.getSubCategoryTooltip(element),
       collapsibleState: element.isProblem
@@ -93,9 +89,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     return result;
   }
 
-  public getChildren(
-    element?: NodeModel | undefined
-  ): vscode.ProviderResult<NodeModel[]> {
+  public getChildren(element?: NodeModel | undefined): vscode.ProviderResult<NodeModel[]> {
     if (!statusBarService.getUser()) {
       return [
         new NodeModel(
@@ -195,9 +189,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
         return this.context.asAbsolutePath(path.join("resources", "x.png"));
       case ProblemState.Unknown:
         if (element.locked) {
-          return this.context.asAbsolutePath(
-            path.join("resources", "lock.png")
-          );
+          return this.context.asAbsolutePath(path.join("resources", "lock.png"));
         }
         return this.context.asAbsolutePath(path.join("resources", "blank.png"));
       default:

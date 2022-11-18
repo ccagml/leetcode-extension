@@ -23,11 +23,7 @@ class PreviewService extends BaseWebViewService {
     return this.sideMode;
   }
 
-  public show(
-    descString: string,
-    node: IProblem,
-    isSideMode: boolean = false
-  ): void {
+  public show(descString: string, node: IProblem, isSideMode: boolean = false): void {
     this.description = this.parseDescription(descString, node);
     this.node = node;
     this.sideMode = isSideMode;
@@ -80,8 +76,7 @@ class PreviewService extends BaseWebViewService {
                 }
                 </style>`,
     };
-    const { title, url, category, difficulty, likes, dislikes, body } =
-      this.description;
+    const { title, url, category, difficulty, likes, dislikes, body } = this.description;
     const head: string = markdownService.render(`# [${title}](${url})`);
     const info: string = markdownService.render(
       [
@@ -94,24 +89,18 @@ class PreviewService extends BaseWebViewService {
       `<details>`,
       `<summary><strong>Tags</strong></summary>`,
       markdownService.render(
-        this.description.tags
-          .map((t: string) => `[\`${t}\`](https://leetcode.com/tag/${t})`)
-          .join(" | ")
+        this.description.tags.map((t: string) => `[\`${t}\`](https://leetcode.com/tag/${t})`).join(" | ")
       ),
       `</details>`,
     ].join("\n");
     const companies: string = [
       `<details>`,
       `<summary><strong>Companies</strong></summary>`,
-      markdownService.render(
-        this.description.companies.map((c: string) => `\`${c}\``).join(" | ")
-      ),
+      markdownService.render(this.description.companies.map((c: string) => `\`${c}\``).join(" | ")),
       `</details>`,
     ].join("\n");
     const links: string = markdownService.render(
-      `[Discussion](${this.getDiscussionLink(
-        url
-      )}) | [Solution](${this.getSolutionLink(url)})`
+      `[Discussion](${this.getDiscussionLink(url)}) | [Solution](${this.getSolutionLink(url)})`
     );
     return `
             <!DOCTYPE html>
@@ -161,10 +150,7 @@ class PreviewService extends BaseWebViewService {
   //     await commands.executeCommand("workbench.action.toggleSidebarVisibility");
   // }
 
-  private parseDescription(
-    descString: string,
-    problem: IProblem
-  ): IDescription {
+  private parseDescription(descString: string, problem: IProblem): IDescription {
     const [
       ,
       ,
@@ -193,12 +179,7 @@ class PreviewService extends BaseWebViewService {
       difficulty: difficulty.slice(2),
       likes: likes.split(": ")[1].trim(),
       dislikes: dislikes.split(": ")[1].trim(),
-      body: body
-        .join("\n")
-        .replace(
-          /<pre>[\r\n]*([^]+?)[\r\n]*<\/pre>/g,
-          "<pre><code>$1</code></pre>"
-        ),
+      body: body.join("\n").replace(/<pre>[\r\n]*([^]+?)[\r\n]*<\/pre>/g, "<pre><code>$1</code></pre>"),
     };
   }
 
@@ -207,10 +188,7 @@ class PreviewService extends BaseWebViewService {
     if (endPoint === Endpoint.LeetCodeCN) {
       return url.replace("/description/", "/comments/");
     } else if (endPoint === Endpoint.LeetCode) {
-      return url.replace(
-        "/description/",
-        "/discuss/?currentPage=1&orderBy=most_votes&query="
-      );
+      return url.replace("/description/", "/discuss/?currentPage=1&orderBy=most_votes&query=");
     }
 
     return "https://leetcode.com";

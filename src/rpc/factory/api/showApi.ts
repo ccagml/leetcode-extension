@@ -99,18 +99,11 @@ class ShowApi extends ApiBase {
   }
   genFileName(problem, opts) {
     const path = require("path");
-    const params = [
-      storageUtils.fmt(configUtils.file.show, problem),
-      "",
-      storageUtils.getFileExtByLanguage(opts.lang),
-    ];
+    const params = [storageUtils.fmt(configUtils.file.show, problem), "", storageUtils.getFileExtByLanguage(opts.lang)];
 
     // try new name to avoid overwrite by mistake
     for (let i = 0; ; ++i) {
-      const name = path.join(
-        opts.outdir,
-        params.join(".").replace(/\.+/g, ".")
-      );
+      const name = path.join(opts.outdir, params.join(".").replace(/\.+/g, "."));
       if (!storageUtils.exist(name)) return name;
       params[1] = i;
     }
@@ -182,8 +175,7 @@ class ShowApi extends ApiBase {
     if (problem.dislikes) reply.info(`* Dislikes: ${problem.dislikes}`);
     else reply.info(`* Dislikes: -`);
     if (problem.totalAC) reply.info(`* Total Accepted:    ${problem.totalAC}`);
-    if (problem.totalSubmit)
-      reply.info(`* Total Submissions: ${problem.totalSubmit}`);
+    if (problem.totalSubmit) reply.info(`* Total Submissions: ${problem.totalSubmit}`);
     if (problem.testable && problem.testcase) {
       let testcase_value = util.inspect(problem.testcase);
       reply.info(`* Testcase Example:  ${testcase_value}`);
@@ -199,12 +191,10 @@ class ShowApi extends ApiBase {
     sessionUtils.argv = argv;
     if (argv.keyword.length > 0) {
       // show specific one
-      chainMgr
-        .getChainHead()
-        .getProblem(argv.keyword, !argv.dontTranslate, function (e, problem) {
-          if (e) return reply.info(e);
-          that.showProblem(problem, argv);
-        });
+      chainMgr.getChainHead().getProblem(argv.keyword, !argv.dontTranslate, function (e, problem) {
+        if (e) return reply.info(e);
+        that.showProblem(problem, argv);
+      });
     } else {
       //
     }

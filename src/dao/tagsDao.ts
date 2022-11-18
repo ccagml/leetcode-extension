@@ -32,12 +32,7 @@ class TagsDao {
     "21": { topicTags: ["recursion", "linked-list"] },
     "22": { topicTags: ["string", "dynamic-programming", "backtracking"] },
     "23": {
-      topicTags: [
-        "linked-list",
-        "divide-and-conquer",
-        "heap-priority-queue",
-        "merge-sort",
-      ],
+      topicTags: ["linked-list", "divide-and-conquer", "heap-priority-queue", "merge-sort"],
     },
     "24": { topicTags: ["recursion", "linked-list"] },
     "25": { topicTags: ["recursion", "linked-list"] },
@@ -58,13 +53,7 @@ class TagsDao {
     "40": { topicTags: ["array", "backtracking"] },
     "41": { topicTags: ["array", "hash-table"] },
     "42": {
-      topicTags: [
-        "stack",
-        "array",
-        "two-pointers",
-        "dynamic-programming",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "array", "two-pointers", "dynamic-programming", "monotonic-stack"],
     },
     "43": { topicTags: ["math", "string", "simulation"] },
     "44": {
@@ -111,13 +100,7 @@ class TagsDao {
     "83": { topicTags: ["linked-list"] },
     "84": { topicTags: ["stack", "array", "monotonic-stack"] },
     "85": {
-      topicTags: [
-        "stack",
-        "array",
-        "dynamic-programming",
-        "matrix",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "array", "dynamic-programming", "matrix", "monotonic-stack"],
     },
     "86": { topicTags: ["linked-list", "two-pointers"] },
     "87": { topicTags: ["string", "dynamic-programming"] },
@@ -129,150 +112,61 @@ class TagsDao {
     "93": { topicTags: ["string", "backtracking"] },
     "94": { topicTags: ["stack", "tree", "depth-first-search", "binary-tree"] },
     "95": {
-      topicTags: [
-        "tree",
-        "binary-search-tree",
-        "dynamic-programming",
-        "backtracking",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "binary-search-tree", "dynamic-programming", "backtracking", "binary-tree"],
     },
     "96": {
-      topicTags: [
-        "tree",
-        "binary-search-tree",
-        "math",
-        "dynamic-programming",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "binary-search-tree", "math", "dynamic-programming", "binary-tree"],
     },
     "97": { topicTags: ["string", "dynamic-programming"] },
     "98": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "99": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "100": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "101": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "102": { topicTags: ["tree", "breadth-first-search", "binary-tree"] },
     "103": { topicTags: ["tree", "breadth-first-search", "binary-tree"] },
     "104": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "105": {
-      topicTags: [
-        "tree",
-        "array",
-        "hash-table",
-        "divide-and-conquer",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "array", "hash-table", "divide-and-conquer", "binary-tree"],
     },
     "106": {
-      topicTags: [
-        "tree",
-        "array",
-        "hash-table",
-        "divide-and-conquer",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "array", "hash-table", "divide-and-conquer", "binary-tree"],
     },
     "107": { topicTags: ["tree", "breadth-first-search", "binary-tree"] },
     "108": {
-      topicTags: [
-        "tree",
-        "binary-search-tree",
-        "array",
-        "divide-and-conquer",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "binary-search-tree", "array", "divide-and-conquer", "binary-tree"],
     },
     "109": {
-      topicTags: [
-        "tree",
-        "binary-search-tree",
-        "linked-list",
-        "divide-and-conquer",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "binary-search-tree", "linked-list", "divide-and-conquer", "binary-tree"],
     },
     "110": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "111": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "112": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "113": {
       topicTags: ["tree", "depth-first-search", "backtracking", "binary-tree"],
     },
     "114": {
-      topicTags: [
-        "stack",
-        "tree",
-        "depth-first-search",
-        "linked-list",
-        "binary-tree",
-      ],
+      topicTags: ["stack", "tree", "depth-first-search", "linked-list", "binary-tree"],
     },
     "115": { topicTags: ["string", "dynamic-programming"] },
     "116": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "linked-list",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "linked-list", "binary-tree"],
     },
     "117": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "linked-list",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "linked-list", "binary-tree"],
     },
     "118": { topicTags: ["array", "dynamic-programming"] },
     "119": { topicTags: ["array", "dynamic-programming"] },
@@ -281,43 +175,22 @@ class TagsDao {
     "122": { topicTags: ["greedy", "array", "dynamic-programming"] },
     "123": { topicTags: ["array", "dynamic-programming"] },
     "124": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "dynamic-programming",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "dynamic-programming", "binary-tree"],
     },
     "125": { topicTags: ["two-pointers", "string"] },
     "126": {
-      topicTags: [
-        "breadth-first-search",
-        "hash-table",
-        "string",
-        "backtracking",
-      ],
+      topicTags: ["breadth-first-search", "hash-table", "string", "backtracking"],
     },
     "127": { topicTags: ["breadth-first-search", "hash-table", "string"] },
     "128": { topicTags: ["union-find", "array", "hash-table"] },
     "129": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "130": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "131": { topicTags: ["string", "dynamic-programming", "backtracking"] },
     "132": { topicTags: ["string", "dynamic-programming"] },
     "133": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "hash-table",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "hash-table"],
     },
     "134": { topicTags: ["greedy", "array"] },
     "135": { topicTags: ["greedy", "array"] },
@@ -325,23 +198,10 @@ class TagsDao {
     "137": { topicTags: ["bit-manipulation", "array"] },
     "138": { topicTags: ["hash-table", "linked-list"] },
     "139": {
-      topicTags: [
-        "trie",
-        "memoization",
-        "hash-table",
-        "string",
-        "dynamic-programming",
-      ],
+      topicTags: ["trie", "memoization", "hash-table", "string", "dynamic-programming"],
     },
     "140": {
-      topicTags: [
-        "trie",
-        "memoization",
-        "hash-table",
-        "string",
-        "dynamic-programming",
-        "backtracking",
-      ],
+      topicTags: ["trie", "memoization", "hash-table", "string", "dynamic-programming", "backtracking"],
     },
     "141": { topicTags: ["hash-table", "linked-list", "two-pointers"] },
     "142": { topicTags: ["hash-table", "linked-list", "two-pointers"] },
@@ -357,13 +217,7 @@ class TagsDao {
     },
     "147": { topicTags: ["linked-list", "sorting"] },
     "148": {
-      topicTags: [
-        "linked-list",
-        "two-pointers",
-        "divide-and-conquer",
-        "sorting",
-        "merge-sort",
-      ],
+      topicTags: ["linked-list", "two-pointers", "divide-and-conquer", "sorting", "merge-sort"],
     },
     "149": { topicTags: ["geometry", "array", "hash-table", "math"] },
     "150": { topicTags: ["stack", "array", "math"] },
@@ -386,34 +240,15 @@ class TagsDao {
     "167": { topicTags: ["array", "two-pointers", "binary-search"] },
     "168": { topicTags: ["math", "string"] },
     "169": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "divide-and-conquer",
-        "counting",
-        "sorting",
-      ],
+      topicTags: ["array", "hash-table", "divide-and-conquer", "counting", "sorting"],
     },
     "170": {
-      topicTags: [
-        "design",
-        "array",
-        "hash-table",
-        "two-pointers",
-        "data-stream",
-      ],
+      topicTags: ["design", "array", "hash-table", "two-pointers", "data-stream"],
     },
     "171": { topicTags: ["math", "string"] },
     "172": { topicTags: ["math"] },
     "173": {
-      topicTags: [
-        "stack",
-        "tree",
-        "design",
-        "binary-search-tree",
-        "binary-tree",
-        "iterator",
-      ],
+      topicTags: ["stack", "tree", "design", "binary-search-tree", "binary-tree", "iterator"],
     },
     "174": { topicTags: ["array", "dynamic-programming", "matrix"] },
     "175": { topicTags: ["database"] },
@@ -429,14 +264,7 @@ class TagsDao {
     "185": { topicTags: ["database"] },
     "186": { topicTags: ["two-pointers", "string"] },
     "187": {
-      topicTags: [
-        "bit-manipulation",
-        "hash-table",
-        "string",
-        "sliding-window",
-        "hash-function",
-        "rolling-hash",
-      ],
+      topicTags: ["bit-manipulation", "hash-table", "string", "sliding-window", "hash-function", "rolling-hash"],
     },
     "188": { topicTags: ["array", "dynamic-programming"] },
     "189": { topicTags: ["array", "math", "two-pointers"] },
@@ -450,21 +278,10 @@ class TagsDao {
     "197": { topicTags: ["database"] },
     "198": { topicTags: ["array", "dynamic-programming"] },
     "199": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "200": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "201": { topicTags: ["bit-manipulation"] },
     "202": { topicTags: ["hash-table", "math", "two-pointers"] },
@@ -473,24 +290,14 @@ class TagsDao {
     "205": { topicTags: ["hash-table", "string"] },
     "206": { topicTags: ["recursion", "linked-list"] },
     "207": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "topological-sort",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "topological-sort"],
     },
     "208": { topicTags: ["design", "trie", "hash-table", "string"] },
     "209": {
       topicTags: ["array", "binary-search", "prefix-sum", "sliding-window"],
     },
     "210": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "topological-sort",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "topological-sort"],
     },
     "211": { topicTags: ["depth-first-search", "design", "trie", "string"] },
     "212": { topicTags: ["trie", "array", "string", "backtracking", "matrix"] },
@@ -499,13 +306,7 @@ class TagsDao {
       topicTags: ["string", "string-matching", "hash-function", "rolling-hash"],
     },
     "215": {
-      topicTags: [
-        "array",
-        "divide-and-conquer",
-        "quickselect",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "divide-and-conquer", "quickselect", "sorting", "heap-priority-queue"],
     },
     "216": { topicTags: ["array", "backtracking"] },
     "217": { topicTags: ["array", "hash-table", "sorting"] },
@@ -522,13 +323,7 @@ class TagsDao {
     },
     "219": { topicTags: ["array", "hash-table", "sliding-window"] },
     "220": {
-      topicTags: [
-        "array",
-        "bucket-sort",
-        "ordered-set",
-        "sorting",
-        "sliding-window",
-      ],
+      topicTags: ["array", "bucket-sort", "ordered-set", "sorting", "sliding-window"],
     },
     "221": { topicTags: ["array", "dynamic-programming", "matrix"] },
     "222": {
@@ -538,59 +333,32 @@ class TagsDao {
     "224": { topicTags: ["stack", "recursion", "math", "string"] },
     "225": { topicTags: ["stack", "design", "queue"] },
     "226": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "227": { topicTags: ["stack", "math", "string"] },
     "228": { topicTags: ["array"] },
     "229": { topicTags: ["array", "hash-table", "counting", "sorting"] },
     "230": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "231": { topicTags: ["bit-manipulation", "recursion", "math"] },
     "232": { topicTags: ["stack", "design", "queue"] },
     "233": { topicTags: ["recursion", "math", "dynamic-programming"] },
     "234": { topicTags: ["stack", "recursion", "linked-list", "two-pointers"] },
     "235": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "236": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "237": { topicTags: ["linked-list"] },
     "238": { topicTags: ["array", "prefix-sum"] },
     "239": {
-      topicTags: [
-        "queue",
-        "array",
-        "sliding-window",
-        "monotonic-queue",
-        "heap-priority-queue",
-      ],
+      topicTags: ["queue", "array", "sliding-window", "monotonic-queue", "heap-priority-queue"],
     },
     "240": {
       topicTags: ["array", "binary-search", "divide-and-conquer", "matrix"],
     },
     "241": {
-      topicTags: [
-        "recursion",
-        "memoization",
-        "math",
-        "string",
-        "dynamic-programming",
-      ],
+      topicTags: ["recursion", "memoization", "math", "string", "dynamic-programming"],
     },
     "242": { topicTags: ["hash-table", "string", "sorting"] },
     "243": { topicTags: ["array", "string"] },
@@ -606,88 +374,38 @@ class TagsDao {
     "251": { topicTags: ["design", "array", "two-pointers", "iterator"] },
     "252": { topicTags: ["array", "sorting"] },
     "253": {
-      topicTags: [
-        "greedy",
-        "array",
-        "two-pointers",
-        "prefix-sum",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "array", "two-pointers", "prefix-sum", "sorting", "heap-priority-queue"],
     },
     "254": { topicTags: ["array", "backtracking"] },
     "255": {
-      topicTags: [
-        "stack",
-        "tree",
-        "binary-search-tree",
-        "recursion",
-        "binary-tree",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "tree", "binary-search-tree", "recursion", "binary-tree", "monotonic-stack"],
     },
     "256": { topicTags: ["array", "dynamic-programming"] },
     "257": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "string",
-        "backtracking",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "string", "backtracking", "binary-tree"],
     },
     "258": { topicTags: ["math", "number-theory", "simulation"] },
     "259": { topicTags: ["array", "two-pointers", "binary-search", "sorting"] },
     "260": { topicTags: ["bit-manipulation", "array"] },
     "261": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "262": { topicTags: ["database"] },
     "263": { topicTags: ["math"] },
     "264": {
-      topicTags: [
-        "hash-table",
-        "math",
-        "dynamic-programming",
-        "heap-priority-queue",
-      ],
+      topicTags: ["hash-table", "math", "dynamic-programming", "heap-priority-queue"],
     },
     "265": { topicTags: ["array", "dynamic-programming"] },
     "266": { topicTags: ["bit-manipulation", "hash-table", "string"] },
     "267": { topicTags: ["hash-table", "string", "backtracking"] },
     "268": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "hash-table",
-        "math",
-        "binary-search",
-        "sorting",
-      ],
+      topicTags: ["bit-manipulation", "array", "hash-table", "math", "binary-search", "sorting"],
     },
     "269": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "topological-sort",
-        "array",
-        "string",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "topological-sort", "array", "string"],
     },
     "270": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-search", "binary-tree"],
     },
     "271": { topicTags: ["design", "array", "string"] },
     "272": {
@@ -716,12 +434,7 @@ class TagsDao {
     "283": { topicTags: ["array", "two-pointers"] },
     "284": { topicTags: ["design", "array", "iterator"] },
     "285": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "286": { topicTags: ["breadth-first-search", "array", "matrix"] },
     "287": {
@@ -734,46 +447,21 @@ class TagsDao {
     "292": { topicTags: ["brainteaser", "math", "game-theory"] },
     "293": { topicTags: ["string"] },
     "294": {
-      topicTags: [
-        "memoization",
-        "math",
-        "dynamic-programming",
-        "backtracking",
-        "game-theory",
-      ],
+      topicTags: ["memoization", "math", "dynamic-programming", "backtracking", "game-theory"],
     },
     "295": {
-      topicTags: [
-        "design",
-        "two-pointers",
-        "data-stream",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["design", "two-pointers", "data-stream", "sorting", "heap-priority-queue"],
     },
     "296": { topicTags: ["array", "math", "matrix", "sorting"] },
     "297": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "design",
-        "string",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "design", "string", "binary-tree"],
     },
     "298": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "299": { topicTags: ["hash-table", "string", "counting"] },
     "300": { topicTags: ["array", "binary-search", "dynamic-programming"] },
     "301": { topicTags: ["breadth-first-search", "string", "backtracking"] },
     "302": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "binary-search",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "binary-search", "matrix"],
     },
     "303": { topicTags: ["design", "array", "prefix-sum"] },
     "304": { topicTags: ["design", "array", "matrix", "prefix-sum"] },
@@ -783,34 +471,17 @@ class TagsDao {
       topicTags: ["design", "binary-indexed-tree", "segment-tree", "array"],
     },
     "308": {
-      topicTags: [
-        "design",
-        "binary-indexed-tree",
-        "segment-tree",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["design", "binary-indexed-tree", "segment-tree", "array", "matrix"],
     },
     "309": { topicTags: ["array", "dynamic-programming"] },
     "310": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "topological-sort",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "topological-sort"],
     },
     "311": { topicTags: ["array", "hash-table", "matrix"] },
     "312": { topicTags: ["array", "dynamic-programming"] },
     "313": { topicTags: ["array", "math", "dynamic-programming"] },
     "314": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "hash-table",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "hash-table", "binary-tree"],
     },
     "315": {
       topicTags: [
@@ -833,12 +504,7 @@ class TagsDao {
       topicTags: ["breadth-first-search", "array", "dynamic-programming"],
     },
     "323": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "324": {
       topicTags: ["array", "divide-and-conquer", "quickselect", "sorting"],
@@ -873,37 +539,19 @@ class TagsDao {
     "331": { topicTags: ["stack", "tree", "string", "binary-tree"] },
     "332": { topicTags: ["depth-first-search", "graph", "eulerian-circuit"] },
     "333": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "dynamic-programming",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "dynamic-programming", "binary-tree"],
     },
     "334": { topicTags: ["greedy", "array"] },
     "335": { topicTags: ["geometry", "array", "math"] },
     "336": { topicTags: ["trie", "array", "hash-table", "string"] },
     "337": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "dynamic-programming",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "dynamic-programming", "binary-tree"],
     },
     "338": { topicTags: ["bit-manipulation", "dynamic-programming"] },
     "339": { topicTags: ["depth-first-search", "breadth-first-search"] },
     "340": { topicTags: ["hash-table", "string", "sliding-window"] },
     "341": {
-      topicTags: [
-        "stack",
-        "tree",
-        "depth-first-search",
-        "design",
-        "queue",
-        "iterator",
-      ],
+      topicTags: ["stack", "tree", "depth-first-search", "design", "queue", "iterator"],
     },
     "342": { topicTags: ["bit-manipulation", "recursion", "math"] },
     "343": { topicTags: ["math", "dynamic-programming"] },
@@ -924,22 +572,10 @@ class TagsDao {
     },
     "348": { topicTags: ["design", "array", "hash-table", "matrix"] },
     "349": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "two-pointers",
-        "binary-search",
-        "sorting",
-      ],
+      topicTags: ["array", "hash-table", "two-pointers", "binary-search", "sorting"],
     },
     "350": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "two-pointers",
-        "binary-search",
-        "sorting",
-      ],
+      topicTags: ["array", "hash-table", "two-pointers", "binary-search", "sorting"],
     },
     "351": { topicTags: ["dynamic-programming", "backtracking"] },
     "352": { topicTags: ["design", "binary-search", "ordered-set"] },
@@ -953,14 +589,7 @@ class TagsDao {
     "356": { topicTags: ["array", "hash-table", "math"] },
     "357": { topicTags: ["math", "dynamic-programming", "backtracking"] },
     "358": {
-      topicTags: [
-        "greedy",
-        "hash-table",
-        "string",
-        "counting",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "hash-table", "string", "counting", "sorting", "heap-priority-queue"],
     },
     "359": { topicTags: ["design", "hash-table"] },
     "360": { topicTags: ["array", "math", "two-pointers", "sorting"] },
@@ -969,13 +598,7 @@ class TagsDao {
       topicTags: ["design", "queue", "array", "hash-table", "binary-search"],
     },
     "363": {
-      topicTags: [
-        "array",
-        "binary-search",
-        "matrix",
-        "ordered-set",
-        "prefix-sum",
-      ],
+      topicTags: ["array", "binary-search", "matrix", "ordered-set", "prefix-sum"],
     },
     "364": {
       topicTags: ["stack", "depth-first-search", "breadth-first-search"],
@@ -996,13 +619,7 @@ class TagsDao {
     "376": { topicTags: ["greedy", "array", "dynamic-programming"] },
     "377": { topicTags: ["array", "dynamic-programming"] },
     "378": {
-      topicTags: [
-        "array",
-        "binary-search",
-        "matrix",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "binary-search", "matrix", "sorting", "heap-priority-queue"],
     },
     "379": {
       topicTags: ["design", "queue", "array", "hash-table", "linked-list"],
@@ -1031,64 +648,31 @@ class TagsDao {
     "393": { topicTags: ["bit-manipulation", "array"] },
     "394": { topicTags: ["stack", "recursion", "string"] },
     "395": {
-      topicTags: [
-        "hash-table",
-        "string",
-        "divide-and-conquer",
-        "sliding-window",
-      ],
+      topicTags: ["hash-table", "string", "divide-and-conquer", "sliding-window"],
     },
     "396": { topicTags: ["array", "math", "dynamic-programming"] },
     "397": {
-      topicTags: [
-        "greedy",
-        "bit-manipulation",
-        "memoization",
-        "dynamic-programming",
-      ],
+      topicTags: ["greedy", "bit-manipulation", "memoization", "dynamic-programming"],
     },
     "398": {
       topicTags: ["reservoir-sampling", "hash-table", "math", "randomized"],
     },
     "399": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-        "array",
-        "shortest-path",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph", "array", "shortest-path"],
     },
     "400": { topicTags: ["math", "binary-search"] },
     "401": { topicTags: ["bit-manipulation", "backtracking"] },
     "402": { topicTags: ["stack", "greedy", "string", "monotonic-stack"] },
     "403": { topicTags: ["array", "dynamic-programming"] },
     "404": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "405": { topicTags: ["bit-manipulation", "math"] },
     "406": {
-      topicTags: [
-        "greedy",
-        "binary-indexed-tree",
-        "segment-tree",
-        "array",
-        "sorting",
-      ],
+      topicTags: ["greedy", "binary-indexed-tree", "segment-tree", "array", "sorting"],
     },
     "407": {
-      topicTags: [
-        "breadth-first-search",
-        "array",
-        "matrix",
-        "heap-priority-queue",
-      ],
+      topicTags: ["breadth-first-search", "array", "matrix", "heap-priority-queue"],
     },
     "408": { topicTags: ["two-pointers", "string"] },
     "409": { topicTags: ["greedy", "hash-table", "string"] },
@@ -1102,12 +686,7 @@ class TagsDao {
     "415": { topicTags: ["math", "string", "simulation"] },
     "416": { topicTags: ["array", "dynamic-programming"] },
     "417": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "matrix"],
     },
     "418": { topicTags: ["string", "dynamic-programming", "simulation"] },
     "419": { topicTags: ["depth-first-search", "array", "matrix"] },
@@ -1130,25 +709,14 @@ class TagsDao {
     },
     "427": { topicTags: ["tree", "array", "divide-and-conquer", "matrix"] },
     "428": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "string",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "string"],
     },
     "429": { topicTags: ["tree", "breadth-first-search"] },
     "430": {
       topicTags: ["depth-first-search", "linked-list", "doubly-linked-list"],
     },
     "431": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "design",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "design", "binary-tree"],
     },
     "432": {
       topicTags: ["design", "hash-table", "linked-list", "doubly-linked-list"],
@@ -1182,27 +750,14 @@ class TagsDao {
     },
     "450": { topicTags: ["tree", "binary-search-tree", "binary-tree"] },
     "451": {
-      topicTags: [
-        "hash-table",
-        "string",
-        "bucket-sort",
-        "counting",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["hash-table", "string", "bucket-sort", "counting", "sorting", "heap-priority-queue"],
     },
     "452": { topicTags: ["greedy", "array", "sorting"] },
     "453": { topicTags: ["array", "math"] },
     "454": { topicTags: ["array", "hash-table"] },
     "455": { topicTags: ["greedy", "array", "two-pointers", "sorting"] },
     "456": {
-      topicTags: [
-        "stack",
-        "array",
-        "binary-search",
-        "ordered-set",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "array", "binary-search", "ordered-set", "monotonic-stack"],
     },
     "457": { topicTags: ["array", "hash-table", "two-pointers"] },
     "458": { topicTags: ["math", "dynamic-programming", "combinatorics"] },
@@ -1213,62 +768,27 @@ class TagsDao {
     "461": { topicTags: ["bit-manipulation"] },
     "462": { topicTags: ["array", "math", "sorting"] },
     "463": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "matrix"],
     },
     "464": {
-      topicTags: [
-        "bit-manipulation",
-        "memoization",
-        "math",
-        "dynamic-programming",
-        "bitmask",
-        "game-theory",
-      ],
+      topicTags: ["bit-manipulation", "memoization", "math", "dynamic-programming", "bitmask", "game-theory"],
     },
     "465": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "backtracking", "bitmask"],
     },
     "466": { topicTags: ["string", "dynamic-programming"] },
     "467": { topicTags: ["string", "dynamic-programming"] },
     "468": { topicTags: ["string"] },
     "469": { topicTags: ["geometry", "math"] },
     "470": {
-      topicTags: [
-        "math",
-        "rejection-sampling",
-        "probability-and-statistics",
-        "randomized",
-      ],
+      topicTags: ["math", "rejection-sampling", "probability-and-statistics", "randomized"],
     },
     "471": { topicTags: ["string", "dynamic-programming"] },
     "472": {
-      topicTags: [
-        "depth-first-search",
-        "trie",
-        "array",
-        "string",
-        "dynamic-programming",
-      ],
+      topicTags: ["depth-first-search", "trie", "array", "string", "dynamic-programming"],
     },
     "473": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "backtracking", "bitmask"],
     },
     "474": { topicTags: ["array", "string", "dynamic-programming"] },
     "475": { topicTags: ["array", "two-pointers", "binary-search", "sorting"] },
@@ -1279,12 +799,7 @@ class TagsDao {
     },
     "479": { topicTags: ["math"] },
     "480": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "sliding-window",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "hash-table", "sliding-window", "heap-priority-queue"],
     },
     "481": { topicTags: ["two-pointers", "string"] },
     "482": { topicTags: ["string"] },
@@ -1292,22 +807,11 @@ class TagsDao {
     "484": { topicTags: ["stack", "greedy", "array", "string"] },
     "485": { topicTags: ["array"] },
     "486": {
-      topicTags: [
-        "recursion",
-        "array",
-        "math",
-        "dynamic-programming",
-        "game-theory",
-      ],
+      topicTags: ["recursion", "array", "math", "dynamic-programming", "game-theory"],
     },
     "487": { topicTags: ["array", "dynamic-programming", "sliding-window"] },
     "488": {
-      topicTags: [
-        "breadth-first-search",
-        "memoization",
-        "string",
-        "dynamic-programming",
-      ],
+      topicTags: ["breadth-first-search", "memoization", "string", "dynamic-programming"],
     },
     "489": { topicTags: ["backtracking", "interactive"] },
     "490": {
@@ -1332,45 +836,21 @@ class TagsDao {
     "495": { topicTags: ["array", "simulation"] },
     "496": { topicTags: ["stack", "array", "hash-table", "monotonic-stack"] },
     "497": {
-      topicTags: [
-        "reservoir-sampling",
-        "math",
-        "binary-search",
-        "ordered-set",
-        "prefix-sum",
-        "randomized",
-      ],
+      topicTags: ["reservoir-sampling", "math", "binary-search", "ordered-set", "prefix-sum", "randomized"],
     },
     "498": { topicTags: ["array", "matrix", "simulation"] },
     "499": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "shortest-path",
-        "heap-priority-queue",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "shortest-path", "heap-priority-queue"],
     },
     "500": { topicTags: ["array", "hash-table", "string"] },
     "501": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "502": { topicTags: ["greedy", "array", "sorting", "heap-priority-queue"] },
     "503": { topicTags: ["stack", "array", "monotonic-stack"] },
     "504": { topicTags: ["math"] },
     "505": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "shortest-path",
-        "heap-priority-queue",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "shortest-path", "heap-priority-queue"],
     },
     "506": { topicTags: ["array", "sorting", "heap-priority-queue"] },
     "507": { topicTags: ["math"] },
@@ -1384,28 +864,13 @@ class TagsDao {
     "511": { topicTags: ["database"] },
     "512": { topicTags: ["database"] },
     "513": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "514": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "string",
-        "dynamic-programming",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "string", "dynamic-programming"],
     },
     "515": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "516": { topicTags: ["string", "dynamic-programming"] },
     "517": { topicTags: ["greedy", "array"] },
@@ -1422,42 +887,19 @@ class TagsDao {
     "524": { topicTags: ["array", "two-pointers", "string", "sorting"] },
     "525": { topicTags: ["array", "hash-table", "prefix-sum"] },
     "526": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "backtracking", "bitmask"],
     },
     "527": { topicTags: ["greedy", "trie", "array", "string", "sorting"] },
     "528": { topicTags: ["math", "binary-search", "prefix-sum", "randomized"] },
     "529": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "matrix"],
     },
     "530": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-search-tree", "binary-tree"],
     },
     "531": { topicTags: ["array", "hash-table", "matrix"] },
     "532": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "two-pointers",
-        "binary-search",
-        "sorting",
-      ],
+      topicTags: ["array", "hash-table", "two-pointers", "binary-search", "sorting"],
     },
     "533": { topicTags: ["array", "hash-table", "matrix"] },
     "534": { topicTags: ["database"] },
@@ -1467,35 +909,20 @@ class TagsDao {
     },
     "537": { topicTags: ["math", "string", "simulation"] },
     "538": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "539": { topicTags: ["array", "math", "string", "sorting"] },
     "540": { topicTags: ["array", "binary-search"] },
     "541": { topicTags: ["two-pointers", "string"] },
     "542": {
-      topicTags: [
-        "breadth-first-search",
-        "array",
-        "dynamic-programming",
-        "matrix",
-      ],
+      topicTags: ["breadth-first-search", "array", "dynamic-programming", "matrix"],
     },
     "543": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "544": { topicTags: ["recursion", "string", "simulation"] },
     "545": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "546": { topicTags: ["memoization", "array", "dynamic-programming"] },
     "547": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "548": { topicTags: ["array", "prefix-sum"] },
     "549": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
@@ -1526,13 +953,7 @@ class TagsDao {
     "570": { topicTags: ["database"] },
     "571": { topicTags: ["database"] },
     "572": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-tree",
-        "string-matching",
-        "hash-function",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-tree", "string-matching", "hash-function"],
     },
     "573": { topicTags: ["array", "math"] },
     "574": { topicTags: ["database"] },
@@ -1543,23 +964,10 @@ class TagsDao {
     "579": { topicTags: ["database"] },
     "580": { topicTags: ["database"] },
     "581": {
-      topicTags: [
-        "stack",
-        "greedy",
-        "array",
-        "two-pointers",
-        "sorting",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "greedy", "array", "two-pointers", "sorting", "monotonic-stack"],
     },
     "582": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "hash-table",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "array", "hash-table"],
     },
     "583": { topicTags: ["string", "dynamic-programming"] },
     "584": { topicTags: ["database"] },
@@ -1594,13 +1002,7 @@ class TagsDao {
     "609": { topicTags: ["array", "hash-table", "string"] },
     "610": { topicTags: ["database"] },
     "611": {
-      topicTags: [
-        "greedy",
-        "array",
-        "two-pointers",
-        "binary-search",
-        "sorting",
-      ],
+      topicTags: ["greedy", "array", "two-pointers", "binary-search", "sorting"],
     },
     "612": { topicTags: ["database"] },
     "613": { topicTags: ["database"] },
@@ -1610,34 +1012,17 @@ class TagsDao {
       topicTags: ["trie", "array", "hash-table", "string", "string-matching"],
     },
     "617": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "618": { topicTags: ["database"] },
     "619": { topicTags: ["database"] },
     "620": { topicTags: ["database"] },
     "621": {
-      topicTags: [
-        "greedy",
-        "array",
-        "hash-table",
-        "counting",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "array", "hash-table", "counting", "sorting", "heap-priority-queue"],
     },
     "622": { topicTags: ["design", "queue", "array", "linked-list"] },
     "623": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "624": { topicTags: ["greedy", "array"] },
     "625": { topicTags: ["greedy", "math"] },
@@ -1648,36 +1033,17 @@ class TagsDao {
     "630": { topicTags: ["greedy", "array", "heap-priority-queue"] },
     "631": { topicTags: ["graph", "design", "topological-sort"] },
     "632": {
-      topicTags: [
-        "greedy",
-        "array",
-        "hash-table",
-        "sorting",
-        "sliding-window",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "array", "hash-table", "sorting", "sliding-window", "heap-priority-queue"],
     },
     "633": { topicTags: ["math", "two-pointers", "binary-search"] },
     "634": { topicTags: ["math", "dynamic-programming"] },
     "635": { topicTags: ["design", "hash-table", "string", "ordered-set"] },
     "636": { topicTags: ["stack", "array"] },
     "637": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "638": {
-      topicTags: [
-        "bit-manipulation",
-        "memoization",
-        "array",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "memoization", "array", "dynamic-programming", "backtracking", "bitmask"],
     },
     "639": { topicTags: ["string", "dynamic-programming"] },
     "640": { topicTags: ["math", "string", "simulation"] },
@@ -1709,33 +1075,15 @@ class TagsDao {
       ],
     },
     "654": {
-      topicTags: [
-        "stack",
-        "tree",
-        "array",
-        "divide-and-conquer",
-        "binary-tree",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "tree", "array", "divide-and-conquer", "binary-tree", "monotonic-stack"],
     },
     "655": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "656": { topicTags: ["array", "dynamic-programming"] },
     "657": { topicTags: ["string", "simulation"] },
     "658": {
-      topicTags: [
-        "array",
-        "two-pointers",
-        "binary-search",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "two-pointers", "binary-search", "sorting", "heap-priority-queue"],
     },
     "659": {
       topicTags: ["greedy", "array", "hash-table", "heap-priority-queue"],
@@ -1743,12 +1091,7 @@ class TagsDao {
     "660": { topicTags: ["math"] },
     "661": { topicTags: ["array", "matrix"] },
     "662": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "663": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "664": { topicTags: ["string", "dynamic-programming"] },
@@ -1759,39 +1102,19 @@ class TagsDao {
     "667": { topicTags: ["array", "math"] },
     "668": { topicTags: ["math", "binary-search"] },
     "669": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "670": { topicTags: ["greedy", "math"] },
     "671": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "672": {
-      topicTags: [
-        "bit-manipulation",
-        "depth-first-search",
-        "breadth-first-search",
-        "math",
-      ],
+      topicTags: ["bit-manipulation", "depth-first-search", "breadth-first-search", "math"],
     },
     "673": {
-      topicTags: [
-        "binary-indexed-tree",
-        "segment-tree",
-        "array",
-        "dynamic-programming",
-      ],
+      topicTags: ["binary-indexed-tree", "segment-tree", "array", "dynamic-programming"],
     },
     "674": { topicTags: ["array"] },
     "675": {
-      topicTags: [
-        "breadth-first-search",
-        "array",
-        "matrix",
-        "heap-priority-queue",
-      ],
+      topicTags: ["breadth-first-search", "array", "matrix", "heap-priority-queue"],
     },
     "676": { topicTags: ["design", "trie", "hash-table", "string"] },
     "677": { topicTags: ["design", "trie", "hash-table", "string"] },
@@ -1801,28 +1124,13 @@ class TagsDao {
     "681": { topicTags: ["string", "enumeration"] },
     "682": { topicTags: ["stack", "array", "simulation"] },
     "683": {
-      topicTags: [
-        "binary-indexed-tree",
-        "array",
-        "ordered-set",
-        "sliding-window",
-      ],
+      topicTags: ["binary-indexed-tree", "array", "ordered-set", "sliding-window"],
     },
     "684": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "685": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "686": { topicTags: ["string", "string-matching"] },
     "687": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
@@ -1832,145 +1140,61 @@ class TagsDao {
       topicTags: ["depth-first-search", "breadth-first-search", "hash-table"],
     },
     "691": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "string",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "string", "dynamic-programming", "backtracking", "bitmask"],
     },
     "692": {
-      topicTags: [
-        "trie",
-        "hash-table",
-        "string",
-        "bucket-sort",
-        "counting",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["trie", "hash-table", "string", "bucket-sort", "counting", "sorting", "heap-priority-queue"],
     },
     "693": { topicTags: ["bit-manipulation"] },
     "694": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "hash-table",
-        "hash-function",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "hash-table", "hash-function"],
     },
     "695": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "696": { topicTags: ["two-pointers", "string"] },
     "697": { topicTags: ["array", "hash-table"] },
     "698": {
-      topicTags: [
-        "bit-manipulation",
-        "memoization",
-        "array",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "memoization", "array", "dynamic-programming", "backtracking", "bitmask"],
     },
     "699": { topicTags: ["segment-tree", "array", "ordered-set"] },
     "700": { topicTags: ["tree", "binary-search-tree", "binary-tree"] },
     "701": { topicTags: ["tree", "binary-search-tree", "binary-tree"] },
     "702": { topicTags: ["array", "binary-search", "interactive"] },
     "703": {
-      topicTags: [
-        "tree",
-        "design",
-        "binary-search-tree",
-        "binary-tree",
-        "data-stream",
-        "heap-priority-queue",
-      ],
+      topicTags: ["tree", "design", "binary-search-tree", "binary-tree", "data-stream", "heap-priority-queue"],
     },
     "704": { topicTags: ["array", "binary-search"] },
     "705": {
-      topicTags: [
-        "design",
-        "array",
-        "hash-table",
-        "linked-list",
-        "hash-function",
-      ],
+      topicTags: ["design", "array", "hash-table", "linked-list", "hash-function"],
     },
     "706": {
-      topicTags: [
-        "design",
-        "array",
-        "hash-table",
-        "linked-list",
-        "hash-function",
-      ],
+      topicTags: ["design", "array", "hash-table", "linked-list", "hash-function"],
     },
     "707": { topicTags: ["design", "linked-list"] },
     "708": { topicTags: ["linked-list"] },
     "709": { topicTags: ["string"] },
     "710": {
-      topicTags: [
-        "hash-table",
-        "math",
-        "binary-search",
-        "sorting",
-        "randomized",
-      ],
+      topicTags: ["hash-table", "math", "binary-search", "sorting", "randomized"],
     },
     "711": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "hash-table",
-        "hash-function",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "hash-table", "hash-function"],
     },
     "712": { topicTags: ["string", "dynamic-programming"] },
     "713": { topicTags: ["array", "sliding-window"] },
     "714": { topicTags: ["greedy", "array", "dynamic-programming"] },
     "715": { topicTags: ["design", "segment-tree", "ordered-set"] },
     "716": {
-      topicTags: [
-        "stack",
-        "design",
-        "linked-list",
-        "doubly-linked-list",
-        "ordered-set",
-      ],
+      topicTags: ["stack", "design", "linked-list", "doubly-linked-list", "ordered-set"],
     },
     "717": { topicTags: ["array"] },
     "718": {
-      topicTags: [
-        "array",
-        "binary-search",
-        "dynamic-programming",
-        "sliding-window",
-        "hash-function",
-        "rolling-hash",
-      ],
+      topicTags: ["array", "binary-search", "dynamic-programming", "sliding-window", "hash-function", "rolling-hash"],
     },
     "719": { topicTags: ["array", "two-pointers", "binary-search", "sorting"] },
     "720": { topicTags: ["trie", "array", "hash-table", "string", "sorting"] },
     "721": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "string",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "string"],
     },
     "722": { topicTags: ["array", "string"] },
     "723": { topicTags: ["array", "two-pointers", "matrix", "simulation"] },
@@ -1990,46 +1214,23 @@ class TagsDao {
       topicTags: ["design", "segment-tree", "binary-search", "ordered-set"],
     },
     "733": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "matrix"],
     },
     "734": { topicTags: ["array", "hash-table", "string"] },
     "735": { topicTags: ["stack", "array"] },
     "736": { topicTags: ["stack", "recursion", "hash-table", "string"] },
     "737": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "hash-table",
-        "string",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "hash-table", "string"],
     },
     "738": { topicTags: ["greedy", "math"] },
     "739": { topicTags: ["stack", "array", "monotonic-stack"] },
     "740": { topicTags: ["array", "hash-table", "dynamic-programming"] },
     "741": { topicTags: ["array", "dynamic-programming", "matrix"] },
     "742": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "743": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "shortest-path",
-        "heap-priority-queue",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "shortest-path", "heap-priority-queue"],
     },
     "744": { topicTags: ["array", "binary-search"] },
     "745": { topicTags: ["design", "trie", "hash-table", "string"] },
@@ -2037,13 +1238,7 @@ class TagsDao {
     "747": { topicTags: ["array", "sorting"] },
     "748": { topicTags: ["array", "hash-table", "string"] },
     "749": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "matrix",
-        "simulation",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "matrix", "simulation"],
     },
     "750": { topicTags: ["array", "math", "dynamic-programming", "matrix"] },
     "751": { topicTags: ["bit-manipulation", "string"] },
@@ -2054,11 +1249,7 @@ class TagsDao {
     "754": { topicTags: ["math", "binary-search"] },
     "755": { topicTags: ["array", "simulation"] },
     "756": {
-      topicTags: [
-        "bit-manipulation",
-        "depth-first-search",
-        "breadth-first-search",
-      ],
+      topicTags: ["bit-manipulation", "depth-first-search", "breadth-first-search"],
     },
     "757": { topicTags: ["greedy", "array", "sorting"] },
     "758": {
@@ -2071,24 +1262,11 @@ class TagsDao {
     "763": { topicTags: ["greedy", "hash-table", "two-pointers", "string"] },
     "764": { topicTags: ["array", "dynamic-programming"] },
     "765": {
-      topicTags: [
-        "greedy",
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["greedy", "depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "766": { topicTags: ["array", "matrix"] },
     "767": {
-      topicTags: [
-        "greedy",
-        "hash-table",
-        "string",
-        "counting",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "hash-table", "string", "counting", "sorting", "heap-priority-queue"],
     },
     "768": {
       topicTags: ["stack", "greedy", "array", "sorting", "monotonic-stack"],
@@ -2124,22 +1302,11 @@ class TagsDao {
     "781": { topicTags: ["greedy", "array", "hash-table", "math"] },
     "782": { topicTags: ["bit-manipulation", "array", "math", "matrix"] },
     "783": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-search-tree", "binary-tree"],
     },
     "784": { topicTags: ["bit-manipulation", "string", "backtracking"] },
     "785": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "786": {
       topicTags: ["array", "binary-search", "sorting", "heap-priority-queue"],
@@ -2164,35 +1331,19 @@ class TagsDao {
     "795": { topicTags: ["array", "two-pointers"] },
     "796": { topicTags: ["string", "string-matching"] },
     "797": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "backtracking",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "backtracking"],
     },
     "798": { topicTags: ["array", "prefix-sum"] },
     "799": { topicTags: ["dynamic-programming"] },
     "800": { topicTags: ["math", "string", "enumeration"] },
     "801": { topicTags: ["array", "dynamic-programming"] },
     "802": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "topological-sort",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "topological-sort"],
     },
     "803": { topicTags: ["union-find", "array", "matrix"] },
     "804": { topicTags: ["array", "hash-table", "string"] },
     "805": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "math",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "math", "dynamic-programming", "bitmask"],
     },
     "806": { topicTags: ["array", "string"] },
     "807": { topicTags: ["greedy", "array", "matrix"] },
@@ -2201,13 +1352,7 @@ class TagsDao {
     },
     "809": { topicTags: ["array", "two-pointers", "string"] },
     "810": {
-      topicTags: [
-        "bit-manipulation",
-        "brainteaser",
-        "array",
-        "math",
-        "game-theory",
-      ],
+      topicTags: ["bit-manipulation", "brainteaser", "array", "math", "game-theory"],
     },
     "811": { topicTags: ["array", "hash-table", "string", "counting"] },
     "812": { topicTags: ["geometry", "array", "math"] },
@@ -2225,22 +1370,10 @@ class TagsDao {
     "824": { topicTags: ["string"] },
     "825": { topicTags: ["array", "two-pointers", "binary-search", "sorting"] },
     "826": {
-      topicTags: [
-        "greedy",
-        "array",
-        "two-pointers",
-        "binary-search",
-        "sorting",
-      ],
+      topicTags: ["greedy", "array", "two-pointers", "binary-search", "sorting"],
     },
     "827": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "828": { topicTags: ["hash-table", "string", "dynamic-programming"] },
     "829": { topicTags: ["math", "enumeration"] },
@@ -2254,22 +1387,11 @@ class TagsDao {
     "835": { topicTags: ["array", "matrix"] },
     "836": { topicTags: ["geometry", "math"] },
     "837": {
-      topicTags: [
-        "math",
-        "dynamic-programming",
-        "sliding-window",
-        "probability-and-statistics",
-      ],
+      topicTags: ["math", "dynamic-programming", "sliding-window", "probability-and-statistics"],
     },
     "838": { topicTags: ["two-pointers", "string", "dynamic-programming"] },
     "839": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "string",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "string"],
     },
     "840": { topicTags: ["array", "math", "matrix"] },
     "841": {
@@ -2281,22 +1403,11 @@ class TagsDao {
     },
     "844": { topicTags: ["stack", "two-pointers", "string", "simulation"] },
     "845": {
-      topicTags: [
-        "array",
-        "two-pointers",
-        "dynamic-programming",
-        "enumeration",
-      ],
+      topicTags: ["array", "two-pointers", "dynamic-programming", "enumeration"],
     },
     "846": { topicTags: ["greedy", "array", "hash-table", "sorting"] },
     "847": {
-      topicTags: [
-        "bit-manipulation",
-        "breadth-first-search",
-        "graph",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "breadth-first-search", "graph", "dynamic-programming", "bitmask"],
     },
     "848": { topicTags: ["array", "string"] },
     "849": { topicTags: ["array"] },
@@ -2328,22 +1439,11 @@ class TagsDao {
       ],
     },
     "863": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "864": { topicTags: ["bit-manipulation", "breadth-first-search"] },
     "865": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "hash-table",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "hash-table", "binary-tree"],
     },
     "866": { topicTags: ["math"] },
     "867": { topicTags: ["array", "matrix", "simulation"] },
@@ -2351,12 +1451,7 @@ class TagsDao {
     "869": { topicTags: ["math", "counting", "enumeration", "sorting"] },
     "870": { topicTags: ["greedy", "array", "two-pointers", "sorting"] },
     "871": {
-      topicTags: [
-        "greedy",
-        "array",
-        "dynamic-programming",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "array", "dynamic-programming", "heap-priority-queue"],
     },
     "872": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "873": { topicTags: ["array", "hash-table", "dynamic-programming"] },
@@ -2375,60 +1470,31 @@ class TagsDao {
     "884": { topicTags: ["hash-table", "string"] },
     "885": { topicTags: ["array", "matrix", "simulation"] },
     "886": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "887": { topicTags: ["math", "binary-search", "dynamic-programming"] },
     "888": { topicTags: ["array", "hash-table", "binary-search", "sorting"] },
     "889": {
-      topicTags: [
-        "tree",
-        "array",
-        "hash-table",
-        "divide-and-conquer",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "array", "hash-table", "divide-and-conquer", "binary-tree"],
     },
     "890": { topicTags: ["array", "hash-table", "string"] },
     "891": { topicTags: ["array", "math", "sorting"] },
     "892": { topicTags: ["geometry", "array", "math", "matrix"] },
     "893": { topicTags: ["array", "hash-table", "string"] },
     "894": {
-      topicTags: [
-        "tree",
-        "recursion",
-        "memoization",
-        "dynamic-programming",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "recursion", "memoization", "dynamic-programming", "binary-tree"],
     },
     "895": { topicTags: ["stack", "design", "hash-table", "ordered-set"] },
     "896": { topicTags: ["array"] },
     "897": {
-      topicTags: [
-        "stack",
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["stack", "tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "898": { topicTags: ["bit-manipulation", "array", "dynamic-programming"] },
     "899": { topicTags: ["math", "string", "sorting"] },
     "900": { topicTags: ["design", "array", "counting", "iterator"] },
     "901": { topicTags: ["stack", "design", "data-stream", "monotonic-stack"] },
     "902": {
-      topicTags: [
-        "array",
-        "math",
-        "string",
-        "binary-search",
-        "dynamic-programming",
-      ],
+      topicTags: ["array", "math", "string", "binary-search", "dynamic-programming"],
     },
     "903": { topicTags: ["dynamic-programming"] },
     "904": { topicTags: ["array", "hash-table", "sliding-window"] },
@@ -2454,14 +1520,7 @@ class TagsDao {
       ],
     },
     "913": {
-      topicTags: [
-        "graph",
-        "topological-sort",
-        "memoization",
-        "math",
-        "dynamic-programming",
-        "game-theory",
-      ],
+      topicTags: ["graph", "topological-sort", "memoization", "math", "dynamic-programming", "game-theory"],
     },
     "914": {
       topicTags: ["array", "hash-table", "math", "counting", "number-theory"],
@@ -2470,13 +1529,7 @@ class TagsDao {
     "916": { topicTags: ["array", "hash-table", "string"] },
     "917": { topicTags: ["two-pointers", "string"] },
     "918": {
-      topicTags: [
-        "queue",
-        "array",
-        "divide-and-conquer",
-        "dynamic-programming",
-        "monotonic-queue",
-      ],
+      topicTags: ["queue", "array", "divide-and-conquer", "dynamic-programming", "monotonic-queue"],
     },
     "919": {
       topicTags: ["tree", "breadth-first-search", "design", "binary-tree"],
@@ -2488,25 +1541,13 @@ class TagsDao {
       topicTags: ["array", "hash-table", "two-pointers", "counting", "sorting"],
     },
     "924": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "925": { topicTags: ["two-pointers", "string"] },
     "926": { topicTags: ["string", "dynamic-programming"] },
     "927": { topicTags: ["array", "math"] },
     "928": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "929": { topicTags: ["array", "hash-table", "string"] },
     "930": {
@@ -2516,23 +1557,13 @@ class TagsDao {
     "932": { topicTags: ["array", "math", "divide-and-conquer"] },
     "933": { topicTags: ["design", "queue", "data-stream"] },
     "934": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "matrix"],
     },
     "935": { topicTags: ["dynamic-programming"] },
     "936": { topicTags: ["stack", "greedy", "queue", "string"] },
     "937": { topicTags: ["array", "string", "sorting"] },
     "938": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "939": {
       topicTags: ["geometry", "array", "hash-table", "math", "sorting"],
@@ -2541,13 +1572,7 @@ class TagsDao {
     "941": { topicTags: ["array"] },
     "942": { topicTags: ["greedy", "array", "two-pointers", "string"] },
     "943": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "string",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "string", "dynamic-programming", "bitmask"],
     },
     "944": { topicTags: ["array", "string"] },
     "945": { topicTags: ["greedy", "array", "counting", "sorting"] },
@@ -2565,12 +1590,7 @@ class TagsDao {
     "957": { topicTags: ["bit-manipulation", "array", "hash-table", "math"] },
     "958": { topicTags: ["tree", "breadth-first-search", "binary-tree"] },
     "959": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "960": { topicTags: ["array", "string", "dynamic-programming"] },
     "961": { topicTags: ["array", "hash-table"] },
@@ -2578,47 +1598,23 @@ class TagsDao {
     "963": { topicTags: ["geometry", "array", "math"] },
     "964": { topicTags: ["math", "dynamic-programming"] },
     "965": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "966": { topicTags: ["array", "hash-table", "string"] },
     "967": { topicTags: ["breadth-first-search", "backtracking"] },
     "968": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "dynamic-programming",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "dynamic-programming", "binary-tree"],
     },
     "969": { topicTags: ["greedy", "array", "two-pointers", "sorting"] },
     "970": { topicTags: ["hash-table", "math"] },
     "971": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "972": { topicTags: ["math", "string"] },
     "973": {
-      topicTags: [
-        "geometry",
-        "array",
-        "math",
-        "divide-and-conquer",
-        "quickselect",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["geometry", "array", "math", "divide-and-conquer", "quickselect", "sorting", "heap-priority-queue"],
     },
     "974": { topicTags: ["array", "hash-table", "prefix-sum"] },
     "975": {
-      topicTags: [
-        "stack",
-        "array",
-        "dynamic-programming",
-        "ordered-set",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "array", "dynamic-programming", "ordered-set", "monotonic-stack"],
     },
     "976": { topicTags: ["greedy", "array", "math", "sorting"] },
     "977": { topicTags: ["array", "two-pointers", "sorting"] },
@@ -2634,13 +1630,7 @@ class TagsDao {
     "985": { topicTags: ["array", "simulation"] },
     "986": { topicTags: ["array", "two-pointers"] },
     "987": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "hash-table",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "hash-table", "binary-tree"],
     },
     "988": {
       topicTags: ["tree", "depth-first-search", "string", "binary-tree"],
@@ -2650,32 +1640,14 @@ class TagsDao {
     "991": { topicTags: ["greedy", "math"] },
     "992": { topicTags: ["array", "hash-table", "counting", "sliding-window"] },
     "993": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "994": { topicTags: ["breadth-first-search", "array", "matrix"] },
     "995": {
-      topicTags: [
-        "bit-manipulation",
-        "queue",
-        "array",
-        "prefix-sum",
-        "sliding-window",
-      ],
+      topicTags: ["bit-manipulation", "queue", "array", "prefix-sum", "sliding-window"],
     },
     "996": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "math",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "math", "dynamic-programming", "backtracking", "bitmask"],
     },
     "997": { topicTags: ["graph", "array", "hash-table"] },
     "998": { topicTags: ["tree", "binary-tree"] },
@@ -2691,14 +1663,7 @@ class TagsDao {
     "1006": { topicTags: ["stack", "math", "simulation"] },
     "1007": { topicTags: ["greedy", "array"] },
     "1008": {
-      topicTags: [
-        "stack",
-        "tree",
-        "binary-search-tree",
-        "array",
-        "binary-tree",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "tree", "binary-search-tree", "array", "binary-tree", "monotonic-stack"],
     },
     "1009": { topicTags: ["bit-manipulation"] },
     "1010": { topicTags: ["array", "hash-table", "counting"] },
@@ -2712,13 +1677,7 @@ class TagsDao {
     "1018": { topicTags: ["array"] },
     "1019": { topicTags: ["stack", "array", "linked-list", "monotonic-stack"] },
     "1020": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "1021": { topicTags: ["stack", "string"] },
     "1022": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
@@ -2731,12 +1690,7 @@ class TagsDao {
     },
     "1026": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "1027": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "binary-search",
-        "dynamic-programming",
-      ],
+      topicTags: ["array", "hash-table", "binary-search", "dynamic-programming"],
     },
     "1028": {
       topicTags: ["tree", "depth-first-search", "string", "binary-tree"],
@@ -2747,30 +1701,15 @@ class TagsDao {
     "1032": { topicTags: ["design", "trie", "array", "string", "data-stream"] },
     "1033": { topicTags: ["brainteaser", "math"] },
     "1034": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "matrix"],
     },
     "1035": { topicTags: ["array", "dynamic-programming"] },
     "1036": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "hash-table",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "hash-table"],
     },
     "1037": { topicTags: ["geometry", "array", "math"] },
     "1038": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "1039": { topicTags: ["array", "dynamic-programming"] },
     "1040": { topicTags: ["array", "math", "two-pointers", "sorting"] },
@@ -2780,26 +1719,13 @@ class TagsDao {
     },
     "1043": { topicTags: ["array", "dynamic-programming"] },
     "1044": {
-      topicTags: [
-        "string",
-        "binary-search",
-        "suffix-array",
-        "sliding-window",
-        "hash-function",
-        "rolling-hash",
-      ],
+      topicTags: ["string", "binary-search", "suffix-array", "sliding-window", "hash-function", "rolling-hash"],
     },
     "1045": { topicTags: ["database"] },
     "1046": { topicTags: ["array", "heap-priority-queue"] },
     "1047": { topicTags: ["stack", "string"] },
     "1048": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "two-pointers",
-        "string",
-        "dynamic-programming",
-      ],
+      topicTags: ["array", "hash-table", "two-pointers", "string", "dynamic-programming"],
     },
     "1049": { topicTags: ["array", "dynamic-programming"] },
     "1050": { topicTags: ["database"] },
@@ -2807,14 +1733,7 @@ class TagsDao {
     "1052": { topicTags: ["array", "sliding-window"] },
     "1053": { topicTags: ["greedy", "array"] },
     "1054": {
-      topicTags: [
-        "greedy",
-        "array",
-        "hash-table",
-        "counting",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "array", "hash-table", "counting", "sorting", "heap-priority-queue"],
     },
     "1055": { topicTags: ["greedy", "string", "dynamic-programming"] },
     "1056": { topicTags: ["math"] },
@@ -2824,26 +1743,13 @@ class TagsDao {
     "1060": { topicTags: ["array", "binary-search"] },
     "1061": { topicTags: ["union-find", "string"] },
     "1062": {
-      topicTags: [
-        "string",
-        "binary-search",
-        "dynamic-programming",
-        "suffix-array",
-        "hash-function",
-        "rolling-hash",
-      ],
+      topicTags: ["string", "binary-search", "dynamic-programming", "suffix-array", "hash-function", "rolling-hash"],
     },
     "1063": { topicTags: ["stack", "array", "monotonic-stack"] },
     "1064": { topicTags: ["array", "binary-search"] },
     "1065": { topicTags: ["trie", "array", "string", "sorting"] },
     "1066": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "backtracking", "bitmask"],
     },
     "1067": { topicTags: ["math", "dynamic-programming"] },
     "1068": { topicTags: ["database"] },
@@ -2877,13 +1783,7 @@ class TagsDao {
       topicTags: ["math", "two-pointers", "probability-and-statistics"],
     },
     "1094": {
-      topicTags: [
-        "array",
-        "prefix-sum",
-        "sorting",
-        "simulation",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "prefix-sum", "sorting", "simulation", "heap-priority-queue"],
     },
     "1095": { topicTags: ["array", "binary-search", "interactive"] },
     "1096": {
@@ -2897,14 +1797,7 @@ class TagsDao {
     "1100": { topicTags: ["hash-table", "string", "sliding-window"] },
     "1101": { topicTags: ["union-find", "array"] },
     "1102": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-        "heap-priority-queue",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix", "heap-priority-queue"],
     },
     "1103": { topicTags: ["math", "simulation"] },
     "1104": { topicTags: ["tree", "math", "binary-tree"] },
@@ -2927,30 +1820,13 @@ class TagsDao {
     "1121": { topicTags: ["greedy", "array"] },
     "1122": { topicTags: ["array", "hash-table", "counting-sort", "sorting"] },
     "1123": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "hash-table",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "hash-table", "binary-tree"],
     },
     "1124": {
-      topicTags: [
-        "stack",
-        "array",
-        "hash-table",
-        "prefix-sum",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "array", "hash-table", "prefix-sum", "monotonic-stack"],
     },
     "1125": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "bitmask"],
     },
     "1126": { topicTags: ["database"] },
     "1127": { topicTags: ["database"] },
@@ -2964,12 +1840,7 @@ class TagsDao {
     "1133": { topicTags: ["array", "hash-table", "sorting"] },
     "1134": { topicTags: ["math"] },
     "1135": {
-      topicTags: [
-        "union-find",
-        "graph",
-        "minimum-spanning-tree",
-        "heap-priority-queue",
-      ],
+      topicTags: ["union-find", "graph", "minimum-spanning-tree", "heap-priority-queue"],
     },
     "1136": { topicTags: ["graph", "topological-sort"] },
     "1137": { topicTags: ["memoization", "math", "dynamic-programming"] },
@@ -2985,14 +1856,7 @@ class TagsDao {
     "1145": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "1146": { topicTags: ["design", "array", "hash-table", "binary-search"] },
     "1147": {
-      topicTags: [
-        "greedy",
-        "two-pointers",
-        "string",
-        "dynamic-programming",
-        "hash-function",
-        "rolling-hash",
-      ],
+      topicTags: ["greedy", "two-pointers", "string", "dynamic-programming", "hash-function", "rolling-hash"],
     },
     "1148": { topicTags: ["database"] },
     "1149": { topicTags: ["database"] },
@@ -3004,32 +1868,16 @@ class TagsDao {
     "1155": { topicTags: ["dynamic-programming"] },
     "1156": { topicTags: ["string", "sliding-window"] },
     "1157": {
-      topicTags: [
-        "design",
-        "binary-indexed-tree",
-        "segment-tree",
-        "array",
-        "binary-search",
-      ],
+      topicTags: ["design", "binary-indexed-tree", "segment-tree", "array", "binary-search"],
     },
     "1158": { topicTags: ["database"] },
     "1159": { topicTags: ["database"] },
     "1160": { topicTags: ["array", "hash-table", "string"] },
     "1161": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "1162": {
-      topicTags: [
-        "breadth-first-search",
-        "array",
-        "dynamic-programming",
-        "matrix",
-      ],
+      topicTags: ["breadth-first-search", "array", "dynamic-programming", "matrix"],
     },
     "1163": { topicTags: ["two-pointers", "string"] },
     "1164": { topicTags: ["database"] },
@@ -3083,21 +1931,10 @@ class TagsDao {
     "1200": { topicTags: ["array", "sorting"] },
     "1201": { topicTags: ["math", "binary-search", "number-theory"] },
     "1202": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "hash-table",
-        "string",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "hash-table", "string"],
     },
     "1203": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "topological-sort",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "topological-sort"],
     },
     "1204": { topicTags: ["database"] },
     "1205": { topicTags: ["database"] },
@@ -3135,12 +1972,7 @@ class TagsDao {
     "1225": { topicTags: ["database"] },
     "1226": { topicTags: ["concurrency"] },
     "1227": {
-      topicTags: [
-        "brainteaser",
-        "math",
-        "dynamic-programming",
-        "probability-and-statistics",
-      ],
+      topicTags: ["brainteaser", "math", "dynamic-programming", "probability-and-statistics"],
     },
     "1228": { topicTags: ["array", "math"] },
     "1229": { topicTags: ["array", "two-pointers", "sorting"] },
@@ -3155,12 +1987,7 @@ class TagsDao {
       topicTags: ["array", "binary-search", "dynamic-programming", "sorting"],
     },
     "1236": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "string",
-        "interactive",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "string", "interactive"],
     },
     "1237": {
       topicTags: ["math", "two-pointers", "binary-search", "interactive"],
@@ -3177,13 +2004,7 @@ class TagsDao {
     "1243": { topicTags: ["array", "simulation"] },
     "1244": { topicTags: ["design", "hash-table", "sorting"] },
     "1245": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "topological-sort",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "graph", "topological-sort"],
     },
     "1246": { topicTags: ["array", "dynamic-programming"] },
     "1247": { topicTags: ["greedy", "math", "string"] },
@@ -3194,64 +2015,26 @@ class TagsDao {
     "1252": { topicTags: ["array", "math", "simulation"] },
     "1253": { topicTags: ["greedy", "array", "matrix"] },
     "1254": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "1255": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "string",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "string", "dynamic-programming", "backtracking", "bitmask"],
     },
     "1256": { topicTags: ["bit-manipulation", "math", "string"] },
     "1257": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "hash-table",
-        "string",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "array", "hash-table", "string"],
     },
     "1258": {
-      topicTags: [
-        "union-find",
-        "array",
-        "hash-table",
-        "string",
-        "backtracking",
-      ],
+      topicTags: ["union-find", "array", "hash-table", "string", "backtracking"],
     },
     "1259": { topicTags: ["math", "dynamic-programming"] },
     "1260": { topicTags: ["array", "matrix", "simulation"] },
     "1261": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "design",
-        "hash-table",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "design", "hash-table", "binary-tree"],
     },
     "1262": { topicTags: ["greedy", "array", "dynamic-programming"] },
     "1263": {
-      topicTags: [
-        "breadth-first-search",
-        "array",
-        "matrix",
-        "heap-priority-queue",
-      ],
+      topicTags: ["breadth-first-search", "array", "matrix", "heap-priority-queue"],
     },
     "1264": { topicTags: ["database"] },
     "1265": {
@@ -3259,14 +2042,7 @@ class TagsDao {
     },
     "1266": { topicTags: ["geometry", "array", "math"] },
     "1267": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "counting",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "counting", "matrix"],
     },
     "1268": { topicTags: ["trie", "array", "string"] },
     "1269": { topicTags: ["dynamic-programming"] },
@@ -3287,12 +2063,7 @@ class TagsDao {
     "1282": { topicTags: ["array", "hash-table"] },
     "1283": { topicTags: ["array", "binary-search"] },
     "1284": {
-      topicTags: [
-        "bit-manipulation",
-        "breadth-first-search",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["bit-manipulation", "breadth-first-search", "array", "matrix"],
     },
     "1285": { topicTags: ["database"] },
     "1286": { topicTags: ["design", "string", "backtracking", "iterator"] },
@@ -3312,23 +2083,12 @@ class TagsDao {
     "1300": { topicTags: ["array", "binary-search", "sorting"] },
     "1301": { topicTags: ["array", "dynamic-programming", "matrix"] },
     "1302": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "1303": { topicTags: ["database"] },
     "1304": { topicTags: ["array", "math"] },
     "1305": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-        "sorting",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree", "sorting"],
     },
     "1306": {
       topicTags: ["depth-first-search", "breadth-first-search", "array"],
@@ -3344,23 +2104,13 @@ class TagsDao {
     "1313": { topicTags: ["array"] },
     "1314": { topicTags: ["array", "matrix", "prefix-sum"] },
     "1315": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "1316": { topicTags: ["trie", "string", "hash-function", "rolling-hash"] },
     "1317": { topicTags: ["math"] },
     "1318": { topicTags: ["bit-manipulation"] },
     "1319": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "1320": { topicTags: ["string", "dynamic-programming"] },
     "1321": { topicTags: ["database"] },
@@ -3380,22 +2130,10 @@ class TagsDao {
     "1335": { topicTags: ["array", "dynamic-programming"] },
     "1336": { topicTags: ["database"] },
     "1337": {
-      topicTags: [
-        "array",
-        "binary-search",
-        "matrix",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "binary-search", "matrix", "sorting", "heap-priority-queue"],
     },
     "1338": {
-      topicTags: [
-        "greedy",
-        "array",
-        "hash-table",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "array", "hash-table", "sorting", "heap-priority-queue"],
     },
     "1339": { topicTags: ["tree", "depth-first-search", "binary-tree"] },
     "1340": { topicTags: ["array", "dynamic-programming", "sorting"] },
@@ -3405,32 +2143,14 @@ class TagsDao {
     "1344": { topicTags: ["math"] },
     "1345": { topicTags: ["breadth-first-search", "array", "hash-table"] },
     "1346": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "two-pointers",
-        "binary-search",
-        "sorting",
-      ],
+      topicTags: ["array", "hash-table", "two-pointers", "binary-search", "sorting"],
     },
     "1347": { topicTags: ["hash-table", "string", "counting"] },
     "1348": {
-      topicTags: [
-        "design",
-        "hash-table",
-        "binary-search",
-        "ordered-set",
-        "sorting",
-      ],
+      topicTags: ["design", "hash-table", "binary-search", "ordered-set", "sorting"],
     },
     "1349": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-        "matrix",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "bitmask", "matrix"],
     },
     "1350": { topicTags: ["database"] },
     "1351": { topicTags: ["array", "binary-search", "matrix"] },
@@ -3444,14 +2164,7 @@ class TagsDao {
     "1359": { topicTags: ["math", "dynamic-programming", "combinatorics"] },
     "1360": { topicTags: ["math", "string"] },
     "1361": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "union-find", "graph", "binary-tree"],
     },
     "1362": { topicTags: ["math"] },
     "1363": { topicTags: ["greedy", "array", "dynamic-programming"] },
@@ -3461,23 +2174,10 @@ class TagsDao {
       topicTags: ["array", "hash-table", "string", "counting", "sorting"],
     },
     "1367": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "linked-list",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "linked-list", "binary-tree"],
     },
     "1368": {
-      topicTags: [
-        "breadth-first-search",
-        "graph",
-        "array",
-        "matrix",
-        "shortest-path",
-        "heap-priority-queue",
-      ],
+      topicTags: ["breadth-first-search", "graph", "array", "matrix", "shortest-path", "heap-priority-queue"],
     },
     "1369": { topicTags: ["database"] },
     "1370": { topicTags: ["hash-table", "string", "counting"] },
@@ -3485,21 +2185,10 @@ class TagsDao {
       topicTags: ["bit-manipulation", "hash-table", "string", "prefix-sum"],
     },
     "1372": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "dynamic-programming",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "dynamic-programming", "binary-tree"],
     },
     "1373": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "dynamic-programming",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "dynamic-programming", "binary-tree"],
     },
     "1374": { topicTags: ["string"] },
     "1375": { topicTags: ["array"] },
@@ -3507,33 +2196,16 @@ class TagsDao {
       topicTags: ["tree", "depth-first-search", "breadth-first-search"],
     },
     "1377": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "graph"],
     },
     "1378": { topicTags: ["database"] },
     "1379": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "1380": { topicTags: ["array", "matrix"] },
     "1381": { topicTags: ["stack", "design", "array"] },
     "1382": {
-      topicTags: [
-        "greedy",
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "divide-and-conquer",
-        "binary-tree",
-      ],
+      topicTags: ["greedy", "tree", "depth-first-search", "binary-search-tree", "divide-and-conquer", "binary-tree"],
     },
     "1383": {
       topicTags: ["greedy", "array", "sorting", "heap-priority-queue"],
@@ -3547,23 +2219,12 @@ class TagsDao {
     },
     "1387": { topicTags: ["memoization", "dynamic-programming", "sorting"] },
     "1388": {
-      topicTags: [
-        "greedy",
-        "array",
-        "dynamic-programming",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "array", "dynamic-programming", "heap-priority-queue"],
     },
     "1389": { topicTags: ["array", "simulation"] },
     "1390": { topicTags: ["array", "math"] },
     "1391": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "1392": {
       topicTags: ["string", "string-matching", "hash-function", "rolling-hash"],
@@ -3609,14 +2270,7 @@ class TagsDao {
     "1423": { topicTags: ["array", "prefix-sum", "sliding-window"] },
     "1424": { topicTags: ["array", "sorting", "heap-priority-queue"] },
     "1425": {
-      topicTags: [
-        "queue",
-        "array",
-        "dynamic-programming",
-        "sliding-window",
-        "monotonic-queue",
-        "heap-priority-queue",
-      ],
+      topicTags: ["queue", "array", "dynamic-programming", "sliding-window", "monotonic-queue", "heap-priority-queue"],
     },
     "1426": { topicTags: ["array", "hash-table"] },
     "1427": { topicTags: ["array", "math", "string"] },
@@ -3625,36 +2279,19 @@ class TagsDao {
       topicTags: ["design", "queue", "array", "hash-table", "data-stream"],
     },
     "1430": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "1431": { topicTags: ["array"] },
     "1432": { topicTags: ["greedy", "math"] },
     "1433": { topicTags: ["greedy", "string", "sorting"] },
     "1434": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "bitmask"],
     },
     "1435": { topicTags: ["database"] },
     "1436": { topicTags: ["hash-table", "string"] },
     "1437": { topicTags: ["array"] },
     "1438": {
-      topicTags: [
-        "queue",
-        "array",
-        "ordered-set",
-        "sliding-window",
-        "monotonic-queue",
-        "heap-priority-queue",
-      ],
+      topicTags: ["queue", "array", "ordered-set", "sliding-window", "monotonic-queue", "heap-priority-queue"],
     },
     "1439": {
       topicTags: ["array", "binary-search", "matrix", "heap-priority-queue"],
@@ -3662,21 +2299,10 @@ class TagsDao {
     "1440": { topicTags: ["database"] },
     "1441": { topicTags: ["stack", "array", "simulation"] },
     "1442": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "hash-table",
-        "math",
-        "prefix-sum",
-      ],
+      topicTags: ["bit-manipulation", "array", "hash-table", "math", "prefix-sum"],
     },
     "1443": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "hash-table",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "hash-table"],
     },
     "1444": {
       topicTags: ["memoization", "array", "dynamic-programming", "matrix"],
@@ -3685,12 +2311,7 @@ class TagsDao {
     "1446": { topicTags: ["string"] },
     "1447": { topicTags: ["math", "string", "number-theory"] },
     "1448": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "1449": { topicTags: ["array", "dynamic-programming"] },
     "1450": { topicTags: ["array"] },
@@ -3701,33 +2322,16 @@ class TagsDao {
     "1455": { topicTags: ["string", "string-matching"] },
     "1456": { topicTags: ["string", "sliding-window"] },
     "1457": {
-      topicTags: [
-        "bit-manipulation",
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["bit-manipulation", "tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "1458": { topicTags: ["array", "dynamic-programming"] },
     "1459": { topicTags: ["database"] },
     "1460": { topicTags: ["array", "hash-table", "sorting"] },
     "1461": {
-      topicTags: [
-        "bit-manipulation",
-        "hash-table",
-        "string",
-        "hash-function",
-        "rolling-hash",
-      ],
+      topicTags: ["bit-manipulation", "hash-table", "string", "hash-function", "rolling-hash"],
     },
     "1462": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "topological-sort",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "topological-sort"],
     },
     "1463": { topicTags: ["array", "dynamic-programming", "matrix"] },
     "1464": { topicTags: ["array", "sorting", "heap-priority-queue"] },
@@ -3736,47 +2340,23 @@ class TagsDao {
       topicTags: ["depth-first-search", "breadth-first-search", "graph"],
     },
     "1467": {
-      topicTags: [
-        "math",
-        "dynamic-programming",
-        "backtracking",
-        "combinatorics",
-        "probability-and-statistics",
-      ],
+      topicTags: ["math", "dynamic-programming", "backtracking", "combinatorics", "probability-and-statistics"],
     },
     "1468": { topicTags: ["database"] },
     "1469": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "1470": { topicTags: ["array"] },
     "1471": { topicTags: ["array", "two-pointers", "sorting"] },
     "1472": {
-      topicTags: [
-        "stack",
-        "design",
-        "array",
-        "linked-list",
-        "data-stream",
-        "doubly-linked-list",
-      ],
+      topicTags: ["stack", "design", "array", "linked-list", "data-stream", "doubly-linked-list"],
     },
     "1473": { topicTags: ["array", "dynamic-programming"] },
     "1474": { topicTags: ["linked-list"] },
     "1475": { topicTags: ["stack", "array", "monotonic-stack"] },
     "1476": { topicTags: ["design", "array", "matrix"] },
     "1477": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "binary-search",
-        "dynamic-programming",
-        "sliding-window",
-      ],
+      topicTags: ["array", "hash-table", "binary-search", "dynamic-programming", "sliding-window"],
     },
     "1478": { topicTags: ["array", "math", "dynamic-programming", "sorting"] },
     "1479": { topicTags: ["database"] },
@@ -3797,52 +2377,24 @@ class TagsDao {
     },
     "1484": { topicTags: ["database"] },
     "1485": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "hash-table",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "hash-table", "binary-tree"],
     },
     "1486": { topicTags: ["bit-manipulation", "math"] },
     "1487": { topicTags: ["array", "hash-table", "string"] },
     "1488": {
-      topicTags: [
-        "greedy",
-        "array",
-        "hash-table",
-        "binary-search",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "array", "hash-table", "binary-search", "heap-priority-queue"],
     },
     "1489": {
-      topicTags: [
-        "union-find",
-        "graph",
-        "minimum-spanning-tree",
-        "sorting",
-        "strongly-connected-component",
-      ],
+      topicTags: ["union-find", "graph", "minimum-spanning-tree", "sorting", "strongly-connected-component"],
     },
     "1490": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "hash-table",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "hash-table"],
     },
     "1491": { topicTags: ["array", "sorting"] },
     "1492": { topicTags: ["math"] },
     "1493": { topicTags: ["array", "dynamic-programming", "sliding-window"] },
     "1494": {
-      topicTags: [
-        "bit-manipulation",
-        "graph",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "graph", "dynamic-programming", "bitmask"],
     },
     "1495": { topicTags: ["database"] },
     "1496": { topicTags: ["hash-table", "string"] },
@@ -3851,13 +2403,7 @@ class TagsDao {
       topicTags: ["array", "two-pointers", "binary-search", "sorting"],
     },
     "1499": {
-      topicTags: [
-        "queue",
-        "array",
-        "sliding-window",
-        "monotonic-queue",
-        "heap-priority-queue",
-      ],
+      topicTags: ["queue", "array", "sliding-window", "monotonic-queue", "heap-priority-queue"],
     },
     "1500": {
       topicTags: ["design", "hash-table", "data-stream", "heap-priority-queue"],
@@ -3866,24 +2412,13 @@ class TagsDao {
     "1502": { topicTags: ["array", "sorting"] },
     "1503": { topicTags: ["brainteaser", "array", "simulation"] },
     "1504": {
-      topicTags: [
-        "stack",
-        "array",
-        "dynamic-programming",
-        "matrix",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "array", "dynamic-programming", "matrix", "monotonic-stack"],
     },
     "1505": {
       topicTags: ["greedy", "binary-indexed-tree", "segment-tree", "string"],
     },
     "1506": {
-      topicTags: [
-        "bit-manipulation",
-        "tree",
-        "depth-first-search",
-        "hash-table",
-      ],
+      topicTags: ["bit-manipulation", "tree", "depth-first-search", "hash-table"],
     },
     "1507": { topicTags: ["string"] },
     "1508": {
@@ -3900,13 +2435,7 @@ class TagsDao {
     "1517": { topicTags: ["database"] },
     "1518": { topicTags: ["math", "simulation"] },
     "1519": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "hash-table",
-        "counting",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "hash-table", "counting"],
     },
     "1520": { topicTags: ["greedy", "string"] },
     "1521": {
@@ -3921,13 +2450,7 @@ class TagsDao {
       topicTags: ["bit-manipulation", "string", "dynamic-programming"],
     },
     "1526": {
-      topicTags: [
-        "stack",
-        "greedy",
-        "array",
-        "dynamic-programming",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "greedy", "array", "dynamic-programming", "monotonic-stack"],
     },
     "1527": { topicTags: ["database"] },
     "1528": { topicTags: ["array", "string"] },
@@ -3966,13 +2489,7 @@ class TagsDao {
     "1557": { topicTags: ["graph"] },
     "1558": { topicTags: ["greedy", "array"] },
     "1559": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "1560": { topicTags: ["array", "simulation"] },
     "1561": {
@@ -3987,13 +2504,7 @@ class TagsDao {
     "1566": { topicTags: ["array", "enumeration"] },
     "1567": { topicTags: ["greedy", "array", "dynamic-programming"] },
     "1568": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "matrix",
-        "strongly-connected-component",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "matrix", "strongly-connected-component"],
     },
     "1569": {
       topicTags: [
@@ -4014,13 +2525,7 @@ class TagsDao {
     "1572": { topicTags: ["array", "matrix"] },
     "1573": { topicTags: ["math", "string"] },
     "1574": {
-      topicTags: [
-        "stack",
-        "array",
-        "two-pointers",
-        "binary-search",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "array", "two-pointers", "binary-search", "monotonic-stack"],
     },
     "1575": { topicTags: ["memoization", "array", "dynamic-programming"] },
     "1576": { topicTags: ["string"] },
@@ -4034,14 +2539,7 @@ class TagsDao {
     "1584": { topicTags: ["union-find", "array", "minimum-spanning-tree"] },
     "1585": { topicTags: ["greedy", "string", "sorting"] },
     "1586": {
-      topicTags: [
-        "stack",
-        "tree",
-        "design",
-        "binary-search-tree",
-        "binary-tree",
-        "iterator",
-      ],
+      topicTags: ["stack", "tree", "design", "binary-search-tree", "binary-tree", "iterator"],
     },
     "1587": { topicTags: ["database"] },
     "1588": { topicTags: ["array", "math", "prefix-sum"] },
@@ -4052,13 +2550,7 @@ class TagsDao {
     "1593": { topicTags: ["hash-table", "string", "backtracking"] },
     "1594": { topicTags: ["array", "dynamic-programming", "matrix"] },
     "1595": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-        "matrix",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "bitmask", "matrix"],
     },
     "1596": { topicTags: ["database"] },
     "1597": { topicTags: ["stack", "tree", "string", "binary-tree"] },
@@ -4092,13 +2584,7 @@ class TagsDao {
     "1615": { topicTags: ["graph"] },
     "1616": { topicTags: ["two-pointers", "string"] },
     "1617": {
-      topicTags: [
-        "bit-manipulation",
-        "tree",
-        "dynamic-programming",
-        "bitmask",
-        "enumeration",
-      ],
+      topicTags: ["bit-manipulation", "tree", "dynamic-programming", "bitmask", "enumeration"],
     },
     "1618": { topicTags: ["array", "string", "binary-search", "interactive"] },
     "1619": { topicTags: ["array", "sorting"] },
@@ -4125,14 +2611,7 @@ class TagsDao {
       ],
     },
     "1632": {
-      topicTags: [
-        "greedy",
-        "union-find",
-        "graph",
-        "topological-sort",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["greedy", "union-find", "graph", "topological-sort", "array", "matrix"],
     },
     "1633": { topicTags: ["database"] },
     "1634": { topicTags: ["linked-list", "math", "two-pointers"] },
@@ -4152,14 +2631,7 @@ class TagsDao {
     "1646": { topicTags: ["array", "dynamic-programming", "simulation"] },
     "1647": { topicTags: ["greedy", "string", "sorting"] },
     "1648": {
-      topicTags: [
-        "greedy",
-        "array",
-        "math",
-        "binary-search",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "array", "math", "binary-search", "sorting", "heap-priority-queue"],
     },
     "1649": {
       topicTags: [
@@ -4180,41 +2652,18 @@ class TagsDao {
       topicTags: ["breadth-first-search", "array", "dynamic-programming"],
     },
     "1655": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "backtracking", "bitmask"],
     },
     "1656": { topicTags: ["design", "array", "hash-table", "data-stream"] },
     "1657": { topicTags: ["hash-table", "string", "sorting"] },
     "1658": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "binary-search",
-        "prefix-sum",
-        "sliding-window",
-      ],
+      topicTags: ["array", "hash-table", "binary-search", "prefix-sum", "sliding-window"],
     },
     "1659": {
-      topicTags: [
-        "bit-manipulation",
-        "memoization",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "memoization", "dynamic-programming", "bitmask"],
     },
     "1660": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "hash-table",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "hash-table", "binary-tree"],
     },
     "1661": { topicTags: ["database"] },
     "1662": { topicTags: ["array", "string"] },
@@ -4243,12 +2692,7 @@ class TagsDao {
     "1679": { topicTags: ["array", "hash-table", "two-pointers", "sorting"] },
     "1680": { topicTags: ["bit-manipulation", "math", "simulation"] },
     "1681": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "bitmask"],
     },
     "1682": { topicTags: ["string", "dynamic-programming"] },
     "1683": { topicTags: ["database"] },
@@ -4257,24 +2701,10 @@ class TagsDao {
     },
     "1685": { topicTags: ["array", "math", "prefix-sum"] },
     "1686": {
-      topicTags: [
-        "greedy",
-        "array",
-        "math",
-        "game-theory",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "array", "math", "game-theory", "sorting", "heap-priority-queue"],
     },
     "1687": {
-      topicTags: [
-        "segment-tree",
-        "queue",
-        "array",
-        "dynamic-programming",
-        "monotonic-queue",
-        "heap-priority-queue",
-      ],
+      topicTags: ["segment-tree", "queue", "array", "dynamic-programming", "monotonic-queue", "heap-priority-queue"],
     },
     "1688": { topicTags: ["math", "simulation"] },
     "1689": { topicTags: ["greedy", "string"] },
@@ -4287,24 +2717,11 @@ class TagsDao {
     "1694": { topicTags: ["string"] },
     "1695": { topicTags: ["array", "hash-table", "sliding-window"] },
     "1696": {
-      topicTags: [
-        "queue",
-        "array",
-        "dynamic-programming",
-        "sliding-window",
-        "monotonic-queue",
-        "heap-priority-queue",
-      ],
+      topicTags: ["queue", "array", "dynamic-programming", "sliding-window", "monotonic-queue", "heap-priority-queue"],
     },
     "1697": { topicTags: ["union-find", "graph", "array", "sorting"] },
     "1698": {
-      topicTags: [
-        "trie",
-        "string",
-        "suffix-array",
-        "hash-function",
-        "rolling-hash",
-      ],
+      topicTags: ["trie", "string", "suffix-array", "hash-function", "rolling-hash"],
     },
     "1699": { topicTags: ["database"] },
     "1700": { topicTags: ["stack", "queue", "array", "simulation"] },
@@ -4314,13 +2731,7 @@ class TagsDao {
     "1704": { topicTags: ["string", "counting"] },
     "1705": { topicTags: ["greedy", "array", "heap-priority-queue"] },
     "1706": {
-      topicTags: [
-        "depth-first-search",
-        "array",
-        "dynamic-programming",
-        "matrix",
-        "simulation",
-      ],
+      topicTags: ["depth-first-search", "array", "dynamic-programming", "matrix", "simulation"],
     },
     "1707": { topicTags: ["bit-manipulation", "trie", "array"] },
     "1708": { topicTags: ["greedy", "array"] },
@@ -4341,13 +2752,7 @@ class TagsDao {
     "1721": { topicTags: ["linked-list", "two-pointers"] },
     "1722": { topicTags: ["depth-first-search", "union-find", "array"] },
     "1723": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "backtracking", "bitmask"],
     },
     "1724": { topicTags: ["union-find", "graph", "minimum-spanning-tree"] },
     "1725": { topicTags: ["array"] },
@@ -4372,13 +2777,7 @@ class TagsDao {
     "1733": { topicTags: ["greedy", "array"] },
     "1734": { topicTags: ["bit-manipulation", "array"] },
     "1735": {
-      topicTags: [
-        "array",
-        "math",
-        "dynamic-programming",
-        "combinatorics",
-        "number-theory",
-      ],
+      topicTags: ["array", "math", "dynamic-programming", "combinatorics", "number-theory"],
     },
     "1736": { topicTags: ["string"] },
     "1737": { topicTags: ["hash-table", "string", "counting", "prefix-sum"] },
@@ -4395,13 +2794,7 @@ class TagsDao {
     },
     "1739": { topicTags: ["greedy", "math", "binary-search"] },
     "1740": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "hash-table",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "hash-table", "binary-tree"],
     },
     "1741": { topicTags: ["database"] },
     "1742": { topicTags: ["hash-table", "math", "counting"] },
@@ -4418,23 +2811,10 @@ class TagsDao {
     "1753": { topicTags: ["greedy", "math", "heap-priority-queue"] },
     "1754": { topicTags: ["greedy", "two-pointers", "string"] },
     "1755": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "two-pointers",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "two-pointers", "dynamic-programming", "bitmask"],
     },
     "1756": {
-      topicTags: [
-        "stack",
-        "design",
-        "binary-indexed-tree",
-        "array",
-        "hash-table",
-        "ordered-set",
-      ],
+      topicTags: ["stack", "design", "binary-indexed-tree", "array", "hash-table", "ordered-set"],
     },
     "1757": { topicTags: ["database"] },
     "1758": { topicTags: ["string"] },
@@ -4443,13 +2823,7 @@ class TagsDao {
     "1761": { topicTags: ["graph"] },
     "1762": { topicTags: ["stack", "array", "monotonic-stack"] },
     "1763": {
-      topicTags: [
-        "bit-manipulation",
-        "hash-table",
-        "string",
-        "divide-and-conquer",
-        "sliding-window",
-      ],
+      topicTags: ["bit-manipulation", "hash-table", "string", "divide-and-conquer", "sliding-window"],
     },
     "1764": { topicTags: ["greedy", "array", "string-matching"] },
     "1765": { topicTags: ["breadth-first-search", "array", "matrix"] },
@@ -4466,22 +2840,11 @@ class TagsDao {
     "1774": { topicTags: ["array", "dynamic-programming", "backtracking"] },
     "1775": { topicTags: ["greedy", "array", "hash-table", "counting"] },
     "1776": {
-      topicTags: [
-        "stack",
-        "array",
-        "math",
-        "monotonic-stack",
-        "heap-priority-queue",
-      ],
+      topicTags: ["stack", "array", "math", "monotonic-stack", "heap-priority-queue"],
     },
     "1777": { topicTags: ["database"] },
     "1778": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "interactive",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "interactive"],
     },
     "1779": { topicTags: ["array"] },
     "1780": { topicTags: ["math"] },
@@ -4491,13 +2854,7 @@ class TagsDao {
     "1784": { topicTags: ["string"] },
     "1785": { topicTags: ["greedy", "array"] },
     "1786": {
-      topicTags: [
-        "graph",
-        "topological-sort",
-        "dynamic-programming",
-        "shortest-path",
-        "heap-priority-queue",
-      ],
+      topicTags: ["graph", "topological-sort", "dynamic-programming", "shortest-path", "heap-priority-queue"],
     },
     "1787": { topicTags: ["bit-manipulation", "array", "dynamic-programming"] },
     "1788": { topicTags: ["greedy", "array", "prefix-sum"] },
@@ -4506,13 +2863,7 @@ class TagsDao {
     "1791": { topicTags: ["graph"] },
     "1792": { topicTags: ["greedy", "array", "heap-priority-queue"] },
     "1793": {
-      topicTags: [
-        "stack",
-        "array",
-        "two-pointers",
-        "binary-search",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "array", "two-pointers", "binary-search", "monotonic-stack"],
     },
     "1794": { topicTags: ["greedy", "hash-table", "string"] },
     "1795": { topicTags: ["database"] },
@@ -4541,26 +2892,14 @@ class TagsDao {
     "1808": { topicTags: ["recursion", "math"] },
     "1809": { topicTags: ["database"] },
     "1810": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "interactive",
-        "heap-priority-queue",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "interactive", "heap-priority-queue"],
     },
     "1811": { topicTags: ["database"] },
     "1812": { topicTags: ["math", "string"] },
     "1813": { topicTags: ["array", "two-pointers", "string"] },
     "1814": { topicTags: ["array", "hash-table", "math", "counting"] },
     "1815": {
-      topicTags: [
-        "bit-manipulation",
-        "memoization",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "memoization", "array", "dynamic-programming", "bitmask"],
     },
     "1816": { topicTags: ["array", "string"] },
     "1817": { topicTags: ["array", "hash-table"] },
@@ -4574,13 +2913,7 @@ class TagsDao {
     },
     "1824": { topicTags: ["greedy", "array", "dynamic-programming"] },
     "1825": {
-      topicTags: [
-        "design",
-        "queue",
-        "data-stream",
-        "ordered-set",
-        "heap-priority-queue",
-      ],
+      topicTags: ["design", "queue", "data-stream", "ordered-set", "heap-priority-queue"],
     },
     "1826": { topicTags: ["array", "two-pointers"] },
     "1827": { topicTags: ["greedy", "array"] },
@@ -4610,13 +2943,7 @@ class TagsDao {
     "1849": { topicTags: ["string", "backtracking"] },
     "1850": { topicTags: ["greedy", "two-pointers", "string"] },
     "1851": {
-      topicTags: [
-        "array",
-        "binary-search",
-        "sorting",
-        "line-sweep",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "binary-search", "sorting", "line-sweep", "heap-priority-queue"],
     },
     "1852": { topicTags: ["array", "hash-table", "sliding-window"] },
     "1853": { topicTags: ["database"] },
@@ -4624,14 +2951,7 @@ class TagsDao {
     "1855": { topicTags: ["greedy", "array", "two-pointers", "binary-search"] },
     "1856": { topicTags: ["stack", "array", "prefix-sum", "monotonic-stack"] },
     "1857": {
-      topicTags: [
-        "graph",
-        "topological-sort",
-        "memoization",
-        "hash-table",
-        "dynamic-programming",
-        "counting",
-      ],
+      topicTags: ["graph", "topological-sort", "memoization", "hash-table", "dynamic-programming", "counting"],
     },
     "1858": { topicTags: ["depth-first-search", "trie"] },
     "1859": { topicTags: ["string", "sorting"] },
@@ -4639,13 +2959,7 @@ class TagsDao {
     "1861": { topicTags: ["array", "two-pointers", "matrix"] },
     "1862": { topicTags: ["array", "math", "binary-search", "prefix-sum"] },
     "1863": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "math",
-        "backtracking",
-        "combinatorics",
-      ],
+      topicTags: ["bit-manipulation", "array", "math", "backtracking", "combinatorics"],
     },
     "1864": { topicTags: ["greedy", "string"] },
     "1865": { topicTags: ["design", "array", "hash-table"] },
@@ -4656,13 +2970,7 @@ class TagsDao {
     "1870": { topicTags: ["array", "binary-search"] },
     "1871": { topicTags: ["two-pointers", "string", "prefix-sum"] },
     "1872": {
-      topicTags: [
-        "array",
-        "math",
-        "dynamic-programming",
-        "game-theory",
-        "prefix-sum",
-      ],
+      topicTags: ["array", "math", "dynamic-programming", "game-theory", "prefix-sum"],
     },
     "1873": { topicTags: ["database"] },
     "1874": { topicTags: ["greedy", "array", "sorting"] },
@@ -4672,22 +2980,10 @@ class TagsDao {
     },
     "1877": { topicTags: ["greedy", "array", "two-pointers", "sorting"] },
     "1878": {
-      topicTags: [
-        "array",
-        "math",
-        "matrix",
-        "prefix-sum",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "math", "matrix", "prefix-sum", "sorting", "heap-priority-queue"],
     },
     "1879": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "bitmask"],
     },
     "1880": { topicTags: ["string"] },
     "1881": { topicTags: ["greedy", "string"] },
@@ -4721,37 +3017,18 @@ class TagsDao {
     "1903": { topicTags: ["greedy", "math", "string"] },
     "1904": { topicTags: ["math", "string"] },
     "1905": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "1906": { topicTags: ["array", "hash-table"] },
     "1907": { topicTags: ["database"] },
     "1908": {
-      topicTags: [
-        "bit-manipulation",
-        "brainteaser",
-        "array",
-        "math",
-        "dynamic-programming",
-        "game-theory",
-      ],
+      topicTags: ["bit-manipulation", "brainteaser", "array", "math", "dynamic-programming", "game-theory"],
     },
     "1909": { topicTags: ["array"] },
     "1910": { topicTags: ["string"] },
     "1911": { topicTags: ["array", "dynamic-programming"] },
     "1912": {
-      topicTags: [
-        "design",
-        "array",
-        "hash-table",
-        "ordered-set",
-        "heap-priority-queue",
-      ],
+      topicTags: ["design", "array", "hash-table", "ordered-set", "heap-priority-queue"],
     },
     "1913": { topicTags: ["array", "sorting"] },
     "1914": { topicTags: ["array", "matrix", "simulation"] },
@@ -4759,14 +3036,7 @@ class TagsDao {
       topicTags: ["bit-manipulation", "hash-table", "string", "prefix-sum"],
     },
     "1916": {
-      topicTags: [
-        "tree",
-        "graph",
-        "topological-sort",
-        "math",
-        "dynamic-programming",
-        "combinatorics",
-      ],
+      topicTags: ["tree", "graph", "topological-sort", "math", "dynamic-programming", "combinatorics"],
     },
     "1917": { topicTags: ["database"] },
     "1918": { topicTags: ["array", "binary-search", "sliding-window"] },
@@ -4775,13 +3045,7 @@ class TagsDao {
     "1921": { topicTags: ["greedy", "array", "sorting"] },
     "1922": { topicTags: ["recursion", "math"] },
     "1923": {
-      topicTags: [
-        "array",
-        "binary-search",
-        "suffix-array",
-        "hash-function",
-        "rolling-hash",
-      ],
+      topicTags: ["array", "binary-search", "suffix-array", "hash-function", "rolling-hash"],
     },
     "1924": { topicTags: ["geometry", "array", "math"] },
     "1925": { topicTags: ["math", "enumeration"] },
@@ -4792,13 +3056,7 @@ class TagsDao {
     "1930": { topicTags: ["hash-table", "string", "prefix-sum"] },
     "1931": { topicTags: ["dynamic-programming"] },
     "1932": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "hash-table",
-        "binary-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "hash-table", "binary-search", "binary-tree"],
     },
     "1933": { topicTags: ["string"] },
     "1934": { topicTags: ["database"] },
@@ -4815,13 +3073,7 @@ class TagsDao {
     "1945": { topicTags: ["string", "simulation"] },
     "1946": { topicTags: ["greedy", "array", "string"] },
     "1947": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "backtracking", "bitmask"],
     },
     "1948": {
       topicTags: ["trie", "array", "hash-table", "string", "hash-function"],
@@ -4850,34 +3102,17 @@ class TagsDao {
     "1968": { topicTags: ["greedy", "array", "sorting"] },
     "1969": { topicTags: ["greedy", "recursion", "math"] },
     "1970": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "binary-search",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "binary-search", "matrix"],
     },
     "1971": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "1972": { topicTags: ["database"] },
     "1973": { topicTags: [] },
     "1974": { topicTags: ["greedy", "string"] },
     "1975": { topicTags: ["greedy", "array", "matrix"] },
     "1976": {
-      topicTags: [
-        "graph",
-        "topological-sort",
-        "dynamic-programming",
-        "shortest-path",
-      ],
+      topicTags: ["graph", "topological-sort", "dynamic-programming", "shortest-path"],
     },
     "1977": { topicTags: ["string", "dynamic-programming", "suffix-array"] },
     "1978": { topicTags: [] },
@@ -4888,23 +3123,10 @@ class TagsDao {
     "1983": { topicTags: ["array", "hash-table", "prefix-sum"] },
     "1984": { topicTags: ["array", "sorting", "sliding-window"] },
     "1985": {
-      topicTags: [
-        "array",
-        "string",
-        "divide-and-conquer",
-        "quickselect",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "string", "divide-and-conquer", "quickselect", "sorting", "heap-priority-queue"],
     },
     "1986": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "backtracking", "bitmask"],
     },
     "1987": { topicTags: ["string", "dynamic-programming"] },
     "1988": { topicTags: [] },
@@ -4912,30 +3134,13 @@ class TagsDao {
     "1990": { topicTags: [] },
     "1991": { topicTags: ["array", "prefix-sum"] },
     "1992": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "matrix"],
     },
     "1993": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "design",
-        "hash-table",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "design", "hash-table"],
     },
     "1994": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "math",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "math", "dynamic-programming", "bitmask"],
     },
     "1995": { topicTags: ["array", "enumeration"] },
     "1996": {
@@ -4949,21 +3154,10 @@ class TagsDao {
       topicTags: ["array", "hash-table", "math", "counting", "number-theory"],
     },
     "2002": {
-      topicTags: [
-        "bit-manipulation",
-        "string",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "string", "dynamic-programming", "backtracking", "bitmask"],
     },
     "2003": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "union-find",
-        "dynamic-programming",
-      ],
+      topicTags: ["tree", "depth-first-search", "union-find", "dynamic-programming"],
     },
     "2004": { topicTags: [] },
     "2005": { topicTags: [] },
@@ -4978,13 +3172,7 @@ class TagsDao {
     "2012": { topicTags: ["array"] },
     "2013": { topicTags: ["design", "array", "hash-table", "counting"] },
     "2014": {
-      topicTags: [
-        "greedy",
-        "string",
-        "backtracking",
-        "counting",
-        "enumeration",
-      ],
+      topicTags: ["greedy", "string", "backtracking", "counting", "enumeration"],
     },
     "2015": {
       topicTags: ["greedy", "array", "sorting", "heap-priority-queue"],
@@ -4993,14 +3181,7 @@ class TagsDao {
     "2017": { topicTags: ["array", "matrix", "prefix-sum"] },
     "2018": { topicTags: ["array", "enumeration", "matrix"] },
     "2019": {
-      topicTags: [
-        "stack",
-        "memoization",
-        "array",
-        "math",
-        "string",
-        "dynamic-programming",
-      ],
+      topicTags: ["stack", "memoization", "array", "math", "string", "dynamic-programming"],
     },
     "2020": { topicTags: ["database"] },
     "2021": { topicTags: ["array", "ordered-set", "prefix-sum"] },
@@ -5010,13 +3191,7 @@ class TagsDao {
       topicTags: ["string", "binary-search", "prefix-sum", "sliding-window"],
     },
     "2025": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "counting",
-        "enumeration",
-        "prefix-sum",
-      ],
+      topicTags: ["array", "hash-table", "counting", "enumeration", "prefix-sum"],
     },
     "2026": { topicTags: ["database"] },
     "2027": { topicTags: ["greedy", "string"] },
@@ -5039,13 +3214,7 @@ class TagsDao {
     "2032": { topicTags: ["array", "hash-table"] },
     "2033": { topicTags: ["array", "math", "matrix", "sorting"] },
     "2034": {
-      topicTags: [
-        "design",
-        "hash-table",
-        "data-stream",
-        "ordered-set",
-        "heap-priority-queue",
-      ],
+      topicTags: ["design", "hash-table", "data-stream", "ordered-set", "heap-priority-queue"],
     },
     "2035": {
       topicTags: [
@@ -5079,13 +3248,7 @@ class TagsDao {
     "2052": { topicTags: ["array", "dynamic-programming"] },
     "2053": { topicTags: ["array", "hash-table", "string", "counting"] },
     "2054": {
-      topicTags: [
-        "array",
-        "binary-search",
-        "dynamic-programming",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "binary-search", "dynamic-programming", "sorting", "heap-priority-queue"],
     },
     "2055": { topicTags: ["array", "string", "binary-search", "prefix-sum"] },
     "2056": { topicTags: ["array", "string", "backtracking", "simulation"] },
@@ -5106,14 +3269,7 @@ class TagsDao {
     "2069": { topicTags: ["design", "simulation"] },
     "2070": { topicTags: ["array", "binary-search", "sorting"] },
     "2071": {
-      topicTags: [
-        "greedy",
-        "queue",
-        "array",
-        "binary-search",
-        "sorting",
-        "monotonic-queue",
-      ],
+      topicTags: ["greedy", "queue", "array", "binary-search", "sorting", "monotonic-queue"],
     },
     "2072": { topicTags: ["database"] },
     "2073": { topicTags: ["queue", "array", "simulation"] },
@@ -5124,13 +3280,7 @@ class TagsDao {
     "2078": { topicTags: ["greedy", "array"] },
     "2079": { topicTags: ["array"] },
     "2080": {
-      topicTags: [
-        "design",
-        "segment-tree",
-        "array",
-        "hash-table",
-        "binary-search",
-      ],
+      topicTags: ["design", "segment-tree", "array", "hash-table", "binary-search"],
     },
     "2081": { topicTags: ["math", "enumeration"] },
     "2082": { topicTags: ["database"] },
@@ -5146,13 +3296,7 @@ class TagsDao {
     "2090": { topicTags: ["array", "sliding-window"] },
     "2091": { topicTags: ["greedy", "array"] },
     "2092": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-        "sorting",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph", "sorting"],
     },
     "2093": { topicTags: ["graph", "shortest-path"] },
     "2094": { topicTags: ["array", "hash-table", "enumeration", "sorting"] },
@@ -5167,22 +3311,10 @@ class TagsDao {
     },
     "2100": { topicTags: ["array", "dynamic-programming", "prefix-sum"] },
     "2101": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "geometry",
-        "array",
-        "math",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "geometry", "array", "math"],
     },
     "2102": {
-      topicTags: [
-        "design",
-        "data-stream",
-        "ordered-set",
-        "heap-priority-queue",
-      ],
+      topicTags: ["design", "data-stream", "ordered-set", "heap-priority-queue"],
     },
     "2103": { topicTags: ["hash-table", "string"] },
     "2104": { topicTags: ["stack", "array", "monotonic-stack"] },
@@ -5223,13 +3355,7 @@ class TagsDao {
     "2133": { topicTags: ["array", "hash-table", "matrix"] },
     "2134": { topicTags: ["array", "sliding-window"] },
     "2135": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "hash-table",
-        "string",
-        "sorting",
-      ],
+      topicTags: ["bit-manipulation", "array", "hash-table", "string", "sorting"],
     },
     "2136": { topicTags: ["greedy", "array", "sorting"] },
     "2137": { topicTags: ["array", "binary-search"] },
@@ -5242,13 +3368,7 @@ class TagsDao {
     "2144": { topicTags: ["greedy", "array", "sorting"] },
     "2145": { topicTags: ["array", "prefix-sum"] },
     "2146": {
-      topicTags: [
-        "breadth-first-search",
-        "array",
-        "matrix",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["breadth-first-search", "array", "matrix", "sorting", "heap-priority-queue"],
     },
     "2147": { topicTags: ["math", "string", "dynamic-programming"] },
     "2148": { topicTags: ["array", "sorting"] },
@@ -5289,33 +3409,17 @@ class TagsDao {
     "2166": { topicTags: ["design", "array", "hash-table"] },
     "2167": { topicTags: ["string", "dynamic-programming"] },
     "2168": {
-      topicTags: [
-        "hash-table",
-        "string",
-        "counting",
-        "hash-function",
-        "rolling-hash",
-      ],
+      topicTags: ["hash-table", "string", "counting", "hash-function", "rolling-hash"],
     },
     "2169": { topicTags: ["math", "simulation"] },
     "2170": { topicTags: ["greedy", "array", "hash-table", "counting"] },
     "2171": { topicTags: ["array", "prefix-sum", "sorting"] },
     "2172": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "bitmask"],
     },
     "2173": { topicTags: ["database"] },
     "2174": {
-      topicTags: [
-        "bit-manipulation",
-        "breadth-first-search",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["bit-manipulation", "breadth-first-search", "array", "matrix"],
     },
     "2175": { topicTags: ["database"] },
     "2176": { topicTags: ["array"] },
@@ -5339,12 +3443,7 @@ class TagsDao {
     },
     "2183": { topicTags: ["array", "math", "number-theory"] },
     "2184": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "bitmask"],
     },
     "2185": { topicTags: ["array", "string"] },
     "2186": { topicTags: ["hash-table", "string", "counting"] },
@@ -5354,12 +3453,7 @@ class TagsDao {
     "2190": { topicTags: ["array", "hash-table", "counting"] },
     "2191": { topicTags: ["array", "sorting"] },
     "2192": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "topological-sort",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "topological-sort"],
     },
     "2193": {
       topicTags: ["greedy", "binary-indexed-tree", "two-pointers", "string"],
@@ -5367,14 +3461,7 @@ class TagsDao {
     "2194": { topicTags: ["string"] },
     "2195": { topicTags: ["greedy", "array", "math", "sorting"] },
     "2196": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "hash-table",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "array", "hash-table", "binary-tree"],
     },
     "2197": { topicTags: ["stack", "array", "math", "number-theory"] },
     "2198": { topicTags: ["math"] },
@@ -5384,12 +3471,7 @@ class TagsDao {
     "2202": { topicTags: ["greedy", "array"] },
     "2203": { topicTags: ["graph", "shortest-path"] },
     "2204": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "2205": { topicTags: ["database"] },
     "2206": {
@@ -5414,14 +3496,7 @@ class TagsDao {
     "2221": { topicTags: ["array", "math", "combinatorics", "simulation"] },
     "2222": { topicTags: ["string", "dynamic-programming", "prefix-sum"] },
     "2223": {
-      topicTags: [
-        "string",
-        "binary-search",
-        "string-matching",
-        "suffix-array",
-        "hash-function",
-        "rolling-hash",
-      ],
+      topicTags: ["string", "binary-search", "string-matching", "suffix-array", "hash-function", "rolling-hash"],
     },
     "2224": { topicTags: ["greedy", "string"] },
     "2225": { topicTags: ["array", "hash-table", "counting", "sorting"] },
@@ -5434,13 +3509,7 @@ class TagsDao {
     "2232": { topicTags: ["string", "enumeration"] },
     "2233": { topicTags: ["greedy", "array", "heap-priority-queue"] },
     "2234": {
-      topicTags: [
-        "greedy",
-        "array",
-        "two-pointers",
-        "binary-search",
-        "sorting",
-      ],
+      topicTags: ["greedy", "array", "two-pointers", "binary-search", "sorting"],
     },
     "2235": { topicTags: ["math"] },
     "2236": { topicTags: ["tree", "binary-tree"] },
@@ -5454,22 +3523,10 @@ class TagsDao {
     "2244": { topicTags: ["greedy", "array", "hash-table", "counting"] },
     "2245": { topicTags: ["array", "matrix", "prefix-sum"] },
     "2246": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "graph",
-        "topological-sort",
-        "array",
-        "string",
-      ],
+      topicTags: ["tree", "depth-first-search", "graph", "topological-sort", "array", "string"],
     },
     "2247": {
-      topicTags: [
-        "bit-manipulation",
-        "graph",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "graph", "dynamic-programming", "bitmask"],
     },
     "2248": { topicTags: ["array", "hash-table", "counting"] },
     "2249": {
@@ -5479,14 +3536,7 @@ class TagsDao {
       topicTags: ["binary-indexed-tree", "array", "binary-search", "sorting"],
     },
     "2251": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "binary-search",
-        "ordered-set",
-        "prefix-sum",
-        "sorting",
-      ],
+      topicTags: ["array", "hash-table", "binary-search", "ordered-set", "prefix-sum", "sorting"],
     },
     "2252": { topicTags: ["database"] },
     "2253": { topicTags: ["database"] },
@@ -5500,14 +3550,7 @@ class TagsDao {
     "2259": { topicTags: ["greedy", "string", "enumeration"] },
     "2260": { topicTags: ["array", "hash-table", "sliding-window"] },
     "2261": {
-      topicTags: [
-        "trie",
-        "array",
-        "hash-table",
-        "enumeration",
-        "hash-function",
-        "rolling-hash",
-      ],
+      topicTags: ["trie", "array", "hash-table", "enumeration", "hash-function", "rolling-hash"],
     },
     "2262": { topicTags: ["hash-table", "string", "dynamic-programming"] },
     "2263": { topicTags: ["greedy", "dynamic-programming"] },
@@ -5531,12 +3574,7 @@ class TagsDao {
     },
     "2276": { topicTags: ["design", "segment-tree", "ordered-set"] },
     "2277": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "array"],
     },
     "2278": { topicTags: ["string"] },
     "2279": { topicTags: ["greedy", "array", "sorting"] },
@@ -5551,25 +3589,13 @@ class TagsDao {
       topicTags: ["greedy", "graph", "sorting", "heap-priority-queue"],
     },
     "2286": {
-      topicTags: [
-        "design",
-        "binary-indexed-tree",
-        "segment-tree",
-        "binary-search",
-      ],
+      topicTags: ["design", "binary-indexed-tree", "segment-tree", "binary-search"],
     },
     "2287": { topicTags: ["hash-table", "string", "counting"] },
     "2288": { topicTags: ["string"] },
     "2289": { topicTags: ["stack", "array", "linked-list", "monotonic-stack"] },
     "2290": {
-      topicTags: [
-        "breadth-first-search",
-        "graph",
-        "array",
-        "matrix",
-        "shortest-path",
-        "heap-priority-queue",
-      ],
+      topicTags: ["breadth-first-search", "graph", "array", "matrix", "shortest-path", "heap-priority-queue"],
     },
     "2291": { topicTags: ["array", "dynamic-programming"] },
     "2292": { topicTags: ["database"] },
@@ -5577,24 +3603,10 @@ class TagsDao {
     "2294": { topicTags: ["greedy", "array", "sorting"] },
     "2295": { topicTags: ["array", "hash-table", "simulation"] },
     "2296": {
-      topicTags: [
-        "stack",
-        "design",
-        "linked-list",
-        "string",
-        "doubly-linked-list",
-        "simulation",
-      ],
+      topicTags: ["stack", "design", "linked-list", "string", "doubly-linked-list", "simulation"],
     },
     "2297": {
-      topicTags: [
-        "stack",
-        "graph",
-        "array",
-        "dynamic-programming",
-        "shortest-path",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "graph", "array", "dynamic-programming", "shortest-path", "monotonic-stack"],
     },
     "2298": { topicTags: ["database"] },
     "2299": { topicTags: ["string"] },
@@ -5608,22 +3620,10 @@ class TagsDao {
     "2303": { topicTags: ["array", "simulation"] },
     "2304": { topicTags: ["array", "dynamic-programming", "matrix"] },
     "2305": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "backtracking",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "backtracking", "bitmask"],
     },
     "2306": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "hash-table",
-        "string",
-        "enumeration",
-      ],
+      topicTags: ["bit-manipulation", "array", "hash-table", "string", "enumeration"],
     },
     "2307": {
       topicTags: ["depth-first-search", "union-find", "graph", "array"],
@@ -5638,22 +3638,12 @@ class TagsDao {
     },
     "2312": { topicTags: ["memoization", "array", "dynamic-programming"] },
     "2313": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "dynamic-programming",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "dynamic-programming", "binary-tree"],
     },
     "2314": { topicTags: ["database"] },
     "2315": { topicTags: ["string"] },
     "2316": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "2317": { topicTags: ["bit-manipulation", "array", "math"] },
     "2318": { topicTags: ["memoization", "dynamic-programming"] },
@@ -5692,12 +3682,7 @@ class TagsDao {
     "2336": { topicTags: ["design", "hash-table", "heap-priority-queue"] },
     "2337": { topicTags: ["two-pointers", "string"] },
     "2338": {
-      topicTags: [
-        "math",
-        "dynamic-programming",
-        "combinatorics",
-        "number-theory",
-      ],
+      topicTags: ["math", "dynamic-programming", "combinatorics", "number-theory"],
     },
     "2339": { topicTags: ["database"] },
     "2340": { topicTags: ["greedy", "array"] },
@@ -5717,13 +3702,7 @@ class TagsDao {
       ],
     },
     "2344": {
-      topicTags: [
-        "array",
-        "math",
-        "number-theory",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "math", "number-theory", "sorting", "heap-priority-queue"],
     },
     "2345": { topicTags: ["stack", "array", "sorting", "monotonic-stack"] },
     "2346": { topicTags: ["database"] },
@@ -5746,13 +3725,7 @@ class TagsDao {
     },
     "2356": { topicTags: ["database"] },
     "2357": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "sorting",
-        "simulation",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "hash-table", "sorting", "simulation", "heap-priority-queue"],
     },
     "2358": { topicTags: ["greedy", "array", "math", "binary-search"] },
     "2359": { topicTags: ["depth-first-search", "graph"] },
@@ -5767,27 +3740,12 @@ class TagsDao {
       topicTags: ["array", "hash-table", "two-pointers", "enumeration"],
     },
     "2368": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "array",
-        "hash-table",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "graph", "array", "hash-table"],
     },
     "2369": { topicTags: ["array", "dynamic-programming"] },
     "2370": { topicTags: ["hash-table", "string", "dynamic-programming"] },
     "2371": {
-      topicTags: [
-        "greedy",
-        "union-find",
-        "graph",
-        "topological-sort",
-        "array",
-        "matrix",
-        "sorting",
-      ],
+      topicTags: ["greedy", "union-find", "graph", "topological-sort", "array", "matrix", "sorting"],
     },
     "2372": { topicTags: ["database"] },
     "2373": { topicTags: ["array", "matrix"] },
@@ -5805,12 +3763,7 @@ class TagsDao {
     "2383": { topicTags: ["greedy", "array"] },
     "2384": { topicTags: ["greedy", "hash-table", "string"] },
     "2385": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "2386": { topicTags: ["array", "sorting", "heap-priority-queue"] },
     "2387": { topicTags: ["array", "binary-search", "matrix"] },
@@ -5826,47 +3779,22 @@ class TagsDao {
     "2395": { topicTags: ["array", "hash-table"] },
     "2396": { topicTags: ["brainteaser", "math", "two-pointers"] },
     "2397": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "backtracking",
-        "enumeration",
-        "matrix",
-      ],
+      topicTags: ["bit-manipulation", "array", "backtracking", "enumeration", "matrix"],
     },
     "2398": {
-      topicTags: [
-        "queue",
-        "array",
-        "binary-search",
-        "prefix-sum",
-        "sliding-window",
-        "heap-priority-queue",
-      ],
+      topicTags: ["queue", "array", "binary-search", "prefix-sum", "sliding-window", "heap-priority-queue"],
     },
     "2399": { topicTags: ["array", "hash-table", "string"] },
     "2400": { topicTags: ["math", "dynamic-programming", "combinatorics"] },
     "2401": { topicTags: ["bit-manipulation", "array", "sliding-window"] },
     "2402": { topicTags: ["array", "sorting", "heap-priority-queue"] },
     "2403": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "bitmask"],
     },
     "2404": { topicTags: ["array", "hash-table", "counting"] },
     "2405": { topicTags: ["greedy", "hash-table", "string"] },
     "2406": {
-      topicTags: [
-        "greedy",
-        "array",
-        "two-pointers",
-        "prefix-sum",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["greedy", "array", "two-pointers", "prefix-sum", "sorting", "heap-priority-queue"],
     },
     "2407": {
       topicTags: [
@@ -5883,23 +3811,13 @@ class TagsDao {
     "2409": { topicTags: ["math", "string"] },
     "2410": { topicTags: ["greedy", "array", "two-pointers", "sorting"] },
     "2411": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "binary-search",
-        "sliding-window",
-      ],
+      topicTags: ["bit-manipulation", "array", "binary-search", "sliding-window"],
     },
     "2412": { topicTags: ["greedy", "array", "sorting"] },
     "2413": { topicTags: ["math", "number-theory"] },
     "2414": { topicTags: ["string"] },
     "2415": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "2416": { topicTags: ["trie", "array", "string", "counting"] },
     "2417": { topicTags: ["math", "enumeration"] },
@@ -5911,54 +3829,26 @@ class TagsDao {
     "LCP 02": { topicTags: ["array", "math", "number-theory", "simulation"] },
     "LCP 03": { topicTags: ["array", "hash-table", "simulation"] },
     "LCP 04": {
-      topicTags: [
-        "bit-manipulation",
-        "graph",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "graph", "array", "dynamic-programming", "bitmask"],
     },
     "LCP 05": { topicTags: ["binary-indexed-tree", "segment-tree", "array"] },
     "LCP 06": { topicTags: ["array", "math"] },
     "LCP 07": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "dynamic-programming",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "dynamic-programming"],
     },
     "LCP 08": { topicTags: ["array", "binary-search", "sorting"] },
     "LCP 09": {
-      topicTags: [
-        "breadth-first-search",
-        "segment-tree",
-        "array",
-        "dynamic-programming",
-      ],
+      topicTags: ["breadth-first-search", "segment-tree", "array", "dynamic-programming"],
     },
     "LCP 10": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "dynamic-programming",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "dynamic-programming", "binary-tree"],
     },
     "LCP 11": {
       topicTags: ["array", "hash-table", "math", "probability-and-statistics"],
     },
     "LCP 12": { topicTags: ["array", "binary-search"] },
     "LCP 13": {
-      topicTags: [
-        "bit-manipulation",
-        "breadth-first-search",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-        "matrix",
-      ],
+      topicTags: ["bit-manipulation", "breadth-first-search", "array", "dynamic-programming", "bitmask", "matrix"],
     },
     "LCP 14": {
       topicTags: ["array", "math", "dynamic-programming", "number-theory"],
@@ -5972,12 +3862,7 @@ class TagsDao {
     "LCP 19": { topicTags: ["string", "dynamic-programming"] },
     "LCP 20": { topicTags: ["memoization", "array", "dynamic-programming"] },
     "LCP 21": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "topological-sort",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "topological-sort"],
     },
     "LCP 22": { topicTags: ["math"] },
     "LCP 23": { topicTags: ["queue", "array", "simulation"] },
@@ -5991,13 +3876,7 @@ class TagsDao {
     "LCP 29": { topicTags: ["math"] },
     "LCP 30": { topicTags: ["greedy", "array", "heap-priority-queue"] },
     "LCP 31": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "dynamic-programming",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "dynamic-programming", "matrix"],
     },
     "LCP 32": { topicTags: ["greedy", "array", "heap-priority-queue"] },
     "LCP 33": { topicTags: ["greedy", "array", "heap-priority-queue"] },
@@ -6005,38 +3884,18 @@ class TagsDao {
     "LCP 35": { topicTags: ["graph", "shortest-path", "heap-priority-queue"] },
     "LCP 36": { topicTags: ["array", "dynamic-programming", "sorting"] },
     "LCP 37": {
-      topicTags: [
-        "greedy",
-        "geometry",
-        "array",
-        "math",
-        "combinatorics",
-        "sorting",
-      ],
+      topicTags: ["greedy", "geometry", "array", "math", "combinatorics", "sorting"],
     },
     "LCP 38": { topicTags: ["array", "dynamic-programming", "matrix"] },
     "LCP 39": { topicTags: ["array", "hash-table", "counting", "matrix"] },
     "LCP 40": { topicTags: ["greedy", "array", "sorting"] },
     "LCP 41": { topicTags: ["breadth-first-search", "array", "matrix"] },
     "LCP 42": {
-      topicTags: [
-        "geometry",
-        "array",
-        "hash-table",
-        "math",
-        "binary-search",
-        "sorting",
-      ],
+      topicTags: ["geometry", "array", "hash-table", "math", "binary-search", "sorting"],
     },
     "LCP 43": { topicTags: ["array", "string", "dynamic-programming"] },
     "LCP 44": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "hash-table",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "hash-table", "binary-tree"],
     },
     "LCP 45": {
       topicTags: [
@@ -6052,47 +3911,22 @@ class TagsDao {
     "LCP 47": { topicTags: ["array", "dynamic-programming"] },
     "LCP 48": { topicTags: ["array", "math", "enumeration", "game-theory"] },
     "LCP 49": {
-      topicTags: [
-        "bit-manipulation",
-        "union-find",
-        "array",
-        "heap-priority-queue",
-      ],
+      topicTags: ["bit-manipulation", "union-find", "array", "heap-priority-queue"],
     },
     "LCP 50": { topicTags: ["array", "simulation"] },
     "LCP 51": {
       topicTags: ["bit-manipulation", "array", "backtracking", "enumeration"],
     },
     "LCP 52": {
-      topicTags: [
-        "tree",
-        "segment-tree",
-        "binary-search-tree",
-        "array",
-        "binary-search",
-        "binary-tree",
-        "ordered-set",
-      ],
+      topicTags: ["tree", "segment-tree", "binary-search-tree", "array", "binary-search", "binary-tree", "ordered-set"],
     },
     "LCP 53": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "dynamic-programming",
-        "bitmask",
-      ],
+      topicTags: ["bit-manipulation", "array", "dynamic-programming", "bitmask"],
     },
     "LCP 54": { topicTags: ["graph", "array", "biconnected-component"] },
     "LCP 55": { topicTags: ["array"] },
     "LCP 56": {
-      topicTags: [
-        "breadth-first-search",
-        "graph",
-        "array",
-        "matrix",
-        "shortest-path",
-        "heap-priority-queue",
-      ],
+      topicTags: ["breadth-first-search", "graph", "array", "matrix", "shortest-path", "heap-priority-queue"],
     },
     "LCP 57": {
       topicTags: ["array", "dynamic-programming", "matrix", "sorting"],
@@ -6108,13 +3942,7 @@ class TagsDao {
     "LCS 01": { topicTags: ["greedy", "math", "dynamic-programming"] },
     "LCS 02": { topicTags: ["greedy", "array", "hash-table", "sorting"] },
     "LCS 03": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "剑指 Offer 03": { topicTags: ["array", "hash-table", "sorting"] },
     "剑指 Offer 04": {
@@ -6125,13 +3953,7 @@ class TagsDao {
       topicTags: ["stack", "recursion", "linked-list", "two-pointers"],
     },
     "剑指 Offer 07": {
-      topicTags: [
-        "tree",
-        "array",
-        "hash-table",
-        "divide-and-conquer",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "array", "hash-table", "divide-and-conquer", "binary-tree"],
     },
     "剑指 Offer 09": { topicTags: ["stack", "design", "queue"] },
     "剑指 Offer 10- I": {
@@ -6160,20 +3982,10 @@ class TagsDao {
       topicTags: ["tree", "depth-first-search", "binary-tree"],
     },
     "剑指 Offer 27": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "剑指 Offer 28": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "剑指 Offer 29": { topicTags: ["array", "matrix", "simulation"] },
     "剑指 Offer 30": { topicTags: ["stack", "design"] },
@@ -6188,14 +4000,7 @@ class TagsDao {
       topicTags: ["tree", "breadth-first-search", "binary-tree"],
     },
     "剑指 Offer 33": {
-      topicTags: [
-        "stack",
-        "tree",
-        "binary-search-tree",
-        "recursion",
-        "binary-tree",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "tree", "binary-search-tree", "recursion", "binary-tree", "monotonic-stack"],
     },
     "剑指 Offer 34": {
       topicTags: ["tree", "depth-first-search", "backtracking", "binary-tree"],
@@ -6213,42 +4018,17 @@ class TagsDao {
       ],
     },
     "剑指 Offer 37": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "design",
-        "string",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "design", "string", "binary-tree"],
     },
     "剑指 Offer 38": { topicTags: ["string", "backtracking"] },
     "剑指 Offer 39": {
-      topicTags: [
-        "array",
-        "hash-table",
-        "divide-and-conquer",
-        "counting",
-        "sorting",
-      ],
+      topicTags: ["array", "hash-table", "divide-and-conquer", "counting", "sorting"],
     },
     "剑指 Offer 40": {
-      topicTags: [
-        "array",
-        "divide-and-conquer",
-        "quickselect",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "divide-and-conquer", "quickselect", "sorting", "heap-priority-queue"],
     },
     "剑指 Offer 41": {
-      topicTags: [
-        "design",
-        "two-pointers",
-        "data-stream",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["design", "two-pointers", "data-stream", "sorting", "heap-priority-queue"],
     },
     "剑指 Offer 42": {
       topicTags: ["array", "divide-and-conquer", "dynamic-programming"],
@@ -6262,12 +4042,7 @@ class TagsDao {
     "剑指 Offer 47": { topicTags: ["array", "dynamic-programming", "matrix"] },
     "剑指 Offer 48": { topicTags: ["hash-table", "string", "sliding-window"] },
     "剑指 Offer 49": {
-      topicTags: [
-        "hash-table",
-        "math",
-        "dynamic-programming",
-        "heap-priority-queue",
-      ],
+      topicTags: ["hash-table", "math", "dynamic-programming", "heap-priority-queue"],
     },
     "剑指 Offer 50": {
       topicTags: ["queue", "hash-table", "string", "counting"],
@@ -6288,29 +4063,13 @@ class TagsDao {
     },
     "剑指 Offer 53 - I": { topicTags: ["array", "binary-search"] },
     "剑指 Offer 53 - II": {
-      topicTags: [
-        "bit-manipulation",
-        "array",
-        "hash-table",
-        "math",
-        "binary-search",
-      ],
+      topicTags: ["bit-manipulation", "array", "hash-table", "math", "binary-search"],
     },
     "剑指 Offer 54": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "剑指 Offer 55 - I": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "剑指 Offer 55 - II": {
       topicTags: ["tree", "depth-first-search", "binary-tree"],
@@ -6324,12 +4083,7 @@ class TagsDao {
     "剑指 Offer 58 - I": { topicTags: ["two-pointers", "string"] },
     "剑指 Offer 58 - II": { topicTags: ["math", "two-pointers", "string"] },
     "剑指 Offer 59 - I": {
-      topicTags: [
-        "queue",
-        "sliding-window",
-        "monotonic-queue",
-        "heap-priority-queue",
-      ],
+      topicTags: ["queue", "sliding-window", "monotonic-queue", "heap-priority-queue"],
     },
     "剑指 Offer 60": {
       topicTags: ["math", "dynamic-programming", "probability-and-statistics"],
@@ -6344,12 +4098,7 @@ class TagsDao {
     "剑指 Offer 66": { topicTags: ["array", "prefix-sum"] },
     "剑指 Offer 67": { topicTags: ["string"] },
     "剑指 Offer 68 - I": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "剑指 Offer 68 - II": {
       topicTags: ["tree", "depth-first-search", "binary-tree"],
@@ -6428,13 +4177,7 @@ class TagsDao {
     "剑指 Offer II 038": { topicTags: ["stack", "array", "monotonic-stack"] },
     "剑指 Offer II 039": { topicTags: ["stack", "array", "monotonic-stack"] },
     "剑指 Offer II 040": {
-      topicTags: [
-        "stack",
-        "array",
-        "dynamic-programming",
-        "matrix",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "array", "dynamic-programming", "matrix", "monotonic-stack"],
     },
     "剑指 Offer II 041": {
       topicTags: ["design", "queue", "array", "data-stream"],
@@ -6444,41 +4187,19 @@ class TagsDao {
       topicTags: ["tree", "breadth-first-search", "design", "binary-tree"],
     },
     "剑指 Offer II 044": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "剑指 Offer II 045": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "剑指 Offer II 046": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
     },
     "剑指 Offer II 047": {
       topicTags: ["tree", "depth-first-search", "binary-tree"],
     },
     "剑指 Offer II 048": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "breadth-first-search",
-        "design",
-        "string",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "design", "string", "binary-tree"],
     },
     "剑指 Offer II 049": {
       topicTags: ["tree", "depth-first-search", "binary-tree"],
@@ -6487,47 +4208,19 @@ class TagsDao {
       topicTags: ["tree", "depth-first-search", "binary-tree"],
     },
     "剑指 Offer II 051": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "dynamic-programming",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "dynamic-programming", "binary-tree"],
     },
     "剑指 Offer II 052": {
-      topicTags: [
-        "stack",
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["stack", "tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "剑指 Offer II 053": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "剑指 Offer II 054": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "剑指 Offer II 055": {
-      topicTags: [
-        "stack",
-        "tree",
-        "design",
-        "binary-search-tree",
-        "binary-tree",
-        "iterator",
-      ],
+      topicTags: ["stack", "tree", "design", "binary-search-tree", "binary-tree", "iterator"],
     },
     "剑指 Offer II 056": {
       topicTags: [
@@ -6541,26 +4234,13 @@ class TagsDao {
       ],
     },
     "剑指 Offer II 057": {
-      topicTags: [
-        "array",
-        "bucket-sort",
-        "ordered-set",
-        "sorting",
-        "sliding-window",
-      ],
+      topicTags: ["array", "bucket-sort", "ordered-set", "sorting", "sliding-window"],
     },
     "剑指 Offer II 058": {
       topicTags: ["design", "segment-tree", "binary-search", "ordered-set"],
     },
     "剑指 Offer II 059": {
-      topicTags: [
-        "tree",
-        "design",
-        "binary-search-tree",
-        "binary-tree",
-        "data-stream",
-        "heap-priority-queue",
-      ],
+      topicTags: ["tree", "design", "binary-search-tree", "binary-tree", "data-stream", "heap-priority-queue"],
     },
     "剑指 Offer II 060": {
       topicTags: [
@@ -6606,30 +4286,13 @@ class TagsDao {
       topicTags: ["array", "hash-table", "counting-sort", "sorting"],
     },
     "剑指 Offer II 076": {
-      topicTags: [
-        "array",
-        "divide-and-conquer",
-        "quickselect",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "divide-and-conquer", "quickselect", "sorting", "heap-priority-queue"],
     },
     "剑指 Offer II 077": {
-      topicTags: [
-        "linked-list",
-        "two-pointers",
-        "divide-and-conquer",
-        "sorting",
-        "merge-sort",
-      ],
+      topicTags: ["linked-list", "two-pointers", "divide-and-conquer", "sorting", "merge-sort"],
     },
     "剑指 Offer II 078": {
-      topicTags: [
-        "linked-list",
-        "divide-and-conquer",
-        "heap-priority-queue",
-        "merge-sort",
-      ],
+      topicTags: ["linked-list", "divide-and-conquer", "heap-priority-queue", "merge-sort"],
     },
     "剑指 Offer II 079": {
       topicTags: ["bit-manipulation", "array", "backtracking"],
@@ -6643,12 +4306,7 @@ class TagsDao {
       topicTags: ["string", "dynamic-programming", "backtracking"],
     },
     "剑指 Offer II 086": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "hash-table",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "hash-table"],
     },
     "剑指 Offer II 087": { topicTags: ["string", "backtracking"] },
     "剑指 Offer II 088": { topicTags: ["array", "dynamic-programming"] },
@@ -6679,29 +4337,13 @@ class TagsDao {
     },
     "剑指 Offer II 104": { topicTags: ["array", "dynamic-programming"] },
     "剑指 Offer II 105": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "剑指 Offer II 106": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "剑指 Offer II 107": {
-      topicTags: [
-        "breadth-first-search",
-        "array",
-        "dynamic-programming",
-        "matrix",
-      ],
+      topicTags: ["breadth-first-search", "array", "dynamic-programming", "matrix"],
     },
     "剑指 Offer II 108": {
       topicTags: ["breadth-first-search", "hash-table", "string"],
@@ -6710,22 +4352,10 @@ class TagsDao {
       topicTags: ["breadth-first-search", "array", "hash-table", "string"],
     },
     "剑指 Offer II 110": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "backtracking",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "backtracking"],
     },
     "剑指 Offer II 111": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-        "array",
-        "shortest-path",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph", "array", "shortest-path"],
     },
     "剑指 Offer II 112": {
       topicTags: [
@@ -6740,48 +4370,20 @@ class TagsDao {
       ],
     },
     "剑指 Offer II 113": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "topological-sort",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "topological-sort"],
     },
     "剑指 Offer II 114": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "graph",
-        "topological-sort",
-        "array",
-        "string",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "topological-sort", "array", "string"],
     },
     "剑指 Offer II 115": { topicTags: ["graph", "topological-sort", "array"] },
     "剑指 Offer II 116": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "剑指 Offer II 117": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "string",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "string"],
     },
     "剑指 Offer II 118": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "剑指 Offer II 119": { topicTags: ["union-find", "array", "hash-table"] },
     "面试题 01.01": {
@@ -6818,21 +4420,10 @@ class TagsDao {
     "面试题 03.05": { topicTags: ["stack", "design", "monotonic-stack"] },
     "面试题 03.06": { topicTags: ["design", "queue"] },
     "面试题 04.01": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "graph",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
     },
     "面试题 04.02": {
-      topicTags: [
-        "tree",
-        "binary-search-tree",
-        "array",
-        "divide-and-conquer",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "binary-search-tree", "array", "divide-and-conquer", "binary-tree"],
     },
     "面试题 04.03": {
       topicTags: ["tree", "breadth-first-search", "linked-list", "binary-tree"],
@@ -6841,20 +4432,10 @@ class TagsDao {
       topicTags: ["tree", "depth-first-search", "binary-tree"],
     },
     "面试题 04.05": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "面试题 04.06": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "binary-tree",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
     },
     "面试题 04.08": {
       topicTags: ["tree", "depth-first-search", "binary-tree"],
@@ -6863,13 +4444,7 @@ class TagsDao {
       topicTags: ["tree", "binary-search-tree", "backtracking", "binary-tree"],
     },
     "面试题 04.10": {
-      topicTags: [
-        "tree",
-        "depth-first-search",
-        "binary-tree",
-        "string-matching",
-        "hash-function",
-      ],
+      topicTags: ["tree", "depth-first-search", "binary-tree", "string-matching", "hash-function"],
     },
     "面试题 04.12": {
       topicTags: ["tree", "depth-first-search", "binary-tree"],
@@ -6899,12 +4474,7 @@ class TagsDao {
       topicTags: ["string", "dynamic-programming", "backtracking"],
     },
     "面试题 08.10": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "matrix"],
     },
     "面试题 08.11": { topicTags: ["array", "math", "dynamic-programming"] },
     "面试题 08.12": { topicTags: ["array", "backtracking"] },
@@ -6920,12 +4490,7 @@ class TagsDao {
       topicTags: ["array", "binary-search", "divide-and-conquer", "matrix"],
     },
     "面试题 10.10": {
-      topicTags: [
-        "design",
-        "binary-indexed-tree",
-        "binary-search",
-        "data-stream",
-      ],
+      topicTags: ["design", "binary-indexed-tree", "binary-search", "data-stream"],
     },
     "面试题 10.11": { topicTags: ["greedy", "array", "sorting"] },
     "面试题 16.01": { topicTags: ["bit-manipulation", "math"] },
@@ -6947,14 +4512,7 @@ class TagsDao {
     "面试题 16.14": { topicTags: ["geometry", "array", "hash-table", "math"] },
     "面试题 16.15": { topicTags: ["hash-table", "string", "counting"] },
     "面试题 16.16": {
-      topicTags: [
-        "stack",
-        "greedy",
-        "array",
-        "two-pointers",
-        "sorting",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "greedy", "array", "two-pointers", "sorting", "monotonic-stack"],
     },
     "面试题 16.17": {
       topicTags: ["array", "divide-and-conquer", "dynamic-programming"],
@@ -6963,13 +4521,7 @@ class TagsDao {
       topicTags: ["math", "string", "backtracking", "enumeration"],
     },
     "面试题 16.19": {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "union-find",
-        "array",
-        "matrix",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
     },
     "面试题 16.20": { topicTags: ["array", "hash-table", "string"] },
     "面试题 16.21": {
@@ -7006,84 +4558,34 @@ class TagsDao {
       topicTags: ["array", "binary-search", "dynamic-programming", "sorting"],
     },
     "面试题 17.09": {
-      topicTags: [
-        "hash-table",
-        "math",
-        "dynamic-programming",
-        "heap-priority-queue",
-      ],
+      topicTags: ["hash-table", "math", "dynamic-programming", "heap-priority-queue"],
     },
     "面试题 17.10": { topicTags: ["array", "counting"] },
     "面试题 17.11": { topicTags: ["array", "string"] },
     "面试题 17.12": {
-      topicTags: [
-        "stack",
-        "tree",
-        "depth-first-search",
-        "binary-search-tree",
-        "linked-list",
-        "binary-tree",
-      ],
+      topicTags: ["stack", "tree", "depth-first-search", "binary-search-tree", "linked-list", "binary-tree"],
     },
     "面试题 17.13": {
-      topicTags: [
-        "trie",
-        "array",
-        "hash-table",
-        "string",
-        "dynamic-programming",
-        "hash-function",
-        "rolling-hash",
-      ],
+      topicTags: ["trie", "array", "hash-table", "string", "dynamic-programming", "hash-function", "rolling-hash"],
     },
     "面试题 17.14": {
-      topicTags: [
-        "array",
-        "divide-and-conquer",
-        "quickselect",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["array", "divide-and-conquer", "quickselect", "sorting", "heap-priority-queue"],
     },
     "面试题 17.15": { topicTags: ["trie", "array", "hash-table", "string"] },
     "面试题 17.16": { topicTags: ["array", "dynamic-programming"] },
     "面试题 17.17": {
-      topicTags: [
-        "trie",
-        "array",
-        "hash-table",
-        "string",
-        "string-matching",
-        "sliding-window",
-      ],
+      topicTags: ["trie", "array", "hash-table", "string", "string-matching", "sliding-window"],
     },
     "面试题 17.18": { topicTags: ["array", "hash-table", "sliding-window"] },
     "面试题 17.19": { topicTags: ["bit-manipulation", "array", "hash-table"] },
     "面试题 17.20": {
-      topicTags: [
-        "design",
-        "two-pointers",
-        "data-stream",
-        "sorting",
-        "heap-priority-queue",
-      ],
+      topicTags: ["design", "two-pointers", "data-stream", "sorting", "heap-priority-queue"],
     },
     "面试题 17.21": {
-      topicTags: [
-        "stack",
-        "array",
-        "two-pointers",
-        "dynamic-programming",
-        "monotonic-stack",
-      ],
+      topicTags: ["stack", "array", "two-pointers", "dynamic-programming", "monotonic-stack"],
     },
     "面试题 17.22": {
-      topicTags: [
-        "breadth-first-search",
-        "hash-table",
-        "string",
-        "backtracking",
-      ],
+      topicTags: ["breadth-first-search", "hash-table", "string", "backtracking"],
     },
     "面试题 17.23": { topicTags: ["array", "dynamic-programming", "matrix"] },
     "面试题 17.24": {
@@ -7092,11 +4594,7 @@ class TagsDao {
     "面试题 17.25": { topicTags: ["trie", "array", "string", "backtracking"] },
     "面试题 17.26": { topicTags: ["array", "hash-table", "sorting"] },
     面试题13: {
-      topicTags: [
-        "depth-first-search",
-        "breadth-first-search",
-        "dynamic-programming",
-      ],
+      topicTags: ["depth-first-search", "breadth-first-search", "dynamic-programming"],
     },
     "面试题59 - II": { topicTags: ["design", "queue", "monotonic-queue"] },
   };

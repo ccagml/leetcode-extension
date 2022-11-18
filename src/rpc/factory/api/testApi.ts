@@ -80,8 +80,7 @@ class TestApi extends ApiBase {
 
   runTest(argv) {
     let that = this;
-    if (!storageUtils.exist(argv.filename))
-      return reply.fatal("File " + argv.filename + " not exist!");
+    if (!storageUtils.exist(argv.filename)) return reply.fatal("File " + argv.filename + " not exist!");
 
     const meta = storageUtils.meta(argv.filename);
 
@@ -174,9 +173,7 @@ class TestApi extends ApiBase {
         if (results[1]) {
           results[0].expected_answer = results[1].answer;
         }
-        results[0].stdout = results[0].stdout
-          .slice(1, -1)
-          .replace(/\\n/g, "\n");
+        results[0].stdout = results[0].stdout.slice(1, -1).replace(/\\n/g, "\n");
         that.printResult(results[0], null, "your_input", log_obj);
         that.printResult(results[0], results[0].runtime, "output", log_obj);
         that.printResult(results[0], null, "expected_answer", log_obj);

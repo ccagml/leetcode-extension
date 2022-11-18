@@ -30,10 +30,7 @@ class Session {
   public saveUser = function (user) {
     // when auto login enabled, have to save password to re-login later
     // otherwise don't dump password for the sake of security.
-    const _user = underscore.omit(
-      user,
-      configUtils.autologin.enable ? [] : ["pass"]
-    );
+    const _user = underscore.omit(user, configUtils.autologin.enable ? [] : ["pass"]);
     storageUtils.setCache(commUtils.KEYS.user, _user);
   };
 

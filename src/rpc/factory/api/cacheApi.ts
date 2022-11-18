@@ -35,10 +35,7 @@ class CacheApi extends ApiBase {
     const isInteger = Number.isInteger(Number(name));
 
     const all_data_file = storageUtils.listCache().filter(function (f) {
-      return (
-        name.length === 0 ||
-        (isInteger ? f.name.startsWith(name + ".") : f.name === name)
-      );
+      return name.length === 0 || (isInteger ? f.name.startsWith(name + ".") : f.name === name);
     });
 
     if (argv.delete) {

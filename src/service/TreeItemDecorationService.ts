@@ -84,12 +84,9 @@ export class TreeItemDecorationService implements FileDecorationProvider {
   }
 
   private isDifficultyBadgeEnabled(): boolean {
-    const configuration: WorkspaceConfiguration = workspace.getConfiguration(
-      "leetcode-problem-rating"
-    );
+    const configuration: WorkspaceConfiguration = workspace.getConfiguration("leetcode-problem-rating");
     return configuration.get<boolean>("colorizeProblems", false);
   }
 }
 
-export const treeItemDecorationService: TreeItemDecorationService =
-  new TreeItemDecorationService();
+export const treeItemDecorationService: TreeItemDecorationService = new TreeItemDecorationService();

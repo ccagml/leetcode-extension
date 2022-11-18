@@ -304,9 +304,7 @@ class StorageUtils {
   }
 
   public getData(fullpath) {
-    return fs.existsSync(fullpath)
-      ? fs.readFileSync(fullpath).toString()
-      : null;
+    return fs.existsSync(fullpath) ? fs.readFileSync(fullpath).toString() : null;
   }
 
   // 获取要提交测试的数据
@@ -333,9 +331,7 @@ class StorageUtils {
    */
   public getAllCase(a_desc) {
     let new_desc = a_desc.replace(/<\/sup>/gm, "").replace(/<sup>/gm, "^");
-    new_desc = require("he").decode(
-      require("cheerio").load(new_desc).root().text()
-    );
+    new_desc = require("he").decode(require("cheerio").load(new_desc).root().text());
     // NOTE: wordwrap internally uses '\n' as EOL, so here we have to
     // remove all '\r' in the raw string.
     new_desc = new_desc.replace(/\r\n/g, "\n").replace(/^ /gm, "");
@@ -400,16 +396,7 @@ class StorageUtils {
 
   // 加载输出模板数据
   public render(tpl, data) {
-    const tplfile = path.join(
-      __dirname,
-      "..",
-      "..",
-      "..",
-      "..",
-      "resources",
-      "templates",
-      tpl + ".tpl"
-    );
+    const tplfile = path.join(__dirname, "..", "..", "..", "..", "resources", "templates", tpl + ".tpl");
     let result = _.template(this.getData(tplfile).replace(/\r\n/g, "\n"))(data);
     if (this.isWindows()) {
       result = result.replace(/\n/g, "\r\n");

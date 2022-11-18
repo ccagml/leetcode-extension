@@ -50,8 +50,7 @@ export class Queue {
   workerRun() {
     // no more tasks, quit now
     if (this.tasks.length === 0) {
-      if (--this.concurrency === 0 && this.onDone)
-        this.onDone(this.error, this.ctx);
+      if (--this.concurrency === 0 && this.onDone) this.onDone(this.error, this.ctx);
       return;
     }
 

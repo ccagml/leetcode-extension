@@ -37,17 +37,11 @@ class SubmissionService extends BaseWebViewService {
   protected getWebviewContent(): string {
     const styles: string = markdownService.getStyles();
     const title: string = `## ${this.result.messages[0]}`;
-    const messages: string[] = this.result.messages
-      .slice(1)
-      .map((m: string) => `* ${m}`);
+    const messages: string[] = this.result.messages.slice(1).map((m: string) => `* ${m}`);
     const sections: string[] = Object.keys(this.result)
       .filter((key: string) => key !== "messages" && key !== "system_message")
-      .map((key: string) =>
-        [`### ${key}`, "```", this.result[key].join("\n"), "```"].join("\n")
-      );
-    const body: string = markdownService.render(
-      [title, ...messages, ...sections].join("\n")
-    );
+      .map((key: string) => [`### ${key}`, "```", this.result[key].join("\n"), "```"].join("\n"));
+    const body: string = markdownService.render([title, ...messages, ...sections].join("\n"));
     return `
             <!DOCTYPE html>
             <html>
@@ -79,10 +73,7 @@ class SubmissionService extends BaseWebViewService {
   }
 
   private async openKeybindingsEditor(query?: string): Promise<void> {
-    await commands.executeCommand(
-      "workbench.action.openGlobalKeybindings",
-      query
-    );
+    await commands.executeCommand("workbench.action.openGlobalKeybindings", query);
   }
 
   private parseResult(raw: string): IResult {

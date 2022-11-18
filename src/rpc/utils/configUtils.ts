@@ -49,10 +49,8 @@ class Config {
         login: "https://leetcode.com/accounts/login/",
         // third part login base urls. TODO facebook google
         github_login: "https://leetcode.com/accounts/github/login/?next=%2F",
-        facebook_login:
-          "https://leetcode.com/accounts/facebook/login/?next=%2F",
-        linkedin_login:
-          "https://leetcode.com/accounts/linkedin_oauth2/login/?next=%2F",
+        facebook_login: "https://leetcode.com/accounts/facebook/login/?next=%2F",
+        linkedin_login: "https://leetcode.com/accounts/linkedin_oauth2/login/?next=%2F",
         // redirect urls
         leetcode_redirect: "https://leetcode.com/",
         github_tf_redirect: "https://github.com/sessions/two-factor",
@@ -61,8 +59,7 @@ class Config {
         github_session_request: "https://github.com/session",
         github_tf_session_request: "https://github.com/sessions/two-factor",
         linkedin_login_request: "https://www.linkedin.com/login",
-        linkedin_session_request:
-          "https://www.linkedin.com/checkpoint/lg/login-submit",
+        linkedin_session_request: "https://www.linkedin.com/checkpoint/lg/login-submit",
         // questions urls
         problems: "https://leetcode.com/api/problems/$category/",
         problem: "https://leetcode.com/problems/$slug/description/",
@@ -124,22 +121,18 @@ class Config {
     this.sys.urls.problem = "https://leetcode.cn/problems/$slug/description/";
     this.sys.urls.graphql = "https://leetcode.cn/graphql";
     this.sys.urls.problem_detail = "https://leetcode.cn/graphql";
-    this.sys.urls.test =
-      "https://leetcode.cn/problems/$slug/interpret_solution/";
+    this.sys.urls.test = "https://leetcode.cn/problems/$slug/interpret_solution/";
     this.sys.urls.session = "https://leetcode.cn/session/";
     this.sys.urls.submit = "https://leetcode.cn/problems/$slug/submit/";
     this.sys.urls.submissions = "https://leetcode.cn/api/submissions/$slug";
     this.sys.urls.submission = "https://leetcode.cn/submissions/detail/$id/";
     this.sys.urls.verify = "https://leetcode.cn/submissions/detail/$id/check/";
     this.sys.urls.favorites = "https://leetcode.cn/list/api/questions";
-    this.sys.urls.favorite_delete =
-      "https://leetcode.cn/list/api/questions/$hash/$id";
+    this.sys.urls.favorite_delete = "https://leetcode.cn/list/api/questions/$hash/$id";
     this.sys.urls.noj_go = "https://leetcode.cn/graphql/noj-go/";
     this.sys.urls.u = "https://leetcode.cn/u/$username/";
-    this.sys.urls.github_login =
-      "https://leetcode.cn/accounts/github/login/?next=%2F";
-    this.sys.urls.linkedin_login =
-      "https://leetcode.cn/accounts/linkedin_oauth2/login/?next=%2F";
+    this.sys.urls.github_login = "https://leetcode.cn/accounts/github/login/?next=%2F";
+    this.sys.urls.linkedin_login = "https://leetcode.cn/accounts/linkedin_oauth2/login/?next=%2F";
     this.sys.urls.leetcode_redirect = "https://leetcode.cn/";
   }
 }

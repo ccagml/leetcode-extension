@@ -132,10 +132,7 @@ class LeetCodeCn extends ChainNodeBase {
   getUserContestP = (username, cb) => {
     const opts = makeOpts(configUtils.sys.urls.noj_go);
     opts.headers.Origin = configUtils.sys.urls.base;
-    opts.headers.Referer = configUtils.sys.urls.u.replace(
-      "$username",
-      username
-    );
+    opts.headers.Referer = configUtils.sys.urls.u.replace("$username", username);
 
     opts.json = true;
     opts.body = {
@@ -181,14 +178,11 @@ class LeetCodeCn extends ChainNodeBase {
 
   getRatingOnline = (cb) => {
     const _request = request.defaults({ jar: true });
-    _request(
-      "https://zerotrac.github.io/leetcode_problem_rating/data.json",
-      function (error: any, _, body: any) {
-        // console.log(error);
-        // console.log(info);
-        cb(error, body);
-      }
-    );
+    _request("https://zerotrac.github.io/leetcode_problem_rating/data.json", function (error: any, _, body: any) {
+      // console.log(error);
+      // console.log(info);
+      cb(error, body);
+    });
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -207,12 +201,7 @@ class LeetCodeCn extends ChainNodeBase {
 }
 
 function signOpts(opts: any, user: any) {
-  opts.headers.Cookie =
-    "LEETCODE_SESSION=" +
-    user.sessionId +
-    ";csrftoken=" +
-    user.sessionCSRF +
-    ";";
+  opts.headers.Cookie = "LEETCODE_SESSION=" + user.sessionId + ";csrftoken=" + user.sessionCSRF + ";";
   opts.headers["X-CSRFToken"] = user.sessionCSRF;
   opts.headers["X-Requested-With"] = "XMLHttpRequest";
 }

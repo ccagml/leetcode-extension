@@ -30,13 +30,8 @@ class SolutionDiscuss extends ChainNodeBase {
         if (e) return cb(e);
         if (!solution) return reply.error("Solution not found for " + lang);
 
-        let link = URL_DISCUSS.replace("$slug", problem.slug).replace(
-          "$id",
-          solution.id
-        );
-        let content = solution.post.content
-          .replace(/\\n/g, "\n")
-          .replace(/\\t/g, "\t");
+        let link = URL_DISCUSS.replace("$slug", problem.slug).replace("$id", solution.id);
+        let content = solution.post.content.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
 
         reply.info();
         reply.info(problem.name);
@@ -104,8 +99,7 @@ function getSolution(problem, lang, cb) {
   };
   request(opts, function (e, resp, body) {
     if (e) return cb(e);
-    if (resp.statusCode !== 200)
-      return cb({ msg: "http error", statusCode: resp.statusCode });
+    if (resp.statusCode !== 200) return cb({ msg: "http error", statusCode: resp.statusCode });
 
     const solutions = body.data.questionTopicsList.edges;
     const solution = solutions.length > 0 ? solutions[0].node : null;

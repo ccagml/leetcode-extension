@@ -22,14 +22,11 @@ class MarkdownService implements vscode.Disposable {
 
   public constructor() {
     this.reload();
-    this.listener = vscode.workspace.onDidChangeConfiguration(
-      (event: vscode.ConfigurationChangeEvent) => {
-        if (event.affectsConfiguration("markdown")) {
-          this.reload();
-        }
-      },
-      this
-    );
+    this.listener = vscode.workspace.onDidChangeConfiguration((event: vscode.ConfigurationChangeEvent) => {
+      if (event.affectsConfiguration("markdown")) {
+        this.reload();
+      }
+    }, this);
   }
 
   public get localResourceRoots(): vscode.Uri[] {
@@ -56,25 +53,19 @@ class MarkdownService implements vscode.Disposable {
   private getBuiltinStyles(): string {
     let styles: vscode.Uri[] = [];
     try {
-      const stylePaths: string[] = require(path.join(
-        this.config.extRoot,
-        "package.json"
-      ))["contributes"]["markdown.previewStyles"];
+      const stylePaths: string[] = require(path.join(this.config.extRoot, "package.json"))["contributes"][
+        "markdown.previewStyles"
+      ];
       styles = stylePaths.map((p: string) =>
         vscode.Uri.file(path.join(this.config.extRoot, p)).with({
           scheme: "vscode-resource",
         })
       );
     } catch (error) {
-      logOutput.appendLine(
-        "[Error] Fail to load built-in markdown style file."
-      );
+      logOutput.appendLine("[Error] Fail to load built-in markdown style file.");
     }
     return styles
-      .map(
-        (style: vscode.Uri) =>
-          `<link rel="stylesheet" type="text/css" href="${style.toString()}">`
-      )
+      .map((style: vscode.Uri) => `<link rel="stylesheet" type="text/css" href="${style.toString()}">`)
       .join(os.EOL);
   }
 
@@ -82,19 +73,9 @@ class MarkdownService implements vscode.Disposable {
     return [
       `<style>`,
       `body {`,
-      `    ${
-        this.config.fontFamily ? `font-family: ${this.config.fontFamily};` : ``
-      }`,
-      `    ${
-        isNaN(this.config.fontSize)
-          ? ``
-          : `font-size: ${this.config.fontSize}px;`
-      }`,
-      `    ${
-        isNaN(this.config.lineHeight)
-          ? ``
-          : `line-height: ${this.config.lineHeight};`
-      }`,
+      `    ${this.config.fontFamily ? `font-family: ${this.config.fontFamily};` : ``}`,
+      `    ${isNaN(this.config.fontSize) ? `` : `font-size: ${this.config.fontSize}px;`}`,
+      `    ${isNaN(this.config.lineHeight) ? `` : `line-height: ${this.config.lineHeight};`}`,
       `}`,
       `</style>`,
     ].join(os.EOL);
@@ -142,10 +123,7 @@ class MarkdownService implements vscode.Disposable {
         return codeBlock(tokens, idx, options, env, self);
       }
       // otherwise, highlight with default lang in env object.
-      const highlighted: string = options.highlight(
-        tokens[idx].content,
-        env.lang
-      );
+      const highlighted: string = options.highlight(tokens[idx].content, env.lang);
       return [
         `<pre><code ${self.renderAttrs(tokens[idx])} >`,
         highlighted || md.utils.escapeHtml(tokens[idx].content),
@@ -158,9 +136,7 @@ class MarkdownService implements vscode.Disposable {
     const image: MarkdownIt.TokenRender = md.renderer.rules["image"];
     // tslint:disable-next-line:typedef
     md.renderer.rules["image"] = (tokens, idx, options, env, self) => {
-      const imageSrc: string[] | undefined = tokens[idx].attrs.find(
-        (value: string[]) => value[0] === "src"
-      );
+      const imageSrc: string[] | undefined = tokens[idx].attrs.find((value: string[]) => value[0] === "src");
       if (env.host && imageSrc && imageSrc[1].startsWith("/")) {
         imageSrc[1] = `${env.host}${imageSrc[1]}`;
       }
@@ -185,30 +161,16 @@ class MarkdownConfiguration {
   public readonly fontFamily: string;
 
   public constructor() {
-    const markdownConfig: vscode.WorkspaceConfiguration =
-      vscode.workspace.getConfiguration("markdown", null);
-    this.extRoot = path.join(
-      vscode.env.appRoot,
-      "extensions",
-      "markdown-language-features"
-    );
-    this.lineHeight = Math.max(
-      0.6,
-      +markdownConfig.get<number>("preview.lineHeight", NaN)
-    );
-    this.fontSize = Math.max(
-      8,
-      +markdownConfig.get<number>("preview.fontSize", NaN)
-    );
+    const markdownConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("markdown", null);
+    this.extRoot = path.join(vscode.env.appRoot, "extensions", "markdown-language-features");
+    this.lineHeight = Math.max(0.6, +markdownConfig.get<number>("preview.lineHeight", NaN));
+    this.fontSize = Math.max(8, +markdownConfig.get<number>("preview.fontSize", NaN));
     this.fontFamily = this.resolveFontFamily(markdownConfig);
   }
 
   private resolveFontFamily(config: vscode.WorkspaceConfiguration): string {
     let fontFamily: string = config.get<string>("preview.fontFamily", "");
-    if (
-      isWindows() &&
-      fontFamily === config.inspect<string>("preview.fontFamily")!.defaultValue
-    ) {
+    if (isWindows() && fontFamily === config.inspect<string>("preview.fontFamily")!.defaultValue) {
       fontFamily = `${fontFamily}, 'Microsoft Yahei UI'`;
     }
     return fontFamily;
