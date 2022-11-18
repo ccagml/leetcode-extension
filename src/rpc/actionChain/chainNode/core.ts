@@ -88,6 +88,9 @@ class CorePlugin extends ChainNodeBase {
   exportProblem = (problem, opts) => {
     const data = _.extend({}, problem);
 
+    // 增加版本信息
+    data.LCPTCTX = configUtils.LCPTCTX;
+    data.allCaseList = storageUtils.getAllCase(problem.desc);
     // unify format before rendering
 
     data.app = configUtils.app || "leetcode";

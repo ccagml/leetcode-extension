@@ -97,6 +97,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
         (uri?: Uri, allCase?: boolean) =>
           treeViewController.testSolutionDefault(uri, allCase)
       ),
+      commands.registerCommand(
+        "leetcode.testSolutionArea",
+        (uri?: Uri, testCase?: string) =>
+          treeViewController.testSolutionArea(uri, testCase)
+      ),
       commands.registerCommand("leetcode.submitSolution", (uri?: Uri) =>
         treeViewController.submitSolution(uri)
       ),

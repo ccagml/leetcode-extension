@@ -298,6 +298,38 @@ class TreeViewController implements Disposable {
     }
   }
 
+  public async testSolutionArea(
+    uri?: vscode.Uri,
+    testcase?: string
+  ): Promise<void> {
+    try {
+      if (statusBarService.getStatus() === UserStatus.SignedOut) {
+        return;
+      }
+
+      const filePath: string | undefined = await this.getActiveFilePath(uri);
+      if (!filePath) {
+        return;
+      }
+
+      let result: string | undefined = await executeService.testSolution(
+        filePath,
+        testcase,
+        false
+      );
+      if (!result) {
+        return;
+      }
+      submissionService.show(result);
+      eventService.emit("submit", submissionService.getSubmitEvent());
+    } catch (error) {
+      await promptForOpenOutputChannel(
+        "提交测试出错了. 请查看控制台信息~",
+        DialogType.error
+      );
+    }
+  }
+
   public usingCmd(): boolean {
     const comSpec: string | undefined = process.env.ComSpec;
     // 'cmd.exe' is used as a fallback if process.env.ComSpec is unavailable.
