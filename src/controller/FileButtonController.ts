@@ -7,31 +7,29 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-
 import { ConfigurationChangeEvent, Disposable, languages, workspace } from "vscode";
 import { fileButtonService } from "../service/FileButtonService";
 // 文件按钮的控制器
 class FileButtonController implements Disposable {
+  private registeredProvider: Disposable | undefined;
+  private configurationChangeListener: Disposable;
 
-    private registeredProvider: Disposable | undefined;
-    private configurationChangeListener: Disposable;
+  constructor() {
+    this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
+      if (event.affectsConfiguration("leetcode-problem-rating.editor.shortcuts")) {
+        fileButtonService.refresh();
+      }
+    }, this);
 
-    constructor() {
-        this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
-            if (event.affectsConfiguration("leetcode-problem-rating.editor.shortcuts")) {
-                fileButtonService.refresh();
-            }
-        }, this);
+    this.registeredProvider = languages.registerCodeLensProvider({ scheme: "file" }, fileButtonService);
+  }
 
-        this.registeredProvider = languages.registerCodeLensProvider({ scheme: "file" }, fileButtonService);
+  public dispose(): void {
+    if (this.registeredProvider) {
+      this.registeredProvider.dispose();
     }
-
-    public dispose(): void {
-        if (this.registeredProvider) {
-            this.registeredProvider.dispose();
-        }
-        this.configurationChangeListener.dispose();
-    }
+    this.configurationChangeListener.dispose();
+  }
 }
 
 export const fileButtonController: FileButtonController = new FileButtonController();

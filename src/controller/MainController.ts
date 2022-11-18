@@ -11,32 +11,44 @@ import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
 import { ExtensionContext } from "vscode";
 import { treeDataService } from "../service/TreeDataService";
+import { logOutput } from "../utils/OutputUtils";
 
 // 做杂活
 class MainContorller {
-    constructor() { }
+  constructor() {}
 
-    /**
-     * 检查运行环境
-     */
-    public async checkNodeEnv(context: ExtensionContext) {
-        if (!systemUtils.useVscodeNode()) {
-            if (!await executeService.checkNodeEnv(context)) {
-                throw new Error("The environment doesn't meet requirements.");
-            }
-        }
+  /**
+   * 检查运行环境
+   */
+  public async checkNodeEnv(context: ExtensionContext) {
+    if (!systemUtils.useVscodeNode()) {
+      if (!(await executeService.checkNodeEnv(context))) {
+        throw new Error("The environment doesn't meet requirements.");
+      }
     }
+  }
 
-    // 初始化上下文
-    public initialize(context: ExtensionContext) {
-        treeDataService.initialize(context);
-    }
+  public setGlobal(context: ExtensionContext) {
+    let cur_version: string = context.extension.packageJSON.version || "1.0.0";
+    let cur_version_arr: Array<string> = cur_version.split(".");
+    let cur_version_num = 0;
+    cur_version_arr.forEach((e) => {
+      cur_version_num *= 100;
+      cur_version_num += Number(e);
+    });
+    logOutput.setLCPTCTX("version", cur_version_num);
+  }
 
+  // 初始化上下文
+  public initialize(context: ExtensionContext) {
+    this.setGlobal(context);
+    treeDataService.initialize(context);
+  }
 
-    // 删除缓存
-    public async deleteCache() {
-        await executeService.deleteCache();
-    }
+  // 删除缓存
+  public async deleteCache() {
+    await executeService.deleteCache();
+  }
 }
 
 export const mainContorller: MainContorller = new MainContorller();

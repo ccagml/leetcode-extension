@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode problem rating",
     "description": "为LeetCode题目难度进行打分。避免只有简单、中等、困难三种难度",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -769,11 +769,12 @@
         "@types/node": "^14.14.33",
         "@types/vscode": "1.57.0",
         "@typescript-eslint/eslint-plugin": "^5.42.1",
-        "@typescript-eslint/parser": "^5.42.1",
+        "@typescript-eslint/parser": "^5.43.0",
         "chai": "4.2.0",
         "eslint": "^8.27.0",
+        "prettier": "^2.7.1",
         "tslint": "^5.20.1",
-        "typescript": "^4.8.4"
+        "typescript": "^4.9.3"
     },
     "dependencies": {
         "ansi-styles": "3.2.1",
@@ -786,7 +787,6 @@
         "mkdirp": "^1.0.4",
         "moment": "^2.29.1",
         "nconf": "^0.11.2",
-        "ora": "3.0.0",
         "prompt": "^1.2.0",
         "request": "2.88.0",
         "underscore": "1.12.1",
