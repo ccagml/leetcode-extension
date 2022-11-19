@@ -6,7 +6,7 @@
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
-    "icon": "resources/LeetCode.png",
+    "icon": "resources/LCPR.png",
     "engines": {
         "vscode": "^1.57.0"
     },
@@ -148,7 +148,7 @@
                 {
                     "id": "lcpr_bar",
                     "title": "LCPR",
-                    "icon": "resources/LeetCode.svg"
+                    "icon": "resources/LCPR.svg"
                 }
             ]
         },
