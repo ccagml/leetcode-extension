@@ -48,10 +48,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       fileButtonController,
       treeViewController,
       window.registerFileDecorationProvider(treeItemDecorationService),
-      window.createTreeView("leetCodeExplorer", {
-        treeDataProvider: treeDataService,
-        showCollapseAll: true,
-      }),
+      window.createTreeView("QuestionExplorer", { treeDataProvider: treeDataService, showCollapseAll: true }),
       commands.registerCommand("leetcode.deleteCache", () => mainContorller.deleteCache()),
       commands.registerCommand("leetcode.toggleLeetCodeCn", () => treeViewController.switchEndpoint()),
       commands.registerCommand("leetcode.signin", () => loginContorller.signIn()),
