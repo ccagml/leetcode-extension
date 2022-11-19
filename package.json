@@ -17,7 +17,8 @@
     "homepage": "https://github.com/ccagml/vscode-leetcode-problem-rating/README.md",
     "categories": [
         "Other",
-        "Snippets"
+        "Snippets",
+        "Education"
     ],
     "keywords": [
         "leetcode",
@@ -157,6 +158,10 @@
                 {
                     "id": "QuestionExplorer",
                     "name": "Problems"
+                },
+                {
+                    "id": "LifeExplorer",
+                    "name": "搬砖"
                 }
             ]
         },
@@ -286,7 +291,7 @@
         "submenus": [
             {
                 "id": "leetcode.editorAction",
-                "label": "LeetCode"
+                "label": "LCPR菜单"
             }
         ],
         "configuration": [
