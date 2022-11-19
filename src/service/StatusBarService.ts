@@ -103,14 +103,21 @@ class StatusBarService implements Disposable {
         }
         break;
       case UserStatus.SignedOut:
-      default:
+        this.currentUserContestInfo = undefined;
         this.instance.text = "";
+        break;
+      default:
         break;
     }
   }
 
   public update_status(status: UserStatus, user?: string) {
     this.userStatus = status;
+
+    // 如果用户名不一样,清掉this.currentUserContestInfo = undefined;
+    if (user != this.currentUser) {
+      this.update_UserContestInfo(undefined);
+    }
     this.currentUser = user;
   }
   public update_UserContestInfo(UserContestInfo?: userContestRanKingBase | undefined) {

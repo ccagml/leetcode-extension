@@ -9,6 +9,4 @@
         "**/node_modules": true,
         ".vscode-test": true
     },
-    "tslint.autoFixOnSave": true,
-    "tslint.ignoreDefinitionFiles": true
 }
