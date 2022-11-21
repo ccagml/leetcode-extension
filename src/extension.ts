@@ -27,6 +27,10 @@ import { getLeetCodeEndpoint } from "./utils/ConfigUtils";
 import { DialogType } from "./model/Model";
 
 // 激活插件
+/**
+ * The main function of the extension. It is called when the extension is activated.
+ * @param {ExtensionContext} context - ExtensionContext
+ */
 export async function activate(context: ExtensionContext): Promise<void> {
   try {
     // 初始化控制器
