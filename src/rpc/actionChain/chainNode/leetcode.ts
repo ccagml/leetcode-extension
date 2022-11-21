@@ -81,6 +81,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* Getting the problems from the category. */
   getCategoryProblems = (category, cb) => {
     const opts = this.makeOpts(configUtils.sys.urls.problems.replace("$category", category));
 
@@ -117,6 +118,8 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* A function that takes in a problem and a callback function. It then makes a request to the leetcode
+server to get the problem's description, test cases, and other information. */
   getProblem = (problem, needTranslation, cb) => {
     const user = sessionUtils.getUser();
     if (problem.locked && !user.paid) return cb("failed to load locked problem!");
@@ -171,6 +174,7 @@ class LeetCode extends ChainNodeBase {
       return cb(null, problem);
     });
   };
+  /* A function that is used to run the code on the server. */
   runCode = (opts, problem, cb) => {
     opts.method = "POST";
     opts.headers.Origin = configUtils.sys.urls.base;
@@ -207,6 +211,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* A function that is used to verify the result of a task. */
   verifyResult = (task, queue, cb) => {
     const opts = queue.ctx.opts;
     opts.method = "GET";
@@ -229,6 +234,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* Formatting the result of the submission. */
   formatResult = (result) => {
     const x: any = {
       ok: result.run_success,
@@ -274,6 +280,7 @@ class LeetCode extends ChainNodeBase {
     return x;
   };
 
+  /* Testing the code. */
   testProblem = (problem, cb) => {
     const opts = this.makeOpts(configUtils.sys.urls.test.replace("$slug", problem.slug));
     opts.body = { data_input: problem.testcase };
@@ -294,6 +301,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* Submitting a problem to the server. */
   submitProblem = (problem, cb) => {
     const opts = this.makeOpts(configUtils.sys.urls.submit.replace("$slug", problem.slug));
     opts.body = { judge_type: "large" };
@@ -309,6 +317,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* Getting the submissions for a problem. */
   getSubmissions = (problem, cb) => {
     const opts = this.makeOpts(configUtils.sys.urls.submissions.replace("$slug", problem.slug));
     opts.headers.Referer = configUtils.sys.urls.problem.replace("$slug", problem.slug);
@@ -326,6 +335,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* Getting the submission code and the runtime distribution chart. */
   getSubmission = (submission, cb) => {
     const opts = this.makeOpts(configUtils.sys.urls.submission.replace("$id", submission.id));
     let that = this;
@@ -342,6 +352,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* A function that is used to star a problem. */
   starProblem = (problem, starred, cb) => {
     const user = sessionUtils.getUser();
     const operationName = starred ? "addQuestionToFavorite" : "removeQuestionFromFavorite";
@@ -365,6 +376,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* Making a request to the server to get the favorites. */
   getFavorites = (cb: any) => {
     const opts = this.makeOpts(configUtils.sys.urls.favorites);
 
@@ -378,6 +390,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* Making a POST request to the GraphQL API. */
   getUserInfo = (cb: any) => {
     let that = this;
     const opts = this.makeOpts(configUtils.sys.urls.graphql);
@@ -398,6 +411,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* Making a request to the server and returning the response. */
   runSession = (method: any, data: any, cb: any) => {
     const opts = this.makeOpts(configUtils.sys.urls.session);
     opts.json = true;
@@ -432,6 +446,10 @@ class LeetCode extends ChainNodeBase {
     this.runSession("DELETE", data, cb);
   };
 
+  /* A function that takes in a user object and a callback function. It then makes a request to the login
+page and gets the csrf token. It then makes a post request to the login page with the csrf token and
+the user's login and password. If the response status code is 302, it saves the user's session id
+and csrf token to the user object and saves the user object to the session. */
   signin = (user: any, cb: any) => {
     let that = this;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -465,6 +483,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* Retrieving the user's favorites and user info. */
   getUser = (user, cb) => {
     let that = this;
     this.getFavorites(function (e, favorites) {
@@ -499,6 +518,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* Parsing the cookie to get the sessionId and sessionCSRF. */
   parseCookie = (cookie, cb) => {
     const SessionPattern = /LEETCODE_SESSION=(.+?)(;|$)/;
     const csrfPattern = /csrftoken=(.+?)(;|$)/;
@@ -512,6 +532,7 @@ class LeetCode extends ChainNodeBase {
       sessionCSRF: reCsrfResult[1],
     };
   };
+  /* A function that is used to login to leetcode. */
 
   requestLeetcodeAndSave = (request, leetcodeUrl, user, cb) => {
     let that = this;
@@ -537,6 +558,7 @@ class LeetCode extends ChainNodeBase {
     this.getUser(user, cb);
   };
 
+  /* A function that is used to login to GitHub. */
   githubLogin = (user, cb) => {
     const urls = configUtils.sys.urls;
     const leetcodeUrl = urls.github_login;
@@ -626,6 +648,7 @@ class LeetCode extends ChainNodeBase {
     });
   };
 
+  /* A function that logs into LinkedIn and then logs into LeetCode. */
   linkedinLogin = (user, cb) => {
     const urls = configUtils.sys.urls;
     const leetcodeUrl = urls.linkedin_login;

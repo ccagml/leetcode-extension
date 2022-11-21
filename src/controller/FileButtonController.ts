@@ -10,6 +10,7 @@
 import { ConfigurationChangeEvent, Disposable, languages, workspace } from "vscode";
 import { fileButtonService } from "../service/FileButtonService";
 // 文件按钮的控制器
+/* It listens to configuration changes and refreshes the file button service */
 class FileButtonController implements Disposable {
   private registeredProvider: Disposable | undefined;
   private configurationChangeListener: Disposable;
