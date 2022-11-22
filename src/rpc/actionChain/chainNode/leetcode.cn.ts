@@ -49,6 +49,7 @@ class LeetCodeCn extends ChainNodeBase {
     });
   };
 
+  /* Getting the title of the problems. */
   getProblemsTitle = (cb) => {
     const opts = makeOpts(configUtils.sys.urls.graphql);
     opts.headers.Origin = configUtils.sys.urls.base;
@@ -82,6 +83,7 @@ class LeetCodeCn extends ChainNodeBase {
     });
   };
 
+  /* A function that gets the question of the day from leetcode. */
   getQuestionOfToday = (cb) => {
     const opts = makeOpts(configUtils.sys.urls.graphql);
     opts.headers.Origin = configUtils.sys.urls.base;
@@ -129,6 +131,7 @@ class LeetCodeCn extends ChainNodeBase {
       return cb(null, result);
     });
   };
+  /* A function that is used to get the user contest ranking information. */
   getUserContestP = (username, cb) => {
     const opts = makeOpts(configUtils.sys.urls.noj_go);
     opts.headers.Origin = configUtils.sys.urls.base;
@@ -176,6 +179,7 @@ class LeetCodeCn extends ChainNodeBase {
     });
   };
 
+  /* A function that is used to get the rating of the problems. */
   getRatingOnline = (cb) => {
     const _request = request.defaults({ jar: true });
     _request("https://zerotrac.github.io/leetcode_problem_rating/data.json", function (error: any, _, body: any) {
@@ -185,6 +189,7 @@ class LeetCodeCn extends ChainNodeBase {
     });
   };
 
+  /* A function that is used to test the api. */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getTestApi = (value: any, _) => {
     const _request = request.defaults({ jar: true });

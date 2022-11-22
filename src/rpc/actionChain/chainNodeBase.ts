@@ -1,6 +1,7 @@
 import { commUtils } from "../utils/commUtils";
 import { storageUtils } from "../utils/storageUtils";
 
+/* It's a chain of responsibility pattern */
 export class ChainNodeBase {
   next: ChainNodeBase; // 下一个点
   enabled: boolean;

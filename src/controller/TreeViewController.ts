@@ -80,6 +80,11 @@ class TreeViewController implements Disposable {
   private waitUserContest: boolean;
 
   // 获取当前文件的路径
+  /**
+   * It returns the path of the currently active file, or undefined if there is no active file
+   * @param [uri] - The file path to open.
+   * @returns A promise that resolves to a string or undefined.
+   */
   public async getActiveFilePath(uri?: vscode.Uri): Promise<string | undefined> {
     let textEditor: vscode.TextEditor | undefined;
     if (uri) {
@@ -103,6 +108,13 @@ class TreeViewController implements Disposable {
   }
 
   // 提交问题
+  /**
+   * It gets the active file path, then submits the solution to the server, and finally refreshes the
+   * tree view
+   * @param [uri] - The URI of the file to be submitted. If not provided, the currently active file will
+   * be submitted.
+   * @returns A promise that resolves to a string.
+   */
   public async submitSolution(uri?: vscode.Uri): Promise<void> {
     if (!statusBarService.getUser()) {
       promptForSignIn();
@@ -127,6 +139,11 @@ class TreeViewController implements Disposable {
   }
 
   // 提交测试用例
+  /**
+   * It takes the current file, and sends it to the server to be tested
+   * @param [uri] - The file path of the file to be submitted. If it is not passed, the currently active
+   * file is submitted.
+   */
   public async testSolution(uri?: vscode.Uri): Promise<void> {
     try {
       if (statusBarService.getStatus() === UserStatus.SignedOut) {
@@ -217,6 +234,13 @@ class TreeViewController implements Disposable {
       await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
   }
+  /**
+   * "Show a file selection dialog, and return the selected file's URI."
+   *
+   * The function is async, so it returns a promise
+   * @param {string} [fsPath] - The path of the file that is currently open in the editor.
+   * @returns An array of file URIs or undefined.
+   */
   public async showFileSelectDialog(fsPath?: string): Promise<vscode.Uri[] | undefined> {
     const defaultUri: vscode.Uri | undefined = this.getBelongingWorkspaceFolderUri(fsPath);
     const options: vscode.OpenDialogOptions = {
@@ -229,6 +253,14 @@ class TreeViewController implements Disposable {
     return await vscode.window.showOpenDialog(options);
   }
 
+  /**
+   * It gets the active file path, and then calls the executeService.testSolution function to test the
+   * solution
+   * @param [uri] - The path of the file to be submitted. If it is not passed, the currently active file
+   * is submitted.
+   * @param {boolean} [allCase] - Whether to submit all cases.
+   * @returns a promise that resolves to void.
+   */
   public async testSolutionDefault(uri?: vscode.Uri, allCase?: boolean): Promise<void> {
     try {
       if (statusBarService.getStatus() === UserStatus.SignedOut) {
@@ -251,6 +283,15 @@ class TreeViewController implements Disposable {
     }
   }
 
+  /**
+   * It gets the active file path, then calls the executeService.testSolution function to test the
+   * solution
+   * @param [uri] - The file path of the file to be submitted. If it is not passed in, the currently
+   * active file is submitted.
+   * @param {string} [testcase] - The test case to be tested. If it is not specified, the test case will
+   * be randomly selected.
+   * @returns a promise that resolves to void.
+   */
   public async testSolutionArea(uri?: vscode.Uri, testcase?: string): Promise<void> {
     try {
       if (statusBarService.getStatus() === UserStatus.SignedOut) {
@@ -273,6 +314,13 @@ class TreeViewController implements Disposable {
     }
   }
 
+  /**
+   * "If the ComSpec environment variable is not set, or if it is set to cmd.exe, then return true."
+   *
+   * The ComSpec environment variable is set to the path of the command processor. On Windows, this is
+   * usually cmd.exe. On Linux, it is usually bash
+   * @returns A boolean value.
+   */
   public usingCmd(): boolean {
     const comSpec: string | undefined = process.env.ComSpec;
     // 'cmd.exe' is used as a fallback if process.env.ComSpec is unavailable.
@@ -286,6 +334,12 @@ class TreeViewController implements Disposable {
     return false;
   }
 
+  /**
+   * If you're on Windows, and you're using cmd.exe, then you need to escape double quotes with
+   * backslashes. Otherwise, you don't
+   * @param {string} test - The test string to be parsed.
+   * @returns a string.
+   */
   public parseTestString(test: string): string {
     if (systemUtils.useWsl() || !systemUtils.isWindows()) {
       if (systemUtils.useVscodeNode()) {
@@ -310,6 +364,10 @@ class TreeViewController implements Disposable {
     }
   }
 
+  /**
+   * It switches the endpoint of LeetCode, and then signs out and signs in again
+   * @returns a promise that resolves to a void.
+   */
   public async switchEndpoint(): Promise<void> {
     const isCnEnabled: boolean = getLeetCodeEndpoint() === Endpoint.LeetCodeCN;
     const picks: Array<IQuickItemEx<string>> = [];
@@ -350,6 +408,11 @@ class TreeViewController implements Disposable {
     }
   }
 
+  /**
+   * It shows a quick pick menu with the available sorting strategies, and if the user selects one, it
+   * updates the sorting strategy and refreshes the tree view
+   * @returns A promise that resolves to a void.
+   */
   public async switchSortingStrategy(): Promise<void> {
     const currentStrategy: SortingStrategy = getSortingStrategy();
     const picks: Array<IQuickItemEx<string>> = [];
@@ -371,6 +434,10 @@ class TreeViewController implements Disposable {
     await treeDataService.refresh();
   }
 
+  /**
+   * It adds a node to the user's favorites
+   * @param {NodeModel} node - NodeModel
+   */
   public async addFavorite(node: NodeModel): Promise<void> {
     try {
       await executeService.toggleFavorite(node, true);
@@ -383,6 +450,10 @@ class TreeViewController implements Disposable {
     }
   }
 
+  /**
+   * It removes a node from the user's favorites
+   * @param {NodeModel} node - The node that is currently selected in the tree.
+   */
   public async removeFavorite(node: NodeModel): Promise<void> {
     try {
       await executeService.toggleFavorite(node, false);
@@ -395,6 +466,10 @@ class TreeViewController implements Disposable {
     }
   }
 
+  /**
+   * It returns a list of problems
+   * @returns An array of problems.
+   */
   public async listProblems(): Promise<IProblem[]> {
     try {
       if (statusBarService.getStatus() === UserStatus.SignedOut) {

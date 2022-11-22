@@ -23,6 +23,7 @@ import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
 class LoginContorller {
   constructor() {}
 
+  /* A login function. */
   // 登录操作
   public async signIn(): Promise<void> {
     const picks: Array<IQuickItemEx<string>> = [];
@@ -165,6 +166,9 @@ class LoginContorller {
   }
 
   // 登出
+  /**
+   * It signs out the user
+   */
   public async signOut(): Promise<void> {
     try {
       await executeService.signOut();
@@ -176,11 +180,18 @@ class LoginContorller {
   }
 
   // 获取登录状态
+  /**
+   * It returns the login status of the user.
+   * @returns The login status of the user.
+   */
   public async getLoginStatus() {
     return await statusBarService.getLoginStatus();
   }
 
   // 删除所有缓存
+  /**
+   * It signs out, removes old cache, switches to the default endpoint, and refreshes the tree data
+   */
   public async deleteAllCache(): Promise<void> {
     await this.signOut();
     await executeService.removeOldCache();

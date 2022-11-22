@@ -59,6 +59,9 @@ class MainContorller {
   }
 
   // 删除缓存
+/**
+ * It deletes the cache.
+ */
   public async deleteCache() {
     await executeService.deleteCache();
   }
