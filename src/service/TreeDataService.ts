@@ -17,7 +17,7 @@ import {
   ProblemState,
   SearchSetType,
   ISubmitEvent,
-  DialogType,
+  OutPutType,
 } from "../model/Model";
 import { treeViewController } from "../controller/TreeViewController";
 import { NodeModel } from "../model/NodeModel";
@@ -171,7 +171,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     if (objData.code == 101) {
       promptForOpenOutputChannel(
         "从 https://zerotrac.github.io/leetcode_problem_rating/data.json 获取数据出错",
-        DialogType.info
+        OutPutType.info
       );
       objData = {};
     }

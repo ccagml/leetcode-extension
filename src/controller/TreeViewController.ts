@@ -32,7 +32,7 @@ import {
   SORT_ORDER,
   Endpoint,
   OpenOption,
-  DialogType,
+  OutPutType,
   DialogOptions,
 } from "../model/Model";
 import {
@@ -119,7 +119,7 @@ class TreeViewController implements Disposable {
       submissionService.show(result);
       eventService.emit("submit", submissionService.getSubmitEvent());
     } catch (error) {
-      await promptForOpenOutputChannel("提交出错了. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("提交出错了. 请查看控制台信息~", OutPutType.error);
       return;
     }
 
@@ -214,7 +214,7 @@ class TreeViewController implements Disposable {
       submissionService.show(result);
       eventService.emit("submit", submissionService.getSubmitEvent());
     } catch (error) {
-      await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
   }
   public async showFileSelectDialog(fsPath?: string): Promise<vscode.Uri[] | undefined> {
@@ -247,7 +247,7 @@ class TreeViewController implements Disposable {
       submissionService.show(result);
       eventService.emit("submit", submissionService.getSubmitEvent());
     } catch (error) {
-      await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
   }
 
@@ -269,7 +269,7 @@ class TreeViewController implements Disposable {
       submissionService.show(result);
       eventService.emit("submit", submissionService.getSubmitEvent());
     } catch (error) {
-      await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
   }
 
@@ -338,7 +338,7 @@ class TreeViewController implements Disposable {
       await leetCodeConfig.update("endpoint", endpoint, true /* UserSetting */);
       vscode.window.showInformationMessage(`Switched the endpoint to ${endpoint}`);
     } catch (error) {
-      await promptForOpenOutputChannel("切换站点出错. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("切换站点出错. 请查看控制台信息~", OutPutType.error);
     }
 
     try {
@@ -346,7 +346,7 @@ class TreeViewController implements Disposable {
       await executeService.deleteCache();
       await promptForSignIn();
     } catch (error) {
-      await promptForOpenOutputChannel("登录失败. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("登录失败. 请查看控制台信息~", OutPutType.error);
     }
   }
 
@@ -379,7 +379,7 @@ class TreeViewController implements Disposable {
         fileButtonService.refresh();
       }
     } catch (error) {
-      await promptForOpenOutputChannel("添加喜欢题目失败. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("添加喜欢题目失败. 请查看控制台信息~", OutPutType.error);
     }
   }
 
@@ -391,7 +391,7 @@ class TreeViewController implements Disposable {
         fileButtonService.refresh();
       }
     } catch (error) {
-      await promptForOpenOutputChannel("移除喜欢题目失败. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("移除喜欢题目失败. 请查看控制台信息~", OutPutType.error);
     }
   }
 
@@ -430,7 +430,7 @@ class TreeViewController implements Disposable {
       }
       return problems.reverse();
     } catch (error) {
-      await promptForOpenOutputChannel("获取题目失败. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("获取题目失败. 请查看控制台信息~", OutPutType.error);
       return [];
     }
   }
@@ -652,7 +652,7 @@ class TreeViewController implements Disposable {
       solutionService.show(unescapeJS(solution));
     } catch (error) {
       logOutput.appendLine(error.toString());
-      await promptForOpenOutputChannel("Failed to fetch the top voted solution. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("Failed to fetch the top voted solution. 请查看控制台信息~", OutPutType.error);
     }
   }
 
@@ -674,7 +674,7 @@ class TreeViewController implements Disposable {
       console.log(query_result);
     } catch (error) {
       logOutput.appendLine(error.toString());
-      await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", OutPutType.error);
     }
   }
 
@@ -873,7 +873,7 @@ class TreeViewController implements Disposable {
 
       await Promise.all(promises);
     } catch (error) {
-      await promptForOpenOutputChannel(`${error} 请查看控制台信息~`, DialogType.error);
+      await promptForOpenOutputChannel(`${error} 请查看控制台信息~`, OutPutType.error);
     }
   }
 
@@ -953,7 +953,7 @@ class TreeViewController implements Disposable {
       eventService.emit("searchUserContest", tt);
     } catch (error) {
       logOutput.appendLine(error.toString());
-      await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", OutPutType.error);
     }
   }
   public async searchToday(): Promise<void> {
@@ -980,7 +980,7 @@ class TreeViewController implements Disposable {
       }
     } catch (error) {
       logOutput.appendLine(error.toString());
-      await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", OutPutType.error);
     }
   }
 

@@ -24,7 +24,7 @@ import { markdownService } from "./service/MarkdownService";
 import { mainContorller } from "./controller/MainController";
 import { loginContorller } from "./controller/LoginController";
 import { getLeetCodeEndpoint } from "./utils/ConfigUtils";
-import { DialogType } from "./model/Model";
+import { OutPutType } from "./model/Model";
 
 // 激活插件
 /**
@@ -89,7 +89,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     logOutput.appendLine(error.toString());
     promptForOpenOutputChannel(
       "Extension initialization failed. Please open output channel for details.",
-      DialogType.error
+      OutPutType.error
     );
   }
 }

@@ -13,7 +13,7 @@ import * as os from "os";
 import * as path from "path";
 import { ExtensionContext } from "vscode";
 import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace } from "vscode";
-import { DialogOptions, DialogType, Endpoint, IProblem, leetcodeHasInited } from "../model/Model";
+import { DialogOptions, OutPutType, Endpoint, IProblem, leetcodeHasInited } from "../model/Model";
 import { executeCommand, executeCommandWithProgress } from "../utils/CliUtils";
 import { getNodePath } from "../utils/ConfigUtils";
 import { openUrl, promptForOpenOutputChannel } from "../utils/OutputUtils";
@@ -86,7 +86,7 @@ class ExecuteService implements Disposable {
     try {
       await this.executeCommandEx(this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "cache", "-d"]);
     } catch (error) {
-      await promptForOpenOutputChannel("Failed to delete cache. 请查看控制台信息~", DialogType.error);
+      await promptForOpenOutputChannel("Failed to delete cache. 请查看控制台信息~", OutPutType.error);
     }
   }
 

@@ -10,7 +10,7 @@
 import * as cp from "child_process";
 import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
-import { DialogType, Endpoint, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
+import { OutPutType, Endpoint, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
 import { createEnvOption } from "../utils/CliUtils";
 import { logOutput, promptForOpenOutputChannel } from "../utils/OutputUtils";
 import { eventService } from "../service/EventService";
@@ -160,7 +160,7 @@ class LoginContorller {
         window.showInformationMessage(`${inMessage} 成功`);
       }
     } catch (error) {
-      promptForOpenOutputChannel(`${inMessage}失败. 请看看控制台输出信息`, DialogType.error);
+      promptForOpenOutputChannel(`${inMessage}失败. 请看看控制台输出信息`, OutPutType.error);
     }
   }
 
@@ -171,7 +171,7 @@ class LoginContorller {
       window.showInformationMessage("成功登出");
       eventService.emit("statusChanged", UserStatus.SignedOut, undefined);
     } catch (error) {
-      // promptForOpenOutputChannel(`Failed to signOut. Please open the output channel for details`, DialogType.error);
+      // promptForOpenOutputChannel(`Failed to signOut. Please open the output channel for details`, OutPutType.error);
     }
   }
 

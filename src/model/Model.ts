@@ -252,7 +252,7 @@ export enum OpenOption {
   addToWorkspace = "添加到工作空间",
 }
 
-export enum DialogType {
+export enum OutPutType {
   info = "info",
   warning = "warning",
   error = "error",
