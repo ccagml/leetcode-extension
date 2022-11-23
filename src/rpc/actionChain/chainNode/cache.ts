@@ -15,6 +15,7 @@ import { storageUtils } from "../../utils/storageUtils";
 import { commUtils } from "../../utils/commUtils";
 import { sessionUtils } from "../../utils/sessionUtils";
 
+/* It's a plugin that caches the data it gets from the next plugin in the chain */
 class CachePlugin extends ChainNodeBase {
   id = 50;
   name = "cache";
@@ -23,6 +24,7 @@ class CachePlugin extends ChainNodeBase {
     super();
   }
 
+  /* Checking if the translation config has changed. If it has, it clears the cache. */
   clearCacheIfTchanged = (needTranslation) => {
     const translationConfig = storageUtils.getCache(commUtils.KEYS.translation);
     if (!translationConfig || translationConfig["useEndpointTranslation"] != needTranslation) {
@@ -33,6 +35,8 @@ class CachePlugin extends ChainNodeBase {
     }
   };
 
+  /* A method that is used to get problems from the cache. If the cache is empty, it will get the
+problems from the next layer. */
   public getProblems = (needTranslation, cb) => {
     this.clearCacheIfTchanged(needTranslation);
     const problems = storageUtils.getCache(commUtils.KEYS.problems);
@@ -46,9 +50,9 @@ class CachePlugin extends ChainNodeBase {
     });
   };
 
-  /**
-   * getRatingOnline
-   */
+  /* A method that is used to get problems from the cache. If the cache is empty, it will get the
+problems from the next layer. */
+
   public getRatingOnline = (cb) => {
     const cacheRantingData = storageUtils.getCache(commUtils.KEYS.ranting_path);
     if (cacheRantingData) {
@@ -67,6 +71,7 @@ class CachePlugin extends ChainNodeBase {
     });
   };
 
+  /* A cache layer for the getProblem function. */
   public getProblem = (problem, needTranslation, cb) => {
     this.clearCacheIfTchanged(needTranslation);
     const k = commUtils.KEYS.problem(problem);
@@ -95,6 +100,7 @@ class CachePlugin extends ChainNodeBase {
     return storageUtils.setCache(commUtils.KEYS.problem(problem), _problem);
   };
 
+  /* Updating the problem in the cache. */
   updateProblem = (problem, kv) => {
     const problems = storageUtils.getCache(commUtils.KEYS.problems);
     if (!problems) return false;
@@ -106,6 +112,7 @@ class CachePlugin extends ChainNodeBase {
     return storageUtils.setCache(commUtils.KEYS.problems, problems);
   };
 
+  /* Logging out the user and then logging in the user. */
   login = (user, cb) => {
     this.logout(user, false);
     this.next.login(user, function (e, user) {
@@ -115,10 +122,10 @@ class CachePlugin extends ChainNodeBase {
     });
   };
 
+  /* Logging out the user and then logging in the user. */
   logout = (user, purge) => {
     if (!user) user = sessionUtils.getUser();
     if (purge) sessionUtils.deleteUser();
-    // NOTE: need invalidate any user related cache
     sessionUtils.deleteCodingSession();
     return user;
   };

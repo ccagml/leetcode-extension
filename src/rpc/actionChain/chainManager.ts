@@ -13,6 +13,7 @@ import { storageUtils } from "../utils/storageUtils";
 import { commUtils } from "../utils/commUtils";
 import { ChainNodeBase } from "./chainNodeBase";
 
+/* It's a class that manages a chain of plugins */
 export class ChainManager {
   id;
   name;
@@ -25,10 +26,19 @@ export class ChainManager {
 
   constructor() {}
 
+  /**
+   * Return the head of the chain.
+   * @returns The head of the chain.
+   */
   public getChainHead(): ChainNodeBase {
     return this.head;
   }
 
+  /**
+   * It loads all the plugins in the directory and initializes them.
+   * @param {ChainNodeBase | undefined} head - The first node in the chain of responsibility.
+   * @returns The return value is a boolean.
+   */
   public init(head: ChainNodeBase | undefined): Object | undefined {
     if (head) {
       this.head = head;
@@ -72,6 +82,9 @@ export class ChainManager {
     return true;
   }
 
+  /**
+   * For each plugin in the plugins array, call the save function.
+   */
   public save_all(): void {
     for (let p of this.plugins) {
       p.save();

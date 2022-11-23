@@ -8,7 +8,7 @@
  */
 
 import * as vscode from "vscode";
-import { DialogOptions, DialogType } from "../model/Model";
+import { DialogOptions, OutPutType } from "../model/Model";
 import { getLeetCodeEndpoint, getVsCodeConfig } from "./ConfigUtils";
 
 export async function openUrl(url: string): Promise<void> {
@@ -45,7 +45,7 @@ export async function promptForSignIn(): Promise<void> {
   );
   switch (choice) {
     case DialogOptions.yes:
-      await vscode.commands.executeCommand("leetcode.signin");
+      await vscode.commands.executeCommand("lcpr.signin");
       break;
     case DialogOptions.singUp:
       if (getLeetCodeEndpoint()) {
@@ -59,16 +59,16 @@ export async function promptForSignIn(): Promise<void> {
   }
 }
 
-export async function promptForOpenOutputChannel(message: string, type: DialogType): Promise<void> {
+export async function promptForOpenOutputChannel(message: string, type: OutPutType): Promise<void> {
   let result: vscode.MessageItem | undefined;
   switch (type) {
-    case DialogType.info:
+    case OutPutType.info:
       result = await vscode.window.showInformationMessage(message, DialogOptions.open, DialogOptions.no);
       break;
-    case DialogType.warning:
+    case OutPutType.warning:
       result = await vscode.window.showWarningMessage(message, DialogOptions.open, DialogOptions.no);
       break;
-    case DialogType.error:
+    case OutPutType.error:
       result = await vscode.window.showErrorMessage(message, DialogOptions.open, DialogOptions.no);
       break;
     default:

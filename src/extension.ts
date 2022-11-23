@@ -24,9 +24,15 @@ import { markdownService } from "./service/MarkdownService";
 import { mainContorller } from "./controller/MainController";
 import { loginContorller } from "./controller/LoginController";
 import { getLeetCodeEndpoint } from "./utils/ConfigUtils";
-import { DialogType } from "./model/Model";
+import { BricksType, OutPutType } from "./model/Model";
+import { bricksDataService } from "./service/BricksDataService";
+import { bricksViewController } from "./controller/BricksViewController";
 
 // 激活插件
+/**
+ * The main function of the extension. It is called when the extension is activated.
+ * @param {ExtensionContext} context - ExtensionContext
+ */
 export async function activate(context: ExtensionContext): Promise<void> {
   try {
     // 初始化控制器
@@ -34,7 +40,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     // 检查node环境
     await mainContorller.checkNodeEnv(context);
     // 事件监听
-    eventController.add_event();
+    eventController.addEvent();
 
     // 资源管理
     context.subscriptions.push(
@@ -48,47 +54,61 @@ export async function activate(context: ExtensionContext): Promise<void> {
       fileButtonController,
       treeViewController,
       window.registerFileDecorationProvider(treeItemDecorationService),
-      window.createTreeView("leetCodeExplorer", {
-        treeDataProvider: treeDataService,
-        showCollapseAll: true,
-      }),
-      commands.registerCommand("leetcode.deleteCache", () => mainContorller.deleteCache()),
-      commands.registerCommand("leetcode.toggleLeetCodeCn", () => treeViewController.switchEndpoint()),
-      commands.registerCommand("leetcode.signin", () => loginContorller.signIn()),
-      commands.registerCommand("leetcode.signout", () => loginContorller.signOut()),
-      commands.registerCommand("leetcode.previewProblem", (node: NodeModel) => treeViewController.previewProblem(node)),
-      commands.registerCommand("leetcode.showProblem", (node: NodeModel) => treeViewController.showProblem(node)),
-      commands.registerCommand("leetcode.pickOne", () => treeViewController.pickOne()),
-      commands.registerCommand("leetcode.deleteAllCache", () => loginContorller.deleteAllCache()),
+      window.createTreeView("QuestionExplorer", { treeDataProvider: treeDataService, showCollapseAll: true }),
+      window.createTreeView("BricksExplorer", { treeDataProvider: bricksDataService, showCollapseAll: true }),
+      commands.registerCommand("lcpr.deleteCache", () => mainContorller.deleteCache()),
+      commands.registerCommand("lcpr.toggleLeetCodeCn", () => treeViewController.switchEndpoint()),
+      commands.registerCommand("lcpr.signin", () => loginContorller.signIn()),
+      commands.registerCommand("lcpr.signout", () => loginContorller.signOut()),
+      commands.registerCommand("lcpr.previewProblem", (node: NodeModel) => treeViewController.previewProblem(node)),
+      commands.registerCommand("lcpr.showProblem", (node: NodeModel) => treeViewController.showProblem(node)),
+      commands.registerCommand("lcpr.pickOne", () => treeViewController.pickOne()),
+      commands.registerCommand("lcpr.deleteAllCache", () => loginContorller.deleteAllCache()),
       commands.registerCommand("leetcode.searchScoreRange", () => treeViewController.searchScoreRange()),
-      commands.registerCommand("leetcode.searchProblem", () => treeViewController.searchProblem()),
-      commands.registerCommand("leetcode.showSolution", (input: NodeModel | Uri) =>
-        treeViewController.showSolution(input)
+      commands.registerCommand("lcpr.searchProblem", () => treeViewController.searchProblem()),
+      commands.registerCommand("lcpr.showSolution", (input: NodeModel | Uri) => treeViewController.showSolution(input)),
+      commands.registerCommand("lcpr.refreshExplorer", () => treeDataService.refresh()),
+      commands.registerCommand("lcpr.testSolution", (uri?: Uri) => treeViewController.testSolution(uri)),
+      commands.registerCommand("lcpr.testCaseDef", (uri?, allCase?) => treeViewController.testCaseDef(uri, allCase)),
+      commands.registerCommand("lcpr.tesCaseArea", (uri, testCase?) => treeViewController.tesCaseArea(uri, testCase)),
+      commands.registerCommand("lcpr.submitSolution", (uri?: Uri) => treeViewController.submitSolution(uri)),
+      commands.registerCommand("lcpr.setDefaultLanguage", () => treeViewController.setDefaultLanguage()),
+      commands.registerCommand("lcpr.addFavorite", (node: NodeModel) => treeViewController.addFavorite(node)),
+      commands.registerCommand("lcpr.removeFavorite", (node: NodeModel) => treeViewController.removeFavorite(node)),
+      commands.registerCommand("lcpr.problems.sort", () => treeViewController.switchSortingStrategy()),
+      commands.registerCommand("lcpr.setBricksType0", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_0)
       ),
-      commands.registerCommand("leetcode.refreshExplorer", () => treeDataService.refresh()),
-      commands.registerCommand("leetcode.testSolution", (uri?: Uri) => treeViewController.testSolution(uri)),
-      commands.registerCommand("leetcode.testSolutionDefault", (uri?: Uri, allCase?: boolean) =>
-        treeViewController.testSolutionDefault(uri, allCase)
+      commands.registerCommand("lcpr.setBricksType1", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_1)
       ),
-      commands.registerCommand("leetcode.testSolutionArea", (uri?: Uri, testCase?: string) =>
-        treeViewController.testSolutionArea(uri, testCase)
+      commands.registerCommand("lcpr.setBricksType2", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_2)
       ),
-      commands.registerCommand("leetcode.submitSolution", (uri?: Uri) => treeViewController.submitSolution(uri)),
-      commands.registerCommand("leetcode.switchDefaultLanguage", () => treeViewController.switchDefaultLanguage()),
-      commands.registerCommand("leetcode.addFavorite", (node: NodeModel) => treeViewController.addFavorite(node)),
-      commands.registerCommand("leetcode.removeFavorite", (node: NodeModel) => treeViewController.removeFavorite(node)),
-      commands.registerCommand("leetcode.problems.sort", () => treeViewController.switchSortingStrategy())
+      commands.registerCommand("lcpr.setBricksType3", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_3)
+      ),
+      commands.registerCommand("lcpr.setBricksType4", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_4)
+      ),
+      commands.registerCommand("lcpr.setBricksType5", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_5)
+      ),
+      commands.registerCommand("lcpr.setBricksType6", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_6)
+      )
     );
 
     // 设置站点
     await executeService.switchEndpoint(getLeetCodeEndpoint());
     // 获取登录状态
     await loginContorller.getLoginStatus();
+    await bricksViewController.initialize();
   } catch (error) {
     logOutput.appendLine(error.toString());
     promptForOpenOutputChannel(
       "Extension initialization failed. Please open output channel for details.",
-      DialogType.error
+      OutPutType.error
     );
   }
 }

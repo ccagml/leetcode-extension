@@ -24,6 +24,7 @@ class RetryPlugin extends ChainNodeBase {
       (this.count[name] || 0) < configUtils.autologin.retry
     );
   };
+  /* A wrapper for the API. */
   init = () => {
     const names = [
       "activateSession",
@@ -67,6 +68,8 @@ class RetryPlugin extends ChainNodeBase {
     }
   };
 
+  /* The above code is checking if the user is logged in. If the user is logged in, it will call the next
+login function. */
   // leetcode.com is limiting one session alive in the same time,
   // which means once you login on web, your cli session will get
   // expired immediately. In that case we will try to re-login in

@@ -53,6 +53,14 @@ class SolutionDiscuss extends ChainNodeBase {
 let URL_DISCUSSES = "https://leetcode.com/graphql";
 let URL_DISCUSS = "https://leetcode.com/problems/$slug/discuss/$id";
 
+/**
+ * It takes a problem object, a language, and a callback. It then makes a request to the LeetCode
+ * Discuss API to get the top voted solution for that problem in that language
+ * @param problem - the problem object
+ * @param lang - The language of the solution.
+ * @param cb - callback function
+ * @returns A solution to the problem.
+ */
 function getSolution(problem, lang, cb) {
   if (!problem) return cb();
 

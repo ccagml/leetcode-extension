@@ -13,6 +13,7 @@ import { UserStatus } from "../model/Model";
 import { ISubmitEvent } from "../model/Model";
 import { statusBarService } from "../service/StatusBarService";
 import { treeDataService } from "../service/TreeDataService";
+import { bricksDataService } from "./BricksDataService";
 
 class EventService extends EventEmitter {
   constructor() {
@@ -22,21 +23,28 @@ class EventService extends EventEmitter {
   /**
    * 监听事件
    */
-  public add_event() {
+  public addEvent() {
     this.on("statusChanged", (userStatus: UserStatus, userName?: string) => {
       statusBarService.update_status(userStatus, userName);
       statusBarService.update();
       treeDataService.cleanUserScore();
       treeDataService.refresh();
+      bricksDataService.refresh();
     });
     this.on("submit", (e: ISubmitEvent) => {
       treeDataService.checkSubmit(e);
+      bricksDataService.checkSubmit(e);
     });
 
     this.on("searchUserContest", (tt) => {
       statusBarService.update_UserContestInfo(tt);
       statusBarService.update();
       treeDataService.refresh();
+      bricksDataService.refresh();
+    });
+
+    this.on("explorerNodeMapSet", () => {
+      bricksDataService.refresh();
     });
   }
 }

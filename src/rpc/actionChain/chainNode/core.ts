@@ -21,6 +21,8 @@ function hasTag(o, tag) {
   return Array.isArray(o) && o.some((x) => x.indexOf(tag.toLowerCase()) >= 0);
 }
 
+/* It's a class that extends the ChainNodeBase class, and it has a bunch of methods that are called by
+the LeetCode CLI */
 class CorePlugin extends ChainNodeBase {
   id = 99999999;
   name = "core";
@@ -29,6 +31,7 @@ class CorePlugin extends ChainNodeBase {
     super();
   }
 
+  /* It's a method that filters the problems. */
   filterProblems = (opts, cb) => {
     this.getProblems(!opts.dontTranslate, function (e, problems) {
       if (e) return cb(e);
@@ -48,6 +51,7 @@ class CorePlugin extends ChainNodeBase {
       return cb(null, problems);
     });
   };
+  /* It's a method that gets the problem. */
   public getProblem = (keyword, needTranslation, cb) => {
     let that = this;
     this.getProblems(needTranslation, function (e, problems) {
@@ -68,6 +72,7 @@ class CorePlugin extends ChainNodeBase {
     });
   };
 
+  /* It's a method that stars the problem. */
   starProblem = (problem, starred, cb) => {
     if (problem.starred === starred) {
       return cb(null, starred);
@@ -76,6 +81,7 @@ class CorePlugin extends ChainNodeBase {
     this.next.starProblem(problem, starred, cb);
   };
 
+  /* It's a method that exports the problem. */
   exportProblem = (problem, opts) => {
     const data = _.extend({}, problem);
 
@@ -140,6 +146,7 @@ const isACed = (x) => x.state === "ac";
 const isLocked = (x) => x.locked;
 const isStarred = (x) => x.starred;
 
+/* It's a dictionary that maps the query to the function that filters the problems. */
 const QUERY_HANDLERS = {
   e: isLevel,
   E: _.negate(isLevel),

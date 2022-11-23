@@ -20,6 +20,10 @@ class MainContorller {
   /**
    * 检查运行环境
    */
+  /**
+   * It checks if the environment meets the requirements
+   * @param {ExtensionContext} context - ExtensionContext
+   */
   public async checkNodeEnv(context: ExtensionContext) {
     if (!systemUtils.useVscodeNode()) {
       if (!(await executeService.checkNodeEnv(context))) {
@@ -28,6 +32,10 @@ class MainContorller {
     }
   }
 
+  /**
+   * It takes the version number from the package.json file and converts it to a number
+   * @param {ExtensionContext} context - ExtensionContext
+   */
   public setGlobal(context: ExtensionContext) {
     let cur_version: string = context.extension.packageJSON.version || "1.0.0";
     let cur_version_arr: Array<string> = cur_version.split(".");
@@ -40,12 +48,20 @@ class MainContorller {
   }
 
   // 初始化上下文
+  /**
+   * This function sets the global variable and then calls the initialize function of the
+   * treeDataService.
+   * @param {ExtensionContext} context - ExtensionContext
+   */
   public initialize(context: ExtensionContext) {
     this.setGlobal(context);
     treeDataService.initialize(context);
   }
 
   // 删除缓存
+/**
+ * It deletes the cache.
+ */
   public async deleteCache() {
     await executeService.deleteCache();
   }

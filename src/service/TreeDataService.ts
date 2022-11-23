@@ -17,7 +17,7 @@ import {
   ProblemState,
   SearchSetType,
   ISubmitEvent,
-  DialogType,
+  OutPutType,
 } from "../model/Model";
 import { treeViewController } from "../controller/TreeViewController";
 import { NodeModel } from "../model/NodeModel";
@@ -40,8 +40,8 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     this.context = context;
   }
 
-  public checkSubmit(e: ISubmitEvent) {
-    treeViewController.checkSubmit(e);
+  public async checkSubmit(e: ISubmitEvent) {
+    await treeViewController.checkSubmit(e);
   }
 
   public cleanUserScore() {
@@ -60,7 +60,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
         label: element.name,
         collapsibleState: vscode.TreeItemCollapsibleState.None,
         command: {
-          command: "leetcode.signin",
+          command: "lcpr.signin",
           title: "未登录",
         },
       };
@@ -171,7 +171,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     if (objData.code == 101) {
       promptForOpenOutputChannel(
         "从 https://zerotrac.github.io/leetcode_problem_rating/data.json 获取数据出错",
-        DialogType.info
+        OutPutType.info
       );
       objData = {};
     }

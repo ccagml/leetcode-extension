@@ -25,7 +25,7 @@ export const loginArgsMapping: Map<string, string> = new Map([
   ["LinkedIn", "-i"],
 ]);
 
-export const languages: string[] = [
+export const AllProgramLanguage: string[] = [
   "bash",
   "c",
   "cpp",
@@ -140,6 +140,26 @@ export const defaultProblem: IProblem = {
   todayData: undefined,
 };
 
+export enum BricksNormalId {
+  Have = "bricksHave", // 有活
+  HaveDesc = "别吹牛了,工头让我叫你快去搬砖了",
+  No = "bricksNo", // 没活
+  NoDesc = "工头让你去上面那个工地,过几天再回来",
+  Today = "bricksToday",
+  TodayDesc = "今天搬好的砖",
+}
+
+export enum BricksType {
+  TYPE_0 = 0,
+  TYPE_1 = 1,
+  TYPE_2 = 2,
+  TYPE_3 = 3,
+  TYPE_4 = 4,
+  TYPE_5 = 5,
+  TYPE_6 = 6,
+  TYPE_7 = 7,
+}
+
 export enum Category {
   All = "All",
   Difficulty = "Difficulty",
@@ -252,7 +272,7 @@ export enum OpenOption {
   addToWorkspace = "添加到工作空间",
 }
 
-export enum DialogType {
+export enum OutPutType {
   info = "info",
   warning = "warning",
   error = "error",

@@ -37,7 +37,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       temp_result.push(
         new vscode.CodeLens(range, {
           title: "Submit",
-          command: "leetcode.submitSolution",
+          command: "lcpr.submitSolution",
           arguments: [document.uri],
         })
       );
@@ -47,7 +47,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       temp_result.push(
         new vscode.CodeLens(range, {
           title: "case",
-          command: "leetcode.testSolutionDefault",
+          command: "lcpr.testCaseDef",
           arguments: [document.uri, false],
         })
       );
@@ -56,7 +56,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       temp_result.push(
         new vscode.CodeLens(range, {
           title: "allcase",
-          command: "leetcode.testSolutionDefault",
+          command: "lcpr.testCaseDef",
           arguments: [document.uri, true],
         })
       );
@@ -66,7 +66,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       temp_result.push(
         new vscode.CodeLens(range, {
           title: "Test",
-          command: "leetcode.testSolution",
+          command: "lcpr.testSolution",
           arguments: [document.uri],
         })
       );
@@ -76,7 +76,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       temp_result.push(
         new vscode.CodeLens(range, {
           title: node.isFavorite ? "Unstar" : "Star",
-          command: node.isFavorite ? "leetcode.removeFavorite" : "leetcode.addFavorite",
+          command: node.isFavorite ? "lcpr.removeFavorite" : "lcpr.addFavorite",
           arguments: [node],
         })
       );
@@ -86,7 +86,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       temp_result.push(
         new vscode.CodeLens(range, {
           title: "Solution",
-          command: "leetcode.showSolution",
+          command: "lcpr.showSolution",
           arguments: [document.uri],
         })
       );
@@ -96,7 +96,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       temp_result.push(
         new vscode.CodeLens(range, {
           title: "Description",
-          command: "leetcode.previewProblem",
+          command: "lcpr.previewProblem",
           arguments: [document.uri],
         })
       );
@@ -112,7 +112,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
 
     return new vscode.CodeLens(range, {
       title: "case",
-      command: "leetcode.testSolutionArea",
+      command: "lcpr.tesCaseArea",
       arguments: [document.uri, testCase],
     });
   }

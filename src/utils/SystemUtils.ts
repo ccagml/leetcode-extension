@@ -70,3 +70,17 @@ export async function getNodeIdFromFile(fsPath: string): Promise<string> {
 
   return id;
 }
+
+//获取当天零点的时间
+export function getDayStart(): number {
+  return new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000;
+}
+
+//获取当天23:59:59的时间
+export function getDayEnd(): number {
+  return getDayStart() + 86399;
+}
+
+export function getDayNow(): number {
+  return Math.round(new Date().getTime() / 1000);
+}

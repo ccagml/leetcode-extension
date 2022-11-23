@@ -2,11 +2,11 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode problem rating",
     "description": "为LeetCode题目难度进行打分。避免只有简单、中等、困难三种难度",
-    "version": "2.1.0",
+    "version": "2.2.1",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
-    "icon": "resources/LeetCode.png",
+    "icon": "resources/LCPR.png",
     "engines": {
         "vscode": "^1.57.0"
     },
@@ -17,7 +17,8 @@
     "homepage": "https://github.com/ccagml/vscode-leetcode-problem-rating/README.md",
     "categories": [
         "Other",
-        "Snippets"
+        "Snippets",
+        "Education"
     ],
     "keywords": [
         "leetcode",
@@ -26,95 +27,135 @@
     ],
     "preview": true,
     "activationEvents": [
-        "onCommand:leetcode.toggleLeetCodeCn",
-        "onCommand:leetcode.signin",
-        "onCommand:leetcode.signout",
-        "onCommand:leetcode.refreshExplorer",
-        "onCommand:leetcode.pickOne",
-        "onCommand:leetcode.deleteAllCache",
-        "onCommand:leetcode.showProblem",
-        "onCommand:leetcode.previewProblem",
-        "onCommand:leetcode.searchProblem",
-        "onCommand:leetcode.testSolution",
-        "onCommand:leetcode.submitSolution",
-        "onCommand:leetcode.switchDefaultLanguage",
-        "onCommand:leetcode.problems.sort",
-        "onView:leetCodeExplorer"
+        "onCommand:lcpr.toggleLeetCodeCn",
+        "onCommand:lcpr.signin",
+        "onCommand:lcpr.signout",
+        "onCommand:lcpr.refreshExplorer",
+        "onCommand:lcpr.pickOne",
+        "onCommand:lcpr.deleteAllCache",
+        "onCommand:lcpr.showProblem",
+        "onCommand:lcpr.previewProblem",
+        "onCommand:lcpr.searchProblem",
+        "onCommand:lcpr.testSolution",
+        "onCommand:lcpr.submitSolution",
+        "onCommand:lcpr.setDefaultLanguage",
+        "onCommand:lcpr.problems.sort",
+        "onView:QuestionExplorer"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "commands": [
             {
-                "command": "leetcode.deleteCache",
+                "command": "lcpr.deleteCache",
                 "title": "Delete Cache",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.toggleLeetCodeCn",
+                "command": "lcpr.toggleLeetCodeCn",
                 "title": "Switch Endpoint",
                 "category": "LeetCode",
                 "icon": "$(globe)"
             },
             {
-                "command": "leetcode.signin",
+                "command": "lcpr.signin",
                 "title": "Sign In",
                 "category": "LeetCode",
                 "icon": "$(sign-in)"
             },
             {
-                "command": "leetcode.signout",
+                "command": "lcpr.signout",
                 "title": "Sign Out",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.refreshExplorer",
+                "command": "lcpr.refreshExplorer",
                 "title": "Refresh",
                 "category": "LeetCode",
                 "icon": "$(refresh)"
             },
             {
-                "command": "leetcode.pickOne",
+                "command": "lcpr.pickOne",
                 "title": "Pick One",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.deleteAllCache",
+                "command": "lcpr.deleteAllCache",
                 "title": "deleteAllCache",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.showProblem",
+                "command": "lcpr.showProblem",
                 "title": "Show Problem",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.previewProblem",
+                "command": "lcpr.previewProblem",
                 "title": "Preview Problem",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.searchProblem",
+                "command": "lcpr.setBricksType0",
+                "title": "设置不出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType1",
+                "title": "最后一次提交在14天前,出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType2",
+                "title": "最后一次提交在7天前,出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType3",
+                "title": "最后一次提交在5天前,出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType4",
+                "title": "最后一次提交在3天前,出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType5",
+                "title": "最后一次提交在2天前,出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType6",
+                "title": "最后一次提交在1天前,出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType7",
+                "title": "最后一次提交在1天前,出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.searchProblem",
                 "title": "Search Problem",
                 "category": "LeetCode",
                 "icon": "$(search)"
             },
             {
-                "command": "leetcode.showSolution",
-                "title": "Show Top Voted Solution",
+                "command": "lcpr.showSolution",
+                "title": "获取题解",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.testSolution",
+                "command": "lcpr.testSolution",
                 "title": "Test in LeetCode",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.submitSolution",
+                "command": "lcpr.submitSolution",
                 "title": "Submit to LeetCode",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.addFavorite",
+                "command": "lcpr.addFavorite",
                 "title": "Add to Favorite List",
                 "category": "LeetCode",
                 "icon": {
@@ -123,7 +164,7 @@
                 }
             },
             {
-                "command": "leetcode.removeFavorite",
+                "command": "lcpr.removeFavorite",
                 "title": "Remove from Favorite List",
                 "category": "LeetCode",
                 "icon": {
@@ -132,12 +173,12 @@
                 }
             },
             {
-                "command": "leetcode.switchDefaultLanguage",
+                "command": "lcpr.setDefaultLanguage",
                 "title": "Switch Default Language",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.problems.sort",
+                "command": "lcpr.problems.sort",
                 "title": "Sort Problems",
                 "category": "LeetCode",
                 "icon": "$(sort-precedence)"
@@ -146,147 +187,244 @@
         "viewsContainers": {
             "activitybar": [
                 {
-                    "id": "leetcode",
-                    "title": "LeetCode",
-                    "icon": "resources/LeetCode.svg"
+                    "id": "lcpr_bar",
+                    "title": "LCPR",
+                    "icon": "resources/LCPR.svg"
                 }
             ]
         },
         "views": {
-            "leetcode": [
+            "lcpr_bar": [
                 {
-                    "id": "leetCodeExplorer",
+                    "id": "QuestionExplorer",
                     "name": "Problems"
+                },
+                {
+                    "id": "BricksExplorer",
+                    "name": "搬砖工地"
                 }
             ]
         },
         "menus": {
             "view/title": [
                 {
-                    "command": "leetcode.toggleLeetCodeCn",
-                    "when": "view == leetCodeExplorer",
+                    "command": "lcpr.toggleLeetCodeCn",
+                    "when": "view == QuestionExplorer",
                     "group": "navigation@0"
                 },
                 {
-                    "command": "leetcode.signin",
-                    "when": "view == leetCodeExplorer",
+                    "command": "lcpr.signin",
+                    "when": "view == QuestionExplorer",
                     "group": "navigation@1"
                 },
                 {
-                    "command": "leetcode.searchProblem",
-                    "when": "view == leetCodeExplorer",
+                    "command": "lcpr.searchProblem",
+                    "when": "view == QuestionExplorer",
                     "group": "navigation@2"
                 },
                 {
-                    "command": "leetcode.refreshExplorer",
-                    "when": "view == leetCodeExplorer",
+                    "command": "lcpr.refreshExplorer",
+                    "when": "view == QuestionExplorer",
                     "group": "navigation@3"
                 },
                 {
-                    "command": "leetcode.pickOne",
-                    "when": "view == leetCodeExplorer",
+                    "command": "lcpr.pickOne",
+                    "when": "view == QuestionExplorer",
                     "group": "overflow@0"
                 },
                 {
-                    "command": "leetcode.problems.sort",
-                    "when": "view == leetCodeExplorer",
+                    "command": "lcpr.problems.sort",
+                    "when": "view == QuestionExplorer",
                     "group": "overflow@1"
                 },
                 {
-                    "command": "leetcode.deleteAllCache",
-                    "when": "view == leetCodeExplorer",
+                    "command": "lcpr.deleteAllCache",
+                    "when": "view == QuestionExplorer",
                     "group": "overflow@2"
                 }
             ],
             "view/item/context": [
                 {
-                    "command": "leetcode.previewProblem",
-                    "when": "view == leetCodeExplorer && viewItem =~ /problem*/",
+                    "command": "lcpr.previewProblem",
+                    "when": "view == QuestionExplorer && viewItem =~ /problem*/",
                     "group": "leetcode@1"
                 },
                 {
-                    "command": "leetcode.showProblem",
-                    "when": "view == leetCodeExplorer && viewItem =~ /problem*/",
+                    "command": "lcpr.showProblem",
+                    "when": "view == QuestionExplorer && viewItem =~ /problem*/",
                     "group": "leetcode@2"
                 },
                 {
-                    "command": "leetcode.showSolution",
-                    "when": "view == leetCodeExplorer && viewItem =~ /problem*/",
+                    "command": "lcpr.showSolution",
+                    "when": "view == QuestionExplorer && viewItem =~ /problem*/",
                     "group": "leetcode@3"
                 },
                 {
-                    "command": "leetcode.addFavorite",
-                    "when": "view == leetCodeExplorer && viewItem == problem",
+                    "submenu": "lcpr.setBricksType_sub",
+                    "when": "view == QuestionExplorer && viewItem =~ /problem*/",
+                    "group": "leetcode@4"
+                },
+                {
+                    "command": "lcpr.addFavorite",
+                    "when": "view == QuestionExplorer && viewItem == problem",
                     "group": "inline"
                 },
                 {
-                    "command": "leetcode.removeFavorite",
-                    "when": "view == leetCodeExplorer && viewItem == problem-favorite",
+                    "command": "lcpr.removeFavorite",
+                    "when": "view == QuestionExplorer && viewItem == problem-favorite",
                     "group": "inline"
+                },
+                {
+                    "command": "lcpr.previewProblem",
+                    "when": "view == BricksExplorer && viewItem == bricks",
+                    "group": "leetcode@1"
+                },
+                {
+                    "command": "lcpr.showProblem",
+                    "when": "view == BricksExplorer && viewItem == bricks",
+                    "group": "leetcode@2"
+                },
+                {
+                    "command": "lcpr.showSolution",
+                    "when": "view == BricksExplorer && viewItem == bricks",
+                    "group": "leetcode@3"
+                },
+                {
+                    "submenu": "lcpr.setBricksType_sub1",
+                    "when": "view == BricksExplorer && viewItem == bricks",
+                    "group": "leetcode@4"
                 }
             ],
             "commandPalette": [
                 {
-                    "command": "leetcode.showProblem",
+                    "command": "lcpr.showProblem",
                     "when": "never"
                 },
                 {
-                    "command": "leetcode.showSolution",
+                    "command": "lcpr.showSolution",
                     "when": "never"
                 },
                 {
-                    "command": "leetcode.previewProblem",
+                    "command": "lcpr.previewProblem",
                     "when": "never"
                 },
                 {
-                    "command": "leetcode.addFavorite",
+                    "command": "lcpr.addFavorite",
                     "when": "never"
                 },
                 {
-                    "command": "leetcode.removeFavorite",
+                    "command": "lcpr.removeFavorite",
                     "when": "never"
                 }
             ],
             "explorer/context": [
                 {
-                    "command": "leetcode.testSolution",
+                    "command": "lcpr.testSolution",
                     "when": "explorerResourceIsFolder == false",
                     "group": "leetcode@1"
                 },
                 {
-                    "command": "leetcode.submitSolution",
+                    "command": "lcpr.submitSolution",
                     "when": "explorerResourceIsFolder == false",
                     "group": "leetcode@2"
                 }
             ],
             "editor/context": [
                 {
-                    "submenu": "leetcode.editorAction"
+                    "submenu": "lcpr.editorAction"
                 }
             ],
-            "leetcode.editorAction": [
+            "lcpr.editorAction": [
                 {
-                    "command": "leetcode.testSolution",
+                    "command": "lcpr.testSolution",
                     "group": "leetcode@1"
                 },
                 {
-                    "command": "leetcode.submitSolution",
+                    "command": "lcpr.submitSolution",
                     "group": "leetcode@2"
                 },
                 {
-                    "command": "leetcode.showSolution",
+                    "command": "lcpr.showSolution",
                     "group": "leetcode@3"
                 },
                 {
-                    "command": "leetcode.previewProblem",
+                    "command": "lcpr.previewProblem",
                     "group": "leetcode@4"
+                }
+            ],
+            "lcpr.setBricksType_sub": [
+                {
+                    "command": "lcpr.setBricksType0",
+                    "group": "leetcode@1"
+                },
+                {
+                    "command": "lcpr.setBricksType6",
+                    "group": "leetcode@2"
+                },
+                {
+                    "command": "lcpr.setBricksType5",
+                    "group": "leetcode@3"
+                },
+                {
+                    "command": "lcpr.setBricksType4",
+                    "group": "leetcode@4"
+                },
+                {
+                    "command": "lcpr.setBricksType3",
+                    "group": "leetcode@5"
+                },
+                {
+                    "command": "lcpr.setBricksType2",
+                    "group": "leetcode@6"
+                },
+                {
+                    "command": "lcpr.setBricksType1",
+                    "group": "leetcode@7"
+                }
+            ],
+            "lcpr.setBricksType_sub1": [
+                {
+                    "command": "lcpr.setBricksType0",
+                    "group": "leetcode@1"
+                },
+                {
+                    "command": "lcpr.setBricksType6",
+                    "group": "leetcode@2"
+                },
+                {
+                    "command": "lcpr.setBricksType5",
+                    "group": "leetcode@3"
+                },
+                {
+                    "command": "lcpr.setBricksType4",
+                    "group": "leetcode@4"
+                },
+                {
+                    "command": "lcpr.setBricksType3",
+                    "group": "leetcode@5"
+                },
+                {
+                    "command": "lcpr.setBricksType2",
+                    "group": "leetcode@6"
+                },
+                {
+                    "command": "lcpr.setBricksType1",
+                    "group": "leetcode@7"
                 }
             ]
         },
         "submenus": [
             {
-                "id": "leetcode.editorAction",
-                "label": "LeetCode"
+                "id": "lcpr.editorAction",
+                "label": "LCPR菜单"
+            },
+            {
+                "id": "lcpr.setBricksType_sub",
+                "label": "设置砖头类型"
+            },
+            {
+                "id": "lcpr.setBricksType_sub1",
+                "label": "设置砖头类型"
             }
         ],
         "configuration": [

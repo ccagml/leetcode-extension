@@ -9,12 +9,18 @@
 
 import { eventService } from "../service/EventService";
 // 事件的控制器
+/* The EventController class has a method called addEvent that calls the addEvent method on the
+eventService class */
 class EventContorller {
   /**
    * 监听事件
    */
-  public add_event() {
-    eventService.add_event();
+  /**
+   * The function `addEvent()` is a public function that calls the `addEvent()` function in the
+   * `eventService` service
+   */
+  public addEvent() {
+    eventService.addEvent();
   }
 }
 
