@@ -7,8 +7,33 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { workspace, WorkspaceConfiguration, commands } from "vscode";
-import { DescriptionConfiguration, Endpoint, IProblem, SortingStrategy } from "../model/Model";
+import {
+  workspace,
+  WorkspaceConfiguration,
+  commands,
+  MessageItem,
+  window,
+  Uri,
+  ConfigurationTarget,
+  OpenDialogOptions,
+  WorkspaceFolder,
+  QuickPickItem,
+} from "vscode";
+import {
+  DescriptionConfiguration,
+  Endpoint,
+  IProblem,
+  SortingStrategy,
+  AllProgramLanguage,
+  DialogOptions,
+  OpenOption,
+  IQuickItemEx,
+} from "../model/Model";
+
+import { useWsl, toWslPath } from "../utils/SystemUtils";
+import * as path from "path";
+import * as fse from "fs-extra";
+import * as os from "os";
 
 // vscode的配置
 export function getVsCodeConfig(): WorkspaceConfiguration {
@@ -163,4 +188,181 @@ export function getLeetCodeEndpoint(): string {
 
 export async function openSettingsEditor(query?: string): Promise<void> {
   await commands.executeCommand("workbench.action.openSettings", query);
+}
+
+// 设置默认语言
+export async function fetchProblemLanguage(): Promise<string | undefined> {
+  const leetCodeConfig: WorkspaceConfiguration = workspace.getConfiguration("leetcode-problem-rating");
+  let defaultLanguage: string | undefined = leetCodeConfig.get<string>("defaultLanguage");
+  if (defaultLanguage && AllProgramLanguage.indexOf(defaultLanguage) < 0) {
+    defaultLanguage = undefined;
+  }
+  const language: string | undefined =
+    defaultLanguage ||
+    (await window.showQuickPick(AllProgramLanguage, {
+      placeHolder: "Select the language you want to use",
+      ignoreFocusOut: true,
+    }));
+
+  (async (): Promise<void> => {
+    if (language && !defaultLanguage && leetCodeConfig.get<boolean>("hint.setDefaultLanguage")) {
+      const choice: MessageItem | undefined = await window.showInformationMessage(
+        `Would you like to set '${language}' as your default language?`,
+        DialogOptions.yes,
+        DialogOptions.no,
+        DialogOptions.never
+      );
+      if (choice === DialogOptions.yes) {
+        leetCodeConfig.update("defaultLanguage", language, true);
+      } else if (choice === DialogOptions.never) {
+        leetCodeConfig.update("hint.setDefaultLanguage", false, true);
+      }
+    }
+  })();
+  return language;
+}
+
+export async function determineLeetCodeFolder(): Promise<string> {
+  let result: string;
+  const picks: Array<IQuickItemEx<string>> = [];
+  picks.push(
+    {
+      label: `Default location`,
+      detail: `${path.join(os.homedir(), ".leetcode")}`,
+      value: `${path.join(os.homedir(), ".leetcode")}`,
+    },
+    {
+      label: "$(file-directory) Browse...",
+      value: ":browse",
+    }
+  );
+  const choice: IQuickItemEx<string> | undefined = await window.showQuickPick(picks, {
+    placeHolder: "Select where you would like to save your LeetCode files",
+  });
+  if (!choice) {
+    result = "";
+  } else if (choice.value === ":browse") {
+    const directory: Uri[] | undefined = await showDirectorySelectDialog();
+    if (!directory || directory.length < 1) {
+      result = "";
+    } else {
+      result = directory[0].fsPath;
+    }
+  } else {
+    result = choice.value;
+  }
+
+  getVsCodeConfig().update("workspaceFolder", result, ConfigurationTarget.Global);
+
+  return result;
+}
+
+export function getBelongingWorkspaceFolderUri(fsPath: string | undefined): Uri | undefined {
+  let defaultUri: Uri | undefined;
+  if (fsPath) {
+    const workspaceFolder: WorkspaceFolder | undefined = workspace.getWorkspaceFolder(Uri.file(fsPath));
+    if (workspaceFolder) {
+      defaultUri = workspaceFolder.uri;
+    }
+  }
+  return defaultUri;
+}
+
+export async function showDirectorySelectDialog(fsPath?: string): Promise<Uri[] | undefined> {
+  const defaultUri: Uri | undefined = getBelongingWorkspaceFolderUri(fsPath);
+  const options: OpenDialogOptions = {
+    defaultUri,
+    canSelectFiles: false,
+    canSelectFolders: true,
+    canSelectMany: false,
+    openLabel: "Select",
+  };
+  return await window.showOpenDialog(options);
+}
+
+export function isSubFolder(from: string, to: string): boolean {
+  const relative: string = path.relative(from, to);
+  if (relative === "") {
+    return true;
+  }
+  return !relative.startsWith("..") && !path.isAbsolute(relative);
+}
+
+export async function selectWorkspaceFolder(isAsk: boolean = true): Promise<string> {
+  let workspaceFolderSetting: string = getWorkspaceFolder();
+  if (workspaceFolderSetting.trim() === "") {
+    workspaceFolderSetting = await determineLeetCodeFolder();
+    if (workspaceFolderSetting === "") {
+      // User cancelled
+      return workspaceFolderSetting;
+    }
+  }
+  let needAsk: boolean = true;
+  await fse.ensureDir(workspaceFolderSetting);
+  for (const folder of workspace.workspaceFolders || []) {
+    if (isSubFolder(folder.uri.fsPath, workspaceFolderSetting)) {
+      needAsk = false;
+    }
+  }
+
+  if (needAsk && isAsk) {
+    const choice: string | undefined = await window.showQuickPick(
+      [OpenOption.justOpenFile, OpenOption.openInCurrentWindow, OpenOption.openInNewWindow, OpenOption.addToWorkspace],
+      {
+        placeHolder: "The LeetCode workspace folder is not opened in VS Code, would you like to open it?",
+      }
+    );
+    switch (choice) {
+      case OpenOption.justOpenFile:
+        return workspaceFolderSetting;
+      case OpenOption.openInCurrentWindow:
+        await commands.executeCommand("vscode.openFolder", Uri.file(workspaceFolderSetting), false);
+        return "";
+      case OpenOption.openInNewWindow:
+        await commands.executeCommand("vscode.openFolder", Uri.file(workspaceFolderSetting), true);
+        return "";
+      case OpenOption.addToWorkspace:
+        workspace.updateWorkspaceFolders(workspace.workspaceFolders?.length ?? 0, 0, {
+          uri: Uri.file(workspaceFolderSetting),
+        });
+        break;
+      default:
+        return "";
+    }
+  }
+
+  return useWsl() ? toWslPath(workspaceFolderSetting) : workspaceFolderSetting;
+}
+
+export async function setDefaultLanguage(): Promise<void> {
+  const leetCodeConfig: WorkspaceConfiguration = workspace.getConfiguration("leetcode-problem-rating");
+  const defaultLanguage: string | undefined = leetCodeConfig.get<string>("defaultLanguage");
+  const languageItems: QuickPickItem[] = [];
+  for (const language of AllProgramLanguage) {
+    languageItems.push({
+      label: language,
+      description: defaultLanguage === language ? "Currently used" : undefined,
+    });
+  }
+  // Put the default language at the top of the list
+  languageItems.sort((a: QuickPickItem, b: QuickPickItem) => {
+    if (a.description) {
+      return Number.MIN_SAFE_INTEGER;
+    } else if (b.description) {
+      return Number.MAX_SAFE_INTEGER;
+    }
+    return a.label.localeCompare(b.label);
+  });
+
+  const selectedItem: QuickPickItem | undefined = await window.showQuickPick(languageItems, {
+    placeHolder: "请设置默认语言",
+    ignoreFocusOut: true,
+  });
+
+  if (!selectedItem) {
+    return;
+  }
+
+  leetCodeConfig.update("defaultLanguage", selectedItem.label, true /* Global */);
+  window.showInformationMessage(`设置默认语言 ${selectedItem.label} 成功`);
 }

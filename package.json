@@ -27,95 +27,100 @@
     ],
     "preview": true,
     "activationEvents": [
-        "onCommand:leetcode.toggleLeetCodeCn",
-        "onCommand:leetcode.signin",
-        "onCommand:leetcode.signout",
-        "onCommand:leetcode.refreshExplorer",
-        "onCommand:leetcode.pickOne",
-        "onCommand:leetcode.deleteAllCache",
-        "onCommand:leetcode.showProblem",
-        "onCommand:leetcode.previewProblem",
-        "onCommand:leetcode.searchProblem",
-        "onCommand:leetcode.testSolution",
-        "onCommand:leetcode.submitSolution",
-        "onCommand:leetcode.switchDefaultLanguage",
-        "onCommand:leetcode.problems.sort",
+        "onCommand:lcpr.toggleLeetCodeCn",
+        "onCommand:lcpr.signin",
+        "onCommand:lcpr.signout",
+        "onCommand:lcpr.refreshExplorer",
+        "onCommand:lcpr.pickOne",
+        "onCommand:lcpr.deleteAllCache",
+        "onCommand:lcpr.showProblem",
+        "onCommand:lcpr.previewProblem",
+        "onCommand:lcpr.searchProblem",
+        "onCommand:lcpr.testSolution",
+        "onCommand:lcpr.submitSolution",
+        "onCommand:lcpr.setDefaultLanguage",
+        "onCommand:lcpr.problems.sort",
         "onView:QuestionExplorer"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "commands": [
             {
-                "command": "leetcode.deleteCache",
+                "command": "lcpr.deleteCache",
                 "title": "Delete Cache",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.toggleLeetCodeCn",
+                "command": "lcpr.toggleLeetCodeCn",
                 "title": "Switch Endpoint",
                 "category": "LeetCode",
                 "icon": "$(globe)"
             },
             {
-                "command": "leetcode.signin",
+                "command": "lcpr.signin",
                 "title": "Sign In",
                 "category": "LeetCode",
                 "icon": "$(sign-in)"
             },
             {
-                "command": "leetcode.signout",
+                "command": "lcpr.signout",
                 "title": "Sign Out",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.refreshExplorer",
+                "command": "lcpr.refreshExplorer",
                 "title": "Refresh",
                 "category": "LeetCode",
                 "icon": "$(refresh)"
             },
             {
-                "command": "leetcode.pickOne",
+                "command": "lcpr.pickOne",
                 "title": "Pick One",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.deleteAllCache",
+                "command": "lcpr.deleteAllCache",
                 "title": "deleteAllCache",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.showProblem",
+                "command": "lcpr.showProblem",
                 "title": "Show Problem",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.previewProblem",
+                "command": "lcpr.previewProblem",
                 "title": "Preview Problem",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.searchProblem",
+                "command": "lcpr.SetBricksType",
+                "title": "设置提交几天后出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.searchProblem",
                 "title": "Search Problem",
                 "category": "LeetCode",
                 "icon": "$(search)"
             },
             {
-                "command": "leetcode.showSolution",
+                "command": "lcpr.showSolution",
                 "title": "Show Top Voted Solution",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.testSolution",
+                "command": "lcpr.testSolution",
                 "title": "Test in LeetCode",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.submitSolution",
+                "command": "lcpr.submitSolution",
                 "title": "Submit to LeetCode",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.addFavorite",
+                "command": "lcpr.addFavorite",
                 "title": "Add to Favorite List",
                 "category": "LeetCode",
                 "icon": {
@@ -124,7 +129,7 @@
                 }
             },
             {
-                "command": "leetcode.removeFavorite",
+                "command": "lcpr.removeFavorite",
                 "title": "Remove from Favorite List",
                 "category": "LeetCode",
                 "icon": {
@@ -133,12 +138,12 @@
                 }
             },
             {
-                "command": "leetcode.switchDefaultLanguage",
+                "command": "lcpr.setDefaultLanguage",
                 "title": "Switch Default Language",
                 "category": "LeetCode"
             },
             {
-                "command": "leetcode.problems.sort",
+                "command": "lcpr.problems.sort",
                 "title": "Sort Problems",
                 "category": "LeetCode",
                 "icon": "$(sort-precedence)"
@@ -160,106 +165,121 @@
                     "name": "Problems"
                 },
                 {
-                    "id": "LifeExplorer",
-                    "name": "搬砖"
+                    "id": "BricksExplorer",
+                    "name": "搬砖工地"
                 }
             ]
         },
         "menus": {
             "view/title": [
                 {
-                    "command": "leetcode.toggleLeetCodeCn",
+                    "command": "lcpr.toggleLeetCodeCn",
                     "when": "view == QuestionExplorer",
                     "group": "navigation@0"
                 },
                 {
-                    "command": "leetcode.signin",
+                    "command": "lcpr.signin",
                     "when": "view == QuestionExplorer",
                     "group": "navigation@1"
                 },
                 {
-                    "command": "leetcode.searchProblem",
+                    "command": "lcpr.searchProblem",
                     "when": "view == QuestionExplorer",
                     "group": "navigation@2"
                 },
                 {
-                    "command": "leetcode.refreshExplorer",
+                    "command": "lcpr.refreshExplorer",
                     "when": "view == QuestionExplorer",
                     "group": "navigation@3"
                 },
                 {
-                    "command": "leetcode.pickOne",
+                    "command": "lcpr.pickOne",
                     "when": "view == QuestionExplorer",
                     "group": "overflow@0"
                 },
                 {
-                    "command": "leetcode.problems.sort",
+                    "command": "lcpr.problems.sort",
                     "when": "view == QuestionExplorer",
                     "group": "overflow@1"
                 },
                 {
-                    "command": "leetcode.deleteAllCache",
+                    "command": "lcpr.deleteAllCache",
                     "when": "view == QuestionExplorer",
                     "group": "overflow@2"
                 }
             ],
             "view/item/context": [
                 {
-                    "command": "leetcode.previewProblem",
+                    "command": "lcpr.previewProblem",
                     "when": "view == QuestionExplorer && viewItem =~ /problem*/",
                     "group": "leetcode@1"
                 },
                 {
-                    "command": "leetcode.showProblem",
+                    "command": "lcpr.showProblem",
                     "when": "view == QuestionExplorer && viewItem =~ /problem*/",
                     "group": "leetcode@2"
                 },
                 {
-                    "command": "leetcode.showSolution",
+                    "command": "lcpr.showSolution",
                     "when": "view == QuestionExplorer && viewItem =~ /problem*/",
                     "group": "leetcode@3"
                 },
                 {
-                    "command": "leetcode.addFavorite",
+                    "command": "lcpr.addFavorite",
                     "when": "view == QuestionExplorer && viewItem == problem",
                     "group": "inline"
                 },
                 {
-                    "command": "leetcode.removeFavorite",
+                    "command": "lcpr.removeFavorite",
                     "when": "view == QuestionExplorer && viewItem == problem-favorite",
                     "group": "inline"
+                },
+                {
+                    "command": "lcpr.previewProblem",
+                    "when": "view == BricksExplorer && viewItem == bricks",
+                    "group": "leetcode@1"
+                },
+                {
+                    "command": "lcpr.showProblem",
+                    "when": "view == BricksExplorer && viewItem == bricks",
+                    "group": "leetcode@2"
+                },
+                {
+                    "command": "lcpr.showSolution",
+                    "when": "view == BricksExplorer && viewItem == bricks",
+                    "group": "leetcode@3"
                 }
             ],
             "commandPalette": [
                 {
-                    "command": "leetcode.showProblem",
+                    "command": "lcpr.showProblem",
                     "when": "never"
                 },
                 {
-                    "command": "leetcode.showSolution",
+                    "command": "lcpr.showSolution",
                     "when": "never"
                 },
                 {
-                    "command": "leetcode.previewProblem",
+                    "command": "lcpr.previewProblem",
                     "when": "never"
                 },
                 {
-                    "command": "leetcode.addFavorite",
+                    "command": "lcpr.addFavorite",
                     "when": "never"
                 },
                 {
-                    "command": "leetcode.removeFavorite",
+                    "command": "lcpr.removeFavorite",
                     "when": "never"
                 }
             ],
             "explorer/context": [
                 {
-                    "command": "leetcode.testSolution",
+                    "command": "lcpr.testSolution",
                     "when": "explorerResourceIsFolder == false",
                     "group": "leetcode@1"
                 },
                 {
-                    "command": "leetcode.submitSolution",
+                    "command": "lcpr.submitSolution",
                     "when": "explorerResourceIsFolder == false",
                     "group": "leetcode@2"
                 }
@@ -271,19 +291,19 @@
             ],
             "leetcode.editorAction": [
                 {
-                    "command": "leetcode.testSolution",
+                    "command": "lcpr.testSolution",
                     "group": "leetcode@1"
                 },
                 {
-                    "command": "leetcode.submitSolution",
+                    "command": "lcpr.submitSolution",
                     "group": "leetcode@2"
                 },
                 {
-                    "command": "leetcode.showSolution",
+                    "command": "lcpr.showSolution",
                     "group": "leetcode@3"
                 },
                 {
-                    "command": "leetcode.previewProblem",
+                    "command": "lcpr.previewProblem",
                     "group": "leetcode@4"
                 }
             ]

@@ -12,7 +12,7 @@ import { IProblem, IScoreData, ITodayData, ProblemState, RootNodeSort } from "./
 
 export class NodeModel {
   private _u_score;
-  constructor(private data: IProblem, private isProblemNode: boolean = true, userscore: number = 0) {
+  constructor(public data: IProblem, public isProblemNode: boolean = true, userscore: number = 0) {
     this._u_score = userscore;
   }
 
@@ -71,7 +71,7 @@ export class NodeModel {
   public get previewCommand(): Command {
     return {
       title: "Preview Problem",
-      command: "leetcode.previewProblem",
+      command: "lcpr.previewProblem",
       arguments: [this],
     };
   }
@@ -137,5 +137,14 @@ export class NodeModel {
   }
   public get qid(): string {
     return this.data.qid || "";
+  }
+}
+
+export class BricksNode extends NodeModel {
+  public collapsibleState?;
+  constructor(data: IProblem, ipn: boolean = true, userscore: number = 0, collapsibleState = 0) {
+    super(data, ipn, userscore);
+    this.isProblemNode = ipn;
+    this.collapsibleState = collapsibleState;
   }
 }

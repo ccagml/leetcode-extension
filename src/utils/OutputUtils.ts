@@ -45,7 +45,7 @@ export async function promptForSignIn(): Promise<void> {
   );
   switch (choice) {
     case DialogOptions.yes:
-      await vscode.commands.executeCommand("leetcode.signin");
+      await vscode.commands.executeCommand("lcpr.signin");
       break;
     case DialogOptions.singUp:
       if (getLeetCodeEndpoint()) {
