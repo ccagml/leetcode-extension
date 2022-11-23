@@ -94,8 +94,43 @@
                 "category": "LeetCode"
             },
             {
-                "command": "lcpr.setBricksType",
-                "title": "设置提交几天后出现在工地",
+                "command": "lcpr.setBricksType0",
+                "title": "设置不出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType1",
+                "title": "设置14天后出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType2",
+                "title": "设置7天后出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType3",
+                "title": "设置5天后出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType4",
+                "title": "设置3天后出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType5",
+                "title": "设置2天后出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType6",
+                "title": "设置1天后出现在工地",
+                "category": "LeetCode"
+            },
+            {
+                "command": "lcpr.setBricksType7",
+                "title": "设置1天后出现在工地",
                 "category": "LeetCode"
             },
             {
@@ -106,7 +141,7 @@
             },
             {
                 "command": "lcpr.showSolution",
-                "title": "Show Top Voted Solution",
+                "title": "获取题解",
                 "category": "LeetCode"
             },
             {
@@ -225,7 +260,7 @@
                     "group": "leetcode@3"
                 },
                 {
-                    "command": "lcpr.setBricksType",
+                    "submenu": "lcpr.setBricksType_sub",
                     "when": "view == QuestionExplorer && viewItem =~ /problem*/",
                     "group": "leetcode@4"
                 },
@@ -255,7 +290,7 @@
                     "group": "leetcode@3"
                 },
                 {
-                    "command": "lcpr.setBricksType",
+                    "submenu": "lcpr.setBricksType_sub1",
                     "when": "view == BricksExplorer && viewItem == bricks",
                     "group": "leetcode@4"
                 }
@@ -296,10 +331,10 @@
             ],
             "editor/context": [
                 {
-                    "submenu": "leetcode.editorAction"
+                    "submenu": "lcpr.editorAction"
                 }
             ],
-            "leetcode.editorAction": [
+            "lcpr.editorAction": [
                 {
                     "command": "lcpr.testSolution",
                     "group": "leetcode@1"
@@ -316,12 +351,80 @@
                     "command": "lcpr.previewProblem",
                     "group": "leetcode@4"
                 }
+            ],
+            "lcpr.setBricksType_sub": [
+                {
+                    "command": "lcpr.setBricksType0",
+                    "group": "leetcode@1"
+                },
+                {
+                    "command": "lcpr.setBricksType6",
+                    "group": "leetcode@2"
+                },
+                {
+                    "command": "lcpr.setBricksType5",
+                    "group": "leetcode@3"
+                },
+                {
+                    "command": "lcpr.setBricksType4",
+                    "group": "leetcode@4"
+                },
+                {
+                    "command": "lcpr.setBricksType3",
+                    "group": "leetcode@5"
+                },
+                {
+                    "command": "lcpr.setBricksType2",
+                    "group": "leetcode@6"
+                },
+                {
+                    "command": "lcpr.setBricksType1",
+                    "group": "leetcode@7"
+                }
+            ],
+            "lcpr.setBricksType_sub1": [
+                {
+                    "command": "lcpr.setBricksType0",
+                    "group": "leetcode@1"
+                },
+                {
+                    "command": "lcpr.setBricksType6",
+                    "group": "leetcode@2"
+                },
+                {
+                    "command": "lcpr.setBricksType5",
+                    "group": "leetcode@3"
+                },
+                {
+                    "command": "lcpr.setBricksType4",
+                    "group": "leetcode@4"
+                },
+                {
+                    "command": "lcpr.setBricksType3",
+                    "group": "leetcode@5"
+                },
+                {
+                    "command": "lcpr.setBricksType2",
+                    "group": "leetcode@6"
+                },
+                {
+                    "command": "lcpr.setBricksType1",
+                    "group": "leetcode@7"
+                }
             ]
         },
         "submenus": [
             {
-                "id": "leetcode.editorAction",
+                "id": "lcpr.editorAction",
                 "label": "LCPR菜单"
+            },
+            {
+                "id": "lcpr.setBricksType_sub",
+                "label": "设置砖头类型"
+            },
+            {
+                "id": "lcpr.setBricksType_sub1",
+                "label": "设置砖头类型"
             }
         ],
         "configuration": [

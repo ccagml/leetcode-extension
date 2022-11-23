@@ -55,20 +55,11 @@ class BricksViewController implements Disposable {
         has_qid ? TreeItemCollapsibleState.Collapsed : TreeItemCollapsibleState.None
       )
     );
-
-    // baseNode.push(
-    //   new BricksNode(
-    //     Object.assign({}, defaultProblem, {
-    //       id: BricksNormalId.Today,
-    //       name: BricksNormalId.TodayDesc,
-    //     }),
-    //     false,
-    //     0,
-    //     TreeItemCollapsibleState.Collapsed
-    //   )
-    // );
-
     return baseNode;
+  }
+
+  public async setBricksType(node: BricksNode, type) {
+    await bricksDataService.setBricksType(node, type);
   }
   public dispose(): void {}
 }

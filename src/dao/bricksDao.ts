@@ -119,8 +119,10 @@ class BricksDao {
       const value = all_bricks[qid];
       const submit_time = value.submit_time || [];
       const submit_size = submit_time.length;
-      if (submit_size < 1 || submit_time[submit_size - 1] < this.getTimeByType(value.type, today_time)) {
-        all_qid.push(qid);
+      if (value.type > BricksType.TYPE_0) {
+        if (submit_size < 1 || submit_time[submit_size - 1] < this.getTimeByType(value.type, today_time)) {
+          all_qid.push(qid);
+        }
       }
     }
     return all_qid;
@@ -146,6 +148,11 @@ class BricksDao {
     if (!temp_data.type) {
       temp_data.type = BricksType.TYPE_2;
     }
+    await this.setInfoByQid(qid, temp_data);
+  }
+  public async setTypeByQid(qid: string, type) {
+    let temp_data = await this.getInfoByQid(qid);
+    temp_data.type = type;
     await this.setInfoByQid(qid, temp_data);
   }
 }

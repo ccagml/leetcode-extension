@@ -96,11 +96,18 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
     }
   }
 
-  public checkSubmit(e: ISubmitEvent) {
+  public async checkSubmit(e: ISubmitEvent) {
     if (e.sub_type == "submit" && e.accepted) {
       let qid: string = e.qid.toString();
       bricksDao.addSubmitTimeByQid(qid);
+      await bricksDataService.refresh();
     }
+  }
+
+  public async setBricksType(node: BricksNode, type) {
+    let qid: string = node.id.toString();
+    bricksDao.setTypeByQid(qid, type);
+    await bricksDataService.refresh();
   }
 
   private parseIconPathFromProblemState(element: BricksNode): string {

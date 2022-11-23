@@ -24,7 +24,7 @@ import { markdownService } from "./service/MarkdownService";
 import { mainContorller } from "./controller/MainController";
 import { loginContorller } from "./controller/LoginController";
 import { getLeetCodeEndpoint } from "./utils/ConfigUtils";
-import { OutPutType } from "./model/Model";
+import { BricksType, OutPutType } from "./model/Model";
 import { bricksDataService } from "./service/BricksDataService";
 import { bricksViewController } from "./controller/BricksViewController";
 
@@ -75,7 +75,28 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.setDefaultLanguage", () => treeViewController.setDefaultLanguage()),
       commands.registerCommand("lcpr.addFavorite", (node: NodeModel) => treeViewController.addFavorite(node)),
       commands.registerCommand("lcpr.removeFavorite", (node: NodeModel) => treeViewController.removeFavorite(node)),
-      commands.registerCommand("lcpr.problems.sort", () => treeViewController.switchSortingStrategy())
+      commands.registerCommand("lcpr.problems.sort", () => treeViewController.switchSortingStrategy()),
+      commands.registerCommand("lcpr.setBricksType0", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_0)
+      ),
+      commands.registerCommand("lcpr.setBricksType1", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_1)
+      ),
+      commands.registerCommand("lcpr.setBricksType2", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_2)
+      ),
+      commands.registerCommand("lcpr.setBricksType3", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_3)
+      ),
+      commands.registerCommand("lcpr.setBricksType4", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_4)
+      ),
+      commands.registerCommand("lcpr.setBricksType5", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_5)
+      ),
+      commands.registerCommand("lcpr.setBricksType6", (node: NodeModel) =>
+        bricksViewController.setBricksType(node, BricksType.TYPE_6)
+      )
     );
 
     // 设置站点

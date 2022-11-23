@@ -40,8 +40,8 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     this.context = context;
   }
 
-  public checkSubmit(e: ISubmitEvent) {
-    treeViewController.checkSubmit(e);
+  public async checkSubmit(e: ISubmitEvent) {
+    await treeViewController.checkSubmit(e);
   }
 
   public cleanUserScore() {
