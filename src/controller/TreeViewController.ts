@@ -263,7 +263,7 @@ class TreeViewController implements Disposable {
    * @param {boolean} [allCase] - Whether to submit all cases.
    * @returns a promise that resolves to void.
    */
-  public async testSolutionDefault(uri?: vscode.Uri, allCase?: boolean): Promise<void> {
+  public async testCaseDef(uri?: vscode.Uri, allCase?: boolean): Promise<void> {
     try {
       if (statusBarService.getStatus() === UserStatus.SignedOut) {
         return;
@@ -294,7 +294,7 @@ class TreeViewController implements Disposable {
    * be randomly selected.
    * @returns a promise that resolves to void.
    */
-  public async testSolutionArea(uri?: vscode.Uri, testcase?: string): Promise<void> {
+  public async tesCaseArea(uri?: vscode.Uri, testcase?: string): Promise<void> {
     try {
       if (statusBarService.getStatus() === UserStatus.SignedOut) {
         return;

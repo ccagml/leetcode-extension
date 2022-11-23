@@ -47,7 +47,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       temp_result.push(
         new vscode.CodeLens(range, {
           title: "case",
-          command: "lcpr.testSolutionDefault",
+          command: "lcpr.testCaseDef",
           arguments: [document.uri, false],
         })
       );
@@ -56,7 +56,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       temp_result.push(
         new vscode.CodeLens(range, {
           title: "allcase",
-          command: "lcpr.testSolutionDefault",
+          command: "lcpr.testCaseDef",
           arguments: [document.uri, true],
         })
       );
@@ -112,7 +112,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
 
     return new vscode.CodeLens(range, {
       title: "case",
-      command: "lcpr.testSolutionArea",
+      command: "lcpr.tesCaseArea",
       arguments: [document.uri, testCase],
     });
   }

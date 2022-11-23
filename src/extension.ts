@@ -69,12 +69,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.showSolution", (input: NodeModel | Uri) => treeViewController.showSolution(input)),
       commands.registerCommand("lcpr.refreshExplorer", () => treeDataService.refresh()),
       commands.registerCommand("lcpr.testSolution", (uri?: Uri) => treeViewController.testSolution(uri)),
-      commands.registerCommand("lcpr.testSolutionDefault", (uri?: Uri, allCase?: boolean) =>
-        treeViewController.testSolutionDefault(uri, allCase)
-      ),
-      commands.registerCommand("lcpr.testSolutionArea", (uri?: Uri, testCase?: string) =>
-        treeViewController.testSolutionArea(uri, testCase)
-      ),
+      commands.registerCommand("lcpr.testCaseDef", (uri?, allCase?) => treeViewController.testCaseDef(uri, allCase)),
+      commands.registerCommand("lcpr.tesCaseArea", (uri, testCase?) => treeViewController.tesCaseArea(uri, testCase)),
       commands.registerCommand("lcpr.submitSolution", (uri?: Uri) => treeViewController.submitSolution(uri)),
       commands.registerCommand("lcpr.setDefaultLanguage", () => treeViewController.setDefaultLanguage()),
       commands.registerCommand("lcpr.addFavorite", (node: NodeModel) => treeViewController.addFavorite(node)),

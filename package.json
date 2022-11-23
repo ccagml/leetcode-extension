@@ -94,7 +94,7 @@
                 "category": "LeetCode"
             },
             {
-                "command": "lcpr.SetBricksType",
+                "command": "lcpr.setBricksType",
                 "title": "设置提交几天后出现在工地",
                 "category": "LeetCode"
             },
@@ -225,6 +225,11 @@
                     "group": "leetcode@3"
                 },
                 {
+                    "command": "lcpr.setBricksType",
+                    "when": "view == QuestionExplorer && viewItem =~ /problem*/",
+                    "group": "leetcode@4"
+                },
+                {
                     "command": "lcpr.addFavorite",
                     "when": "view == QuestionExplorer && viewItem == problem",
                     "group": "inline"
@@ -248,6 +253,11 @@
                     "command": "lcpr.showSolution",
                     "when": "view == BricksExplorer && viewItem == bricks",
                     "group": "leetcode@3"
+                },
+                {
+                    "command": "lcpr.setBricksType",
+                    "when": "view == BricksExplorer && viewItem == bricks",
+                    "group": "leetcode@4"
                 }
             ],
             "commandPalette": [
