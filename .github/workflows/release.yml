@@ -2,6 +2,7 @@ name: release
 
 on:
   workflow_dispatch:
+    branches: [release]
     inputs:
       tag:
         description: "Release Tag"
