@@ -15,7 +15,7 @@ import { BricksType } from "../model/Model";
 
 // let bricks_json = {
 //   version: 1,
-//   bricks: {
+//   all_bricks: {
 //     [qid]: {
 //       fid: "xxx", // 页面显示的编号可能有空格之类的
 //       submit_time: [], // 上次提交的时间

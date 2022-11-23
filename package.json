@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode problem rating",
     "description": "为LeetCode题目难度进行打分。避免只有简单、中等、困难三种难度",
-    "version": "2.1.1",
+    "version": "2.2.1",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -100,37 +100,37 @@
             },
             {
                 "command": "lcpr.setBricksType1",
-                "title": "设置14天后出现在工地",
+                "title": "最后一次提交在14天前,出现在工地",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType2",
-                "title": "设置7天后出现在工地",
+                "title": "最后一次提交在7天前,出现在工地",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType3",
-                "title": "设置5天后出现在工地",
+                "title": "最后一次提交在5天前,出现在工地",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType4",
-                "title": "设置3天后出现在工地",
+                "title": "最后一次提交在3天前,出现在工地",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType5",
-                "title": "设置2天后出现在工地",
+                "title": "最后一次提交在2天前,出现在工地",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType6",
-                "title": "设置1天后出现在工地",
+                "title": "最后一次提交在1天前,出现在工地",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType7",
-                "title": "设置1天后出现在工地",
+                "title": "最后一次提交在1天前,出现在工地",
                 "category": "LeetCode"
             },
             {

@@ -105,7 +105,7 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
   }
 
   public async setBricksType(node: BricksNode, type) {
-    let qid: string = node.id.toString();
+    let qid: string = node.qid.toString();
     bricksDao.setTypeByQid(qid, type);
     await bricksDataService.refresh();
   }
