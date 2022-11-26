@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "LeetCode 官方插件增强, 代码开源, 增加 LeetCode 题目难度分, 给个star吧, 球球了",
-    "version": "2.2.4",
+    "version": "2.3.1",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -182,6 +182,44 @@
                 "title": "Sort Problems",
                 "category": "LeetCode",
                 "icon": "$(sort-precedence)"
+            },
+            {
+                "command": "mywiki.commentcreateNote",
+                "title": "Create Note",
+                "enablement": "!commentIsEmpty"
+            },
+            {
+                "command": "mywiki.commentreplyNote",
+                "title": "Reply",
+                "enablement": "!commentIsEmpty"
+            },
+            {
+                "command": "mywiki.commenteditNote",
+                "title": "Edit",
+                "icon": {
+                    "dark": "resources/edit_inverse.svg",
+                    "light": "resources/edit.svg"
+                }
+            },
+            {
+                "command": "mywiki.commentdeleteNoteComment",
+                "title": "Delete",
+                "icon": {
+                    "dark": "resources/close_inverse.svg",
+                    "light": "resources/close.svg"
+                }
+            },
+            {
+                "command": "mywiki.commentsaveNote",
+                "title": "Save"
+            },
+            {
+                "command": "mywiki.commentcancelsaveNote",
+                "title": "Cancel"
+            },
+            {
+                "command": "mywiki.commentdispose",
+                "title": "Remove All Notes"
             }
         ],
         "viewsContainers": {
@@ -206,6 +244,57 @@
             ]
         },
         "menus": {
+            "commandPalette": [
+                {
+                    "command": "mywiki.commentcreateNote",
+                    "when": "false"
+                },
+                {
+                    "command": "mywiki.commentreplyNote",
+                    "when": "false"
+                },
+                {
+                    "command": "mywiki.commentdeleteNoteComment",
+                    "when": "false"
+                }
+            ],
+            "comments/commentThread/title": [],
+            "comments/commentThread/context": [
+                {
+                    "command": "mywiki.commentcreateNote",
+                    "group": "inline",
+                    "when": "commentController == comment-sample && commentThreadIsEmpty"
+                },
+                {
+                    "command": "mywiki.commentreplyNote",
+                    "group": "inline",
+                    "when": "commentController == comment-sample && !commentThreadIsEmpty"
+                }
+            ],
+            "comments/comment/title": [
+                {
+                    "command": "mywiki.commenteditNote",
+                    "group": "group@1",
+                    "when": "commentController == comment-sample"
+                },
+                {
+                    "command": "mywiki.commentdeleteNoteComment",
+                    "group": "group@2",
+                    "when": "commentController == comment-sample && comment == canDelete"
+                }
+            ],
+            "comments/comment/context": [
+                {
+                    "command": "mywiki.commentcancelsaveNote",
+                    "group": "inline@1",
+                    "when": "commentController == comment-sample"
+                },
+                {
+                    "command": "mywiki.commentsaveNote",
+                    "group": "inline@2",
+                    "when": "commentController == comment-sample"
+                }
+            ],
             "view/title": [
                 {
                     "command": "lcpr.toggleLeetCodeCn",

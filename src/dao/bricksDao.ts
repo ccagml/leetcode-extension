@@ -143,12 +143,14 @@ class BricksDao {
   public async addSubmitTimeByQid(qid: string) {
     let temp_data = await this.getInfoByQid(qid);
     let submit_time = temp_data.submit_time || [];
-    submit_time.push(getDayNow());
+    let submit_now = getDayNow();
+    submit_time.push(submit_now);
     temp_data.submit_time = submit_time;
     if (!temp_data.type) {
       temp_data.type = BricksType.TYPE_2;
     }
     await this.setInfoByQid(qid, temp_data);
+    return submit_now;
   }
   public async setTypeByQid(qid: string, type) {
     let temp_data = await this.getInfoByQid(qid);

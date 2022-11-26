@@ -9,11 +9,12 @@
 
 import { EventEmitter } from "events";
 
-import { UserStatus } from "../model/Model";
+import { IProblem, UserStatus } from "../model/Model";
 import { ISubmitEvent } from "../model/Model";
 import { statusBarService } from "../service/StatusBarService";
 import { treeDataService } from "../service/TreeDataService";
 import { bricksDataService } from "./BricksDataService";
+import { statusBarTimeService } from "./StatusBarTimeService";
 
 class EventService extends EventEmitter {
   constructor() {
@@ -34,6 +35,7 @@ class EventService extends EventEmitter {
     this.on("submit", (e: ISubmitEvent) => {
       treeDataService.checkSubmit(e);
       bricksDataService.checkSubmit(e);
+      statusBarTimeService.checkSubmit(e);
     });
 
     this.on("searchUserContest", (tt) => {
@@ -45,6 +47,10 @@ class EventService extends EventEmitter {
 
     this.on("explorerNodeMapSet", () => {
       bricksDataService.refresh();
+    });
+
+    this.on("showProblemFinish", (node: IProblem) => {
+      statusBarTimeService.showProblemFinish(node);
     });
   }
 }
