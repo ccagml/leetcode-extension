@@ -72,7 +72,7 @@ class StatusBarService implements Disposable {
   }
 
   constructor() {
-    this.instance = window.createStatusBarItem();
+    this.instance = window.createStatusBarItem(undefined, 999);
     this.setStatusBarVisibility();
     this.currentUser = undefined;
     this.userStatus = UserStatus.SignedOut;

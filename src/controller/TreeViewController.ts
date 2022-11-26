@@ -769,6 +769,12 @@ class TreeViewController implements Disposable {
       if (descriptionConfig.showInWebview) {
         promises.push(this.showDescriptionView(node));
       }
+      promises.push(
+        new Promise(async (resolve, _) => {
+          await eventService.emit("showProblemFinish", node);
+          resolve(1);
+        })
+      );
 
       await Promise.all(promises);
     } catch (error) {
