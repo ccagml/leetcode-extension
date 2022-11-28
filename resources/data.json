@@ -1133,6 +1133,17 @@
         "ContestID_zh": "第 209 场周赛"
     },
     {
+        "Rating": 2344.3664724791,
+        "ID": 2478,
+        "Title": "Number of Beautiful Partitions",
+        "TitleZH": "完美分割的方案数",
+        "TitleSlug": "number-of-beautiful-partitions",
+        "ContestSlug": "weekly-contest-320",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 320",
+        "ContestID_zh": "第 320 场周赛"
+    },
+    {
         "Rating": 2341.4506355884,
         "ID": 810,
         "Title": "Chalkboard XOR Game",
@@ -3364,6 +3375,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 319",
         "ContestID_zh": "第 319 场周赛"
+    },
+    {
+        "Rating": 2011.9703133514,
+        "ID": 2477,
+        "Title": "Minimum Fuel Cost to Report to the Capital",
+        "TitleZH": "到达首都的最少油耗",
+        "TitleSlug": "minimum-fuel-cost-to-report-to-the-capital",
+        "ContestSlug": "weekly-contest-320",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 320",
+        "ContestID_zh": "第 320 场周赛"
     },
     {
         "Rating": 2011.3542735398,
@@ -8127,6 +8149,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 161",
         "ContestID_zh": "第 161 场周赛"
+    },
+    {
+        "Rating": 1596.9852244916,
+        "ID": 2476,
+        "Title": "Closest Nodes Queries in a Binary Search Tree",
+        "TitleZH": "二叉搜索树最近节点查询",
+        "TitleSlug": "closest-nodes-queries-in-a-binary-search-tree",
+        "ContestSlug": "weekly-contest-320",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 320",
+        "ContestID_zh": "第 320 场周赛"
     },
     {
         "Rating": 1594.2563236049,
@@ -13528,6 +13561,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 135",
         "ContestID_zh": "第 135 场周赛"
+    },
+    {
+        "Rating": 1255.5461825223,
+        "ID": 2475,
+        "Title": "Number of Unequal Triplets in Array",
+        "TitleZH": "数组中不等三元组的数目",
+        "TitleSlug": "number-of-unequal-triplets-in-array",
+        "ContestSlug": "weekly-contest-320",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 320",
+        "ContestID_zh": "第 320 场周赛"
     },
     {
         "Rating": 1254.8626139269,
