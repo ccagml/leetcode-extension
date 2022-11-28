@@ -137,6 +137,21 @@ export class FileButtonService implements vscode.CodeLensProvider {
     typescript: "//",
   };
 
+  public processRemarkButton(codeLensLine, document): vscode.CodeLens[] {
+    const temp_result: vscode.CodeLens[] = [];
+
+    const range: vscode.Range = new vscode.Range(codeLensLine, 0, codeLensLine, 0);
+
+    temp_result.push(
+      new vscode.CodeLens(range, {
+        title: "remark",
+        command: "lcpr.startRemark",
+        arguments: [document],
+      })
+    );
+    return temp_result;
+  }
+
   public provideCodeLenses(document: vscode.TextDocument): vscode.ProviderResult<vscode.CodeLens[]> {
     const content: string = document.getText();
     const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=.*/);
@@ -156,6 +171,10 @@ export class FileButtonService implements vscode.CodeLensProvider {
       const lineContent: string = document.lineAt(i).text;
       if (lineContent.indexOf("@lc code=end") >= 0) {
         this.processCodeButton(i, document, node).forEach((x) => codeLens.push(x));
+      }
+
+      if (lineContent.indexOf("@lc code=start") >= 0) {
+        this.processRemarkButton(i, document).forEach((x) => codeLens.push(x));
       }
 
       if (caseFlag && lineContent.indexOf("@lcpr case=end") < 0) {
