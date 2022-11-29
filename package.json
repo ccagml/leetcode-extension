@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "LeetCode 官方插件增强, 代码开源, 增加 LeetCode 题目难度分, 给个star吧, 球球了",
-    "version": "2.3.2",
+    "version": "2.4.1",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -184,41 +184,43 @@
                 "icon": "$(sort-precedence)"
             },
             {
-                "command": "mywiki.commentcreateNote",
-                "title": "Create Note",
-                "enablement": "!commentIsEmpty"
+                "command": "lcpr.remarkCreateNote",
+                "title": "Create Note"
             },
             {
-                "command": "mywiki.commentreplyNote",
-                "title": "Reply",
-                "enablement": "!commentIsEmpty"
+                "command": "lcpr.remarkClose",
+                "title": "关闭?"
             },
             {
-                "command": "mywiki.commenteditNote",
-                "title": "Edit",
+                "command": "lcpr.remarkReplyNote",
+                "title": "New Note"
+            },
+            {
+                "command": "lcpr.remarkEditNote",
+                "title": "Edit Note",
                 "icon": {
                     "dark": "resources/edit_inverse.svg",
                     "light": "resources/edit.svg"
                 }
             },
             {
-                "command": "mywiki.commentdeleteNoteComment",
-                "title": "Delete",
+                "command": "lcpr.remarkDeleteNoteComment",
+                "title": "Delete Note",
                 "icon": {
                     "dark": "resources/close_inverse.svg",
                     "light": "resources/close.svg"
                 }
             },
             {
-                "command": "mywiki.commentsaveNote",
-                "title": "Save"
+                "command": "lcpr.remarkSaveNote",
+                "title": "Save Note"
             },
             {
-                "command": "mywiki.commentcancelsaveNote",
-                "title": "Cancel"
+                "command": "lcpr.remarkCancelsaveNote",
+                "title": "Cancel Note"
             },
             {
-                "command": "mywiki.commentdispose",
+                "command": "lcpr.remarkDispose",
                 "title": "Remove All Notes"
             }
         ],
@@ -246,52 +248,53 @@
         "menus": {
             "commandPalette": [
                 {
-                    "command": "mywiki.commentcreateNote",
-                    "when": "false"
+                    "command": "lcpr.remarkCreateNote",
+                    "when": "true"
                 },
                 {
-                    "command": "mywiki.commentreplyNote",
-                    "when": "false"
+                    "command": "lcpr.remarkReplyNote",
+                    "when": "true"
                 },
                 {
-                    "command": "mywiki.commentdeleteNoteComment",
-                    "when": "false"
+                    "command": "lcpr.remarkDeleteNoteComment",
+                    "when": "true"
                 }
             ],
-            "comments/commentThread/title": [],
+            "comments/commentThread/title": [
+                {
+                    "command": "lcpr.remarkClose",
+                    "group": "inline",
+                    "when": "commentController == comment-sample"
+                }
+            ],
             "comments/commentThread/context": [
                 {
-                    "command": "mywiki.commentcreateNote",
+                    "command": "lcpr.remarkCreateNote",
                     "group": "inline",
                     "when": "commentController == comment-sample && commentThreadIsEmpty"
                 },
                 {
-                    "command": "mywiki.commentreplyNote",
+                    "command": "lcpr.remarkReplyNote",
                     "group": "inline",
                     "when": "commentController == comment-sample && !commentThreadIsEmpty"
                 }
             ],
             "comments/comment/title": [
                 {
-                    "command": "mywiki.commenteditNote",
+                    "command": "lcpr.remarkEditNote",
                     "group": "group@1",
                     "when": "commentController == comment-sample"
                 },
                 {
-                    "command": "mywiki.commentdeleteNoteComment",
+                    "command": "lcpr.remarkDeleteNoteComment",
                     "group": "group@2",
                     "when": "commentController == comment-sample && comment == canDelete"
                 }
             ],
             "comments/comment/context": [
                 {
-                    "command": "mywiki.commentcancelsaveNote",
+                    "command": "lcpr.remarkSaveNote",
                     "group": "inline@1",
-                    "when": "commentController == comment-sample"
-                },
-                {
-                    "command": "mywiki.commentsaveNote",
-                    "group": "inline@2",
                     "when": "commentController == comment-sample"
                 }
             ],

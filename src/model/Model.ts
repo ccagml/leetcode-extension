@@ -7,7 +7,17 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { ViewColumn, QuickPickItem, MessageItem } from "vscode";
+import {
+  ViewColumn,
+  QuickPickItem,
+  MessageItem,
+  Comment,
+  MarkdownString,
+  CommentMode,
+  CommentAuthorInformation,
+  CommentThread,
+} from "vscode";
+import { getDayNowM, getRemakeName } from "../utils/SystemUtils";
 
 export interface IQuickItemEx<T> extends QuickPickItem {
   value: T;
@@ -257,6 +267,38 @@ export interface ISubmitEvent {
   id: string;
   sub_type: string; // test  submit
   accepted: boolean;
+}
+
+export class RemarkComment implements Comment {
+  id: number;
+  label: string | undefined;
+  mode: CommentMode;
+  author: CommentAuthorInformation;
+  contextValue?: string;
+
+  constructor(public body: string | MarkdownString, public parent?: CommentThread) {
+    this.id = getDayNowM();
+    this.label = "";
+    this.contextValue = "canDelete";
+    this.mode = CommentMode.Preview;
+    this.author = { name: getRemakeName() };
+  }
+
+  getDbData() {
+    let a = {
+      name: this.author.name,
+      id: this.id,
+      body: this.body,
+    };
+    return a;
+  }
+
+  static getObjByDbData(dbData, thread?): RemarkComment {
+    let obj = new RemarkComment(dbData.body, thread);
+    obj.id = dbData.id || getDayNowM();
+    obj.author = { name: dbData.name };
+    return obj;
+  }
 }
 
 export interface IWebViewOption {

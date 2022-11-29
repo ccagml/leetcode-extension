@@ -1391,6 +1391,10 @@ class TreeViewController implements Disposable {
     return this.getNodeById(this.qidToFid.get(qid) || "");
   }
 
+  public getQidByFid(id: string) {
+    return this.fidToQid.get(id);
+  }
+
   public getFavoriteNodes(): NodeModel[] {
     const res: NodeModel[] = [];
     for (const node of this.explorerNodeMap.values()) {
