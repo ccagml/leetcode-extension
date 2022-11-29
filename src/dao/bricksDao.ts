@@ -128,6 +128,21 @@ class BricksDao {
     return all_qid;
   }
 
+  public async getTodayBricksSubmit(): Promise<string[]> {
+    let today_time = getDayStart();
+    let all_bricks = await this.getAllBricks();
+    let all_qid: Array<string> = [];
+    for (const qid in all_bricks) {
+      const value = all_bricks[qid];
+      const submit_time = value.submit_time || [];
+      let submit_size = submit_time.length;
+      if (submit_size > 0 && submit_time[submit_size - 1] >= today_time) {
+        all_qid.push(qid);
+      }
+    }
+    return all_qid;
+  }
+
   public async getInfoByQid(qid: string) {
     let all_bricks = await this.getAllBricks();
     return all_bricks[qid] || {};
