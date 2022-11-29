@@ -109,8 +109,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.remarkCreateNote", (reply: CommentReply) => {
         remarkController.remarkCreateNote(reply);
       }),
-      commands.registerCommand("lcpr.remarkAdd", (a, b, c, d) => {
-        remarkController.remarkAdd(a, b, c, d);
+      commands.registerCommand("lcpr.remarkClose", (a) => {
+        remarkController.remarkClose(a);
       }),
       commands.registerCommand("lcpr.remarkReplyNote", (reply: CommentReply) => {
         remarkController.remarkReplyNote(reply);

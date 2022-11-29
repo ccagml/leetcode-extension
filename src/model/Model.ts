@@ -17,7 +17,7 @@ import {
   CommentAuthorInformation,
   CommentThread,
 } from "vscode";
-import { getDayNowM } from "../utils/SystemUtils";
+import { getDayNowM, getRemakeName } from "../utils/SystemUtils";
 
 export interface IQuickItemEx<T> extends QuickPickItem {
   value: T;
@@ -272,23 +272,32 @@ export interface ISubmitEvent {
 export class RemarkComment implements Comment {
   id: number;
   label: string | undefined;
-  constructor(
-    public body: string | MarkdownString,
-    public mode: CommentMode,
-    public author: CommentAuthorInformation,
-    public parent?: CommentThread,
-    public contextValue?: string
-  ) {
+  mode: CommentMode;
+  author: CommentAuthorInformation;
+  contextValue?: string;
+
+  constructor(public body: string | MarkdownString, public parent?: CommentThread) {
     this.id = getDayNowM();
     this.label = "";
+    this.contextValue = "canDelete";
+    this.mode = CommentMode.Preview;
+    this.author = { name: getRemakeName() };
   }
 
-  getDbString() {
+  getDbData() {
     let a = {
       name: this.author.name,
       id: this.id,
       body: this.body,
     };
+    return a;
+  }
+
+  static getObjByDbData(dbData, thread?): RemarkComment {
+    let obj = new RemarkComment(dbData.body, thread);
+    obj.id = dbData.id || getDayNowM();
+    obj.author = { name: dbData.name };
+    return obj;
   }
 }
 

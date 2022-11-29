@@ -15,11 +15,8 @@ import { remarkService } from "../service/RemarkService";
 class RemarkController implements Disposable {
   public dispose(): void {}
 
-  public remarkAdd(a, b, c, d) {
-    console.log(a);
-    console.log(b);
-    console.log(c);
-    console.log(d);
+  public remarkClose(a) {
+    remarkService.remarkClose(a);
   }
 
   public remarkCreateNote(reply: CommentReply) {
@@ -33,8 +30,8 @@ class RemarkController implements Disposable {
   public remarkDeleteNoteComment(comment: RemarkComment) {
     remarkService.remarkDeleteNoteComment(comment);
   }
-  public startRemark(document: TextDocument) {
-    remarkService.startRemark(document);
+  public async startRemark(document: TextDocument) {
+    await remarkService.startRemark(document);
   }
 
   public remarkCancelsaveNote(comment: RemarkComment) {

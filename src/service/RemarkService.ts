@@ -10,8 +10,8 @@ import {
   Disposable,
 } from "vscode";
 import { treeViewController } from "../controller/TreeViewController";
+import { remarkDao } from "../dao/remarkDao";
 import { RemarkComment } from "../model/Model";
-import { getRemakeName } from "../utils/SystemUtils";
 
 class RemarkService implements Disposable {
   private _remarkComment;
@@ -44,7 +44,7 @@ class RemarkService implements Disposable {
     };
   }
 
-  public startRemark(document: TextDocument) {
+  public async startRemark(document: TextDocument) {
     let docInfo = this.getQidByDocument(document);
     if (docInfo["qid"] == undefined) {
       return;
@@ -54,12 +54,17 @@ class RemarkService implements Disposable {
       this._qid_map_thread.get(docInfo["qid"])?.dispose();
       this._qid_map_thread.delete(docInfo["qid"]);
     }
+    let oldRemark = await this.getOldThreadRemarkByQid(docInfo["qid"]);
     for (let i: number = 0; i < document.lineCount; i++) {
       const lineContent: string = document.lineAt(i).text;
       if (lineContent.indexOf("@lc code=start") >= 0) {
-        let newRemark = this._remarkComment.createCommentThread(document.uri, new Range(i - 1, 0, i - 1, 0), []);
-        newRemark.contextValue = `qid:${docInfo["qid"]}`;
-        newRemark.label = `${docInfo["fid"]}题`;
+        let newRemark = this._remarkComment.createCommentThread(document.uri, new Range(i - 1, 0, i - 1, 0), oldRemark);
+        newRemark.comments.forEach((element) => {
+          element.parent = newRemark;
+        });
+
+        newRemark.contextValue = `qid=${docInfo["qid"]}`;
+        newRemark.label = `${docInfo["fid"]}`;
         newRemark.collapsibleState = CommentThreadCollapsibleState.Expanded;
         this._qid_map_thread.set(docInfo["qid"], newRemark);
         break;
@@ -76,16 +81,12 @@ class RemarkService implements Disposable {
   }
 
   public remarkDeleteNoteComment(comment: RemarkComment) {
-    let thread = comment.parent;
-    if (!thread) {
+    if (!comment.parent) {
       return;
     }
 
-    thread.comments = thread.comments.filter((cmt) => (cmt as RemarkComment).id !== comment.id);
-
-    // if (thread.comments.length === 0) {
-    //   thread.dispose();
-    // }
+    comment.parent.comments = comment.parent.comments.filter((cmt) => (cmt as RemarkComment).id !== comment.id);
+    this.saveThreadRemark(comment.parent);
   }
 
   public remarkCancelsaveNote(comment: RemarkComment) {
@@ -100,19 +101,10 @@ class RemarkService implements Disposable {
 
       return cmt;
     });
+    this.saveThreadRemark(comment.parent);
   }
   public remarkSaveNote(comment: RemarkComment) {
-    if (!comment.parent) {
-      return;
-    }
-
-    comment.parent.comments = comment.parent.comments.map((cmt) => {
-      if ((cmt as RemarkComment).id === comment.id) {
-        cmt.mode = CommentMode.Preview;
-      }
-
-      return cmt;
-    });
+    this.remarkCancelsaveNote(comment);
   }
   public remarkEditNote(comment: RemarkComment) {
     if (!comment.parent) {
@@ -126,12 +118,49 @@ class RemarkService implements Disposable {
 
       return cmt;
     });
+
+    this.saveThreadRemark(comment.parent);
   }
 
   public replyNote(reply: CommentReply) {
     let thread = reply.thread;
-    let newComment = new RemarkComment(reply.text, CommentMode.Preview, { name: getRemakeName() }, thread, "canDelete");
+    let newComment = new RemarkComment(reply.text, thread);
     thread.comments = [...thread.comments, newComment];
+    this.saveThreadRemark(thread);
+  }
+
+  public saveThreadRemark(thread) {
+    const params: URLSearchParams = new URLSearchParams(thread.contextValue);
+    let qid = params.get("qid");
+    if (!qid) {
+      return;
+    }
+    let data: Array<any> = [];
+    thread.comments.forEach((element) => {
+      data.push(element.getDbData());
+    });
+    let remarkData = {};
+    remarkData["data"] = data;
+    remarkDao.setInfoByQid(qid, remarkData);
+  }
+  public async getOldThreadRemarkByQid(qid: string, thread?) {
+    let remarkData = await remarkDao.getInfoByQid(qid);
+    let remarkDataBody = remarkData["data"] || [];
+    let OldRemark: Array<any> = [];
+    remarkDataBody.forEach((element) => {
+      OldRemark.push(RemarkComment.getObjByDbData(element, thread));
+    });
+    return OldRemark;
+  }
+
+  public remarkClose(thread) {
+    const params: URLSearchParams = new URLSearchParams(thread.contextValue);
+    let qid = params.get("qid");
+    if (!qid) {
+      return;
+    }
+
+    this._qid_map_thread.get(qid)?.dispose();
   }
 
   public dispose(): void {}

@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "LeetCode 官方插件增强, 代码开源, 增加 LeetCode 题目难度分, 给个star吧, 球球了",
-    "version": "2.3.2",
+    "version": "2.4.1",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -188,8 +188,8 @@
                 "title": "Create Note"
             },
             {
-                "command": "lcpr.remarkAdd",
-                "title": "测试新加线程?"
+                "command": "lcpr.remarkClose",
+                "title": "关闭?"
             },
             {
                 "command": "lcpr.remarkReplyNote",
@@ -249,20 +249,20 @@
             "commandPalette": [
                 {
                     "command": "lcpr.remarkCreateNote",
-                    "when": "false"
+                    "when": "true"
                 },
                 {
                     "command": "lcpr.remarkReplyNote",
-                    "when": "false"
+                    "when": "true"
                 },
                 {
                     "command": "lcpr.remarkDeleteNoteComment",
-                    "when": "false"
+                    "when": "true"
                 }
             ],
             "comments/commentThread/title": [
                 {
-                    "command": "lcpr.remarkAdd",
+                    "command": "lcpr.remarkClose",
                     "group": "inline",
                     "when": "commentController == comment-sample"
                 }
@@ -293,13 +293,8 @@
             ],
             "comments/comment/context": [
                 {
-                    "command": "lcpr.remarkCancelsaveNote",
-                    "group": "inline@1",
-                    "when": "commentController == comment-sample"
-                },
-                {
                     "command": "lcpr.remarkSaveNote",
-                    "group": "inline@2",
+                    "group": "inline@1",
                     "when": "commentController == comment-sample"
                 }
             ],
