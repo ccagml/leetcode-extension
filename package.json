@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "LeetCode 官方插件增强, 代码开源, 增加 LeetCode 题目难度分, 给个star吧, 球球了",
-    "version": "2.5.1",
+    "version": "2.6.1",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -69,28 +69,28 @@
             },
             {
                 "command": "lcpr.refreshExplorer",
-                "title": "Refresh",
+                "title": "刷新",
                 "category": "LeetCode",
                 "icon": "$(refresh)"
             },
             {
                 "command": "lcpr.pickOne",
-                "title": "Pick One",
+                "title": "手气一下",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.deleteAllCache",
-                "title": "deleteAllCache",
+                "title": "删除题目缓存",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.showProblem",
-                "title": "Show Problem",
+                "title": "做题",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.previewProblem",
-                "title": "Preview Problem",
+                "title": "预览题目",
                 "category": "LeetCode"
             },
             {
@@ -222,6 +222,26 @@
             {
                 "command": "lcpr.remarkDispose",
                 "title": "Remove All Notes"
+            },
+            {
+                "command": "lcpr.newBrickGroup",
+                "title": "新建一个自定义分类",
+                "icon": "$(file-directory-create)"
+            },
+            {
+                "command": "lcpr.addQidToGroup",
+                "title": "添加题目到自定义分类",
+                "icon": "$(add)"
+            },
+            {
+                "command": "lcpr.removeBrickGroup",
+                "title": "移除这个自定义分类",
+                "icon": "$(remove)"
+            },
+            {
+                "command": "lcpr.removeQidFromGroup",
+                "title": "从分类中移除这个题目",
+                "icon": "$(remove)"
             }
         ],
         "viewsContainers": {
@@ -333,6 +353,11 @@
                     "command": "lcpr.deleteAllCache",
                     "when": "view == QuestionExplorer",
                     "group": "overflow@2"
+                },
+                {
+                    "command": "lcpr.newBrickGroup",
+                    "when": "view == BricksExplorer",
+                    "group": "navigation@1"
                 }
             ],
             "view/item/context": [
@@ -357,6 +382,11 @@
                     "group": "leetcode@4"
                 },
                 {
+                    "command": "lcpr.addQidToGroup",
+                    "when": "view == QuestionExplorer && viewItem =~ /problem*/",
+                    "group": "leetcode@5"
+                },
+                {
                     "command": "lcpr.addFavorite",
                     "when": "view == QuestionExplorer && viewItem == problem",
                     "group": "inline"
@@ -368,23 +398,33 @@
                 },
                 {
                     "command": "lcpr.previewProblem",
-                    "when": "view == BricksExplorer && viewItem == bricks",
+                    "when": "view == BricksExplorer && viewItem  =~ /nodebricks*/",
                     "group": "leetcode@1"
                 },
                 {
                     "command": "lcpr.showProblem",
-                    "when": "view == BricksExplorer && viewItem == bricks",
+                    "when": "view == BricksExplorer && viewItem =~ /nodebricks*/",
                     "group": "leetcode@2"
                 },
                 {
                     "command": "lcpr.showSolution",
-                    "when": "view == BricksExplorer && viewItem == bricks",
+                    "when": "view == BricksExplorer && viewItem  =~ /nodebricks*/",
                     "group": "leetcode@3"
                 },
                 {
                     "submenu": "lcpr.setBricksType_sub1",
-                    "when": "view == BricksExplorer && viewItem == bricks",
+                    "when": "view == BricksExplorer && viewItem =~ /nodebricks*/ ",
                     "group": "leetcode@4"
+                },
+                {
+                    "command": "lcpr.removeQidFromGroup",
+                    "when": "view == BricksExplorer && viewItem == nodebricksdiy",
+                    "group": "leetcode@5"
+                },
+                {
+                    "command": "lcpr.removeBrickGroup",
+                    "when": "view == BricksExplorer && viewItem == bricksdiy",
+                    "group": "leetcode@1"
                 }
             ],
             "commandPalette": [

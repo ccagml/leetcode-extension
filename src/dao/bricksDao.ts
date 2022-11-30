@@ -1,11 +1,11 @@
-// > workspace/ 工作目录
-// >
-// > > .lcpr_data/ 存数据
-// > >
-// > > > remake/ 备注
-// > > >
-// > > > > 题目内部编号.json 根据 qid 备注的信息
-// > >
+/*
+ * Filename: /home/cc/vscode-leetcode-problem-rating/src/dao/bricksDao.ts
+ * Path: /home/cc/vscode-leetcode-problem-rating
+ * Created Date: Wednesday, November 23rd 2022, 4:36:38 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2022  ccagml . All rights reserved.
+ */
 
 import { fetchProblemLanguage, selectWorkspaceFolder } from "../utils/ConfigUtils";
 import { useWsl, toWinPath, getDayStart, getDayNow } from "../utils/SystemUtils";

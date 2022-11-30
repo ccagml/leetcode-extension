@@ -52,6 +52,10 @@ class EventService extends EventEmitter {
     this.on("showProblemFinish", (node: IProblem) => {
       statusBarTimeService.showProblemFinish(node);
     });
+
+    this.on("groupUpdate", () => {
+      bricksDataService.refresh();
+    });
   }
 }
 
