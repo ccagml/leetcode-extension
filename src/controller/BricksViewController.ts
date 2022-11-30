@@ -1,5 +1,5 @@
 /*
- * Filename: /home/cc/vscode-leetcode-problem-rating/src/controller/BricksViewController.ts
+ * https://github.com/ccagml/vscode-leetcode-problem-rating/src/controller/BricksViewController.ts
  * Path: /home/cc/vscode-leetcode-problem-rating
  * Created Date: Tuesday, November 22nd 2022, 11:04:59 am
  * Author: ccagml
