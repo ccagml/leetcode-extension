@@ -105,6 +105,10 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.setBricksType6", (node: NodeModel) =>
         bricksViewController.setBricksType(node, BricksType.TYPE_6)
       ),
+      commands.registerCommand("lcpr.newBrickGroup", () => bricksViewController.newBrickGroup()),
+      commands.registerCommand("lcpr.addQidToGroup", (a) => bricksViewController.addQidToGroup(a)),
+      commands.registerCommand("lcpr.removeBrickGroup", (a) => bricksViewController.removeBrickGroup(a)),
+      commands.registerCommand("lcpr.removeQidFromGroup", (node) => bricksViewController.removeQidFromGroup(node)),
 
       commands.registerCommand("lcpr.remarkCreateNote", (reply: CommentReply) => {
         remarkController.remarkCreateNote(reply);

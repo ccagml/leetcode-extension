@@ -1388,7 +1388,8 @@ class TreeViewController implements Disposable {
   }
 
   public getNodeByQid(qid: string): NodeModel | undefined {
-    return this.getNodeById(this.qidToFid.get(qid) || "");
+    let new_qid = qid.toString();
+    return this.getNodeById(this.qidToFid.get(new_qid) || "");
   }
 
   public getQidByFid(id: string) {

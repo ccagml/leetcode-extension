@@ -156,6 +156,7 @@ export enum BricksNormalId {
   No = "bricksNo", // 没活
   NoDesc = "工头让你去上面那个工地,过几天再回来",
   Today = "bricksToday",
+  DIY = "bricksDiy",
 }
 
 export enum BricksType {

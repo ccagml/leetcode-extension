@@ -13,6 +13,7 @@ import { bricksViewController } from "../controller/BricksViewController";
 import { BricksNode } from "../model/NodeModel";
 import { statusBarService } from "./StatusBarService";
 import { bricksDao } from "../dao/bricksDao";
+import { groupDao } from "../dao/groupDao";
 
 export class BricksDataService implements TreeDataProvider<BricksNode> {
   private onDidChangeTreeDataEvent: EventEmitter<BricksNode | undefined | null> = new EventEmitter<
@@ -27,6 +28,7 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
 
   public async initialize() {
     await bricksDao.init();
+    await groupDao.init();
   }
 
   // 节点的内容
@@ -43,7 +45,7 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
     }
     let contextValue: string;
     if (element.isProblem) {
-      contextValue = "bricks";
+      contextValue = element.groupTime ? "nodebricksdiy" : "nodebricks";
     } else {
       contextValue = element.id.toLowerCase();
     }
@@ -54,8 +56,6 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
         : element.name,
       tooltip: this.getSubCategoryTooltip(element),
       collapsibleState: element.collapsibleState || TreeItemCollapsibleState.None,
-      // ? vscode.TreeItemCollapsibleState.None // 问题没有子节点
-      // : vscode.TreeItemCollapsibleState.Collapsed, // 折叠
       iconPath: this.parseIconPathFromProblemState(element),
       command: element.isProblem ? element.previewCommand : undefined,
       resourceUri: element.uri,
@@ -88,6 +88,9 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
           break;
         case BricksNormalId.Have:
           return await bricksViewController.getHaveNodes();
+          break;
+        case BricksNormalId.DIY:
+          return await bricksViewController.getDiyNode(element);
           break;
         default:
           return [];
@@ -123,6 +126,19 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
       return "";
     }
     return "";
+  }
+
+  // 创建一个新的分类
+  public async newBrickGroup(name) {
+    await groupDao.newBrickGroup(name);
+  }
+  // 删除一个分类
+  public async removeBrickGroup(time) {
+    await groupDao.removeBrickGroupByTime(time);
+  }
+
+  public async getAllGroup() {
+    return await groupDao.getAllGroup();
   }
 }
 
