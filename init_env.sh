@@ -8,5 +8,4 @@ sudo n stable
 sudo apt install node-typescript
 sudo npm i vsce -g
 
-git config --global user.email "ccagml@163.com"
-git config --global user.name "ccagml"
+
