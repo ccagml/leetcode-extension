@@ -561,12 +561,12 @@ class TreeViewController implements Disposable {
         label: `周赛期数查询`,
         detail: `周赛期数查询`,
         value: `contest`,
-      },
-      {
-        label: `测试api`,
-        detail: `测试api`,
-        value: `testapi`,
       }
+      // {
+      //   label: `测试api`,
+      //   detail: `测试api`,
+      //   value: `testapi`,
+      // }
       // ,
       // {
       //     label: `每日一题`,
