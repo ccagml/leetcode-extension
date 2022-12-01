@@ -227,6 +227,7 @@ sudo n stable
 ### 编译 ts 生成 js
 
 ```
+    sudo apt install node-typescript
     tsc
 ```
 
