@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "LeetCode 官方插件增强, 代码开源, 增加 LeetCode 题目难度分, 给个star吧, 球球了",
-    "version": "2.6.2",
+    "version": "2.6.3",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -415,6 +415,11 @@
                     "submenu": "lcpr.setBricksType_sub1",
                     "when": "view == BricksExplorer && viewItem =~ /nodebricks*/ ",
                     "group": "leetcode@4"
+                },
+                {
+                    "command": "lcpr.addQidToGroup",
+                    "when": "view == BricksExplorer && viewItem != nodebricksdiy",
+                    "group": "leetcode@5"
                 },
                 {
                     "command": "lcpr.removeQidFromGroup",
