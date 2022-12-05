@@ -366,3 +366,7 @@ export async function setDefaultLanguage(): Promise<void> {
   leetCodeConfig.update("defaultLanguage", selectedItem.label, true /* Global */);
   window.showInformationMessage(`设置默认语言 ${selectedItem.label} 成功`);
 }
+
+export function isAnswerDiffColor(): boolean {
+  return getVsCodeConfig().get<boolean>("answerDiffColor", false);
+}

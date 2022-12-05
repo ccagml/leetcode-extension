@@ -26,6 +26,7 @@
 - [状态栏增加简易计时器](#状态栏增加简易计时器)
 - [新增一个 remark 功能](#新增在工作目录存放数据)
 - [新增题目自定义分类](#新增在工作目录存放数据)
+- [简易判断答案不同的地方](#插件配置项)
 
 # 关于本项目
 
@@ -170,6 +171,7 @@
 | <font color=red>leetcode-problem-rating.pickOneByRankRangeMax</font>  | 随机一题的最大浮动,随机一题最高分(你的竞赛分+本配置)。                                                                                                                                                                                                                                                        | <font color=red>150</font>                                       |
 | <font color=red>leetcode-problem-rating.hideScore</font>              | 隐藏分数相关的题目。Score:隐藏有分数的题目, NoScore:隐藏没有分数的题目, ScoreRange:隐藏分数范围外的题目                                                                                                                                                                                                       | <font color=red>None</font>                                      |
 | <font color=red>leetcode-problem-rating.useVscodeNode</font>          | 默认情况下使用 VsCode 自带 Node 环境,不需要额外安装 Node 环境                                                                                                                                                                                                                                                 | <font color=red>true</font>                                      |
+| <font color=red>leetcode-problem-rating.answerDiffColor</font>        | 答案不同的地方上色                                                                                                                                                                                                                                                                                            | <font color=red>false</font>                                     |
 
 ## 更新日志
 
