@@ -8,10 +8,13 @@ import {
   comments,
   Range,
   Disposable,
+  window,
+  Position,
 } from "vscode";
 import { treeViewController } from "../controller/TreeViewController";
 import { remarkDao } from "../dao/remarkDao";
 import { RemarkComment } from "../model/Model";
+import { getIncludeTemplate } from "../utils/ConfigUtils";
 
 class RemarkService implements Disposable {
   private _remarkComment;
@@ -42,6 +45,25 @@ class RemarkService implements Disposable {
         return undefined;
       },
     };
+  }
+
+  public async includeTemplates(document: TextDocument) {
+    const content: string = document.getText();
+    const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=(.*)/);
+    if (!matchResult || !matchResult[2]) {
+      return undefined;
+    }
+    for (let i: number = 0; i < document.lineCount; i++) {
+      const lineContent: string = document.lineAt(i).text;
+
+      if (lineContent.indexOf("@lc code=start") >= 0) {
+        const editor = window.activeTextEditor;
+        editor?.edit((edit) => {
+          edit.insert(new Position(i - 1, i - 1), getIncludeTemplate(matchResult[2]));
+        });
+      }
+    }
+    return undefined;
   }
 
   public async startRemark(document: TextDocument) {

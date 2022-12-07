@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "LeetCode 官方插件增强, 代码开源, 增加 LeetCode 题目难度分, 给个star吧, 球球了",
-    "version": "2.7.3",
+    "version": "2.8.1",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -241,6 +241,11 @@
             {
                 "command": "lcpr.removeQidFromGroup",
                 "title": "从分类中移除这个题目",
+                "icon": "$(remove)"
+            },
+            {
+                "command": "lcpr.includeTemplates",
+                "title": "插入头文件模板",
                 "icon": "$(remove)"
             }
         ],
@@ -568,6 +573,72 @@
             {
                 "title": "leetcode-problem-rating",
                 "properties": {
+                    "leetcode-problem-rating.includeTemplates": {
+                        "type": "array",
+                        "description": "引入一些默认内容,防止vscode都是波浪红线",
+                        "default": [
+                            {
+                                "language": "cpp",
+                                "template": [
+                                    "using namespace std;",
+                                    "#include <algorithm>",
+                                    "#include <array>",
+                                    "#include <bitset>",
+                                    "#include <climits>",
+                                    "#include <deque>",
+                                    "#include <functional>",
+                                    "#include <iostream>",
+                                    "#include <list>",
+                                    "#include <queue>",
+                                    "#include <stack>",
+                                    "#include <tuple>",
+                                    "#include <unordered_map>",
+                                    "#include <unordered_set>",
+                                    "#include <utility>",
+                                    "#include <vector>"
+                                ]
+                            }
+                        ],
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "language"
+                            ],
+                            "properties": {
+                                "language": {
+                                    "type": "string",
+                                    "enum": [
+                                        "bash",
+                                        "c",
+                                        "cpp",
+                                        "csharp",
+                                        "golang",
+                                        "java",
+                                        "javascript",
+                                        "kotlin",
+                                        "mysql",
+                                        "php",
+                                        "python",
+                                        "python3",
+                                        "ruby",
+                                        "rust",
+                                        "scala",
+                                        "swift",
+                                        "typescript"
+                                    ],
+                                    "description": "哪种语言"
+                                },
+                                "template": {
+                                    "type": "array",
+                                    "default": [],
+                                    "description": "模板内容",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "leetcode-problem-rating.hideSolved": {
                         "type": "boolean",
                         "default": false,

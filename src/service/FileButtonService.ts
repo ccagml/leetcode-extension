@@ -147,6 +147,11 @@ export class FileButtonService implements vscode.CodeLensProvider {
         title: "remark",
         command: "lcpr.startRemark",
         arguments: [document],
+      }),
+      new vscode.CodeLens(range, {
+        title: "includeTemplates",
+        command: "lcpr.includeTemplates",
+        arguments: [document],
       })
     );
     return temp_result;

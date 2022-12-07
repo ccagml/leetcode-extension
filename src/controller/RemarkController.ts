@@ -33,6 +33,9 @@ class RemarkController implements Disposable {
   public async startRemark(document: TextDocument) {
     await remarkService.startRemark(document);
   }
+  public async includeTemplates(document: TextDocument) {
+    await remarkService.includeTemplates(document);
+  }
 
   public remarkCancelsaveNote(comment: RemarkComment) {
     remarkService.remarkCancelsaveNote(comment);

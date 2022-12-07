@@ -133,6 +133,9 @@ export async function activate(context: ExtensionContext): Promise<void> {
       }),
       commands.registerCommand("lcpr.startRemark", (document: TextDocument) => {
         remarkController.startRemark(document);
+      }),
+      commands.registerCommand("lcpr.includeTemplates", (document: TextDocument) => {
+        remarkController.includeTemplates(document);
       })
     );
 
