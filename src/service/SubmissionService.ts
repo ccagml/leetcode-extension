@@ -35,7 +35,7 @@ class SubmissionService extends BaseWebViewService {
   }
 
   private sections_filtter(key) {
-    if (key.substring(0, 6) == "Output") {
+    if (key.substring(0, 6) == "Output" || key.substring(0, 6) == "Answer") {
       return false;
     } else if (key.substring(0, 8) == "Expected") {
       return false;
@@ -50,7 +50,7 @@ class SubmissionService extends BaseWebViewService {
     let ans;
     let exp;
     for (const key in result) {
-      if (key.substring(0, 6) == "Output") {
+      if (key.substring(0, 6) == "Output" || key.substring(0, 6) == "Answer") {
         ans = key;
       } else if (key.substring(0, 8) == "Expected") {
         exp = key;
@@ -156,7 +156,7 @@ class SubmissionService extends BaseWebViewService {
     let expected_key;
     for (const key in temp) {
       if (typeof key == "string") {
-        if (key.substring(0, 6) == "Output") {
+        if (key.substring(0, 6) == "Output" || key.substring(0, 6) == "Answer") {
           output_key = key;
         } else if (key.substring(0, 8) == "Expected") {
           expected_key = key;
