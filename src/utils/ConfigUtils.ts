@@ -370,3 +370,16 @@ export async function setDefaultLanguage(): Promise<void> {
 export function isAnswerDiffColor(): boolean {
   return getVsCodeConfig().get<boolean>("answerDiffColor", false);
 }
+
+export function getIncludeTemplate(lang: string): string {
+  let temp_cfg = getVsCodeConfig().get<any>("includeTemplates") || [];
+  let result = "";
+  temp_cfg.forEach((element) => {
+    if (element.language == lang) {
+      result = (element.template || []).join("\n");
+      return;
+    }
+  });
+
+  return result;
+}
