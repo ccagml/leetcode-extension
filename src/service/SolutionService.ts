@@ -75,16 +75,27 @@ class SolutionService extends BaseWebViewService {
   }
 
   private parseSolution(raw: string): Solution {
-    raw = raw.slice(1); // skip first empty line
-    [this.problemName, raw] = raw.split(/\n\n([^]+)/); // parse problem name and skip one line
-    const solution: Solution = new Solution();
-    // [^] matches everything including \n, yet can be replaced by . in ES2018's `m` flag
-    [solution.title, raw] = raw.split(/\n\n([^]+)/);
-    [solution.url, raw] = raw.split(/\n\n([^]+)/);
-    [solution.lang, raw] = raw.match(/\* Lang:\s+(.+)\n([^]+)/)!.slice(1);
-    [solution.author, raw] = raw.match(/\* Author:\s+(.+)\n([^]+)/)!.slice(1);
-    [solution.votes, raw] = raw.match(/\* Votes:\s+(\d+)\n\n([^]+)/)!.slice(1);
-    solution.body = raw;
+    // raw = raw.slice(1); // skip first empty line
+    // [this.problemName, raw] = raw.split(/\n\n([^]+)/); // parse problem name and skip one line
+    // const solution: Solution = new Solution();
+    // // [^] matches everything including \n, yet can be replaced by . in ES2018's `m` flag
+    // [solution.title, raw] = raw.split(/\n\n([^]+)/);
+    // [solution.url, raw] = raw.split(/\n\n([^]+)/);
+    // [solution.lang, raw] = raw.match(/\* Lang:\s+(.+)\n([^]+)/)!.slice(1);
+    // [solution.author, raw] = raw.match(/\* Author:\s+(.+)\n([^]+)/)!.slice(1);
+    // [solution.votes, raw] = raw.match(/\* Votes:\s+(\d+)\n\n([^]+)/)!.slice(1);
+    // solution.body = raw;
+    let obj = JSON.parse(raw);
+    let solution: Solution = new Solution();
+    if (obj.code == 100) {
+      this.problemName = obj.solution.problem_name;
+      solution.title = obj.solution.title;
+      solution.url = obj.solution.url;
+      solution.lang = obj.solution.lang;
+      solution.author = obj.solution.author;
+      solution.votes = obj.solution.votes || 0;
+      solution.body = obj.solution.body;
+    }
     return solution;
   }
 }

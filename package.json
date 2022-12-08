@@ -140,7 +140,7 @@
                 "icon": "$(search)"
             },
             {
-                "command": "lcpr.showSolution",
+                "command": "lcpr.getHelp",
                 "title": "获取题解",
                 "category": "LeetCode"
             },
@@ -377,7 +377,7 @@
                     "group": "leetcode@2"
                 },
                 {
-                    "command": "lcpr.showSolution",
+                    "command": "lcpr.getHelp",
                     "when": "view == QuestionExplorer && viewItem =~ /problem*/",
                     "group": "leetcode@3"
                 },
@@ -412,7 +412,7 @@
                     "group": "leetcode@2"
                 },
                 {
-                    "command": "lcpr.showSolution",
+                    "command": "lcpr.getHelp",
                     "when": "view == BricksExplorer && viewItem  =~ /nodebricks*/",
                     "group": "leetcode@3"
                 },
@@ -443,7 +443,7 @@
                     "when": "never"
                 },
                 {
-                    "command": "lcpr.showSolution",
+                    "command": "lcpr.getHelp",
                     "when": "never"
                 },
                 {
@@ -486,7 +486,7 @@
                     "group": "leetcode@2"
                 },
                 {
-                    "command": "lcpr.showSolution",
+                    "command": "lcpr.getHelp",
                     "group": "leetcode@3"
                 },
                 {
@@ -1142,7 +1142,6 @@
         "prompt": "^1.2.0",
         "request": "2.88.0",
         "underscore": "1.12.1",
-        "unescape-js": "^1.1.4",
         "wordwrap": "1.0.0"
     }
 }

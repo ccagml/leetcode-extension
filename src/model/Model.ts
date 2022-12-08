@@ -180,12 +180,6 @@ export enum Category {
   Choice = "Choice",
 }
 
-export const supportedPlugins: string[] = [
-  // "company",
-  "solution.discuss",
-  "leetcode.cn",
-];
-
 export enum DescriptionConfiguration {
   InWebView = "In Webview",
   InFileComment = "In File Comment",

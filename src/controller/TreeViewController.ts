@@ -9,7 +9,6 @@
 
 import * as lodash from "lodash";
 import * as path from "path";
-import * as unescapeJS from "unescape-js";
 import * as vscode from "vscode";
 import { toNumber } from "lodash";
 import { Disposable, Uri, window } from "vscode";
@@ -475,7 +474,7 @@ class TreeViewController implements Disposable {
    * It returns a list of problems
    * @returns An array of problems.
    */
-  public async listProblems(): Promise<IProblem[]> {
+  public async getAllProblems(): Promise<IProblem[]> {
     try {
       if (statusBarService.getStatus() === UserStatus.SignedOut) {
         return [];
@@ -483,7 +482,7 @@ class TreeViewController implements Disposable {
 
       const showLockedFlag: boolean = isShowLocked();
       const useEndpointTranslation: boolean = isUseEndpointTranslation();
-      const result: string = await executeService.listProblems(showLockedFlag, useEndpointTranslation);
+      const result: string = await executeService.getAllProblems(showLockedFlag, useEndpointTranslation);
       const all_problem_info = JSON.parse(result);
       const problems: IProblem[] = [];
       const AllScoreData = treeDataService.getScoreData();
@@ -561,12 +560,12 @@ class TreeViewController implements Disposable {
         label: `周赛期数查询`,
         detail: `周赛期数查询`,
         value: `contest`,
+      },
+      {
+        label: `测试api`,
+        detail: `测试api`,
+        value: `testapi`,
       }
-      // {
-      //   label: `测试api`,
-      //   detail: `测试api`,
-      //   value: `testapi`,
-      // }
       // ,
       // {
       //     label: `每日一题`,
@@ -600,7 +599,7 @@ class TreeViewController implements Disposable {
     }
   }
 
-  public async showSolution(input: NodeModel | vscode.Uri): Promise<void> {
+  public async getHelp(input: NodeModel | vscode.Uri): Promise<void> {
     let problemInput: string | undefined;
     if (input instanceof NodeModel) {
       // Triggerred from explorer
@@ -629,10 +628,36 @@ class TreeViewController implements Disposable {
     if (!language) {
       return;
     }
+
+    const picks: Array<IQuickItemEx<string>> = [];
+    picks.push(
+      {
+        label: "获取中文站题解",
+        description: "",
+        detail: "",
+        value: "cn",
+      },
+      {
+        label: "获取英文站题解",
+        description: "",
+        detail: "",
+        value: "en",
+      }
+    );
+    const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks);
+    if (!choice) {
+      return;
+    }
+
     try {
       const needTranslation: boolean = isUseEndpointTranslation();
-      const solution: string = await executeService.showSolution(problemInput, language, needTranslation);
-      solutionService.show(unescapeJS(solution));
+      const solution: string = await executeService.getHelp(
+        problemInput,
+        language,
+        needTranslation,
+        choice.value == "cn"
+      );
+      solutionService.show(solution);
     } catch (error) {
       logOutput.appendLine(error.toString());
       await promptForOpenOutputChannel("Failed to fetch the top voted solution. 请查看控制台信息~", OutPutType.error);
@@ -645,16 +670,10 @@ class TreeViewController implements Disposable {
       return;
     }
     try {
-      const twoFactor: string | undefined = await vscode.window.showInputBox({
-        prompt: "测试数据",
-        ignoreFocusOut: true,
-        validateInput: (s: string): string | undefined => (s && s.trim() ? undefined : "The input must not be empty"),
-      });
-
+      let problemInput = await this.getActiveFilePath();
       // vscode.window.showErrorMessage(twoFactor || "输入错误");
-      const solution: string = await executeService.getTestApi(twoFactor || "");
-      const query_result = JSON.parse(solution);
-      console.log(query_result);
+      const solution: string = await executeService.getTestApi(problemInput || "");
+      solutionService.show(solution);
     } catch (error) {
       logOutput.appendLine(error.toString());
       await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", OutPutType.error);
@@ -667,7 +686,7 @@ class TreeViewController implements Disposable {
       return;
     }
     const choice: IQuickItemEx<IProblem> | undefined = await vscode.window.showQuickPick(
-      this.parseProblemsToPicks(this.listProblems()),
+      this.parseProblemsToPicks(this.getAllProblems()),
       {
         matchOnDetail: true,
         matchOnDescription: true,
@@ -688,7 +707,7 @@ class TreeViewController implements Disposable {
   }
 
   public async pickOne(): Promise<void> {
-    const problems: IProblem[] = await this.listProblems();
+    const problems: IProblem[] = await this.getAllProblems();
     let randomProblem: IProblem;
 
     const user_score = statusBarService.getUserContestScore();
@@ -1053,7 +1072,7 @@ class TreeViewController implements Disposable {
     const temp_waitUserContest: boolean = this.waitUserContest;
     this.dispose();
     let user_score = statusBarService.getUserContestScore();
-    for (const problem of await this.listProblems()) {
+    for (const problem of await this.getAllProblems()) {
       this.explorerNodeMap.set(problem.id, new NodeModel(problem, true, user_score));
       this.fidToQid.set(problem.id, problem.qid.toString());
       this.qidToFid.set(problem.qid.toString(), problem.id);
