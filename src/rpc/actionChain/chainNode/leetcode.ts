@@ -57,7 +57,6 @@ class LeetCode extends ChainNodeBase {
   getCategoryProblems = (category, cb) => {
     const opts = makeOpts(configUtils.sys.urls.problems.replace("$category", category));
 
-    let that = this;
     request(opts, function (e, resp, body) {
       e = checkError(e, resp, 200);
       if (e) return cb(e);
@@ -121,7 +120,6 @@ server to get the problem's description, test cases, and other information. */
       operationName: "getQuestionDetail",
     };
 
-    let that = this;
     request.post(opts, function (e, resp, body) {
       e = checkError(e, resp, 200);
       if (e) return cb(e);
@@ -293,7 +291,7 @@ server to get the problem's description, test cases, and other information. */
   getSubmissions = (problem, cb) => {
     const opts = makeOpts(configUtils.sys.urls.submissions.replace("$slug", problem.slug));
     opts.headers.Referer = configUtils.sys.urls.problem.replace("$slug", problem.slug);
-    let that = this;
+
     request(opts, function (e, resp, body) {
       e = checkError(e, resp, 200);
       if (e) return cb(e);
@@ -310,7 +308,7 @@ server to get the problem's description, test cases, and other information. */
   /* Getting the submission code and the runtime distribution chart. */
   getSubmission = (submission, cb) => {
     const opts = makeOpts(configUtils.sys.urls.submission.replace("$id", submission.id));
-    let that = this;
+
     request(opts, function (e, resp, body) {
       e = checkError(e, resp, 200);
       if (e) return cb(e);
@@ -339,7 +337,6 @@ server to get the problem's description, test cases, and other information. */
       operationName: operationName,
     };
 
-    let that = this;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     request.post(opts, function (e: any, resp: any, _) {
       e = checkError(e, resp, 200);
@@ -352,7 +349,6 @@ server to get the problem's description, test cases, and other information. */
   getFavorites = (cb: any) => {
     const opts = makeOpts(configUtils.sys.urls.favorites);
 
-    let that = this;
     request(opts, function (e, resp, body) {
       e = checkError(e, resp, 200);
       if (e) return cb(e);
@@ -364,7 +360,6 @@ server to get the problem's description, test cases, and other information. */
 
   /* Making a POST request to the GraphQL API. */
   getUserInfo = (cb: any) => {
-    let that = this;
     const opts = makeOpts(configUtils.sys.urls.graphql);
     opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = configUtils.sys.urls.base;
@@ -390,7 +385,6 @@ server to get the problem's description, test cases, and other information. */
     opts.method = method;
     opts.body = data;
 
-    let that = this;
     request(opts, function (e, resp, body) {
       e = checkError(e, resp, 200);
       if (e && e.statusCode === 302) e = sessionUtils.errors.EXPIRED;
@@ -423,7 +417,6 @@ page and gets the csrf token. It then makes a post request to the login page wit
 the user's login and password. If the response status code is 302, it saves the user's session id
 and csrf token to the user object and saves the user object to the session. */
   signin = (user: any, cb: any) => {
-    let that = this;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     request(configUtils.sys.urls.login, function (e: any, resp: any, _) {
       e = checkError(e, resp, 200);
