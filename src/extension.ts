@@ -71,7 +71,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.deleteAllCache", () => loginContorller.deleteAllCache()),
       commands.registerCommand("leetcode.searchScoreRange", () => treeViewController.searchScoreRange()),
       commands.registerCommand("lcpr.searchProblem", () => treeViewController.searchProblem()),
-      commands.registerCommand("lcpr.showSolution", (input: NodeModel | Uri) => treeViewController.showSolution(input)),
+      commands.registerCommand("lcpr.getHelp", (input: NodeModel | Uri) => treeViewController.getHelp(input)),
       commands.registerCommand("lcpr.refreshExplorer", () => treeDataService.refresh()),
       commands.registerCommand("lcpr.testSolution", (uri?: Uri) => treeViewController.testSolution(uri)),
       commands.registerCommand("lcpr.testCaseDef", (uri?, allCase?) => treeViewController.testCaseDef(uri, allCase)),

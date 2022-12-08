@@ -29,34 +29,6 @@ class LeetCode extends ChainNodeBase {
     super();
   }
 
-  signOpts(opts, user) {
-    opts.headers.Cookie = "LEETCODE_SESSION=" + user.sessionId + ";csrftoken=" + user.sessionCSRF + ";";
-    opts.headers["X-CSRFToken"] = user.sessionCSRF;
-    opts.headers["X-Requested-With"] = "XMLHttpRequest";
-  }
-
-  makeOpts(url) {
-    const opts: any = {};
-    opts.url = url;
-    opts.headers = {};
-
-    if (sessionUtils.isLogin()) this.signOpts(opts, sessionUtils.getUser());
-    return opts;
-  }
-
-  checkError(e, resp, expectedStatus) {
-    if (!e && resp && resp.statusCode !== expectedStatus) {
-      const code = resp.statusCode;
-
-      if (code === 403 || code === 401) {
-        e = sessionUtils.errors.EXPIRED;
-      } else {
-        e = { msg: "http error", statusCode: code };
-      }
-    }
-    return e;
-  }
-
   init() {
     configUtils.app = "leetcode";
   }
@@ -83,11 +55,10 @@ class LeetCode extends ChainNodeBase {
 
   /* Getting the problems from the category. */
   getCategoryProblems = (category, cb) => {
-    const opts = this.makeOpts(configUtils.sys.urls.problems.replace("$category", category));
+    const opts = makeOpts(configUtils.sys.urls.problems.replace("$category", category));
 
-    let that = this;
     request(opts, function (e, resp, body) {
-      e = that.checkError(e, resp, 200);
+      e = checkError(e, resp, 200);
       if (e) return cb(e);
 
       const json = JSON.parse(body);
@@ -124,7 +95,7 @@ server to get the problem's description, test cases, and other information. */
     const user = sessionUtils.getUser();
     if (problem.locked && !user.paid) return cb("failed to load locked problem!");
 
-    const opts = this.makeOpts(configUtils.sys.urls.graphql);
+    const opts = makeOpts(configUtils.sys.urls.graphql);
     opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = problem.link;
 
@@ -149,9 +120,8 @@ server to get the problem's description, test cases, and other information. */
       operationName: "getQuestionDetail",
     };
 
-    let that = this;
     request.post(opts, function (e, resp, body) {
-      e = that.checkError(e, resp, 200);
+      e = checkError(e, resp, 200);
       if (e) return cb(e);
 
       const q = body.data.question;
@@ -192,7 +162,7 @@ server to get the problem's description, test cases, and other information. */
 
     let that = this;
     request(opts, function (e, resp, body) {
-      e = that.checkError(e, resp, 200);
+      e = checkError(e, resp, 200);
       if (e) return cb(e);
 
       if (body.error) {
@@ -219,7 +189,7 @@ server to get the problem's description, test cases, and other information. */
 
     let that = this;
     request(opts, function (e, resp, body) {
-      e = that.checkError(e, resp, 200);
+      e = checkError(e, resp, 200);
       if (e) return cb(e);
 
       let result = JSON.parse(body);
@@ -282,7 +252,7 @@ server to get the problem's description, test cases, and other information. */
 
   /* Testing the code. */
   testProblem = (problem, cb) => {
-    const opts = this.makeOpts(configUtils.sys.urls.test.replace("$slug", problem.slug));
+    const opts = makeOpts(configUtils.sys.urls.test.replace("$slug", problem.slug));
     opts.body = { data_input: problem.testcase };
     let that = this;
     this.runCode(opts, problem, function (e, task) {
@@ -303,7 +273,7 @@ server to get the problem's description, test cases, and other information. */
 
   /* Submitting a problem to the server. */
   submitProblem = (problem, cb) => {
-    const opts = this.makeOpts(configUtils.sys.urls.submit.replace("$slug", problem.slug));
+    const opts = makeOpts(configUtils.sys.urls.submit.replace("$slug", problem.slug));
     opts.body = { judge_type: "large" };
     let that = this;
     this.runCode(opts, problem, function (e, task) {
@@ -319,11 +289,11 @@ server to get the problem's description, test cases, and other information. */
 
   /* Getting the submissions for a problem. */
   getSubmissions = (problem, cb) => {
-    const opts = this.makeOpts(configUtils.sys.urls.submissions.replace("$slug", problem.slug));
+    const opts = makeOpts(configUtils.sys.urls.submissions.replace("$slug", problem.slug));
     opts.headers.Referer = configUtils.sys.urls.problem.replace("$slug", problem.slug);
-    let that = this;
+
     request(opts, function (e, resp, body) {
-      e = that.checkError(e, resp, 200);
+      e = checkError(e, resp, 200);
       if (e) return cb(e);
 
       // FIXME: this only return the 1st 20 submissions, we should get next if necessary.
@@ -337,10 +307,10 @@ server to get the problem's description, test cases, and other information. */
 
   /* Getting the submission code and the runtime distribution chart. */
   getSubmission = (submission, cb) => {
-    const opts = this.makeOpts(configUtils.sys.urls.submission.replace("$id", submission.id));
-    let that = this;
+    const opts = makeOpts(configUtils.sys.urls.submission.replace("$id", submission.id));
+
     request(opts, function (e, resp, body) {
-      e = that.checkError(e, resp, 200);
+      e = checkError(e, resp, 200);
       if (e) return cb(e);
 
       let re = body.match(/submissionCode:\s('[^']*')/);
@@ -356,7 +326,7 @@ server to get the problem's description, test cases, and other information. */
   starProblem = (problem, starred, cb) => {
     const user = sessionUtils.getUser();
     const operationName = starred ? "addQuestionToFavorite" : "removeQuestionFromFavorite";
-    const opts = this.makeOpts(configUtils.sys.urls.graphql);
+    const opts = makeOpts(configUtils.sys.urls.graphql);
     opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = problem.link;
 
@@ -367,10 +337,9 @@ server to get the problem's description, test cases, and other information. */
       operationName: operationName,
     };
 
-    let that = this;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     request.post(opts, function (e: any, resp: any, _) {
-      e = that.checkError(e, resp, 200);
+      e = checkError(e, resp, 200);
       if (e) return cb(e);
       return cb(null, starred);
     });
@@ -378,11 +347,10 @@ server to get the problem's description, test cases, and other information. */
 
   /* Making a request to the server to get the favorites. */
   getFavorites = (cb: any) => {
-    const opts = this.makeOpts(configUtils.sys.urls.favorites);
+    const opts = makeOpts(configUtils.sys.urls.favorites);
 
-    let that = this;
     request(opts, function (e, resp, body) {
-      e = that.checkError(e, resp, 200);
+      e = checkError(e, resp, 200);
       if (e) return cb(e);
 
       const favorites = JSON.parse(body);
@@ -392,8 +360,7 @@ server to get the problem's description, test cases, and other information. */
 
   /* Making a POST request to the GraphQL API. */
   getUserInfo = (cb: any) => {
-    let that = this;
-    const opts = this.makeOpts(configUtils.sys.urls.graphql);
+    const opts = makeOpts(configUtils.sys.urls.graphql);
     opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = configUtils.sys.urls.base;
     opts.json = true;
@@ -403,7 +370,7 @@ server to get the problem's description, test cases, and other information. */
     };
 
     request.post(opts, function (e, resp, body) {
-      e = that.checkError(e, resp, 200);
+      e = checkError(e, resp, 200);
       if (e) return cb(e);
 
       const user = body.data.user;
@@ -413,14 +380,13 @@ server to get the problem's description, test cases, and other information. */
 
   /* Making a request to the server and returning the response. */
   runSession = (method: any, data: any, cb: any) => {
-    const opts = this.makeOpts(configUtils.sys.urls.session);
+    const opts = makeOpts(configUtils.sys.urls.session);
     opts.json = true;
     opts.method = method;
     opts.body = data;
 
-    let that = this;
     request(opts, function (e, resp, body) {
-      e = that.checkError(e, resp, 200);
+      e = checkError(e, resp, 200);
       if (e && e.statusCode === 302) e = sessionUtils.errors.EXPIRED;
 
       return e ? cb(e) : cb(null, body.sessions);
@@ -451,10 +417,9 @@ page and gets the csrf token. It then makes a post request to the login page wit
 the user's login and password. If the response status code is 302, it saves the user's session id
 and csrf token to the user object and saves the user object to the session. */
   signin = (user: any, cb: any) => {
-    let that = this;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     request(configUtils.sys.urls.login, function (e: any, resp: any, _) {
-      e = that.checkError(e, resp, 200);
+      e = checkError(e, resp, 200);
       if (e) return cb(e);
       user.loginCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
       const opts = {
@@ -706,6 +671,115 @@ and csrf token to the user object and saves the user object to the session. */
       });
     });
   };
+  getHelpOnline = (problem, _, lang) => {
+    getHelpEn(problem, lang, function (e, solution) {
+      if (e) return;
+      if (!solution) return reply.info(JSON.stringify({ code: -1, msg: `Solution not found for ${lang}` }));
+      let URL_DISCUSS = "https://leetcode.com/problems/$slug/discuss/$id";
+      let link = URL_DISCUSS.replace("$slug", problem.slug).replace("$id", solution.id);
+      let content = solution.post.content.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
+
+      let solution_result: any = {};
+      solution_result.problem_name = problem.name;
+      solution_result.title = solution.title;
+      solution_result.url = link;
+      solution_result.lang = lang;
+      solution_result.author = solution.post.author.username;
+      solution_result.votes = solution.post.voteCount;
+      solution_result.body = content;
+      solution_result.is_cn = false;
+      reply.info(JSON.stringify({ code: 100, solution: solution_result }));
+    });
+  };
+}
+
+/**
+ * It takes a problem object, a language, and a callback. It then makes a request to the LeetCode
+ * Discuss API to get the top voted solution for that problem in that language
+ * @param problem - the problem object
+ * @param lang - The language of the solution.
+ * @param cb - callback function
+ * @returns A solution to the problem.
+ */
+function getHelpEn(problem, lang, cb) {
+  if (!problem) return cb();
+  let URL_DISCUSSES = "https://leetcode.com/graphql";
+
+  if (lang === "python3") lang = "python";
+
+  let opts = {
+    url: URL_DISCUSSES,
+    json: true,
+    body: {
+      query: [
+        "query questionTopicsList($questionId: String!, $orderBy: TopicSortingOption, $skip: Int, $query: String, $first: Int!, $tags: [String!]) {",
+        "  questionTopicsList(questionId: $questionId, orderBy: $orderBy, skip: $skip, query: $query, first: $first, tags: $tags) {",
+        "    ...TopicsList",
+        "  }",
+        "}",
+        "fragment TopicsList on TopicConnection {",
+        "  totalNum",
+        "  edges {",
+        "    node {",
+        "      id",
+        "      title",
+        "      post {",
+        "        content",
+        "        voteCount",
+        "        author {",
+        "          username",
+        "        }",
+        "      }",
+        "    }",
+        "  }",
+        "}",
+      ].join("\n"),
+
+      operationName: "questionTopicsList",
+      variables: JSON.stringify({
+        query: "",
+        first: 1,
+        skip: 0,
+        orderBy: "most_votes",
+        questionId: "" + problem.id,
+        tags: [lang],
+      }),
+    },
+  };
+  request(opts, function (e, resp, body) {
+    if (e) return cb(e);
+    if (resp.statusCode !== 200) return cb({ msg: "http error", statusCode: resp.statusCode });
+
+    const solutions = body.data.questionTopicsList.edges;
+    const solution = solutions.length > 0 ? solutions[0].node : null;
+    return cb(null, solution);
+  });
+}
+function makeOpts(url) {
+  const opts: any = {};
+  opts.url = url;
+  opts.headers = {};
+
+  if (sessionUtils.isLogin()) signOpts(opts, sessionUtils.getUser());
+  return opts;
+}
+
+function signOpts(opts, user) {
+  opts.headers.Cookie = "LEETCODE_SESSION=" + user.sessionId + ";csrftoken=" + user.sessionCSRF + ";";
+  opts.headers["X-CSRFToken"] = user.sessionCSRF;
+  opts.headers["X-Requested-With"] = "XMLHttpRequest";
+}
+function checkError(e, resp, expectedStatus) {
+  if (!e && resp && resp.statusCode !== expectedStatus) {
+    const code = resp.statusCode;
+
+    if (code === 403 || code === 401) {
+      e = sessionUtils.errors.EXPIRED;
+    } else {
+      e = { msg: "http error", statusCode: code };
+    }
+  }
+  return e;
 }
 
 export const pluginObj: LeetCode = new LeetCode();

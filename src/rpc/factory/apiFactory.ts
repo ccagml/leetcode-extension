@@ -1,5 +1,5 @@
 import { cacheApi } from "./api/cacheApi";
-import { listApi } from "./api/listApi";
+
 import { pluginApi } from "./api/pluginApi";
 import { queryApi } from "./api/queryApi";
 import { showApi } from "./api/showApi";
@@ -14,8 +14,6 @@ class ApiFactory {
   getApi(api: string): IApi | undefined {
     if (api == "cache") {
       return cacheApi;
-    } else if (api == "list") {
-      return listApi;
     } else if (api == "plugin") {
       return pluginApi;
     } else if (api == "query") {

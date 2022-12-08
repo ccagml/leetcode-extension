@@ -14,7 +14,7 @@ let request = require("request");
 import { configUtils } from "../../utils/configUtils";
 
 import { sessionUtils } from "../../utils/sessionUtils";
-
+import { reply } from "../../utils/ReplyUtils";
 class LeetCodeCn extends ChainNodeBase {
   id = 15;
   name = "leetcode.cn";
@@ -192,17 +192,137 @@ class LeetCodeCn extends ChainNodeBase {
   /* A function that is used to test the api. */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getTestApi = (value: any, _) => {
-    const _request = request.defaults({ jar: true });
-    _request(
-      "https://zerotrac.github.io/leetcode_problem_rating/data.json",
-      function (error: any, info: any, body: any) {
-        console.log(error);
-        console.log(info);
-        let a = body;
-        console.log(a, value);
-      }
-    );
+    console.log(value);
+    let question_slug = "determine-color-of-a-chessboard-square";
+    let lang = "cpp";
+
+    getSolutionArticlesSlugList(question_slug, lang, (e, articles_slug) => {
+      if (e) return;
+      getSolutionBySlug(question_slug, articles_slug, lang);
+    });
   };
+
+  getHelpOnline = (problem, cn_flag, lang) => {
+    if (cn_flag) {
+      getSolutionArticlesSlugList(problem.slug, lang, (e, articles_slug) => {
+        if (e) return;
+        getSolutionBySlug(problem.slug, articles_slug, lang);
+      });
+    } else {
+      this.next.getHelpOnline(problem, cn_flag, lang);
+    }
+  };
+}
+
+function getSolutionBySlug(question_slug: string, articles_slug: string, lang: string) {
+  const opts = makeOpts(configUtils.sys.urls.graphql);
+  opts.headers.Origin = configUtils.sys.urls.base;
+  let URL_DISCUSS = "https://leetcode.cn/problems/$slug/solution/$articles_slug/";
+  opts.headers.Referer = URL_DISCUSS.replace("$slug", question_slug).replace("$articles_slug", articles_slug);
+
+  opts.json = true;
+  opts.body = {
+    operationName: "solutionDetailArticle",
+    variables: { slug: "pan-duan-guo-ji-xiang-qi-qi-pan-zhong-yi-8dv4", orderBy: "DEFAULT" },
+    query: [
+      "query solutionDetailArticle($slug: String!, $orderBy: SolutionArticleOrderBy!) {",
+      "    solutionArticle(slug: $slug, orderBy: $orderBy) {",
+      "      ...solutionArticle",
+      "      content",
+      "      question {",
+      "        questionTitleSlug",
+      "        __typename",
+      "      }",
+      "  __typename",
+      "}",
+      "}",
+      "fragment solutionArticle on SolutionArticleNode {",
+      "    uuid",
+      "    title",
+      "    slug",
+      "    identifier",
+      "author {",
+      "      username",
+      "      profile {",
+      "        realName",
+      "        __typename",
+      "      }",
+      "  __typename",
+      "}",
+      "byLeetcode",
+      "__typename",
+      "}",
+    ].join("\n"),
+  };
+
+  request.post(opts, function (_, __, body) {
+    // let bbb = body;
+    // console.log(bbb);
+    let solution = body.data.solutionArticle;
+    if (!solution) return reply.error("本题没有题解");
+
+    let link = URL_DISCUSS.replace("$slug", question_slug).replace("$articles_slug", articles_slug);
+    let content = solution.content.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
+
+    let solution_result: any = {};
+    solution_result.problem_name = "暂代题目名称";
+    solution_result.title = solution.title;
+    solution_result.url = link;
+    solution_result.lang = lang;
+    solution_result.author = solution.author.username;
+    solution_result.votes = solution.voteCount;
+    solution_result.body = content;
+    solution_result.is_cn = true;
+    reply.info(JSON.stringify({ code: 100, solution: solution_result }));
+  });
+}
+
+function getSolutionArticlesSlugList(question_slug: string, lang: string, cb) {
+  const opts = makeOpts(configUtils.sys.urls.graphql);
+  opts.headers.Origin = configUtils.sys.urls.base;
+  // let URL_DISCUSSES = "https://leetcode.com/graphql";
+  let URL_DISCUSS = "https://leetcode.cn/problems/$slug/solution";
+  opts.headers.Referer = URL_DISCUSS.replace("$slug", question_slug);
+
+  opts.json = true;
+  opts.body = {
+    operationName: "questionSolutionArticles",
+    variables: { questionSlug: question_slug, first: 1, skip: 0, orderBy: "DEFAULT", tagSlugs: [lang] },
+    query: [
+      "query questionSolutionArticles($questionSlug: String!, $skip: Int, $first: Int, $orderBy: SolutionArticleOrderBy, $userInput: String, $tagSlugs: [String!]) {",
+      "questionSolutionArticles(questionSlug: $questionSlug, skip: $skip, first: $first, orderBy: $orderBy, userInput: $userInput, tagSlugs: $tagSlugs) {",
+      "        totalNum",
+      "        edges {",
+      "          node {",
+      "            ...solutionArticle",
+      "            __typename",
+      "          }",
+      "      __typename",
+      "    }",
+      "    __typename",
+      "  }",
+      "}",
+      "fragment solutionArticle on SolutionArticleNode {",
+      "      uuid",
+      "      slug",
+      "  byLeetcode",
+      "  __typename",
+      "}",
+    ].join("\n"),
+  };
+
+  request.post(opts, function (e, _, body) {
+    let edges = body?.data?.questionSolutionArticles?.edges || [];
+    let temp_result;
+    edges.forEach((element) => {
+      if (element?.node?.slug) {
+        temp_result = element?.node?.slug;
+        return;
+      }
+    });
+
+    cb(e, temp_result);
+  });
 }
 
 function signOpts(opts: any, user: any) {

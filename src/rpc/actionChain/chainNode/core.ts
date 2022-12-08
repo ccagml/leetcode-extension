@@ -17,9 +17,9 @@ import { configUtils } from "../../utils/configUtils";
 
 import { ChainNodeBase } from "../chainNodeBase";
 
-function hasTag(o, tag) {
-  return Array.isArray(o) && o.some((x) => x.indexOf(tag.toLowerCase()) >= 0);
-}
+// function hasTag(o, tag) {
+//   return Array.isArray(o) && o.some((x) => x.indexOf(tag.toLowerCase()) >= 0);
+// }
 
 /* It's a class that extends the ChainNodeBase class, and it has a bunch of methods that are called by
 the LeetCode CLI */
@@ -36,17 +36,17 @@ class CorePlugin extends ChainNodeBase {
     this.getProblems(!opts.dontTranslate, function (e, problems) {
       if (e) return cb(e);
 
-      for (let q of (opts.query || "").split("")) {
-        const f = QUERY_HANDLERS[q];
-        if (!f) continue;
-        problems = problems.filter((x) => f(x, q));
-      }
+      // for (let q of (opts.query || "").split("")) {
+      //   const f = QUERY_HANDLERS[q];
+      //   if (!f) continue;
+      //   problems = problems.filter((x) => f(x, q));
+      // }
 
-      for (let t of opts.tag || []) {
-        problems = problems.filter(function (x) {
-          return x.category === t || hasTag(x.companies, t) || hasTag(x.tags, t);
-        });
-      }
+      // for (let t of opts.tag || []) {
+      //   problems = problems.filter(function (x) {
+      //     return x.category === t || hasTag(x.companies, t) || hasTag(x.tags, t);
+      //   });
+      // }
 
       return cb(null, problems);
     });
@@ -139,27 +139,30 @@ class CorePlugin extends ChainNodeBase {
       return cb(null, result);
     });
   };
+  getHelp = (problem, cn_flag, lang) => {
+    this.getHelpOnline(problem, cn_flag, lang);
+  };
 }
 
-const isLevel = (x, q) => x.level[0].toLowerCase() === q.toLowerCase();
-const isACed = (x) => x.state === "ac";
-const isLocked = (x) => x.locked;
-const isStarred = (x) => x.starred;
+// const isLevel = (x, q) => x.level[0].toLowerCase() === q.toLowerCase();
+// const isACed = (x) => x.state === "ac";
+// const isLocked = (x) => x.locked;
+// const isStarred = (x) => x.starred;
 
 /* It's a dictionary that maps the query to the function that filters the problems. */
-const QUERY_HANDLERS = {
-  e: isLevel,
-  E: _.negate(isLevel),
-  m: isLevel,
-  M: _.negate(isLevel),
-  h: isLevel,
-  H: _.negate(isLevel),
-  l: isLocked,
-  L: _.negate(isLocked),
-  d: isACed,
-  D: _.negate(isACed),
-  s: isStarred,
-  S: _.negate(isStarred),
-};
+// const QUERY_HANDLERS = {
+//   e: isLevel,
+//   E: _.negate(isLevel),
+//   m: isLevel,
+//   M: _.negate(isLevel),
+//   h: isLevel,
+//   H: _.negate(isLevel),
+//   l: isLocked,
+//   L: _.negate(isLocked),
+//   d: isACed,
+//   D: _.negate(isACed),
+//   s: isStarred,
+//   S: _.negate(isStarred),
+// };
 
 export const corePlugin: CorePlugin = new CorePlugin();

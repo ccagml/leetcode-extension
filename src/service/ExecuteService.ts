@@ -109,8 +109,8 @@ class ExecuteService implements Disposable {
     ]);
   }
 
-  public async listProblems(showLocked: boolean, needTranslation: boolean): Promise<string> {
-    const cmd: string[] = [await this.getLeetCodeBinaryPath(), "list"];
+  public async getAllProblems(showLocked: boolean, needTranslation: boolean): Promise<string> {
+    const cmd: string[] = [await this.getLeetCodeBinaryPath(), "query", "-d"];
     if (!needTranslation) {
       cmd.push("-T"); // use -T to prevent translation
     }
@@ -146,11 +146,14 @@ class ExecuteService implements Disposable {
     }
   }
 
-  public async showSolution(input: string, language: string, needTranslation: boolean): Promise<string> {
+  public async getHelp(input: string, language: string, needTranslation: boolean, cn_help?: boolean): Promise<string> {
     // solution don't support translation
-    const cmd: string[] = [await this.getLeetCodeBinaryPath(), "show", input, "--solution", "-l", language];
+    const cmd: string[] = [await this.getLeetCodeBinaryPath(), "query", input, "-e", "-g", language];
     if (!needTranslation) {
       cmd.push("-T");
+    }
+    if (cn_help) {
+      cmd.push("-f");
     }
     const solution: string = await this.executeCommandWithProgressEx("正在获取题解~~~", this.nodeExecutable, cmd);
     return solution;

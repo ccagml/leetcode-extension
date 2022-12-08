@@ -115,4 +115,7 @@ export class ChainNodeBase {
   public getRating(cb: Function): void {
     this.next.getRating(cb);
   }
+  public getHelpOnline(problem, cn_flag, lang): void {
+    this.next.getHelpOnline(problem, cn_flag, lang);
+  }
 }

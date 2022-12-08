@@ -86,7 +86,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       temp_result.push(
         new vscode.CodeLens(range, {
           title: "Solution",
-          command: "lcpr.showSolution",
+          command: "lcpr.getHelp",
           arguments: [document.uri],
         })
       );
