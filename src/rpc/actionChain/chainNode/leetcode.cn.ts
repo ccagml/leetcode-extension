@@ -272,6 +272,7 @@ function getSolutionBySlug(question_slug: string, articles_slug: string, lang: s
     solution_result.author = solution.author.username;
     solution_result.votes = solution.voteCount;
     solution_result.body = content;
+    solution_result.is_cn = true;
     reply.info(JSON.stringify({ code: 100, solution: solution_result }));
   });
 }

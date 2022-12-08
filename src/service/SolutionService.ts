@@ -42,7 +42,9 @@ class SolutionService extends BaseWebViewService {
     const styles: string = markdownService.getStyles();
     const { title, url, lang, author, votes } = this.solution;
     const head: string = markdownService.render(`# [${title}](${url})`);
-    const auth: string = `[${author}](https://leetcode.com/${author}/)`;
+    const auth: string = this.solution.is_cn
+      ? `[${author}](https://leetcode.cn/u/${author}/)`
+      : `[${author}](https://leetcode.com/${author}/)`;
     const info: string = markdownService.render(
       [
         `| Language |  Author  |  Votes   |`,
@@ -95,6 +97,7 @@ class SolutionService extends BaseWebViewService {
       solution.author = obj.solution.author;
       solution.votes = obj.solution.votes || 0;
       solution.body = obj.solution.body;
+      solution.is_cn = obj.solution.is_cn;
     }
     return solution;
   }
@@ -108,6 +111,7 @@ class Solution {
   public author: string = "";
   public votes: string = "";
   public body: string = ""; // Markdown supported
+  public is_cn?: boolean = false;
 }
 
 export const solutionService: SolutionService = new SolutionService();

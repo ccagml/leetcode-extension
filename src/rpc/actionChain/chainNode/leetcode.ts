@@ -674,7 +674,7 @@ and csrf token to the user object and saves the user object to the session. */
   getHelpOnline = (problem, _, lang) => {
     getHelpEn(problem, lang, function (e, solution) {
       if (e) return;
-      if (!solution) return reply.error("Solution not found for " + lang);
+      if (!solution) return reply.info(JSON.stringify({ code: -1, msg: `Solution not found for ${lang}` }));
       let URL_DISCUSS = "https://leetcode.com/problems/$slug/discuss/$id";
       let link = URL_DISCUSS.replace("$slug", problem.slug).replace("$id", solution.id);
       let content = solution.post.content.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
@@ -687,6 +687,7 @@ and csrf token to the user object and saves the user object to the session. */
       solution_result.author = solution.post.author.username;
       solution_result.votes = solution.post.voteCount;
       solution_result.body = content;
+      solution_result.is_cn = false;
       reply.info(JSON.stringify({ code: 100, solution: solution_result }));
     });
   };
