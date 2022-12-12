@@ -33,6 +33,9 @@ jobs:
   jobB:
     name: createPr
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     if: ${{ github.event.inputs.pr }} &&  github.event.inputs.tag != ''
     steps:
       - uses: actions/checkout@v2
