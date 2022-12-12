@@ -9,6 +9,9 @@ on:
       change:
         description: "提交内容"
         type: string
+      pr:
+        description: "需要合并提交"
+        type: boolean
 
 jobs:
   jobA:
@@ -26,3 +29,11 @@ jobs:
           git add .
           git commit -m ${{ github.event.inputs.change }}
           git push
+  jobB:
+    name: createPr
+    runs-on: ubuntu-latest
+    if: github.event.inputs.pr &&  github.event.inputs.tag != ''
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+       gh pr create -B main --title 'Merge release${{ github.event.inputs.tag }} into main' --body 'Created by Github action'
