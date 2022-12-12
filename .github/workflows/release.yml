@@ -10,6 +10,14 @@ on:
       change:
         description: "提交内容"
         type: string
+      pr:
+        description: "需要合并提交"
+        type: boolean
+        default: true
+      market:
+        description: "提交到市场"
+        type: boolean
+        default: true
 
 jobs:
   jobA:
@@ -27,10 +35,22 @@ jobs:
           git add .
           git commit -m ${{ github.event.inputs.change }}
           git push
+  jobB:
+    name: createPr
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    if: ${{ github.event.inputs.pr }} &&  github.event.inputs.tag != ''
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          gh pr create -B main --title 'Merge release${{ github.event.inputs.tag }} into main' --body 'Created by Github action'
   linux:
     name: Linux
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    if: ${{ github.event.inputs.market }}
     steps:
       - uses: actions/checkout@v2
 
