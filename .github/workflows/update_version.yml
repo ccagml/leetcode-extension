@@ -1,0 +1,24 @@
+name: debug
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "test Tag"
+        required: true
+
+jobs:
+  linux:
+    name: Linux
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          ls
+          sed -i "s/\"version\":.*$/\"version\": \"${{ github.event.inputs.tag }}\",/" package.json
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "update version"
+          git push

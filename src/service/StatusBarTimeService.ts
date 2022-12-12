@@ -1,6 +1,6 @@
 /*
  * https://github.com/ccagml/vscode-leetcode-problem-rating/src/service/StatusBarTimeService.ts
- * Path: /home/cc/vscode-leetcode-problem-rating
+ * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
  * Created Date: Saturday, November 26th 2022, 2:14:53 pm
  * Author: ccagml
  *

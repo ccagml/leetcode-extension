@@ -1,6 +1,6 @@
 /*
  * https://github.com/ccagml/vscode-leetcode-problem-rating/src/rpc/actionChain/cache.ts
- * Path: /home/cc/vscode-leetcode-problem-rating
+ * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
  * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
