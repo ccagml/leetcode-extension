@@ -1,4 +1,4 @@
-name: debug
+name: update_version
 
 on:
   workflow_dispatch:
