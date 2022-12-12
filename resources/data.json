@@ -781,6 +781,17 @@
         "ContestID_zh": "第 155 场周赛"
     },
     {
+        "Rating": 2415.2802039252,
+        "ID": 2493,
+        "Title": "Divide Nodes Into the Maximum Number of Groups",
+        "TitleZH": "将节点分成尽可能多的组",
+        "TitleSlug": "divide-nodes-into-the-maximum-number-of-groups",
+        "ContestSlug": "weekly-contest-322",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 322",
+        "ContestID_zh": "第 322 场周赛"
+    },
+    {
         "Rating": 2415.0089731911,
         "ID": 2003,
         "Title": "Smallest Missing Genetic Value in Each Subtree",
@@ -7084,6 +7095,17 @@
         "ContestID_zh": "第 317 场周赛"
     },
     {
+        "Rating": 1679.5737760149,
+        "ID": 2492,
+        "Title": "Minimum Score of a Path Between Two Cities",
+        "TitleZH": "两个城市间路径的最小分数",
+        "TitleSlug": "minimum-score-of-a-path-between-two-cities",
+        "ContestSlug": "weekly-contest-322",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 322",
+        "ContestID_zh": "第 322 场周赛"
+    },
+    {
         "Rating": 1679.2607152001,
         "ID": 1402,
         "Title": "Reducing Dishes",
@@ -12243,6 +12265,17 @@
         "ContestID_zh": "第 56 场双周赛"
     },
     {
+        "Rating": 1323.1893756783,
+        "ID": 2491,
+        "Title": "Divide Players Into Teams of Equal Skill",
+        "TitleZH": "划分技能点相等的团队",
+        "TitleSlug": "divide-players-into-teams-of-equal-skill",
+        "ContestSlug": "weekly-contest-322",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 322",
+        "ContestID_zh": "第 322 场周赛"
+    },
+    {
         "Rating": 1322.8302750313,
         "ID": 1614,
         "Title": "Maximum Nesting Depth of the Parentheses",
@@ -13396,6 +13429,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 190",
         "ContestID_zh": "第 190 场周赛"
+    },
+    {
+        "Rating": 1262.938740364,
+        "ID": 2490,
+        "Title": "Circular Sentence",
+        "TitleZH": "回环句",
+        "TitleSlug": "circular-sentence",
+        "ContestSlug": "weekly-contest-322",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 322",
+        "ContestID_zh": "第 322 场周赛"
     },
     {
         "Rating": 1262.5890311992,
