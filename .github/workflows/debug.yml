@@ -13,11 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          path: main
-        run: |
+      - uses: actions/checkout@v3
+      - run: |
           sed -i "s/\"version\":.*$/\"version\": \"${{ github.event.inputs.tag }}\",/" package.json
           git config user.name github-actions
           git config user.email github-actions@github.com
