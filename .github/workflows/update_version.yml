@@ -36,5 +36,8 @@ jobs:
     if: ${{ github.event.inputs.pr }} &&  github.event.inputs.tag != ''
     steps:
       - uses: actions/checkout@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: |
           gh pr create -B main --title 'Merge release${{ github.event.inputs.tag }} into main' --body 'Created by Github action'
