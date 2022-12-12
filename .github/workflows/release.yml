@@ -20,36 +20,37 @@ on:
         default: true
 
 jobs:
-  jobA:
+  pre:
     name: version
     runs-on: ubuntu-latest
-    if: github.event.inputs.tag != '' &&  github.event.inputs.change != ''
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          ls
+      - name: updatepackage
+        if: github.event.inputs.tag != ''
+        run: |
           sed -i "s/\"version\":.*$/\"version\": \"${{ github.event.inputs.tag }}\",/" package.json
+      - name: change
+        if: github.event.inputs.change != ''
+        run: |
           echo -e "## version ${{ github.event.inputs.tag }}\n\n- ${{ github.event.inputs.change }}\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
+      - name: commit
+        if: github.event.inputs.tag != '' || github.event.inputs.change != ''
+        run: |
           git config user.name ccagml
           git config user.email ccagml@163.com
           git add .
           git commit -m ${{ github.event.inputs.change }}
           git push
-  jobB:
-    name: createPr
-    needs: jobA
-    runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    if: ${{ github.event.inputs.pr }} &&  github.event.inputs.tag != ''
-    steps:
-      - uses: actions/checkout@v2
-      - run: |
-          gh pr create -B main --title 'Merge release${{ github.event.inputs.tag }} into main' --body 'Created by Github action'
-  linux:
-    name: Linux
-    needs: jobB
+      - name: finish
+        run: |
+          ls
+
+  market:
+    name: market
+    needs: pre
     runs-on: ubuntu-latest
     timeout-minutes: 30
     if: ${{ github.event.inputs.market }}
