@@ -14,7 +14,7 @@ on:
         description: "需要合并提交"
         type: boolean
         default: false
-      market:
+      mt:
         description: "提交到市场"
         type: boolean
         default: false
@@ -58,7 +58,7 @@ jobs:
     needs: pre
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: ${{ github.event.inputs.market }}
+    if: ${{ github.event.inputs.mt }}
     steps:
       - uses: actions/checkout@v2
       - name: updatepackage
@@ -80,4 +80,5 @@ jobs:
         run: npm i -g vsce
 
       - name: Publish
+        if: ${{ github.event.inputs.mt }}
         run: vsce publish -p ${{ secrets.VSCE_PAT }}
