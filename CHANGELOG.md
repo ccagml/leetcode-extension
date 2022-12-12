@@ -1,3 +1,7 @@
+## version 2.10.4
+
+- 更新action
+
 ## version 2.10.3
 
 - 上锁题目显示问题
