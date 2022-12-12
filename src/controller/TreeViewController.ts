@@ -483,7 +483,10 @@ class TreeViewController implements Disposable {
       const showLockedFlag: boolean = isShowLocked();
       const useEndpointTranslation: boolean = isUseEndpointTranslation();
       const result: string = await executeService.getAllProblems(showLockedFlag, useEndpointTranslation);
-      const all_problem_info = JSON.parse(result);
+      let all_problem_info = JSON.parse(result);
+      if (!showLockedFlag) {
+        all_problem_info = all_problem_info.filter((p) => !p.locked);
+      }
       const problems: IProblem[] = [];
       const AllScoreData = treeDataService.getScoreData();
       // 增加直接在线获取分数数据
