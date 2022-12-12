@@ -12,8 +12,11 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: ["release"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "版本号"
+        type: string
 
 jobs:
   analyze:

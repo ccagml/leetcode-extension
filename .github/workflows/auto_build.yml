@@ -1,10 +1,11 @@
 name: auto_build
 
 on:
-  push:
-    branches: [release]
-  pull_request:
-    branches: [release]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "版本号"
+        type: string
 
 jobs:
   linux:
