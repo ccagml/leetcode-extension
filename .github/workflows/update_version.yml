@@ -6,17 +6,21 @@ on:
       tag:
         description: "test Tag"
         type: string
+      change:
+        description: "test change"
+        type: string
 
 jobs:
   jobA:
     name: Linux
     runs-on: ubuntu-latest
-    if: github.event.inputs.tag != ''
+    if: github.event.inputs.tag != '' &&  github.event.inputs.change != ''
     steps:
       - uses: actions/checkout@v2
       - run: |
           ls
           sed -i "s/\"version\":.*$/\"version\": \"${{ github.event.inputs.tag }}\",/" package.json
+          echo -e "## version ${{ github.event.inputs.tag }}\n\n- ${{ github.event.inputs.change }}\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
