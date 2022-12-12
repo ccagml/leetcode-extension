@@ -28,7 +28,7 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
-      - name: package_json
+      - name: updatepackage
           if: github.event.inputs.tag != ''
           run: |
             sed -i "s/\"version\":.*$/\"version\": \"${{ github.event.inputs.tag }}\",/" package.json
