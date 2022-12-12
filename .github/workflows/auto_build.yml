@@ -1,88 +1,89 @@
-# name: auto_build
+name: auto_build
 
-# on:
-#   push:
-#     branches: [release]
-#   pull_request:
-#     branches: [release]
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "版本号"
+        type: string
 
-# jobs:
-#   linux:
-#     name: Linux
-#     runs-on: ubuntu-latest
-#     timeout-minutes: 30
-#     steps:
-#       - uses: actions/checkout@v2
+jobs:
+  linux:
+    name: Linux
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
 
-#       - name: Setup Node.js environment
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: 16
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
 
-#       - name: Install Node.js modules
-#         run: npm install
+      - name: Install Node.js modules
+        run: npm install
 
-#       - name: Update Node.js modules
-#         run: npm update
+      - name: Update Node.js modules
+        run: npm update
 
-#       - name: Install vsce
-#         run: npm i -g vsce
+      - name: Install vsce
+        run: npm i -g vsce
 
-#       - name: VSCE Packge
-#         run: |
-#           vsce package
-#           VSIX_FILE=$(find ./ -name '*vscode-leetcode-problem-rating*.vsix')
-#           echo "VSIX_FILE=$VSIX_FILE" >> $GITHUB_ENV
-#           echo $VSIX_FILE
-#       - uses: actions/upload-artifact@v2
-#         with:
-#           name: vsix_file
-#           path: ${{ env.VSIX_FILE }}
+      - name: VSCE Packge
+        run: |
+          vsce package
+          VSIX_FILE=$(find ./ -name '*vscode-leetcode-problem-rating*.vsix')
+          echo "VSIX_FILE=$VSIX_FILE" >> $GITHUB_ENV
+          echo $VSIX_FILE
+      - uses: actions/upload-artifact@v2
+        with:
+          name: vsix_file
+          path: ${{ env.VSIX_FILE }}
 
-#   windows:
-#     name: Windows
-#     runs-on: windows-latest
-#     timeout-minutes: 30
-#     steps:
-#       - uses: actions/checkout@v2
+  windows:
+    name: Windows
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
 
-#       - name: Setup Node.js environment
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: 16
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
 
-#       - name: Install Node.js modules
-#         run: npm install
+      - name: Install Node.js modules
+        run: npm install
 
-#       - name: Update Node.js modules
-#         run: npm update
+      - name: Update Node.js modules
+        run: npm update
 
-#       - name: Install vsce
-#         run: npm i -g vsce
+      - name: Install vsce
+        run: npm i -g vsce
 
-#       - name: VSCE Packge
-#         run: vsce package
+      - name: VSCE Packge
+        run: vsce package
 
-#   darwin:
-#     name: macOS
-#     runs-on: macos-latest
-#     timeout-minutes: 30
-#     steps:
-#       - uses: actions/checkout@v2
+  darwin:
+    name: macOS
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
 
-#       - name: Setup Node.js environment
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: 16
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
 
-#       - name: Install Node.js modules
-#         run: npm install
+      - name: Install Node.js modules
+        run: npm install
 
-#       - name: Update Node.js modules
-#         run: npm update
+      - name: Update Node.js modules
+        run: npm update
 
-#       - name: Install vsce
-#         run: npm i -g vsce
+      - name: Install vsce
+        run: npm i -g vsce
 
-#       - name: VSCE Packge
-#         run: vsce package
+      - name: VSCE Packge
+        run: vsce package
