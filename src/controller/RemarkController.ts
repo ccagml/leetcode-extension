@@ -1,6 +1,6 @@
 /*
  * https://github.com/ccagml/vscode-leetcode-problem-rating/src/controller/RemarkController.ts
- * Path: /home/cc/vscode-leetcode-problem-rating
+ * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
  * Created Date: Monday, November 28th 2022, 3:29:37 pm
  * Author: ccagml
  *
