@@ -5,10 +5,28 @@ on:
     branches: [release]
     inputs:
       tag:
-        description: "Release Tag"
-        required: true
+        description: "版本号"
+        type: string
+      change:
+        description: "提交内容"
+        type: string
 
 jobs:
+  jobA:
+    name: Linux
+    runs-on: ubuntu-latest
+    if: github.event.inputs.tag != '' &&  github.event.inputs.change != ''
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          ls
+          sed -i "s/\"version\":.*$/\"version\": \"${{ github.event.inputs.tag }}\",/" package.json
+          echo -e "## version ${{ github.event.inputs.tag }}\n\n- ${{ github.event.inputs.change }}\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
+          git config user.name ccagml
+          git config user.email ccagml@163.com
+          git add .
+          git commit -m ${{ github.event.inputs.change }}
+          git push
   linux:
     name: Linux
     runs-on: ubuntu-latest
