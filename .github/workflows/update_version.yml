@@ -32,8 +32,8 @@ jobs:
   jobB:
     name: createPr
     runs-on: ubuntu-latest
-    if: github.event.inputs.pr &&  github.event.inputs.tag != ''
+    if: github.event.inputs.pr == true &&  github.event.inputs.tag != ''
     steps:
       - uses: actions/checkout@v2
       - run: |
-       gh pr create -B main --title 'Merge release${{ github.event.inputs.tag }} into main' --body 'Created by Github action'
+          gh pr create -B main --title 'Merge release${{ github.event.inputs.tag }} into main' --body 'Created by Github action'
