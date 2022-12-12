@@ -31,22 +31,22 @@ jobs:
       - name: updatepackage
         if: github.event.inputs.tag != ''
         run: |
-            sed -i "s/\"version\":.*$/\"version\": \"${{ github.event.inputs.tag }}\",/" package.json
+          sed -i "s/\"version\":.*$/\"version\": \"${{ github.event.inputs.tag }}\",/" package.json
       - name: change
-        if:  github.event.inputs.change != ''
+        if: github.event.inputs.change != ''
         run: |
-              echo -e "## version ${{ github.event.inputs.tag }}\n\n- ${{ github.event.inputs.change }}\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
+          echo -e "## version ${{ github.event.inputs.tag }}\n\n- ${{ github.event.inputs.change }}\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
       - name: commit
         if: github.event.inputs.tag != '' || github.event.inputs.change != ''
         run: |
-            git config user.name ccagml
-            git config user.email ccagml@163.com
-            git add .
-            git commit -m ${{ github.event.inputs.change }}
-            git push
+          git config user.name ccagml
+          git config user.email ccagml@163.com
+          git add .
+          git commit -m ${{ github.event.inputs.change }}
+          git push
       - name: finish
-          run: |
-            ls
+        run: |
+          ls
 
   market:
     name: market
