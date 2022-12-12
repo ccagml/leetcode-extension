@@ -11,7 +11,7 @@ jobs:
   jobA:
     name: Linux
     runs-on: ubuntu-latest
-    if: github.event.inputs.input1 != ''
+    if: github.event.inputs.tag != ''
     steps:
       - uses: actions/checkout@v2
       - run: |
