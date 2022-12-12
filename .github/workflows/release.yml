@@ -13,11 +13,11 @@ on:
       pr:
         description: "需要合并提交"
         type: boolean
-        default: true
+        default: false
       market:
         description: "提交到市场"
         type: boolean
-        default: true
+        default: false
 
 jobs:
   pre:
