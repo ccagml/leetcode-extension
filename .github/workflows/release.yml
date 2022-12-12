@@ -44,6 +44,11 @@ jobs:
           git add .
           git commit -m ${{ github.event.inputs.change }}
           git push
+      - name: needpr
+        if: ${{ github.event.inputs.pr }}
+        run: |
+          gh pr create -B main --title 'Merge release${{ github.event.inputs.tag }} into main' --body 'Created by Github action'
+
       - name: finish
         run: |
           ls
