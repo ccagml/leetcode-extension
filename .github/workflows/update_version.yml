@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "test Tag"
+        description: "版本号"
         type: string
       change:
-        description: "test change"
+        description: "提交内容"
         type: string
 
 jobs:
