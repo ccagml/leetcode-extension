@@ -21,7 +21,7 @@ on:
 
 jobs:
   jobA:
-    name: Linux
+    name: version
     runs-on: ubuntu-latest
     if: github.event.inputs.tag != '' &&  github.event.inputs.change != ''
     steps:
@@ -37,6 +37,7 @@ jobs:
           git push
   jobB:
     name: createPr
+    needs: version
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -48,6 +49,7 @@ jobs:
           gh pr create -B main --title 'Merge release${{ github.event.inputs.tag }} into main' --body 'Created by Github action'
   linux:
     name: Linux
+    needs: createPr
     runs-on: ubuntu-latest
     timeout-minutes: 30
     if: ${{ github.event.inputs.market }}
