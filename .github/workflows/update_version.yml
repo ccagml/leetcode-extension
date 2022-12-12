@@ -21,8 +21,8 @@ jobs:
           ls
           sed -i "s/\"version\":.*$/\"version\": \"${{ github.event.inputs.tag }}\",/" package.json
           echo -e "## version ${{ github.event.inputs.tag }}\n\n- ${{ github.event.inputs.change }}\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name ccagml
+          git config user.email ccagml@163.com
           git add .
-          git commit -m "update version"
+          git commit -m ${{ github.event.inputs.change }}
           git push
