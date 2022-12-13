@@ -58,7 +58,7 @@ class BricksDao {
     if (!lcpr_data_path) {
       return;
     }
-    return await fse.writeFile(lcpr_data_path, JSON.stringify(data));
+    return await fse.writeFile(lcpr_data_path, JSON.stringify(data, null, 4));
   }
 
   private async _read_data() {
