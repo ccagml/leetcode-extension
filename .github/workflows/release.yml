@@ -20,7 +20,7 @@ on:
         default: false
 
 jobs:
-  pre:
+  first:
     name: version
     runs-on: ubuntu-latest
     env:
@@ -55,7 +55,7 @@ jobs:
 
   market:
     name: market
-    needs: pre
+    needs: first
     runs-on: ubuntu-latest
     timeout-minutes: 30
     if: ${{ github.event.inputs.mt }}
