@@ -134,6 +134,8 @@ class BricksDao {
       case BricksType.TYPE_6:
         // 6: (1天后搬砖(hard))
         return BricksTypeName.TYPE_6;
+      default:
+        return "";
     }
   }
 
