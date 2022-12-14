@@ -45,7 +45,7 @@ jobs:
           git commit -m ${{ github.event.inputs.change }}
           git push
       - name: needpr
-        if: ${{ github.event.inputs.pr }}
+        if: ${{ inputs.pr != '' && inputs.pr || true }}
         run: |
           gh pr create -B main --title 'Merge release${{ github.event.inputs.tag }} into main' --body 'Created by Github action'
 
@@ -58,13 +58,19 @@ jobs:
     needs: first
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: ${{ inputs.mt }}
+    if: ${{ inputs.mt != '' && inputs.mt || true }}
     steps:
       - uses: actions/checkout@v2
       - name: updatepackage
         if: github.event.inputs.tag != ''
         run: |
           sed -i "s/\"version\":.*$/\"version\": \"${{ github.event.inputs.tag }}\",/" package.json
+
+      - name: change
+        if: github.event.inputs.change != ''
+        run: |
+          echo -e "## version ${{ github.event.inputs.tag }}\n\n- ${{ github.event.inputs.change }}\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
+
       - name: Setup Node.js environment
         uses: actions/setup-node@v2
         with:
@@ -80,5 +86,5 @@ jobs:
         run: npm i -g vsce
 
       - name: Publish
-        if: ${{ inputs.mt }}
+        if: ${{ inputs.mt != '' && inputs.mt || true }}
         run: vsce publish -p ${{ secrets.VSCE_PAT }}
