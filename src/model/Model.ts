@@ -170,6 +170,17 @@ export enum BricksType {
   TYPE_7 = 7,
 }
 
+export enum BricksTypeName {
+  TYPE_0 = "不再出现",
+  TYPE_1 = "14天",
+  TYPE_2 = "7天",
+  TYPE_3 = "5天",
+  TYPE_4 = "3天",
+  TYPE_5 = "2天",
+  TYPE_6 = "1天",
+  TYPE_7 = "999天",
+}
+
 export enum Category {
   All = "All",
   Difficulty = "Difficulty",
