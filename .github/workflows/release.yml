@@ -12,12 +12,10 @@ on:
         type: string
       pr:
         description: "需要合并提交"
-        type: boolean
-        default: false
+        type: string
       mt:
         description: "提交到市场"
-        type: boolean
-        default: false
+        type: string
 
 jobs:
   first:
@@ -45,7 +43,7 @@ jobs:
           git commit -m ${{ github.event.inputs.change }}
           git push
       - name: needpr
-        if: ${{ inputs.pr != '' && inputs.pr || true }}
+        if: github.event.inputs.pr != ''
         run: |
           gh pr create -B main --title 'Merge release${{ github.event.inputs.tag }} into main' --body 'Created by Github action'
 
@@ -58,7 +56,7 @@ jobs:
     needs: first
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: ${{ inputs.mt != '' && inputs.mt || true }}
+    if: github.event.inputs.mt != ''
     steps:
       - uses: actions/checkout@v2
       - name: updatepackage
@@ -86,5 +84,4 @@ jobs:
         run: npm i -g vsce
 
       - name: Publish
-        if: ${{ inputs.mt != '' && inputs.mt || true }}
         run: vsce publish -p ${{ secrets.VSCE_PAT }}
