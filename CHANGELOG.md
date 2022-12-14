@@ -1,3 +1,7 @@
+## version 2.10.6
+
+- 更新工作流
+
 ## version 2.10.5
 
 - bricks.json格式化
