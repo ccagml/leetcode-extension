@@ -1,14 +1,18 @@
+## version 2.10.7
+
+- 中文题解获取错误
+
 ## version 2.10.6
 
 - 更新工作流
 
 ## version 2.10.5
 
-- bricks.json格式化
+- bricks.json 格式化
 
 ## version 2.10.4
 
-- 更新action
+- 更新 action
 
 ## version 2.10.3
 
