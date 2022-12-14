@@ -58,7 +58,7 @@ jobs:
     needs: first
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: ${{ github.event.inputs.mt }}
+    if: ${{ inputs.mt }}
     steps:
       - uses: actions/checkout@v2
       - name: updatepackage
@@ -80,5 +80,5 @@ jobs:
         run: npm i -g vsce
 
       - name: Publish
-        if: ${{ github.event.inputs.mt }}
+        if: ${{ inputs.mt }}
         run: vsce publish -p ${{ secrets.VSCE_PAT }}
