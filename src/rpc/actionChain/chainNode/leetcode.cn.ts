@@ -223,7 +223,7 @@ function getSolutionBySlug(question_slug: string, articles_slug: string, lang: s
   opts.json = true;
   opts.body = {
     operationName: "solutionDetailArticle",
-    variables: { slug: "pan-duan-guo-ji-xiang-qi-qi-pan-zhong-yi-8dv4", orderBy: "DEFAULT" },
+    variables: { slug: articles_slug, orderBy: "DEFAULT" },
     query: [
       "query solutionDetailArticle($slug: String!, $orderBy: SolutionArticleOrderBy!) {",
       "    solutionArticle(slug: $slug, orderBy: $orderBy) {",
@@ -265,7 +265,7 @@ function getSolutionBySlug(question_slug: string, articles_slug: string, lang: s
     let content = solution.content.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
 
     let solution_result: any = {};
-    solution_result.problem_name = "暂代题目名称";
+    solution_result.problem_name = solution.title;
     solution_result.title = solution.title;
     solution_result.url = link;
     solution_result.lang = lang;
