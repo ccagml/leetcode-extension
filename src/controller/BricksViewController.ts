@@ -37,12 +37,22 @@ class BricksViewController implements Disposable {
   }
   // 今天搬的
   public async getTodayNodes() {
+    // 增加tooltip
     let all_qid: string[] = await bricksDao.getTodayBricksSubmit();
+    let qid_tip = await bricksDao.getTodayBricksSubmitToolTip(all_qid);
     const baseNode: BricksNode[] = [];
     all_qid.forEach((qid) => {
       let node = treeViewController.getNodeByQid(qid);
       if (node) {
-        baseNode.push(node);
+        let new_obj = new BricksNode(
+          Object.assign({}, node.data, {}),
+          true,
+          node.user_score,
+          TreeItemCollapsibleState.None,
+          0,
+          qid_tip.get(qid)
+        );
+        baseNode.push(new_obj);
       }
     });
     return baseNode;

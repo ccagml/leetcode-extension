@@ -8,10 +8,10 @@
  */
 
 import { fetchProblemLanguage, selectWorkspaceFolder } from "../utils/ConfigUtils";
-import { useWsl, toWinPath, getDayStart, getDayNow } from "../utils/SystemUtils";
+import { useWsl, toWinPath, getDayStart, getDayNow, getYMD } from "../utils/SystemUtils";
 import * as path from "path";
 import * as fse from "fs-extra";
-import { BricksType } from "../model/Model";
+import { BricksType, BricksTypeName } from "../model/Model";
 
 // let bricks_json = {
 //   version: 1,
@@ -75,7 +75,7 @@ class BricksDao {
     return allData.all_bricks || {};
   }
 
-  private getTimeByType(type: number, today_time: number) {
+  private getTimeByType(type: number, today_time: number, add_flag?: boolean) {
     let need_day_ago = 7;
     switch (type) {
       case BricksType.TYPE_0:
@@ -108,7 +108,33 @@ class BricksDao {
       default:
         break;
     }
-    return today_time - need_day_ago * 86400;
+
+    return add_flag ? today_time + need_day_ago * 86400 : today_time - need_day_ago * 86400;
+  }
+
+  private getTypeName(type: number) {
+    switch (type) {
+      case BricksType.TYPE_0:
+        return BricksTypeName.TYPE_0;
+      case BricksType.TYPE_1:
+        // 1:(14天搬砖simple)
+        return BricksTypeName.TYPE_1;
+      case BricksType.TYPE_2:
+        //  2:(7天后搬砖simple_error)
+        return BricksTypeName.TYPE_2;
+      case BricksType.TYPE_3:
+        // 3:(5天后搬砖simple_time)
+        return BricksTypeName.TYPE_3;
+      case BricksType.TYPE_4:
+        // 4:(3天后搬砖(time_limit))
+        return BricksTypeName.TYPE_4;
+      case BricksType.TYPE_5:
+        //  5:(2天后搬砖(medium))
+        return BricksTypeName.TYPE_5;
+      case BricksType.TYPE_6:
+        // 6: (1天后搬砖(hard))
+        return BricksTypeName.TYPE_6;
+    }
   }
 
   public async getTodayBricks(): Promise<string[]> {
@@ -141,6 +167,34 @@ class BricksDao {
       }
     }
     return all_qid;
+  }
+
+  public async getTodayBricksSubmitToolTip(qid_list: Array<string>) {
+    let today_time = getDayStart();
+    let all_bricks = await this.getAllBricks();
+    let result: Map<string, string> = new Map<string, string>();
+    qid_list.forEach((qid) => {
+      const value = all_bricks[qid];
+      if (value == undefined) {
+        result.set(qid, this.TypetimeToMan(BricksType.TYPE_2, this.getTimeByType(BricksType.TYPE_2, today_time, true)));
+      } else {
+        result.set(
+          qid,
+          this.TypetimeToMan(
+            value.type ? value.type : BricksType.TYPE_2,
+            this.getTimeByType(value.type ? value.type : BricksType.TYPE_2, today_time, true)
+          )
+        );
+      }
+    });
+    return result;
+  }
+  public TypetimeToMan(type, time: number) {
+    if (time < 10) {
+      return BricksTypeName.TYPE_0;
+    }
+
+    return `${this.getTypeName(type)}后${getYMD(time)}出现`; //this.getTypeName(type) + getYMD(time) + "出现";
   }
 
   public async getInfoByQid(qid: string) {

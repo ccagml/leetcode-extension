@@ -143,10 +143,19 @@ export class NodeModel {
 export class BricksNode extends NodeModel {
   public collapsibleState?;
   public groupTime?;
-  constructor(data: IProblem, ipn: boolean = true, userscore: number = 0, collapsibleState = 0, groupTime?: number) {
+  public toolTip?;
+  constructor(
+    data: IProblem,
+    ipn: boolean = true,
+    userscore: number = 0,
+    collapsibleState = 0,
+    groupTime?: number,
+    toolTip?: string
+  ) {
     super(data, ipn, userscore);
     this.isProblemNode = ipn;
     this.collapsibleState = collapsibleState;
     this.groupTime = groupTime;
+    this.toolTip = toolTip;
   }
 }

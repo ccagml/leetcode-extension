@@ -125,6 +125,9 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
     if (element.id === "ROOT") {
       return "";
     }
+    if (element.toolTip) {
+      return element.toolTip;
+    }
     return "";
   }
 
