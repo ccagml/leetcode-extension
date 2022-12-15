@@ -183,8 +183,8 @@ class BricksDao {
         result.set(
           qid,
           this.TypetimeToMan(
-            value.type ? value.type : BricksType.TYPE_2,
-            this.getTimeByType(value.type ? value.type : BricksType.TYPE_2, today_time, true)
+            value.type != undefined ? value.type : BricksType.TYPE_2,
+            this.getTimeByType(value.type != undefined ? value.type : BricksType.TYPE_2, today_time, true)
           )
         );
       }
