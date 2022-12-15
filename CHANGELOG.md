@@ -1,3 +1,7 @@
+## version 2.11.2
+
+- 不再出现tooltip显示错误
+
 ## version 2.11.1
 
 - 今天搬到增加tips显示下次时间
