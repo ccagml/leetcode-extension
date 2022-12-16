@@ -102,6 +102,10 @@ class QueryApi extends ApiBase {
             code: 101,
             data: {},
           };
+          if (e.code == "ETIMEDOUT") {
+            log_data.code = 102;
+          }
+
           reply.info(JSON.stringify(log_data));
           return;
         }
