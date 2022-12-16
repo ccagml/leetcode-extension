@@ -174,6 +174,9 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
         OutPutType.info
       );
       objData = {};
+    } else if (objData.code == 102) {
+      objData = {};
+      // 请求超时 不处理
     }
     return scoreDao.getScoreData(objData.data);
   }

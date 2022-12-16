@@ -181,7 +181,7 @@ class LeetCodeCn extends ChainNodeBase {
 
   /* A function that is used to get the rating of the problems. */
   getRatingOnline = (cb) => {
-    const _request = request.defaults({ jar: true });
+    const _request = request.defaults({ timeout: 2000, jar: true });
     _request("https://zerotrac.github.io/leetcode_problem_rating/data.json", function (error: any, _, body: any) {
       // console.log(error);
       // console.log(info);
