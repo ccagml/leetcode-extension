@@ -165,6 +165,17 @@
         "ContestID_zh": "第 231 场周赛"
     },
     {
+        "Rating": 2633.0144045478,
+        "ID": 2499,
+        "Title": "Minimum Total Cost to Make Arrays Unequal",
+        "TitleZH": "让数组不相等的最小总代价",
+        "TitleSlug": "minimum-total-cost-to-make-arrays-unequal",
+        "ContestSlug": "biweekly-contest-93",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 93",
+        "ContestID_zh": "第 93 场双周赛"
+    },
+    {
         "Rating": 2628.7957821141,
         "ID": 2213,
         "Title": "Longest Substring of One Repeating Character",
@@ -1923,6 +1934,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 84",
         "ContestID_zh": "第 84 场周赛"
+    },
+    {
+        "Rating": 2195.6540241654,
+        "ID": 2503,
+        "Title": "Maximum Number of Points From Grid Queries",
+        "TitleZH": "矩阵查询可获得的最大分数",
+        "TitleSlug": "maximum-number-of-points-from-grid-queries",
+        "ContestSlug": "weekly-contest-323",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 323",
+        "ContestID_zh": "第 323 场周赛"
     },
     {
         "Rating": 2190.1757477854,
@@ -6094,6 +6116,17 @@
         "ContestID_zh": "第 267 场周赛"
     },
     {
+        "Rating": 1759.0470795449,
+        "ID": 2498,
+        "Title": "Frog Jump II",
+        "TitleZH": "青蛙过河 II",
+        "TitleSlug": "frog-jump-ii",
+        "ContestSlug": "biweekly-contest-93",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 93",
+        "ContestID_zh": "第 93 场双周赛"
+    },
+    {
         "Rating": 1759.0197295594,
         "ID": 1541,
         "Title": "Minimum Insertions to Balance a Parentheses String",
@@ -6301,6 +6334,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Weekly Contest 181",
         "ContestID_zh": "第 181 场周赛"
+    },
+    {
+        "Rating": 1745.5352025872,
+        "ID": 2502,
+        "Title": "Design Memory Allocator",
+        "TitleZH": "设计内存分配器",
+        "TitleSlug": "design-memory-allocator",
+        "ContestSlug": "weekly-contest-323",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 323",
+        "ContestID_zh": "第 323 场周赛"
     },
     {
         "Rating": 1744.7611048301,
@@ -7027,6 +7071,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Weekly Contest 188",
         "ContestID_zh": "第 188 场周赛"
+    },
+    {
+        "Rating": 1682.16892078,
+        "ID": 2497,
+        "Title": "Maximum Star Sum of a Graph",
+        "TitleZH": "图中最大星和",
+        "TitleSlug": "maximum-star-sum-of-a-graph",
+        "ContestSlug": "biweekly-contest-93",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 93",
+        "ContestID_zh": "第 93 场双周赛"
     },
     {
         "Rating": 1681.3263732456,
@@ -9689,6 +9744,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Biweekly Contest 2",
         "ContestID_zh": "第 2 场双周赛"
+    },
+    {
+        "Rating": 1479.9828219111,
+        "ID": 2501,
+        "Title": "Longest Square Streak in an Array",
+        "TitleZH": "数组中最长的方波",
+        "TitleSlug": "longest-square-streak-in-an-array",
+        "ContestSlug": "weekly-contest-323",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 323",
+        "ContestID_zh": "第 323 场周赛"
     },
     {
         "Rating": 1479.4837595809,
@@ -12507,6 +12573,17 @@
         "ContestID_zh": "第 222 场周赛"
     },
     {
+        "Rating": 1309.7266159448,
+        "ID": 2500,
+        "Title": "Delete Greatest Value in Each Row",
+        "TitleZH": "删除每行中的最大值",
+        "TitleSlug": "delete-greatest-value-in-each-row",
+        "ContestSlug": "weekly-contest-323",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 323",
+        "ContestID_zh": "第 323 场周赛"
+    },
+    {
         "Rating": 1309.3113721825,
         "ID": 1451,
         "Title": "Rearrange Words in a Sentence",
@@ -12879,6 +12956,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 202",
         "ContestID_zh": "第 202 场周赛"
+    },
+    {
+        "Rating": 1292.8993325204,
+        "ID": 2496,
+        "Title": "Maximum Value of a String in an Array",
+        "TitleZH": "数组中字符串的最大值",
+        "TitleSlug": "maximum-value-of-a-string-in-an-array",
+        "ContestSlug": "biweekly-contest-93",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 93",
+        "ContestID_zh": "第 93 场双周赛"
     },
     {
         "Rating": 1290.0361853035,
