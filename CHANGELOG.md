@@ -1,3 +1,7 @@
+## version 2.11.5
+
+- BWC94 & WC324 & WC325 数据
+
 ## version 2.11.4
 
 - BWC93 & WC323 数据
