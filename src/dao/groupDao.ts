@@ -7,7 +7,7 @@
  * Copyright (c) 2022  ccagml . All rights reserved.
  */
 
-import { fetchProblemLanguage, selectWorkspaceFolder } from "../utils/ConfigUtils";
+import { selectWorkspaceFolder } from "../utils/ConfigUtils";
 import { useWsl, toWinPath, getDayNowM } from "../utils/SystemUtils";
 import * as path from "path";
 import * as fse from "fs-extra";
