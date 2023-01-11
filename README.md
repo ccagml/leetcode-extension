@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/ccagml/vscode-leetcode-problem-rating/actions/workflows/release.yml">
-    <img src="https://img.shields.io/github/workflow/status/ccagml/vscode-leetcode-problem-rating/release?style=flat-square" alt="">
+    <img src="https://img.shields.io/github/actions/workflow/status/ccagml/vscode-leetcode-problem-rating/release.yml?branch=release" alt="">
   </a>
   <a href="https://marketplace.visualstudio.com/items?itemName=ccagml.vscode-leetcode-problem-rating">
     <img src="https://img.shields.io/visual-studio-marketplace/d/ccagml.vscode-leetcode-problem-rating.svg?style=flat-square" alt="">
