@@ -15,10 +15,10 @@ import * as fse from "fs-extra";
 class RemarkDao {
   version = 1;
   public async get_remark_dir_path() {
-    const language: string | undefined = await fetchProblemLanguage();
-    if (!language) {
-      return;
-    }
+    // const language: string | undefined = await fetchProblemLanguage();
+    // if (!language) {
+    //   return;
+    // }
     const workspaceFolder: string = await selectWorkspaceFolder(false);
     if (!workspaceFolder) {
       return;
