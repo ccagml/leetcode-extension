@@ -20,10 +20,10 @@ import * as fse from "fs-extra";
 class GroupDao {
   version = 1;
   public async group_data_path() {
-    const language: string | undefined = await fetchProblemLanguage();
-    if (!language) {
-      return;
-    }
+    // const language: string | undefined = await fetchProblemLanguage();
+    // if (!language) {
+    //   return;
+    // }
     const workspaceFolder: string = await selectWorkspaceFolder(false);
     if (!workspaceFolder) {
       return;
@@ -33,16 +33,17 @@ class GroupDao {
 
     let finalPath = path.join(lcpr_data_path, "group.json");
     finalPath = useWsl() ? await toWinPath(finalPath) : finalPath;
+
+    if (!(await fse.pathExists(finalPath))) {
+      await fse.createFile(finalPath);
+      await fse.writeFile(finalPath, JSON.stringify({ version: this.version }));
+    }
     return finalPath;
   }
   public async init() {
     let lcpr_data_path = await this.group_data_path();
     if (!lcpr_data_path) {
       return;
-    }
-    if (!(await fse.pathExists(lcpr_data_path))) {
-      await fse.createFile(lcpr_data_path);
-      await fse.writeFile(lcpr_data_path, JSON.stringify({ version: this.version }));
     }
   }
 
@@ -57,7 +58,7 @@ class GroupDao {
   private async _read_data() {
     let lcpr_data_path = await this.group_data_path();
     if (!lcpr_data_path) {
-      return;
+      return {};
     }
     let temp_data = await fse.readFile(lcpr_data_path, "utf8");
     return JSON.parse(temp_data) || {};

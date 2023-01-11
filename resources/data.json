@@ -7667,6 +7667,17 @@
         "ContestID_zh": "第 178 场周赛"
     },
     {
+        "Rating": 1649.7120733311,
+        "ID": 2523,
+        "Title": "Closest Prime Numbers in Range",
+        "TitleZH": "范围内最接近的两个质数",
+        "TitleSlug": "closest-prime-numbers-in-range",
+        "ContestSlug": "weekly-contest-326",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 326",
+        "ContestID_zh": "第 326 场周赛"
+    },
+    {
         "Rating": 1648.3540381514,
         "ID": 2423,
         "Title": "Remove Letter To Equalize Frequency",
@@ -8237,6 +8248,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 78",
         "ContestID_zh": "第 78 场周赛"
+    },
+    {
+        "Rating": 1604.5128423093,
+        "ID": 2522,
+        "Title": "Partition String Into Substrings With Values at Most K",
+        "TitleZH": "将字符串分割成值不超过 K 的子字符串",
+        "TitleSlug": "partition-string-into-substrings-with-values-at-most-k",
+        "ContestSlug": "weekly-contest-326",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 326",
+        "ContestID_zh": "第 326 场周赛"
     },
     {
         "Rating": 1604.1602280047,
@@ -10855,6 +10877,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 307",
         "ContestID_zh": "第 307 场周赛"
+    },
+    {
+        "Rating": 1413.0376809608,
+        "ID": 2521,
+        "Title": "Distinct Prime Factors of Product of Array",
+        "TitleZH": "数组乘积中的不同质因数数目",
+        "TitleSlug": "distinct-prime-factors-of-product-of-array",
+        "ContestSlug": "weekly-contest-326",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 326",
+        "ContestID_zh": "第 326 场周赛"
     },
     {
         "Rating": 1412.3053230205,
@@ -13693,6 +13726,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Biweekly Contest 77",
         "ContestID_zh": "第 77 场双周赛"
+    },
+    {
+        "Rating": 1260.8697515006,
+        "ID": 2520,
+        "Title": "Count the Digits That Divide a Number",
+        "TitleZH": "统计能整除数字的位数",
+        "TitleSlug": "count-the-digits-that-divide-a-number",
+        "ContestSlug": "weekly-contest-326",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 326",
+        "ContestID_zh": "第 326 场周赛"
     },
     {
         "Rating": 1260.1755576607,
