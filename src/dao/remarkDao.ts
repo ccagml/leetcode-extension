@@ -7,7 +7,7 @@
 // > > > > 题目内部编号.json 根据 qid 备注的信息
 // > >
 
-import { fetchProblemLanguage, selectWorkspaceFolder } from "../utils/ConfigUtils";
+import { selectWorkspaceFolder } from "../utils/ConfigUtils";
 import { useWsl, toWinPath } from "../utils/SystemUtils";
 import * as path from "path";
 import * as fse from "fs-extra";
