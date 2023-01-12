@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "LeetCode 官方插件增强, 代码开源, 增加 LeetCode 题目难度分, 给个star吧, 球球了",
-    "version": "2.11.8",
+    "version": "2.11.9",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",

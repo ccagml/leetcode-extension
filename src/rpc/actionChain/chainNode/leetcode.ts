@@ -469,8 +469,6 @@ and csrf token to the user object and saves the user object to the session. */
         if (!e) {
           user.paid = _user.isCurrentUserPremium;
           user.name = _user.username;
-        } else {
-          return cb(e);
         }
         sessionUtils.saveUser(user);
         return cb(null, user);
