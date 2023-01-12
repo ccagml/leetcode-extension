@@ -458,16 +458,19 @@ and csrf token to the user object and saves the user object to the session. */
           user.hash = f.id_hash;
           user.name = favorites.user_name;
         } else {
-          reply.warn("Favorite not found?");
+          // reply.warn("Favorite not found?");
         }
       } else {
-        reply.warn("Failed to retrieve user favorites: " + e);
+        // return cb(e);
+        // reply.warn("Failed to retrieve user favorites: " + e);
       }
 
       that.getUserInfo(function (e, _user) {
         if (!e) {
           user.paid = _user.isCurrentUserPremium;
           user.name = _user.username;
+        } else {
+          return cb(e);
         }
         sessionUtils.saveUser(user);
         return cb(null, user);
