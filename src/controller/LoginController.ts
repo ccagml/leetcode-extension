@@ -82,8 +82,8 @@ class LoginContorller {
             }
             if (successMatch.code == 100) {
               childProc.stdin?.end();
-              result = successMatch.user_name;
-              return resolve(successMatch.user_name);
+              result = successMatch.user_name || name || "没有取到用户名"; //successMatch.user_name;
+              return resolve(result);
             } else if (successMatch.code < 0) {
               childProc.stdin?.end();
               return reject(new Error(successMatch.msg));
