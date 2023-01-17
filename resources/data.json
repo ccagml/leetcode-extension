@@ -253,6 +253,17 @@
         "ContestID_zh": "第 116 场周赛"
     },
     {
+        "Rating": 2588.8752130913,
+        "ID": 2532,
+        "Title": "Time to Cross a Bridge",
+        "TitleZH": "过桥的时间",
+        "TitleSlug": "time-to-cross-a-bridge",
+        "ContestSlug": "weekly-contest-327",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 327",
+        "ContestID_zh": "第 327 场周赛"
+    },
+    {
         "Rating": 2587.8725248485,
         "ID": 1883,
         "Title": "Minimum Skips to Arrive at Meeting On Time",
@@ -1670,6 +1681,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 88",
         "ContestID_zh": "第 88 场周赛"
+    },
+    {
+        "Rating": 2235.5784618885,
+        "ID": 2528,
+        "Title": "Maximize the Minimum Powered City",
+        "TitleZH": "最大化城市的最小供电站数目",
+        "TitleSlug": "maximize-the-minimum-powered-city",
+        "ContestSlug": "biweekly-contest-95",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 95",
+        "ContestID_zh": "第 95 场双周赛"
     },
     {
         "Rating": 2234.9191877602,
@@ -6061,6 +6083,17 @@
         "ContestID_zh": "第 105 场周赛"
     },
     {
+        "Rating": 1775.854606648,
+        "ID": 2531,
+        "Title": "Make Number of Distinct Characters Equal",
+        "TitleZH": "使字符串总不同字符的数目相等",
+        "TitleSlug": "make-number-of-distinct-characters-equal",
+        "ContestSlug": "weekly-contest-327",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 327",
+        "ContestID_zh": "第 327 场周赛"
+    },
+    {
         "Rating": 1774.8764591297,
         "ID": 1238,
         "Title": "Circular Permutation in Binary Representation",
@@ -8888,6 +8921,17 @@
         "ContestID_zh": "第 74 场双周赛"
     },
     {
+        "Rating": 1549.945040184,
+        "ID": 2527,
+        "Title": "Find Xor-Beauty of Array",
+        "TitleZH": "查询数组 Xor 美丽值",
+        "TitleSlug": "find-xor-beauty-of-array",
+        "ContestSlug": "biweekly-contest-95",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 95",
+        "ContestID_zh": "第 95 场双周赛"
+    },
+    {
         "Rating": 1548.4678056182,
         "ID": 1329,
         "Title": "Sort the Matrix Diagonally",
@@ -10340,6 +10384,17 @@
         "ContestID_zh": "第 191 场周赛"
     },
     {
+        "Rating": 1444.3218903725,
+        "ID": 2526,
+        "Title": "Find Consecutive Integers from a Data Stream",
+        "TitleZH": "找到数据流中的连续整数",
+        "TitleSlug": "find-consecutive-integers-from-a-data-stream",
+        "ContestSlug": "biweekly-contest-95",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 95",
+        "ContestID_zh": "第 95 场双周赛"
+    },
+    {
         "Rating": 1444.2068009303,
         "ID": 942,
         "Title": "DI String Match",
@@ -11317,6 +11372,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 165",
         "ContestID_zh": "第 165 场周赛"
+    },
+    {
+        "Rating": 1386.1200017827,
+        "ID": 2530,
+        "Title": "Maximal Score After Applying K Operations",
+        "TitleZH": "执行 K 次操作后的最大分数",
+        "TitleSlug": "maximal-score-after-applying-k-operations",
+        "ContestSlug": "weekly-contest-327",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 327",
+        "ContestID_zh": "第 327 场周赛"
     },
     {
         "Rating": 1384.4078082338,
@@ -12945,6 +13011,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 289",
         "ContestID_zh": "第 289 场周赛"
+    },
+    {
+        "Rating": 1301.4167433184,
+        "ID": 2525,
+        "Title": "Categorize Box According to Criteria",
+        "TitleZH": "根据规则将箱子分类",
+        "TitleSlug": "categorize-box-according-to-criteria",
+        "ContestSlug": "biweekly-contest-95",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 95",
+        "ContestID_zh": "第 95 场双周赛"
     },
     {
         "Rating": 1301.4117757184,
@@ -15046,6 +15123,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 122",
         "ContestID_zh": "第 122 场周赛"
+    },
+    {
+        "Rating": 1195.9731842298,
+        "ID": 2529,
+        "Title": "Maximum Count of Positive Integer and Negative Integer",
+        "TitleZH": "正整数和负整数的最大计数",
+        "TitleSlug": "maximum-count-of-positive-integer-and-negative-integer",
+        "ContestSlug": "weekly-contest-327",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 327",
+        "ContestID_zh": "第 327 场周赛"
     },
     {
         "Rating": 1195.7512695571,
