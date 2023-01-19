@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/vscode-leetcode-problem-rating/src/dao/bricksDao.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
+ * https://github.com/ccagml/leetcode-vscode/src/dao/bricksDao.ts
+ * Path: https://github.com/ccagml/leetcode-vscode
  * Created Date: Wednesday, November 23rd 2022, 4:36:38 pm
  * Author: ccagml
  *

@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/service/EventService.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
+ * Filename: https://github.com/ccagml/leetcode-vscode/src/service/EventService.ts
+ * Path: https://github.com/ccagml/leetcode-vscode
  * Created Date: Thursday, November 10th 2022, 3:14:29 pm
  * Author: ccagml
  *

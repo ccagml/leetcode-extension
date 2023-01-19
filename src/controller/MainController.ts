@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/controller/MainController.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
+ * Filename: https://github.com/ccagml/leetcode-vscode/src/controller/MainController.ts
+ * Path: https://github.com/ccagml/leetcode-vscode
  * Created Date: Thursday, November 10th 2022, 2:18:21 pm
  * Author: ccagml
  *
@@ -59,9 +59,9 @@ class MainContorller {
   }
 
   // 删除缓存
-/**
- * It deletes the cache.
- */
+  /**
+   * It deletes the cache.
+   */
   public async deleteCache() {
     await executeService.deleteCache();
   }

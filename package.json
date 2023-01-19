@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "LeetCode 官方插件增强, 代码开源, 增加 LeetCode 题目难度分, 给个star吧, 球球了",
-    "version": "2.11.12",
+    "version": "2.11.13",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -12,9 +12,9 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/ccagml/vscode-leetcode-problem-rating"
+        "url": "https://github.com/ccagml/leetcode-vscode"
     },
-    "homepage": "https://github.com/ccagml/vscode-leetcode-problem-rating/README.md",
+    "homepage": "https://github.com/ccagml/leetcode-vscode/README.md",
     "categories": [
         "Other",
         "Snippets",

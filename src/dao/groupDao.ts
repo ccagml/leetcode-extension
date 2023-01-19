@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/vscode-leetcode-problem-rating/src/dao/groupDao.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
+ * https://github.com/ccagml/leetcode-vscode/src/dao/groupDao.ts
+ * Path: https://github.com/ccagml/leetcode-vscode
  * Created Date: Wednesday, November 30th 2022, 9:47:36 am
  * Author: ccagml
  *
