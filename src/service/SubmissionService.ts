@@ -14,12 +14,18 @@ import { ISubmitEvent } from "../model/Model";
 import { IWebViewOption } from "../model/Model";
 import { promptHintMessage } from "../utils/OutputUtils";
 import { isAnswerDiffColor } from "../utils/ConfigUtils";
+import { statusBarTimeService } from "../service/StatusBarTimeService";
 class SubmissionService extends BaseWebViewService {
   protected readonly viewType: string = "leetcode.submission";
   private result: IResult;
 
   public show(resultString: string): void {
     this.result = this.parseResult(resultString);
+
+    const temp = this.getSubmitEvent();
+    if (temp?.accepted && temp?.sub_type == "submit") {
+      this.result["costTime"] = [`耗时${statusBarTimeService.getCostTimeStr()}`];
+    }
     this.showWebviewInternal();
     this.showKeybindingsHint();
   }
@@ -42,6 +48,8 @@ class SubmissionService extends BaseWebViewService {
     } else if (key == "messages") {
       return false;
     } else if (key == "system_message") {
+      return false;
+    } else if (key == "costTime") {
       return false;
     }
     return true;
@@ -68,6 +76,9 @@ class SubmissionService extends BaseWebViewService {
   protected getWebviewContent(): string {
     const styles: string = markdownService.getStyles();
     const title: string = `## ${this.result.messages[0]}`;
+    if (this.result?.costTime && this.result?.costTime.length > 0) {
+      this.result.messages.push(this.result?.costTime[0]);
+    }
     const messages: string[] = this.result.messages.slice(1).map((m: string) => `* ${m}`);
     let sections: string[] = [];
     if (isAnswerDiffColor()) {
