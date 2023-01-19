@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/vscode-leetcode-problem-rating/src/rpc/factory/apiBase.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
+ * https://github.com/ccagml/leetcode-vscode/src/rpc/factory/apiBase.ts
+ * Path: https://github.com/ccagml/leetcode-vscode
  * Created Date: Thursday, November 17th 2022, 11:44:14 am
  * Author: ccagml
  *

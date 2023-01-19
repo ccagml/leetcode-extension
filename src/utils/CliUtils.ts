@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/utils/cliUtils.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
+ * Filename: https://github.com/ccagml/leetcode-vscode/src/utils/cliUtils.ts
+ * Path: https://github.com/ccagml/leetcode-vscode
  * Created Date: Monday, October 31st 2022, 10:16:47 am
  * Author: ccagml
  *

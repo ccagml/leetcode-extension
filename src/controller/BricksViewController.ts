@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/vscode-leetcode-problem-rating/src/controller/BricksViewController.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
+ * https://github.com/ccagml/leetcode-vscode/src/controller/BricksViewController.ts
+ * Path: https://github.com/ccagml/leetcode-vscode
  * Created Date: Tuesday, November 22nd 2022, 11:04:59 am
  * Author: ccagml
  *

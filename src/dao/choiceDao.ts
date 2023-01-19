@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/vscode-leetcode-problem-rating/src/dao/choiceDao.ts
- * Path: https://github.com/ccagml/vscode-leetcode-problem-rating
+ * Filename: https://github.com/ccagml/leetcode-vscode/src/dao/choiceDao.ts
+ * Path: https://github.com/ccagml/leetcode-vscode
  * Created Date: Thursday, November 10th 2022, 11:34:10 pm
  * Author: ccagml
  *

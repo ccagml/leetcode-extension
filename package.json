@@ -12,9 +12,9 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/ccagml/vscode-leetcode-problem-rating"
+        "url": "https://github.com/ccagml/leetcode-vscode"
     },
-    "homepage": "https://github.com/ccagml/vscode-leetcode-problem-rating/README.md",
+    "homepage": "https://github.com/ccagml/leetcode-vscode/README.md",
     "categories": [
         "Other",
         "Snippets",
