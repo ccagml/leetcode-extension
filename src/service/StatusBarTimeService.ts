@@ -112,7 +112,7 @@ class StatusBarTimeService implements Disposable {
       if (this.questionNode?.id) {
         pre = `${this.questionNode?.id}题`;
       }
-      this.showBar.text = `${pre}计时:${diffstr}`;
+      this.showBar.text = `${pre}计时: ${diffstr}`;
     } else if (this.saveTime > 0) {
       let diff = this.saveTime;
       let diffstr = this.getDiffStr(diff);
@@ -120,9 +120,9 @@ class StatusBarTimeService implements Disposable {
       if (this.questionNode?.id) {
         pre = `${this.questionNode?.id}题`;
       }
-      this.showBar.text = `${pre}题计时:${diffstr}`;
+      this.showBar.text = `${pre}计时: ${diffstr}`;
     } else {
-      this.showBar.text = `做题计时:${this.getDiffStr(0)}`;
+      this.showBar.text = `做题计时: ${this.getDiffStr(0)}`;
     }
   }
 
