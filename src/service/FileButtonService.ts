@@ -157,6 +157,30 @@ export class FileButtonService implements vscode.CodeLensProvider {
     return temp_result;
   }
 
+  // 去除测试用例前的注释符号, 测试用例 可能有某些语言的注释符号, 例如 844题的#
+  public fix_lineContent(lineContent) {
+    let cut_pos = 0;
+    for (let left = 0; left < lineContent.length; left++) {
+      if (lineContent[left] == "#") {
+        continue;
+      }
+      if (lineContent[left] == "/" && lineContent[left + 1] == "/") {
+        left++;
+        continue;
+      }
+      if (lineContent[left] == "-" && lineContent[left + 1] == "-") {
+        left++;
+        continue;
+      }
+      if (lineContent[left] == " ") {
+        continue;
+      }
+      cut_pos = left;
+      break;
+    }
+    return lineContent.substring(cut_pos);
+  }
+
   public provideCodeLenses(document: vscode.TextDocument): vscode.ProviderResult<vscode.CodeLens[]> {
     const content: string = document.getText();
     const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=.*/);
@@ -183,7 +207,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       }
 
       if (caseFlag && lineContent.indexOf("@lcpr case=end") < 0) {
-        curCase += lineContent.replace(/#/g, "").replace(/\/\//g, "").replace(/--/g, "").replace(/\s+/g, "");
+        curCase += this.fix_lineContent(lineContent).replace(/\s+/g, "");
       }
       // 收集所有用例
       if (lineContent.indexOf("@lcpr case=start") >= 0) {
