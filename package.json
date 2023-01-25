@@ -291,6 +291,18 @@
                 {
                     "command": "lcpr.removeFavorite",
                     "when": "never"
+                },
+                {
+                    "command": "lcpr.remarkCreateNote",
+                    "when": "true"
+                },
+                {
+                    "command": "lcpr.remarkReplyNote",
+                    "when": "true"
+                },
+                {
+                    "command": "lcpr.remarkDeleteNoteComment",
+                    "when": "true"
                 }
             ],
             "comments/commentThread/title": [
