@@ -57,7 +57,7 @@ import { executeService } from "../service/ExecuteService";
 import { getNodeIdFromFile } from "../utils/SystemUtils";
 import { logOutput, promptForOpenOutputChannel, promptForSignIn, promptHintMessage } from "../utils/OutputUtils";
 import { treeDataService } from "../service/TreeDataService";
-import { genFileExt, genFileName } from "../utils/SystemUtils";
+import { genFileExt, genFileName, getyyyymmdd, getDayNowStr } from "../utils/SystemUtils";
 import { IDescriptionConfiguration, isStarShortcut } from "../utils/ConfigUtils";
 import * as systemUtils from "../utils/SystemUtils";
 import { solutionService } from "../service/SolutionService";
@@ -983,6 +983,10 @@ class TreeViewController implements Disposable {
           return tag;
         case "company":
           return company;
+        case "yyyymmdd":
+          return getyyyymmdd(undefined);
+        case "timestamp":
+          return getDayNowStr();
         default:
           errorMsg = `The config '${placeholder}' is not supported.`;
           logOutput.appendLine(errorMsg);

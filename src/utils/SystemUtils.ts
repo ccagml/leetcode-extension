@@ -85,6 +85,10 @@ export function getDayNow(): number {
   return Math.round(new Date().getTime() / 1000);
 }
 
+export function getDayNowStr(): string {
+  return Math.round(new Date().getTime() / 1000).toString();
+}
+
 export function getDayNowM(): number {
   return Math.round(new Date().getTime());
 }
@@ -108,5 +112,14 @@ export function getYMD(timeSecond: number): string {
   const month = date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
   const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`;
   const newDate = `${year}-${month}-${day}`;
+  return newDate;
+}
+
+export function getyyyymmdd(timeSecond: number | undefined): string {
+  const date = timeSecond ? new Date(timeSecond * 1000) : new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
+  const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`;
+  const newDate = `${year}${month}${day}`;
   return newDate;
 }

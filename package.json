@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "LeetCode 官方插件增强, 代码开源, 增加 LeetCode 题目难度分, 给个star吧, 球球了",
-    "version": "2.11.16",
+    "version": "2.12.1",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -273,6 +273,26 @@
         "menus": {
             "commandPalette": [
                 {
+                    "command": "lcpr.showProblem",
+                    "when": "never"
+                },
+                {
+                    "command": "lcpr.getHelp",
+                    "when": "never"
+                },
+                {
+                    "command": "lcpr.previewProblem",
+                    "when": "never"
+                },
+                {
+                    "command": "lcpr.addFavorite",
+                    "when": "never"
+                },
+                {
+                    "command": "lcpr.removeFavorite",
+                    "when": "never"
+                },
+                {
                     "command": "lcpr.remarkCreateNote",
                     "when": "true"
                 },
@@ -435,28 +455,6 @@
                     "command": "lcpr.removeBrickGroup",
                     "when": "view == BricksExplorer && viewItem == bricksdiy",
                     "group": "leetcode@1"
-                }
-            ],
-            "commandPalette": [
-                {
-                    "command": "lcpr.showProblem",
-                    "when": "never"
-                },
-                {
-                    "command": "lcpr.getHelp",
-                    "when": "never"
-                },
-                {
-                    "command": "lcpr.previewProblem",
-                    "when": "never"
-                },
-                {
-                    "command": "lcpr.addFavorite",
-                    "when": "never"
-                },
-                {
-                    "command": "lcpr.removeFavorite",
-                    "when": "never"
                 }
             ],
             "explorer/context": [
