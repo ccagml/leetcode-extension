@@ -1,3 +1,8 @@
+## version 2.12.1
+
+- 配置filePath文件名 增加 ${yyyymmdd}格式
+- 配置filePath文件名 增加 ${timestamp}格式
+
 ## version 2.11.16
 
 - 修正提交结果页面耗时显示
