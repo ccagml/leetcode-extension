@@ -23,8 +23,9 @@ class SubmissionService extends BaseWebViewService {
     this.result = this.parseResult(resultString);
 
     const temp = this.getSubmitEvent();
-    if (temp?.accepted && temp?.sub_type == "submit") {
-      this.result["costTime"] = [`耗时${statusBarTimeService.getCostTimeStr()}`];
+    let costTime = statusBarTimeService.getCostTimeStr();
+    if (temp?.accepted && temp?.sub_type == "submit" && costTime) {
+      this.result["costTime"] = [`耗时 ${costTime}`];
     }
     this.showWebviewInternal();
     this.showKeybindingsHint();
