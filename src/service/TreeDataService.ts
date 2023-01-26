@@ -122,7 +122,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
         return [];
       } else {
         switch (
-          element.id // First-level
+        element.id // First-level
         ) {
           case Category.All:
             return treeViewController.getAllNodes();
@@ -153,6 +153,10 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
   }
   public getTagsData(fid: string): Array<string> {
     return tagsDao.getTagsData(fid) || ["Unknown"];
+  }
+
+  public getTagsDataEn(fid: string): Array<string> {
+    return tagsDao.getTagsDataEn(fid) || ["Unknown"];
   }
 
   // 返回题目id的数据

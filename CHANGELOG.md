@@ -1,3 +1,8 @@
+## version 2.12.2
+
+- 修复 使用${tag}作为文件夹名称不生效
+- 更新 README.md
+
 ## version 2.12.1
 
 - 配置filePath文件名 增加 ${yyyymmdd}格式

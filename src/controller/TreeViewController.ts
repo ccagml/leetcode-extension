@@ -946,7 +946,7 @@ class TreeViewController implements Disposable {
 
   public async resolveRelativePath(relativePath: string, node: IProblem, selectedLanguage: string): Promise<string> {
     let tag: string = "";
-    if (/\$\{ tag \} /i.test(relativePath)) {
+    if (/\$\{tag\}/i.test(relativePath)) {
       tag = (await this.resolveTagForProblem(node)) || "";
     }
 
@@ -996,10 +996,11 @@ class TreeViewController implements Disposable {
   }
 
   public async resolveTagForProblem(problem: IProblem): Promise<string | undefined> {
-    if (problem.tags.length === 1) {
-      return problem.tags[0];
+    let path_en_tags = treeDataService.getTagsDataEn(problem.id)
+    if (path_en_tags.length === 1) {
+      return path_en_tags[0];
     }
-    return await vscode.window.showQuickPick(problem.tags, {
+    return await vscode.window.showQuickPick(path_en_tags, {
       matchOnDetail: true,
       placeHolder: "Multiple tags available, please select one",
       ignoreFocusOut: true,

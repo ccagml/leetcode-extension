@@ -176,7 +176,7 @@
 
 ## 更新日志
 
-请参考[更新日志](https://github.com/ccagml/leetcode-vscode/CHANGELOG.md)
+请参考[更新日志](CHANGELOG.md)
 
 ## 鸣谢
 
