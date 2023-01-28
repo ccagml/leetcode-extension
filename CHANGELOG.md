@@ -1,3 +1,7 @@
+## version 2.13.1
+
+- 题解显示 katex 数学公式
+
 ## version 2.12.3
 
 - hideScore 配置变化时刷新题目列表

@@ -9,6 +9,7 @@
 
 import * as hljs from "highlight.js";
 import * as MarkdownIt from "markdown-it";
+import * as MarkDownItKatex from "markdown-it-katex";
 import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
@@ -30,7 +31,10 @@ class MarkdownService implements vscode.Disposable {
   }
 
   public get localResourceRoots(): vscode.Uri[] {
-    return [vscode.Uri.file(path.join(this.config.extRoot, "media"))];
+    return [
+      vscode.Uri.file(path.join(this.config.extRoot, "media")),
+      vscode.Uri.file(path.join(__dirname, "..", "..", "..", "resources", "katexcss")),
+    ];
   }
 
   public dispose(): void {
@@ -108,6 +112,7 @@ class MarkdownService implements vscode.Disposable {
       },
     });
 
+    md.use(MarkDownItKatex);
     this.addCodeBlockHighlight(md);
     this.addImageUrlCompletion(md);
     this.addLinkValidator(md);

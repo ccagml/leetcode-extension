@@ -13,6 +13,8 @@ import { BaseWebViewService } from "./BaseWebviewService";
 import { markdownService } from "./MarkdownService";
 import { IWebViewOption } from "../model/Model";
 
+import * as path from "path";
+
 class SolutionService extends BaseWebViewService {
   protected readonly viewType: string = "leetcode.solution";
   private problemName: string;
@@ -52,16 +54,32 @@ class SolutionService extends BaseWebViewService {
         `| ${lang}  | ${auth}  | ${votes} |`,
       ].join("\n")
     );
+
+    // $\textit
+    this.solution.body = this.solution.body.replace(/\$\textit/g, "$");
+
     const body: string = markdownService.render(this.solution.body, {
       lang: this.solution.lang,
       host: "https://discuss.leetcode.com/",
     });
+    // "<link rel=\"stylesheet\" type=\"text/css\" href=\"vscode-resource:/home/cc/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/extensions/markdown-language-features/media/markdown.css\">\n<link rel=\"stylesheet\" type=\"text/css\" href=\"vscode-resource:/home/cc/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/extensions/markdown-language-features/media/highlight.css\">\n<style>\nbody {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;\n    font-size: 14px;\n    line-height: 1.6;\n}\n</style>"
+    // <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https:; script-src vscode-resource:; style-src vscode-resource:;"/>
+
     return `
             <!DOCTYPE html>
             <html>
             <head>
-                <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https:; script-src vscode-resource:; style-src vscode-resource:;"/>
+                <meta http-equiv="Content-Security-Policy" content="default-src self; img-src vscode-resource:; script-src vscode-resource: 'self' 'unsafe-inline'; style-src vscode-resource: 'self' 'unsafe-inline'; "/>
                 ${styles}
+                <link rel="stylesheet" type="text/css" href= "vscode-resource:${path.join(
+                  __dirname,
+                  "..",
+                  "..",
+                  "..",
+                  "resources",
+                  "katexcss",
+                  "kates.min.css"
+                )}">
             </head>
             <body class="vscode-body 'scrollBeyondLastLine' 'wordWrap' 'showEditorSelection'" style="tab-size:4">
                 ${head}
