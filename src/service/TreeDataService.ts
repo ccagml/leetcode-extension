@@ -122,7 +122,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
         return [];
       } else {
         switch (
-        element.id // First-level
+          element.id // First-level
         ) {
           case Category.All:
             return treeViewController.getAllNodes();

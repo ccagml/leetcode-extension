@@ -11,7 +11,7 @@ import * as lodash from "lodash";
 import * as path from "path";
 import * as vscode from "vscode";
 import { toNumber } from "lodash";
-import { Disposable, Uri, window } from "vscode";
+import { Disposable, Uri, window, workspace, ConfigurationChangeEvent } from "vscode";
 import {
   SearchNode,
   userContestRankingObj,
@@ -78,7 +78,16 @@ class TreeViewController implements Disposable {
   private searchSet: Map<string, ISearchSet> = new Map<string, ISearchSet>();
   private waitTodayQuestion: boolean;
   private waitUserContest: boolean;
+  private configurationChangeListener: Disposable;
 
+  constructor() {
+    this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
+      if (event.affectsConfiguration("leetcode-problem-rating.hideScore")) {
+        treeDataService.refresh();
+        bricksDataService.refresh();
+      }
+    }, this);
+  }
   // 获取当前文件的路径
   /**
    * It returns the path of the currently active file, or undefined if there is no active file
@@ -996,7 +1005,7 @@ class TreeViewController implements Disposable {
   }
 
   public async resolveTagForProblem(problem: IProblem): Promise<string | undefined> {
-    let path_en_tags = treeDataService.getTagsDataEn(problem.id)
+    let path_en_tags = treeDataService.getTagsDataEn(problem.id);
     if (path_en_tags.length === 1) {
       return path_en_tags[0];
     }
@@ -1078,7 +1087,7 @@ class TreeViewController implements Disposable {
     const temp_searchSet: Map<string, ISearchSet> = this.searchSet;
     const temp_waitTodayQuestion: boolean = this.waitTodayQuestion;
     const temp_waitUserContest: boolean = this.waitUserContest;
-    this.dispose();
+    this.clearCache();
     let user_score = statusBarService.getUserContestScore();
     for (const problem of await this.getAllProblems()) {
       this.explorerNodeMap.set(problem.id, new NodeModel(problem, true, user_score));
@@ -1492,12 +1501,17 @@ class TreeViewController implements Disposable {
     return this.applySortingStrategy(res);
   }
 
-  public dispose(): void {
+  public clearCache(): void {
     this.explorerNodeMap.clear();
     this.companySet.clear();
     this.tagSet.clear();
     this.fidToQid.clear();
     this.qidToFid.clear();
+  }
+
+  public dispose(): void {
+    this.configurationChangeListener.dispose();
+    this.clearCache();
   }
 
   private sortSubCategoryNodes(subCategoryNodes: NodeModel[], category: Category): void {

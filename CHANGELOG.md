@@ -1,3 +1,7 @@
+## version 2.12.3
+
+- hideScore 配置变化时刷新题目列表
+
 ## version 2.12.2
 
 - 修复 使用${tag}作为文件夹名称不生效
@@ -5,8 +9,8 @@
 
 ## version 2.12.1
 
-- 配置filePath文件名 增加 ${yyyymmdd}格式
-- 配置filePath文件名 增加 ${timestamp}格式
+- 配置 filePath 文件名 增加 ${yyyymmdd}格式
+- 配置 filePath 文件名 增加 ${timestamp}格式
 
 ## version 2.11.16
 
