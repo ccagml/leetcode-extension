@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/leetcode-vscode/src/dao/tagsDao.ts
- * Path: https://github.com/ccagml/leetcode-vscode
+ * Filename: https://github.com/ccagml/leetcode_extension/src/dao/tagsDao.ts
+ * Path: https://github.com/ccagml/leetcode_extension
  * Created Date: Thursday, November 10th 2022, 11:38:10 pm
  * Author: ccagml
  *

@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/leetcode-vscode/src/rpc/factory/apiBase.ts
- * Path: https://github.com/ccagml/leetcode-vscode
+ * https://github.com/ccagml/leetcode_extension/src/rpc/factory/apiBase.ts
+ * Path: https://github.com/ccagml/leetcode_extension
  * Created Date: Thursday, November 17th 2022, 11:44:14 am
  * Author: ccagml
  *

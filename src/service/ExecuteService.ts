@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/leetcode-vscode/src/service/executeService.ts
- * Path: https://github.com/ccagml/leetcode-vscode
+ * Filename: https://github.com/ccagml/leetcode_extension/src/service/executeService.ts
+ * Path: https://github.com/ccagml/leetcode_extension
  * Created Date: Monday, October 31st 2022, 10:16:47 am
  * Author: ccagml
  *
