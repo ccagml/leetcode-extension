@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/leetcode-vscode/src/dao/bricksDao.ts
- * Path: https://github.com/ccagml/leetcode-vscode
+ * https://github.com/ccagml/leetcode_extension/src/dao/bricksDao.ts
+ * Path: https://github.com/ccagml/leetcode_extension
  * Created Date: Wednesday, November 23rd 2022, 4:36:38 pm
  * Author: ccagml
  *

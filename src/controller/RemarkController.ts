@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/leetcode-vscode/src/controller/RemarkController.ts
- * Path: https://github.com/ccagml/leetcode-vscode
+ * https://github.com/ccagml/leetcode_extension/src/controller/RemarkController.ts
+ * Path: https://github.com/ccagml/leetcode_extension
  * Created Date: Monday, November 28th 2022, 3:29:37 pm
  * Author: ccagml
  *

@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/leetcode-vscode/src/service/TreeItemDecorationService.ts
- * Path: https://github.com/ccagml/leetcode-vscode
+ * Filename: https://github.com/ccagml/leetcode_extension/src/service/TreeItemDecorationService.ts
+ * Path: https://github.com/ccagml/leetcode_extension
  * Created Date: Thursday, October 27th 2022, 7:43:29 pm
  * Author: ccagml
  *
