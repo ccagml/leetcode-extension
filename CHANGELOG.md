@@ -1,3 +1,8 @@
+## version 2.13.4
+
+- US站一些报错
+
+
 ## version 2.13.3
 
 - 修改README.md
