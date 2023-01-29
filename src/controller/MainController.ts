@@ -33,6 +33,14 @@ class MainContorller {
   }
 
   /**
+   * 检查题目缓存
+   */
+
+  public async deleteProblemCache() {
+    await executeService.deleteProblemCache();
+  }
+
+  /**
    * It takes the version number from the package.json file and converts it to a number
    * @param {ExtensionContext} context - ExtensionContext
    */

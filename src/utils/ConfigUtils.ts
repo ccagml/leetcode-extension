@@ -383,3 +383,13 @@ export function getIncludeTemplate(lang: string): string {
 
   return result;
 }
+
+// 获取清除缓存修改时间间隔
+export function getOpenClearProblemCacheTime(): number {
+  return getVsCodeConfig().get<number>("openClearProblemCacheTime") || 3600;
+}
+
+// 是否打开清除题目缓存
+export function isOpenClearProblemCache(): boolean {
+  return getVsCodeConfig().get<boolean>("openClearProblemCache", false);
+}

@@ -19,6 +19,7 @@ import { getNodePath } from "../utils/ConfigUtils";
 import { openUrl, promptForOpenOutputChannel } from "../utils/OutputUtils";
 import * as systemUtils from "../utils/SystemUtils";
 import { toWslPath, useWsl } from "../utils/SystemUtils";
+import { getOpenClearProblemCacheTime, isOpenClearProblemCache } from "../utils/ConfigUtils";
 
 class ExecuteService implements Disposable {
   private leetCodeCliResourcesRootPath: string;
@@ -80,6 +81,24 @@ class ExecuteService implements Disposable {
     }
     context.globalState.update(leetcodeHasInited, true);
     return true;
+  }
+
+  // 多机同步,可能题目缓存会导致不一致
+  public async deleteProblemCache() {
+    if (isOpenClearProblemCache()) {
+      try {
+        await this.executeCommandWithProgressEx("正在清除缓存~", this.nodeExecutable, [
+          await this.getLeetCodeBinaryPath(),
+          "cache",
+          "-d",
+          "problems",
+          "-t",
+          getOpenClearProblemCacheTime().toString(),
+        ]);
+      } catch (error) {
+        await promptForOpenOutputChannel("Failed to delete cache. 请查看控制台信息~", OutPutType.error);
+      }
+    }
   }
 
   public async deleteCache() {
