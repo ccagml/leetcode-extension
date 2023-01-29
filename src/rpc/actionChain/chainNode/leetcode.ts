@@ -672,6 +672,116 @@ and csrf token to the user object and saves the user object to the session. */
       });
     });
   };
+
+  /* A function that is used to get the rating of the problems. */
+  getRatingOnline = (cb) => {
+    const _request = request.defaults({ timeout: 2000, jar: true });
+    _request("https://zerotrac.github.io/leetcode_problem_rating/data.json", function (error: any, _, body: any) {
+      // console.log(error);
+      // console.log(info);
+      cb(error, body);
+    });
+  };
+
+  /* A function that gets the question of the day from leetcode. */
+  getQuestionOfToday = (cb) => {
+    const opts = makeOpts(configUtils.sys.urls.graphql);
+    opts.headers.Origin = configUtils.sys.urls.base;
+    opts.headers.Referer = "https://leetcode.com/";
+
+    opts.json = true;
+    opts.body = {
+      operationName: "questionOfToday",
+      variables: {},
+      query: [
+        "query questionOfToday {",
+        "  todayRecord {",
+        "    date",
+        "    userStatus",
+        "    question {",
+        "      titleSlug",
+        "      questionId",
+        "      questionFrontendId",
+        // '      content',
+        // '      stats',
+        // '      likes',
+        // '      dislikes',
+        // '      codeDefinition',
+        // '      sampleTestCase',
+        // '      enableRunCode',
+        // '      metaData',
+        // '      translatedContent',
+        "      __typename",
+        "    }",
+        "  __typename",
+        "  }",
+        "}",
+      ].join("\n"),
+    };
+
+    // request.post(opts, function (e, resp, body) {
+    //   e = checkError(e, resp, 200);
+    //   if (e) return cb(e);
+    //   let result: any = {};
+    //   result.titleSlug = body.data.todayRecord[0].question.titleSlug;
+    //   result.questionId = body.data.todayRecord[0].question.questionId;
+    //   result.fid = body.data.todayRecord[0].question.questionFrontendId;
+    //   result.date = body.data.todayRecord[0].data;
+    //   result.userStatus = body.data.todayRecord[0].userStatus;
+    //   return cb(null, result);
+    // });
+    cb(null, {})
+  };
+
+  /* A function that is used to get the user contest ranking information. */
+  getUserContestP = (username, cb) => {
+    const opts = makeOpts(configUtils.sys.urls.noj_go);
+    opts.headers.Origin = configUtils.sys.urls.base;
+    opts.headers.Referer = configUtils.sys.urls.u.replace("$username", username);
+
+    opts.json = true;
+    opts.body = {
+      variables: {
+        userSlug: username,
+      },
+      query: [
+        "        query userContestRankingInfo($userSlug: String!) {",
+        "          userContestRanking(userSlug: $userSlug) {",
+        "            attendedContestsCount",
+        "            rating",
+        "            globalRanking",
+        "            localRanking",
+        "            globalTotalParticipants",
+        "            localTotalParticipants",
+        "            topPercentage",
+        "        }",
+        // '      userContestRankingHistory(userSlug: $userSlug) {',
+        // '            attended',
+        // '            totalProblems',
+        // '            trendingDirection',
+        // '            finishTimeInSeconds',
+        // '            rating',
+        // '            score',
+        // '            ranking',
+        // '            contest {',
+        // '              title',
+        // '              titleCn',
+        // '              startTime',
+        // '            }',
+        // '        }',
+        "    }",
+      ].join("\n"),
+    };
+
+    // request.post(opts, function (e, resp, body) {
+    //   e = checkError(e, resp, 200);
+    //   if (e) return cb(e);
+
+    //   return cb(null, body.data);
+    // });
+    cb(null, {})
+  };
+
   getHelpOnline = (problem, _, lang) => {
     getHelpEn(problem, lang, function (e, solution) {
       if (e) return;
