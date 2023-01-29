@@ -266,6 +266,7 @@ class StorageUtils {
           name: k,
           size: stat.size,
           mtime: stat.mtime,
+          mtimeMs: stat.mtimeMs,
         };
       });
   }
@@ -463,7 +464,6 @@ class StorageUtils {
     return lineContent.substring(cut_pos);
   }
 
-
   public meta(filename) {
     const m = Object.assign({}, defaultMETA, {});
 
@@ -476,8 +476,7 @@ class StorageUtils {
     for (let all_input = 0; all_input < file_info.length; all_input++) {
       const lineContent = file_info[all_input];
       if (caseFlag && lineContent.indexOf("@lcpr case=end") < 0) {
-        curCase += this.fix_lineContent(lineContent).replace(/\s+/g, "")
-          .replace(/\\n/g, "\n");
+        curCase += this.fix_lineContent(lineContent).replace(/\s+/g, "").replace(/\\n/g, "\n");
       }
       // 收集所有用例
       if (lineContent.indexOf("@lcpr case=start") >= 0) {

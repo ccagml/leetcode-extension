@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "LeetCode 官方插件增强, 代码开源, 增加 LeetCode 题目难度分, 给个star吧, 球球了",
-    "version": "2.13.1",
+    "version": "2.13.2",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -1101,6 +1101,18 @@
                         ],
                         "scope": "application",
                         "description": "Precinct Score Hidden Questions."
+                    },
+                    "leetcode-problem-rating.openClearProblemCache": {
+                        "type": "boolean",
+                        "default": false,
+                        "scope": "application",
+                        "description": "Clear the Problems cache when opening the app to avoid out-of-sync state"
+                    },
+                    "leetcode-problem-rating.openClearProblemCacheTime": {
+                        "type": "integer",
+                        "default": 3600,
+                        "scope": "application",
+                        "description": "Open the app to clear the cache interval by default 3600 seconds"
                     }
                 }
             }

@@ -43,6 +43,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     mainContorller.initialize(context);
     // 检查node环境
     await mainContorller.checkNodeEnv(context);
+    await mainContorller.deleteProblemCache();
     // 事件监听
     eventController.addEvent();
 
