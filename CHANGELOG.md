@@ -1,11 +1,14 @@
+## version 2.14.1
+
+- 尝试增加语言本地化
+
 ## version 2.13.4
 
-- US站一些报错
-
+- US 站一些报错
 
 ## version 2.13.3
 
-- 修改README.md
+- 修改 README.md
 
 ## version 2.13.2
 
