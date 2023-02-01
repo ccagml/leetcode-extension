@@ -57,6 +57,8 @@ class SolutionService extends BaseWebViewService {
 
     // $\textit
     this.solution.body = this.solution.body.replace(/\$\textit/g, "$");
+    this.solution.body = this.solution.body.replace(/\$\texttt/g, "$");
+    this.solution.body = this.solution.body.replace(/\$\text/g, "$");
 
     const body: string = markdownService.render(this.solution.body, {
       lang: this.solution.lang,
