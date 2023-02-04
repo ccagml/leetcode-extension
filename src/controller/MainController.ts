@@ -12,7 +12,9 @@ import { executeService } from "../service/ExecuteService";
 import { ExtensionContext } from "vscode";
 import { treeDataService } from "../service/TreeDataService";
 import { logOutput } from "../utils/OutputUtils";
+import { extensionState } from "../utils/problemUtils";
 
+import * as fse from "fs-extra";
 // 做杂活
 class MainContorller {
   constructor() {}
@@ -29,6 +31,9 @@ class MainContorller {
       if (!(await executeService.checkNodeEnv(context))) {
         throw new Error("The environment doesn't meet requirements.");
       }
+    }
+    if (!(await fse.pathExists(extensionState.cachePath))) {
+      await fse.mkdirs(extensionState.cachePath);
     }
   }
 
@@ -64,6 +69,8 @@ class MainContorller {
   public initialize(context: ExtensionContext) {
     this.setGlobal(context);
     treeDataService.initialize(context);
+    extensionState.context = context;
+    extensionState.cachePath = context.globalStoragePath;
   }
 
   // 删除缓存

@@ -107,14 +107,28 @@ export class FileButtonService implements vscode.CodeLensProvider {
   /**
    * createCase
    */
-  public createCase(codeLensLine, document, testCase) {
+  public createCase(codeLensLine, document, testCase): vscode.CodeLens[] {
     const range: vscode.Range = new vscode.Range(codeLensLine, 0, codeLensLine, 0);
 
-    return new vscode.CodeLens(range, {
-      title: "case",
-      command: "lcpr.tesCaseArea",
-      arguments: [document.uri, testCase],
-    });
+    const temp_result: vscode.CodeLens[] = [];
+
+    temp_result.push(
+      new vscode.CodeLens(range, {
+        title: "case",
+        command: "lcpr.tesCaseArea",
+        arguments: [document.uri, testCase],
+      })
+    );
+
+    // temp_result.push(
+    //   new vscode.CodeLens(range, {
+    //     title: "debug",
+    //     command: "lcpr.simpleDebug",
+    //     arguments: [document.uri, testCase],
+    //   })
+    // );
+
+    return temp_result;
   }
 
   public singleLineFlag = {
@@ -215,7 +229,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       }
 
       if (caseFlag && lineContent.indexOf("@lcpr case=end") >= 0) {
-        codeLens.push(this.createCase(i, document, curCase));
+        this.createCase(i, document, curCase).forEach((x) => codeLens.push(x));
         curCase = "";
         caseFlag = false;
       }

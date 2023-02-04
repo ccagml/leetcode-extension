@@ -13,6 +13,7 @@ import * as path from "path";
 import { IProblem, langExt } from "../model/Model";
 import { executeCommand } from "./CliUtils";
 import { isUseVscodeNode, isUseWsl } from "./ConfigUtils";
+import { Uri, window, TextEditor } from "vscode";
 
 export function isWindows(): boolean {
   return process.platform === "win32";
@@ -122,4 +123,50 @@ export function getyyyymmdd(timeSecond: number | undefined): string {
   const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`;
   const newDate = `${year}${month}${day}`;
   return newDate;
+}
+
+/**
+ * "If the ComSpec environment variable is not set, or if it is set to cmd.exe, then return true."
+ *
+ * The ComSpec environment variable is set to the path of the command processor. On Windows, this is
+ * usually cmd.exe. On Linux, it is usually bash
+ * @returns A boolean value.
+ */
+export function usingCmd(): boolean {
+  const comSpec: string | undefined = process.env.ComSpec;
+  // 'cmd.exe' is used as a fallback if process.env.ComSpec is unavailable.
+  if (!comSpec) {
+    return true;
+  }
+
+  if (comSpec.indexOf("cmd.exe") > -1) {
+    return true;
+  }
+  return false;
+}
+
+// 获取当前文件的路径
+/**
+ * It returns the path of the currently active file, or undefined if there is no active file
+ * @param [uri] - The file path to open.
+ * @returns A promise that resolves to a string or undefined.
+ */
+export async function getTextEditorFilePathByUri(uri?: Uri): Promise<string | undefined> {
+  let textEditor: TextEditor | undefined;
+  if (uri) {
+    textEditor = await window.showTextDocument(uri, {
+      preview: false,
+    });
+  } else {
+    textEditor = window.activeTextEditor;
+  }
+
+  if (!textEditor) {
+    return undefined;
+  }
+  if (textEditor.document.isDirty && !(await textEditor.document.save())) {
+    window.showWarningMessage("请先保存当前文件");
+    return undefined;
+  }
+  return useWsl() ? toWslPath(textEditor.document.uri.fsPath) : textEditor.document.uri.fsPath;
 }

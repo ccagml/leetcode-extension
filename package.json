@@ -247,6 +247,11 @@
                 "command": "lcpr.includeTemplates",
                 "title": "插入头文件模板",
                 "icon": "$(remove)"
+            },
+            {
+                "command": "lcpr.simpleDebug",
+                "title": "简单调试",
+                "icon": "$(remove)"
             }
         ],
         "viewsContainers": {
