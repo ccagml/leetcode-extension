@@ -27,6 +27,7 @@ class DebugContorller {
       const fileContent: Buffer = fs.readFileSync(filePath);
       const meta: ProblemMeta | null = fileMeta(fileContent.toString());
       if (!canDebug(meta)) {
+        window.showErrorMessage("这题还不能debug 麻烦提issuse");
         return;
       }
       let result: any;
