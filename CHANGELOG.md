@@ -1,3 +1,7 @@
+## version 2.15.1
+
+- 参考 wangtao0101/vscode-debug-leetcode 添加 debug
+
 ## version 2.14.2
 
 - BWC96 & WC328 & WC329 数据

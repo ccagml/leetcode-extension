@@ -11,14 +11,14 @@ import { Uri, window } from "vscode";
 import { getTextEditorFilePathByUri } from "../utils/SystemUtils";
 import * as fs from "fs";
 import { fileMeta, ProblemMeta, canDebug } from "../utils/problemUtils";
-import problemTypes from "../utils/problemTypes";
-import { debugExecutor } from "../debug/debugExecutor";
+// import problemTypes from "../utils/problemTypes";
+import { debugService } from "../service/DebugService";
 
 // 做杂活
 class DebugContorller {
   constructor() {}
 
-  public async debugSolution(uri: Uri, testcase?: string): Promise<void> {
+  public async startDebug(uri: Uri, testcase?: string): Promise<void> {
     try {
       const filePath: string | undefined = await getTextEditorFilePathByUri(uri);
       if (!filePath) {
@@ -31,12 +31,8 @@ class DebugContorller {
       }
       let result: any;
 
-      if (!testcase) {
-        result = await debugExecutor.execute(
-          filePath,
-          problemTypes[meta!.id]!.testCase.replace(/"/g, '\\"'),
-          meta!.lang
-        );
+      if (testcase != undefined) {
+        result = await debugService.execute(filePath, testcase.replace(/"/g, '\\"'), meta!.lang);
       } else {
         const ts: string | undefined = await window.showInputBox({
           prompt: "Enter the test cases.",
@@ -46,7 +42,7 @@ class DebugContorller {
           ignoreFocusOut: true,
         });
         if (ts) {
-          result = await debugExecutor.execute(filePath, ts.replace(/"/g, '\\"'), meta!.lang);
+          result = await debugService.execute(filePath, ts.replace(/"/g, '\\"'), meta!.lang);
         }
       }
 

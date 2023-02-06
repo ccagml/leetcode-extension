@@ -7,8 +7,8 @@ import { useWsl, isWindows, usingCmd } from "./SystemUtils";
 
 const fileMateReg: RegExp = /@lc\s+(?:[\s\S]*?)\s+id=(\d+)\s+lang=([\S]+)/;
 
-const beforeStubReg: RegExp = /@before-stub-for-debug-begin([\s\S]*?)@before-stub-for-debug-end/;
-const afterStubReg: RegExp = /@after-stub-for-debug-begin([\s\S]*?)@after-stub-for-debug-end/;
+const beforeStubReg: RegExp = /@lcpr-before-debug-begin([\s\S]*?)@lcpr-before-debug-end/;
+const afterStubReg: RegExp = /@lcpr-after-debug-begin([\s\S]*?)@lcpr-after-debug-end/;
 
 interface IExtensionState {
   context: vscode.ExtensionContext;
@@ -147,7 +147,7 @@ export async function getProblemSpecialCode(
   fileExt: string,
   extDir: string
 ): Promise<string> {
-  const problemPath: string = path.join(extDir, "src/debug/entry", language, "problems", `${problem}.${fileExt}`);
+  const problemPath: string = path.join(extDir, "resources/debug/entry", language, "problems", `${problem}.${fileExt}`);
   const isSpecial: boolean = await fse.pathExists(problemPath);
   if (isSpecial) {
     const specialContent: Buffer = await fse.readFile(problemPath);
@@ -157,7 +157,7 @@ export async function getProblemSpecialCode(
     return "";
   }
   const fileContent: Buffer = await fse.readFile(
-    path.join(extDir, "src/debug/entry", language, "problems", `common.${fileExt}`)
+    path.join(extDir, "resources/debug/entry", language, "problems", `common.${fileExt}`)
   );
   return fileContent.toString();
 }
@@ -167,7 +167,7 @@ export async function getEntryFile(language: string, problem: string): Promise<s
   const fileExt: string = genFileExt(language);
   const specialCode: string = await getProblemSpecialCode(language, problem, fileExt, extDir);
   const tmpEntryCode: string = (
-    await fse.readFile(path.join(extDir, "src/debug/entry", language, `entry.${fileExt}`))
+    await fse.readFile(path.join(extDir, "resources/debug/entry", language, `entry.${fileExt}`))
   ).toString();
   const entryCode: string = tmpEntryCode.replace(/\/\/ @@stub-for-code@@/, specialCode);
   const entryPath: string = path.join(extensionState.cachePath, `${language}problem${problem}.${fileExt}`);

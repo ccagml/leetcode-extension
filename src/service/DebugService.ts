@@ -2,7 +2,7 @@ import * as net from "net";
 // import * as path from "path";
 import * as vscode from "vscode";
 import { IDebugResult } from "../utils/problemUtils";
-import { cppExecutor } from "../debug/executor/cppExecutor";
+import { debugCpp } from "../debugex/debugCpp";
 import { logOutput } from "../utils/OutputUtils";
 import * as fse from "fs-extra";
 import { fileMeta, getEntryFile, IDebugConfig, IProblemType } from "../utils/problemUtils";
@@ -26,7 +26,7 @@ const debugConfigMap: Map<string, IDebugConfig> = new Map([
   ],
 ]);
 
-class DebugExecutor {
+class DebugService {
   private server: net.Server;
 
   constructor() {
@@ -47,7 +47,7 @@ class DebugExecutor {
     }
 
     if (language === "cpp") {
-      return await cppExecutor.execute(filePath, testString, language, (this.server.address() as net.AddressInfo).port);
+      return await debugCpp.execute(filePath, testString, language, (this.server.address() as net.AddressInfo).port);
     }
 
     const debugConfig: undefined | IDebugConfig = debugConfigMap.get(language);
@@ -81,16 +81,16 @@ class DebugExecutor {
         fse.writeFile(
           filePath,
           fileContent.toString() +
-            `\n// @after-stub-for-debug-begin\nmodule.exports = ${funName};\n// @after-stub-for-debug-end`
+            `\n// @lcpr-after-debug-begin\nmodule.exports = ${funName};\n// @lcpr-after-debug-end`
         );
       }
     } else if (language === "python3") {
       // check whether module.exports is exist or not
-      const moduleExportsReg: RegExp = /# @before-stub-for-debug-begin/;
+      const moduleExportsReg: RegExp = /# @lcpr-before-debug-begin/;
       if (!moduleExportsReg.test(fileContent.toString())) {
         await fse.writeFile(
           filePath,
-          `# @before-stub-for-debug-begin\nfrom python3problem${meta.id} import *\nfrom typing import *\n# @before-stub-for-debug-end\n\n` +
+          `# @lcpr-before-debug-begin\nfrom python3problem${meta.id} import *\nfrom typing import *\n# @lcpr-before-debug-end\n\n` +
             fileContent.toString()
         );
       }
@@ -152,4 +152,4 @@ class DebugExecutor {
   }
 }
 
-export const debugExecutor: DebugExecutor = new DebugExecutor();
+export const debugService: DebugService = new DebugService();

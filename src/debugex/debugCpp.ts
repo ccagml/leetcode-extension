@@ -1,9 +1,9 @@
 import * as fse from "fs-extra";
 import * as path from "path";
 import * as vscode from "vscode";
-import { logOutput } from "../../utils/OutputUtils";
+import { logOutput } from "../utils/OutputUtils";
 
-import { executeCommand } from "../../utils/CliUtils";
+import { executeCommand } from "../utils/CliUtils";
 import {
   fileMeta,
   getEntryFile,
@@ -12,10 +12,12 @@ import {
   extensionState,
   IDebugConfig,
   IProblemType,
-} from "../../utils/problemUtils";
+} from "../utils/problemUtils";
 
-import problemTypes from "../../utils/problemTypes";
-import { isWindows } from "../../utils/SystemUtils";
+import problemTypes from "../utils/problemTypes";
+import { isWindows } from "../utils/SystemUtils";
+
+import { DebugBase } from "../debugex/debugBase";
 
 function getGdbDefaultConfig(): IDebugConfig {
   return {
@@ -53,7 +55,7 @@ function getTemplateId(id: string): string {
   return findKey ? findKey : id;
 }
 
-class CppExecutor {
+class DebugCpp extends DebugBase {
   public async execute(
     filePath: string,
     testString: string,
@@ -83,16 +85,10 @@ class CppExecutor {
     const commonImplementName: string = `common${language}problem${meta.id}.cpp`;
 
     // check whether module.exports is exist or not
-    const moduleExportsReg: RegExp = /\/\/ @before-stub-for-debug-begin/;
+    const moduleExportsReg: RegExp = /\/\/ @lcpr-before-debug-begin/;
     if (!moduleExportsReg.test(sourceFileContent)) {
       const newContent: string =
-        `// @before-stub-for-debug-begin
-
-
-
-
-
-// @before-stub-for-debug-end\n\n` + sourceFileContent;
+        `// @lcpr-before-debug-begin\n\n\n\n\n// @lcpr-before-debug-end\n\n` + sourceFileContent;
       await fse.writeFile(filePath, newContent);
 
       // create source file for build because g++ does not support inlucde file with chinese name
@@ -101,11 +97,18 @@ class CppExecutor {
       await fse.writeFile(newSourceFilePath, sourceFileContent);
     }
 
-    const params: string[] = testString.split("\\n");
+    let params: string[] = testString.split("\\n");
     const paramsType: string[] = problemType.paramTypes;
-    if (params.length !== paramsType.length) {
+
+    // 参数不够就不行
+
+    if (params.length < paramsType.length) {
       vscode.window.showErrorMessage("Input parameters is not match the problem!");
       return;
+    }
+    // 参数太多舍弃
+    if (params.length < paramsType.length) {
+      params = params.slice(0, paramsType.length);
     }
 
     const templateId: string = getTemplateId(meta.id);
@@ -203,7 +206,7 @@ class CppExecutor {
     const extDir: string = vscode.extensions.getExtension("ccagml.vscode-leetcode-problem-rating")!.extensionPath;
 
     // copy common.h
-    const commonHeaderPath: string = path.join(extDir, "src/debug/entry/cpp/problems/common.h");
+    const commonHeaderPath: string = path.join(extDir, "resources/debug/entry/cpp/problems/common.h");
     const commonHeaderContent: string = (await fse.readFile(commonHeaderPath)).toString();
     const commonHeaderDestPath: string = path.join(extensionState.cachePath, commonHeaderName);
 
@@ -214,7 +217,7 @@ class CppExecutor {
     );
 
     // copy common.cpp
-    const commonPath: string = path.join(extDir, "src/debug/entry/cpp/problems/common.cpp");
+    const commonPath: string = path.join(extDir, "resources/debug/entry/cpp/problems/common.cpp");
     const commonContent: string = (await fse.readFile(commonPath))
       .toString()
       .replace(includeFileRegExp, `#include "${commonHeaderName}"`);
@@ -227,8 +230,8 @@ class CppExecutor {
     );
 
     const exePath: string = path.join(extensionState.cachePath, `${language}problem${meta.id}.exe`);
-    const thirdPartyPath: string = path.join(extDir, "src/debug/thirdparty/c");
-    const jsonPath: string = path.join(extDir, "src/debug/thirdparty/c/cJSON.c");
+    const thirdPartyPath: string = path.join(extDir, "resources/debug/thirdparty/c");
+    const jsonPath: string = path.join(extDir, "resources/debug/thirdparty/c/cJSON.c");
 
     const compiler = vscode.workspace.getConfiguration("debug-leetcode").get<string>("cppCompiler") ?? "gdb";
     let debugConfig: any;
@@ -442,4 +445,4 @@ class CppExecutor {
   }
 }
 
-export const cppExecutor: CppExecutor = new CppExecutor();
+export const debugCpp: DebugCpp = new DebugCpp();

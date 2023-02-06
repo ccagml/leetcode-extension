@@ -349,7 +349,8 @@ function parseParameter(index, type, param) {
 function parseParamsToJson(paramString) {
     let params;
     try {
-        const paramsByLine = paramString.split(/\\n/);
+        let paramsByLine = paramString.split(/\\n/);
+        paramsByLine = paramsByLine.slice(0, paramTypes.length);
 
         params = paramsByLine.map(str => {
             return JSON.parse(str);

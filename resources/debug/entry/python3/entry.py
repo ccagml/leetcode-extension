@@ -291,6 +291,7 @@ def loadModule():
 
 def start():
     lines = testString.split("\\n")
+    lines = lines[:len(paramTypes)]
     params = []
     for i, val in enumerate(lines):
         params.append(json.loads(codecs.getdecoder("unicode_escape")(val)[0]))
