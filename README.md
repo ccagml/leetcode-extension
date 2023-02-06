@@ -28,7 +28,8 @@
 - [新增题目自定义分类](#新增在工作目录存放数据)
 - [答案不同上色,配置默认不开启](#插件配置项)
 - 增加获取中文站的题解
-- 增加 cpp、js、py3 一些题目的 debug(参考其他项目,有问题提 issues)
+- 增加 cpp、js、py3 一些题目的 debug(参考 wangtao0101 项目,有问题提 issues)
+- [有些题目原插件无法调试,请尝试配置区域调试参数](#区域调试参数的一些说明)
 
 # 关于本项目
 
@@ -73,6 +74,55 @@
 ## 状态栏增加简易计时器
 
 - 查看一个题目时会开始计时,提交一个题目通过后会停止计时
+
+## 区域调试参数的一些说明
+
+### 如果有些题目无法 debug,请尝试配置 diy 参数区
+
+1. 例子 cpp 2544 题为例
+   ```
+   // @lcpr-div-debug-arg-start
+   // funName= alternateDigitSum
+   // paramTypes= ["number"]
+   // returnType= number
+   // @lcpr-div-debug-arg-end
+   ```
+2. diy 参数说明
+
+- funName:函数名,既本次解决方法的函数名
+- paramTypes:函数的输入参数,是一个字符串数组类型
+  - 可填入内容为以下字符串
+    - "number"
+      - 类型说明:数字
+    - "number[]"
+      - 类型说明:数字数组
+    - "number[][]"
+      - 类型说明:数字二维数组
+    - "string"
+      - 类型说明:字符串
+    - "string[]"
+      - 类型说明:字符串数组
+    - "string[][]"
+      - 类型说明:字符串二维数组
+    - "ListNode"
+      - 类型说明:链表
+    - "ListNode[]"
+      - 类型说明:链表数组
+    - "character"
+      - 类型说明:字节
+    - "character[]"
+      - 类型说明:字节数组
+    - "character[][]"
+      - 类型说明:字节二维数组
+    - "NestedInteger[]"
+      - 类型说明:数组
+    - "MountainArray"
+      - 类型说明:数组
+    - "TreeNode"
+      - 类型说明:树节点
+- returnType:函数的返回值
+
+  - 可填入内容同 paramTypes
 
 <!-- ## TODO 看到一些可能会用得上的功能
 

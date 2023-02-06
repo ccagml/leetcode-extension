@@ -6,7 +6,7 @@ import { debugCpp } from "../debugex/debugCpp";
 import { logOutput } from "../utils/OutputUtils";
 import * as fse from "fs-extra";
 import { fileMeta, getEntryFile, IDebugConfig, IProblemType } from "../utils/problemUtils";
-import problemTypes from "../utils/problemTypes";
+import { debugArgDao } from "../dao/debugArgDao";
 
 const debugConfigMap: Map<string, IDebugConfig> = new Map([
   [
@@ -40,14 +40,25 @@ class DebugService {
     return problemType.funName;
   }
 
-  public async execute(filePath: string, testString: string, language: string): Promise<string | undefined> {
+  public async execute(
+    document: vscode.TextDocument,
+    filePath: string,
+    testString: string,
+    language: string
+  ): Promise<string | undefined> {
     if (this.server == null || this.server.address() == null) {
       vscode.window.showErrorMessage("Debug server error, maybe you can restart vscode.");
       return;
     }
 
     if (language === "cpp") {
-      return await debugCpp.execute(filePath, testString, language, (this.server.address() as net.AddressInfo).port);
+      return await debugCpp.execute(
+        document,
+        filePath,
+        testString,
+        language,
+        (this.server.address() as net.AddressInfo).port
+      );
     }
 
     const debugConfig: undefined | IDebugConfig = debugConfigMap.get(language);
@@ -64,8 +75,8 @@ class DebugService {
       );
       return;
     }
-    const problemType: IProblemType = problemTypes[meta.id];
-    if (problemType == null) {
+    const problemType: IProblemType | undefined = debugArgDao.getDebugArgData(meta.id, document);
+    if (problemType == undefined) {
       vscode.window.showErrorMessage(`Notsupported problem: ${meta.id}.`);
       return;
     }

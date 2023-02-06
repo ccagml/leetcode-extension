@@ -185,7 +185,7 @@ class RemarkService implements Disposable {
     this._qid_map_thread.get(qid)?.dispose();
   }
 
-  public dispose(): void { }
+  public dispose(): void {}
 }
 
 export const remarkService: RemarkService = new RemarkService();

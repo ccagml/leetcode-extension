@@ -1,7 +1,6 @@
 import * as fse from "fs-extra";
 import * as path from "path";
 import * as vscode from "vscode";
-import problemTypes from "./problemTypes";
 
 import { useWsl, isWindows, usingCmd } from "./SystemUtils";
 
@@ -28,7 +27,7 @@ export interface IProblemType {
   funName: string;
   paramTypes: string[];
   returnType: string;
-  testCase: string;
+  testCase?: string;
   specialFunName?: {
     [x: string]: string;
   };
@@ -99,13 +98,6 @@ export function genFileExt(language: string): string {
     throw new Error(`The language "${language}" is not supported.`);
   }
   return ext;
-}
-
-export function canDebug(meta: ProblemMeta | null) {
-  if (meta == null || supportDebugLanguages.indexOf(meta.lang) === -1 || problemTypes[meta.id] == null) {
-    return false;
-  }
-  return true;
 }
 
 export function fileMeta(content: string): ProblemMeta | null {
