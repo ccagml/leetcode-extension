@@ -1,3 +1,7 @@
+## version 2.15.2
+
+- 有些题目不能 debug 的提示
+
 ## version 2.15.1
 
 - 参考 wangtao0101/vscode-debug-leetcode 添加 debug
