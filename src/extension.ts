@@ -29,6 +29,7 @@ import { bricksDataService } from "./service/BricksDataService";
 import { bricksViewController } from "./controller/BricksViewController";
 import { statusBarTimeService } from "./service/StatusBarTimeService";
 import { remarkController } from "./controller/RemarkController";
+import { debugContorller } from "./controller/DebugController";
 
 // 激活插件
 /**
@@ -137,7 +138,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
       }),
       commands.registerCommand("lcpr.includeTemplates", (document: TextDocument) => {
         remarkController.includeTemplates(document);
-      })
+      }),
+      commands.registerCommand("lcpr.simpleDebug", (uri, testCase?) => debugContorller.startDebug(uri, testCase))
     );
 
     // 设置站点

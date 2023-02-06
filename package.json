@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "2.14.2",
+    "version": "2.15.1",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -246,6 +246,11 @@
             {
                 "command": "lcpr.includeTemplates",
                 "title": "插入头文件模板",
+                "icon": "$(remove)"
+            },
+            {
+                "command": "lcpr.simpleDebug",
+                "title": "简单调试",
                 "icon": "$(remove)"
             }
         ],

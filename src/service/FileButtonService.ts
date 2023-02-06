@@ -11,6 +11,7 @@ import * as vscode from "vscode";
 import { treeViewController } from "../controller/TreeViewController";
 import { NodeModel } from "../model/NodeModel";
 import { getEditorShortcuts } from "../utils/ConfigUtils";
+import { supportDebugLanguages } from "../utils/problemUtils";
 
 export class FileButtonService implements vscode.CodeLensProvider {
   private onDidChangeCodeLensesEmitter: vscode.EventEmitter<void> = new vscode.EventEmitter<void>();
@@ -24,7 +25,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
   }
 
   // 处理代码的按钮
-  private processCodeButton(codeLensLine, document, node): vscode.CodeLens[] {
+  private processCodeButton(codeLensLine, document, node, nodeLang): vscode.CodeLens[] {
     const temp_result: vscode.CodeLens[] = [];
     const shortcuts: string[] = getEditorShortcuts();
     if (!shortcuts) {
@@ -101,20 +102,47 @@ export class FileButtonService implements vscode.CodeLensProvider {
         })
       );
     }
+
+    if (supportDebugLanguages.indexOf(nodeLang) != -1) {
+      temp_result.push(
+        new vscode.CodeLens(range, {
+          title: "debug",
+          command: "lcpr.simpleDebug",
+          arguments: [document.uri],
+        })
+      );
+    }
+
     return temp_result;
   }
 
   /**
    * createCase
    */
-  public createCase(codeLensLine, document, testCase) {
+  public createCase(codeLensLine, document, testCase, nodeLang): vscode.CodeLens[] {
     const range: vscode.Range = new vscode.Range(codeLensLine, 0, codeLensLine, 0);
 
-    return new vscode.CodeLens(range, {
-      title: "case",
-      command: "lcpr.tesCaseArea",
-      arguments: [document.uri, testCase],
-    });
+    const temp_result: vscode.CodeLens[] = [];
+
+    temp_result.push(
+      new vscode.CodeLens(range, {
+        title: "case",
+        command: "lcpr.tesCaseArea",
+        arguments: [document.uri, testCase],
+      })
+    );
+
+    if (supportDebugLanguages.indexOf(nodeLang) != -1) {
+      temp_result.push(
+        new vscode.CodeLens(range, {
+          title: "debug",
+          command: "lcpr.simpleDebug",
+          arguments: [document.uri, testCase],
+        })
+      );
+    }
+
+    return temp_result;
   }
 
   public singleLineFlag = {
@@ -183,7 +211,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
 
   public provideCodeLenses(document: vscode.TextDocument): vscode.ProviderResult<vscode.CodeLens[]> {
     const content: string = document.getText();
-    const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=.*/);
+    const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=(.*)/);
     if (!matchResult) {
       return undefined;
     }
@@ -192,6 +220,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
     if (nodeId) {
       node = treeViewController.getNodeById(nodeId);
     }
+    let nodeLang: string | undefined = matchResult[2];
 
     const codeLens: vscode.CodeLens[] = [];
     let caseFlag: boolean = false;
@@ -199,7 +228,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
     for (let i: number = 0; i < document.lineCount; i++) {
       const lineContent: string = document.lineAt(i).text;
       if (lineContent.indexOf("@lc code=end") >= 0) {
-        this.processCodeButton(i, document, node).forEach((x) => codeLens.push(x));
+        this.processCodeButton(i, document, node, nodeLang).forEach((x) => codeLens.push(x));
       }
 
       if (lineContent.indexOf("@lc code=start") >= 0) {
@@ -215,7 +244,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       }
 
       if (caseFlag && lineContent.indexOf("@lcpr case=end") >= 0) {
-        codeLens.push(this.createCase(i, document, curCase));
+        this.createCase(i, document, curCase, nodeLang).forEach((x) => codeLens.push(x));
         curCase = "";
         caseFlag = false;
       }

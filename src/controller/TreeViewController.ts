@@ -57,7 +57,14 @@ import { executeService } from "../service/ExecuteService";
 import { getNodeIdFromFile } from "../utils/SystemUtils";
 import { logOutput, promptForOpenOutputChannel, promptForSignIn, promptHintMessage } from "../utils/OutputUtils";
 import { treeDataService } from "../service/TreeDataService";
-import { genFileExt, genFileName, getyyyymmdd, getDayNowStr } from "../utils/SystemUtils";
+import {
+  genFileExt,
+  genFileName,
+  getyyyymmdd,
+  getDayNowStr,
+  getTextEditorFilePathByUri,
+  usingCmd,
+} from "../utils/SystemUtils";
 import { IDescriptionConfiguration, isStarShortcut } from "../utils/ConfigUtils";
 import * as systemUtils from "../utils/SystemUtils";
 import { solutionService } from "../service/SolutionService";
@@ -88,33 +95,6 @@ class TreeViewController implements Disposable {
       }
     }, this);
   }
-  // 获取当前文件的路径
-  /**
-   * It returns the path of the currently active file, or undefined if there is no active file
-   * @param [uri] - The file path to open.
-   * @returns A promise that resolves to a string or undefined.
-   */
-  public async getActiveFilePath(uri?: vscode.Uri): Promise<string | undefined> {
-    let textEditor: vscode.TextEditor | undefined;
-    if (uri) {
-      textEditor = await vscode.window.showTextDocument(uri, {
-        preview: false,
-      });
-    } else {
-      textEditor = vscode.window.activeTextEditor;
-    }
-
-    if (!textEditor) {
-      return undefined;
-    }
-    if (textEditor.document.isDirty && !(await textEditor.document.save())) {
-      vscode.window.showWarningMessage("请先保存当前文件");
-      return undefined;
-    }
-    return systemUtils.useWsl()
-      ? systemUtils.toWslPath(textEditor.document.uri.fsPath)
-      : textEditor.document.uri.fsPath;
-  }
 
   // 提交问题
   /**
@@ -130,7 +110,7 @@ class TreeViewController implements Disposable {
       return;
     }
 
-    const filePath: string | undefined = await this.getActiveFilePath(uri);
+    const filePath: string | undefined = await getTextEditorFilePathByUri(uri);
     if (!filePath) {
       return;
     }
@@ -160,7 +140,7 @@ class TreeViewController implements Disposable {
         return;
       }
 
-      const filePath: string | undefined = await this.getActiveFilePath(uri);
+      const filePath: string | undefined = await getTextEditorFilePathByUri(uri);
       if (!filePath) {
         return;
       }
@@ -277,7 +257,7 @@ class TreeViewController implements Disposable {
         return;
       }
 
-      const filePath: string | undefined = await this.getActiveFilePath(uri);
+      const filePath: string | undefined = await getTextEditorFilePathByUri(uri);
       if (!filePath) {
         return;
       }
@@ -308,7 +288,7 @@ class TreeViewController implements Disposable {
         return;
       }
 
-      const filePath: string | undefined = await this.getActiveFilePath(uri);
+      const filePath: string | undefined = await getTextEditorFilePathByUri(uri);
       if (!filePath) {
         return;
       }
@@ -325,26 +305,6 @@ class TreeViewController implements Disposable {
   }
 
   /**
-   * "If the ComSpec environment variable is not set, or if it is set to cmd.exe, then return true."
-   *
-   * The ComSpec environment variable is set to the path of the command processor. On Windows, this is
-   * usually cmd.exe. On Linux, it is usually bash
-   * @returns A boolean value.
-   */
-  public usingCmd(): boolean {
-    const comSpec: string | undefined = process.env.ComSpec;
-    // 'cmd.exe' is used as a fallback if process.env.ComSpec is unavailable.
-    if (!comSpec) {
-      return true;
-    }
-
-    if (comSpec.indexOf("cmd.exe") > -1) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
    * If you're on Windows, and you're using cmd.exe, then you need to escape double quotes with
    * backslashes. Otherwise, you don't
    * @param {string} test - The test string to be parsed.
@@ -358,7 +318,7 @@ class TreeViewController implements Disposable {
       return `'${test}'`;
     }
 
-    if (this.usingCmd()) {
+    if (usingCmd()) {
       // 一般需要走进这里, 除非改了 环境变量ComSpec的值
       if (systemUtils.useVscodeNode()) {
         //eslint-disable-next-line
@@ -628,7 +588,7 @@ class TreeViewController implements Disposable {
       }
     } else if (!input) {
       // Triggerred from command
-      problemInput = await this.getActiveFilePath();
+      problemInput = await getTextEditorFilePathByUri();
     }
 
     if (!problemInput) {
@@ -682,7 +642,7 @@ class TreeViewController implements Disposable {
       return;
     }
     try {
-      let problemInput = await this.getActiveFilePath();
+      let problemInput = await getTextEditorFilePathByUri();
       // vscode.window.showErrorMessage(twoFactor || "输入错误");
       const solution: string = await executeService.getTestApi(problemInput || "");
       solutionService.show(solution);
