@@ -22,9 +22,9 @@
 <%=comment.singleLine%> @lc code=end
 
 <%=comment.singleLine%> @lcpr-div-debug-arg-start
-<%=comment.singleLine%> funName= ""
+<%=comment.singleLine%> funName=
 <%=comment.singleLine%> paramTypes= []
-<%=comment.singleLine%> returnType= ""
+<%=comment.singleLine%> returnType=
 <%=comment.singleLine%> @lcpr-div-debug-arg-end
 
 <% if(allCaseList && allCaseList.length > 0){ %>
