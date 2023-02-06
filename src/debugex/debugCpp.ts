@@ -14,10 +14,10 @@ import {
   IProblemType,
 } from "../utils/problemUtils";
 
-import problemTypes from "../utils/problemTypes";
 import { isWindows } from "../utils/SystemUtils";
 
 import { DebugBase } from "../debugex/debugBase";
+import { debugArgDao } from "../dao/debugArgDao";
 
 function getGdbDefaultConfig(): IDebugConfig {
   return {
@@ -57,6 +57,7 @@ function getTemplateId(id: string): string {
 
 class DebugCpp extends DebugBase {
   public async execute(
+    document: vscode.TextDocument,
     filePath: string,
     testString: string,
     language: string,
@@ -70,8 +71,8 @@ class DebugCpp extends DebugBase {
       );
       return;
     }
-    const problemType: IProblemType = problemTypes[meta.id];
-    if (problemType == null) {
+    const problemType: IProblemType | undefined = debugArgDao.getDebugArgData(meta.id, document);
+    if (problemType == undefined) {
       vscode.window.showErrorMessage(`Notsupported problem: ${meta.id}.`);
       return;
     }
@@ -233,7 +234,7 @@ class DebugCpp extends DebugBase {
     const thirdPartyPath: string = path.join(extDir, "resources/debug/thirdparty/c");
     const jsonPath: string = path.join(extDir, "resources/debug/thirdparty/c/cJSON.c");
 
-    const compiler = vscode.workspace.getConfiguration("debug-leetcode").get<string>("cppCompiler") ?? "gdb";
+    const compiler = vscode.workspace.getConfiguration("leetcode-problem-rating").get<string>("cppCompiler") ?? "gdb";
     let debugConfig: any;
     if (compiler === "clang") {
       debugConfig = await this.getClangDebugConfig({

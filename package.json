@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "2.15.2",
+    "version": "2.15.3",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -1118,6 +1118,19 @@
                         "default": 3600,
                         "scope": "application",
                         "description": "Open the app to clear the cache interval by default 3600 seconds"
+                    },
+                    "leetcode-problem-rating.cppCompiler": {
+                        "type": "string",
+                        "default": "gdb",
+                        "enum": [
+                            "gdb",
+                            "clang"
+                        ],
+                        "enumDescriptions": [
+                            "gdb compiler",
+                            "clang compiler"
+                        ],
+                        "scope": "resource"
                     }
                 }
             }

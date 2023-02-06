@@ -108,7 +108,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
         new vscode.CodeLens(range, {
           title: "debug",
           command: "lcpr.simpleDebug",
-          arguments: [document.uri],
+          arguments: [document],
         })
       );
     }
@@ -137,7 +137,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
         new vscode.CodeLens(range, {
           title: "debug",
           command: "lcpr.simpleDebug",
-          arguments: [document.uri, testCase],
+          arguments: [document, testCase],
         })
       );
     }

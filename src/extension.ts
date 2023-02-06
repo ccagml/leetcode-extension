@@ -139,7 +139,9 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.includeTemplates", (document: TextDocument) => {
         remarkController.includeTemplates(document);
       }),
-      commands.registerCommand("lcpr.simpleDebug", (uri, testCase?) => debugContorller.startDebug(uri, testCase))
+      commands.registerCommand("lcpr.simpleDebug", (document: TextDocument, testCase?) =>
+        debugContorller.startDebug(document, testCase)
+      )
     );
 
     // 设置站点

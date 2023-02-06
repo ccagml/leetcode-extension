@@ -7,33 +7,45 @@
  * Copyright (c) 2023 ccagml . All rights reserved
  */
 
-import { Uri, window } from "vscode";
+import { TextDocument, window } from "vscode";
 import { getTextEditorFilePathByUri } from "../utils/SystemUtils";
 import * as fs from "fs";
-import { fileMeta, ProblemMeta, canDebug } from "../utils/problemUtils";
-// import problemTypes from "../utils/problemTypes";
+import { fileMeta, ProblemMeta, supportDebugLanguages } from "../utils/problemUtils";
+
 import { debugService } from "../service/DebugService";
+import { debugArgDao } from "../dao/debugArgDao";
 
 // 做杂活
 class DebugContorller {
   constructor() {}
+  public canDebug(meta: ProblemMeta | null, document: TextDocument) {
+    if (
+      meta == null ||
+      supportDebugLanguages.indexOf(meta.lang) === -1 ||
+      debugArgDao.getDebugArgData(meta.id, document) == undefined
+    ) {
+      return false;
+    }
+    return true;
+  }
 
-  public async startDebug(uri: Uri, testcase?: string): Promise<void> {
+  public async startDebug(document: TextDocument, testcase?: string): Promise<void> {
     try {
-      const filePath: string | undefined = await getTextEditorFilePathByUri(uri);
+      const filePath: string | undefined = await getTextEditorFilePathByUri(document.uri);
       if (!filePath) {
         return;
       }
       const fileContent: Buffer = fs.readFileSync(filePath);
       const meta: ProblemMeta | null = fileMeta(fileContent.toString());
-      if (!canDebug(meta)) {
-        window.showErrorMessage("这题还不能debug 麻烦提issuse");
+
+      if (!this.canDebug(meta, document)) {
+        window.showErrorMessage("这题还不能debug,请尝试配置区域调试参数,麻烦提issuse");
         return;
       }
       let result: any;
 
       if (testcase != undefined) {
-        result = await debugService.execute(filePath, testcase.replace(/"/g, '\\"'), meta!.lang);
+        result = await debugService.execute(document, filePath, testcase.replace(/"/g, '\\"'), meta!.lang);
       } else {
         const ts: string | undefined = await window.showInputBox({
           prompt: "Enter the test cases.",
@@ -43,7 +55,7 @@ class DebugContorller {
           ignoreFocusOut: true,
         });
         if (ts) {
-          result = await debugService.execute(filePath, ts.replace(/"/g, '\\"'), meta!.lang);
+          result = await debugService.execute(document, filePath, ts.replace(/"/g, '\\"'), meta!.lang);
         }
       }
 
