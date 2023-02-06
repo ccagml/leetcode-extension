@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/leetcode_extension/src/rpc/cli.ts
- * Path: https://github.com/ccagml/leetcode_extension
+ * Filename: https://github.com/ccagml/leetcode_ext/src/rpc/cli.ts
+ * Path: https://github.com/ccagml/leetcode_ext
  * Created Date: Thursday, October 27th 2022, 7:43:29 pm
  * Author: ccagml
  *

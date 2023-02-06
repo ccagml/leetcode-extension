@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/leetcode_extension/src/rpc/factory/api/userApi.ts
- * Path: https://github.com/ccagml/leetcode_extension
+ * https://github.com/ccagml/leetcode_ext/src/rpc/factory/api/userApi.ts
+ * Path: https://github.com/ccagml/leetcode_ext
  * Created Date: Thursday, November 17th 2022, 11:44:14 am
  * Author: ccagml
  *
