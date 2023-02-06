@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/leetcode_extension/src/rpc/actionChain/leetcode.ts
- * Path: https://github.com/ccagml/leetcode_extension
+ * https://github.com/ccagml/leetcode_ext/src/rpc/actionChain/leetcode.ts
+ * Path: https://github.com/ccagml/leetcode_ext
  * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
@@ -730,7 +730,7 @@ and csrf token to the user object and saves the user object to the session. */
     //   result.userStatus = body.data.todayRecord[0].userStatus;
     //   return cb(null, result);
     // });
-    cb(null, {})
+    cb(null, {});
   };
 
   /* A function that is used to get the user contest ranking information. */
@@ -779,7 +779,7 @@ and csrf token to the user object and saves the user object to the session. */
 
     //   return cb(null, body.data);
     // });
-    cb(null, {})
+    cb(null, {});
   };
 
   getHelpOnline = (problem, _, lang) => {

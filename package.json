@@ -12,9 +12,9 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/ccagml/leetcode_extension"
+        "url": "https://github.com/ccagml/leetcode_ext"
     },
-    "homepage": "https://github.com/ccagml/leetcode_extension/README.md",
+    "homepage": "https://github.com/ccagml/leetcode_ext/README.md",
     "categories": [
         "Other",
         "Snippets",

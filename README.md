@@ -1,11 +1,11 @@
 <p align="center">
-  <a href="https://github.com/ccagml/leetcode_extension/actions/workflows/release.yml">
+  <a href="https://github.com/ccagml/leetcode_ext/actions/workflows/release.yml">
     <img src="https://img.shields.io/github/actions/workflow/status/ccagml/vscode-leetcode-problem-rating/release.yml?branch=release" alt="">
   </a>
   <a href="https://marketplace.visualstudio.com/items?itemName=ccagml.vscode-leetcode-problem-rating">
     <img src="https://img.shields.io/visual-studio-marketplace/d/ccagml.vscode-leetcode-problem-rating.svg?style=flat-square" alt="">
   </a>
-  <a href="https://github.com/ccagml/leetcode_extension/blob/main/LICENSE">
+  <a href="https://github.com/ccagml/leetcode_ext/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/ccagml/vscode-leetcode-problem-rating" alt="">
   </a>
 </p>
@@ -32,8 +32,8 @@
 
 # 关于本项目
 
-- [项目地址:https://github.com/ccagml/leetcode_extension/](https://github.com/ccagml/leetcode_extension/)
-- [报告问题](https://github.com/ccagml/leetcode_extension/issues)
+- [项目地址:https://github.com/ccagml/leetcode_ext/](https://github.com/ccagml/leetcode_ext/)
+- [报告问题](https://github.com/ccagml/leetcode_ext/issues)
 - [疑难解答](https://github.com/LeetCode-OpenSource/vscode-leetcode/wiki/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94)
 - [常见问题](https://github.com/LeetCode-OpenSource/vscode-leetcode/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
 - 趁着现在只有<img src="https://img.shields.io/github/stars/ccagml/vscode-leetcode-problem-rating" alt="">提交一个 PR 就能成为项目元老了

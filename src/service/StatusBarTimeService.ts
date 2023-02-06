@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/leetcode_extension/src/service/StatusBarTimeService.ts
- * Path: https://github.com/ccagml/leetcode_extension
+ * https://github.com/ccagml/leetcode_ext/src/service/StatusBarTimeService.ts
+ * Path: https://github.com/ccagml/leetcode_ext
  * Created Date: Saturday, November 26th 2022, 2:14:53 pm
  * Author: ccagml
  *

@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/leetcode_extension/src/dao/groupDao.ts
- * Path: https://github.com/ccagml/leetcode_extension
+ * https://github.com/ccagml/leetcode_ext/src/dao/groupDao.ts
+ * Path: https://github.com/ccagml/leetcode_ext
  * Created Date: Wednesday, November 30th 2022, 9:47:36 am
  * Author: ccagml
  *
