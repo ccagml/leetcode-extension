@@ -755,7 +755,7 @@
                     },
                     "leetcode-problem-rating.answerDiffColor": {
                         "type": "boolean",
-                        "default": false,
+                        "default": true,
                         "scope": "application",
                         "description": "答案不同地方上色"
                     },
