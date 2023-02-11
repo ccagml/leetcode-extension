@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/leetcode_ext/src/controller/LoginController.ts
- * Path: https://github.com/ccagml/leetcode_ext
+ * Filename: https://github.com/ccagml/leetcode_vsc/src/controller/LoginController.ts
+ * Path: https://github.com/ccagml/leetcode_vsc
  * Created Date: Thursday, November 10th 2022, 3:06:12 pm
  * Author: ccagml
  *
