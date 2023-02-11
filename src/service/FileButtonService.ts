@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/leetcode_ext/src/service/FileButtonService.ts
- * Path: https://github.com/ccagml/leetcode_ext
+ * Filename: https://github.com/ccagml/leetcode_vsc/src/service/FileButtonService.ts
+ * Path: https://github.com/ccagml/leetcode_vsc
  * Created Date: Thursday, October 27th 2022, 7:43:29 pm
  * Author: ccagml
  *

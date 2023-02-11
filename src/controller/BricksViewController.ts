@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/leetcode_ext/src/controller/BricksViewController.ts
- * Path: https://github.com/ccagml/leetcode_ext
+ * https://github.com/ccagml/leetcode_vsc/src/controller/BricksViewController.ts
+ * Path: https://github.com/ccagml/leetcode_vsc
  * Created Date: Tuesday, November 22nd 2022, 11:04:59 am
  * Author: ccagml
  *

@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/leetcode_ext/src/dao/scoreDao.ts
- * Path: https://github.com/ccagml/leetcode_ext
+ * Filename: https://github.com/ccagml/leetcode_vsc/src/dao/scoreDao.ts
+ * Path: https://github.com/ccagml/leetcode_vsc
  * Created Date: Thursday, November 10th 2022, 11:40:22 pm
  * Author: ccagml
  *

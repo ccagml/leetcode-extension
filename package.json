@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "2.15.4",
+    "version": "2.15.5",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -12,9 +12,9 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/ccagml/leetcode_ext"
+        "url": "https://github.com/ccagml/leetcode_vsc"
     },
-    "homepage": "https://github.com/ccagml/leetcode_ext/README.md",
+    "homepage": "https://github.com/ccagml/leetcode_vsc/README.md",
     "categories": [
         "Other",
         "Snippets",
@@ -755,7 +755,7 @@
                     },
                     "leetcode-problem-rating.answerDiffColor": {
                         "type": "boolean",
-                        "default": false,
+                        "default": true,
                         "scope": "application",
                         "description": "答案不同地方上色"
                     },
