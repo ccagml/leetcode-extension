@@ -13,6 +13,7 @@ function check_key(object, father: Array<any>) {
     }
 
     result_json[key] = object["description"];
+    object["description"] = `%${key}%`;
   }
   if (object["title"]) {
     let key = main_join + ".title";
@@ -20,6 +21,7 @@ function check_key(object, father: Array<any>) {
       console.log("重复", key);
     }
     result_json[key] = object["title"];
+    object["title"] = `%${key}%`;
   }
   if (object["name"]) {
     let key = main_join + ".name";
@@ -27,6 +29,7 @@ function check_key(object, father: Array<any>) {
       console.log("重复", key);
     }
     result_json[key] = object["name"];
+    object["name"] = `%${key}%`;
   }
   if (object["label"]) {
     let key = main_join + ".label";
@@ -34,6 +37,7 @@ function check_key(object, father: Array<any>) {
       console.log("重复", key);
     }
     result_json[key] = object["label"];
+    object["label"] = `%${key}%`;
   }
   if (object["enumDescriptions"]) {
     let key = main_join + ".enumDescriptions";
@@ -41,6 +45,7 @@ function check_key(object, father: Array<any>) {
       console.log("重复", key);
     }
     result_json[key] = object["enumDescriptions"];
+    object["enumDescriptions"] = `%${key}%`;
   }
 }
 
@@ -83,6 +88,7 @@ async function test() {
   let ob = JSON.parse(temp_data);
   print_obj(ob, ["main"]);
   await fse.writeFile("./nls.json", JSON.stringify(result_json));
+  await fse.writeFile("./package.json", JSON.stringify(ob));
 }
 
 test();
