@@ -98,5 +98,24 @@
     "main.contributes.configuration.properties.leetcode-problem-rating.cppCompiler.enumDescriptions": [
         "gdb compiler",
         "clang compiler"
-    ]
+    ],
+    "main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.0": "默认题目编号排序",
+    "main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.1": "通过率升序",
+    "main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.2": "通过率降序",
+    "main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.3": "分数升序",
+    "main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.4": "分数降序",
+    "main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.5": "题目编号降序",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.0": "提交代码",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.1": "测试代码",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.2": "题目加喜爱",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.3": "获取题解",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.4": "展示题目介绍",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.5": "测试默认用例",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.6": "测试所有用例",
+    "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.0": "不处理",
+    "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.1": "隐藏有分数的题目",
+    "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.2": "隐藏没有分数的题目",
+    "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.3": "隐藏分数在配置[pickOneByRankRangeMin, pickOneByRankRangeMax]范围外的题目",
+    "main.contributes.configuration.properties.leetcode-problem-rating.cppCompiler.enumDescriptions.0": "gdb编译",
+    "main.contributes.configuration.properties.leetcode-problem-rating.cppCompiler.enumDescriptions.1": "clang编译"
 }
