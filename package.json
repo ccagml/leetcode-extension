@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "2.15.5",
+    "version": "2.16.1",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -47,116 +47,116 @@
         "commands": [
             {
                 "command": "lcpr.deleteCache",
-                "title": "Delete Cache",
+                "title": "%main.contributes.commands.lcpr.deleteCache.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.toggleLeetCodeCn",
-                "title": "Switch Endpoint",
+                "title": "%main.contributes.commands.lcpr.toggleLeetCodeCn.title%",
                 "category": "LeetCode",
                 "icon": "$(globe)"
             },
             {
                 "command": "lcpr.signin",
-                "title": "Sign In",
+                "title": "%main.contributes.commands.lcpr.signin.title%",
                 "category": "LeetCode",
                 "icon": "$(sign-in)"
             },
             {
                 "command": "lcpr.signout",
-                "title": "Sign Out",
+                "title": "%main.contributes.commands.lcpr.signout.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.refreshExplorer",
-                "title": "刷新",
+                "title": "%main.contributes.commands.lcpr.refreshExplorer.title%",
                 "category": "LeetCode",
                 "icon": "$(refresh)"
             },
             {
                 "command": "lcpr.pickOne",
-                "title": "手气一下",
+                "title": "%main.contributes.commands.lcpr.pickOne.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.deleteAllCache",
-                "title": "删除题目缓存",
+                "title": "%main.contributes.commands.lcpr.deleteAllCache.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.showProblem",
-                "title": "做题",
+                "title": "%main.contributes.commands.lcpr.showProblem.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.previewProblem",
-                "title": "预览题目",
+                "title": "%main.contributes.commands.lcpr.previewProblem.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType0",
-                "title": "设置不出现在工地",
+                "title": "%main.contributes.commands.lcpr.setBricksType0.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType1",
-                "title": "最后一次提交在14天前,出现在工地",
+                "title": "%main.contributes.commands.lcpr.setBricksType1.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType2",
-                "title": "最后一次提交在7天前,出现在工地",
+                "title": "%main.contributes.commands.lcpr.setBricksType2.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType3",
-                "title": "最后一次提交在5天前,出现在工地",
+                "title": "%main.contributes.commands.lcpr.setBricksType3.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType4",
-                "title": "最后一次提交在3天前,出现在工地",
+                "title": "%main.contributes.commands.lcpr.setBricksType4.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType5",
-                "title": "最后一次提交在2天前,出现在工地",
+                "title": "%main.contributes.commands.lcpr.setBricksType5.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType6",
-                "title": "最后一次提交在1天前,出现在工地",
+                "title": "%main.contributes.commands.lcpr.setBricksType6.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.setBricksType7",
-                "title": "最后一次提交在1天前,出现在工地",
+                "title": "%main.contributes.commands.lcpr.setBricksType7.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.searchProblem",
-                "title": "Search Problem",
+                "title": "%main.contributes.commands.lcpr.searchProblem.title%",
                 "category": "LeetCode",
                 "icon": "$(search)"
             },
             {
                 "command": "lcpr.getHelp",
-                "title": "获取题解",
+                "title": "%main.contributes.commands.lcpr.getHelp.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.testSolution",
-                "title": "Test in LeetCode",
+                "title": "%main.contributes.commands.lcpr.testSolution.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.submitSolution",
-                "title": "Submit to LeetCode",
+                "title": "%main.contributes.commands.lcpr.submitSolution.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.addFavorite",
-                "title": "Add to Favorite List",
+                "title": "%main.contributes.commands.lcpr.addFavorite.title%",
                 "category": "LeetCode",
                 "icon": {
                     "light": "resources/light/like.png",
@@ -165,7 +165,7 @@
             },
             {
                 "command": "lcpr.removeFavorite",
-                "title": "Remove from Favorite List",
+                "title": "%main.contributes.commands.lcpr.removeFavorite.title%",
                 "category": "LeetCode",
                 "icon": {
                     "light": "resources/light/dislike.png",
@@ -174,30 +174,30 @@
             },
             {
                 "command": "lcpr.setDefaultLanguage",
-                "title": "Switch Default Language",
+                "title": "%main.contributes.commands.lcpr.setDefaultLanguage.title%",
                 "category": "LeetCode"
             },
             {
                 "command": "lcpr.problems.sort",
-                "title": "Sort Problems",
+                "title": "%main.contributes.commands.lcpr.problems.sort.title%",
                 "category": "LeetCode",
                 "icon": "$(sort-precedence)"
             },
             {
                 "command": "lcpr.remarkCreateNote",
-                "title": "Create Note"
+                "title": "%main.contributes.commands.lcpr.remarkCreateNote.title%"
             },
             {
                 "command": "lcpr.remarkClose",
-                "title": "关闭?"
+                "title": "%main.contributes.commands.lcpr.remarkClose.title%"
             },
             {
                 "command": "lcpr.remarkReplyNote",
-                "title": "New Note"
+                "title": "%main.contributes.commands.lcpr.remarkReplyNote.title%"
             },
             {
                 "command": "lcpr.remarkEditNote",
-                "title": "Edit Note",
+                "title": "%main.contributes.commands.lcpr.remarkEditNote.title%",
                 "icon": {
                     "dark": "resources/edit_inverse.svg",
                     "light": "resources/edit.svg"
@@ -205,7 +205,7 @@
             },
             {
                 "command": "lcpr.remarkDeleteNoteComment",
-                "title": "Delete Note",
+                "title": "%main.contributes.commands.lcpr.remarkDeleteNoteComment.title%",
                 "icon": {
                     "dark": "resources/close_inverse.svg",
                     "light": "resources/close.svg"
@@ -213,44 +213,44 @@
             },
             {
                 "command": "lcpr.remarkSaveNote",
-                "title": "Save Note"
+                "title": "%main.contributes.commands.lcpr.remarkSaveNote.title%"
             },
             {
                 "command": "lcpr.remarkCancelsaveNote",
-                "title": "Cancel Note"
+                "title": "%main.contributes.commands.lcpr.remarkCancelsaveNote.title%"
             },
             {
                 "command": "lcpr.remarkDispose",
-                "title": "Remove All Notes"
+                "title": "%main.contributes.commands.lcpr.remarkDispose.title%"
             },
             {
                 "command": "lcpr.newBrickGroup",
-                "title": "新建一个自定义分类",
+                "title": "%main.contributes.commands.lcpr.newBrickGroup.title%",
                 "icon": "$(file-directory-create)"
             },
             {
                 "command": "lcpr.addQidToGroup",
-                "title": "添加题目到自定义分类",
+                "title": "%main.contributes.commands.lcpr.addQidToGroup.title%",
                 "icon": "$(add)"
             },
             {
                 "command": "lcpr.removeBrickGroup",
-                "title": "移除这个自定义分类",
+                "title": "%main.contributes.commands.lcpr.removeBrickGroup.title%",
                 "icon": "$(remove)"
             },
             {
                 "command": "lcpr.removeQidFromGroup",
-                "title": "从分类中移除这个题目",
+                "title": "%main.contributes.commands.lcpr.removeQidFromGroup.title%",
                 "icon": "$(remove)"
             },
             {
                 "command": "lcpr.includeTemplates",
-                "title": "插入头文件模板",
+                "title": "%main.contributes.commands.lcpr.includeTemplates.title%",
                 "icon": "$(remove)"
             },
             {
                 "command": "lcpr.simpleDebug",
-                "title": "简单调试",
+                "title": "%main.contributes.commands.lcpr.simpleDebug.title%",
                 "icon": "$(remove)"
             }
         ],
@@ -258,7 +258,7 @@
             "activitybar": [
                 {
                     "id": "lcpr_bar",
-                    "title": "LCPR",
+                    "title": "%main.contributes.viewsContainers.activitybar.lcpr_bar.title%",
                     "icon": "resources/LCPR.svg"
                 }
             ]
@@ -267,11 +267,11 @@
             "lcpr_bar": [
                 {
                     "id": "QuestionExplorer",
-                    "name": "Problems"
+                    "name": "%main.contributes.views.lcpr_bar.QuestionExplorer.name%"
                 },
                 {
                     "id": "BricksExplorer",
-                    "name": "搬砖工地"
+                    "name": "%main.contributes.views.lcpr_bar.BricksExplorer.name%"
                 }
             ]
         },
@@ -561,24 +561,24 @@
         "submenus": [
             {
                 "id": "lcpr.editorAction",
-                "label": "LCPR菜单"
+                "label": "%main.contributes.submenus.lcpr.editorAction.label%"
             },
             {
                 "id": "lcpr.setBricksType_sub",
-                "label": "设置砖头类型"
+                "label": "%main.contributes.submenus.lcpr.setBricksType_sub.label%"
             },
             {
                 "id": "lcpr.setBricksType_sub1",
-                "label": "设置砖头类型"
+                "label": "%main.contributes.submenus.lcpr.setBricksType_sub1.label%"
             }
         ],
         "configuration": [
             {
-                "title": "leetcode-problem-rating",
+                "title": "%main.contributes.configuration.title%",
                 "properties": {
                     "leetcode-problem-rating.includeTemplates": {
                         "type": "array",
-                        "description": "引入一些默认内容,防止vscode都是波浪红线",
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.includeTemplates.description%",
                         "default": [
                             {
                                 "language": "cpp",
@@ -629,12 +629,12 @@
                                         "swift",
                                         "typescript"
                                     ],
-                                    "description": "哪种语言"
+                                    "description": "%main.contributes.configuration.properties.leetcode-problem-rating.includeTemplates.items.properties.language.description%"
                                 },
                                 "template": {
                                     "type": "array",
                                     "default": [],
-                                    "description": "模板内容",
+                                    "description": "%main.contributes.configuration.properties.leetcode-problem-rating.includeTemplates.items.properties.template.description%",
                                     "items": {
                                         "type": "string"
                                     }
@@ -646,13 +646,13 @@
                         "type": "boolean",
                         "default": false,
                         "scope": "application",
-                        "description": "Hide solved problems."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.hideSolved.description%"
                     },
                     "leetcode-problem-rating.showLocked": {
                         "type": "boolean",
                         "default": false,
                         "scope": "application",
-                        "description": "Show locked problems."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.showLocked.description%"
                     },
                     "leetcode-problem-rating.defaultLanguage": {
                         "type": "string",
@@ -676,7 +676,7 @@
                             "typescript"
                         ],
                         "scope": "application",
-                        "description": "Default language for solving the problems."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.defaultLanguage.description%"
                     },
                     "leetcode-problem-rating.showDescription": {
                         "type": "string",
@@ -692,50 +692,50 @@
                             "Show the problem description in the file's comment"
                         ],
                         "scope": "application",
-                        "description": "Specify where to show the description."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.showDescription.description%"
                     },
                     "leetcode-problem-rating.showCommentDescription": {
                         "type": "boolean",
                         "default": false,
                         "scope": "application",
-                        "description": "[Deprecated] Include problem description in comments.",
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.showCommentDescription.description%",
                         "deprecationMessage": "This setting will be deprecated in 0.17.0, please use 'leetcode.showDescription' instead"
                     },
                     "leetcode-problem-rating.hint.setDefaultLanguage": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
-                        "description": "Show a hint to set the default language."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.hint.setDefaultLanguage.description%"
                     },
                     "leetcode-problem-rating.hint.configWebviewMarkdown": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
-                        "description": "Show a hint to change webview appearance through markdown config."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.hint.configWebviewMarkdown.description%"
                     },
                     "leetcode-problem-rating.hint.commentDescription": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
-                        "description": "Show a hint to enable comment description in solution code file."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.hint.commentDescription.description%"
                     },
                     "leetcode-problem-rating.hint.commandShortcut": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
-                        "description": "Show a hint to configure commands key binding."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.hint.commandShortcut.description%"
                     },
                     "leetcode-problem-rating.useVscodeNode": {
                         "type": "boolean",
                         "default": true,
                         "scope": "machine",
-                        "description": "Try the node version of vecode."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.useVscodeNode.description%"
                     },
                     "leetcode-problem-rating.useWsl": {
                         "type": "boolean",
                         "default": false,
                         "scope": "application",
-                        "description": "Use the Windows Subsystem for Linux."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.useWsl.description%"
                     },
                     "leetcode-problem-rating.endpoint": {
                         "type": "string",
@@ -745,30 +745,30 @@
                             "leetcode",
                             "leetcode-cn"
                         ],
-                        "description": "Endpoint of the user account."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.endpoint.description%"
                     },
                     "leetcode-problem-rating.useEndpointTranslation": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
-                        "description": "Use endpoint's translation (if available)"
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.useEndpointTranslation.description%"
                     },
                     "leetcode-problem-rating.answerDiffColor": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
-                        "description": "答案不同地方上色"
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.answerDiffColor.description%"
                     },
                     "leetcode-problem-rating.workspaceFolder": {
                         "type": "string",
                         "scope": "machine",
-                        "description": "The path of the workspace folder to store the problem files.",
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.workspaceFolder.description%",
                         "default": ""
                     },
                     "leetcode-problem-rating.filePath": {
                         "type": "object",
                         "scope": "machine",
-                        "description": "The output folder and filename to save the problem files.",
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.filePath.description%",
                         "properties": {
                             "default": {
                                 "type": "object",
@@ -1010,7 +1010,7 @@
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
-                        "description": "Show the LeetCode status bar or not."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.enableStatusBar.description%"
                     },
                     "leetcode-problem-rating.editor.shortcuts": {
                         "type": "array",
@@ -1043,25 +1043,25 @@
                                 "Test all default case"
                             ]
                         },
-                        "description": "Customize the shortcuts in editors."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.description%"
                     },
                     "leetcode-problem-rating.enableSideMode": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
-                        "description": "Determine whether to group all webview pages into the second editor column when solving problems."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.enableSideMode.description%"
                     },
                     "leetcode-problem-rating.nodePath": {
                         "type": "string",
                         "default": "node",
                         "scope": "machine",
-                        "description": "The Node.js executable path. for example, C:\\Program Files\\nodejs\\node.exe"
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.nodePath.description%"
                     },
                     "leetcode-problem-rating.colorizeProblems": {
                         "type": "boolean",
                         "default": true,
                         "scope": "application",
-                        "description": "Add difficulty badge and colorize problems files in explorer tree."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.colorizeProblems.description%"
                     },
                     "leetcode-problem-rating.problems.sortStrategy": {
                         "type": "string",
@@ -1075,19 +1075,19 @@
                             "Score (Descending)",
                             "ID (Descending)"
                         ],
-                        "description": "Sorting strategy for problems list."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.description%"
                     },
                     "leetcode-problem-rating.pickOneByRankRangeMin": {
                         "type": "integer",
                         "default": 50,
                         "scope": "application",
-                        "description": "Minimum score for a random question(your score + pickOneByRankRangeMin) "
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.pickOneByRankRangeMin.description%"
                     },
                     "leetcode-problem-rating.pickOneByRankRangeMax": {
                         "type": "integer",
                         "default": 150,
                         "scope": "application",
-                        "description": "Highest score for a random question(your score + pickOneByRankRangeMax)"
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.pickOneByRankRangeMax.description%"
                     },
                     "leetcode-problem-rating.hideScore": {
                         "type": "string",
@@ -1105,19 +1105,19 @@
                             "Hide questions outside the range of scores [pickOneByRankRangeMin, pickOneByRankRangeMax]"
                         ],
                         "scope": "application",
-                        "description": "Precinct Score Hidden Questions."
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.hideScore.description%"
                     },
                     "leetcode-problem-rating.openClearProblemCache": {
                         "type": "boolean",
                         "default": false,
                         "scope": "application",
-                        "description": "Clear the Problems cache when opening the app to avoid out-of-sync state"
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.openClearProblemCache.description%"
                     },
                     "leetcode-problem-rating.openClearProblemCacheTime": {
                         "type": "integer",
                         "default": 3600,
                         "scope": "application",
-                        "description": "Open the app to clear the cache interval by default 3600 seconds"
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.openClearProblemCacheTime.description%"
                     },
                     "leetcode-problem-rating.cppCompiler": {
                         "type": "string",

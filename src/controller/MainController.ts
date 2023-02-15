@@ -13,6 +13,7 @@ import { ExtensionContext } from "vscode";
 import { treeDataService } from "../service/TreeDataService";
 import { logOutput } from "../utils/OutputUtils";
 import { extensionState } from "../utils/problemUtils";
+import { nlsUtils } from "../utils/NlsUtils";
 
 import * as fse from "fs-extra";
 // 做杂活
@@ -67,6 +68,7 @@ class MainContorller {
    * @param {ExtensionContext} context - ExtensionContext
    */
   public initialize(context: ExtensionContext) {
+    nlsUtils.init();
     this.setGlobal(context);
     treeDataService.initialize(context);
     extensionState.context = context;
