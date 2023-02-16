@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/leetcode_vsc/src/rpc/commUtils.ts
- * Path: https://github.com/ccagml/leetcode_vsc
+ * https://github.com/ccagml/leetcode-extension/src/rpc/commUtils.ts
+ * Path: https://github.com/ccagml/leetcode-extension
  * Created Date: Wednesday, November 16th 2022, 4:50:55 pm
  * Author: ccagml
  *
