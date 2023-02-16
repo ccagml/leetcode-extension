@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/leetcode_vsc/src/controller/MainController.ts
- * Path: https://github.com/ccagml/leetcode_vsc
+ * Filename: https://github.com/ccagml/leetcode-extension/src/controller/MainController.ts
+ * Path: https://github.com/ccagml/leetcode-extension
  * Created Date: Thursday, November 10th 2022, 2:18:21 pm
  * Author: ccagml
  *

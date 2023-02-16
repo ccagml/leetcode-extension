@@ -1,6 +1,6 @@
 /*
- * Filename: https://github.com/ccagml/leetcode_vsc/src/dao/debugArgDao.ts
- * Path: https://github.com/ccagml/leetcode_vsc
+ * Filename: https://github.com/ccagml/leetcode-extension/src/dao/debugArgDao.ts
+ * Path: https://github.com/ccagml/leetcode-extension
  * Created Date: Thursday, November 10th 2022, 11:38:10 pm
  * Author: ccagml
  *

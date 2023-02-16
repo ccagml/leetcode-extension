@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/leetcode_vsc/src/service/BricksDataService.ts
- * Path: https://github.com/ccagml/leetcode_vsc
+ * https://github.com/ccagml/leetcode-extension/src/service/BricksDataService.ts
+ * Path: https://github.com/ccagml/leetcode-extension
  * Created Date: Tuesday, November 22nd 2022, 10:42:49 am
  * Author: ccagml
  *

@@ -1,5 +1,5 @@
 {
-    "main.description": "LeetCode official plug-in enhancement, code open source, increase the difficulty score of LeetCode questions, give a star, please~",
+    "main.description": "LeetCode official plug-in enhancement, code open source, increase the difficulty score of LeetCode questions, give a star, please~\nGitHub 开源,给个 star 吧~",
     "main.name": "vscode-leetcode-problem-rating",
     "main.contributes.commands.lcpr.deleteCache.title": "Delete Cache",
     "main.contributes.commands.lcpr.toggleLeetCodeCn.title": "Switch Endpoint",

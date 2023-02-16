@@ -1,6 +1,6 @@
 /*
- * https://github.com/ccagml/leetcode_vsc/src/rpc/Response.ts
- * Path: https://github.com/ccagml/leetcode_vsc
+ * https://github.com/ccagml/leetcode-extension/src/rpc/Response.ts
+ * Path: https://github.com/ccagml/leetcode-extension
  * Created Date: Monday, November 14th 2022, 4:04:31 pm
  * Author: ccagml
  *
