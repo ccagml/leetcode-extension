@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "2.16.1",
+    "version": "2.17.1",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -1034,13 +1034,13 @@
                                 "allcase"
                             ],
                             "enumDescriptions": [
-                                "Submit your answer to LeetCode.",
-                                "Test your answer with customized test cases.",
-                                "Star or unstar the current problem.",
-                                "Show the top voted solution for the current problem.",
-                                "Show the problem description page.",
-                                "Test default case",
-                                "Test all default case"
+                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.0%",
+                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.1%",
+                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.2%",
+                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.3%",
+                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.4%",
+                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.5%",
+                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.6%"
                             ]
                         },
                         "description": "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.description%"
@@ -1075,6 +1075,14 @@
                             "Score (Descending)",
                             "ID (Descending)"
                         ],
+                        "enumDescriptions": [
+                            "%main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.0%",
+                            "%main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.1%",
+                            "%main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.2%",
+                            "%main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.3%",
+                            "%main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.4%",
+                            "%main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.5%"
+                        ],
                         "description": "%main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.description%"
                     },
                     "leetcode-problem-rating.pickOneByRankRangeMin": {
@@ -1099,10 +1107,10 @@
                             "ScoreRange"
                         ],
                         "enumDescriptions": [
-                            "Don't hide",
-                            "Hide questions with scores",
-                            "Hide questions with no scores",
-                            "Hide questions outside the range of scores [pickOneByRankRangeMin, pickOneByRankRangeMax]"
+                            "%main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.0%",
+                            "%main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.1%",
+                            "%main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.2%",
+                            "%main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.3%"
                         ],
                         "scope": "application",
                         "description": "%main.contributes.configuration.properties.leetcode-problem-rating.hideScore.description%"
@@ -1127,8 +1135,8 @@
                             "clang"
                         ],
                         "enumDescriptions": [
-                            "gdb compiler",
-                            "clang compiler"
+                            "%main.contributes.configuration.properties.leetcode-problem-rating.cppCompiler.enumDescriptions.0%",
+                            "%main.contributes.configuration.properties.leetcode-problem-rating.cppCompiler.enumDescriptions.1%"
                         ],
                         "scope": "resource"
                     }

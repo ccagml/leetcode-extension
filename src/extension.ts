@@ -141,6 +141,12 @@ export async function activate(context: ExtensionContext): Promise<void> {
       }),
       commands.registerCommand("lcpr.simpleDebug", (document: TextDocument, testCase?) =>
         debugContorller.startDebug(document, testCase)
+      ),
+      commands.registerCommand("lcpr.addDebugType", (document: TextDocument, addType) =>
+        debugContorller.addDebugType(document, addType)
+      ),
+      commands.registerCommand("lcpr.resetDebugType", (document: TextDocument, addType) =>
+        debugContorller.resetDebugType(document, addType)
       )
     );
 

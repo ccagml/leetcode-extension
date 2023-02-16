@@ -98,5 +98,24 @@
     "main.contributes.configuration.properties.leetcode-problem-rating.cppCompiler.enumDescriptions": [
         "gdb compiler",
         "clang compiler"
-    ]
+    ],
+    "main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.0": "None",
+    "main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.1": "Acceptance Rate (Ascending)",
+    "main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.2": "Acceptance Rate (Descending)",
+    "main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.3": "Score (Ascending)",
+    "main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.4": "Score (Descending)",
+    "main.contributes.configuration.properties.leetcode-problem-rating.problems.sortStrategy.enumDescriptions.5": "ID (Descending)",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.0": "Submit your answer to LeetCode.",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.1": "Test your answer with customized test cases.",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.2": "Star or unstar the current problem.",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.3": "Show the top voted solution for the current problem.",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.4": "Show the problem description page.",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.5": "Test default case",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.6": "Test all default case",
+    "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.0": "Don't hide",
+    "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.1": "Hide questions with scores",
+    "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.2": "Hide questions with no scores",
+    "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.3": "Hide questions outside the range of scores [pickOneByRankRangeMin, pickOneByRankRangeMax]",
+    "main.contributes.configuration.properties.leetcode-problem-rating.cppCompiler.enumDescriptions.0": "gdb compiler",
+    "main.contributes.configuration.properties.leetcode-problem-rating.cppCompiler.enumDescriptions.1": "clang compiler"
 }

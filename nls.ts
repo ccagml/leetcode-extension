@@ -44,8 +44,11 @@ function check_key(object, father: Array<any>) {
     if (result_json[key]) {
       console.log("重复", key);
     }
-    result_json[key] = object["enumDescriptions"];
-    object["enumDescriptions"] = `%${key}%`;
+    for (let e_index = 0; e_index < object["enumDescriptions"].length; e_index++) {
+      let b_key = key + `.${e_index}`;
+      result_json[b_key] = object["enumDescriptions"][e_index];
+    }
+    // object["enumDescriptions"] = `%${key}%`;
   }
 }
 
