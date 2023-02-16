@@ -209,6 +209,51 @@ export class FileButtonService implements vscode.CodeLensProvider {
     return lineContent.substring(cut_pos);
   }
 
+  public createDebugButton(codeLensLine, document, lineContent): vscode.CodeLens[] {
+    // const last_index = document.lineAt(codeLensLine).range.end.character;
+
+    const range: vscode.Range = new vscode.Range(codeLensLine + 1, 0, codeLensLine + 1, 0);
+    const temp_result: vscode.CodeLens[] = [];
+
+    // paramTypes= []
+    // returnType=
+
+    if (lineContent.indexOf("paramTypes=") >= 0) {
+      temp_result.push(
+        new vscode.CodeLens(range, {
+          title: "addParam",
+          command: "lcpr.addDebugType",
+          arguments: [document, "paramTypes"],
+        })
+      );
+      temp_result.push(
+        new vscode.CodeLens(range, {
+          title: "resetParam",
+          command: "lcpr.resetDebugType",
+          arguments: [document, "paramTypes"],
+        })
+      );
+    }
+
+    if (lineContent.indexOf("returnType=") >= 0) {
+      temp_result.push(
+        new vscode.CodeLens(range, {
+          title: "addReturn",
+          command: "lcpr.addDebugType",
+          arguments: [document, "returnType"],
+        })
+      );
+      temp_result.push(
+        new vscode.CodeLens(range, {
+          title: "resetReturn",
+          command: "lcpr.resetDebugType",
+          arguments: [document, "returnType"],
+        })
+      );
+    }
+    return temp_result;
+  }
+
   public provideCodeLenses(document: vscode.TextDocument): vscode.ProviderResult<vscode.CodeLens[]> {
     const content: string = document.getText();
     const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=(.*)/);
@@ -225,6 +270,8 @@ export class FileButtonService implements vscode.CodeLensProvider {
     const codeLens: vscode.CodeLens[] = [];
     let caseFlag: boolean = false;
     let curCase = "";
+    // 搜集所有debug
+    let debugFlag: boolean = false;
     for (let i: number = 0; i < document.lineCount; i++) {
       const lineContent: string = document.lineAt(i).text;
       if (lineContent.indexOf("@lc code=end") >= 0) {
@@ -247,6 +294,20 @@ export class FileButtonService implements vscode.CodeLensProvider {
         this.createCase(i, document, curCase, nodeLang).forEach((x) => codeLens.push(x));
         curCase = "";
         caseFlag = false;
+      }
+
+      // 收集所有用例
+      if (lineContent.indexOf("@lcpr-div-debug-arg-end") >= 0) {
+        debugFlag = false;
+      }
+
+      if (debugFlag) {
+        this.createDebugButton(i, document, lineContent).forEach((x) => codeLens.push(x));
+      }
+
+      // 收集所有用例
+      if (lineContent.indexOf("@lcpr-div-debug-arg-start") >= 0) {
+        debugFlag = true;
       }
     }
 
