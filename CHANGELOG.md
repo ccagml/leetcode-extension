@@ -1,3 +1,7 @@
+## version 2.17.4
+
+- 多语言配置缺少 main.contributes.commands.lcpr.simpleDebug.title
+
 ## version 2.17.3
 
 - 修改插件显示的 README
