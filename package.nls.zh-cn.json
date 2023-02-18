@@ -39,6 +39,7 @@
     "main.contributes.commands.lcpr.removeBrickGroup.title": "移除这个自定义分类",
     "main.contributes.commands.lcpr.removeQidFromGroup.title": "从分类中移除这个题目",
     "main.contributes.commands.lcpr.includeTemplates.title": "插入头文件模板",
+    "main.contributes.commands.lcpr.simpleDebug.title": "简单调试",
     "main.contributes.viewsContainers.activitybar.lcpr_bar.title": "LCPR",
     "main.contributes.views.lcpr_bar.QuestionExplorer.name": "题目列表",
     "main.contributes.views.lcpr_bar.BricksExplorer.name": "搬砖工地",

@@ -39,6 +39,7 @@
     "main.contributes.commands.lcpr.removeBrickGroup.title": "delete category",
     "main.contributes.commands.lcpr.removeQidFromGroup.title": "remove this",
     "main.contributes.commands.lcpr.includeTemplates.title": "insert template",
+    "main.contributes.commands.lcpr.simpleDebug.title": "simple debug",
     "main.contributes.viewsContainers.activitybar.lcpr_bar.title": "LCPR",
     "main.contributes.views.lcpr_bar.QuestionExplorer.name": "Problems",
     "main.contributes.views.lcpr_bar.BricksExplorer.name": "repeat practice",
