@@ -277,6 +277,7 @@ class DebugCpp extends DebugBase {
       Object.assign({}, debugConfig, {
         request: "launch",
         name: debugSessionName,
+        logging: { engineLogging: true, trace: true, traceResponse: true },
         args,
       })
     );
@@ -315,11 +316,17 @@ class DebugCpp extends DebugBase {
 
           event.removed.map((bp: vscode.SourceBreakpoint) => {
             if (bp.location.uri.fsPath === filePath) {
-              const location: vscode.Location = new vscode.Location(
-                vscode.Uri.file(newSourceFilePath),
-                bp.location.range
-              );
-              vscode.debug.removeBreakpoints([new vscode.SourceBreakpoint(location)]);
+              const aaa: vscode.Breakpoint[] = [];
+              vscode.debug.breakpoints.map((all_bp_one: vscode.SourceBreakpoint) => {
+                if (
+                  all_bp_one.location.uri.fsPath === newSourceFilePath &&
+                  all_bp_one.location.range.start.line == bp.location.range.start.line &&
+                  all_bp_one.location.range.end.line == bp.location.range.end.line
+                ) {
+                  aaa.push(all_bp_one);
+                }
+              });
+              vscode.debug.removeBreakpoints(aaa);
             }
           });
 
@@ -329,7 +336,17 @@ class DebugCpp extends DebugBase {
                 vscode.Uri.file(newSourceFilePath),
                 bp.location.range
               );
-              vscode.debug.removeBreakpoints([new vscode.SourceBreakpoint(location)]);
+              const aaa: vscode.Breakpoint[] = [];
+              vscode.debug.breakpoints.map((all_bp_one: vscode.SourceBreakpoint) => {
+                if (
+                  all_bp_one.location.uri.fsPath === newSourceFilePath &&
+                  all_bp_one.location.range.start.line == bp.location.range.start.line &&
+                  all_bp_one.location.range.end.line == bp.location.range.end.line
+                ) {
+                  aaa.push(all_bp_one);
+                }
+              });
+              vscode.debug.removeBreakpoints(aaa);
               vscode.debug.addBreakpoints([
                 new vscode.SourceBreakpoint(location, bp.enabled, bp.condition, bp.hitCondition, bp.logMessage),
               ]);
