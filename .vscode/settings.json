@@ -9,4 +9,8 @@
         "**/node_modules": true,
         ".vscode-test": true
     },
+    "files.associations": {
+        "*.gafq": "lua",
+        "functional": "cpp"
+    },
 }

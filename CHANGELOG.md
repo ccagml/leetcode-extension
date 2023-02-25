@@ -1,3 +1,7 @@
+## version 2.17.5
+
+- 修复 c++ 调试 断点问题
+
 ## version 2.17.4
 
 - 多语言配置缺少 main.contributes.commands.lcpr.simpleDebug.title
