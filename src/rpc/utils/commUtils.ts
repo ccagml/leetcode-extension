@@ -7,7 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { storageUtils } from "./storageUtils";
+// import { storageUtils } from "./storageUtils";
 
 class CommUtils {
   KEYS;
@@ -36,30 +36,30 @@ class CommUtils {
     }
   }
 
-  readStdin(cb) {
-    const stdin = process.stdin;
-    let bufs: Array<any> = [];
+  // readStdin(cb) {
+  //   const stdin = process.stdin;
+  //   let bufs: Array<any> = [];
 
-    console.log(
-      "NOTE: to finish the input, press " + (storageUtils.isWindows() ? "<Ctrl-D> and <Return>" : "<Ctrl-D>")
-    );
+  //   console.log(
+  //     "NOTE: to finish the input, press " + (storageUtils.isWindows() ? "<Ctrl-D> and <Return>" : "<Ctrl-D>")
+  //   );
 
-    stdin.on("readable", function () {
-      const data = stdin.read();
-      if (data) {
-        // windows doesn't treat ctrl-D as EOF
-        if (storageUtils.isWindows() && data.toString() === "\x04\r\n") {
-          stdin.emit("end");
-        } else {
-          bufs.push(data);
-        }
-      }
-    });
-    stdin.on("end", function () {
-      cb(null, Buffer.concat(bufs).toString());
-    });
-    stdin.on("error", cb);
-  }
+  //   stdin.on("readable", function () {
+  //     const data = stdin.read();
+  //     if (data) {
+  //       // windows doesn't treat ctrl-D as EOF
+  //       if (storageUtils.isWindows() && data.toString() === "\x04\r\n") {
+  //         stdin.emit("end");
+  //       } else {
+  //         bufs.push(data);
+  //       }
+  //     }
+  //   });
+  //   stdin.on("end", function () {
+  //     cb(null, Buffer.concat(bufs).toString());
+  //   });
+  //   stdin.on("error", cb);
+  // }
 
   getSetCookieValue(resp: any, key: any) {
     const cookies = resp.headers["set-cookie"];

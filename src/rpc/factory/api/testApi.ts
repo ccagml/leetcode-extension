@@ -188,12 +188,12 @@ class TestApi extends ApiBase {
     sessionUtils.argv = argv;
     if (!argv.i) return that.runTest(argv);
 
-    commUtils.readStdin(function (e, data) {
-      if (e) return reply.info(e);
+    // commUtils.readStdin(function (e, data) {
+    //   if (e) return reply.info(e);
 
-      argv.testcase = data;
-      return that.runTest(argv);
-    });
+    //   argv.testcase = data;
+    //   return that.runTest(argv);
+    // });
   }
 }
 
