@@ -101,7 +101,7 @@ class SubmitApi extends ApiBase {
                 result.runtime_percentile.toFixed(2),
                 result.lang
               );
-            else return reply.warn("Failed to get runtime percentile.");
+
             if (result.memory && result.memory_percentile)
               that.printLine(
                 log_obj,
@@ -111,7 +111,6 @@ class SubmitApi extends ApiBase {
                 result.lang,
                 result.memory
               );
-            else return reply.warn("Failed to get memory percentile.");
           })();
         } else {
           result.testcase = result.testcase.slice(1, -1).replace(/\\n/g, "\n");
