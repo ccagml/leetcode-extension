@@ -13,4 +13,10 @@
         "*.gafq": "lua",
         "functional": "cpp"
     },
+    "leetcode-problem-rating.filePath": {
+        "default": {
+            "folder": "",
+            "filename": "${id}.${kebab-case-name}_${yyyymmdd}.${ext}"
+        }
+    },
 }

@@ -15,7 +15,7 @@ import { reply } from "../../utils/ReplyUtils";
 
 import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../apiBase";
-import { commUtils } from "../../utils/commUtils";
+// import { commUtils } from "../../utils/commUtils";
 import { chainMgr } from "../../actionChain/chainManager";
 
 class TestApi extends ApiBase {
