@@ -15,7 +15,7 @@ import { reply } from "../../utils/ReplyUtils";
 
 import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../apiBase";
-import { commUtils } from "../../utils/commUtils";
+// import { commUtils } from "../../utils/commUtils";
 import { chainMgr } from "../../actionChain/chainManager";
 
 class TestApi extends ApiBase {
@@ -188,12 +188,12 @@ class TestApi extends ApiBase {
     sessionUtils.argv = argv;
     if (!argv.i) return that.runTest(argv);
 
-    commUtils.readStdin(function (e, data) {
-      if (e) return reply.info(e);
+    // commUtils.readStdin(function (e, data) {
+    //   if (e) return reply.info(e);
 
-      argv.testcase = data;
-      return that.runTest(argv);
-    });
+    //   argv.testcase = data;
+    //   return that.runTest(argv);
+    // });
   }
 }
 
