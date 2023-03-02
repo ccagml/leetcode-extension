@@ -511,11 +511,6 @@ class TreeViewController implements Disposable {
   }
 
   public async searchProblem(): Promise<void> {
-    if (!statusBarService.getUser()) {
-      promptForSignIn();
-      return;
-    }
-
     const picks: Array<IQuickItemEx<string>> = [];
     picks.push(
       {
@@ -538,17 +533,6 @@ class TreeViewController implements Disposable {
       //   detail: `测试api`,
       //   value: `testapi`,
       // }
-      // ,
-      // {
-      //     label: `每日一题`,
-      //     detail: `每日一题`,
-      //     value: `today`,
-      // },
-      // {
-      //     label: `查询自己竞赛信息`,
-      //     detail: `查询自己竞赛信息`,
-      //     value: `userContest`,
-      // }
     );
     const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks, {
       title: "选择查询选项",
@@ -556,6 +540,12 @@ class TreeViewController implements Disposable {
     if (!choice) {
       return;
     }
+
+    if (!statusBarService.getUser() && choice.value != "testapi") {
+      promptForSignIn();
+      return;
+    }
+
     if (choice.value == "byid") {
       await this.searchProblemByID();
     } else if (choice.value == "range") {
@@ -637,14 +627,10 @@ class TreeViewController implements Disposable {
   }
 
   public async testapi(): Promise<void> {
-    if (!statusBarService.getUser()) {
-      promptForSignIn();
-      return;
-    }
     try {
-      let problemInput = await getTextEditorFilePathByUri();
-      // vscode.window.showErrorMessage(twoFactor || "输入错误");
-      const solution: string = await executeService.getTestApi(problemInput || "");
+      let so = {};
+
+      const solution: string = JSON.stringify(so);
       solutionService.show(solution);
     } catch (error) {
       logOutput.appendLine(error.toString());
