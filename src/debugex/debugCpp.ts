@@ -277,8 +277,9 @@ class DebugCpp extends DebugBase {
       Object.assign({}, debugConfig, {
         request: "launch",
         name: debugSessionName,
-        logging: { engineLogging: true, trace: true, traceResponse: true },
+        // logging: { engineLogging: true, trace: true, traceResponse: true },
         args,
+
       })
     );
 

@@ -11,7 +11,8 @@
     },
     "files.associations": {
         "*.gafq": "lua",
-        "functional": "cpp"
+        "functional": "cpp",
+        "iostream": "cpp"
     },
     "leetcode-problem-rating.filePath": {
         "default": {
