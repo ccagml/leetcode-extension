@@ -262,7 +262,15 @@ function getSolutionBySlug(question_slug: string, articles_slug: string, lang: s
     if (!solution) return reply.error("本题没有题解");
 
     let link = URL_DISCUSS.replace("$slug", question_slug).replace("$articles_slug", articles_slug);
-    let content = solution.content.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
+    // let content = solution.content.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
+    let content = solution.content.replace(/\\n/g, "\n");
+
+    // content = content.replace(/\$\\textit/g, "$");
+    // content = content.replace(/\$\\texttt/g, "$");
+    // content = content.replace(/\$\\text/g, "$");
+    content = content.replace(/\\textit{/g, "{");
+    content = content.replace(/\\texttt{/g, "{");
+    content = content.replace(/\\text{/g, "{");
 
     let solution_result: any = {};
     solution_result.problem_name = solution.title;
