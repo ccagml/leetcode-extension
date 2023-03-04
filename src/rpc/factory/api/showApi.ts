@@ -7,7 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-let util = require("util");
+// let util = require("util");
 let childProcess = require("child_process");
 
 import { storageUtils } from "../../utils/storageUtils";
@@ -110,15 +110,15 @@ class ShowApi extends ApiBase {
   }
 
   showProblem(problem, argv) {
-    const taglist = [problem.category]
-      .concat(problem.companies || [])
-      .concat(problem.tags || [])
-      .map((x) => " " + x + " ")
-      .join(" ");
-    const langlist = problem.templates
-      .map((x) => " " + x.value + " ")
-      .sort()
-      .join(" ");
+    // const taglist = [problem.category]
+    //   .concat(problem.companies || [])
+    //   .concat(problem.tags || [])
+    //   .map((x) => " " + x + " ")
+    //   .join(" ");
+    // const langlist = problem.templates
+    //   .map((x) => " " + x.value + " ")
+    //   .sort()
+    //   .join(" ");
 
     let code;
     const needcode = argv.gen || argv.codeonly;
@@ -126,7 +126,7 @@ class ShowApi extends ApiBase {
       const template = problem.templates.find((x) => x.value === argv.lang);
       if (!template) {
         reply.info('Not supported language "' + argv.lang + '"');
-        reply.warn("Supported languages: " + langlist);
+        // reply.warn("Supported languages: " + langlist);
         return;
       }
 
@@ -157,33 +157,42 @@ class ShowApi extends ApiBase {
       }
     }
 
-    reply.info(`[${problem.fid}] ${problem.name}`);
-    reply.info();
-    reply.info(problem.link);
-    if (argv.extra) {
-      reply.info();
-      reply.info("Tags:  " + taglist);
-      reply.info();
-      reply.info("Langs: " + langlist);
-    }
+    let preview_data: any = {};
+    preview_data.url = problem.link;
+    preview_data.category = `${problem.category}`;
+    preview_data.difficulty = `${problem.level} (${problem.percent.toFixed(2)}%)`;
+    preview_data.likes = `${problem.likes}`;
+    preview_data.dislikes = `${problem.dislikes}`;
+    preview_data.desc = problem.desc;
+    reply.info(JSON.stringify(preview_data));
 
-    reply.info();
-    reply.info(`* ${problem.category}`);
-    reply.info(`* ${problem.level} (${problem.percent.toFixed(2)}%)`);
+    // reply.info(`[${problem.fid}] ${problem.name}`);
+    // reply.info();
+    // reply.info(problem.link);
+    // if (argv.extra) {
+    //   reply.info();
+    //   reply.info("Tags:  " + taglist);
+    //   reply.info();
+    //   reply.info("Langs: " + langlist);
+    // }
 
-    if (problem.likes) reply.info(`* Likes:    ${problem.likes}`);
-    if (problem.dislikes) reply.info(`* Dislikes: ${problem.dislikes}`);
-    else reply.info(`* Dislikes: -`);
-    if (problem.totalAC) reply.info(`* Total Accepted:    ${problem.totalAC}`);
-    if (problem.totalSubmit) reply.info(`* Total Submissions: ${problem.totalSubmit}`);
-    if (problem.testable && problem.testcase) {
-      let testcase_value = util.inspect(problem.testcase);
-      reply.info(`* Testcase Example:  ${testcase_value}`);
-    }
-    if (filename) reply.info(`* Source Code:       ${filename}`);
+    // reply.info();
+    // reply.info(`* ${problem.category}`);
+    // reply.info(`* ${problem.level} (${problem.percent.toFixed(2)}%)`);
 
-    reply.info();
-    reply.info(problem.desc);
+    // if (problem.likes) reply.info(`* Likes:    ${problem.likes}`);
+    // if (problem.dislikes) reply.info(`* Dislikes: ${problem.dislikes}`);
+    // else reply.info(`* Dislikes: -`);
+    // if (problem.totalAC) reply.info(`* Total Accepted:    ${problem.totalAC}`);
+    // if (problem.totalSubmit) reply.info(`* Total Submissions: ${problem.totalSubmit}`);
+    // if (problem.testable && problem.testcase) {
+    //   let testcase_value = util.inspect(problem.testcase);
+    //   reply.info(`* Testcase Example:  ${testcase_value}`);
+    // }
+    // if (filename) reply.info(`* Source Code:       ${filename}`);
+
+    // reply.info();
+    // reply.info(problem.desc);
   }
 
   call(argv) {

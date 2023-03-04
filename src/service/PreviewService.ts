@@ -76,13 +76,14 @@ class PreviewService extends BaseWebViewService {
                 }
                 </style>`,
     };
-    const { title, url, category, difficulty, likes, dislikes, body } = this.description;
+    const { title, url, category, difficulty, likes, dislikes, body, contest_slug, problem_index, problem_score } =
+      this.description;
     const head: string = markdownService.render(`# [${title}](${url})`);
     const info: string = markdownService.render(
       [
-        `| Category | Difficulty | Likes | Dislikes |`,
-        `| :------: | :--------: | :---: | :------: |`,
-        `| ${category} | ${difficulty} | ${likes} | ${dislikes} |`,
+        `| Category | Difficulty | Likes | Dislikes |  ContestSlug |  ProblemIndex |  Score |`,
+        `| :------: | :--------: | :---: | :------: |  :---------: |  :----------: |  :---: |`,
+        `| ${category} | ${difficulty} | ${likes} | ${dislikes} | ${contest_slug} | ${problem_index} | ${problem_score} | `,
       ].join("\n")
     );
     const tags: string = [
@@ -145,41 +146,41 @@ class PreviewService extends BaseWebViewService {
     }
   }
 
-  // private async hideSideBar(): Promise<void> {
-  //     await commands.executeCommand("workbench.action.focusSideBar");
-  //     await commands.executeCommand("workbench.action.toggleSidebarVisibility");
-  // }
-
   private parseDescription(descString: string, problem: IProblem): IDescription {
-    const [
-      ,
-      ,
-      /* title */ url,
-      ,
-      ,
-      ,
-      ,
-      ,
-      /* tags */ /* langs */ category,
-      difficulty,
-      likes,
-      dislikes,
-      ,
-      ,
-      ,
-      ,
-      /* accepted */ /* submissions */ /* testcase */ ...body
-    ] = descString.split("\n");
+    // const [
+    //   ,
+    //   ,
+    //   /* title */ url,
+    //   ,
+    //   ,
+    //   ,
+    //   ,
+    //   ,
+    //   /* tags */ /* langs */ category,
+    //   difficulty,
+    //   likes,
+    //   dislikes,
+    //   ,
+    //   ,
+    //   ,
+    //   ,
+    //   /* accepted */ /* submissions */ /* testcase */ ...body
+    // ] = descString.split("\n");
+
+    let preview_data = JSON.parse(descString);
     return {
       title: problem.name,
-      url,
+      url: preview_data.url,
       tags: problem.tags,
       companies: problem.companies,
-      category: category.slice(2),
-      difficulty: difficulty.slice(2),
-      likes: likes.split(": ")[1].trim(),
-      dislikes: dislikes.split(": ")[1].trim(),
-      body: body.join("\n").replace(/<pre>[\r\n]*([^]+?)[\r\n]*<\/pre>/g, "<pre><code>$1</code></pre>"),
+      category: preview_data.category,
+      difficulty: preview_data.difficulty,
+      likes: preview_data.likes,
+      dislikes: preview_data.dislikes,
+      body: preview_data.desc.replace(/<pre>[\r\n]*([^]+?)[\r\n]*<\/pre>/g, "<pre><code>$1</code></pre>"),
+      contest_slug: problem?.scoreData?.ContestSlug || "-",
+      problem_index: problem?.scoreData?.ProblemIndex || "-",
+      problem_score: problem?.scoreData?.score || "0",
     };
   }
 
@@ -209,6 +210,9 @@ interface IDescription {
   likes: string;
   dislikes: string;
   body: string;
+  contest_slug: string;
+  problem_index: string;
+  problem_score: string;
 }
 
 interface IWebViewMessage {
