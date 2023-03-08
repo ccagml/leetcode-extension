@@ -27,12 +27,8 @@ class RetryPlugin extends ChainNodeBase {
   /* A wrapper for the API. */
   init = () => {
     const names = [
-      "activateSession",
-      "createSession",
-      "deleteSession",
       "getProblems",
       "getProblem",
-      "getSessions",
       "getSubmissions",
       "getSubmission",
       "getFavorites",

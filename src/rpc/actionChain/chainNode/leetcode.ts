@@ -20,6 +20,13 @@ import { reply } from "../../utils/ReplyUtils";
 import { sessionUtils } from "../../utils/sessionUtils";
 import { ChainNodeBase } from "../chainNodeBase";
 import { Queue } from "../../utils/queueUtils";
+import {
+  getAddQuestionToFavoriteBody,
+  getGetHelpEnBody,
+  getQuestionDetailBody,
+  getRemoveQuestionFromFavoriteBody,
+  getUserInfoBody,
+} from "../../utils/graphqlUtils";
 
 class LeetCode extends ChainNodeBase {
   id = 10;
@@ -100,26 +107,7 @@ server to get the problem's description, test cases, and other information. */
     opts.headers.Referer = problem.link;
 
     opts.json = true;
-    opts.body = {
-      query: [
-        "query getQuestionDetail($titleSlug: String!) {",
-        "  question(titleSlug: $titleSlug) {",
-        "    content",
-        "    stats",
-        "    likes",
-        "    dislikes",
-        "    codeDefinition",
-        "    sampleTestCase",
-        "    enableRunCode",
-        "    metaData",
-        "    translatedContent",
-        "  }",
-        "}",
-      ].join("\n"),
-      variables: { titleSlug: problem.slug },
-      operationName: "getQuestionDetail",
-    };
-
+    opts.body = getQuestionDetailBody(problem.slug);
     request.post(opts, function (e, resp, body) {
       e = checkError(e, resp, 200);
       if (e) return cb(e);
@@ -138,8 +126,6 @@ server to get the problem's description, test cases, and other information. */
       problem.testcase = q.sampleTestCase;
       problem.testable = q.enableRunCode;
       problem.templateMeta = JSON.parse(q.metaData);
-      // @si-yao: seems below property is never used.
-      // problem.discuss =  q.discussCategoryId;
 
       return cb(null, problem);
     });
@@ -325,17 +311,13 @@ server to get the problem's description, test cases, and other information. */
   /* A function that is used to star a problem. */
   starProblem = (problem, starred, cb) => {
     const user = sessionUtils.getUser();
-    const operationName = starred ? "addQuestionToFavorite" : "removeQuestionFromFavorite";
     const opts = makeOpts(configUtils.sys.urls.graphql);
     opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = problem.link;
-
     opts.json = true;
-    opts.body = {
-      query: `mutation ${operationName}($favoriteIdHash: String!, $questionId: String!) {\n  ${operationName}(favoriteIdHash: $favoriteIdHash, questionId: $questionId) {\n    ok\n    error\n    favoriteIdHash\n    questionId\n    __typename\n  }\n}\n`,
-      variables: { favoriteIdHash: user.hash, questionId: "" + problem.id },
-      operationName: operationName,
-    };
+    opts.body = starred
+      ? getAddQuestionToFavoriteBody(user.hash, problem.id)
+      : getRemoveQuestionFromFavoriteBody(user.hash, problem.id); //  getStarProblem(user.hash, problem.id);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     request.post(opts, function (e: any, resp: any, _) {
@@ -364,11 +346,7 @@ server to get the problem's description, test cases, and other information. */
     opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = configUtils.sys.urls.base;
     opts.json = true;
-    opts.body = {
-      query: ["{", "  user {", "    username", "    isCurrentUserPremium", "  }", "}"].join("\n"),
-      variables: {},
-    };
-
+    opts.body = getUserInfoBody();
     request.post(opts, function (e, resp, body) {
       e = checkError(e, resp, 200);
       if (e) return cb(e);
@@ -376,40 +354,6 @@ server to get the problem's description, test cases, and other information. */
       const user = body.data.user;
       return cb(null, user);
     });
-  };
-
-  /* Making a request to the server and returning the response. */
-  runSession = (method: any, data: any, cb: any) => {
-    const opts = makeOpts(configUtils.sys.urls.session);
-    opts.json = true;
-    opts.method = method;
-    opts.body = data;
-
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e && e.statusCode === 302) e = sessionUtils.errors.EXPIRED;
-
-      return e ? cb(e) : cb(null, body.sessions);
-    });
-  };
-
-  getSessions = (cb) => {
-    this.runSession("POST", {}, cb);
-  };
-
-  activateSession = (session, cb) => {
-    const data = { func: "activate", target: session.id };
-    this.runSession("PUT", data, cb);
-  };
-
-  createSession = (name, cb) => {
-    const data = { func: "create", name: name };
-    this.runSession("PUT", data, cb);
-  };
-
-  deleteSession = (session, cb) => {
-    const data = { target: session.id };
-    this.runSession("DELETE", data, cb);
   };
 
   /* A function that takes in a user object and a callback function. It then makes a request to the login
@@ -685,39 +629,39 @@ and csrf token to the user object and saves the user object to the session. */
 
   /* A function that gets the question of the day from leetcode. */
   getQuestionOfToday = (cb) => {
-    const opts = makeOpts(configUtils.sys.urls.graphql);
-    opts.headers.Origin = configUtils.sys.urls.base;
-    opts.headers.Referer = "https://leetcode.com/";
+    // const opts = makeOpts(configUtils.sys.urls.graphql);
+    // opts.headers.Origin = configUtils.sys.urls.base;
+    // opts.headers.Referer = "https://leetcode.com/";
 
-    opts.json = true;
-    opts.body = {
-      operationName: "questionOfToday",
-      variables: {},
-      query: [
-        "query questionOfToday {",
-        "  todayRecord {",
-        "    date",
-        "    userStatus",
-        "    question {",
-        "      titleSlug",
-        "      questionId",
-        "      questionFrontendId",
-        // '      content',
-        // '      stats',
-        // '      likes',
-        // '      dislikes',
-        // '      codeDefinition',
-        // '      sampleTestCase',
-        // '      enableRunCode',
-        // '      metaData',
-        // '      translatedContent',
-        "      __typename",
-        "    }",
-        "  __typename",
-        "  }",
-        "}",
-      ].join("\n"),
-    };
+    // opts.json = true;
+    // opts.body = {
+    //   operationName: "questionOfToday",
+    //   variables: {},
+    //   query: [
+    //     "query questionOfToday {",
+    //     "  todayRecord {",
+    //     "    date",
+    //     "    userStatus",
+    //     "    question {",
+    //     "      titleSlug",
+    //     "      questionId",
+    //     "      questionFrontendId",
+    //     // '      content',
+    //     // '      stats',
+    //     // '      likes',
+    //     // '      dislikes',
+    //     // '      codeDefinition',
+    //     // '      sampleTestCase',
+    //     // '      enableRunCode',
+    //     // '      metaData',
+    //     // '      translatedContent',
+    //     "      __typename",
+    //     "    }",
+    //     "  __typename",
+    //     "  }",
+    //     "}",
+    //   ].join("\n"),
+    // };
 
     // request.post(opts, function (e, resp, body) {
     //   e = checkError(e, resp, 200);
@@ -739,39 +683,39 @@ and csrf token to the user object and saves the user object to the session. */
     opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = configUtils.sys.urls.u.replace("$username", username);
 
-    opts.json = true;
-    opts.body = {
-      variables: {
-        userSlug: username,
-      },
-      query: [
-        "        query userContestRankingInfo($userSlug: String!) {",
-        "          userContestRanking(userSlug: $userSlug) {",
-        "            attendedContestsCount",
-        "            rating",
-        "            globalRanking",
-        "            localRanking",
-        "            globalTotalParticipants",
-        "            localTotalParticipants",
-        "            topPercentage",
-        "        }",
-        // '      userContestRankingHistory(userSlug: $userSlug) {',
-        // '            attended',
-        // '            totalProblems',
-        // '            trendingDirection',
-        // '            finishTimeInSeconds',
-        // '            rating',
-        // '            score',
-        // '            ranking',
-        // '            contest {',
-        // '              title',
-        // '              titleCn',
-        // '              startTime',
-        // '            }',
-        // '        }',
-        "    }",
-      ].join("\n"),
-    };
+    // opts.json = true;
+    // opts.body = {
+    //   variables: {
+    //     userSlug: username,
+    //   },
+    //   query: [
+    //     "        query userContestRankingInfo($userSlug: String!) {",
+    //     "          userContestRanking(userSlug: $userSlug) {",
+    //     "            attendedContestsCount",
+    //     "            rating",
+    //     "            globalRanking",
+    //     "            localRanking",
+    //     "            globalTotalParticipants",
+    //     "            localTotalParticipants",
+    //     "            topPercentage",
+    //     "        }",
+    //     // '      userContestRankingHistory(userSlug: $userSlug) {',
+    //     // '            attended',
+    //     // '            totalProblems',
+    //     // '            trendingDirection',
+    //     // '            finishTimeInSeconds',
+    //     // '            rating',
+    //     // '            score',
+    //     // '            ranking',
+    //     // '            contest {',
+    //     // '              title',
+    //     // '              titleCn',
+    //     // '              startTime',
+    //     // '            }',
+    //     // '        }',
+    //     "    }",
+    //   ].join("\n"),
+    // };
 
     // request.post(opts, function (e, resp, body) {
     //   e = checkError(e, resp, 200);
@@ -821,41 +765,7 @@ function getHelpEn(problem, lang, cb) {
   let opts = {
     url: URL_DISCUSSES,
     json: true,
-    body: {
-      query: [
-        "query questionTopicsList($questionId: String!, $orderBy: TopicSortingOption, $skip: Int, $query: String, $first: Int!, $tags: [String!]) {",
-        "  questionTopicsList(questionId: $questionId, orderBy: $orderBy, skip: $skip, query: $query, first: $first, tags: $tags) {",
-        "    ...TopicsList",
-        "  }",
-        "}",
-        "fragment TopicsList on TopicConnection {",
-        "  totalNum",
-        "  edges {",
-        "    node {",
-        "      id",
-        "      title",
-        "      post {",
-        "        content",
-        "        voteCount",
-        "        author {",
-        "          username",
-        "        }",
-        "      }",
-        "    }",
-        "  }",
-        "}",
-      ].join("\n"),
-
-      operationName: "questionTopicsList",
-      variables: JSON.stringify({
-        query: "",
-        first: 1,
-        skip: 0,
-        orderBy: "most_votes",
-        questionId: "" + problem.id,
-        tags: [lang],
-      }),
-    },
+    body: getGetHelpEnBody(lang, problem.id),
   };
   request(opts, function (e, resp, body) {
     if (e) return cb(e);
@@ -871,7 +781,9 @@ function makeOpts(url) {
   opts.url = url;
   opts.headers = {};
 
-  if (sessionUtils.isLogin()) signOpts(opts, sessionUtils.getUser());
+  if (sessionUtils.isLogin()) {
+    signOpts(opts, sessionUtils.getUser());
+  }
   return opts;
 }
 

@@ -44,18 +44,7 @@ export class ChainNodeBase {
   public getProblemsTitle(cb: Function): void {
     this.next.getProblemsTitle(cb);
   }
-  public createSession(a, cb: Function): void {
-    this.next.createSession(a, cb);
-  }
-  public getSessions(cb: Function): void {
-    this.next.getSessions(cb);
-  }
-  public activateSession(s, cb: Function): void {
-    this.next.activateSession(s, cb);
-  }
-  public deleteSession(s, cb: Function): void {
-    this.next.deleteSession(s, cb);
-  }
+
   public updateProblem(a, b): void {
     this.next.updateProblem(a, b);
   }

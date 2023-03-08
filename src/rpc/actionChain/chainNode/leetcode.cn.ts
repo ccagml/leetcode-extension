@@ -15,6 +15,16 @@ import { configUtils } from "../../utils/configUtils";
 
 import { sessionUtils } from "../../utils/sessionUtils";
 import { reply } from "../../utils/ReplyUtils";
+import {
+  getProblemsTitleCNBody,
+  getQuestionOfTodayCNBody,
+  getSolutionArticlesSlugListCNBody,
+  getSolutionBySlugCNBody,
+  getUserContestPCNBody,
+} from "../../utils/graphqlUtils";
+
+// import axios from "axios";
+
 class LeetCodeCn extends ChainNodeBase {
   id = 15;
   name = "leetcode.cn";
@@ -56,19 +66,7 @@ class LeetCodeCn extends ChainNodeBase {
     opts.headers.Referer = "https://leetcode.cn/api/problems/algorithms/";
 
     opts.json = true;
-    opts.body = {
-      query: [
-        "query getQuestionTranslation($lang: String) {",
-        "  translations: allAppliedQuestionTranslations(lang: $lang) {",
-        "    title",
-        "    questionId",
-        "    __typename",
-        "    }",
-        "}",
-      ].join("\n"),
-      variables: {},
-      operationName: "getQuestionTranslation",
-    };
+    opts.body = getProblemsTitleCNBody();
 
     request.post(opts, function (e, resp, body) {
       e = checkError(e, resp, 200);
@@ -90,35 +88,7 @@ class LeetCodeCn extends ChainNodeBase {
     opts.headers.Referer = "https://leetcode.cn/";
 
     opts.json = true;
-    opts.body = {
-      operationName: "questionOfToday",
-      variables: {},
-      query: [
-        "query questionOfToday {",
-        "  todayRecord {",
-        "    date",
-        "    userStatus",
-        "    question {",
-        "      titleSlug",
-        "      questionId",
-        "      questionFrontendId",
-        // '      content',
-        // '      stats',
-        // '      likes',
-        // '      dislikes',
-        // '      codeDefinition',
-        // '      sampleTestCase',
-        // '      enableRunCode',
-        // '      metaData',
-        // '      translatedContent',
-        "      __typename",
-        "    }",
-        "  __typename",
-        "  }",
-        "}",
-      ].join("\n"),
-    };
-
+    opts.body = getQuestionOfTodayCNBody();
     request.post(opts, function (e, resp, body) {
       e = checkError(e, resp, 200);
       if (e) return cb(e);
@@ -138,39 +108,7 @@ class LeetCodeCn extends ChainNodeBase {
     opts.headers.Referer = configUtils.sys.urls.u.replace("$username", username);
 
     opts.json = true;
-    opts.body = {
-      variables: {
-        userSlug: username,
-      },
-      query: [
-        "        query userContestRankingInfo($userSlug: String!) {",
-        "          userContestRanking(userSlug: $userSlug) {",
-        "            attendedContestsCount",
-        "            rating",
-        "            globalRanking",
-        "            localRanking",
-        "            globalTotalParticipants",
-        "            localTotalParticipants",
-        "            topPercentage",
-        "        }",
-        // '      userContestRankingHistory(userSlug: $userSlug) {',
-        // '            attended',
-        // '            totalProblems',
-        // '            trendingDirection',
-        // '            finishTimeInSeconds',
-        // '            rating',
-        // '            score',
-        // '            ranking',
-        // '            contest {',
-        // '              title',
-        // '              titleCn',
-        // '              startTime',
-        // '            }',
-        // '        }',
-        "    }",
-      ].join("\n"),
-    };
-
+    opts.body = getUserContestPCNBody(username);
     request.post(opts, function (e, resp, body) {
       e = checkError(e, resp, 200);
       if (e) return cb(e);
@@ -183,8 +121,6 @@ class LeetCodeCn extends ChainNodeBase {
   getRatingOnline = (cb) => {
     const _request = request.defaults({ timeout: 2000, jar: true });
     _request("https://zerotrac.github.io/leetcode_problem_rating/data.json", function (error: any, _, body: any) {
-      // console.log(error);
-      // console.log(info);
       cb(error, body);
     });
   };
@@ -221,39 +157,7 @@ function getSolutionBySlug(question_slug: string, articles_slug: string, lang: s
   opts.headers.Referer = URL_DISCUSS.replace("$slug", question_slug).replace("$articles_slug", articles_slug);
 
   opts.json = true;
-  opts.body = {
-    operationName: "solutionDetailArticle",
-    variables: { slug: articles_slug, orderBy: "DEFAULT" },
-    query: [
-      "query solutionDetailArticle($slug: String!, $orderBy: SolutionArticleOrderBy!) {",
-      "    solutionArticle(slug: $slug, orderBy: $orderBy) {",
-      "      ...solutionArticle",
-      "      content",
-      "      question {",
-      "        questionTitleSlug",
-      "        __typename",
-      "      }",
-      "  __typename",
-      "}",
-      "}",
-      "fragment solutionArticle on SolutionArticleNode {",
-      "    uuid",
-      "    title",
-      "    slug",
-      "    identifier",
-      "author {",
-      "      username",
-      "      profile {",
-      "        realName",
-      "        __typename",
-      "      }",
-      "  __typename",
-      "}",
-      "byLeetcode",
-      "__typename",
-      "}",
-    ].join("\n"),
-  };
+  opts.body = getSolutionBySlugCNBody(articles_slug);
 
   request.post(opts, function (_, __, body) {
     // let bbb = body;
@@ -265,9 +169,6 @@ function getSolutionBySlug(question_slug: string, articles_slug: string, lang: s
     // let content = solution.content.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
     let content = solution.content.replace(/\\n/g, "\n");
 
-    // content = content.replace(/\$\\textit/g, "$");
-    // content = content.replace(/\$\\texttt/g, "$");
-    // content = content.replace(/\$\\text/g, "$");
     content = content.replace(/\\textit{/g, "{");
     content = content.replace(/\\texttt{/g, "{");
     content = content.replace(/\\text{/g, "{");
@@ -293,31 +194,7 @@ function getSolutionArticlesSlugList(question_slug: string, lang: string, cb) {
   opts.headers.Referer = URL_DISCUSS.replace("$slug", question_slug);
 
   opts.json = true;
-  opts.body = {
-    operationName: "questionSolutionArticles",
-    variables: { questionSlug: question_slug, first: 1, skip: 0, orderBy: "DEFAULT", tagSlugs: [lang] },
-    query: [
-      "query questionSolutionArticles($questionSlug: String!, $skip: Int, $first: Int, $orderBy: SolutionArticleOrderBy, $userInput: String, $tagSlugs: [String!]) {",
-      "questionSolutionArticles(questionSlug: $questionSlug, skip: $skip, first: $first, orderBy: $orderBy, userInput: $userInput, tagSlugs: $tagSlugs) {",
-      "        totalNum",
-      "        edges {",
-      "          node {",
-      "            ...solutionArticle",
-      "            __typename",
-      "          }",
-      "      __typename",
-      "    }",
-      "    __typename",
-      "  }",
-      "}",
-      "fragment solutionArticle on SolutionArticleNode {",
-      "      uuid",
-      "      slug",
-      "  byLeetcode",
-      "  __typename",
-      "}",
-    ].join("\n"),
-  };
+  opts.body = getSolutionArticlesSlugListCNBody(question_slug, lang);
 
   request.post(opts, function (e, _, body) {
     let edges = body?.data?.questionSolutionArticles?.edges || [];
