@@ -13,6 +13,7 @@ let underscore = require("underscore");
 let request = require("request");
 let prompt_out = require("prompt");
 
+// import axios, { AxiosError, AxiosResponse } from "axios";
 import { configUtils } from "../../utils/configUtils";
 import { commUtils } from "../../utils/commUtils";
 import { storageUtils } from "../../utils/storageUtils";
@@ -361,6 +362,48 @@ page and gets the csrf token. It then makes a post request to the login page wit
 the user's login and password. If the response status code is 302, it saves the user's session id
 and csrf token to the user object and saves the user object to the session. */
   signin = (user: any, cb: any) => {
+    // axios
+    //   .get(configUtils.sys.urls.login)
+    //   .then(function (response: AxiosResponse) {
+    //     login_info.loginCSRF = commUtils.getSetCookieValue(response, "csrftoken");
+    //     axios
+    //       .post(
+    //         configUtils.sys.urls.login,
+    //         {
+    //           csrfmiddlewaretoken: login_info.loginCSRF,
+    //           login: login_info.login,
+    //           password: login_info.pass,
+    //         },
+    //         {
+    //           headers: {
+    //             "Content-Type": "multipart/form-data",
+    //             Origin: configUtils.sys.urls.base,
+    //             Referer: configUtils.sys.urls.login,
+    //             Cookie: "csrftoken=" + login_info.loginCSRF + ";",
+    //           },
+    //         }
+    //       )
+    //       .then(function (response: AxiosResponse) {
+    //         //handle success
+    //         // console.log(response);
+    //         login_info.sessionCSRF = commUtils.getSetCookieValue(response, "csrftoken");
+    //         login_info.sessionId = commUtils.getSetCookieValue(response, "LEETCODE_SESSION");
+    //         sessionUtils.saveUser(login_info);
+    //         return cb(null, login_info);
+    //       })
+    //       .catch(function (response: AxiosError) {
+    //         //handle error
+    //         if (response.response?.status !== 302) return cb("invalid password?");
+    //       });
+    //   })
+    //   .catch(function (error: AxiosError) {
+    //     let error_info: any = {};
+    //     error_info.msg = error.message;
+    //     if (error.response) {
+    //       error_info.statusCode = error.response?.status;
+    //     }
+    //     cb(error_info);
+    //   });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     request(configUtils.sys.urls.login, function (e: any, resp: any, _) {
       e = checkError(e, resp, 200);
@@ -420,9 +463,9 @@ and csrf token to the user object and saves the user object to the session. */
     });
   };
 
-  login = (user, cb) => {
+  normalLogin = (login_info, cb) => {
     let that = this;
-    that.signin(user, function (e, user) {
+    that.signin(login_info, function (e, user) {
       if (e) return cb(e);
       that.getUser(user, cb);
     });

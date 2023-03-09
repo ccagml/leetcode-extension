@@ -113,9 +113,9 @@ problems from the next layer. */
   };
 
   /* Logging out the user and then logging in the user. */
-  login = (user, cb) => {
-    this.logout(user, false);
-    this.next.login(user, function (e, user) {
+  normalLogin = (login_info, cb) => {
+    this.logout(login_info, false);
+    this.next.normalLogin(login_info, function (e, user) {
       if (e) return cb(e);
       sessionUtils.saveUser(user);
       return cb(null, user);

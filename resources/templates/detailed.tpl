@@ -1,6 +1,6 @@
 <%=comment.start%>
 <%=comment.line%> @lc app=<%=app%> id=<%=fid%> lang=<%=lang%>
-<%=comment.line%> @lcpr version=<%=LCPTCTX.version%>
+<%=comment.line%> @lcpr version=<%=LCPRCTX.version%>
 <%=comment.line%>
 <%=comment.line%> [<%=fid%>] <%=name%>
 <%=comment.line%>

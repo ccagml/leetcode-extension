@@ -96,19 +96,16 @@ export async function executeCommandWithProgress(
   return result;
 }
 
-function childLCPTCTX(): string {
-  return JSON.stringify(logOutput.getLCPTCTXAll());
-}
-
 // clone process.env and add http proxy
-export function createEnvOption(): {} {
+export function createEnvOption(extra?: string): {} {
   const proxy: string | undefined = getHttpAgent();
   const env: any = Object.create(process.env);
   if (proxy) {
     env.http_proxy = proxy;
     return env;
   }
-  env.ccagml = childLCPTCTX();
+  env.ccagml = JSON.stringify(logOutput.getLCPRCTXAll());
+  env.extra = extra;
   return env;
 }
 

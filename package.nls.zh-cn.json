@@ -3,7 +3,7 @@
     "main.name": "vscode-leetcode-problem-rating",
     "main.contributes.commands.lcpr.deleteCache.title": "删除缓存",
     "main.contributes.commands.lcpr.toggleLeetCodeCn.title": "切换站点",
-    "main.contributes.commands.lcpr.signin.title": "登录",
+    "main.contributes.commands.lcpr.newlogin.title": "登录",
     "main.contributes.commands.lcpr.signout.title": "登出",
     "main.contributes.commands.lcpr.refreshExplorer.title": "刷新",
     "main.contributes.commands.lcpr.pickOne.title": "手气一下",

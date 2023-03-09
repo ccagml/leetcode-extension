@@ -15,6 +15,7 @@ import { sessionUtils } from "../../utils/sessionUtils";
 import { ApiBase } from "../apiBase";
 
 import { chainMgr } from "../../actionChain/chainManager";
+import { configUtils } from "../../utils/configUtils";
 
 class UserApi extends ApiBase {
   constructor() {
@@ -53,7 +54,6 @@ class UserApi extends ApiBase {
         default: false,
         describe: "Logout",
       });
-
     argv_config.parseArgFromCmd(argv);
 
     return argv_config.get_result();
@@ -63,28 +63,36 @@ class UserApi extends ApiBase {
     sessionUtils.argv = argv;
     let user: any = null;
     if (argv.login) {
-      // login
-      prompt_out.colors = false;
-      prompt_out.message = "";
-      prompt_out.start();
-      prompt_out.get(
-        [
-          { name: "login", required: true },
-          { name: "pass", required: true, hidden: true },
-        ],
-        function (e, user) {
-          if (e) {
-            return reply.info(JSON.stringify({ code: -1, msg: e.msg || e }));
-          }
-
-          chainMgr.getChainHead().login(user, function (e, user) {
-            if (e) {
-              return reply.info(JSON.stringify({ code: -2, msg: e.msg || e }));
-            }
-            reply.info(JSON.stringify({ code: 100, user_name: user.name }));
-          });
+      let login_info: any = {};
+      login_info.name = configUtils.LCPRENVEXTRA?.name || "";
+      login_info.pass = configUtils.LCPRENVEXTRA?.pass || "";
+      chainMgr.getChainHead().normalLogin(login_info, function (e, user) {
+        if (e) {
+          return reply.info(JSON.stringify({ code: -2, msg: e.msg || e }));
         }
-      );
+        reply.info(JSON.stringify({ code: 100, user_name: user.name }));
+      });
+      // // login
+      // prompt_out.colors = false;
+      // prompt_out.message = "";
+      // prompt_out.start();
+      // prompt_out.get(
+      //   [
+      //     { name: "login", required: true },
+      //     { name: "pass", required: true, hidden: true },
+      //   ],
+      //   function (e, user) {
+      //     if (e) {
+      //       return reply.info(JSON.stringify({ code: -1, msg: e.msg || e }));
+      //     }
+      //     chainMgr.getChainHead().login(user, function (e, user) {
+      //       if (e) {
+      //         return reply.info(JSON.stringify({ code: -2, msg: e.msg || e }));
+      //       }
+      //       reply.info(JSON.stringify({ code: 100, user_name: user.name }));
+      //     });
+      //   }
+      // );
     } else if (argv.logout) {
       // logout
       user = chainMgr.getChainHead().logout(user, true);

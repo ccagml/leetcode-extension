@@ -76,7 +76,7 @@ login function. */
       return cb();
     }
 
-    this.next.login(user, function (e) {
+    this.next.normalLogin(user, function (e) {
       if (e) {
         //
       } else {

@@ -21,19 +21,13 @@ import { getDayNowM, getRemakeName } from "../utils/SystemUtils";
 
 export interface IQuickItemEx<T> extends QuickPickItem {
   value: T;
+  cmd?: string;
 }
 
 export enum UserStatus {
   SignedIn = 1,
   SignedOut = 2,
 }
-
-export const loginArgsMapping: Map<string, string> = new Map([
-  ["LeetCode", "-l"],
-  ["Cookie", "-c"],
-  ["GitHub", "-g"],
-  ["LinkedIn", "-i"],
-]);
 
 export const AllProgramLanguage: string[] = [
   "bash",

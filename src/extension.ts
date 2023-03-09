@@ -65,7 +65,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       window.createTreeView("BricksExplorer", { treeDataProvider: bricksDataService, showCollapseAll: true }),
       commands.registerCommand("lcpr.deleteCache", () => mainContorller.deleteCache()),
       commands.registerCommand("lcpr.toggleLeetCodeCn", () => treeViewController.switchEndpoint()),
-      commands.registerCommand("lcpr.signin", () => loginContorller.signIn()),
+      commands.registerCommand("lcpr.newlogin", () => loginContorller.NewLogin()),
       commands.registerCommand("lcpr.signout", () => loginContorller.signOut()),
       commands.registerCommand("lcpr.previewProblem", (node: NodeModel) => treeViewController.previewProblem(node)),
       commands.registerCommand("lcpr.showProblem", (node: NodeModel) => treeViewController.showProblem(node)),

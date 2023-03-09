@@ -10,7 +10,7 @@
 import * as cp from "child_process";
 import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
-import { OutPutType, Endpoint, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
+import { OutPutType, Endpoint, IQuickItemEx, UserStatus } from "../model/Model";
 import { createEnvOption } from "../utils/CliUtils";
 import { logOutput, promptForOpenOutputChannel } from "../utils/OutputUtils";
 import { eventService } from "../service/EventService";
@@ -23,35 +23,32 @@ import { bricksDataService } from "../service/BricksDataService";
 // 登录控制器
 class LoginContorller {
   constructor() {}
-  commandArg: string | undefined;
+
   loginMethod: string;
 
-  public async getUserName(): Promise<string | undefined> {
+  public async getUserName(login_info: any): Promise<string | undefined> {
     let result: string = "";
 
     await window.withProgress({ location: ProgressLocation.Notification }, async (p: Progress<{}>) => {
       return new Promise(
         async (resolve: (res: string | undefined) => void, reject: (e: Error) => void): Promise<void> => {
-          if (this.commandArg == undefined) {
-            reject(new Error("not commandArg"));
-            return;
-          }
           const leetCodeBinaryPath: string = await executeService.getLeetCodeBinaryPath();
           let childProc: cp.ChildProcess;
           if (systemUtils.useVscodeNode()) {
-            childProc = cp.fork(await executeService.getLeetCodeBinaryPath(), ["user", this.commandArg], {
+            let newargs: string[] = ["user", login_info.cmd];
+            childProc = cp.fork(leetCodeBinaryPath, newargs, {
               silent: true,
-              env: createEnvOption(),
+              env: createEnvOption(JSON.stringify(login_info)),
             });
           } else {
             if (systemUtils.useWsl()) {
-              childProc = cp.spawn("wsl", [executeService.node, leetCodeBinaryPath, "user", this.commandArg], {
-                shell: true,
-              });
+              let newargs: string[] = [executeService.node, leetCodeBinaryPath, "user", login_info.cmd];
+              childProc = cp.spawn("wsl", newargs, { shell: true, env: createEnvOption(JSON.stringify(login_info)) });
             } else {
-              childProc = cp.spawn(executeService.node, [leetCodeBinaryPath, "user", this.commandArg], {
+              let newargs: string[] = [leetCodeBinaryPath, "user", login_info.cmd];
+              childProc = cp.spawn(executeService.node, newargs, {
                 shell: true,
-                env: createEnvOption(),
+                env: createEnvOption(JSON.stringify(login_info)),
               });
             }
           }
@@ -92,31 +89,6 @@ class LoginContorller {
 
           childProc.stderr?.on("data", (data: string | Buffer) => logOutput.append(data.toString()));
           childProc.on("error", reject);
-
-          const name: string | undefined = await window.showInputBox({
-            prompt: "Enter username or E-mail.",
-            ignoreFocusOut: true,
-            validateInput: (s: string): string | undefined =>
-              s && s.trim() ? undefined : "The input must not be empty",
-          });
-          if (!name) {
-            childProc.kill();
-            return resolve(undefined);
-          }
-          childProc.stdin?.write(`${name}\n`);
-          const isByCookie: boolean = this.loginMethod === "Cookie";
-          const pwd: string | undefined = await window.showInputBox({
-            prompt: isByCookie ? "Enter cookie" : "Enter password.",
-            password: true,
-            ignoreFocusOut: true,
-            validateInput: (s: string): string | undefined =>
-              s ? undefined : isByCookie ? "Cookie must not be empty" : "Password must not be empty",
-          });
-          if (!pwd) {
-            childProc.kill();
-            return resolve(undefined);
-          }
-          childProc.stdin?.write(`${pwd}\n`);
           p.report({ message: "正在登录中~~~~" });
         }
       );
@@ -127,7 +99,7 @@ class LoginContorller {
 
   /* A login function. */
   // 登录操作
-  public async signIn(): Promise<void> {
+  public async NewLogin(): Promise<void> {
     const picks: Array<IQuickItemEx<string>> = [];
     let qpOpiton: QuickPickOptions = {
       title: "正在登录leetcode.com",
@@ -140,6 +112,7 @@ class LoginContorller {
         label: "LeetCode Account",
         detail: "只能登录leetcode.cn",
         value: "LeetCode",
+        cmd: "-l",
       });
       qpOpiton.title = "正在登录中文版leetcode.cn";
       qpOpiton.placeHolder = "请选择登录方式 正在登录中文版leetcode.cn";
@@ -149,16 +122,19 @@ class LoginContorller {
         label: "Third-Party: GitHub",
         detail: "Use GitHub account to login",
         value: "GitHub",
+        cmd: "-g",
       },
       {
         label: "Third-Party: LinkedIn",
         detail: "Use LinkedIn account to login",
         value: "LinkedIn",
+        cmd: "-i",
       },
       {
         label: "LeetCode Cookie",
         detail: "Use LeetCode cookie copied from browser to login",
         value: "Cookie",
+        cmd: "-c",
       }
     );
     const choice: IQuickItemEx<string> | undefined = await window.showQuickPick(picks, qpOpiton);
@@ -166,20 +142,46 @@ class LoginContorller {
       return;
     }
     this.loginMethod = choice.value;
-    this.commandArg = loginArgsMapping.get(this.loginMethod);
-    if (!this.commandArg) {
+
+    if (!choice.cmd) {
       throw new Error(`不支持 "${this.loginMethod}" 方式登录`);
+      return;
     }
+
+    let login_info: any = {};
+    login_info.cmd = choice.cmd;
+
+    const name: string | undefined = await window.showInputBox({
+      prompt: "Enter username or E-mail.",
+      ignoreFocusOut: true,
+      validateInput: (s: string): string | undefined => (s && s.trim() ? undefined : "The input must not be empty"),
+    });
+    if (!name) {
+      return;
+    }
+    login_info.name = name;
+
     const isByCookie: boolean = this.loginMethod === "Cookie";
-    const inMessage: string = isByCookie ? " 通过cookie登录" : "登录";
+    const passWord: string | undefined = await window.showInputBox({
+      prompt: isByCookie ? "Enter cookie" : "Enter password.",
+      password: true,
+      ignoreFocusOut: true,
+      validateInput: (s: string): string | undefined =>
+        s ? undefined : isByCookie ? "Cookie must not be empty" : "Password must not be empty",
+    });
+    if (!passWord) {
+      return;
+    }
+    login_info.pass = passWord;
+
     try {
-      const userName: string | undefined = await this.getUserName();
+      const userName: string | undefined = await this.getUserName(login_info);
       if (userName) {
         eventService.emit("statusChanged", UserStatus.SignedIn, userName);
-        window.showInformationMessage(`${inMessage} 成功`);
+        window.showInformationMessage(`登录成功`);
       }
     } catch (error) {
-      promptForOpenOutputChannel(`${inMessage}失败. 请看看控制台输出信息`, OutPutType.error);
+      promptForOpenOutputChannel(`登录失败. 请看看控制台输出信息`, OutPutType.error);
     }
   }
 

@@ -60,8 +60,8 @@ export class ChainNodeBase {
   public testProblem(s, cb: Function): void {
     this.next.testProblem(s, cb);
   }
-  public login(user, cb: Function): void {
-    this.next.login(user, cb);
+  public normalLogin(login_info, cb: Function): void {
+    this.next.normalLogin(login_info, cb);
   }
   public logout(user, cb): void {
     this.next.logout(user, cb);

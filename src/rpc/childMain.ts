@@ -23,7 +23,8 @@ class Main {
     process.stdout.on("error", function (e) {
       if (e.code === "EPIPE") process.exit();
     });
-    configUtils.init(JSON.parse(process.env.ccagml || "{}"));
+    configUtils.init_env("LCPRCTX", JSON.parse(process.env.ccagml || "{}"));
+    configUtils.init_env("LCPRENVEXTRA", JSON.parse(process.env.extra || "{}"));
     reply.init();
     storageUtils.init();
     chainMgr.init(corePlugin);

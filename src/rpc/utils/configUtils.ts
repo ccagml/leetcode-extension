@@ -10,7 +10,8 @@
 let underscore = require("underscore");
 
 class Config {
-  LCPTCTX: any;
+  LCPRCTX: any;
+  LCPRENVEXTRA: any;
   app: any;
   sys: any;
   autologin: any;
@@ -103,8 +104,8 @@ class Config {
     this.plugins = {};
   }
 
-  init(ctx) {
-    this.LCPTCTX = ctx;
+  init_env(key, value) {
+    this[key] = value;
   }
 
   getAll(useronly) {

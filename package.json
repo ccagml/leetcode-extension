@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "2.18.1",
+    "version": "2.18.2",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -28,7 +28,7 @@
     "preview": true,
     "activationEvents": [
         "onCommand:lcpr.toggleLeetCodeCn",
-        "onCommand:lcpr.signin",
+        "onCommand:lcpr.newlogin",
         "onCommand:lcpr.signout",
         "onCommand:lcpr.refreshExplorer",
         "onCommand:lcpr.pickOne",
@@ -57,8 +57,8 @@
                 "icon": "$(globe)"
             },
             {
-                "command": "lcpr.signin",
-                "title": "%main.contributes.commands.lcpr.signin.title%",
+                "command": "lcpr.newlogin",
+                "title": "%main.contributes.commands.lcpr.newlogin.title%",
                 "category": "LeetCode",
                 "icon": "$(sign-in)"
             },
@@ -355,7 +355,7 @@
                     "group": "navigation@0"
                 },
                 {
-                    "command": "lcpr.signin",
+                    "command": "lcpr.newlogin",
                     "when": "view == QuestionExplorer",
                     "group": "navigation@1"
                 },

@@ -58,7 +58,7 @@ class MainContorller {
       cur_version_num *= 100;
       cur_version_num += Number(e);
     });
-    logOutput.setLCPTCTX("version", cur_version_num);
+    logOutput.setLCPRCTX("version", cur_version_num);
   }
 
   // 初始化上下文

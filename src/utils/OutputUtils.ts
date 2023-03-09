@@ -45,7 +45,7 @@ export async function promptForSignIn(): Promise<void> {
   );
   switch (choice) {
     case DialogOptions.yes:
-      await vscode.commands.executeCommand("lcpr.signin");
+      await vscode.commands.executeCommand("lcpr.newlogin");
       break;
     case DialogOptions.singUp:
       if (getLeetCodeEndpoint()) {
@@ -83,7 +83,7 @@ export async function promptForOpenOutputChannel(message: string, type: OutPutTy
 class LogOutput implements vscode.Disposable {
   private readonly channel: vscode.OutputChannel = vscode.window.createOutputChannel("LeetCodeProblemRating");
 
-  private LCPTCTX = {};
+  private LCPRCTX = {};
   public appendLine(message: string): void {
     this.channel.appendLine(message);
   }
@@ -100,16 +100,16 @@ class LogOutput implements vscode.Disposable {
     this.channel.dispose();
   }
 
-  public setLCPTCTX(k, v) {
-    this.LCPTCTX[k] = v;
+  public setLCPRCTX(k, v) {
+    this.LCPRCTX[k] = v;
   }
 
-  public getLCPTCTX(k) {
-    return this.LCPTCTX[k];
+  public getLCPRCTX(k) {
+    return this.LCPRCTX[k];
   }
 
-  public getLCPTCTXAll() {
-    return this.LCPTCTX;
+  public getLCPRCTXAll() {
+    return this.LCPRCTX;
   }
 }
 

@@ -158,19 +158,19 @@ export function enableSideMode(): boolean {
   return getVsCodeConfig().get<boolean>("enableSideMode", true);
 }
 
-export function getNodePath() {
+export function getNodePath(): string {
   return getVsCodeConfig().get<string>("nodePath", "node" /* default value */);
 }
 
-export function isShowLocked() {
+export function isShowLocked(): boolean {
   return !!getVsCodeConfig().get<boolean>("showLocked");
 }
 
-export function isUseVscodeNode() {
+export function isUseVscodeNode(): boolean {
   return getVsCodeConfig().get<boolean>("useVscodeNode") === true;
 }
 
-export function isUseWsl() {
+export function isUseWsl(): boolean {
   return getVsCodeConfig().get<boolean>("useWsl") === true;
 }
 
@@ -178,7 +178,7 @@ export function getSortingStrategy(): SortingStrategy {
   return getVsCodeConfig().get<SortingStrategy>("problems.sortStrategy", SortingStrategy.None);
 }
 
-export async function updateSortingStrategy(value: string, flag: boolean) {
+export async function updateSortingStrategy(value: string, flag: boolean): Promise<void> {
   await getVsCodeConfig().update("problems.sortStrategy", value, flag);
 }
 

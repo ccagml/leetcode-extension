@@ -3,7 +3,7 @@
     "main.name": "vscode-leetcode-problem-rating",
     "main.contributes.commands.lcpr.deleteCache.title": "Delete Cache",
     "main.contributes.commands.lcpr.toggleLeetCodeCn.title": "Switch Endpoint",
-    "main.contributes.commands.lcpr.signin.title": "Sign In",
+    "main.contributes.commands.lcpr.newlogin.title": "Sign In",
     "main.contributes.commands.lcpr.signout.title": "Sign Out",
     "main.contributes.commands.lcpr.refreshExplorer.title": "refresh",
     "main.contributes.commands.lcpr.pickOne.title": "pickOne",

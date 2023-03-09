@@ -60,7 +60,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
         label: element.name,
         collapsibleState: vscode.TreeItemCollapsibleState.None,
         command: {
-          command: "lcpr.signin",
+          command: "lcpr.newlogin",
           title: "未登录",
         },
       };

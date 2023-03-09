@@ -11,6 +11,8 @@ import { ChainNodeBase } from "../chainNodeBase";
 
 let request = require("request");
 
+import axios, { AxiosError, AxiosResponse } from "axios";
+
 import { configUtils } from "../../utils/configUtils";
 
 import { sessionUtils } from "../../utils/sessionUtils";
@@ -119,23 +121,30 @@ class LeetCodeCn extends ChainNodeBase {
 
   /* A function that is used to get the rating of the problems. */
   getRatingOnline = (cb) => {
-    const _request = request.defaults({ timeout: 2000, jar: true });
-    _request("https://zerotrac.github.io/leetcode_problem_rating/data.json", function (error: any, _, body: any) {
-      cb(error, body);
-    });
+    // const _request = request.defaults({ timeout: 2000, jar: true });
+    // _request("https://zerotrac.github.io/leetcode_problem_rating/data.json", function (error: any, _, body: any) {
+    //   cb(error, body);
+    // });
+
+    axios
+      .get("https://zerotrac.github.io/leetcode_problem_rating/data.json", { timeout: 2000 })
+      .then(function (response: AxiosResponse) {
+        cb(null, response.data);
+      })
+      .catch(function (error: AxiosError) {
+        let error_info: any = {};
+        error_info.msg = error.message;
+        if (error.response) {
+          error_info.statusCode = error.response?.status;
+        }
+        cb(error_info);
+      });
   };
 
   /* A function that is used to test the api. */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getTestApi = (value: any, _) => {
     console.log(value);
-    let question_slug = "determine-color-of-a-chessboard-square";
-    let lang = "cpp";
-
-    getSolutionArticlesSlugList(question_slug, lang, (e, articles_slug) => {
-      if (e) return;
-      getSolutionBySlug(question_slug, articles_slug, lang);
-    });
   };
 
   getHelpOnline = (problem, cn_flag, lang) => {
@@ -189,7 +198,6 @@ function getSolutionBySlug(question_slug: string, articles_slug: string, lang: s
 function getSolutionArticlesSlugList(question_slug: string, lang: string, cb) {
   const opts = makeOpts(configUtils.sys.urls.graphql);
   opts.headers.Origin = configUtils.sys.urls.base;
-  // let URL_DISCUSSES = "https://leetcode.com/graphql";
   let URL_DISCUSS = "https://leetcode.cn/problems/$slug/solution";
   opts.headers.Referer = URL_DISCUSS.replace("$slug", question_slug);
 

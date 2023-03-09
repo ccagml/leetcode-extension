@@ -38,7 +38,7 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
         label: element.name,
         collapsibleState: element.collapsibleState, // 没有子节点
         command: {
-          command: "lcpr.signin",
+          command: "lcpr.newlogin",
           title: "工头说你不是我们工地的人",
         },
       };
