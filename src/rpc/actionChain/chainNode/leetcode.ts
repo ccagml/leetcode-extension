@@ -361,76 +361,79 @@ server to get the problem's description, test cases, and other information. */
 page and gets the csrf token. It then makes a post request to the login page with the csrf token and
 the user's login and password. If the response status code is 302, it saves the user's session id
 and csrf token to the user object and saves the user object to the session. */
-  signin = (user: any, cb: any) => {
-    // axios
-    //   .get(configUtils.sys.urls.login)
-    //   .then(function (response: AxiosResponse) {
-    //     login_info.loginCSRF = commUtils.getSetCookieValue(response, "csrftoken");
-    //     axios
-    //       .post(
-    //         configUtils.sys.urls.login,
-    //         {
-    //           csrfmiddlewaretoken: login_info.loginCSRF,
-    //           login: login_info.login,
-    //           password: login_info.pass,
-    //         },
-    //         {
-    //           headers: {
-    //             "Content-Type": "multipart/form-data",
-    //             Origin: configUtils.sys.urls.base,
-    //             Referer: configUtils.sys.urls.login,
-    //             Cookie: "csrftoken=" + login_info.loginCSRF + ";",
+  signin = (login_info: any, cb: any) => {
+    //   axios
+    //     .get(configUtils.sys.urls.login)
+    //     .then(function (response: AxiosResponse) {
+    //       login_info.loginCSRF = commUtils.getSetCookieValue(response, "csrftoken");
+    //       axios
+    //         .post(
+    //           configUtils.sys.urls.login,
+    //           {
+    //             csrfmiddlewaretoken: login_info.loginCSRF,
+    //             login: login_info.login,
+    //             password: login_info.pass,
     //           },
-    //         }
-    //       )
-    //       .then(function (response: AxiosResponse) {
-    //         //handle success
-    //         // console.log(response);
-    //         login_info.sessionCSRF = commUtils.getSetCookieValue(response, "csrftoken");
-    //         login_info.sessionId = commUtils.getSetCookieValue(response, "LEETCODE_SESSION");
-    //         sessionUtils.saveUser(login_info);
-    //         return cb(null, login_info);
-    //       })
-    //       .catch(function (response: AxiosError) {
-    //         //handle error
-    //         if (response.response?.status !== 302) return cb("invalid password?");
-    //       });
-    //   })
-    //   .catch(function (error: AxiosError) {
-    //     let error_info: any = {};
-    //     error_info.msg = error.message;
-    //     if (error.response) {
-    //       error_info.statusCode = error.response?.status;
-    //     }
-    //     cb(error_info);
-    //   });
+    //           {
+    //             headers: {
+    //               "Content-Type": "multipart/form-data",
+    //               Origin: configUtils.sys.urls.base,
+    //               Referer: configUtils.sys.urls.login,
+    //               Cookie: "csrftoken=" + login_info.loginCSRF + ";",
+    //             },
+    //           }
+    //         )
+    //         .then(function (response: AxiosResponse) {
+    //           //handle success
+    //           // console.log(response);
+    //           login_info.sessionCSRF = commUtils.getSetCookieValue(response, "csrftoken");
+    //           login_info.sessionId = commUtils.getSetCookieValue(response, "LEETCODE_SESSION");
+    //           sessionUtils.saveUser(login_info);
+    //           return cb(null, login_info);
+    //         })
+    //         .catch(function (response: AxiosError) {
+    //           //handle error
+    //           if (response.response?.status !== 302) return cb("invalid password?");
+    //           login_info.sessionCSRF = commUtils.getSetCookieValue(response, "csrftoken");
+    //           login_info.sessionId = commUtils.getSetCookieValue(response, "LEETCODE_SESSION");
+    //           sessionUtils.saveUser(login_info);
+    //           return cb(null, login_info);
+    //         });
+    //     })
+    //     .catch(function (error: AxiosError) {
+    //       let error_info: any = {};
+    //       error_info.msg = error.message;
+    //       if (error.response) {
+    //         error_info.statusCode = error.response?.status;
+    //       }
+    //       cb(error_info);
+    //     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     request(configUtils.sys.urls.login, function (e: any, resp: any, _) {
       e = checkError(e, resp, 200);
       if (e) return cb(e);
-      user.loginCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
+      login_info.loginCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
       const opts = {
         url: configUtils.sys.urls.login,
         headers: {
           Origin: configUtils.sys.urls.base,
           Referer: configUtils.sys.urls.login,
-          Cookie: "csrftoken=" + user.loginCSRF + ";",
+          Cookie: "csrftoken=" + login_info.loginCSRF + ";",
         },
         form: {
-          csrfmiddlewaretoken: user.loginCSRF,
-          login: user.login,
-          password: user.pass,
+          csrfmiddlewaretoken: login_info.loginCSRF,
+          login: login_info.login,
+          password: login_info.pass,
         },
       };
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       request.post(opts, function (e: any, resp: any, _) {
         if (e) return cb(e);
         if (resp.statusCode !== 302) return cb("invalid password?");
-
-        user.sessionCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
-        user.sessionId = commUtils.getSetCookieValue(resp, "LEETCODE_SESSION");
-        sessionUtils.saveUser(user);
-        return cb(null, user);
+        login_info.sessionCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
+        login_info.sessionId = commUtils.getSetCookieValue(resp, "LEETCODE_SESSION");
+        sessionUtils.saveUser(login_info);
+        return cb(null, login_info);
       });
     });
   };

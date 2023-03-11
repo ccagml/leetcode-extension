@@ -64,7 +64,7 @@ class UserApi extends ApiBase {
     let user: any = null;
     if (argv.login) {
       let login_info: any = {};
-      login_info.name = configUtils.LCPRENVEXTRA?.name || "";
+      login_info.login = configUtils.LCPRENVEXTRA?.name || "";
       login_info.pass = configUtils.LCPRENVEXTRA?.pass || "";
       chainMgr.getChainHead().normalLogin(login_info, function (e, user) {
         if (e) {
