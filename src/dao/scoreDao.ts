@@ -15,13 +15,13 @@ class ScoreDao {
   public getScoreData(onlineData?): Map<string, IScoreData> {
     let nameSiteMapping = new Map<string, IScoreData>();
     let temp = this.scoreBase as IScoreData[];
-    if (onlineData) {
-      temp = onlineData;
+    if (onlineData && Array.isArray(onlineData)) {
+      onlineData.forEach((element) => {
+        element.score = "" + Math.floor(element.Rating || 0);
+        nameSiteMapping.set("" + element.ID, element);
+      });
     }
     temp.forEach((element) => {
-      // Rating
-      // ID
-      // ContestSlug
       element.score = "" + Math.floor(element.Rating || 0);
       nameSiteMapping.set("" + element.ID, element);
     });

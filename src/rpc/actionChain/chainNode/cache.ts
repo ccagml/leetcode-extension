@@ -58,14 +58,14 @@ problems from the next layer. */
     if (cacheRantingData) {
       return cb(null, cacheRantingData);
     }
-    this.next.getRatingOnline(function (e, ratingData) {
+    this.next.getRatingOnline(function (e, ratingObj) {
       if (e) return cb(e);
-      let ratingObj;
-      try {
-        ratingObj = JSON.parse(ratingData);
-      } catch (error) {
-        return cb("JSON.parse(ratingData) error");
-      }
+      // let ratingObj;
+      // try {
+      //   ratingObj = JSON.parse(ratingData);
+      // } catch (error) {
+      //   return cb("JSON.parse(ratingData) error");
+      // }
       storageUtils.setCache(commUtils.KEYS.ranting_path, ratingObj);
       return cb(null, ratingObj);
     });
