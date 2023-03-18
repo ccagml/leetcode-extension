@@ -9,8 +9,6 @@
 
 import { ChainNodeBase } from "../chainNodeBase";
 
-let request = require("request");
-
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 import { configUtils } from "../../utils/configUtils";
@@ -44,7 +42,6 @@ class LeetCodeCn extends ChainNodeBase {
       if (e) return cb(e);
 
       if (needTranslation) {
-        // only translate titles of the list if user requested
         that.getProblemsTitle(function (e, titles) {
           if (e) return cb(e);
 
@@ -70,17 +67,25 @@ class LeetCodeCn extends ChainNodeBase {
     opts.json = true;
     opts.body = getProblemsTitleCNBody();
 
-    request.post(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
+    axios
+      .post(opts.url, opts.body, opts)
+      .then(function (_response: AxiosResponse) {
+        const json_data = JSON.parse(_response.data);
 
-      const titles: Object = [];
-      body.data.translations.forEach(function (x) {
-        titles[x.questionId] = x.title;
+        const titles: Object = [];
+        json_data.translations.forEach(function (x) {
+          titles[x.questionId] = x.title;
+        });
+
+        return cb(null, titles);
+      })
+      .catch(function (response: AxiosError) {
+        if (response.status == 403 || response.status == 401) {
+          cb(sessionUtils.errors.EXPIRED);
+        } else {
+          cb({ msg: response.message, statusCode: response.status });
+        }
       });
-
-      return cb(null, titles);
-    });
   };
 
   /* A function that gets the question of the day from leetcode. */
@@ -91,17 +96,25 @@ class LeetCodeCn extends ChainNodeBase {
 
     opts.json = true;
     opts.body = getQuestionOfTodayCNBody();
-    request.post(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
-      let result: any = {};
-      result.titleSlug = body.data.todayRecord[0].question.titleSlug;
-      result.questionId = body.data.todayRecord[0].question.questionId;
-      result.fid = body.data.todayRecord[0].question.questionFrontendId;
-      result.date = body.data.todayRecord[0].data;
-      result.userStatus = body.data.todayRecord[0].userStatus;
-      return cb(null, result);
-    });
+    axios
+      .post(opts.url, opts.body, opts)
+      .then(function (_response: AxiosResponse) {
+        const json_data = JSON.parse(_response.data);
+        let result: any = {};
+        result.titleSlug = json_data.todayRecord[0].question.titleSlug;
+        result.questionId = json_data.todayRecord[0].question.questionId;
+        result.fid = json_data.todayRecord[0].question.questionFrontendId;
+        result.date = json_data.todayRecord[0].data;
+        result.userStatus = json_data.todayRecord[0].userStatus;
+        return cb(null, result);
+      })
+      .catch(function (response: AxiosError) {
+        if (response.status == 403 || response.status == 401) {
+          cb(sessionUtils.errors.EXPIRED);
+        } else {
+          cb({ msg: response.message, statusCode: response.status });
+        }
+      });
   };
   /* A function that is used to get the user contest ranking information. */
   getUserContestP = (username, cb) => {
@@ -111,21 +124,25 @@ class LeetCodeCn extends ChainNodeBase {
 
     opts.json = true;
     opts.body = getUserContestPCNBody(username);
-    request.post(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
 
-      return cb(null, body.data);
-    });
+    axios
+      .post(opts.url, opts.body, opts)
+      .then(function (_response: AxiosResponse) {
+        const json_data = JSON.parse(_response.data);
+
+        return cb(null, json_data);
+      })
+      .catch(function (response: AxiosError) {
+        if (response.status == 403 || response.status == 401) {
+          cb(sessionUtils.errors.EXPIRED);
+        } else {
+          cb({ msg: response.message, statusCode: response.status });
+        }
+      });
   };
 
   /* A function that is used to get the rating of the problems. */
   getRatingOnline = (cb) => {
-    // const _request = request.defaults({ timeout: 2000, jar: true });
-    // _request("https://zerotrac.github.io/leetcode_problem_rating/data.json", function (error: any, _, body: any) {
-    //   cb(error, body);
-    // });
-
     axios
       .get("https://zerotrac.github.io/leetcode_problem_rating/data.json", { timeout: 2000 })
       .then(function (response: AxiosResponse) {
@@ -168,31 +185,41 @@ function getSolutionBySlug(question_slug: string, articles_slug: string, lang: s
   opts.json = true;
   opts.body = getSolutionBySlugCNBody(articles_slug);
 
-  request.post(opts, function (_, __, body) {
-    // let bbb = body;
-    // console.log(bbb);
-    let solution = body.data.solutionArticle;
-    if (!solution) return reply.error("本题没有题解");
+  axios
+    .post(opts.url, opts.body, opts)
+    .then(function (_response: AxiosResponse) {
+      const json_data = JSON.parse(_response.data);
 
-    let link = URL_DISCUSS.replace("$slug", question_slug).replace("$articles_slug", articles_slug);
-    // let content = solution.content.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
-    let content = solution.content.replace(/\\n/g, "\n");
+      let solution = json_data.solutionArticle;
+      if (!solution) {
+        return reply.error("本题没有题解");
+      }
+      let link = URL_DISCUSS.replace("$slug", question_slug).replace("$articles_slug", articles_slug);
+      // let content = solution.content.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
+      let content = solution.content.replace(/\\n/g, "\n");
 
-    content = content.replace(/\\textit{/g, "{");
-    content = content.replace(/\\texttt{/g, "{");
-    content = content.replace(/\\text{/g, "{");
+      content = content.replace(/\\textit{/g, "{");
+      content = content.replace(/\\texttt{/g, "{");
+      content = content.replace(/\\text{/g, "{");
 
-    let solution_result: any = {};
-    solution_result.problem_name = solution.title;
-    solution_result.title = solution.title;
-    solution_result.url = link;
-    solution_result.lang = lang;
-    solution_result.author = solution.author.username;
-    solution_result.votes = solution.voteCount;
-    solution_result.body = content;
-    solution_result.is_cn = true;
-    reply.info(JSON.stringify({ code: 100, solution: solution_result }));
-  });
+      let solution_result: any = {};
+      solution_result.problem_name = solution.title;
+      solution_result.title = solution.title;
+      solution_result.url = link;
+      solution_result.lang = lang;
+      solution_result.author = solution.author.username;
+      solution_result.votes = solution.voteCount;
+      solution_result.body = content;
+      solution_result.is_cn = true;
+      reply.info(JSON.stringify({ code: 100, solution: solution_result }));
+    })
+    .catch(function (response: AxiosError) {
+      if (response.status == 403 || response.status == 401) {
+        reply.info(JSON.stringify(sessionUtils.errors.EXPIRED));
+      } else {
+        reply.info(JSON.stringify({ msg: response.message, statusCode: response.status }));
+      }
+    });
 }
 
 function getSolutionArticlesSlugList(question_slug: string, lang: string, cb) {
@@ -204,46 +231,42 @@ function getSolutionArticlesSlugList(question_slug: string, lang: string, cb) {
   opts.json = true;
   opts.body = getSolutionArticlesSlugListCNBody(question_slug, lang);
 
-  request.post(opts, function (e, _, body) {
-    let edges = body?.data?.questionSolutionArticles?.edges || [];
-    let temp_result;
-    edges.forEach((element) => {
-      if (element?.node?.slug) {
-        temp_result = element?.node?.slug;
-        return;
+  axios
+    .post(opts.url, opts.body, opts)
+    .then(function (_response: AxiosResponse) {
+      const json_data = JSON.parse(_response.data);
+      let edges = json_data.questionSolutionArticles?.edges || [];
+      let temp_result;
+      edges.forEach((element) => {
+        if (element?.node?.slug) {
+          temp_result = element?.node?.slug;
+          return;
+        }
+      });
+
+      cb(null, temp_result);
+    })
+    .catch(function (response: AxiosError) {
+      if (response.status == 403 || response.status == 401) {
+        cb(sessionUtils.errors.EXPIRED);
+      } else {
+        cb({ msg: response.message, statusCode: response.status });
       }
     });
-
-    cb(e, temp_result);
-  });
 }
 
-function signOpts(opts: any, user: any) {
-  opts.headers.Cookie = "LEETCODE_SESSION=" + user.sessionId + ";csrftoken=" + user.sessionCSRF + ";";
-  opts.headers["X-CSRFToken"] = user.sessionCSRF;
-  opts.headers["X-Requested-With"] = "XMLHttpRequest";
-}
-
-function makeOpts(url: any) {
-  let opts: any = {};
+function makeOpts(url) {
+  const opts: any = {};
   opts.url = url;
   opts.headers = {};
 
-  if (sessionUtils.isLogin()) signOpts(opts, sessionUtils.getUser());
-  return opts;
-}
-
-function checkError(e: any, resp: any, expectedStatus: any) {
-  if (!e && resp && resp.statusCode !== expectedStatus) {
-    const code = resp.statusCode;
-
-    if (code === 403 || code === 401) {
-      e = sessionUtils.errors.EXPIRED;
-    } else {
-      e = { msg: "http error", statusCode: code };
-    }
+  if (sessionUtils.isLogin()) {
+    let user = sessionUtils.getUser();
+    opts.headers.Cookie = "LEETCODE_SESSION=" + user.sessionId + ";csrftoken=" + user.sessionCSRF + ";";
+    opts.headers["X-CSRFToken"] = user.sessionCSRF;
+    opts.headers["X-Requested-With"] = "XMLHttpRequest";
   }
-  return e;
+  return opts;
 }
 
 export const pluginObj: LeetCodeCn = new LeetCodeCn();

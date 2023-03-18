@@ -13,7 +13,7 @@ let underscore = require("underscore");
 let request = require("request");
 let prompt_out = require("prompt");
 
-// import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { configUtils } from "../../utils/configUtils";
 import { commUtils } from "../../utils/commUtils";
 import { storageUtils } from "../../utils/storageUtils";
@@ -65,39 +65,45 @@ class LeetCode extends ChainNodeBase {
   getCategoryProblems = (category, cb) => {
     const opts = makeOpts(configUtils.sys.urls.problems.replace("$category", category));
 
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
+    axios
+      .get(opts.url, opts)
+      .then(function (_response: AxiosResponse) {
+        const json_data = JSON.parse(_response.data);
 
-      const json = JSON.parse(body);
+        if (json_data.user_name.length === 0) {
+          return cb(sessionUtils.errors.EXPIRED);
+        }
 
-      if (json.user_name.length === 0) {
-        return cb(sessionUtils.errors.EXPIRED);
-      }
+        const problems = json_data.stat_status_pairs
+          .filter((p) => !p.stat.question__hide)
+          .map(function (p) {
+            return {
+              state: p.status || "None",
+              id: p.stat.question_id,
+              fid: p.stat.frontend_question_id,
+              name: p.stat.question__title,
+              slug: p.stat.question__title_slug,
+              link: configUtils.sys.urls.problem.replace("$slug", p.stat.question__title_slug),
+              locked: p.paid_only,
+              percent: (p.stat.total_acs * 100) / p.stat.total_submitted,
+              level: commUtils.getNameByLevel(p.difficulty.level),
+              starred: p.is_favor,
+              category: json_data.category_slug,
+            };
+          });
 
-      const problems = json.stat_status_pairs
-        .filter((p) => !p.stat.question__hide)
-        .map(function (p) {
-          return {
-            state: p.status || "None",
-            id: p.stat.question_id,
-            fid: p.stat.frontend_question_id,
-            name: p.stat.question__title,
-            slug: p.stat.question__title_slug,
-            link: configUtils.sys.urls.problem.replace("$slug", p.stat.question__title_slug),
-            locked: p.paid_only,
-            percent: (p.stat.total_acs * 100) / p.stat.total_submitted,
-            level: commUtils.getNameByLevel(p.difficulty.level),
-            starred: p.is_favor,
-            category: json.category_slug,
-          };
-        });
-
-      return cb(null, problems);
-    });
+        return cb(null, problems);
+      })
+      .catch(function (response: AxiosError) {
+        if (response.status == 403 || response.status == 401) {
+          cb(sessionUtils.errors.EXPIRED);
+        } else {
+          cb({ msg: response.message, statusCode: response.status });
+        }
+      });
   };
 
-  /* A function that takes in a problem and a callback function. It then makes a request to the leetcode
+  /* A function that takes in a problem and a callback function. It then makes  to the leetcode
 server to get the problem's description, test cases, and other information. */
   getProblem = (problem, needTranslation, cb) => {
     const user = sessionUtils.getUser();
@@ -109,27 +115,34 @@ server to get the problem's description, test cases, and other information. */
 
     opts.json = true;
     opts.body = getQuestionDetailBody(problem.slug);
-    request.post(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
 
-      const q = body.data.question;
-      if (!q) return cb("failed to load problem!");
+    axios
+      .post(opts.url, opts.body, opts)
+      .then(function (_response: AxiosResponse) {
+        const q = _response.data.data.question;
+        if (!q) return cb("failed to load problem!");
 
-      problem.totalAC = JSON.parse(q.stats).totalAccepted;
-      problem.totalSubmit = JSON.parse(q.stats).totalSubmission;
-      problem.likes = q.likes;
-      problem.dislikes = q.dislikes;
+        problem.totalAC = JSON.parse(q.stats).totalAccepted;
+        problem.totalSubmit = JSON.parse(q.stats).totalSubmission;
+        problem.likes = q.likes;
+        problem.dislikes = q.dislikes;
 
-      problem.desc = q.translatedContent && needTranslation ? q.translatedContent : q.content;
+        problem.desc = q.translatedContent && needTranslation ? q.translatedContent : q.content;
 
-      problem.templates = JSON.parse(q.codeDefinition);
-      problem.testcase = q.sampleTestCase;
-      problem.testable = q.enableRunCode;
-      problem.templateMeta = JSON.parse(q.metaData);
+        problem.templates = JSON.parse(q.codeDefinition);
+        problem.testcase = q.sampleTestCase;
+        problem.testable = q.enableRunCode;
+        problem.templateMeta = JSON.parse(q.metaData);
 
-      return cb(null, problem);
-    });
+        return cb(null, problem);
+      })
+      .catch(function (response: AxiosError) {
+        if (response.status == 403 || response.status == 401) {
+          cb(sessionUtils.errors.EXPIRED);
+        } else {
+          cb({ msg: response.message, statusCode: response.status });
+        }
+      });
   };
   /* A function that is used to run the code on the server. */
   runCode = (opts, problem, cb) => {
@@ -148,24 +161,29 @@ server to get the problem's description, test cases, and other information. */
     });
 
     let that = this;
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
 
-      if (body.error) {
-        if (!body.error.includes("too soon")) return cb(body.error);
+    axios
+      .post(opts.url, opts.body, opts)
+      .then(function (_response: AxiosResponse) {
+        let json_data = JSON.parse(_response.data);
+        if (json_data.error) {
+          if (!json_data.error.includes("too soon")) {
+            return cb(json_data.error);
+          }
+          ++opts._delay;
 
-        ++opts._delay;
-
-        const reRun = underscore.partial(that.runCode, opts, problem, cb);
-        return setTimeout(reRun, opts._delay * 1000);
-      }
-
-      opts.json = false;
-      opts.body = null;
-
-      return cb(null, body);
-    });
+          const reRun = underscore.partial(that.runCode, opts, problem, cb);
+          return setTimeout(reRun, opts._delay * 1000);
+        }
+        return cb(null, json_data);
+      })
+      .catch(function (response: AxiosError) {
+        if (response.status == 403 || response.status == 401) {
+          cb(sessionUtils.errors.EXPIRED);
+        } else {
+          cb({ msg: response.message, statusCode: response.status });
+        }
+      });
   };
 
   /* A function that is used to verify the result of a task. */
@@ -175,20 +193,27 @@ server to get the problem's description, test cases, and other information. */
     opts.url = configUtils.sys.urls.verify.replace("$id", task.id);
 
     let that = this;
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
 
-      let result = JSON.parse(body);
-      if (result.state === "SUCCESS") {
-        result = that.formatResult(result);
-        underscore.extendOwn(result, task);
-        queue.ctx.results.push(result);
-      } else {
-        queue.addTask(task);
-      }
-      return cb();
-    });
+    axios
+      .get(opts.url, opts)
+      .then(function (_response: AxiosResponse) {
+        let result = JSON.parse(_response.data);
+        if (result.state === "SUCCESS") {
+          result = that.formatResult(result);
+          underscore.extendOwn(result, task);
+          queue.ctx.results.push(result);
+        } else {
+          queue.addTask(task);
+        }
+        return cb();
+      })
+      .catch(function (response: AxiosError) {
+        if (response.status == 403 || response.status == 401) {
+          cb(sessionUtils.errors.EXPIRED);
+        } else {
+          cb({ msg: response.message, statusCode: response.status });
+        }
+      });
   };
 
   /* Formatting the result of the submission. */
@@ -279,34 +304,45 @@ server to get the problem's description, test cases, and other information. */
     const opts = makeOpts(configUtils.sys.urls.submissions.replace("$slug", problem.slug));
     opts.headers.Referer = configUtils.sys.urls.problem.replace("$slug", problem.slug);
 
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
+    axios
+      .get(opts.url, opts)
+      .then(function (_response: AxiosResponse) {
+        const submissions = JSON.parse(_response.data).submissions_dump;
+        for (const submission of submissions)
+          submission.id = underscore.last(underscore.compact(submission.url.split("/")));
 
-      // FIXME: this only return the 1st 20 submissions, we should get next if necessary.
-      const submissions = JSON.parse(body).submissions_dump;
-      for (const submission of submissions)
-        submission.id = underscore.last(underscore.compact(submission.url.split("/")));
-
-      return cb(null, submissions);
-    });
+        return cb(null, submissions);
+      })
+      .catch(function (response: AxiosError) {
+        if (response.status == 403 || response.status == 401) {
+          cb(sessionUtils.errors.EXPIRED);
+        } else {
+          cb({ msg: response.message, statusCode: response.status });
+        }
+      });
   };
 
   /* Getting the submission code and the runtime distribution chart. */
   getSubmission = (submission, cb) => {
     const opts = makeOpts(configUtils.sys.urls.submission.replace("$id", submission.id));
 
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
+    axios
+      .get(opts.url, opts)
+      .then(function (_response: AxiosResponse) {
+        let re = _response.data.match(/submissionCode:\s('[^']*')/);
+        if (re) submission.code = eval(re[1]);
 
-      let re = body.match(/submissionCode:\s('[^']*')/);
-      if (re) submission.code = eval(re[1]);
-
-      re = body.match(/runtimeDistributionFormatted:\s('[^']+')/);
-      if (re) submission.distributionChart = JSON.parse(eval(re[1]));
-      return cb(null, submission);
-    });
+        re = _response.data.match(/runtimeDistributionFormatted:\s('[^']+')/);
+        if (re) submission.distributionChart = JSON.parse(eval(re[1]));
+        return cb(null, submission);
+      })
+      .catch(function (response: AxiosError) {
+        if (response.status == 403 || response.status == 401) {
+          cb(sessionUtils.errors.EXPIRED);
+        } else {
+          cb({ msg: response.message, statusCode: response.status });
+        }
+      });
   };
 
   /* A function that is used to star a problem. */
@@ -320,122 +356,113 @@ server to get the problem's description, test cases, and other information. */
       ? getAddQuestionToFavoriteBody(user.hash, problem.id)
       : getRemoveQuestionFromFavoriteBody(user.hash, problem.id); //  getStarProblem(user.hash, problem.id);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    request.post(opts, function (e: any, resp: any, _) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
-      return cb(null, starred);
-    });
+    axios
+      .post(opts.url, opts.body, opts)
+      .then(function (_response: AxiosResponse) {
+        return cb(null, starred);
+      })
+      .catch(function (response: AxiosError) {
+        if (response.status == 403 || response.status == 401) {
+          cb(sessionUtils.errors.EXPIRED);
+        } else {
+          cb({ msg: response.message, statusCode: response.status });
+        }
+      });
   };
 
-  /* Making a request to the server to get the favorites. */
+  /* Making a   to the server to get the favorites. */
   getFavorites = (cb: any) => {
     const opts = makeOpts(configUtils.sys.urls.favorites);
 
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
-
-      const favorites = JSON.parse(body);
-      return cb(null, favorites);
-    });
+    axios
+      .get(opts.url, opts)
+      .then(function (_response: AxiosResponse) {
+        const favorites = JSON.parse(_response.data);
+        return cb(null, favorites);
+      })
+      .catch(function (response: AxiosError) {
+        if (response.status == 403 || response.status == 401) {
+          cb(sessionUtils.errors.EXPIRED);
+        } else {
+          cb({ msg: response.message, statusCode: response.status });
+        }
+      });
   };
 
-  /* Making a POST request to the GraphQL API. */
+  /* Making a POST   to the GraphQL API. */
   getUserInfo = (cb: any) => {
     const opts = makeOpts(configUtils.sys.urls.graphql);
     opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = configUtils.sys.urls.base;
     opts.json = true;
     opts.body = getUserInfoBody();
-    request.post(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
 
-      const user = body.data.user;
-      return cb(null, user);
-    });
+    axios
+      .post(opts.url, getUserInfoBody(), opts)
+      .then(function (_response: AxiosResponse) {
+        const user = JSON.parse(_response.data.user);
+        return cb(null, user);
+      })
+      .catch(function (response: AxiosError) {
+        if (response.status == 403 || response.status == 401) {
+          cb(sessionUtils.errors.EXPIRED);
+        } else {
+          cb({ msg: response.message, statusCode: response.status });
+        }
+      });
   };
 
-  /* A function that takes in a user object and a callback function. It then makes a request to the login
-page and gets the csrf token. It then makes a post request to the login page with the csrf token and
+  /* A function that takes in a user object and a callback function. It then makes a   to the login
+page and gets the csrf token. It then makes a post   to the login page with the csrf token and
 the user's login and password. If the response status code is 302, it saves the user's session id
 and csrf token to the user object and saves the user object to the session. */
   signin = (login_info: any, cb: any) => {
-    //   axios
-    //     .get(configUtils.sys.urls.login)
-    //     .then(function (response: AxiosResponse) {
-    //       login_info.loginCSRF = commUtils.getSetCookieValue(response, "csrftoken");
-    //       axios
-    //         .post(
-    //           configUtils.sys.urls.login,
-    //           {
-    //             csrfmiddlewaretoken: login_info.loginCSRF,
-    //             login: login_info.login,
-    //             password: login_info.pass,
-    //           },
-    //           {
-    //             headers: {
-    //               "Content-Type": "multipart/form-data",
-    //               Origin: configUtils.sys.urls.base,
-    //               Referer: configUtils.sys.urls.login,
-    //               Cookie: "csrftoken=" + login_info.loginCSRF + ";",
-    //             },
-    //           }
-    //         )
-    //         .then(function (response: AxiosResponse) {
-    //           //handle success
-    //           // console.log(response);
-    //           login_info.sessionCSRF = commUtils.getSetCookieValue(response, "csrftoken");
-    //           login_info.sessionId = commUtils.getSetCookieValue(response, "LEETCODE_SESSION");
-    //           sessionUtils.saveUser(login_info);
-    //           return cb(null, login_info);
-    //         })
-    //         .catch(function (response: AxiosError) {
-    //           //handle error
-    //           if (response.response?.status !== 302) return cb("invalid password?");
-    //           login_info.sessionCSRF = commUtils.getSetCookieValue(response, "csrftoken");
-    //           login_info.sessionId = commUtils.getSetCookieValue(response, "LEETCODE_SESSION");
-    //           sessionUtils.saveUser(login_info);
-    //           return cb(null, login_info);
-    //         });
-    //     })
-    //     .catch(function (error: AxiosError) {
-    //       let error_info: any = {};
-    //       error_info.msg = error.message;
-    //       if (error.response) {
-    //         error_info.statusCode = error.response?.status;
-    //       }
-    //       cb(error_info);
-    //     });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    request(configUtils.sys.urls.login, function (e: any, resp: any, _) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
-      login_info.loginCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
-      const opts = {
-        url: configUtils.sys.urls.login,
-        headers: {
-          Origin: configUtils.sys.urls.base,
-          Referer: configUtils.sys.urls.login,
-          Cookie: "csrftoken=" + login_info.loginCSRF + ";",
-        },
-        form: {
-          csrfmiddlewaretoken: login_info.loginCSRF,
-          login: login_info.login,
-          password: login_info.pass,
-        },
-      };
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      request.post(opts, function (e: any, resp: any, _) {
-        if (e) return cb(e);
-        if (resp.statusCode !== 302) return cb("invalid password?");
-        login_info.sessionCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
-        login_info.sessionId = commUtils.getSetCookieValue(resp, "LEETCODE_SESSION");
-        sessionUtils.saveUser(login_info);
-        return cb(null, login_info);
+    axios
+      .get(configUtils.sys.urls.login)
+      .then(function (response: AxiosResponse) {
+        login_info.loginCSRF = commUtils.getSetCookieValue(response, "csrftoken");
+        axios
+          .post(
+            configUtils.sys.urls.login,
+            {
+              csrfmiddlewaretoken: login_info.loginCSRF,
+              login: login_info.login,
+              password: login_info.pass,
+            },
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Origin: configUtils.sys.urls.base,
+                Referer: configUtils.sys.urls.login,
+                Cookie: "csrftoken=" + login_info.loginCSRF + ";",
+              },
+            }
+          )
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          .then(function (_response: AxiosResponse) {
+            //handle success
+            // console.log(response);
+            return cb("invalid password?");
+          })
+          .catch(function (response: AxiosError) {
+            //handle error
+            if (response.response?.status !== 302) {
+              return cb("invalid password?");
+            }
+            login_info.sessionCSRF = commUtils.getSetCookieValue(response, "csrftoken");
+            login_info.sessionId = commUtils.getSetCookieValue(response, "LEETCODE_SESSION");
+            sessionUtils.saveUser(login_info);
+            return cb(null, login_info);
+          });
+      })
+      .catch(function (error: AxiosError) {
+        let error_info: any = {};
+        error_info.msg = error.message;
+        if (error.response) {
+          error_info.statusCode = error.response?.status;
+        }
+        cb(error_info);
       });
-    });
   };
 
   /* Retrieving the user's favorites and user info. */
@@ -447,12 +474,7 @@ and csrf token to the user object and saves the user object to the session. */
         if (f) {
           user.hash = f.id_hash;
           user.name = favorites.user_name;
-        } else {
-          // reply.warn("Favorite not found?");
         }
-      } else {
-        // return cb(e);
-        // reply.warn("Failed to retrieve user favorites: " + e);
       }
 
       that.getUserInfo(function (e, _user) {
@@ -490,7 +512,7 @@ and csrf token to the user object and saves the user object to the session. */
   };
   /* A function that is used to login to leetcode. */
 
-  requestLeetcodeAndSave = (request, leetcodeUrl, user, cb) => {
+  callLeetcodeAndSave = (request, leetcodeUrl, user, cb) => {
     let that = this;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     request.get({ url: leetcodeUrl }, function (_, resp, __) {
@@ -560,7 +582,7 @@ and csrf token to the user object and saves the user object to the session. */
           return cb("GitHub login failed");
         }
         if (resp.request.uri.href !== urls.github_tf_redirect) {
-          return that.requestLeetcodeAndSave(_request, leetcodeUrl, user, cb);
+          return that.callLeetcodeAndSave(_request, leetcodeUrl, user, cb);
         }
         prompt_out.colors = false;
         prompt_out.message = "";
@@ -596,7 +618,7 @@ and csrf token to the user object and saves the user object to the session. */
               if (resp.request.uri.href === urls.github_tf_session_request) {
                 return cb("Invalid two-factor code please check");
               }
-              that.requestLeetcodeAndSave(_request, leetcodeUrl, user, cb);
+              that.callLeetcodeAndSave(_request, leetcodeUrl, user, cb);
             });
           }
         );
@@ -658,68 +680,30 @@ and csrf token to the user object and saves the user object to the session. */
         if (resp.statusCode !== 200) {
           return cb("LinkedIn login failed");
         }
-        that.requestLeetcodeAndSave(_request, leetcodeUrl, user, cb);
+        that.callLeetcodeAndSave(_request, leetcodeUrl, user, cb);
       });
     });
   };
 
   /* A function that is used to get the rating of the problems. */
   getRatingOnline = (cb) => {
-    const _request = request.defaults({ timeout: 2000, jar: true });
-    _request("https://zerotrac.github.io/leetcode_problem_rating/data.json", function (error: any, _, body: any) {
-      // console.log(error);
-      // console.log(info);
-      cb(error, body);
-    });
+    axios
+      .get("https://zerotrac.github.io/leetcode_problem_rating/data.json", { timeout: 2000 })
+      .then(function (response: AxiosResponse) {
+        cb(null, response.data);
+      })
+      .catch(function (error: AxiosError) {
+        let error_info: any = {};
+        error_info.msg = error.message;
+        if (error.response) {
+          error_info.statusCode = error.response?.status;
+        }
+        cb(error_info);
+      });
   };
 
   /* A function that gets the question of the day from leetcode. */
   getQuestionOfToday = (cb) => {
-    // const opts = makeOpts(configUtils.sys.urls.graphql);
-    // opts.headers.Origin = configUtils.sys.urls.base;
-    // opts.headers.Referer = "https://leetcode.com/";
-
-    // opts.json = true;
-    // opts.body = {
-    //   operationName: "questionOfToday",
-    //   variables: {},
-    //   query: [
-    //     "query questionOfToday {",
-    //     "  todayRecord {",
-    //     "    date",
-    //     "    userStatus",
-    //     "    question {",
-    //     "      titleSlug",
-    //     "      questionId",
-    //     "      questionFrontendId",
-    //     // '      content',
-    //     // '      stats',
-    //     // '      likes',
-    //     // '      dislikes',
-    //     // '      codeDefinition',
-    //     // '      sampleTestCase',
-    //     // '      enableRunCode',
-    //     // '      metaData',
-    //     // '      translatedContent',
-    //     "      __typename",
-    //     "    }",
-    //     "  __typename",
-    //     "  }",
-    //     "}",
-    //   ].join("\n"),
-    // };
-
-    // request.post(opts, function (e, resp, body) {
-    //   e = checkError(e, resp, 200);
-    //   if (e) return cb(e);
-    //   let result: any = {};
-    //   result.titleSlug = body.data.todayRecord[0].question.titleSlug;
-    //   result.questionId = body.data.todayRecord[0].question.questionId;
-    //   result.fid = body.data.todayRecord[0].question.questionFrontendId;
-    //   result.date = body.data.todayRecord[0].data;
-    //   result.userStatus = body.data.todayRecord[0].userStatus;
-    //   return cb(null, result);
-    // });
     cb(null, {});
   };
 
@@ -728,47 +712,6 @@ and csrf token to the user object and saves the user object to the session. */
     const opts = makeOpts(configUtils.sys.urls.noj_go);
     opts.headers.Origin = configUtils.sys.urls.base;
     opts.headers.Referer = configUtils.sys.urls.u.replace("$username", username);
-
-    // opts.json = true;
-    // opts.body = {
-    //   variables: {
-    //     userSlug: username,
-    //   },
-    //   query: [
-    //     "        query userContestRankingInfo($userSlug: String!) {",
-    //     "          userContestRanking(userSlug: $userSlug) {",
-    //     "            attendedContestsCount",
-    //     "            rating",
-    //     "            globalRanking",
-    //     "            localRanking",
-    //     "            globalTotalParticipants",
-    //     "            localTotalParticipants",
-    //     "            topPercentage",
-    //     "        }",
-    //     // '      userContestRankingHistory(userSlug: $userSlug) {',
-    //     // '            attended',
-    //     // '            totalProblems',
-    //     // '            trendingDirection',
-    //     // '            finishTimeInSeconds',
-    //     // '            rating',
-    //     // '            score',
-    //     // '            ranking',
-    //     // '            contest {',
-    //     // '              title',
-    //     // '              titleCn',
-    //     // '              startTime',
-    //     // '            }',
-    //     // '        }',
-    //     "    }",
-    //   ].join("\n"),
-    // };
-
-    // request.post(opts, function (e, resp, body) {
-    //   e = checkError(e, resp, 200);
-    //   if (e) return cb(e);
-
-    //   return cb(null, body.data);
-    // });
     cb(null, {});
   };
 
@@ -795,7 +738,7 @@ and csrf token to the user object and saves the user object to the session. */
 }
 
 /**
- * It takes a problem object, a language, and a callback. It then makes a request to the LeetCode
+ * It takes a problem object, a language, and a callback. It then makes a   to the LeetCode
  * Discuss API to get the top voted solution for that problem in that language
  * @param problem - the problem object
  * @param lang - The language of the solution.
@@ -807,20 +750,20 @@ function getHelpEn(problem, lang, cb) {
   let URL_DISCUSSES = "https://leetcode.com/graphql";
 
   if (lang === "python3") lang = "python";
-
-  let opts = {
-    url: URL_DISCUSSES,
-    json: true,
-    body: getGetHelpEnBody(lang, problem.id),
-  };
-  request(opts, function (e, resp, body) {
-    if (e) return cb(e);
-    if (resp.statusCode !== 200) return cb({ msg: "http error", statusCode: resp.statusCode });
-
-    const solutions = body.data.questionTopicsList.edges;
-    const solution = solutions.length > 0 ? solutions[0].node : null;
-    return cb(null, solution);
-  });
+  axios
+    .post(URL_DISCUSSES, {
+      url: URL_DISCUSSES,
+      json: true,
+      body: getGetHelpEnBody(lang, problem.id),
+    })
+    .then(function (_response: AxiosResponse) {
+      const solutions = _response.data.questionTopicsList.edges;
+      const solution = solutions.length > 0 ? solutions[0].node : null;
+      return cb(null, solution);
+    })
+    .catch(function (response: AxiosError) {
+      return cb({ msg: response.message, statusCode: response.status }, null);
+    });
 }
 function makeOpts(url) {
   const opts: any = {};
@@ -828,27 +771,30 @@ function makeOpts(url) {
   opts.headers = {};
 
   if (sessionUtils.isLogin()) {
-    signOpts(opts, sessionUtils.getUser());
+    let user = sessionUtils.getUser();
+    opts.headers.Cookie = "LEETCODE_SESSION=" + user.sessionId + ";csrftoken=" + user.sessionCSRF + ";";
+    opts.headers["X-CSRFToken"] = user.sessionCSRF;
+    opts.headers["X-Requested-With"] = "XMLHttpRequest";
   }
   return opts;
 }
 
-function signOpts(opts, user) {
-  opts.headers.Cookie = "LEETCODE_SESSION=" + user.sessionId + ";csrftoken=" + user.sessionCSRF + ";";
-  opts.headers["X-CSRFToken"] = user.sessionCSRF;
-  opts.headers["X-Requested-With"] = "XMLHttpRequest";
-}
-function checkError(e, resp, expectedStatus) {
-  if (!e && resp && resp.statusCode !== expectedStatus) {
-    const code = resp.statusCode;
+// function signOpts(opts, user) {
+//   opts.headers.Cookie = "LEETCODE_SESSION=" + user.sessionId + ";csrftoken=" + user.sessionCSRF + ";";
+//   opts.headers["X-CSRFToken"] = user.sessionCSRF;
+//   opts.headers["X-Requested-With"] = "XMLHttpRequest";
+// }
+// function checkError(e, resp, expectedStatus) {
+//   if (!e && resp && resp.statusCode !== expectedStatus) {
+//     const code = resp.statusCode;
 
-    if (code === 403 || code === 401) {
-      e = sessionUtils.errors.EXPIRED;
-    } else {
-      e = { msg: "http error", statusCode: code };
-    }
-  }
-  return e;
-}
+//     if (code === 403 || code === 401) {
+//       e = sessionUtils.errors.EXPIRED;
+//     } else {
+//       e = { msg: "http error", statusCode: code };
+//     }
+//   }
+//   return e;
+// }
 
 export const pluginObj: LeetCode = new LeetCode();
