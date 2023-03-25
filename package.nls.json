@@ -79,7 +79,8 @@
         "Show the top voted solution for the current problem.",
         "Show the problem description page.",
         "Test default case",
-        "Test all default case"
+        "Test all default case",
+        "Debug case"
     ],
     "main.contributes.configuration.properties.leetcode-problem-rating.enableSideMode.description": "Determine whether to group all webview pages into the second editor column when solving problems.",
     "main.contributes.configuration.properties.leetcode-problem-rating.nodePath.description": "The Node.js executable path. for example, C:\\Program Files\\nodejs\\node.exe",

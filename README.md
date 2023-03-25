@@ -84,7 +84,6 @@
    // @lcpr-div-debug-arg-start
    // funName= alternateDigitSum
    // paramTypes= ["number"]
-   // returnType= number
    // @lcpr-div-debug-arg-end
    ```
 2. diy 参数说明
@@ -120,9 +119,6 @@
       - 类型说明:数组
     - "TreeNode"
       - 类型说明:树节点
-- returnType:函数的返回值
-
-  - 可填入内容同 paramTypes
 
 <!-- ## TODO 看到一些可能会用得上的功能
 

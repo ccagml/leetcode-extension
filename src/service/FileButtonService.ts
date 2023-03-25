@@ -216,7 +216,6 @@ export class FileButtonService implements vscode.CodeLensProvider {
     const temp_result: vscode.CodeLens[] = [];
 
     // paramTypes= []
-    // returnType=
 
     if (lineContent.indexOf("paramTypes=") >= 0) {
       temp_result.push(
@@ -235,22 +234,22 @@ export class FileButtonService implements vscode.CodeLensProvider {
       );
     }
 
-    if (lineContent.indexOf("returnType=") >= 0) {
-      temp_result.push(
-        new vscode.CodeLens(range, {
-          title: "addReturn",
-          command: "lcpr.addDebugType",
-          arguments: [document, "returnType"],
-        })
-      );
-      temp_result.push(
-        new vscode.CodeLens(range, {
-          title: "resetReturn",
-          command: "lcpr.resetDebugType",
-          arguments: [document, "returnType"],
-        })
-      );
-    }
+    // if (lineContent.indexOf("returnType=") >= 0) {
+    //   temp_result.push(
+    //     new vscode.CodeLens(range, {
+    //       title: "addReturn",
+    //       command: "lcpr.addDebugType",
+    //       arguments: [document, "returnType"],
+    //     })
+    //   );
+    //   temp_result.push(
+    //     new vscode.CodeLens(range, {
+    //       title: "resetReturn",
+    //       command: "lcpr.resetDebugType",
+    //       arguments: [document, "returnType"],
+    //     })
+    //   );
+    // }
     return temp_result;
   }
 

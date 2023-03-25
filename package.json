@@ -1018,7 +1018,8 @@
                             "case",
                             "allcase",
                             "test",
-                            "solution"
+                            "solution",
+                            "debug"
                         ],
                         "scope": "application",
                         "items": {
@@ -1030,7 +1031,8 @@
                                 "solution",
                                 "description",
                                 "case",
-                                "allcase"
+                                "allcase",
+                                "debug"
                             ],
                             "enumDescriptions": [
                                 "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.0%",
@@ -1039,7 +1041,8 @@
                                 "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.3%",
                                 "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.4%",
                                 "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.5%",
-                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.6%"
+                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.6%",
+                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.7%"
                             ]
                         },
                         "description": "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.description%"

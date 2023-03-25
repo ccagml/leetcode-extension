@@ -267,7 +267,7 @@ class DebugCpp extends DebugBase {
       testString.replace(/\\"/g, '\\\\"'),
       problemType.funName,
       problemType.paramTypes.join(","),
-      problemType.returnType,
+      problemType.returnType || "",
       meta.id,
       port.toString(),
     ];
@@ -279,7 +279,6 @@ class DebugCpp extends DebugBase {
         name: debugSessionName,
         // logging: { engineLogging: true, trace: true, traceResponse: true },
         args,
-
       })
     );
 

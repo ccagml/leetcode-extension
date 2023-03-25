@@ -1,6 +1,9 @@
 <%=comment.start%>
 <%=comment.line%> @lc app=<%=app%> id=<%=fid%> lang=<%=lang%>
 <%=comment.line%> @lcpr version=<%=LCPTCTX.version%>
+<%=comment.line%> @lcpr app=<%=app%>
+<%=comment.line%> @lcpr id=<%=fid%>
+<%=comment.line%> @lcpr lang=<%=lang%>
 <%=comment.line%>
 <%=comment.line%> [<%=fid%>] <%=name%>
 <%=comment.end%>
@@ -9,11 +12,6 @@
 <%=code%>
 <%=comment.singleLine%> @lc code=end
 
-<%=comment.singleLine%> @lcpr-div-debug-arg-start
-<%=comment.singleLine%> funName=
-<%=comment.singleLine%> paramTypes= []
-<%=comment.singleLine%> returnType=
-<%=comment.singleLine%> @lcpr-div-debug-arg-end
 
 <% if(allCaseList && allCaseList.length > 0){ %>
 <%=comment.start%><% allCaseList.forEach(function(acase) { %>
