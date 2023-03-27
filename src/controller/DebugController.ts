@@ -7,7 +7,7 @@
  * Copyright (c) 2023 ccagml . All rights reserved
  */
 
-import { TextDocument, window, Range } from "vscode";
+import { TextDocument, window, Range, Position } from "vscode";
 import { getTextEditorFilePathByUri } from "../utils/SystemUtils";
 import * as fs from "fs";
 import { fileMeta, ProblemMeta, supportDebugLanguages } from "../utils/problemUtils";
@@ -16,6 +16,26 @@ import { debugService } from "../service/DebugService";
 import { debugArgDao } from "../dao/debugArgDao";
 
 import { IQuickItemEx } from "../model/Model";
+
+const singleLineFlag = {
+  bash: "#",
+  c: "//",
+  cpp: "//",
+  csharp: "//",
+  golang: "//",
+  java: "//",
+  javascript: "//",
+  kotlin: "//",
+  mysql: "--",
+  php: "//",
+  python: "#",
+  python3: "#",
+  ruby: "#",
+  rust: "//",
+  scala: "//",
+  swift: "//",
+  typescript: "//",
+};
 
 // 做杂活
 class DebugContorller {
@@ -31,6 +51,149 @@ class DebugContorller {
     return true;
   }
 
+  public async check_create_debug_area(meta: ProblemMeta | null, document: TextDocument) {
+    if (supportDebugLanguages.indexOf(meta?.lang || "") != -1) {
+      // 分析uri代码块
+      if (document != null) {
+        const fileContent: string = document.getText();
+        const debug_div_arg: RegExp = /@lcpr-div-debug-arg-start/;
+        if (!debug_div_arg.test(fileContent.toString())) {
+          // 弹一个生成配置区的选项
+          await this.create_diy_debug_arg(meta, document);
+        }
+      }
+    }
+  }
+
+  public try_get_array_type(obj) {
+    if (Array.isArray(obj)) {
+      if (Array.isArray(obj[0])) {
+        if (typeof obj[0][0] == "number") {
+          return "number[][]";
+        } else if (typeof obj[0][0] == "string") {
+          return "string[][]";
+        }
+      } else if (typeof obj[0] == "number") {
+        return "number[]";
+      } else if (typeof obj[0] == "string") {
+        return "string[]";
+      }
+    }
+    return "try_arg_error";
+  }
+
+  // 尝试获取diy的参数
+  public try_get_diy_param(ts: string) {
+    let debug_param: Array<any> = [];
+
+    ts = (ts || "").replace(/\r?\n/g, "\\n");
+    ts += "\\n";
+
+    let case_array: Array<string> = ts.split("\\n");
+
+    case_array.forEach((element) => {
+      if (element.length > 0) {
+        try {
+          let cur_param = JSON.parse(element);
+          if (typeof cur_param == "number") {
+            debug_param.push("number");
+          } else if (Array.isArray(cur_param)) {
+            debug_param.push(this.try_get_array_type(cur_param));
+          } else if (typeof cur_param == "string") {
+            debug_param.push(element.length == 1 ? "character" : "string");
+          } else {
+            debug_param = [];
+            return;
+          }
+        } catch (error) {
+          // 这里是字符串
+          debug_param.push(element.length == 1 ? "character" : "string");
+        }
+      }
+    });
+
+    // console.log("结果", debug_param);
+    return debug_param;
+  }
+
+  // 去除测试用例前的注释符号, 测试用例 可能有某些语言的注释符号, 例如 844题的#
+  public fix_lineContent(lineContent) {
+    let cut_pos = 0;
+    for (let left = 0; left < lineContent.length; left++) {
+      if (lineContent[left] == "#") {
+        continue;
+      }
+      if (lineContent[left] == "/" && lineContent[left + 1] == "/") {
+        left++;
+        continue;
+      }
+      if (lineContent[left] == "-" && lineContent[left + 1] == "-") {
+        left++;
+        continue;
+      }
+      if (lineContent[left] == " ") {
+        continue;
+      }
+      cut_pos = left;
+      break;
+    }
+    return lineContent.substring(cut_pos);
+  }
+
+  public get_one_case(document: TextDocument) {
+    let caseFlag = false;
+    let curCase = "";
+    for (let i: number = 0; i < document.lineCount; i++) {
+      const lineContent: string = document.lineAt(i).text;
+
+      if (caseFlag && lineContent.indexOf("@lcpr case=end") < 0) {
+        curCase += this.fix_lineContent(lineContent).replace(/\s+/g, "");
+      }
+      // 收集所有用例
+      if (lineContent.indexOf("@lcpr case=start") >= 0) {
+        caseFlag = true;
+      }
+
+      if (caseFlag && lineContent.indexOf("@lcpr case=end") >= 0) {
+        return curCase;
+      }
+    }
+    return curCase;
+  }
+
+  public async create_diy_debug_arg(meta: ProblemMeta | null, document: TextDocument) {
+    const name: string | undefined = await window.showInputBox({
+      prompt: "输入函数名",
+      title: "尝试生成区域调试参数",
+      ignoreFocusOut: true,
+    });
+
+    if (!(name && name.trim())) {
+      return;
+    }
+
+    let singleLine = singleLineFlag[meta?.lang || ""];
+    let div_debug_arg: any = [
+      `\n`,
+      `${singleLine} @lcpr-div-debug-arg-start`,
+      `${singleLine} funName=${name}`,
+      `${singleLine} paramTypes= ${JSON.stringify(this.try_get_diy_param(this.get_one_case(document)))}`,
+      `${singleLine} @lcpr-div-debug-arg-end`,
+      `\n`,
+    ];
+
+    for (let i: number = 0; i < document.lineCount; i++) {
+      const lineContent: string = document.lineAt(i).text;
+
+      if (lineContent.indexOf("@lc code=end") >= 0) {
+        const editor = window.activeTextEditor;
+        editor?.edit((edit) => {
+          edit.insert(new Position(i + 1, i + 1), div_debug_arg.join("\n"));
+        });
+      }
+    }
+  }
+
   public async startDebug(document: TextDocument, testcase?: string): Promise<void> {
     try {
       const filePath: string | undefined = await getTextEditorFilePathByUri(document.uri);
@@ -41,7 +204,9 @@ class DebugContorller {
       const meta: ProblemMeta | null = fileMeta(fileContent.toString());
 
       if (!this.canDebug(meta, document)) {
-        window.showErrorMessage("这题还不能debug,请尝试配置区域调试参数,麻烦提issuse");
+        // window.showErrorMessage("这题还不能debug,请尝试配置区域调试参数,麻烦提issuse");
+        // 判断生成测试区块
+        await this.check_create_debug_area(meta, document);
         return;
       }
       let result: any;
@@ -99,8 +264,10 @@ class DebugContorller {
     }
 
     const content: string = document.getText();
-    const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=(.*)/);
-    if (!matchResult || !matchResult[2]) {
+    const matchResult: RegExpMatchArray | null = content.match(
+      /@lc app=(.*) id=(.*|\w*|\W*|[\\u4e00-\\u9fa5]*) lang=(.*)/
+    );
+    if (!matchResult || !matchResult[3]) {
       return undefined;
     }
     // 搜集所有debug
@@ -132,11 +299,12 @@ class DebugContorller {
 
             edit.replace(new Range(i, equal_index + 1, i, last_index), JSON.stringify(cur_param_array));
           });
-        } else if (addType == "returnType" && lineContent.indexOf("returnType=") >= 0) {
-          window.activeTextEditor?.edit((edit) => {
-            edit.replace(new Range(i, equal_index + 1, i, last_index), choice.value);
-          });
         }
+        //  else if (addType == "returnType" && lineContent.indexOf("returnType=") >= 0) {
+        //   window.activeTextEditor?.edit((edit) => {
+        //     edit.replace(new Range(i, equal_index + 1, i, last_index), choice.value);
+        //   });
+        // }
       }
 
       // 收集所有用例
@@ -148,7 +316,9 @@ class DebugContorller {
   }
   public async resetDebugType(document: TextDocument, addType) {
     const content: string = document.getText();
-    const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=(.*)/);
+    const matchResult: RegExpMatchArray | null = content.match(
+      /@lc app=(.*) id=(.*|\w*|\W*|[\\u4e00-\\u9fa5]*) lang=(.*)/
+    );
     if (!matchResult || !matchResult[2]) {
       return undefined;
     }
@@ -170,11 +340,12 @@ class DebugContorller {
             let cur_param_array: any = [];
             edit.replace(new Range(i, equal_index + 1, i, last_index), JSON.stringify(cur_param_array));
           });
-        } else if (addType == "returnType" && lineContent.indexOf("returnType=") >= 0) {
-          window.activeTextEditor?.edit((edit) => {
-            edit.replace(new Range(i, equal_index + 1, i, last_index), "");
-          });
         }
+        //  else if (addType == "returnType" && lineContent.indexOf("returnType=") >= 0) {
+        //   window.activeTextEditor?.edit((edit) => {
+        //     edit.replace(new Range(i, equal_index + 1, i, last_index), "");
+        //   });
+        // }
       }
 
       // 收集所有用例

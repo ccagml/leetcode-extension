@@ -628,10 +628,10 @@ class TreeViewController implements Disposable {
 
   public async testapi(): Promise<void> {
     try {
-      let so = {};
-
-      const solution: string = JSON.stringify(so);
-      solutionService.show(solution);
+      // let so = {};
+      // const solution: string = JSON.stringify(so);
+      // solutionService.show(solution);
+      // debugContorller.try_get_diy_param();
     } catch (error) {
       logOutput.appendLine(error.toString());
       await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", OutPutType.error);

@@ -22,12 +22,14 @@ class RemarkService implements Disposable {
 
   getQidByDocument(document: TextDocument) {
     const content: string = document.getText();
-    const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=.*/);
+    const matchResult: RegExpMatchArray | null = content.match(
+      /@lc app=(.*) id=(.*|\w*|\W*|[\\u4e00-\\u9fa5]*) lang=(.*)/
+    );
     let result: Map<string, string> = new Map<string, string>();
     if (!matchResult) {
       return result;
     }
-    const fid: string | undefined = matchResult[1];
+    const fid: string | undefined = matchResult[2];
     let qid: string | undefined = treeViewController.getQidByFid(fid);
     result["fid"] = fid;
     if (qid != undefined) {
@@ -49,8 +51,10 @@ class RemarkService implements Disposable {
 
   public async includeTemplates(document: TextDocument) {
     const content: string = document.getText();
-    const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=(.*)/);
-    if (!matchResult || !matchResult[2]) {
+    const matchResult: RegExpMatchArray | null = content.match(
+      /@lc app=(.*) id=(.*|\w*|\W*|[\\u4e00-\\u9fa5]*) lang=(.*)/
+    );
+    if (!matchResult || !matchResult[3]) {
       return undefined;
     }
     for (let i: number = 0; i < document.lineCount; i++) {
@@ -59,7 +63,7 @@ class RemarkService implements Disposable {
       if (lineContent.indexOf("@lc code=start") >= 0) {
         const editor = window.activeTextEditor;
         editor?.edit((edit) => {
-          edit.insert(new Position(i - 1, i - 1), getIncludeTemplate(matchResult[2]));
+          edit.insert(new Position(i - 1, i - 1), getIncludeTemplate(matchResult[3]));
         });
       }
     }

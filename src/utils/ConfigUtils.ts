@@ -92,7 +92,14 @@ export function getWorkspaceFolder(): string {
 
 // 快捷操作
 export function getEditorShortcuts(): string[] {
-  return getVsCodeConfig().get<string[]>("editor.shortcuts", ["submit", "case", "allcase", "test", "solution"]);
+  return getVsCodeConfig().get<string[]>("editor.shortcuts", [
+    "submit",
+    "case",
+    "allcase",
+    "test",
+    "solution",
+    "debug",
+  ]);
 }
 
 export function isStarShortcut(): boolean {

@@ -73,13 +73,14 @@
     "main.contributes.configuration.properties.leetcode-problem-rating.enableStatusBar.description": "是否显示状态栏。",
     "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.description": "自定义编辑器中的快捷方式。",
     "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions": [
-        "Submit your answer to LeetCode.",
-        "Test your answer with customized test cases.",
-        "Star or unstar the current problem.",
-        "Show the top voted solution for the current problem.",
-        "Show the problem description page.",
-        "Test default case",
-        "Test all default case"
+        "提交题解",
+        "提交测试",
+        "题目标心",
+        "获取题解",
+        "显示题目简介",
+        "提交默认测试",
+        "提交所有测试",
+        "本地调试"
     ],
     "main.contributes.configuration.properties.leetcode-problem-rating.enableSideMode.description": "解决问题时确定是否将所有webview页面分组到第二个编辑器列中。",
     "main.contributes.configuration.properties.leetcode-problem-rating.nodePath.description": "Node.js 可执行文件路径。 例如:C:\\Program Files\\nodejs\\node.exe",

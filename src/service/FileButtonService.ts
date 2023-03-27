@@ -104,13 +104,15 @@ export class FileButtonService implements vscode.CodeLensProvider {
     }
 
     if (supportDebugLanguages.indexOf(nodeLang) != -1) {
-      temp_result.push(
-        new vscode.CodeLens(range, {
-          title: "debug",
-          command: "lcpr.simpleDebug",
-          arguments: [document],
-        })
-      );
+      if (shortcuts.indexOf("debug") >= 0) {
+        temp_result.push(
+          new vscode.CodeLens(range, {
+            title: "debug",
+            command: "lcpr.simpleDebug",
+            arguments: [document],
+          })
+        );
+      }
     }
 
     return temp_result;
@@ -124,22 +126,31 @@ export class FileButtonService implements vscode.CodeLensProvider {
 
     const temp_result: vscode.CodeLens[] = [];
 
-    temp_result.push(
-      new vscode.CodeLens(range, {
-        title: "case",
-        command: "lcpr.tesCaseArea",
-        arguments: [document.uri, testCase],
-      })
-    );
+    const shortcuts: string[] = getEditorShortcuts();
+    if (!shortcuts) {
+      return temp_result;
+    }
 
-    if (supportDebugLanguages.indexOf(nodeLang) != -1) {
+    if (shortcuts.indexOf("case") >= 0) {
       temp_result.push(
         new vscode.CodeLens(range, {
-          title: "debug",
-          command: "lcpr.simpleDebug",
-          arguments: [document, testCase],
+          title: "case",
+          command: "lcpr.tesCaseArea",
+          arguments: [document.uri, testCase],
         })
       );
+    }
+
+    if (supportDebugLanguages.indexOf(nodeLang) != -1) {
+      if (shortcuts.indexOf("debug") >= 0) {
+        temp_result.push(
+          new vscode.CodeLens(range, {
+            title: "debug",
+            command: "lcpr.simpleDebug",
+            arguments: [document, testCase],
+          })
+        );
+      }
     }
 
     return temp_result;
@@ -216,56 +227,63 @@ export class FileButtonService implements vscode.CodeLensProvider {
     const temp_result: vscode.CodeLens[] = [];
 
     // paramTypes= []
-    // returnType=
 
     if (lineContent.indexOf("paramTypes=") >= 0) {
-      temp_result.push(
-        new vscode.CodeLens(range, {
-          title: "addParam",
-          command: "lcpr.addDebugType",
-          arguments: [document, "paramTypes"],
-        })
-      );
-      temp_result.push(
-        new vscode.CodeLens(range, {
-          title: "resetParam",
-          command: "lcpr.resetDebugType",
-          arguments: [document, "paramTypes"],
-        })
-      );
+      const shortcuts: string[] = getEditorShortcuts();
+      if (!shortcuts) {
+        return temp_result;
+      }
+      if (shortcuts.indexOf("debug") >= 0) {
+        temp_result.push(
+          new vscode.CodeLens(range, {
+            title: "addParam",
+            command: "lcpr.addDebugType",
+            arguments: [document, "paramTypes"],
+          })
+        );
+        temp_result.push(
+          new vscode.CodeLens(range, {
+            title: "resetParam",
+            command: "lcpr.resetDebugType",
+            arguments: [document, "paramTypes"],
+          })
+        );
+      }
     }
 
-    if (lineContent.indexOf("returnType=") >= 0) {
-      temp_result.push(
-        new vscode.CodeLens(range, {
-          title: "addReturn",
-          command: "lcpr.addDebugType",
-          arguments: [document, "returnType"],
-        })
-      );
-      temp_result.push(
-        new vscode.CodeLens(range, {
-          title: "resetReturn",
-          command: "lcpr.resetDebugType",
-          arguments: [document, "returnType"],
-        })
-      );
-    }
+    // if (lineContent.indexOf("returnType=") >= 0) {
+    //   temp_result.push(
+    //     new vscode.CodeLens(range, {
+    //       title: "addReturn",
+    //       command: "lcpr.addDebugType",
+    //       arguments: [document, "returnType"],
+    //     })
+    //   );
+    //   temp_result.push(
+    //     new vscode.CodeLens(range, {
+    //       title: "resetReturn",
+    //       command: "lcpr.resetDebugType",
+    //       arguments: [document, "returnType"],
+    //     })
+    //   );
+    // }
     return temp_result;
   }
 
   public provideCodeLenses(document: vscode.TextDocument): vscode.ProviderResult<vscode.CodeLens[]> {
     const content: string = document.getText();
-    const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=(.*)/);
+    const matchResult: RegExpMatchArray | null = content.match(
+      /@lc app=(.*) id=(.*|\w*|\W*|[\\u4e00-\\u9fa5]*) lang=(.*)/
+    );
     if (!matchResult) {
       return undefined;
     }
-    const nodeId: string | undefined = matchResult[1];
+    const nodeId: string | undefined = matchResult[2];
     let node: NodeModel | undefined;
     if (nodeId) {
       node = treeViewController.getNodeById(nodeId);
     }
-    let nodeLang: string | undefined = matchResult[2];
+    let nodeLang: string | undefined = matchResult[3];
 
     const codeLens: vscode.CodeLens[] = [];
     let caseFlag: boolean = false;
