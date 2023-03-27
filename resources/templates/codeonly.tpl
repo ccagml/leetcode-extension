@@ -9,11 +9,6 @@
 <%=code%>
 <%=comment.singleLine%> @lc code=end
 
-<%=comment.singleLine%> @lcpr-div-debug-arg-start
-<%=comment.singleLine%> funName=
-<%=comment.singleLine%> paramTypes= []
-<%=comment.singleLine%> returnType=
-<%=comment.singleLine%> @lcpr-div-debug-arg-end
 
 <% if(allCaseList && allCaseList.length > 0){ %>
 <%=comment.start%><% allCaseList.forEach(function(acase) { %>

@@ -113,7 +113,7 @@ class DebugService {
       testString,
       problemType.funName,
       problemType.paramTypes.join(","),
-      problemType.returnType,
+      problemType.returnType || "",
       meta.id,
       (this.server.address() as net.AddressInfo).port.toString(),
     ];
