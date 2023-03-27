@@ -4,8 +4,6 @@ import * as vscode from "vscode";
 
 import { useWsl, isWindows, usingCmd } from "./SystemUtils";
 
-const fileMateReg: RegExp = /@lc\s+(?:[\s\S]*?)\s+id=(\d+)\s+lang=([\S]+)/;
-
 const beforeStubReg: RegExp = /@lcpr-before-debug-begin([\s\S]*?)@lcpr-before-debug-end/;
 const afterStubReg: RegExp = /@lcpr-after-debug-begin([\s\S]*?)@lcpr-after-debug-end/;
 
@@ -101,11 +99,11 @@ export function genFileExt(language: string): string {
 }
 
 export function fileMeta(content: string): ProblemMeta | null {
-  const result: RegExpExecArray | null = fileMateReg.exec(content);
+  const result: RegExpExecArray | null = /@lc app=(.*) id=(.*|\w*|\W*|[\\u4e00-\\u9fa5]*) lang=(.*)/.exec(content);
   if (result != null) {
     return {
-      id: result[1],
-      lang: result[2],
+      id: result[2],
+      lang: result[3],
     };
   }
   return null;

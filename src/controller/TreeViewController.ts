@@ -74,7 +74,6 @@ import { fileButtonService } from "../service/FileButtonService";
 import * as fse from "fs-extra";
 import { submissionService } from "../service/SubmissionService";
 import { bricksDataService } from "../service/BricksDataService";
-import { debugContorller } from "./DebugController";
 
 // 视图控制器
 class TreeViewController implements Disposable {
@@ -528,12 +527,12 @@ class TreeViewController implements Disposable {
         label: `周赛期数查询`,
         detail: `周赛期数查询`,
         value: `contest`,
-      },
-      {
-        label: `测试api`,
-        detail: `测试api`,
-        value: `testapi`,
       }
+      // {
+      //   label: `测试api`,
+      //   detail: `测试api`,
+      //   value: `testapi`,
+      // }
     );
     const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks, {
       title: "选择查询选项",
@@ -632,7 +631,7 @@ class TreeViewController implements Disposable {
       // let so = {};
       // const solution: string = JSON.stringify(so);
       // solutionService.show(solution);
-      debugContorller.try_get_diy_param();
+      // debugContorller.try_get_diy_param();
     } catch (error) {
       logOutput.appendLine(error.toString());
       await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", OutPutType.error);

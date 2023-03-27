@@ -83,14 +83,8 @@ class DebugContorller {
   }
 
   // 尝试获取diy的参数
-  public async try_get_diy_param() {
+  public try_get_diy_param(ts: string) {
     let debug_param: Array<any> = [];
-
-    let ts: string | undefined = await window.showInputBox({
-      prompt: "测试",
-      placeHolder: "Example: [1,2,3]\\n4",
-      ignoreFocusOut: true,
-    });
 
     ts = (ts || "").replace(/\r?\n/g, "\\n");
     ts += "\\n";
@@ -98,55 +92,73 @@ class DebugContorller {
     let case_array: Array<string> = ts.split("\\n");
 
     case_array.forEach((element) => {
-      try {
-        let cur_param = JSON.parse(element);
-        if (typeof cur_param == "number") {
-          debug_param.push("number");
-        } else if (Array.isArray(cur_param)) {
-          debug_param.push(this.try_get_array_type(cur_param));
-        } else {
-          debug_param = [];
-          return;
+      if (element.length > 0) {
+        try {
+          let cur_param = JSON.parse(element);
+          if (typeof cur_param == "number") {
+            debug_param.push("number");
+          } else if (Array.isArray(cur_param)) {
+            debug_param.push(this.try_get_array_type(cur_param));
+          } else if (typeof cur_param == "string") {
+            debug_param.push(element.length == 1 ? "character" : "string");
+          } else {
+            debug_param = [];
+            return;
+          }
+        } catch (error) {
+          // 这里是字符串
+          debug_param.push(element.length == 1 ? "character" : "string");
         }
-      } catch (error) {
-        // 这里是字符串
-        debug_param.push(element.length == 1 ? "character" : "string");
       }
     });
 
-    console.log("结果", debug_param);
+    // console.log("结果", debug_param);
+    return debug_param;
+  }
 
-    // const picks: Array<IQuickItemEx<string>> = [
-    //   { label: "number", detail: "类型说明:数字", value: "number" },
-    //   { label: "number[]", detail: "类型说明:数字数组", value: "number[]" },
-    //   { label: "number[][]", detail: "类型说明:数字二维数组", value: "number[][]" },
-    //   { label: "string", detail: "类型说明:字符串", value: "string" },
-    //   { label: "string[]", detail: "类型说明:字符串数组", value: "string[]" },
-    //   { label: "string[][]", detail: "类型说明:字符串二维数组", value: "string[][]" },
-    //   { label: "character", detail: "类型说明:字节", value: "character" },
-    //   { label: "character[]", detail: "类型说明:字节数组", value: "character[]" },
-    //   { label: "character[][]", detail: "类型说明:字节二维数组", value: "character[][]" },
-    // ];
+  // 去除测试用例前的注释符号, 测试用例 可能有某些语言的注释符号, 例如 844题的#
+  public fix_lineContent(lineContent) {
+    let cut_pos = 0;
+    for (let left = 0; left < lineContent.length; left++) {
+      if (lineContent[left] == "#") {
+        continue;
+      }
+      if (lineContent[left] == "/" && lineContent[left + 1] == "/") {
+        left++;
+        continue;
+      }
+      if (lineContent[left] == "-" && lineContent[left + 1] == "-") {
+        left++;
+        continue;
+      }
+      if (lineContent[left] == " ") {
+        continue;
+      }
+      cut_pos = left;
+      break;
+    }
+    return lineContent.substring(cut_pos);
+  }
 
-    // let equal_index = lineContent.indexOf("=");
-    // const last_index = document.lineAt(i).range.end.character;
-    // if (addType == "paramTypes" && lineContent.indexOf("paramTypes=") >= 0) {
-    //   window.activeTextEditor?.edit((edit) => {
-    //     // 参数是个数组;
-    //     // edit.replace(new Position(i, equal_index + 1), choice.value);
-    //     let cur_param_str = lineContent.substring(equal_index + 1);
-    //     let cur_param_array: any = [];
-    //     try {
-    //       cur_param_array = JSON.parse(cur_param_str);
-    //     } catch (error) {
-    //       cur_param_array = [];
-    //     }
+  public get_one_case(document: TextDocument) {
+    let caseFlag = false;
+    let curCase = "";
+    for (let i: number = 0; i < document.lineCount; i++) {
+      const lineContent: string = document.lineAt(i).text;
 
-    //     cur_param_array.push(choice.value);
+      if (caseFlag && lineContent.indexOf("@lcpr case=end") < 0) {
+        curCase += this.fix_lineContent(lineContent).replace(/\s+/g, "");
+      }
+      // 收集所有用例
+      if (lineContent.indexOf("@lcpr case=start") >= 0) {
+        caseFlag = true;
+      }
 
-    //     edit.replace(new Range(i, equal_index + 1, i, last_index), JSON.stringify(cur_param_array));
-    //   });
-    // }
+      if (caseFlag && lineContent.indexOf("@lcpr case=end") >= 0) {
+        return curCase;
+      }
+    }
+    return curCase;
   }
 
   public async create_diy_debug_arg(meta: ProblemMeta | null, document: TextDocument) {
@@ -165,7 +177,7 @@ class DebugContorller {
       `\n`,
       `${singleLine} @lcpr-div-debug-arg-start`,
       `${singleLine} funName=${name}`,
-      `${singleLine} paramTypes= []`,
+      `${singleLine} paramTypes= ${JSON.stringify(this.try_get_diy_param(this.get_one_case(document)))}`,
       `${singleLine} @lcpr-div-debug-arg-end`,
       `\n`,
     ];
@@ -252,8 +264,10 @@ class DebugContorller {
     }
 
     const content: string = document.getText();
-    const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=(.*)/);
-    if (!matchResult || !matchResult[2]) {
+    const matchResult: RegExpMatchArray | null = content.match(
+      /@lc app=(.*) id=(.*|\w*|\W*|[\\u4e00-\\u9fa5]*) lang=(.*)/
+    );
+    if (!matchResult || !matchResult[3]) {
       return undefined;
     }
     // 搜集所有debug
@@ -302,7 +316,9 @@ class DebugContorller {
   }
   public async resetDebugType(document: TextDocument, addType) {
     const content: string = document.getText();
-    const matchResult: RegExpMatchArray | null = content.match(/@lc app=.* id=(.*) lang=(.*)/);
+    const matchResult: RegExpMatchArray | null = content.match(
+      /@lc app=(.*) id=(.*|\w*|\W*|[\\u4e00-\\u9fa5]*) lang=(.*)/
+    );
     if (!matchResult || !matchResult[2]) {
       return undefined;
     }
