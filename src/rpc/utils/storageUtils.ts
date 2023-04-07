@@ -420,9 +420,9 @@ class StorageUtils {
 
   // 去掉头尾的\n
   public deleteWriteCaseHeadENDn(testCase) {
-    if (testCase.length < 3) {
-      return testCase;
-    }
+    // if (testCase.length < 3) {
+    //   return testCase;
+    // }
     let start = 0;
     let end = testCase.length - 1;
     let flag = false;
