@@ -71,6 +71,7 @@
     "main.contributes.configuration.properties.leetcode-problem-rating.workspaceFolder.description": "The path of the workspace folder to store the problem files.",
     "main.contributes.configuration.properties.leetcode-problem-rating.filePath.description": "The output folder and filename to save the problem files.",
     "main.contributes.configuration.properties.leetcode-problem-rating.enableStatusBar.description": "Show the LeetCode status bar or not.",
+    "main.contributes.configuration.properties.leetcode-problem-rating.enableTimerBar.description": "Show the LeetCode timer bar or not.",
     "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.description": "Customize the shortcuts in editors.",
     "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions": [
         "Submit your answer to LeetCode.",

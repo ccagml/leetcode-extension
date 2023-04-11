@@ -122,6 +122,11 @@ export function enableStatusBar(): boolean {
   return getVsCodeConfig().get<boolean>("enableStatusBar", true);
 }
 
+// 状态栏定时器可见性
+export function enableTimerBar(): boolean {
+  return getVsCodeConfig().get<boolean>("enableTimerBar", true);
+}
+
 // 展示方式
 export function getDescriptionConfiguration(): IDescriptionConfiguration {
   const setting: string = getVsCodeConfig().get<string>("showDescription", DescriptionConfiguration.InWebView);

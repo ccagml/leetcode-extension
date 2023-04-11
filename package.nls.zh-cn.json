@@ -71,6 +71,7 @@
     "main.contributes.configuration.properties.leetcode-problem-rating.workspaceFolder.description": "用于存储问题文件的工作区文件夹的路径。",
     "main.contributes.configuration.properties.leetcode-problem-rating.filePath.description": "用于保存问题文件的输出文件夹和文件名。",
     "main.contributes.configuration.properties.leetcode-problem-rating.enableStatusBar.description": "是否显示状态栏。",
+    "main.contributes.configuration.properties.leetcode-problem-rating.enableTimerBar.description": "是否显示计时器。",
     "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.description": "自定义编辑器中的快捷方式。",
     "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions": [
         "提交题解",
