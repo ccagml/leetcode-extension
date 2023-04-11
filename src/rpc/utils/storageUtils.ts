@@ -342,28 +342,26 @@ class StorageUtils {
     let temp_collect = "";
     for (let all_input = 0; all_input < input.length; all_input++) {
       const element = input[all_input];
-      let check_index = element.indexOf("输入：");
+      let check_input_1 = element.indexOf("输入：");
+      let check_input_2 = element.indexOf("输入:");
+      let check_input_3 = element.indexOf("Input:");
+      if (check_input_1 != -1 || check_input_2 != -1 || check_input_3 != -1) {
+        if (check_input_1 != -1) {
+          temp_collect += element.substring(check_input_1 + 3);
+        } else if (check_input_2 != -1) {
+          temp_collect += element.substring(check_input_2 + 3);
+        } else if (check_input_3 != -1) {
+          temp_collect += element.substring(check_input_3 + 6);
+        }
 
-      if (check_index == -1) {
-        check_index = element.indexOf("输入:");
-      }
-
-      if (check_index == -1) {
-        check_index = element.indexOf("Input:");
-      }
-      if (check_index != -1) {
-        temp_collect += element.substring(check_index + 1);
         start_flag = true;
         continue;
       }
-      check_index = element.indexOf("输出：");
-      if (check_index == -1) {
-        check_index = element.indexOf("输出:");
-      }
-      if (check_index == -1) {
-        check_index = element.indexOf("Output:");
-      }
-      if (check_index != -1) {
+
+      let check_index_1 = element.indexOf("输出：");
+      let check_index_2 = element.indexOf("输出:");
+      let check_index_3 = element.indexOf("Output:");
+      if (check_index_1 != -1 || check_index_2 != -1 || check_index_3 != -1) {
         start_flag = false;
       }
       if (start_flag) {
@@ -374,21 +372,29 @@ class StorageUtils {
           let temp_case: Array<any> = [];
           let wait_cur = "";
           let no_need_flag = false;
-          for (let index = new_ele.length - 1; index >= 0; index--) {
-            if (no_need_flag) {
-              if (new_ele[index] == ",") {
-                no_need_flag = false;
-              }
-            } else {
-              if (new_ele[index] == "=") {
-                temp_case.push(wait_cur.trim());
-                no_need_flag = true;
-                wait_cur = "";
+
+          // 1040题的输入不标准 没有 x = aaa
+          if (temp_collect.indexOf("=") == -1) {
+            temp_case.push(temp_collect.trim());
+          } else {
+            // 解析 x = aaa, y = bbb 之类的输入参数
+            for (let index = new_ele.length - 1; index >= 0; index--) {
+              if (no_need_flag) {
+                if (new_ele[index] == ",") {
+                  no_need_flag = false;
+                }
               } else {
-                wait_cur = new_ele[index] + wait_cur;
+                if (new_ele[index] == "=") {
+                  temp_case.push(wait_cur.trim());
+                  no_need_flag = true;
+                  wait_cur = "";
+                } else {
+                  wait_cur = new_ele[index] + wait_cur;
+                }
               }
             }
           }
+
           let new_temp_case: Array<any> = [];
           for (let tci = temp_case.length - 1; tci >= 0; tci--) {
             new_temp_case.push(temp_case[tci]);
