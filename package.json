@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "2.19.3",
+    "version": "2.19.4",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -1010,6 +1010,12 @@
                         "default": true,
                         "scope": "application",
                         "description": "%main.contributes.configuration.properties.leetcode-problem-rating.enableStatusBar.description%"
+                    },
+                    "leetcode-problem-rating.enableTimerBar": {
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "application",
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.enableTimerBar.description%"
                     },
                     "leetcode-problem-rating.editor.shortcuts": {
                         "type": "array",

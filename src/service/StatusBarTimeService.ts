@@ -7,13 +7,15 @@
  * Copyright (c) 2022  ccagml . All rights reserved.
  */
 
-import { Disposable, StatusBarItem, window } from "vscode";
+import { Disposable, StatusBarItem, window, workspace, ConfigurationChangeEvent } from "vscode";
 import { IProblem, ISubmitEvent, OutPutType } from "../model/Model";
 import { promptForOpenOutputChannel } from "../utils/OutputUtils";
 import { getDayNow } from "../utils/SystemUtils";
+import { enableTimerBar } from "../utils/ConfigUtils";
 
 // 状态栏工具
 class StatusBarTimeService implements Disposable {
+  private configurationChangeListener: Disposable;
   private showBar: StatusBarItem;
   private startBar: StatusBarItem;
   private stopBar: StatusBarItem;
@@ -49,12 +51,21 @@ class StatusBarTimeService implements Disposable {
 
     this.startTime = 0;
     this.saveTime = 0;
+
+    this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
+      if (event.affectsConfiguration("leetcode-problem-rating.enableTimerBar")) {
+        this.setStatusBarVisibility();
+      }
+    }, this);
+    this.setStatusBarVisibility();
   }
 
   public showProblemFinish(node) {
-    this.questionNode = node;
-    this.reset();
-    this.start();
+    if (enableTimerBar()) {
+      this.questionNode = node;
+      this.reset();
+      this.start();
+    }
   }
 
   private getDiffStr(diff: number) {
@@ -71,9 +82,11 @@ class StatusBarTimeService implements Disposable {
   }
 
   public getCostTimeStr() {
-    if (this.startTime && this.startTime > 0) {
-      let diff = getDayNow() - this.startTime + this.saveTime;
-      return this.getDiffStr(diff);
+    if (enableTimerBar()) {
+      if (this.startTime && this.startTime > 0) {
+        let diff = getDayNow() - this.startTime + this.saveTime;
+        return this.getDiffStr(diff);
+      }
     }
     return;
   }
@@ -137,6 +150,22 @@ class StatusBarTimeService implements Disposable {
     this.startBar.dispose();
     this.stopBar.dispose();
     this.resetBar.dispose();
+    this.configurationChangeListener.dispose();
+  }
+  // 设置可见性
+  private setStatusBarVisibility(): void {
+    if (enableTimerBar()) {
+      this.showBar.show();
+      this.startBar.show();
+      this.stopBar.show();
+      this.resetBar.show();
+    } else {
+      this.showBar.hide();
+      this.startBar.hide();
+      this.stopBar.hide();
+      this.resetBar.hide();
+      this.reset();
+    }
   }
 }
 
