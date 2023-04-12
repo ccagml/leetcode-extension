@@ -8,7 +8,6 @@
  */
 
 // let util = require("util");
-let childProcess = require("child_process");
 
 import { storageUtils } from "../../utils/storageUtils";
 
@@ -32,29 +31,12 @@ class ShowApi extends ApiBase {
         default: false,
         describe: "Only show code template",
       })
-      .option("e", {
-        alias: "editor",
-        type: "string",
-        describe: "Open source code in editor",
-      })
-      .option("g", {
-        alias: "gen",
-        type: "boolean",
-        default: false,
-        describe: "Generate source code",
-      })
       .option("l", {
         alias: "lang",
         type: "string",
         default: configUtils.code.lang,
         describe: "Programming language of the source code",
         choices: configUtils.sys.langs,
-      })
-      .option("o", {
-        alias: "outdir",
-        type: "string",
-        describe: "Where to save source code",
-        default: ".",
       })
       .option("q", {
         alias: "query",
@@ -110,23 +92,12 @@ class ShowApi extends ApiBase {
   }
 
   showProblem(problem, argv) {
-    // const taglist = [problem.category]
-    //   .concat(problem.companies || [])
-    //   .concat(problem.tags || [])
-    //   .map((x) => " " + x + " ")
-    //   .join(" ");
-    // const langlist = problem.templates
-    //   .map((x) => " " + x.value + " ")
-    //   .sort()
-    //   .join(" ");
-
     let code;
     const needcode = argv.gen || argv.codeonly;
     if (needcode) {
       const template = problem.templates.find((x) => x.value === argv.lang);
       if (!template) {
-        reply.info('Not supported language "' + argv.lang + '"');
-        // reply.warn("Supported languages: " + langlist);
+        reply.info(JSON.stringify({ code: 101, error: `Not supported language ${argv.lang} ` }));
         return;
       }
 
@@ -138,23 +109,9 @@ class ShowApi extends ApiBase {
       code = chainMgr.getChainHead().exportProblem(problem, opts);
     }
 
-    let filename;
-    if (argv.gen) {
-      storageUtils.mkdir(argv.outdir);
-      filename = this.genFileName(problem, argv);
-      storageUtils.write(filename, code);
-
-      if (argv.editor !== undefined) {
-        childProcess.spawn(argv.editor || configUtils.code.editor, [filename], {
-          // in case your editor of choice is vim or emacs
-          stdio: "inherit",
-        });
-      }
-    } else {
-      if (argv.codeonly) {
-        reply.info(code);
-        return;
-      }
+    if (argv.codeonly) {
+      reply.info(JSON.stringify({ code: 100, msg: code }));
+      return;
     }
 
     let preview_data: any = {};
@@ -164,35 +121,7 @@ class ShowApi extends ApiBase {
     preview_data.likes = `${problem.likes}`;
     preview_data.dislikes = `${problem.dislikes}`;
     preview_data.desc = problem.desc;
-    reply.info(JSON.stringify(preview_data));
-
-    // reply.info(`[${problem.fid}] ${problem.name}`);
-    // reply.info();
-    // reply.info(problem.link);
-    // if (argv.extra) {
-    //   reply.info();
-    //   reply.info("Tags:  " + taglist);
-    //   reply.info();
-    //   reply.info("Langs: " + langlist);
-    // }
-
-    // reply.info();
-    // reply.info(`* ${problem.category}`);
-    // reply.info(`* ${problem.level} (${problem.percent.toFixed(2)}%)`);
-
-    // if (problem.likes) reply.info(`* Likes:    ${problem.likes}`);
-    // if (problem.dislikes) reply.info(`* Dislikes: ${problem.dislikes}`);
-    // else reply.info(`* Dislikes: -`);
-    // if (problem.totalAC) reply.info(`* Total Accepted:    ${problem.totalAC}`);
-    // if (problem.totalSubmit) reply.info(`* Total Submissions: ${problem.totalSubmit}`);
-    // if (problem.testable && problem.testcase) {
-    //   let testcase_value = util.inspect(problem.testcase);
-    //   reply.info(`* Testcase Example:  ${testcase_value}`);
-    // }
-    // if (filename) reply.info(`* Source Code:       ${filename}`);
-
-    // reply.info();
-    // reply.info(problem.desc);
+    reply.info(JSON.stringify({ code: 100, msg: preview_data }));
   }
 
   call(argv) {
@@ -201,7 +130,7 @@ class ShowApi extends ApiBase {
     if (argv.keyword.length > 0) {
       // show specific one
       chainMgr.getChainHead().getProblem(argv.keyword, !argv.dontTranslate, function (e, problem) {
-        if (e) return reply.info(e);
+        if (e) return reply.info(JSON.stringify({ code: 102, error: e }));
         that.showProblem(problem, argv);
       });
     } else {
