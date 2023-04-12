@@ -146,7 +146,7 @@ class ExecuteService implements Disposable {
     filePath: string,
     showDescriptionInComment: boolean = false,
     needTranslation: boolean
-  ): Promise<void> {
+  ): Promise<number> {
     const templateType: string = showDescriptionInComment ? "-cx" : "-c";
     const cmd: string[] = [await this.getLeetCodeBinaryPath(), "show", problemNode.qid, templateType, "-l", language];
 
@@ -155,14 +155,28 @@ class ExecuteService implements Disposable {
     }
 
     if (!(await fse.pathExists(filePath))) {
-      await fse.createFile(filePath);
       const codeTemplate: string = await this.executeCommandWithProgressEx(
         "正在获取题目数据~",
         this.nodeExecutable,
         cmd
       );
-      await fse.writeFile(filePath, codeTemplate);
+
+      let successResult;
+      try {
+        successResult = JSON.parse(codeTemplate);
+      } catch (e) {
+        successResult = { code: -1 };
+      }
+      if (successResult.code == 100) {
+        await fse.createFile(filePath);
+        await fse.writeFile(filePath, successResult.msg);
+        return successResult.code;
+      } else {
+        await promptForOpenOutputChannel(`${codeTemplate} 请查看控制台信息~`, OutPutType.error);
+      }
+      return successResult.code;
     }
+    return 100;
   }
 
   public async getHelp(input: string, language: string, needTranslation: boolean, cn_help?: boolean): Promise<string> {

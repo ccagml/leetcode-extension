@@ -26,6 +26,7 @@
             "request": "attach",
             "name": "attach process",
             "processId": "${command:PickProcess}",
+            "continueOnAttach": true
         },
         {
             "name": "Launch Tests",

@@ -259,7 +259,7 @@ function getSolutionBySlug(question_slug: string, articles_slug: string, lang: s
     // let bbb = body;
     // console.log(bbb);
     let solution = body.data.solutionArticle;
-    if (!solution) return reply.error("本题没有题解");
+    if (!solution) return reply.info(JSON.stringify({ code: -1, error: "本题没有题解" }));
 
     let link = URL_DISCUSS.replace("$slug", question_slug).replace("$articles_slug", articles_slug);
     // let content = solution.content.replace(/\\n/g, "\n").replace(/\\t/g, "\t");

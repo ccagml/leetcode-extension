@@ -730,30 +730,38 @@ class TreeViewController implements Disposable {
       const descriptionConfig: IDescriptionConfiguration = getDescriptionConfiguration();
       const needTranslation: boolean = isUseEndpointTranslation();
 
-      await executeService.showProblem(node, language, finalPath, descriptionConfig.showInComment, needTranslation);
-      const promises: any[] = [
-        vscode.window.showTextDocument(vscode.Uri.file(finalPath), {
-          preview: false,
-          viewColumn: vscode.ViewColumn.One,
-        }),
-        promptHintMessage(
-          "hint.commentDescription",
-          'You can config how to show the problem description through "leetcode-problem-rating.showDescription".',
-          "Open settings",
-          (): Promise<any> => openSettingsEditor("leetcode-problem-rating.showDescription")
-        ),
-      ];
-      if (descriptionConfig.showInWebview) {
-        promises.push(this.showDescriptionView(node));
-      }
-      promises.push(
-        new Promise(async (resolve, _) => {
-          await eventService.emit("showProblemFinish", node);
-          resolve(1);
-        })
+      let show_code = await executeService.showProblem(
+        node,
+        language,
+        finalPath,
+        descriptionConfig.showInComment,
+        needTranslation
       );
+      if (show_code == 100) {
+        const promises: any[] = [
+          vscode.window.showTextDocument(vscode.Uri.file(finalPath), {
+            preview: false,
+            viewColumn: vscode.ViewColumn.One,
+          }),
+          promptHintMessage(
+            "hint.commentDescription",
+            'You can config how to show the problem description through "leetcode-problem-rating.showDescription".',
+            "Open settings",
+            (): Promise<any> => openSettingsEditor("leetcode-problem-rating.showDescription")
+          ),
+        ];
+        if (descriptionConfig.showInWebview) {
+          promises.push(this.showDescriptionView(node));
+        }
+        promises.push(
+          new Promise(async (resolve, _) => {
+            await eventService.emit("showProblemFinish", node);
+            resolve(1);
+          })
+        );
 
-      await Promise.all(promises);
+        await Promise.all(promises);
+      }
     } catch (error) {
       await promptForOpenOutputChannel(`${error} 请查看控制台信息~`, OutPutType.error);
     }
@@ -785,7 +793,18 @@ class TreeViewController implements Disposable {
     }
     const needTranslation: boolean = isUseEndpointTranslation();
     const descString: string = await executeService.getDescription(node.qid, needTranslation);
-    previewService.show(descString, node, isSideMode);
+
+    let successResult;
+    try {
+      successResult = JSON.parse(descString);
+    } catch (e) {
+      successResult = {};
+    }
+    if (successResult.code == 100) {
+      previewService.show(JSON.stringify(successResult.msg), node, isSideMode);
+    } else {
+      await promptForOpenOutputChannel(`${descString} 请查看控制台信息~`, OutPutType.error);
+    }
   }
 
   public async searchScoreRange(): Promise<void> {
