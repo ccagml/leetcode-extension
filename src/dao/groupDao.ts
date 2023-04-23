@@ -135,6 +135,17 @@ class GroupDao {
     old_data.all_group = all_group;
     this._write_data(old_data);
   }
+
+  public async getPickOneTags() {
+    let old_data = await this._read_data();
+    let pick_one_tags = old_data.pick_one_tags || [];
+    return pick_one_tags;
+  }
+  public async setPickOneTags(new_pick_one_tags) {
+    let old_data = await this._read_data();
+    old_data.pick_one_tags = new_pick_one_tags;
+    this._write_data(old_data);
+  }
 }
 
 export const groupDao: GroupDao = new GroupDao();
