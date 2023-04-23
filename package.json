@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "2.19.6",
+    "version": "2.19.7",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -76,7 +76,8 @@
             {
                 "command": "lcpr.pickOne",
                 "title": "%main.contributes.commands.lcpr.pickOne.title%",
-                "category": "LeetCode"
+                "category": "LeetCode",
+                "icon": "$(compass)"
             },
             {
                 "command": "lcpr.deleteAllCache",
@@ -372,17 +373,17 @@
                 {
                     "command": "lcpr.pickOne",
                     "when": "view == QuestionExplorer",
-                    "group": "overflow@0"
+                    "group": "navigation@4"
                 },
                 {
                     "command": "lcpr.problems.sort",
                     "when": "view == QuestionExplorer",
-                    "group": "overflow@1"
+                    "group": "overflow@0"
                 },
                 {
                     "command": "lcpr.deleteAllCache",
                     "when": "view == QuestionExplorer",
-                    "group": "overflow@2"
+                    "group": "overflow@1"
                 },
                 {
                     "command": "lcpr.newBrickGroup",

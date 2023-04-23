@@ -74,6 +74,7 @@ import { fileButtonService } from "../service/FileButtonService";
 import * as fse from "fs-extra";
 import { submissionService } from "../service/SubmissionService";
 import { bricksDataService } from "../service/BricksDataService";
+import { groupDao } from "../dao/groupDao";
 
 // 视图控制器
 class TreeViewController implements Disposable {
@@ -665,6 +666,45 @@ class TreeViewController implements Disposable {
   }
 
   public async pickOne(): Promise<void> {
+    const picks: Array<IQuickItemEx<string>> = [];
+
+    let last_pick = await groupDao.getPickOneTags();
+
+    let last_tag_set: Set<string> = new Set<string>();
+    last_pick.forEach((tag_name) => {
+      last_tag_set.add(tag_name);
+    });
+
+    for (const tag of this.tagSet.values()) {
+      let pick_item: IQuickItemEx<string> = {
+        label: tag,
+        detail: "",
+        value: tag,
+      };
+      if (last_tag_set.has(tag)) {
+        pick_item.picked = true;
+      }
+
+      picks.push(pick_item);
+    }
+
+    const choice: Array<IQuickItemEx<string>> | undefined = await window.showQuickPick(picks, {
+      title: "指定Tag类型",
+      matchOnDescription: false,
+      matchOnDetail: false,
+      placeHolder: "指定Tag类型",
+      canPickMany: true,
+    });
+    if (!choice) {
+      return;
+    }
+
+    // 写入选择
+    let cur_tag_set: Set<string> = new Set<string>();
+    choice.forEach((element) => {
+      cur_tag_set.add(element.value);
+    });
+
     const problems: IProblem[] = await this.getAllProblems();
     let randomProblem: IProblem;
 
@@ -678,7 +718,11 @@ class TreeViewController implements Disposable {
       problems.forEach((element) => {
         if (element.scoreData?.Rating) {
           if (element.scoreData.Rating >= need_min && element.scoreData.Rating <= need_max) {
-            temp_problems.push(element);
+            for (const q_tag of element.tags) {
+              if (cur_tag_set.has(q_tag)) {
+                temp_problems.push(element);
+              }
+            }
           }
         }
       });
@@ -689,6 +733,13 @@ class TreeViewController implements Disposable {
     if (randomProblem) {
       await this.showProblemInternal(randomProblem);
     }
+
+    // 写入
+    let new_pick_one_tags: Array<string> = [];
+    for (const new_tag of cur_tag_set) {
+      new_pick_one_tags.push(new_tag);
+    }
+    await groupDao.setPickOneTags(new_pick_one_tags);
   }
 
   public async showProblemInternal(node: IProblem): Promise<void> {
