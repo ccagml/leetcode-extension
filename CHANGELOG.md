@@ -1,3 +1,7 @@
+## version 2.19.9
+
+- 146题非Solution类时cpp调试报错
+
 ## version 2.19.8
 
 - 新增尊享100分类
