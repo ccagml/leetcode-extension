@@ -190,7 +190,9 @@ class DebugCpp extends DebugBase {
       insertCode += `${indent}(new Solution())->${problemType.funName}(arg1, master);\n`;
     } else if (templateId === "1095") {
       insertCode += `${indent}(new Solution())->${problemType.funName}(arg1, arg0);\n`;
-    } else {
+    } else if (templateId === "146") {
+      insertCode += `LRUCache *lc; for (int i = 0; i < arg0.size(); i++) { if (arg0[i].compare("LRUCache") == 0) { lc = new LRUCache(arg1[i][0]); } else if (arg0[i].compare("put") == 0) { lc->put(arg1[i][0], arg1[i][1]); } else if (arg0[i].compare("get") == 0) { lc->get(arg1[i][0]); } }      \n`;
+    }else {
       insertCode += `${indent}(new Solution())->${problemType.funName}(${callArgs.join(", ")});\n`;
     }
 
