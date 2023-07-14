@@ -34,6 +34,7 @@ import { useWsl, toWslPath } from "../utils/SystemUtils";
 import * as path from "path";
 import * as fse from "fs-extra";
 import * as os from "os";
+import { logOutput } from "./OutputUtils";
 
 // vscode的配置
 export function getVsCodeConfig(): WorkspaceConfiguration {
@@ -87,7 +88,24 @@ export function getPickOneByRankRangeMax(): number {
 }
 // 工作目录
 export function getWorkspaceFolder(): string {
-  return getVsCodeConfig().get<string>("workspaceFolder", "");
+  let cur_wsf = getVsCodeConfig().get<string>("workspaceFolder", "");
+  return resolveWorkspaceFolder(cur_wsf);
+}
+
+// 尝试从环境变量解析WorkspaceFolder
+function resolveWorkspaceFolder(cur_wsf: string): string {
+  return cur_wsf.replace(/\$\{(.*?)\}/g, (_substring: string, ...args: string[]) => {
+    const placeholder: string = args[0].trim();
+    switch (placeholder) {
+      default:
+        if (process.env[placeholder]) {
+          return process.env[placeholder] || "";
+        } else {
+          logOutput.append("环境变量" + JSON.stringify(process.env));
+          throw new Error(`无法从环境变量获取到${placeholder}的变量, 请查看控制台信息~ `);
+        }
+    }
+  });
 }
 
 // 快捷操作

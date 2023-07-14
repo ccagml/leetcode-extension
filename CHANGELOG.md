@@ -1,10 +1,16 @@
+## version 2.19.10
+
+- workspaceFolder 可以尝试从环境变量中读取数据
+- 例如/home/${USERNAME}/leetcode, 现在会尝试从系统环境变量读取 USERNAME 对应的值
+- 例如环境变量中 USERNAME 是 ccagml,那么就会是/home/ccagml/leetcode
+
 ## version 2.19.9
 
-- 146题非Solution类时cpp调试报错
+- 146 题非 Solution 类时 cpp 调试报错
 
 ## version 2.19.8
 
-- 新增尊享100分类
+- 新增尊享 100 分类
 
 ## version 2.19.7
 
