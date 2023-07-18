@@ -7,7 +7,7 @@
  * Copyright (c) 2023 ccagml . All rights reserved
  */
 
-import { TextDocument, window, Range, Position } from "vscode";
+import { TextDocument, window, Range, Position, workspace } from "vscode";
 import { getTextEditorFilePathByUri } from "../utils/SystemUtils";
 import * as fs from "fs";
 import { fileMeta, ProblemMeta, supportDebugLanguages } from "../utils/problemUtils";
@@ -187,9 +187,13 @@ class DebugContorller {
 
       if (lineContent.indexOf("@lc code=end") >= 0) {
         const editor = window.activeTextEditor;
-        editor?.edit((edit) => {
-          edit.insert(new Position(i + 1, i + 1), div_debug_arg.join("\n"));
-        });
+        await editor
+          ?.edit((edit) => {
+            edit.insert(new Position(i + 1, i + 1), div_debug_arg.join("\n"));
+          })
+          .then(() => {
+            editor.document.save();
+          });
       }
     }
   }
@@ -207,7 +211,16 @@ class DebugContorller {
         // window.showErrorMessage("这题还不能debug,请尝试配置区域调试参数,麻烦提issuse");
         // 判断生成测试区块
         await this.check_create_debug_area(meta, document);
-        return;
+
+        try {
+          document = await workspace.openTextDocument(document.uri);
+        } catch (error) {
+          return;
+        }
+
+        if (!this.canDebug(meta, document)) {
+          return;
+        }
       }
       let result: any;
 
