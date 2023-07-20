@@ -22,6 +22,12 @@ export class NodeModel {
   public get name(): string {
     return this.data.name;
   }
+  public get cn_name(): string {
+    return this.data.cn_name;
+  }
+  public get en_name(): string {
+    return this.data.en_name;
+  }
 
   public get state(): ProblemState {
     // 每日一题的修正

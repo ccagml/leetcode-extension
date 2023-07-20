@@ -1,3 +1,8 @@
+## version 2.19.12
+
+- 配置 filePath 文件名 ${name} ${camelcasename} ${pascalcasename} ${kebabcasename} ${kebab-case-name} ${snakecasename} ${snake_case_name} 原本参数使用英文名
+- 配置 filePath 文件名 增加 ${cn_name} ${cnname} 如果有中文名称的话,使用中文名称
+
 ## version 2.19.11
 
 - 生成区域调试参数后尝试直接发起调试

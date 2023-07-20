@@ -107,6 +107,8 @@ export interface IProblem {
   id: string; // 题目编号 fid
   qid: string;
   name: string;
+  cn_name: string;
+  en_name: string;
   difficulty: string;
   passRate: string;
   companies: string[];
@@ -139,6 +141,8 @@ export const defaultProblem: IProblem = {
   id: "",
   qid: "",
   name: "",
+  cn_name: "",
+  en_name: "",
   difficulty: "",
   passRate: "",
   companies: [] as string[],
