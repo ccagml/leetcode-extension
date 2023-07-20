@@ -38,7 +38,11 @@ class LeetCodeCn extends ChainNodeBase {
 
           problems.forEach(function (problem) {
             const title = titles[problem.id];
-            if (title) problem.name = title;
+            if (title) {
+              problem.en_name = problem.name;
+              problem.name = title;
+              problem.cn_name = title;
+            }
           });
 
           return cb(null, problems);

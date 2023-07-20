@@ -469,6 +469,8 @@ class TreeViewController implements Disposable {
           locked: p.locked,
           state: this.parseProblemState(p.state),
           name: p.name,
+          cn_name: p.cn_name,
+          en_name: p.en_name,
           difficulty: p.level,
           passRate: p.percent,
           companies: p.companies || [],
@@ -986,18 +988,21 @@ class TreeViewController implements Disposable {
       switch (placeholder) {
         case "id":
           return node.id;
+        case "cnname":
+        case "cn_name":
+          return node.cn_name || node.name;
         case "name":
-          return node.name;
+          return node.en_name || node.name;
         case "camelcasename":
-          return lodash.camelCase(node.name);
+          return lodash.camelCase(node.en_name || node.name);
         case "pascalcasename":
-          return lodash.upperFirst(lodash.camelCase(node.name));
+          return lodash.upperFirst(lodash.camelCase(node.en_name || node.name));
         case "kebabcasename":
         case "kebab-case-name":
-          return lodash.kebabCase(node.name);
+          return lodash.kebabCase(node.en_name || node.name);
         case "snakecasename":
         case "snake_case_name":
-          return lodash.snakeCase(node.name);
+          return lodash.snakeCase(node.en_name || node.name);
         case "ext":
           return genFileExt(selectedLanguage);
         case "language":
