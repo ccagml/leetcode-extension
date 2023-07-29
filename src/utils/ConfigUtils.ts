@@ -115,6 +115,7 @@ export function getEditorShortcuts(): string[] {
     "case",
     "allcase",
     "test",
+    "retest",
     "solution",
     "debug",
   ]);

@@ -115,6 +115,8 @@
     "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.4": "Show the problem description page.",
     "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.5": "Test default case",
     "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.6": "Test all default case",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.7": "Debug solution",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.8": "Test all default case",
     "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.0": "Don't hide",
     "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.1": "Hide questions with scores",
     "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.2": "Hide questions with no scores",

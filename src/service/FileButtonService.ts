@@ -73,6 +73,16 @@ export class FileButtonService implements vscode.CodeLensProvider {
       );
     }
 
+    if (shortcuts.indexOf("retest") >= 0) {
+      temp_result.push(
+        new vscode.CodeLens(range, {
+          title: "ReTest",
+          command: "lcpr.reTestSolution",
+          arguments: [document.uri],
+        })
+      );
+    }
+
     if (shortcuts.indexOf("star") >= 0 && node) {
       temp_result.push(
         new vscode.CodeLens(range, {

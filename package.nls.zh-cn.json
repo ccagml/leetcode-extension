@@ -115,6 +115,8 @@
     "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.4": "展示题目介绍",
     "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.5": "测试默认用例",
     "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.6": "测试所有用例",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.7": "调试代码",
+    "main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.8": "重新执行用例",
     "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.0": "不处理",
     "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.1": "隐藏有分数的题目",
     "main.contributes.configuration.properties.leetcode-problem-rating.hideScore.enumDescriptions.2": "隐藏没有分数的题目",
