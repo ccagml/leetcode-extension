@@ -1,3 +1,7 @@
+## version 2.19.13
+
+- 增加重试上次测试用例按钮 retest
+
 ## version 2.19.12
 
 - 配置 filePath 文件名 ${name} ${camelcasename} ${pascalcasename} ${kebabcasename} ${kebab-case-name} ${snakecasename} ${snake_case_name} 原本参数使用英文名

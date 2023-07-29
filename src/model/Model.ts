@@ -28,6 +28,31 @@ export enum UserStatus {
   SignedOut = 2,
 }
 
+export enum TestSolutionType {
+  Type_1 = 1,
+  Type_2 = 2,
+  Type_3 = 3,
+  Type_4 = 4,
+  Type_5 = 5,
+  Type_6 = 6,
+}
+
+export interface ITestSolutionData {
+  filePath: string;
+  testString: undefined | string;
+  allCase: undefined | boolean;
+  type: TestSolutionType;
+  result: string | undefined;
+}
+
+export const defaultTestSolutionData: ITestSolutionData = {
+  filePath: "",
+  testString: undefined,
+  allCase: undefined,
+  type: TestSolutionType.Type_1,
+  result: undefined,
+};
+
 export const loginArgsMapping: Map<string, string> = new Map([
   ["LeetCode", "-l"],
   ["Cookie", "-c"],

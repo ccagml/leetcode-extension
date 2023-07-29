@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "2.19.12",
+    "version": "2.19.13",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -1025,6 +1025,7 @@
                             "case",
                             "allcase",
                             "test",
+                            "retest",
                             "solution",
                             "debug"
                         ],
@@ -1039,7 +1040,8 @@
                                 "description",
                                 "case",
                                 "allcase",
-                                "debug"
+                                "debug",
+                                "retest"
                             ],
                             "enumDescriptions": [
                                 "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.0%",
@@ -1049,7 +1051,8 @@
                                 "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.4%",
                                 "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.5%",
                                 "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.6%",
-                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.7%"
+                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.7%",
+                                "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.items.enumDescriptions.8%"
                             ]
                         },
                         "description": "%main.contributes.configuration.properties.leetcode-problem-rating.editor.shortcuts.description%"

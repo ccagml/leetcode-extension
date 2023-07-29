@@ -76,6 +76,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.getHelp", (input: NodeModel | Uri) => treeViewController.getHelp(input)),
       commands.registerCommand("lcpr.refreshExplorer", () => treeDataService.refresh()),
       commands.registerCommand("lcpr.testSolution", (uri?: Uri) => treeViewController.testSolution(uri)),
+      commands.registerCommand("lcpr.reTestSolution", (uri?: Uri) => treeViewController.reTestSolution(uri)),
       commands.registerCommand("lcpr.testCaseDef", (uri?, allCase?) => treeViewController.testCaseDef(uri, allCase)),
       commands.registerCommand("lcpr.tesCaseArea", (uri, testCase?) => treeViewController.tesCaseArea(uri, testCase)),
       commands.registerCommand("lcpr.submitSolution", (uri?: Uri) => treeViewController.submitSolution(uri)),

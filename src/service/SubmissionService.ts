@@ -10,16 +10,23 @@
 import { ViewColumn, commands } from "vscode";
 import { BaseWebViewService } from "./BaseWebviewService";
 import { markdownService } from "./MarkdownService";
-import { ISubmitEvent } from "../model/Model";
+import { ISubmitEvent, ITestSolutionData } from "../model/Model";
 import { IWebViewOption } from "../model/Model";
 import { promptHintMessage } from "../utils/OutputUtils";
 import { isAnswerDiffColor } from "../utils/ConfigUtils";
 import { statusBarTimeService } from "../service/StatusBarTimeService";
+import { eventService } from "./EventService";
 class SubmissionService extends BaseWebViewService {
   protected readonly viewType: string = "leetcode.submission";
   private result: IResult;
 
-  public show(resultString: string): void {
+  private tempTestCase: Map<string, ITestSolutionData> = new Map<string, ITestSolutionData>();
+
+  public getTSDByQid(qid: string): ITestSolutionData | undefined {
+    return this.tempTestCase.get(qid);
+  }
+
+  public show(resultString: string, tsd?: ITestSolutionData): void {
     this.result = this.parseResult(resultString);
 
     const temp = this.getSubmitEvent();
@@ -29,6 +36,13 @@ class SubmissionService extends BaseWebViewService {
     }
     this.showWebviewInternal();
     this.showKeybindingsHint();
+
+    let submit_event: ISubmitEvent = this.getSubmitEvent();
+    if (tsd != undefined) {
+      let qid = submit_event?.qid?.toString();
+      this.tempTestCase.set(qid, tsd);
+    }
+    eventService.emit("submit", submit_event);
   }
   public getSubmitEvent(): ISubmitEvent {
     return this.result.system_message as unknown as ISubmitEvent;

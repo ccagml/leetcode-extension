@@ -9,12 +9,13 @@
 
 import { EventEmitter } from "events";
 
-import { IProblem, UserStatus } from "../model/Model";
+import { IProblem, ITestSolutionData, UserStatus } from "../model/Model";
 import { ISubmitEvent } from "../model/Model";
 import { statusBarService } from "../service/StatusBarService";
 import { treeDataService } from "../service/TreeDataService";
 import { bricksDataService } from "./BricksDataService";
 import { statusBarTimeService } from "./StatusBarTimeService";
+import { submissionService } from "./SubmissionService";
 
 class EventService extends EventEmitter {
   constructor() {
@@ -55,6 +56,13 @@ class EventService extends EventEmitter {
 
     this.on("groupUpdate", () => {
       bricksDataService.refresh();
+    });
+
+    this.on("testSolutionResult", (resultString: string, tsd: ITestSolutionData) => {
+      submissionService.show(resultString, tsd);
+    });
+    this.on("submitSolutionResult", (resultString: string) => {
+      submissionService.show(resultString);
     });
   }
 }

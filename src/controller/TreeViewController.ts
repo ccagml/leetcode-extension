@@ -11,6 +11,7 @@ import * as lodash from "lodash";
 import * as path from "path";
 import * as vscode from "vscode";
 import { toNumber } from "lodash";
+import * as fs from "fs";
 import { Disposable, Uri, window, workspace, ConfigurationChangeEvent } from "vscode";
 import {
   SearchNode,
@@ -30,6 +31,9 @@ import {
   SORT_ORDER,
   Endpoint,
   OutPutType,
+  TestSolutionType,
+  ITestSolutionData,
+  defaultTestSolutionData,
 } from "../model/Model";
 import {
   isHideSolvedProblem,
@@ -75,6 +79,7 @@ import * as fse from "fs-extra";
 import { submissionService } from "../service/SubmissionService";
 import { bricksDataService } from "../service/BricksDataService";
 import { groupDao } from "../dao/groupDao";
+import { fileMeta, ProblemMeta } from "../utils/problemUtils";
 
 // 视图控制器
 class TreeViewController implements Disposable {
@@ -118,8 +123,10 @@ class TreeViewController implements Disposable {
 
     try {
       const result: string = await executeService.submitSolution(filePath);
-      submissionService.show(result);
-      eventService.emit("submit", submissionService.getSubmitEvent());
+
+      eventService.emit("submitSolutionResult", result);
+      // submissionService.show(result);
+      // eventService.emit("submit", submissionService.getSubmitEvent());
     } catch (error) {
       await promptForOpenOutputChannel("提交出错了. 请查看控制台信息~", OutPutType.error);
       return;
@@ -147,12 +154,6 @@ class TreeViewController implements Disposable {
       }
       const picks: Array<IQuickItemEx<string>> = [];
       picks.push(
-        // {
-        //     label: "$(three-bars) Default test cases",
-        //     description: "",
-        //     detail: "默认用例",
-        //     value: ":default",
-        // },
         {
           label: "$(pencil) Write directly...",
           description: "",
@@ -165,12 +166,6 @@ class TreeViewController implements Disposable {
           detail: "文件中的测试用例",
           value: ":file",
         }
-        // {
-        //     label: "All Default test cases...",
-        //     description: "",
-        //     detail: "所有的测试用例",
-        //     value: ":alldefault",
-        // },
       );
       const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks);
       if (!choice) {
@@ -180,10 +175,10 @@ class TreeViewController implements Disposable {
       let result: string | undefined;
       let testString: string | undefined;
       let testFile: vscode.Uri[] | undefined;
+
+      let tsd: ITestSolutionData = Object.assign({}, defaultTestSolutionData, {});
+
       switch (choice.value) {
-        case ":default":
-          result = await executeService.testSolution(filePath);
-          break;
         case ":direct":
           testString = await vscode.window.showInputBox({
             prompt: "Enter the test cases.",
@@ -193,7 +188,12 @@ class TreeViewController implements Disposable {
             ignoreFocusOut: true,
           });
           if (testString) {
-            result = await executeService.testSolution(filePath, this.parseTestString(testString));
+            tsd.filePath = filePath;
+            tsd.testString = this.parseTestString(testString);
+            tsd.allCase = false;
+            tsd.type = TestSolutionType.Type_1;
+            result = await executeService.testSolution(tsd.filePath, tsd.testString, tsd.allCase);
+            tsd.result = result;
           }
           break;
         case ":file":
@@ -201,17 +201,16 @@ class TreeViewController implements Disposable {
           if (testFile && testFile.length) {
             const input: string = (await fse.readFile(testFile[0].fsPath, "utf-8")).trim();
             if (input) {
-              result = await executeService.testSolution(
-                filePath,
-                this.parseTestString(input.replace(/\r?\n/g, "\\n"))
-              );
+              tsd.filePath = filePath;
+              tsd.testString = this.parseTestString(input.replace(/\r?\n/g, "\\n"));
+              tsd.allCase = false;
+              result = await executeService.testSolution(tsd.filePath, tsd.testString, tsd.allCase);
+              tsd.result = result;
+              tsd.type = TestSolutionType.Type_2;
             } else {
               vscode.window.showErrorMessage("The selected test file must not be empty.");
             }
           }
-          break;
-        case ":alldefault":
-          result = await executeService.testSolution(filePath, undefined, true);
           break;
         default:
           break;
@@ -219,8 +218,9 @@ class TreeViewController implements Disposable {
       if (!result) {
         return;
       }
-      submissionService.show(result);
-      eventService.emit("submit", submissionService.getSubmitEvent());
+      // submissionService.show(result);
+      // eventService.emit("submit", submissionService.getSubmitEvent());
+      eventService.emit("testSolutionResult", result, tsd);
     } catch (error) {
       await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
@@ -263,12 +263,64 @@ class TreeViewController implements Disposable {
         return;
       }
 
-      let result: string | undefined = await executeService.testSolution(filePath, undefined, allCase || false);
+      let tsd: ITestSolutionData = Object.assign({}, defaultTestSolutionData, {});
+      tsd.filePath = filePath;
+      tsd.testString = undefined;
+      tsd.allCase = allCase || false;
+      tsd.type = TestSolutionType.Type_3;
+      let result: string | undefined = await executeService.testSolution(tsd.filePath, tsd.testString, tsd.allCase);
+      tsd.result = result;
       if (!result) {
         return;
       }
-      submissionService.show(result);
-      eventService.emit("submit", submissionService.getSubmitEvent());
+      // submissionService.show(result);
+      // eventService.emit("submit", submissionService.getSubmitEvent());
+      eventService.emit("testSolutionResult", result, tsd);
+    } catch (error) {
+      await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", OutPutType.error);
+    }
+  }
+
+  // 提交测试用例
+  /**
+   * It takes the current file, and sends it to the server to be tested
+   * @param [uri] - The file path of the file to be submitted. If it is not passed, the currently active
+   * file is submitted.
+   */
+  public async reTestSolution(uri?: vscode.Uri): Promise<void> {
+    try {
+      if (statusBarService.getStatus() === UserStatus.SignedOut) {
+        return;
+      }
+
+      const filePath: string | undefined = await getTextEditorFilePathByUri(uri);
+      if (!filePath) {
+        return;
+      }
+      const fileContent: Buffer = fs.readFileSync(filePath);
+      const meta: ProblemMeta | null = fileMeta(fileContent.toString());
+
+      let qid: string | undefined = undefined;
+      if (meta?.id != undefined) {
+        qid = this.getQidByFid(meta?.id);
+      }
+
+      if (qid == undefined) {
+        return;
+      }
+
+      let tsd: ITestSolutionData | undefined = submissionService.getTSDByQid(qid);
+      if (tsd == undefined) {
+        return;
+      }
+
+      let result: string | undefined = await executeService.testSolution(tsd.filePath, tsd.testString, tsd.allCase);
+      if (!result) {
+        return;
+      }
+      // submissionService.show(result);
+      // eventService.emit("submit", submissionService.getSubmitEvent());
+      eventService.emit("testSolutionResult", result, tsd);
     } catch (error) {
       await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
@@ -294,12 +346,19 @@ class TreeViewController implements Disposable {
         return;
       }
 
-      let result: string | undefined = await executeService.testSolution(filePath, testcase, false);
+      let tsd: ITestSolutionData = Object.assign({}, defaultTestSolutionData, {});
+      tsd.filePath = filePath;
+      tsd.testString = testcase;
+      tsd.allCase = false;
+      tsd.type = TestSolutionType.Type_4;
+      let result: string | undefined = await executeService.testSolution(tsd.filePath, tsd.testString, tsd.allCase);
+      tsd.result = result;
       if (!result) {
         return;
       }
-      submissionService.show(result);
-      eventService.emit("submit", submissionService.getSubmitEvent());
+      // submissionService.show(result);
+      // eventService.emit("submit", submissionService.getSubmitEvent());
+      eventService.emit("testSolutionResult", result, tsd);
     } catch (error) {
       await promptForOpenOutputChannel("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
