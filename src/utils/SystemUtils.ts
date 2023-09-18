@@ -7,13 +7,14 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import * as fse from "fs-extra";
+import * as fs from "fs";
 import * as _ from "lodash";
 import * as path from "path";
 import { IProblem, langExt } from "../model/Model";
 import { executeCommand } from "./CliUtils";
 import { isUseVscodeNode, isUseWsl } from "./ConfigUtils";
 import { Uri, window, TextEditor } from "vscode";
+import { fileMeta, ProblemMeta } from "../utils/problemUtils";
 
 export function isWindows(): boolean {
   return process.platform === "win32";
@@ -58,12 +59,10 @@ export function genFileName(node: IProblem, language: string): string {
 }
 
 export async function getNodeIdFromFile(fsPath: string): Promise<string> {
-  const fileContent: string = await fse.readFile(fsPath, "utf8");
-  let id: string = "";
-  const matchResults: RegExpMatchArray | null = fileContent.match(/@lc.+id=(.+?) /);
-  if (matchResults && matchResults.length === 2) {
-    id = matchResults[1];
-  }
+  const fileContent: Buffer = fs.readFileSync(fsPath);
+  const meta: ProblemMeta | null = fileMeta(fileContent.toString());
+
+  let id = meta?.id;
   // Try to get id from file name if getting from comments failed
   if (!id) {
     id = path.basename(fsPath).split(".")[0];

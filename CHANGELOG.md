@@ -1,3 +1,7 @@
+# version 2.19.14
+
+- 在 ID 含有空格的题目对应的文件中，点击 Description 按钮时，无法识别题目 ID
+
 ## version 2.19.13
 
 - 增加重试上次测试用例按钮 retest
