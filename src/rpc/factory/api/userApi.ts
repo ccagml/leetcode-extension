@@ -81,14 +81,14 @@ class UserApi extends ApiBase {
             if (e) {
               return reply.info(JSON.stringify({ code: -2, msg: e.msg || e }));
             }
-            reply.info(JSON.stringify({ code: 100, user_name: user.name }));
+            reply.info(JSON.stringify({ code: 100, user_name: user.name || user.login || "username" }));
           });
         }
       );
     } else if (argv.logout) {
       // logout
       user = chainMgr.getChainHead().logout(user, true);
-      if (user) reply.info(JSON.stringify({ code: 100, user_name: user.name }));
+      if (user) reply.info(JSON.stringify({ code: 100, user_name: user.name || user.login || "username" }));
       else reply.info(JSON.stringify({ code: -3, msg: "You are not login yet?" }));
       // third parties
     } else if (argv.github || argv.linkedin) {
@@ -114,7 +114,7 @@ class UserApi extends ApiBase {
             if (e) return reply.info(JSON.stringify({ code: -4, msg: e.msg || e }));
             coreFunction(user, function (e, user) {
               if (e) return reply.info(JSON.stringify({ code: -5, msg: e.msg || e }));
-              reply.info(JSON.stringify({ code: 100, user_name: user.name }));
+              reply.info(JSON.stringify({ code: 100, user_name: user.name || user.login || "username" }));
             });
           }
         );
@@ -133,7 +133,7 @@ class UserApi extends ApiBase {
           if (e) return reply.info(e);
           chainMgr.getChainHead().cookieLogin(user, function (e, user) {
             if (e) return reply.info(JSON.stringify({ code: -6, msg: e.msg || e }));
-            reply.info(JSON.stringify({ code: 100, user_name: user.name }));
+            reply.info(JSON.stringify({ code: 100, user_name: user.name || user.login || "username" }));
           });
         }
       );
@@ -141,7 +141,7 @@ class UserApi extends ApiBase {
       // show current user
       user = sessionUtils.getUser();
       if (user) {
-        reply.info(JSON.stringify({ code: 100, user_name: user.login }));
+        reply.info(JSON.stringify({ code: 100, user_name: user.name || user.login || "username" }));
       } else return reply.info(JSON.stringify({ code: -7, msg: "You are not login yet?" }));
     }
   }
