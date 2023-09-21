@@ -46,7 +46,9 @@ class StatusBarService implements Disposable {
   public async getLoginStatus(): Promise<void> {
     try {
       const result: string = await executeService.getUserInfo();
+      // BUG: this.tryParseUserName(result)拿到的是对象,而不是字符串
       this.currentUser = this.tryParseUserName(result);
+      // this.currentUser = { ...result, user_name: result.login };
       this.userStatus = UserStatus.SignedIn;
       if (this.currentUser == undefined) {
         this.userStatus = UserStatus.SignedOut;
