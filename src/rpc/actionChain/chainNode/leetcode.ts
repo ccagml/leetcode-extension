@@ -438,7 +438,17 @@ and csrf token to the user object and saves the user object to the session. */
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       request.post(opts, function (e: any, resp: any, _) {
         if (e) return cb(e);
-        if (resp.statusCode !== 302) return cb("invalid password?");
+        if (resp.statusCode !== 302) {
+          let _temp_msg = JSON.stringify({
+            statusCode: resp.statusCode,
+            body: resp.body,
+            statusMessage: resp.statusMessage,
+            msg: "密码错误?",
+            msg1: "invalid password?",
+            msg2: "要是用浏览器在力扣官网登录过账号还没过期, 插件的登录会被拒绝,使得登录失败",
+          });
+          return cb(_temp_msg);
+        }
 
         user.sessionCSRF = commUtils.getSetCookieValue(resp, "csrftoken");
         user.sessionId = commUtils.getSetCookieValue(resp, "LEETCODE_SESSION");
