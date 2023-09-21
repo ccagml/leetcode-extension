@@ -141,7 +141,7 @@ class UserApi extends ApiBase {
       // show current user
       user = sessionUtils.getUser();
       if (user) {
-        reply.info(JSON.stringify({ code: 100, user_name: user.name }));
+        reply.info(JSON.stringify({ code: 100, user_name: user.login }));
       } else return reply.info(JSON.stringify({ code: -7, msg: "You are not login yet?" }));
     }
   }
