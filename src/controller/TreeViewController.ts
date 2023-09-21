@@ -1244,6 +1244,14 @@ class TreeViewController implements Disposable {
         }),
         false
       ),
+      new NodeModel(
+        Object.assign({}, defaultProblem, {
+          id: Category.Contest,
+          name: Category.Contest,
+          rootNodeSortId: RootNodeSort.Context,
+        }),
+        false
+      ),
     ];
     this.searchSet.forEach((element) => {
       if (element.type == SearchSetType.Day) {
@@ -1446,6 +1454,41 @@ class TreeViewController implements Disposable {
     return res;
   }
 
+  public getAllContestNodes(): NodeModel[] {
+    const res: NodeModel[] = [];
+    res.push(
+      new NodeModel(
+        Object.assign({}, defaultProblem, {
+          id: `${Category.Contest}.Q1`,
+          name: "Q1",
+        }),
+        false
+      ),
+      new NodeModel(
+        Object.assign({}, defaultProblem, {
+          id: `${Category.Contest}.Q2`,
+          name: "Q2",
+        }),
+        false
+      ),
+      new NodeModel(
+        Object.assign({}, defaultProblem, {
+          id: `${Category.Contest}.Q3`,
+          name: "Q3",
+        }),
+        false
+      ),
+      new NodeModel(
+        Object.assign({}, defaultProblem, {
+          id: `${Category.Contest}.Q4`,
+          name: "Q4",
+        }),
+        false
+      )
+    );
+    this.sortSubCategoryNodes(res, Category.Contest);
+    return res;
+  }
   public getAllChoiceNodes(): NodeModel[] {
     const res: NodeModel[] = [];
 
@@ -1576,6 +1619,12 @@ class TreeViewController implements Disposable {
           if (choiceQuestionId[Number(node.qid)]) {
             res.push(node);
           }
+          break;
+        case Category.Contest:
+          if (node.ProblemIndex == metaInfo[1]) {
+            res.push(node);
+          }
+          break;
       }
     }
     return this.applySortingStrategy(res);

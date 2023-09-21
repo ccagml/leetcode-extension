@@ -138,6 +138,8 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
             return treeViewController.getAllScoreNodes(element.user_score);
           case Category.Choice:
             return treeViewController.getAllChoiceNodes();
+          case Category.Contest:
+            return treeViewController.getAllContestNodes();
           default:
             if (element.isProblem) {
               return [];

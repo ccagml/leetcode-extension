@@ -218,6 +218,7 @@ export enum Category {
   Favorite = "Favorite",
   Score = "Score",
   Choice = "Choice",
+  Contest = "Contest",
 }
 
 export enum DescriptionConfiguration {

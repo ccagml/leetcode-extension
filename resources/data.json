@@ -11,6 +11,28 @@
         "ContestID_zh": "第 43 场双周赛"
     },
     {
+        "Rating": 2978.7961959355,
+        "ID": 2809,
+        "Title": "Minimum Time to Make Array Sum At Most x",
+        "TitleZH": "使数组和小于等于 x 的最少时间",
+        "TitleSlug": "minimum-time-to-make-array-sum-at-most-x",
+        "ContestSlug": "biweekly-contest-110",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 110",
+        "ContestID_zh": "第 110 场双周赛"
+    },
+    {
+        "Rating": 2873.9745576413,
+        "ID": 2699,
+        "Title": "Modify Graph Edge Weights",
+        "TitleZH": "修改图中的边权",
+        "TitleSlug": "modify-graph-edge-weights",
+        "ContestSlug": "weekly-contest-346",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 346",
+        "ContestID_zh": "第 346 场周赛"
+    },
+    {
         "Rating": 2872.0290327119,
         "ID": 1982,
         "Title": "Find Array Given Subset Sums",
@@ -44,6 +66,17 @@
         "ContestID_zh": "第 224 场周赛"
     },
     {
+        "Rating": 2824.4551372454,
+        "ID": 2612,
+        "Title": "Minimum Reverse Operations",
+        "TitleZH": "最少翻转操作数",
+        "TitleSlug": "minimum-reverse-operations",
+        "ContestSlug": "weekly-contest-339",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 339",
+        "ContestID_zh": "第 339 场周赛"
+    },
+    {
         "Rating": 2817.267212602,
         "ID": 1977,
         "Title": "Number of Ways to Separate Numbers",
@@ -66,6 +99,17 @@
         "ContestID_zh": "第 265 场周赛"
     },
     {
+        "Rating": 2768.8154223451,
+        "ID": 2836,
+        "Title": "Maximize Value of Function in a Ball Passing Game",
+        "TitleZH": "在传球游戏中最大化函数值",
+        "TitleSlug": "maximize-value-of-function-in-a-ball-passing-game",
+        "ContestSlug": "weekly-contest-360",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 360",
+        "ContestID_zh": "第 360 场周赛"
+    },
+    {
         "Rating": 2765.2533837781,
         "ID": 803,
         "Title": "Bricks Falling When Hit",
@@ -75,6 +119,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 76",
         "ContestID_zh": "第 76 场周赛"
+    },
+    {
+        "Rating": 2711.8717381409,
+        "ID": 2603,
+        "Title": "Collect Coins in a Tree",
+        "TitleZH": "收集树中金币",
+        "TitleSlug": "collect-coins-in-a-tree",
+        "ContestSlug": "weekly-contest-338",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 338",
+        "ContestID_zh": "第 338 场周赛"
     },
     {
         "Rating": 2690.5859406179,
@@ -97,6 +152,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 333",
         "ContestID_zh": "第 333 场周赛"
+    },
+    {
+        "Rating": 2677.1682592316,
+        "ID": 2791,
+        "Title": "Count Paths That Can Form a Palindrome in a Tree",
+        "TitleZH": "树中可以形成回文的路径数",
+        "TitleSlug": "count-paths-that-can-form-a-palindrome-in-a-tree",
+        "ContestSlug": "weekly-contest-355",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 355",
+        "ContestID_zh": "第 355 场周赛"
     },
     {
         "Rating": 2666.668150845,
@@ -220,6 +286,17 @@
         "ContestID_zh": "第 50 场双周赛"
     },
     {
+        "Rating": 2619.7016189999,
+        "ID": 2790,
+        "Title": "Maximum Number of Groups With Increasing Length",
+        "TitleZH": "长度递增组的最大数目",
+        "TitleSlug": "maximum-number-of-groups-with-increasing-length",
+        "ContestSlug": "weekly-contest-355",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 355",
+        "ContestID_zh": "第 355 场周赛"
+    },
+    {
         "Rating": 2615.1468269481,
         "ID": 2338,
         "Title": "Count the Number of Ideal Arrays",
@@ -306,6 +383,28 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 109",
         "ContestID_zh": "第 109 场周赛"
+    },
+    {
+        "Rating": 2582.0814855506,
+        "ID": 2813,
+        "Title": "Maximum Elegance of a K-Length Subsequence",
+        "TitleZH": "子序列最大优雅度",
+        "TitleSlug": "maximum-elegance-of-a-k-length-subsequence",
+        "ContestSlug": "weekly-contest-357",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 357",
+        "ContestID_zh": "第 357 场周赛"
+    },
+    {
+        "Rating": 2581.9961985753,
+        "ID": 2617,
+        "Title": "Minimum Number of Visited Cells in a Grid",
+        "TitleZH": "网格图中最少访问的格子数",
+        "TitleSlug": "minimum-number-of-visited-cells-in-a-grid",
+        "ContestSlug": "weekly-contest-340",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 340",
+        "ContestID_zh": "第 340 场周赛"
     },
     {
         "Rating": 2575.9570281316,
@@ -429,6 +528,17 @@
         "ContestID_zh": "第 217 场周赛"
     },
     {
+        "Rating": 2533.2830157959,
+        "ID": 2736,
+        "Title": "Maximum Sum Queries",
+        "TitleZH": "最大和查询",
+        "TitleSlug": "maximum-sum-queries",
+        "ContestSlug": "weekly-contest-349",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 349",
+        "ContestID_zh": "第 349 场周赛"
+    },
+    {
         "Rating": 2531.6452775023,
         "ID": 1896,
         "Title": "Minimum Cost to Change the Final Value of Expression",
@@ -482,6 +592,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Biweekly Contest 78",
         "ContestID_zh": "第 78 场双周赛"
+    },
+    {
+        "Rating": 2507.9960044659,
+        "ID": 2846,
+        "Title": "Minimum Edge Weight Equilibrium Queries in a Tree",
+        "TitleZH": "边权重均等查询",
+        "TitleSlug": "minimum-edge-weight-equilibrium-queries-in-a-tree",
+        "ContestSlug": "weekly-contest-361",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 361",
+        "ContestID_zh": "第 361 场周赛"
     },
     {
         "Rating": 2502.5176603922,
@@ -803,6 +924,17 @@
         "ContestID_zh": "第 136 场周赛"
     },
     {
+        "Rating": 2424.6761561972,
+        "ID": 2742,
+        "Title": "Painting the Walls",
+        "TitleZH": "给墙壁刷油漆",
+        "TitleSlug": "painting-the-walls",
+        "ContestSlug": "weekly-contest-350",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 350",
+        "ContestID_zh": "第 350 场周赛"
+    },
+    {
         "Rating": 2422.5309771173,
         "ID": 1000,
         "Title": "Minimum Cost to Merge Stones",
@@ -845,6 +977,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 155",
         "ContestID_zh": "第 155 场周赛"
+    },
+    {
+        "Rating": 2415.7434855724,
+        "ID": 2663,
+        "Title": "Lexicographically Smallest Beautiful String",
+        "TitleZH": "字典序最小的美丽字符串",
+        "TitleSlug": "lexicographically-smallest-beautiful-string",
+        "ContestSlug": "weekly-contest-343",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 343",
+        "ContestID_zh": "第 343 场周赛"
     },
     {
         "Rating": 2415.2802039252,
@@ -902,6 +1045,17 @@
         "ContestID_zh": "第 22 场双周赛"
     },
     {
+        "Rating": 2405.3375364501,
+        "ID": 2747,
+        "Title": "Count Zero Request Servers",
+        "TitleZH": "统计没有收到请求的服务器数目",
+        "TitleSlug": "count-zero-request-servers",
+        "ContestSlug": "biweekly-contest-107",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 107",
+        "ContestID_zh": "第 107 场双周赛"
+    },
+    {
         "Rating": 2399.5729141925,
         "ID": 920,
         "Title": "Number of Music Playlists",
@@ -933,6 +1087,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Biweekly Contest 98",
         "ContestID_zh": "第 98 场双周赛"
+    },
+    {
+        "Rating": 2396.6770372863,
+        "ID": 2818,
+        "Title": "Apply Operations to Maximize Score",
+        "TitleZH": "操作使得分最大",
+        "TitleSlug": "apply-operations-to-maximize-score",
+        "ContestSlug": "weekly-contest-358",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 358",
+        "ContestID_zh": "第 358 场周赛"
     },
     {
         "Rating": 2396.6267778669,
@@ -1001,6 +1166,17 @@
         "ContestID_zh": "第 218 场周赛"
     },
     {
+        "Rating": 2387.3525635254,
+        "ID": 2713,
+        "Title": "Maximum Strictly Increasing Cells in a Matrix",
+        "TitleZH": "矩阵中严格递增的单元格数",
+        "TitleSlug": "maximum-strictly-increasing-cells-in-a-matrix",
+        "ContestSlug": "weekly-contest-347",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 347",
+        "ContestID_zh": "第 347 场周赛"
+    },
+    {
         "Rating": 2385.8072128533,
         "ID": 1349,
         "Title": "Maximum Students Taking Exam",
@@ -1067,6 +1243,17 @@
         "ContestID_zh": "第 82 场双周赛"
     },
     {
+        "Rating": 2380.5983169295,
+        "ID": 2589,
+        "Title": "Minimum Time to Complete All Tasks",
+        "TitleZH": "完成所有任务的最少时间",
+        "TitleSlug": "minimum-time-to-complete-all-tasks",
+        "ContestSlug": "weekly-contest-336",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 336",
+        "ContestID_zh": "第 336 场周赛"
+    },
+    {
         "Rating": 2378.6234112504,
         "ID": 757,
         "Title": "Set Intersection Size At Least Two",
@@ -1120,6 +1307,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Biweekly Contest 97",
         "ContestID_zh": "第 97 场双周赛"
+    },
+    {
+        "Rating": 2367.4705934718,
+        "ID": 2801,
+        "Title": "Count Stepping Numbers in Range",
+        "TitleZH": "统计范围内的步进数字数目",
+        "TitleSlug": "count-stepping-numbers-in-range",
+        "ContestSlug": "weekly-contest-356",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 356",
+        "ContestID_zh": "第 356 场周赛"
     },
     {
         "Rating": 2366.7099607655,
@@ -1208,6 +1406,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 191",
         "ContestID_zh": "第 191 场周赛"
+    },
+    {
+        "Rating": 2354.5411153127,
+        "ID": 2719,
+        "Title": "Count of Integers",
+        "TitleZH": "统计整数数目",
+        "TitleSlug": "count-of-integers",
+        "ContestSlug": "weekly-contest-348",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 348",
+        "ContestID_zh": "第 348 场周赛"
     },
     {
         "Rating": 2350.9694374861,
@@ -1340,6 +1549,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 96",
         "ContestID_zh": "第 96 场周赛"
+    },
+    {
+        "Rating": 2324.1192580053,
+        "ID": 2827,
+        "Title": "Number of Beautiful Integers in the Range",
+        "TitleZH": "范围中美丽整数的数目",
+        "TitleSlug": "number-of-beautiful-integers-in-the-range",
+        "ContestSlug": "biweekly-contest-111",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 111",
+        "ContestID_zh": "第 111 场双周赛"
     },
     {
         "Rating": 2315.6037017989,
@@ -1551,6 +1771,17 @@
         "ContestID_zh": "第 223 场周赛"
     },
     {
+        "Rating": 2281.8816902545,
+        "ID": 2659,
+        "Title": "Make Array Empty",
+        "TitleZH": "将数组清空",
+        "TitleSlug": "make-array-empty",
+        "ContestSlug": "biweekly-contest-103",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 103",
+        "ContestID_zh": "第 103 场双周赛"
+    },
+    {
         "Rating": 2280.3143643878,
         "ID": 2407,
         "Title": "Longest Increasing Subsequence II",
@@ -1560,6 +1791,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 310",
         "ContestID_zh": "第 310 场周赛"
+    },
+    {
+        "Rating": 2277.7923804151,
+        "ID": 2763,
+        "Title": "Sum of Imbalance Numbers of All Subarrays",
+        "TitleZH": "所有子数组中不平衡数字之和",
+        "TitleSlug": "sum-of-imbalance-numbers-of-all-subarrays",
+        "ContestSlug": "weekly-contest-352",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 352",
+        "ContestID_zh": "第 352 场周赛"
     },
     {
         "Rating": 2277.3595662538,
@@ -1760,6 +2002,28 @@
         "ContestID_zh": "第 160 场周赛"
     },
     {
+        "Rating": 2239.7101856677,
+        "ID": 2732,
+        "Title": "Find a Good Subset of the Matrix",
+        "TitleZH": "找到矩阵中的好子集",
+        "TitleSlug": "find-a-good-subset-of-the-matrix",
+        "ContestSlug": "biweekly-contest-106",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 106",
+        "ContestID_zh": "第 106 场双周赛"
+    },
+    {
+        "Rating": 2238.2830745228,
+        "ID": 2646,
+        "Title": "Minimize the Total Price of the Trips",
+        "TitleZH": "最小化旅行的价格总和",
+        "TitleSlug": "minimize-the-total-price-of-the-trips",
+        "ContestSlug": "weekly-contest-341",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 341",
+        "ContestID_zh": "第 341 场周赛"
+    },
+    {
         "Rating": 2235.9672341699,
         "ID": 850,
         "Title": "Rectangle Area II",
@@ -1824,6 +2088,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 128",
         "ContestID_zh": "第 128 场周赛"
+    },
+    {
+        "Rating": 2228.3454693625,
+        "ID": 2581,
+        "Title": "Count Number of Possible Root Nodes",
+        "TitleZH": "统计可能的树根数目",
+        "TitleSlug": "count-number-of-possible-root-nodes",
+        "ContestSlug": "biweekly-contest-99",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 99",
+        "ContestID_zh": "第 99 场双周赛"
     },
     {
         "Rating": 2225.3877535768,
@@ -1991,6 +2266,17 @@
         "ContestID_zh": "第 214 场周赛"
     },
     {
+        "Rating": 2207.4917475411,
+        "ID": 2835,
+        "Title": "Minimum Operations to Form Subsequence With Target Sum",
+        "TitleZH": "使子序列的和等于目标的最少操作次数",
+        "TitleSlug": "minimum-operations-to-form-subsequence-with-target-sum",
+        "ContestSlug": "weekly-contest-360",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 360",
+        "ContestID_zh": "第 360 场周赛"
+    },
+    {
         "Rating": 2205.4304373587,
         "ID": 1157,
         "Title": "Online Majority Element In Subarray",
@@ -2011,6 +2297,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 95",
         "ContestID_zh": "第 95 场周赛"
+    },
+    {
+        "Rating": 2203.5694828019,
+        "ID": 2781,
+        "Title": "Length of the Longest Valid Substring",
+        "TitleZH": "最长合法子字符串的长度",
+        "TitleSlug": "length-of-the-longest-valid-substring",
+        "ContestSlug": "weekly-contest-354",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 354",
+        "ContestID_zh": "第 354 场周赛"
     },
     {
         "Rating": 2203.1738850937,
@@ -2189,6 +2486,17 @@
         "ContestID_zh": "第 266 场周赛"
     },
     {
+        "Rating": 2175.7874705227,
+        "ID": 2768,
+        "Title": "Number of Black Blocks",
+        "TitleZH": "黑格子的数目",
+        "TitleSlug": "number-of-black-blocks",
+        "ContestSlug": "biweekly-contest-108",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 108",
+        "ContestID_zh": "第 108 场双周赛"
+    },
+    {
         "Rating": 2175.6850426027,
         "ID": 1420,
         "Title": "Build Array Where You Can Find The Maximum Exactly K Comparisons",
@@ -2209,6 +2517,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Biweekly Contest 90",
         "ContestID_zh": "第 90 场双周赛"
+    },
+    {
+        "Rating": 2171.9645269732,
+        "ID": 2709,
+        "Title": "Greatest Common Divisor Traversal",
+        "TitleZH": "最大公约数遍历",
+        "TitleSlug": "greatest-common-divisor-traversal",
+        "ContestSlug": "biweekly-contest-105",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 105",
+        "ContestID_zh": "第 105 场双周赛"
     },
     {
         "Rating": 2171.716066664,
@@ -2266,6 +2585,17 @@
         "ContestID_zh": "第 134 场周赛"
     },
     {
+        "Rating": 2159.4844281244,
+        "ID": 2584,
+        "Title": "Split the Array to Make Coprime Products",
+        "TitleZH": "分割数组使乘积互质",
+        "TitleSlug": "split-the-array-to-make-coprime-products",
+        "ContestSlug": "weekly-contest-335",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 335",
+        "ContestID_zh": "第 335 场周赛"
+    },
+    {
         "Rating": 2158.8988728254,
         "ID": 2122,
         "Title": "Recover the Original Array",
@@ -2308,6 +2638,39 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 197",
         "ContestID_zh": "第 197 场周赛"
+    },
+    {
+        "Rating": 2155.3424932408,
+        "ID": 2616,
+        "Title": "Minimize the Maximum Difference of Pairs",
+        "TitleZH": "最小化数对的最大差值",
+        "TitleSlug": "minimize-the-maximum-difference-of-pairs",
+        "ContestSlug": "weekly-contest-340",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 340",
+        "ContestID_zh": "第 340 场周赛"
+    },
+    {
+        "Rating": 2153.8943791656,
+        "ID": 2662,
+        "Title": "Minimum Cost of a Path With Special Roads",
+        "TitleZH": "前往目标的最小代价",
+        "TitleSlug": "minimum-cost-of-a-path-with-special-roads",
+        "ContestSlug": "weekly-contest-343",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 343",
+        "ContestID_zh": "第 343 场周赛"
+    },
+    {
+        "Rating": 2153.5854429139,
+        "ID": 2812,
+        "Title": "Find the Safest Path in a Grid",
+        "TitleZH": "找出最安全路径",
+        "TitleSlug": "find-the-safest-path-in-a-grid",
+        "ContestSlug": "weekly-contest-357",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 357",
+        "ContestID_zh": "第 357 场周赛"
     },
     {
         "Rating": 2147.1828941776,
@@ -2420,6 +2783,17 @@
         "ContestID_zh": "第 100 场周赛"
     },
     {
+        "Rating": 2132.06233459,
+        "ID": 2749,
+        "Title": "Minimum Operations to Make the Integer Zero",
+        "TitleZH": "得到整数零需要执行的最少操作数",
+        "TitleSlug": "minimum-operations-to-make-the-integer-zero",
+        "ContestSlug": "weekly-contest-351",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 351",
+        "ContestID_zh": "第 351 场周赛"
+    },
+    {
         "Rating": 2131.7917160422,
         "ID": 1579,
         "Title": "Remove Max Number of Edges to Keep Graph Fully Traversable",
@@ -2484,6 +2858,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 289",
         "ContestID_zh": "第 289 场周赛"
+    },
+    {
+        "Rating": 2126.1931814161,
+        "ID": 2746,
+        "Title": "Decremental String Concatenation",
+        "TitleZH": "字符串连接删减字母",
+        "TitleSlug": "decremental-string-concatenation",
+        "ContestSlug": "biweekly-contest-107",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 107",
+        "ContestID_zh": "第 107 场双周赛"
     },
     {
         "Rating": 2125.3125624762,
@@ -2737,6 +3122,28 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Biweekly Contest 87",
         "ContestID_zh": "第 87 场双周赛"
+    },
+    {
+        "Rating": 2091.6580433632,
+        "ID": 2842,
+        "Title": "Count K-Subsequences of a String With Maximum Beauty",
+        "TitleZH": "统计一个字符串的 k 子序列美丽值最大的数目",
+        "TitleSlug": "count-k-subsequences-of-a-string-with-maximum-beauty",
+        "ContestSlug": "biweekly-contest-112",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 112",
+        "ContestID_zh": "第 112 场双周赛"
+    },
+    {
+        "Rating": 2091.6474629767,
+        "ID": 2751,
+        "Title": "Robot Collisions",
+        "TitleZH": "机器人碰撞",
+        "TitleSlug": "robot-collisions",
+        "ContestSlug": "weekly-contest-351",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 351",
+        "ContestID_zh": "第 351 场周赛"
     },
     {
         "Rating": 2091.3820373571,
@@ -3014,6 +3421,17 @@
         "ContestID_zh": "第 93 场周赛"
     },
     {
+        "Rating": 2073.048019317,
+        "ID": 2845,
+        "Title": "Count of Interesting Subarrays",
+        "TitleZH": "统计趣味子数组的数目",
+        "TitleSlug": "count-of-interesting-subarrays",
+        "ContestSlug": "weekly-contest-361",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 361",
+        "ContestID_zh": "第 361 场周赛"
+    },
+    {
         "Rating": 2073.0124645606,
         "ID": 1850,
         "Title": "Minimum Adjacent Swaps to Reach the Kth Smallest Number",
@@ -3034,6 +3452,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Biweekly Contest 48",
         "ContestID_zh": "第 48 场双周赛"
+    },
+    {
+        "Rating": 2071.3208991938,
+        "ID": 2607,
+        "Title": "Make K-Subarray Sums Equal",
+        "TitleZH": "使子数组元素和相等",
+        "TitleSlug": "make-k-subarray-sums-equal",
+        "ContestSlug": "biweekly-contest-101",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 101",
+        "ContestID_zh": "第 101 场双周赛"
     },
     {
         "Rating": 2070.2102619334,
@@ -3144,6 +3573,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Biweekly Contest 84",
         "ContestID_zh": "第 84 场双周赛"
+    },
+    {
+        "Rating": 2060.0818824378,
+        "ID": 2681,
+        "Title": "Power of Heroes",
+        "TitleZH": "英雄的力量",
+        "TitleSlug": "power-of-heroes",
+        "ContestSlug": "biweekly-contest-104",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 104",
+        "ContestID_zh": "第 104 场双周赛"
     },
     {
         "Rating": 2060.0720834082,
@@ -3276,6 +3716,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 202",
         "ContestID_zh": "第 202 场周赛"
+    },
+    {
+        "Rating": 2043.1015779104,
+        "ID": 2735,
+        "Title": "Collecting Chocolates",
+        "TitleZH": "收集巧克力",
+        "TitleSlug": "collecting-chocolates",
+        "ContestSlug": "weekly-contest-349",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 349",
+        "ContestID_zh": "第 349 场周赛"
     },
     {
         "Rating": 2042.4005521254,
@@ -3454,6 +3905,17 @@
         "ContestID_zh": "第 88 场双周赛"
     },
     {
+        "Rating": 2029.4024513478,
+        "ID": 2772,
+        "Title": "Apply Operations to Make All Array Elements Equal to Zero",
+        "TitleZH": "使数组中的所有元素都等于零",
+        "TitleSlug": "apply-operations-to-make-all-array-elements-equal-to-zero",
+        "ContestSlug": "weekly-contest-353",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 353",
+        "ContestID_zh": "第 353 场周赛"
+    },
+    {
         "Rating": 2029.1301557536,
         "ID": 1231,
         "Title": "Divide Chocolate",
@@ -3542,6 +4004,17 @@
         "ContestID_zh": "第 44 场双周赛"
     },
     {
+        "Rating": 2023.4303440211,
+        "ID": 2597,
+        "Title": "The Number of Beautiful Subsets",
+        "TitleZH": "美丽子集的数目",
+        "TitleSlug": "the-number-of-beautiful-subsets",
+        "ContestSlug": "weekly-contest-337",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 337",
+        "ContestID_zh": "第 337 场周赛"
+    },
+    {
         "Rating": 2022.8520613737,
         "ID": 1235,
         "Title": "Maximum Profit in Job Scheduling",
@@ -3584,6 +4057,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Biweekly Contest 78",
         "ContestID_zh": "第 78 场双周赛"
+    },
+    {
+        "Rating": 2020.7095306378,
+        "ID": 2741,
+        "Title": "Special Permutations",
+        "TitleZH": "特别的排列",
+        "TitleSlug": "special-permutations",
+        "ContestSlug": "weekly-contest-350",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 350",
+        "ContestID_zh": "第 350 场周赛"
     },
     {
         "Rating": 2020.6775180586,
@@ -4026,6 +4510,17 @@
         "ContestID_zh": "第 141 场周赛"
     },
     {
+        "Rating": 1975.9693382075,
+        "ID": 2831,
+        "Title": "Find the Longest Equal Subarray",
+        "TitleZH": "找出最长等值子数组",
+        "TitleSlug": "find-the-longest-equal-subarray",
+        "ContestSlug": "weekly-contest-359",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 359",
+        "ContestID_zh": "第 359 场周赛"
+    },
+    {
         "Rating": 1975.5726300727,
         "ID": 907,
         "Title": "Sum of Subarray Minimums",
@@ -4356,6 +4851,17 @@
         "ContestID_zh": "第 272 场周赛"
     },
     {
+        "Rating": 1940.2116985812,
+        "ID": 2762,
+        "Title": "Continuous Subarrays",
+        "TitleZH": "不间断子数组",
+        "TitleSlug": "continuous-subarrays",
+        "ContestSlug": "weekly-contest-352",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 352",
+        "ContestID_zh": "第 352 场周赛"
+    },
+    {
         "Rating": 1939.9323330472,
         "ID": 1760,
         "Title": "Minimum Limit of Balls in a Bag",
@@ -4510,6 +5016,17 @@
         "ContestID_zh": "第 233 场周赛"
     },
     {
+        "Rating": 1928.7961204946,
+        "ID": 2654,
+        "Title": "Minimum Number of Operations to Make All Array Elements Equal to 1",
+        "TitleZH": "使数组所有元素变成 1 的最少操作次数",
+        "TitleSlug": "minimum-number-of-operations-to-make-all-array-elements-equal-to-1",
+        "ContestSlug": "weekly-contest-342",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 342",
+        "ContestID_zh": "第 342 场周赛"
+    },
+    {
         "Rating": 1928.2304187946,
         "ID": 1562,
         "Title": "Find Latest Group of Size M",
@@ -4552,6 +5069,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 226",
         "ContestID_zh": "第 226 场周赛"
+    },
+    {
+        "Rating": 1922.9521758079,
+        "ID": 2731,
+        "Title": "Movement of Robots",
+        "TitleZH": "移动机器人",
+        "TitleSlug": "movement-of-robots",
+        "ContestSlug": "biweekly-contest-106",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 106",
+        "ContestID_zh": "第 106 场双周赛"
     },
     {
         "Rating": 1919.7433862082,
@@ -4609,6 +5137,17 @@
         "ContestID_zh": "第 86 场双周赛"
     },
     {
+        "Rating": 1917.1049672432,
+        "ID": 2673,
+        "Title": "Make Costs of Paths Equal in a Binary Tree",
+        "TitleZH": "使二叉树所有路径值相等的最小代价",
+        "TitleSlug": "make-costs-of-paths-equal-in-a-binary-tree",
+        "ContestSlug": "weekly-contest-344",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 344",
+        "ContestID_zh": "第 344 场周赛"
+    },
+    {
         "Rating": 1916.0689858272,
         "ID": 1043,
         "Title": "Partition Array for Maximum Sum",
@@ -4618,6 +5157,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Weekly Contest 136",
         "ContestID_zh": "第 136 场周赛"
+    },
+    {
+        "Rating": 1915.2628132733,
+        "ID": 2594,
+        "Title": "Minimum Time to Repair Cars",
+        "TitleZH": "修车的最少时间",
+        "TitleSlug": "minimum-time-to-repair-cars",
+        "ContestSlug": "biweekly-contest-100",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 100",
+        "ContestID_zh": "第 100 场双周赛"
     },
     {
         "Rating": 1914.6717285348,
@@ -4664,6 +5214,17 @@
         "ContestID_zh": "第 245 场周赛"
     },
     {
+        "Rating": 1912.1926699881,
+        "ID": 2680,
+        "Title": "Maximum OR",
+        "TitleZH": "最大或值",
+        "TitleSlug": "maximum-or",
+        "ContestSlug": "biweekly-contest-104",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 104",
+        "ContestID_zh": "第 104 场双周赛"
+    },
+    {
         "Rating": 1912.0829958001,
         "ID": 1147,
         "Title": "Longest Chunked Palindrome Decomposition",
@@ -4708,6 +5269,17 @@
         "ContestID_zh": "第 94 场周赛"
     },
     {
+        "Rating": 1909.5535861652,
+        "ID": 2585,
+        "Title": "Number of Ways to Earn Points",
+        "TitleZH": "获得分数的方法数",
+        "TitleSlug": "number-of-ways-to-earn-points",
+        "ContestSlug": "weekly-contest-335",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 335",
+        "ContestID_zh": "第 335 场周赛"
+    },
+    {
         "Rating": 1909.4189035523,
         "ID": 991,
         "Title": "Broken Calculator",
@@ -4728,6 +5300,28 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Weekly Contest 145",
         "ContestID_zh": "第 145 场周赛"
+    },
+    {
+        "Rating": 1904.2279434479,
+        "ID": 2608,
+        "Title": "Shortest Cycle in a Graph",
+        "TitleZH": "图中的最短环",
+        "TitleSlug": "shortest-cycle-in-a-graph",
+        "ContestSlug": "biweekly-contest-101",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 101",
+        "ContestID_zh": "第 101 场双周赛"
+    },
+    {
+        "Rating": 1903.1973989877,
+        "ID": 2602,
+        "Title": "Minimum Operations to Make All Array Elements Equal",
+        "TitleZH": "使数组元素全部相等的最少操作次数",
+        "TitleSlug": "minimum-operations-to-make-all-array-elements-equal",
+        "ContestSlug": "weekly-contest-338",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 338",
+        "ContestID_zh": "第 338 场周赛"
     },
     {
         "Rating": 1900.8434122725,
@@ -4838,6 +5432,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Weekly Contest 328",
         "ContestID_zh": "第 328 场周赛"
+    },
+    {
+        "Rating": 1889.4554322242,
+        "ID": 2817,
+        "Title": "Minimum Absolute Difference Between Elements With Constraint",
+        "TitleZH": "限制条件下元素之间的最小绝对差",
+        "TitleSlug": "minimum-absolute-difference-between-elements-with-constraint",
+        "ContestSlug": "weekly-contest-358",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 358",
+        "ContestID_zh": "第 358 场周赛"
     },
     {
         "Rating": 1886.7040111218,
@@ -5016,6 +5621,17 @@
         "ContestID_zh": "第 181 场周赛"
     },
     {
+        "Rating": 1875.4217845362,
+        "ID": 2808,
+        "Title": "Minimum Seconds to Equalize a Circular Array",
+        "TitleZH": "使循环数组所有元素相等的最少秒数",
+        "TitleSlug": "minimum-seconds-to-equalize-a-circular-array",
+        "ContestSlug": "biweekly-contest-110",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 110",
+        "ContestID_zh": "第 110 场双周赛"
+    },
+    {
         "Rating": 1874.6468976233,
         "ID": 1015,
         "Title": "Smallest Integer Divisible by K",
@@ -5159,6 +5775,17 @@
         "ContestID_zh": "第 63 场双周赛"
     },
     {
+        "Rating": 1864.5644306171,
+        "ID": 2767,
+        "Title": "Partition String Into Minimum Beautiful Substrings",
+        "TitleZH": "将字符串分割为最少的美丽子字符串",
+        "TitleSlug": "partition-string-into-minimum-beautiful-substrings",
+        "ContestSlug": "biweekly-contest-108",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 108",
+        "ContestID_zh": "第 108 场双周赛"
+    },
+    {
         "Rating": 1864.0948676111,
         "ID": 1163,
         "Title": "Last Substring in Lexicographical Order",
@@ -5247,6 +5874,17 @@
         "ContestID_zh": "第 75 场周赛"
     },
     {
+        "Rating": 1855.561153694,
+        "ID": 2800,
+        "Title": "Shortest String That Contains Three Strings",
+        "TitleZH": "包含三个字符串的最短字符串",
+        "TitleSlug": "shortest-string-that-contains-three-strings",
+        "ContestSlug": "weekly-contest-356",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 356",
+        "ContestID_zh": "第 356 场周赛"
+    },
+    {
         "Rating": 1855.4479039876,
         "ID": 1202,
         "Title": "Smallest String With Swaps",
@@ -5311,6 +5949,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Biweekly Contest 71",
         "ContestID_zh": "第 71 场双周赛"
+    },
+    {
+        "Rating": 1851.2677996923,
+        "ID": 2830,
+        "Title": "Maximize the Profit as the Salesman",
+        "TitleZH": "销售利润最大化",
+        "TitleSlug": "maximize-the-profit-as-the-salesman",
+        "ContestSlug": "weekly-contest-359",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 359",
+        "ContestID_zh": "第 359 场周赛"
     },
     {
         "Rating": 1850.8490524791,
@@ -5399,6 +6048,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 94",
         "ContestID_zh": "第 94 场周赛"
+    },
+    {
+        "Rating": 1845.6611654401,
+        "ID": 2598,
+        "Title": "Smallest Missing Non-negative Integer After Operations",
+        "TitleZH": "执行操作后的最大 MEX",
+        "TitleSlug": "smallest-missing-non-negative-integer-after-operations",
+        "ContestSlug": "weekly-contest-337",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 337",
+        "ContestID_zh": "第 337 场周赛"
     },
     {
         "Rating": 1845.0428731248,
@@ -5731,6 +6391,17 @@
         "ContestID_zh": "第 232 场周赛"
     },
     {
+        "Rating": 1817.5282352022,
+        "ID": 2787,
+        "Title": "Ways to Express an Integer as Sum of Powers",
+        "TitleZH": "将一个数字表示成幂的和的方案数",
+        "TitleSlug": "ways-to-express-an-integer-as-sum-of-powers",
+        "ContestSlug": "biweekly-contest-109",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 109",
+        "ContestID_zh": "第 109 场双周赛"
+    },
+    {
         "Rating": 1817.224026292,
         "ID": 1658,
         "Title": "Minimum Operations to Reduce X to Zero",
@@ -5773,6 +6444,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Weekly Contest 166",
         "ContestID_zh": "第 166 场周赛"
+    },
+    {
+        "Rating": 1810.6470004623,
+        "ID": 2642,
+        "Title": "Design Graph With Shortest Path Calculator",
+        "TitleZH": "设计可以求最短路径的图类",
+        "TitleSlug": "design-graph-with-shortest-path-calculator",
+        "ContestSlug": "biweekly-contest-102",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Biweekly Contest 102",
+        "ContestID_zh": "第 102 场双周赛"
     },
     {
         "Rating": 1809.8192888474,
@@ -6006,6 +6688,17 @@
         "ContestID_zh": "第 85 场双周赛"
     },
     {
+        "Rating": 1793.3033536992,
+        "ID": 2615,
+        "Title": "Sum of Distances",
+        "TitleZH": "等值距离和",
+        "TitleSlug": "sum-of-distances",
+        "ContestSlug": "weekly-contest-340",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 340",
+        "ContestID_zh": "第 340 场周赛"
+    },
+    {
         "Rating": 1792.076794537,
         "ID": 1245,
         "Title": "Tree Diameter",
@@ -6015,6 +6708,28 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Biweekly Contest 12",
         "ContestID_zh": "第 12 场双周赛"
+    },
+    {
+        "Rating": 1791.5102962397,
+        "ID": 2771,
+        "Title": "Longest Non-decreasing Subarray From Two Arrays",
+        "TitleZH": "构造最长非递减子数组",
+        "TitleSlug": "longest-non-decreasing-subarray-from-two-arrays",
+        "ContestSlug": "weekly-contest-353",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 353",
+        "ContestID_zh": "第 353 场周赛"
+    },
+    {
+        "Rating": 1791.0336923305,
+        "ID": 2712,
+        "Title": "Minimum Cost to Make All Characters Equal",
+        "TitleZH": "使所有字符相等的最小成本",
+        "TitleSlug": "minimum-cost-to-make-all-characters-equal",
+        "ContestSlug": "weekly-contest-347",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 347",
+        "ContestID_zh": "第 347 场周赛"
     },
     {
         "Rating": 1790.5747006625,
@@ -6138,6 +6853,17 @@
         "ContestID_zh": "第 55 场双周赛"
     },
     {
+        "Rating": 1785.6006955353,
+        "ID": 2653,
+        "Title": "Sliding Subarray Beauty",
+        "TitleZH": "滑动子数组的美丽值",
+        "TitleSlug": "sliding-subarray-beauty",
+        "ContestSlug": "weekly-contest-342",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 342",
+        "ContestID_zh": "第 342 场周赛"
+    },
+    {
         "Rating": 1784.2539813582,
         "ID": 894,
         "Title": "All Possible Full Binary Trees",
@@ -6259,6 +6985,17 @@
         "ContestID_zh": "第 129 场周赛"
     },
     {
+        "Rating": 1779.0712927572,
+        "ID": 2601,
+        "Title": "Prime Subtraction Operation",
+        "TitleZH": "质数减法运算",
+        "TitleSlug": "prime-subtraction-operation",
+        "ContestSlug": "weekly-contest-338",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 338",
+        "ContestID_zh": "第 338 场周赛"
+    },
+    {
         "Rating": 1778.4880620629,
         "ID": 1824,
         "Title": "Minimum Sideway Jumps",
@@ -6312,6 +7049,28 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Weekly Contest 148",
         "ContestID_zh": "第 148 场周赛"
+    },
+    {
+        "Rating": 1769.4344566771,
+        "ID": 2685,
+        "Title": "Count the Number of Complete Components",
+        "TitleZH": "统计完全连通分量的数量",
+        "TitleSlug": "count-the-number-of-complete-components",
+        "ContestSlug": "weekly-contest-345",
+        "ProblemIndex": "Q4",
+        "ContestID_en": "Weekly Contest 345",
+        "ContestID_zh": "第 345 场周赛"
+    },
+    {
+        "Rating": 1768.9138093037,
+        "ID": 2718,
+        "Title": "Sum of Matrix After Queries",
+        "TitleZH": "查询后矩阵的和",
+        "TitleSlug": "sum-of-matrix-after-queries",
+        "ContestSlug": "weekly-contest-348",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 348",
+        "ContestID_zh": "第 348 场周赛"
     },
     {
         "Rating": 1768.623896829,
@@ -6743,6 +7502,17 @@
         "ContestID_zh": "第 49 场双周赛"
     },
     {
+        "Rating": 1735.8505509901,
+        "ID": 2707,
+        "Title": "Extra Characters in a String",
+        "TitleZH": "字符串中的额外字符",
+        "TitleSlug": "extra-characters-in-a-string",
+        "ContestSlug": "biweekly-contest-105",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 105",
+        "ContestID_zh": "第 105 场双周赛"
+    },
+    {
         "Rating": 1734.8208369949,
         "ID": 1292,
         "Title": "Maximum Side Length of a Square with Sum Less than or Equal to Threshold",
@@ -6774,6 +7544,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Biweekly Contest 14",
         "ContestID_zh": "第 14 场双周赛"
+    },
+    {
+        "Rating": 1732.5146472785,
+        "ID": 2786,
+        "Title": "Visit Array Positions to Maximize Score",
+        "TitleZH": "访问数组中的位置使分数最大",
+        "TitleSlug": "visit-array-positions-to-maximize-score",
+        "ContestSlug": "biweekly-contest-109",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 109",
+        "ContestID_zh": "第 109 场双周赛"
     },
     {
         "Rating": 1731.5555445321,
@@ -6873,6 +7654,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Biweekly Contest 9",
         "ContestID_zh": "第 9 场双周赛"
+    },
+    {
+        "Rating": 1721.1964988483,
+        "ID": 2826,
+        "Title": "Sorting Three Groups",
+        "TitleZH": "将三个组排序",
+        "TitleSlug": "sorting-three-groups",
+        "ContestSlug": "biweekly-contest-111",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 111",
+        "ContestID_zh": "第 111 场双周赛"
     },
     {
         "Rating": 1720.7470612766,
@@ -7128,6 +7920,17 @@
         "ContestID_zh": "第 80 场周赛"
     },
     {
+        "Rating": 1705.2545641354,
+        "ID": 2672,
+        "Title": "Number of Adjacent Elements With the Same Color",
+        "TitleZH": "有相同颜色的相邻元素数目",
+        "TitleSlug": "number-of-adjacent-elements-with-the-same-color",
+        "ContestSlug": "weekly-contest-344",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 344",
+        "ContestID_zh": "第 344 场周赛"
+    },
+    {
         "Rating": 1704.360891641,
         "ID": 1947,
         "Title": "Maximum Compatibility Score Sum",
@@ -7236,6 +8039,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 194",
         "ContestID_zh": "第 194 场周赛"
+    },
+    {
+        "Rating": 1696.8895579594,
+        "ID": 2588,
+        "Title": "Count the Number of Beautiful Subarrays",
+        "TitleZH": "统计美丽子数组数目",
+        "TitleSlug": "count-the-number-of-beautiful-subarrays",
+        "ContestSlug": "weekly-contest-336",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 336",
+        "ContestID_zh": "第 336 场周赛"
     },
     {
         "Rating": 1695.3076664977,
@@ -7513,6 +8327,17 @@
         "ContestID_zh": "第 246 场周赛"
     },
     {
+        "Rating": 1678.6245760413,
+        "ID": 2698,
+        "Title": "Find the Punishment Number of an Integer",
+        "TitleZH": "求一个整数的惩罚数",
+        "TitleSlug": "find-the-punishment-number-of-an-integer",
+        "ContestSlug": "weekly-contest-346",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 346",
+        "ContestID_zh": "第 346 场周赛"
+    },
+    {
         "Rating": 1678.6241816708,
         "ID": 2317,
         "Title": "Maximum XOR After Operations ",
@@ -7555,6 +8380,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 89",
         "ContestID_zh": "第 89 场周赛"
+    },
+    {
+        "Rating": 1676.5007365375,
+        "ID": 2641,
+        "Title": "Cousins in Binary Tree II",
+        "TitleZH": "二叉树的堂兄弟节点 II",
+        "TitleSlug": "cousins-in-binary-tree-ii",
+        "ContestSlug": "biweekly-contest-102",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 102",
+        "ContestID_zh": "第 102 场双周赛"
     },
     {
         "Rating": 1675.989407584,
@@ -7678,6 +8514,17 @@
         "ContestID_zh": "第 37 场双周赛"
     },
     {
+        "Rating": 1665.1885910815,
+        "ID": 2593,
+        "Title": "Find Score of an Array After Marking All Elements",
+        "TitleZH": "标记所有元素后数组的分数",
+        "TitleSlug": "find-score-of-an-array-after-marking-all-elements",
+        "ContestSlug": "biweekly-contest-100",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 100",
+        "ContestID_zh": "第 100 场双周赛"
+    },
+    {
         "Rating": 1664.7703749741,
         "ID": 1121,
         "Title": "Divide Array Into Increasing Sequences",
@@ -7687,6 +8534,17 @@
         "ProblemIndex": "Q4",
         "ContestID_en": "Biweekly Contest 4",
         "ContestID_zh": "第 4 场双周赛"
+    },
+    {
+        "Rating": 1663.456591933,
+        "ID": 2611,
+        "Title": "Mice and Cheese",
+        "TitleZH": "老鼠和奶酪",
+        "TitleSlug": "mice-and-cheese",
+        "ContestSlug": "weekly-contest-339",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 339",
+        "ContestID_zh": "第 339 场周赛"
     },
     {
         "Rating": 1663.3912882908,
@@ -8074,6 +8932,17 @@
         "ContestID_zh": "第 302 场周赛"
     },
     {
+        "Rating": 1638.4147703093,
+        "ID": 2779,
+        "Title": "Maximum Beauty of an Array After Applying Operation",
+        "TitleZH": "数组的最大美丽值",
+        "TitleSlug": "maximum-beauty-of-an-array-after-applying-operation",
+        "ContestSlug": "weekly-contest-354",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 354",
+        "ContestID_zh": "第 354 场周赛"
+    },
+    {
         "Rating": 1638.3134093066,
         "ID": 1926,
         "Title": "Nearest Exit from Entrance in Maze",
@@ -8217,6 +9086,17 @@
         "ContestID_zh": "第 81 场周赛"
     },
     {
+        "Rating": 1631.5850830561,
+        "ID": 2580,
+        "Title": "Count Ways to Group Overlapping Ranges",
+        "TitleZH": "统计将重叠区间合并成组的方案数",
+        "TitleSlug": "count-ways-to-group-overlapping-ranges",
+        "ContestSlug": "biweekly-contest-99",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 99",
+        "ContestID_zh": "第 99 场双周赛"
+    },
+    {
         "Rating": 1631.338145683,
         "ID": 1540,
         "Title": "Can Convert String in K Moves",
@@ -8270,6 +9150,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 178",
         "ContestID_zh": "第 178 场周赛"
+    },
+    {
+        "Rating": 1625.9636825798,
+        "ID": 2684,
+        "Title": "Maximum Number of Moves in a Grid",
+        "TitleZH": "矩阵中移动的最大次数",
+        "TitleSlug": "maximum-number-of-moves-in-a-grid",
+        "ContestSlug": "weekly-contest-345",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 345",
+        "ContestID_zh": "第 345 场周赛"
     },
     {
         "Rating": 1624.9775945043,
@@ -8404,6 +9295,17 @@
         "ContestID_zh": "第 70 场双周赛"
     },
     {
+        "Rating": 1613.2485081262,
+        "ID": 2766,
+        "Title": "Relocate Marbles",
+        "TitleZH": "重新放置石块",
+        "TitleSlug": "relocate-marbles",
+        "ContestSlug": "biweekly-contest-108",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 108",
+        "ContestID_zh": "第 108 场双周赛"
+    },
+    {
         "Rating": 1613.0429766636,
         "ID": 1277,
         "Title": "Count Square Submatrices with All Ones",
@@ -8501,6 +9403,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 299",
         "ContestID_zh": "第 299 场周赛"
+    },
+    {
+        "Rating": 1607.4192947808,
+        "ID": 2745,
+        "Title": "Construct the Longest New String",
+        "TitleZH": "构造最长的新字符串",
+        "TitleSlug": "construct-the-longest-new-string",
+        "ContestSlug": "biweekly-contest-107",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 107",
+        "ContestID_zh": "第 107 场双周赛"
     },
     {
         "Rating": 1607.0005715974,
@@ -8646,6 +9559,17 @@
         "ContestID_zh": "第 137 场周赛"
     },
     {
+        "Rating": 1597.5718383661,
+        "ID": 2750,
+        "Title": "Ways to Split Array Into Good Subarrays",
+        "TitleZH": "将数组划分成若干好子数组的方式",
+        "TitleSlug": "ways-to-split-array-into-good-subarrays",
+        "ContestSlug": "weekly-contest-351",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 351",
+        "ContestID_zh": "第 351 场周赛"
+    },
+    {
         "Rating": 1597.1931473887,
         "ID": 1218,
         "Title": "Longest Arithmetic Subsequence of Given Difference",
@@ -8789,6 +9713,17 @@
         "ContestID_zh": "第 49 场双周赛"
     },
     {
+        "Rating": 1588.4826339516,
+        "ID": 2844,
+        "Title": "Minimum Operations to Make a Special Number",
+        "TitleZH": "生成特殊数字的最少操作",
+        "TitleSlug": "minimum-operations-to-make-a-special-number",
+        "ContestSlug": "weekly-contest-361",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 361",
+        "ContestID_zh": "第 361 场周赛"
+    },
+    {
         "Rating": 1588.3835994255,
         "ID": 1764,
         "Title": "Form Array by Concatenating Subarrays of Another Array",
@@ -8831,6 +9766,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 285",
         "ContestID_zh": "第 285 场周赛"
+    },
+    {
+        "Rating": 1580.9748095835,
+        "ID": 2765,
+        "Title": "Longest Alternating Subarray",
+        "TitleZH": "最长交替子序列",
+        "TitleSlug": "longest-alternating-subarray",
+        "ContestSlug": "biweekly-contest-108",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 108",
+        "ContestID_zh": "第 108 场双周赛"
     },
     {
         "Rating": 1580.3620959714,
@@ -8974,6 +9920,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 144",
         "ContestID_zh": "第 144 场周赛"
+    },
+    {
+        "Rating": 1569.1579260438,
+        "ID": 2592,
+        "Title": "Maximize Greatness of an Array",
+        "TitleZH": "最大化数组的伟大值",
+        "TitleSlug": "maximize-greatness-of-an-array",
+        "ContestSlug": "biweekly-contest-100",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 100",
+        "ContestID_zh": "第 100 场双周赛"
     },
     {
         "Rating": 1567.6884942977,
@@ -9207,6 +10164,17 @@
         "ContestID_zh": "第 74 场双周赛"
     },
     {
+        "Rating": 1549.9747683007,
+        "ID": 2780,
+        "Title": "Minimum Index of a Valid Split",
+        "TitleZH": "合法分割的最小下标",
+        "TitleSlug": "minimum-index-of-a-valid-split",
+        "ContestSlug": "weekly-contest-354",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 354",
+        "ContestID_zh": "第 354 场周赛"
+    },
+    {
         "Rating": 1549.945040184,
         "ID": 2527,
         "Title": "Find Xor-Beauty of Array",
@@ -9273,6 +10241,17 @@
         "ContestID_zh": "第 66 场周赛"
     },
     {
+        "Rating": 1545.9654593951,
+        "ID": 2841,
+        "Title": "Maximum Sum of Almost Unique Subarray",
+        "TitleZH": "几乎唯一子数组的最大和",
+        "TitleSlug": "maximum-sum-of-almost-unique-subarray",
+        "ContestSlug": "biweekly-contest-112",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 112",
+        "ContestID_zh": "第 112 场双周赛"
+    },
+    {
         "Rating": 1544.8391626032,
         "ID": 1104,
         "Title": "Path In Zigzag Labelled Binary Tree",
@@ -9304,6 +10283,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 74",
         "ContestID_zh": "第 74 场周赛"
+    },
+    {
+        "Rating": 1543.1204810684,
+        "ID": 2811,
+        "Title": "Check if it is Possible to Split Array",
+        "TitleZH": "判断是否能拆分数组",
+        "TitleSlug": "check-if-it-is-possible-to-split-array",
+        "ContestSlug": "weekly-contest-357",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 357",
+        "ContestID_zh": "第 357 场周赛"
     },
     {
         "Rating": 1542.5630367445,
@@ -9493,6 +10483,17 @@
         "ContestID_zh": "第 177 场周赛"
     },
     {
+        "Rating": 1533.47383662,
+        "ID": 2770,
+        "Title": "Maximum Number of Jumps to Reach the Last Index",
+        "TitleZH": "达到末尾下标所需的最大跳跃次数",
+        "TitleSlug": "maximum-number-of-jumps-to-reach-the-last-index",
+        "ContestSlug": "weekly-contest-353",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 353",
+        "ContestID_zh": "第 353 场周赛"
+    },
+    {
         "Rating": 1533.3376144199,
         "ID": 1930,
         "Title": "Unique Length-3 Palindromic Subsequences",
@@ -9524,6 +10525,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 101",
         "ContestID_zh": "第 101 场周赛"
+    },
+    {
+        "Rating": 1530.6451141787,
+        "ID": 2591,
+        "Title": "Distribute Money to Maximum Children",
+        "TitleZH": "将钱分给最多的儿童",
+        "TitleSlug": "distribute-money-to-maximum-children",
+        "ContestSlug": "biweekly-contest-100",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 100",
+        "ContestID_zh": "第 100 场双周赛"
     },
     {
         "Rating": 1530.495439788,
@@ -9691,6 +10703,17 @@
         "ContestID_zh": "第 213 场周赛"
     },
     {
+        "Rating": 1517.8263048447,
+        "ID": 2683,
+        "Title": "Neighboring Bitwise XOR",
+        "TitleZH": "相邻值的按位异或",
+        "TitleSlug": "neighboring-bitwise-xor",
+        "ContestSlug": "weekly-contest-345",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 345",
+        "ContestID_zh": "第 345 场周赛"
+    },
+    {
         "Rating": 1516.8229485853,
         "ID": 775,
         "Title": "Global and Local Inversions",
@@ -9744,6 +10767,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Weekly Contest 144",
         "ContestID_zh": "第 144 场周赛"
+    },
+    {
+        "Rating": 1509.6237874441,
+        "ID": 2671,
+        "Title": "Frequency Tracker",
+        "TitleZH": "频率跟踪器",
+        "TitleSlug": "frequency-tracker",
+        "ContestSlug": "weekly-contest-344",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 344",
+        "ContestID_zh": "第 344 场周赛"
     },
     {
         "Rating": 1509.5562928491,
@@ -9845,6 +10879,17 @@
         "ContestID_zh": "第 47 场双周赛"
     },
     {
+        "Rating": 1504.9263037499,
+        "ID": 2761,
+        "Title": "Prime Pairs With Target Sum",
+        "TitleZH": "和等于目标值的质数对",
+        "TitleSlug": "prime-pairs-with-target-sum",
+        "ContestSlug": "weekly-contest-352",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 352",
+        "ContestID_zh": "第 352 场周赛"
+    },
+    {
         "Rating": 1504.8237159326,
         "ID": 869,
         "Title": "Reordered Power of 2",
@@ -9878,6 +10923,17 @@
         "ContestID_zh": "第 27 场双周赛"
     },
     {
+        "Rating": 1502.6623568929,
+        "ID": 2661,
+        "Title": "First Completely Painted Row or Column",
+        "TitleZH": "找出叠涂元素",
+        "TitleSlug": "first-completely-painted-row-or-column",
+        "ContestSlug": "weekly-contest-343",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 343",
+        "ContestID_zh": "第 343 场周赛"
+    },
+    {
         "Rating": 1502.5363677723,
         "ID": 2358,
         "Title": "Maximum Number of Groups Entering a Competition",
@@ -9887,6 +10943,28 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 304",
         "ContestID_zh": "第 304 场周赛"
+    },
+    {
+        "Rating": 1502.2633100489,
+        "ID": 2708,
+        "Title": "Maximum Strength of a Group",
+        "TitleZH": "一个小组的最大实力值",
+        "TitleSlug": "maximum-strength-of-a-group",
+        "ContestSlug": "biweekly-contest-105",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 105",
+        "ContestID_zh": "第 105 场双周赛"
+    },
+    {
+        "Rating": 1501.9080845668,
+        "ID": 2730,
+        "Title": "Find the Longest Semi-Repetitive Substring",
+        "TitleZH": "找到最长的半重复子字符串",
+        "TitleSlug": "find-the-longest-semi-repetitive-substring",
+        "ContestSlug": "biweekly-contest-106",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 106",
+        "ContestID_zh": "第 106 场双周赛"
     },
     {
         "Rating": 1501.6846714598,
@@ -10087,6 +11165,17 @@
         "ContestID_zh": "第 168 场周赛"
     },
     {
+        "Rating": 1489.7210915287,
+        "ID": 2658,
+        "Title": "Maximum Number of Fish in a Grid",
+        "TitleZH": "网格图中鱼的最大数目",
+        "TitleSlug": "maximum-number-of-fish-in-a-grid",
+        "ContestSlug": "biweekly-contest-103",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Biweekly Contest 103",
+        "ContestID_zh": "第 103 场双周赛"
+    },
+    {
         "Rating": 1489.0102202162,
         "ID": 1175,
         "Title": "Prime Arrangements",
@@ -10131,6 +11220,17 @@
         "ContestID_zh": "第 204 场周赛"
     },
     {
+        "Rating": 1486.2147876747,
+        "ID": 2840,
+        "Title": "Check if Strings Can be Made Equal With Operations II",
+        "TitleZH": "判断通过操作能否让字符串相等 II",
+        "TitleSlug": "check-if-strings-can-be-made-equal-with-operations-ii",
+        "ContestSlug": "biweekly-contest-112",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 112",
+        "ContestID_zh": "第 112 场双周赛"
+    },
+    {
         "Rating": 1485.6550472186,
         "ID": 1190,
         "Title": "Reverse Substrings Between Each Pair of Parentheses",
@@ -10151,6 +11251,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 185",
         "ContestID_zh": "第 185 场周赛"
+    },
+    {
+        "Rating": 1484.8385256564,
+        "ID": 2789,
+        "Title": "Largest Element in an Array after Merge Operations",
+        "TitleZH": "合并后数组中的最大元素",
+        "TitleSlug": "largest-element-in-an-array-after-merge-operations",
+        "ContestSlug": "weekly-contest-355",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 355",
+        "ContestID_zh": "第 355 场周赛"
     },
     {
         "Rating": 1483.8137189709,
@@ -10250,6 +11361,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 181",
         "ContestID_zh": "第 181 场周赛"
+    },
+    {
+        "Rating": 1477.7669322402,
+        "ID": 2645,
+        "Title": "Minimum Additions to Make Valid String",
+        "TitleZH": "构造有效字符串的最少插入数",
+        "TitleSlug": "minimum-additions-to-make-valid-string",
+        "ContestSlug": "weekly-contest-341",
+        "ProblemIndex": "Q3",
+        "ContestID_en": "Weekly Contest 341",
+        "ContestID_zh": "第 341 场周赛"
     },
     {
         "Rating": 1477.4844514104,
@@ -10604,6 +11726,17 @@
         "ContestID_zh": "第 94 场双周赛"
     },
     {
+        "Rating": 1448.1865030721,
+        "ID": 2596,
+        "Title": "Check Knight Tour Configuration",
+        "TitleZH": "检查骑士巡视方案",
+        "TitleSlug": "check-knight-tour-configuration",
+        "ContestSlug": "weekly-contest-337",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 337",
+        "ContestID_zh": "第 337 场周赛"
+    },
+    {
         "Rating": 1448.1207963663,
         "ID": 945,
         "Title": "Minimum Increment to Make Array Unique",
@@ -10760,8 +11893,8 @@
     {
         "Rating": 1438.8988489545,
         "ID": 1375,
-        "Title": "Bulb Switcher III",
-        "TitleZH": "灯泡开关 III",
+        "Title": "Number of Times Binary String Is Prefix-Aligned",
+        "TitleZH": "二进制字符串前缀一致的次数",
         "TitleSlug": "number-of-times-binary-string-is-prefix-aligned",
         "ContestSlug": "weekly-contest-179",
         "ProblemIndex": "Q2",
@@ -10844,6 +11977,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 331",
         "ContestID_zh": "第 331 场周赛"
+    },
+    {
+        "Rating": 1434.2392062372,
+        "ID": 2600,
+        "Title": "K Items With the Maximum Sum",
+        "TitleZH": "K 件物品的最大和",
+        "TitleSlug": "k-items-with-the-maximum-sum",
+        "ContestSlug": "weekly-contest-338",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 338",
+        "ContestID_zh": "第 338 场周赛"
     },
     {
         "Rating": 1433.0795554833,
@@ -10943,6 +12087,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 122",
         "ContestID_zh": "第 122 场周赛"
+    },
+    {
+        "Rating": 1428.7246677159,
+        "ID": 2711,
+        "Title": "Difference of Number of Distinct Values on Diagonals",
+        "TitleZH": "对角线上不同值的数量差",
+        "TitleSlug": "difference-of-number-of-distinct-values-on-diagonals",
+        "ContestSlug": "weekly-contest-347",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 347",
+        "ContestID_zh": "第 347 场周赛"
     },
     {
         "Rating": 1428.712905903,
@@ -11088,6 +12243,17 @@
         "ContestID_zh": "第 29 场双周赛"
     },
     {
+        "Rating": 1422.3308967485,
+        "ID": 2606,
+        "Title": "Find the Substring With Maximum Cost",
+        "TitleZH": "找到最大开销的子字符串",
+        "TitleSlug": "find-the-substring-with-maximum-cost",
+        "ContestSlug": "biweekly-contest-101",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 101",
+        "ContestID_zh": "第 101 场双周赛"
+    },
+    {
         "Rating": 1421.9944676861,
         "ID": 1630,
         "Title": "Arithmetic Subarrays",
@@ -11130,6 +12296,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 134",
         "ContestID_zh": "第 134 场周赛"
+    },
+    {
+        "Rating": 1420.3698647434,
+        "ID": 2760,
+        "Title": "Longest Even Odd Subarray With Threshold",
+        "TitleZH": "最长奇偶子数组",
+        "TitleSlug": "longest-even-odd-subarray-with-threshold",
+        "ContestSlug": "weekly-contest-352",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 352",
+        "ContestID_zh": "第 352 场周赛"
     },
     {
         "Rating": 1418.9758090724,
@@ -11209,6 +12386,17 @@
         "ContestID_zh": "第 296 场周赛"
     },
     {
+        "Rating": 1414.6100987673,
+        "ID": 2825,
+        "Title": "Make String a Subsequence Using Cyclic Increments",
+        "TitleZH": "循环增长使字符串子序列等于另一个字符串",
+        "TitleSlug": "make-string-a-subsequence-using-cyclic-increments",
+        "ContestSlug": "biweekly-contest-111",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 111",
+        "ContestID_zh": "第 111 场双周赛"
+    },
+    {
         "Rating": 1414.4918812526,
         "ID": 890,
         "Title": "Find and Replace Pattern",
@@ -11284,6 +12472,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 147",
         "ContestID_zh": "第 147 场周赛"
+    },
+    {
+        "Rating": 1409.2288385791,
+        "ID": 2834,
+        "Title": "Find the Minimum Possible Sum of a Beautiful Array",
+        "TitleZH": "找出美丽数组的最小和",
+        "TitleSlug": "find-the-minimum-possible-sum-of-a-beautiful-array",
+        "ContestSlug": "weekly-contest-360",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 360",
+        "ContestID_zh": "第 360 场周赛"
     },
     {
         "Rating": 1408.7923640745,
@@ -11363,6 +12562,17 @@
         "ContestID_zh": "第 90 场双周赛"
     },
     {
+        "Rating": 1405.8938478338,
+        "ID": 2744,
+        "Title": "Find Maximum Number of String Pairs",
+        "TitleZH": "最大字符串配对数目",
+        "TitleSlug": "find-maximum-number-of-string-pairs",
+        "ContestSlug": "biweekly-contest-107",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 107",
+        "ContestID_zh": "第 107 场双周赛"
+    },
+    {
         "Rating": 1405.5786892723,
         "ID": 1561,
         "Title": "Maximum Number of Coins You Can Get",
@@ -11383,6 +12593,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Weekly Contest 184",
         "ContestID_zh": "第 184 场周赛"
+    },
+    {
+        "Rating": 1405.123188264,
+        "ID": 2734,
+        "Title": "Lexicographically Smallest String After Substring Operation",
+        "TitleZH": "执行子串操作后的字典序最小字符串",
+        "TitleSlug": "lexicographically-smallest-string-after-substring-operation",
+        "ContestSlug": "weekly-contest-349",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 349",
+        "ContestID_zh": "第 349 场周赛"
     },
     {
         "Rating": 1405.0021415178,
@@ -11449,6 +12670,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Biweekly Contest 76",
         "ContestID_zh": "第 76 场双周赛"
+    },
+    {
+        "Rating": 1397.9519549403,
+        "ID": 2799,
+        "Title": "Count Complete Subarrays in an Array",
+        "TitleZH": "统计完全子数组的数目",
+        "TitleSlug": "count-complete-subarrays-in-an-array",
+        "ContestSlug": "weekly-contest-356",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 356",
+        "ContestID_zh": "第 356 场周赛"
     },
     {
         "Rating": 1397.8875115008,
@@ -11548,6 +12780,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Biweekly Contest 77",
         "ContestID_zh": "第 77 场双周赛"
+    },
+    {
+        "Rating": 1393.7857353048,
+        "ID": 2816,
+        "Title": "Double a Number Represented as a Linked List",
+        "TitleZH": "翻倍以链表形式表示的数字",
+        "TitleSlug": "double-a-number-represented-as-a-linked-list",
+        "ContestSlug": "weekly-contest-358",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 358",
+        "ContestID_zh": "第 358 场周赛"
     },
     {
         "Rating": 1393.4123491817,
@@ -11759,6 +13002,17 @@
         "ContestID_zh": "第 88 场周赛"
     },
     {
+        "Rating": 1382.6941570342,
+        "ID": 2682,
+        "Title": "Find the Losers of the Circular Game",
+        "TitleZH": "找出转圈游戏输家",
+        "TitleSlug": "find-the-losers-of-the-circular-game",
+        "ContestSlug": "weekly-contest-345",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 345",
+        "ContestID_zh": "第 345 场周赛"
+    },
+    {
         "Rating": 1382.5129151601,
         "ID": 797,
         "Title": "All Paths From Source to Target",
@@ -11891,6 +13145,17 @@
         "ContestID_zh": "第 77 场周赛"
     },
     {
+        "Rating": 1376.2376633804,
+        "ID": 2784,
+        "Title": "Check if Array is Good",
+        "TitleZH": "检查数组是否是好的",
+        "TitleSlug": "check-if-array-is-good",
+        "ContestSlug": "biweekly-contest-109",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 109",
+        "ContestID_zh": "第 109 场双周赛"
+    },
+    {
         "Rating": 1376.0047008182,
         "ID": 2443,
         "Title": "Sum of Number and Its Reverse",
@@ -11900,6 +13165,17 @@
         "ProblemIndex": "Q3",
         "ContestID_en": "Weekly Contest 315",
         "ContestID_zh": "第 315 场周赛"
+    },
+    {
+        "Rating": 1375.4261931199,
+        "ID": 2614,
+        "Title": "Prime In Diagonal",
+        "TitleZH": "对角线上的质数",
+        "TitleSlug": "prime-in-diagonal",
+        "ContestSlug": "weekly-contest-340",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 340",
+        "ContestID_zh": "第 340 场周赛"
     },
     {
         "Rating": 1375.0376362104,
@@ -11955,6 +13231,28 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Biweekly Contest 37",
         "ContestID_zh": "第 37 场双周赛"
+    },
+    {
+        "Rating": 1374.3527967199,
+        "ID": 2583,
+        "Title": "Kth Largest Sum in a Binary Tree",
+        "TitleZH": "二叉树中的第 K 大层和",
+        "TitleSlug": "kth-largest-sum-in-a-binary-tree",
+        "ContestSlug": "weekly-contest-335",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 335",
+        "ContestID_zh": "第 335 场周赛"
+    },
+    {
+        "Rating": 1373.8916796083,
+        "ID": 2610,
+        "Title": "Convert an Array Into a 2D Array With Conditions",
+        "TitleZH": "转换二维数组",
+        "TitleSlug": "convert-an-array-into-a-2d-array-with-conditions",
+        "ContestSlug": "weekly-contest-339",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 339",
+        "ContestID_zh": "第 339 场周赛"
     },
     {
         "Rating": 1373.8113453501,
@@ -12265,6 +13563,17 @@
         "ContestID_zh": "第 63 场双周赛"
     },
     {
+        "Rating": 1356.4450869217,
+        "ID": 2579,
+        "Title": "Count Total Number of Colored Cells",
+        "TitleZH": "统计染色格子数",
+        "TitleSlug": "count-total-number-of-colored-cells",
+        "ContestSlug": "biweekly-contest-99",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 99",
+        "ContestID_zh": "第 99 场双周赛"
+    },
+    {
         "Rating": 1356.1920189231,
         "ID": 2043,
         "Title": "Simple Bank System",
@@ -12397,6 +13706,17 @@
         "ContestID_zh": "第 64 场双周赛"
     },
     {
+        "Rating": 1350.5883729249,
+        "ID": 2578,
+        "Title": "Split With Minimum Sum",
+        "TitleZH": "最小和分割",
+        "TitleSlug": "split-with-minimum-sum",
+        "ContestSlug": "biweekly-contest-99",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 99",
+        "ContestID_zh": "第 99 场双周赛"
+    },
+    {
         "Rating": 1348.670191438,
         "ID": 1100,
         "Title": "Find K-Length Substrings With No Repeated Characters",
@@ -12406,6 +13726,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Biweekly Contest 3",
         "ContestID_zh": "第 3 场双周赛"
+    },
+    {
+        "Rating": 1348.577010609,
+        "ID": 2609,
+        "Title": "Find the Longest Balanced Substring of a Binary String",
+        "TitleZH": "最长平衡子字符串",
+        "TitleSlug": "find-the-longest-balanced-substring-of-a-binary-string",
+        "ContestSlug": "weekly-contest-339",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 339",
+        "ContestID_zh": "第 339 场周赛"
     },
     {
         "Rating": 1348.0079390256,
@@ -12428,6 +13759,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 308",
         "ContestID_zh": "第 308 场周赛"
+    },
+    {
+        "Rating": 1347.2146542772,
+        "ID": 2829,
+        "Title": "Determine the Minimum Sum of a k-avoiding Array",
+        "TitleZH": "k-avoiding 数组的最小总和",
+        "TitleSlug": "determine-the-minimum-sum-of-a-k-avoiding-array",
+        "ContestSlug": "weekly-contest-359",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 359",
+        "ContestID_zh": "第 359 场周赛"
     },
     {
         "Rating": 1346.9594471871,
@@ -12606,6 +13948,17 @@
         "ContestID_zh": "第 165 场周赛"
     },
     {
+        "Rating": 1336.7830451625,
+        "ID": 2587,
+        "Title": "Rearrange Array to Maximize Prefix Score",
+        "TitleZH": "重排数组以得到最大前缀分数",
+        "TitleSlug": "rearrange-array-to-maximize-prefix-score",
+        "ContestSlug": "weekly-contest-336",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 336",
+        "ContestID_zh": "第 336 场周赛"
+    },
+    {
         "Rating": 1335.4613368501,
         "ID": 2506,
         "Title": "Count Pairs Of Similar Strings",
@@ -12703,6 +14056,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Weekly Contest 281",
         "ContestID_zh": "第 281 场周赛"
+    },
+    {
+        "Rating": 1333.0179956774,
+        "ID": 2679,
+        "Title": "Sum in a Matrix",
+        "TitleZH": "矩阵中的和",
+        "TitleSlug": "sum-in-a-matrix",
+        "ContestSlug": "biweekly-contest-104",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 104",
+        "ContestID_zh": "第 104 场双周赛"
     },
     {
         "Rating": 1332.622596763,
@@ -12879,6 +14243,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Biweekly Contest 36",
         "ContestID_zh": "第 36 场双周赛"
+    },
+    {
+        "Rating": 1324.1714505166,
+        "ID": 2660,
+        "Title": "Determine the Winner of a Bowling Game",
+        "TitleZH": "保龄球游戏的获胜者",
+        "TitleSlug": "determine-the-winner-of-a-bowling-game",
+        "ContestSlug": "weekly-contest-343",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 343",
+        "ContestID_zh": "第 343 场周赛"
     },
     {
         "Rating": 1323.8236471852,
@@ -13090,6 +14465,17 @@
         "ContestID_zh": "第 50 场双周赛"
     },
     {
+        "Rating": 1314.3600610974,
+        "ID": 2640,
+        "Title": "Find the Score of All Prefixes of an Array",
+        "TitleZH": "一个数组所有前缀的分数",
+        "TitleSlug": "find-the-score-of-all-prefixes-of-an-array",
+        "ContestSlug": "biweekly-contest-102",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 102",
+        "ContestID_zh": "第 102 场双周赛"
+    },
+    {
         "Rating": 1314.2912238536,
         "ID": 2160,
         "Title": "Minimum Sum of Four Digit Number After Splitting Digits",
@@ -13266,6 +14652,28 @@
         "ContestID_zh": "第 256 场周赛"
     },
     {
+        "Rating": 1304.1180812515,
+        "ID": 2657,
+        "Title": "Find the Prefix Common Array of Two Arrays",
+        "TitleZH": "找到两个数组的前缀公共数组",
+        "TitleSlug": "find-the-prefix-common-array-of-two-arrays",
+        "ContestSlug": "biweekly-contest-103",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 103",
+        "ContestID_zh": "第 103 场双周赛"
+    },
+    {
+        "Rating": 1303.7347742929,
+        "ID": 2697,
+        "Title": "Lexicographically Smallest Palindrome",
+        "TitleZH": "字典序最小回文串",
+        "TitleSlug": "lexicographically-smallest-palindrome",
+        "ContestSlug": "weekly-contest-346",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 346",
+        "ContestID_zh": "第 346 场周赛"
+    },
+    {
         "Rating": 1303.5594588137,
         "ID": 2331,
         "Title": "Evaluate Boolean Binary Tree",
@@ -13343,6 +14751,17 @@
         "ContestID_zh": "第 289 场周赛"
     },
     {
+        "Rating": 1301.9276849391,
+        "ID": 2740,
+        "Title": "Find the Value of the Partition",
+        "TitleZH": "找出分区值",
+        "TitleSlug": "find-the-value-of-the-partition",
+        "ContestSlug": "weekly-contest-350",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 350",
+        "ContestID_zh": "第 350 场周赛"
+    },
+    {
         "Rating": 1301.4167433184,
         "ID": 2525,
         "Title": "Categorize Box According to Criteria",
@@ -13385,6 +14804,17 @@
         "ProblemIndex": "Q2",
         "ContestID_en": "Biweekly Contest 53",
         "ContestID_zh": "第 53 场双周赛"
+    },
+    {
+        "Rating": 1301.1576743638,
+        "ID": 2748,
+        "Title": "Number of Beautiful Pairs",
+        "TitleZH": "美丽下标对的数目",
+        "TitleSlug": "number-of-beautiful-pairs",
+        "ContestSlug": "weekly-contest-351",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 351",
+        "ContestID_zh": "第 351 场周赛"
     },
     {
         "Rating": 1300.9041426403,
@@ -13475,6 +14905,17 @@
         "ContestID_zh": "第 287 场周赛"
     },
     {
+        "Rating": 1295.75504698,
+        "ID": 2717,
+        "Title": "Semi-Ordered Permutation",
+        "TitleZH": "半有序排列",
+        "TitleSlug": "semi-ordered-permutation",
+        "ContestSlug": "weekly-contest-348",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 348",
+        "ContestID_zh": "第 348 场周赛"
+    },
+    {
         "Rating": 1295.4970938463,
         "ID": 1539,
         "Title": "Kth Missing Positive Number",
@@ -13484,6 +14925,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Biweekly Contest 32",
         "ContestID_zh": "第 32 场双周赛"
+    },
+    {
+        "Rating": 1295.0947625986,
+        "ID": 2815,
+        "Title": "Max Pair Sum in an Array",
+        "TitleZH": "数组中的最大数对和",
+        "TitleSlug": "max-pair-sum-in-an-array",
+        "ContestSlug": "weekly-contest-358",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 358",
+        "ContestID_zh": "第 358 场周赛"
     },
     {
         "Rating": 1294.7724244077,
@@ -13517,6 +14969,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Biweekly Contest 43",
         "ContestID_zh": "第 43 场双周赛"
+    },
+    {
+        "Rating": 1294.2819324126,
+        "ID": 2833,
+        "Title": "Furthest Point From Origin",
+        "TitleZH": "距离原点最远的点",
+        "TitleSlug": "furthest-point-from-origin",
+        "ContestSlug": "weekly-contest-360",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 360",
+        "ContestID_zh": "第 360 场周赛"
     },
     {
         "Rating": 1294.0257382852,
@@ -13695,6 +15158,17 @@
         "ContestID_zh": "第 91 场周赛"
     },
     {
+        "Rating": 1285.1547123119,
+        "ID": 2839,
+        "Title": "Check if Strings Can be Made Equal With Operations I",
+        "TitleZH": "判断通过操作能否让字符串相等 I",
+        "TitleSlug": "check-if-strings-can-be-made-equal-with-operations-i",
+        "ContestSlug": "biweekly-contest-112",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 112",
+        "ContestID_zh": "第 112 场双周赛"
+    },
+    {
         "Rating": 1284.4514662456,
         "ID": 1720,
         "Title": "Decode XORed Array",
@@ -13750,6 +15224,17 @@
         "ContestID_zh": "第 162 场周赛"
     },
     {
+        "Rating": 1282.5186784876,
+        "ID": 2639,
+        "Title": "Find the Width of Columns of a Grid",
+        "TitleZH": "查询网格图中每一列的宽度",
+        "TitleSlug": "find-the-width-of-columns-of-a-grid",
+        "ContestSlug": "biweekly-contest-102",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 102",
+        "ContestID_zh": "第 102 场双周赛"
+    },
+    {
         "Rating": 1282.4111853142,
         "ID": 1837,
         "Title": "Sum of Digits in Base K",
@@ -13759,6 +15244,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 238",
         "ContestID_zh": "第 238 场周赛"
+    },
+    {
+        "Rating": 1282.3870247003,
+        "ID": 2696,
+        "Title": "Minimum String Length After Removing Substrings",
+        "TitleZH": "删除子串后的字符串最小长度",
+        "TitleSlug": "minimum-string-length-after-removing-substrings",
+        "ContestSlug": "weekly-contest-346",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 346",
+        "ContestID_zh": "第 346 场周赛"
     },
     {
         "Rating": 1282.1502428906,
@@ -13847,6 +15343,28 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 200",
         "ContestID_zh": "第 200 场周赛"
+    },
+    {
+        "Rating": 1279.0301521682,
+        "ID": 2807,
+        "Title": "Insert Greatest Common Divisors in Linked List",
+        "TitleZH": "在链表中插入最大公约数",
+        "TitleSlug": "insert-greatest-common-divisors-in-linked-list",
+        "ContestSlug": "biweekly-contest-110",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 110",
+        "ContestID_zh": "第 110 场双周赛"
+    },
+    {
+        "Rating": 1278.0092842613,
+        "ID": 2582,
+        "Title": "Pass the Pillow",
+        "TitleZH": "递枕头",
+        "TitleSlug": "pass-the-pillow",
+        "ContestSlug": "weekly-contest-335",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 335",
+        "ContestID_zh": "第 335 场周赛"
     },
     {
         "Rating": 1277.9987709491,
@@ -14003,6 +15521,17 @@
         "ContestID_zh": "第 84 场双周赛"
     },
     {
+        "Rating": 1269.8118442786,
+        "ID": 2843,
+        "Title": "  Count Symmetric Integers",
+        "TitleZH": "统计对称整数的数目",
+        "TitleSlug": "count-symmetric-integers",
+        "ContestSlug": "weekly-contest-361",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 361",
+        "ContestID_zh": "第 361 场周赛"
+    },
+    {
         "Rating": 1269.7567553523,
         "ID": 2032,
         "Title": "Two Out of Three",
@@ -14056,6 +15585,28 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 314",
         "ContestID_zh": "第 314 场周赛"
+    },
+    {
+        "Rating": 1266.5231114343,
+        "ID": 2670,
+        "Title": "Find the Distinct Difference Array",
+        "TitleZH": "找出不同元素数目差数组",
+        "TitleSlug": "find-the-distinct-difference-array",
+        "ContestSlug": "weekly-contest-344",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 344",
+        "ContestID_zh": "第 344 场周赛"
+    },
+    {
+        "Rating": 1266.5014127879,
+        "ID": 2785,
+        "Title": "Sort Vowels in a String",
+        "TitleZH": "将字符串中的元音字母排序",
+        "TitleSlug": "sort-vowels-in-a-string",
+        "ContestSlug": "biweekly-contest-109",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Biweekly Contest 109",
+        "ContestID_zh": "第 109 场双周赛"
     },
     {
         "Rating": 1266.341468955,
@@ -14155,6 +15706,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 141",
         "ContestID_zh": "第 141 场周赛"
+    },
+    {
+        "Rating": 1262.100652797,
+        "ID": 2739,
+        "Title": "Total Distance Traveled",
+        "TitleZH": "总行驶距离",
+        "TitleSlug": "total-distance-traveled",
+        "ContestSlug": "weekly-contest-350",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 350",
+        "ContestID_zh": "第 350 场周赛"
     },
     {
         "Rating": 1260.9112824221,
@@ -14276,6 +15838,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 100",
         "ContestID_zh": "第 100 场周赛"
+    },
+    {
+        "Rating": 1257.8344655358,
+        "ID": 2644,
+        "Title": "Find the Maximum Divisibility Score",
+        "TitleZH": "找出可整除性得分最大的整数",
+        "TitleSlug": "find-the-maximum-divisibility-score",
+        "ContestSlug": "weekly-contest-341",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 341",
+        "ContestID_zh": "第 341 场周赛"
     },
     {
         "Rating": 1257.7670945029,
@@ -14696,6 +16269,17 @@
         "ContestID_zh": "第 84 场周赛"
     },
     {
+        "Rating": 1242.9383307344,
+        "ID": 2716,
+        "Title": "Minimize String Length",
+        "TitleZH": "最小化字符串长度",
+        "TitleSlug": "minimize-string-length",
+        "ContestSlug": "weekly-contest-348",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 348",
+        "ContestID_zh": "第 348 场周赛"
+    },
+    {
         "Rating": 1242.8939284628,
         "ID": 2309,
         "Title": "Greatest English Letter in Upper and Lower Case",
@@ -14740,6 +16324,17 @@
         "ContestID_zh": "第 185 场周赛"
     },
     {
+        "Rating": 1241.5775825621,
+        "ID": 2605,
+        "Title": "Form Smallest Number From Two Digit Arrays",
+        "TitleZH": "从两个数字数组里生成最小数字",
+        "TitleSlug": "form-smallest-number-from-two-digit-arrays",
+        "ContestSlug": "biweekly-contest-101",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 101",
+        "ContestID_zh": "第 101 场双周赛"
+    },
+    {
         "Rating": 1241.5645130241,
         "ID": 2347,
         "Title": "Best Poker Hand",
@@ -14782,6 +16377,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 268",
         "ContestID_zh": "第 268 场周赛"
+    },
+    {
+        "Rating": 1239.1621762681,
+        "ID": 2788,
+        "Title": "Split Strings by Separator",
+        "TitleZH": "按分隔符拆分字符串",
+        "TitleSlug": "split-strings-by-separator",
+        "ContestSlug": "weekly-contest-355",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 355",
+        "ContestID_zh": "第 355 场周赛"
     },
     {
         "Rating": 1237.7565585875,
@@ -14980,6 +16586,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Biweekly Contest 45",
         "ContestID_zh": "第 45 场双周赛"
+    },
+    {
+        "Rating": 1227.91037348,
+        "ID": 2729,
+        "Title": "Check if The Number is Fascinating",
+        "TitleZH": "判断一个数是否迷人",
+        "TitleSlug": "check-if-the-number-is-fascinating",
+        "ContestSlug": "biweekly-contest-106",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 106",
+        "ContestID_zh": "第 106 场双周赛"
     },
     {
         "Rating": 1227.7906887239,
@@ -15224,6 +16841,17 @@
         "ContestID_zh": "第 272 场周赛"
     },
     {
+        "Rating": 1214.703724776,
+        "ID": 2806,
+        "Title": "Account Balance After Rounded Purchase",
+        "TitleZH": "取整购买后的账户余额",
+        "TitleSlug": "account-balance-after-rounded-purchase",
+        "ContestSlug": "biweekly-contest-110",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 110",
+        "ContestID_zh": "第 110 场双周赛"
+    },
+    {
         "Rating": 1213.8073621345,
         "ID": 973,
         "Title": "K Closest Points to Origin",
@@ -15233,6 +16861,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 119",
         "ContestID_zh": "第 119 场周赛"
+    },
+    {
+        "Rating": 1213.4070467355,
+        "ID": 2656,
+        "Title": "Maximum Sum With Exactly K Elements ",
+        "TitleZH": "K 个元素的最大和",
+        "TitleSlug": "maximum-sum-with-exactly-k-elements",
+        "ContestSlug": "biweekly-contest-103",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 103",
+        "ContestID_zh": "第 103 场双周赛"
     },
     {
         "Rating": 1212.2606422181,
@@ -15312,6 +16951,17 @@
         "ContestID_zh": "第 180 场周赛"
     },
     {
+        "Rating": 1207.7491943483,
+        "ID": 2706,
+        "Title": "Buy Two Chocolates",
+        "TitleZH": "购买两块巧克力",
+        "TitleSlug": "buy-two-chocolates",
+        "ContestSlug": "biweekly-contest-105",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 105",
+        "ContestID_zh": "第 105 场双周赛"
+    },
+    {
         "Rating": 1207.748239075,
         "ID": 2215,
         "Title": "Find the Difference of Two Arrays",
@@ -15343,6 +16993,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 321",
         "ContestID_zh": "第 321 场周赛"
+    },
+    {
+        "Rating": 1206.5675296817,
+        "ID": 2595,
+        "Title": "Number of Even and Odd Bits",
+        "TitleZH": "奇偶位数",
+        "TitleSlug": "number-of-even-and-odd-bits",
+        "ContestSlug": "weekly-contest-337",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 337",
+        "ContestID_zh": "第 337 场周赛"
     },
     {
         "Rating": 1206.1240971343,
@@ -15532,6 +17193,17 @@
         "ContestID_zh": "第 7 场双周赛"
     },
     {
+        "Rating": 1198.8420836551,
+        "ID": 2678,
+        "Title": "Number of Senior Citizens",
+        "TitleZH": "老人的数目",
+        "TitleSlug": "number-of-senior-citizens",
+        "ContestSlug": "biweekly-contest-104",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 104",
+        "ContestID_zh": "第 104 场双周赛"
+    },
+    {
         "Rating": 1198.5705825982,
         "ID": 1200,
         "Title": "Minimum Absolute Difference",
@@ -15620,6 +17292,17 @@
         "ContestID_zh": "第 312 场周赛"
     },
     {
+        "Rating": 1192.9770230345,
+        "ID": 2810,
+        "Title": "Faulty Keyboard",
+        "TitleZH": "故障键盘",
+        "TitleSlug": "faulty-keyboard",
+        "ContestSlug": "weekly-contest-357",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 357",
+        "ContestID_zh": "第 357 场周赛"
+    },
+    {
         "Rating": 1192.3167969426,
         "ID": 1436,
         "Title": "Destination City",
@@ -15629,6 +17312,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 187",
         "ContestID_zh": "第 187 场周赛"
+    },
+    {
+        "Rating": 1191.3681720998,
+        "ID": 2769,
+        "Title": "Find the Maximum Achievable Number",
+        "TitleZH": "找出最大的可达成数字",
+        "TitleSlug": "find-the-maximum-achievable-number",
+        "ContestSlug": "weekly-contest-353",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 353",
+        "ContestID_zh": "第 353 场周赛"
     },
     {
         "Rating": 1188.6470369782,
@@ -15719,6 +17413,17 @@
         "ContestID_zh": "第 217 场周赛"
     },
     {
+        "Rating": 1182.3093772964,
+        "ID": 2652,
+        "Title": "Sum Multiples",
+        "TitleZH": "倍数求和",
+        "TitleSlug": "sum-multiples",
+        "ContestSlug": "weekly-contest-342",
+        "ProblemIndex": "Q2",
+        "ContestID_en": "Weekly Contest 342",
+        "ContestID_zh": "第 342 场周赛"
+    },
+    {
         "Rating": 1181.9716216714,
         "ID": 1189,
         "Title": "Maximum Number of Balloons",
@@ -15774,6 +17479,17 @@
         "ContestID_zh": "第 15 场双周赛"
     },
     {
+        "Rating": 1178.6580069402,
+        "ID": 2586,
+        "Title": "Count the Number of Vowel Strings in Range",
+        "TitleZH": "统计范围内的元音字符串数",
+        "TitleSlug": "count-the-number-of-vowel-strings-in-range",
+        "ContestSlug": "weekly-contest-336",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 336",
+        "ContestID_zh": "第 336 场周赛"
+    },
+    {
         "Rating": 1178.4942541235,
         "ID": 905,
         "Title": "Sort Array By Parity",
@@ -15818,6 +17534,17 @@
         "ContestID_zh": "第 230 场周赛"
     },
     {
+        "Rating": 1174.3019990918,
+        "ID": 2643,
+        "Title": "Row With Maximum Ones",
+        "TitleZH": "一最多的行",
+        "TitleSlug": "row-with-maximum-ones",
+        "ContestSlug": "weekly-contest-341",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 341",
+        "ContestID_zh": "第 341 场周赛"
+    },
+    {
         "Rating": 1173.505926482,
         "ID": 922,
         "Title": "Sort Array By Parity II",
@@ -15860,6 +17587,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 313",
         "ContestID_zh": "第 313 场周赛"
+    },
+    {
+        "Rating": 1168.6157473032,
+        "ID": 2651,
+        "Title": "Calculate Delayed Arrival Time",
+        "TitleZH": "计算列车到站时间",
+        "TitleSlug": "calculate-delayed-arrival-time",
+        "ContestSlug": "weekly-contest-342",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 342",
+        "ContestID_zh": "第 342 场周赛"
     },
     {
         "Rating": 1167.8737144048,
@@ -15939,6 +17677,17 @@
         "ContestID_zh": "第 229 场周赛"
     },
     {
+        "Rating": 1165.8838207286,
+        "ID": 2824,
+        "Title": "Count Pairs Whose Sum is Less than Target",
+        "TitleZH": "统计和小于目标的下标对数目",
+        "TitleSlug": "count-pairs-whose-sum-is-less-than-target",
+        "ContestSlug": "biweekly-contest-111",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Biweekly Contest 111",
+        "ContestID_zh": "第 111 场双周赛"
+    },
+    {
         "Rating": 1165.4768151611,
         "ID": 1446,
         "Title": "Consecutive Characters",
@@ -15970,6 +17719,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 69",
         "ContestID_zh": "第 69 场周赛"
+    },
+    {
+        "Rating": 1164.5575871589,
+        "ID": 2710,
+        "Title": "Remove Trailing Zeros From a String",
+        "TitleZH": "移除字符串中的尾随零",
+        "TitleSlug": "remove-trailing-zeros-from-a-string",
+        "ContestSlug": "weekly-contest-347",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 347",
+        "ContestID_zh": "第 347 场周赛"
     },
     {
         "Rating": 1164.0227691933,
@@ -16093,6 +17853,28 @@
         "ContestID_zh": "第 178 场周赛"
     },
     {
+        "Rating": 1151.9713084499,
+        "ID": 2828,
+        "Title": "Check if a String Is an Acronym of Words",
+        "TitleZH": "判别首字母缩略词",
+        "TitleSlug": "check-if-a-string-is-an-acronym-of-words",
+        "ContestSlug": "weekly-contest-359",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 359",
+        "ContestID_zh": "第 359 场周赛"
+    },
+    {
+        "Rating": 1151.9363042898,
+        "ID": 2778,
+        "Title": "Sum of Squares of Special Elements ",
+        "TitleZH": "特殊元素平方和",
+        "TitleSlug": "sum-of-squares-of-special-elements",
+        "ContestSlug": "weekly-contest-354",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 354",
+        "ContestID_zh": "第 354 场周赛"
+    },
+    {
         "Rating": 1151.5250329621,
         "ID": 1460,
         "Title": "Make Two Arrays Equal by Reversing Sub-arrays",
@@ -16126,6 +17908,17 @@
         "ContestID_zh": "第 317 场周赛"
     },
     {
+        "Rating": 1147.8274860083,
+        "ID": 2733,
+        "Title": "Neither Minimum nor Maximum",
+        "TitleZH": "既不是最小值也不是最大值",
+        "TitleSlug": "neither-minimum-nor-maximum",
+        "ContestSlug": "weekly-contest-349",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 349",
+        "ContestID_zh": "第 349 场周赛"
+    },
+    {
         "Rating": 1144.9508874557,
         "ID": 2413,
         "Title": "Smallest Even Multiple",
@@ -16157,6 +17950,17 @@
         "ProblemIndex": "Q1",
         "ContestID_en": "Weekly Contest 147",
         "ContestID_zh": "第 147 场周赛"
+    },
+    {
+        "Rating": 1142.0341823205,
+        "ID": 2798,
+        "Title": "Number of Employees Who Met the Target",
+        "TitleZH": "满足目标工作时长的员工数目",
+        "TitleSlug": "number-of-employees-who-met-the-target",
+        "ContestSlug": "weekly-contest-356",
+        "ProblemIndex": "Q1",
+        "ContestID_en": "Weekly Contest 356",
+        "ContestID_zh": "第 356 场周赛"
     },
     {
         "Rating": 1141.2363999461,
