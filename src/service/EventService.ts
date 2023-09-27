@@ -11,11 +11,10 @@ import { EventEmitter } from "events";
 
 import { IProblem, ITestSolutionData, UserStatus } from "../model/Model";
 import { ISubmitEvent } from "../model/Model";
-import { statusBarService } from "../service/StatusBarService";
 import { treeDataService } from "../service/TreeDataService";
 import { bricksDataService } from "./BricksDataService";
-import { statusBarTimeService } from "./StatusBarTimeService";
 import { submissionService } from "./SubmissionService";
+import { BABA, BabaStr } from "./../BABA";
 
 class EventService extends EventEmitter {
   constructor() {
@@ -27,8 +26,8 @@ class EventService extends EventEmitter {
    */
   public addEvent() {
     this.on("statusChanged", (userStatus: UserStatus, userName?: string) => {
-      statusBarService.update_status(userStatus, userName);
-      statusBarService.update();
+      BABA.sendNotification(BabaStr.statusBar_update_status, { userStatus: userStatus, userName: userName });
+      BABA.sendNotification(BabaStr.statusBar_update);
       treeDataService.cleanUserScore();
       treeDataService.refresh();
       bricksDataService.refresh();
@@ -36,12 +35,12 @@ class EventService extends EventEmitter {
     this.on("submit", (e: ISubmitEvent) => {
       treeDataService.checkSubmit(e);
       bricksDataService.checkSubmit(e);
-      statusBarTimeService.checkSubmit(e);
+      BABA.sendNotification(BabaStr.submit, e);
     });
 
     this.on("searchUserContest", (tt) => {
-      statusBarService.update_UserContestInfo(tt);
-      statusBarService.update();
+      BABA.sendNotification(BabaStr.statusBar_update_UserContestInfo, tt);
+      BABA.sendNotification(BabaStr.statusBar_update);
       treeDataService.refresh();
       bricksDataService.refresh();
     });
@@ -51,7 +50,7 @@ class EventService extends EventEmitter {
     });
 
     this.on("showProblemFinish", (node: IProblem) => {
-      statusBarTimeService.showProblemFinish(node);
+      BABA.sendNotification(BabaStr.showProblemFinish, node);
     });
 
     this.on("groupUpdate", () => {

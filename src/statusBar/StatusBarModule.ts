@@ -1,17 +1,18 @@
 /*
- * Filename: https://github.com/ccagml/leetcode-extension/src/service/StatusBarService.ts
- * Path: https://github.com/ccagml/leetcode-extension
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/leetcode-extension/src/statusBar/StatusBarModule.ts
+ * Path: /home/cc/leetcode-extension
+ * Created Date: Wednesday, September 27th 2023, 8:27:08 pm
  * Author: ccagml
  *
- * Copyright (c) 2022 ccagml . All rights reserved.
+ * Copyright (c) 2023 ccagml . All rights reserved
  */
 
 import { ConfigurationChangeEvent, Disposable, workspace, StatusBarItem, window } from "vscode";
 import { UserStatus, userContestRanKingBase } from "../model/Model";
 import { enableStatusBar } from "../utils/ConfigUtils";
-import { eventService } from "./EventService";
-import { executeService } from "./ExecuteService";
+import { eventService } from "../service/EventService";
+import { executeService } from "../service/ExecuteService";
+import { BabaStr, BABAMediator, BABAProxy, BaseCC } from "../BABA";
 
 // 状态栏工具
 class StatusBarService implements Disposable {
@@ -143,6 +144,64 @@ class StatusBarService implements Disposable {
       this.instance.show();
     } else {
       this.instance.hide();
+    }
+  }
+}
+
+export class StatusBarProxy extends BABAProxy {
+  static NAME = BabaStr.StatusBarProxy;
+  constructor() {
+    super(StatusBarProxy.NAME);
+  }
+
+  public getUser() {
+    return statusBarService.getUser();
+  }
+
+  public getStatus() {
+    return statusBarService.getStatus();
+  }
+
+  public getUserContestScore(): number {
+    return statusBarService.getUserContestScore();
+  }
+
+  public async getLoginStatus(): Promise<void> {
+    return await statusBarService.getLoginStatus();
+  }
+}
+
+export class StatusBarMediator extends BABAMediator {
+  static NAME = BabaStr.StatusBarMediator;
+  constructor() {
+    super(StatusBarMediator.NAME);
+  }
+
+  listNotificationInterests(): string[] {
+    return [
+      BabaStr.VSCODE_DISPOST,
+      BabaStr.statusBar_update_status,
+      BabaStr.statusBar_update,
+      BabaStr.statusBar_update_UserContestInfo,
+    ];
+  }
+  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    switch (_notification.getName()) {
+      case BabaStr.VSCODE_DISPOST:
+        statusBarService.dispose();
+        break;
+      case BabaStr.statusBar_update_status:
+        let body = _notification.getBody();
+        statusBarService.update_status(body.userStatus, body.userName);
+        break;
+      case BabaStr.statusBar_update:
+        statusBarService.update();
+        break;
+      case BabaStr.statusBar_update_UserContestInfo:
+        statusBarService.update_UserContestInfo(_notification.getBody());
+        break;
+      default:
+        break;
     }
   }
 }

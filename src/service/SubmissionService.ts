@@ -14,8 +14,9 @@ import { ISubmitEvent, ITestSolutionData } from "../model/Model";
 import { IWebViewOption } from "../model/Model";
 import { promptHintMessage } from "../utils/OutputUtils";
 import { isAnswerDiffColor } from "../utils/ConfigUtils";
-import { statusBarTimeService } from "../service/StatusBarTimeService";
 import { eventService } from "./EventService";
+import { BABA, BabaStr } from "../BABA";
+
 class SubmissionService extends BaseWebViewService {
   protected readonly viewType: string = "leetcode.submission";
   private result: IResult;
@@ -30,7 +31,7 @@ class SubmissionService extends BaseWebViewService {
     this.result = this.parseResult(resultString);
 
     const temp = this.getSubmitEvent();
-    let costTime = statusBarTimeService.getCostTimeStr();
+    let costTime = BABA.getProxy(BabaStr.StatusBarTimeProxy).getCostTimeStr();
     if (temp?.accepted && temp?.sub_type == "submit" && costTime) {
       this.result["costTime"] = [`耗时 ${costTime}`];
     }

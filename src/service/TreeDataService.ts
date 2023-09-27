@@ -21,12 +21,12 @@ import {
 } from "../model/Model";
 import { treeViewController } from "../controller/TreeViewController";
 import { NodeModel } from "../model/NodeModel";
-import { statusBarService } from "./StatusBarService";
 import { scoreDao } from "../dao/scoreDao";
 import { choiceDao } from "../dao/choiceDao";
 import { tagsDao } from "../dao/tagsDao";
 import { executeService } from "./ExecuteService";
 import { promptForOpenOutputChannel } from "../utils/OutputUtils";
+import { BABA, BabaStr } from "../BABA";
 
 export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
   private context: vscode.ExtensionContext;
@@ -90,7 +90,8 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
   }
 
   public getChildren(element?: NodeModel | undefined): vscode.ProviderResult<NodeModel[]> {
-    if (!statusBarService.getUser()) {
+    let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+    if (!sbp.getUser()) {
       return [
         new NodeModel(
           Object.assign({}, defaultProblem, {

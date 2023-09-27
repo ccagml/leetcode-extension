@@ -55,7 +55,6 @@ import {
 } from "../utils/ConfigUtils";
 import { NodeModel } from "../model/NodeModel";
 import { ISearchSet } from "../model/Model";
-import { statusBarService } from "../service/StatusBarService";
 import { previewService } from "../service/PreviewService";
 import { executeService } from "../service/ExecuteService";
 import { getNodeIdFromFile } from "../utils/SystemUtils";
@@ -80,6 +79,7 @@ import { submissionService } from "../service/SubmissionService";
 import { bricksDataService } from "../service/BricksDataService";
 import { groupDao } from "../dao/groupDao";
 import { fileMeta, ProblemMeta } from "../utils/problemUtils";
+import { BABA, BabaStr } from "../BABA";
 
 // 视图控制器
 class TreeViewController implements Disposable {
@@ -111,7 +111,8 @@ class TreeViewController implements Disposable {
    * @returns A promise that resolves to a string.
    */
   public async submitSolution(uri?: vscode.Uri): Promise<void> {
-    if (!statusBarService.getUser()) {
+    let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+    if (!sbp.getUser()) {
       promptForSignIn();
       return;
     }
@@ -144,7 +145,8 @@ class TreeViewController implements Disposable {
    */
   public async testSolution(uri?: vscode.Uri): Promise<void> {
     try {
-      if (statusBarService.getStatus() === UserStatus.SignedOut) {
+      let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+      if (sbp.getStatus() === UserStatus.SignedOut) {
         return;
       }
 
@@ -254,7 +256,8 @@ class TreeViewController implements Disposable {
    */
   public async testCaseDef(uri?: vscode.Uri, allCase?: boolean): Promise<void> {
     try {
-      if (statusBarService.getStatus() === UserStatus.SignedOut) {
+      let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+      if (sbp.getStatus() === UserStatus.SignedOut) {
         return;
       }
 
@@ -289,7 +292,8 @@ class TreeViewController implements Disposable {
    */
   public async reTestSolution(uri?: vscode.Uri): Promise<void> {
     try {
-      if (statusBarService.getStatus() === UserStatus.SignedOut) {
+      let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+      if (sbp.getStatus() === UserStatus.SignedOut) {
         return;
       }
 
@@ -337,7 +341,8 @@ class TreeViewController implements Disposable {
    */
   public async tesCaseArea(uri?: vscode.Uri, testcase?: string): Promise<void> {
     try {
-      if (statusBarService.getStatus() === UserStatus.SignedOut) {
+      let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+      if (sbp.getStatus() === UserStatus.SignedOut) {
         return;
       }
 
@@ -505,7 +510,8 @@ class TreeViewController implements Disposable {
    */
   public async getAllProblems(): Promise<IProblem[]> {
     try {
-      if (statusBarService.getStatus() === UserStatus.SignedOut) {
+      let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+      if (sbp.getStatus() === UserStatus.SignedOut) {
         return [];
       }
 
@@ -603,7 +609,7 @@ class TreeViewController implements Disposable {
       return;
     }
 
-    if (!statusBarService.getUser() && choice.value != "testapi") {
+    if (!BABA.getProxy(BabaStr.StatusBarProxy).getUser() && choice.value != "testapi") {
       promptForSignIn();
       return;
     }
@@ -701,7 +707,8 @@ class TreeViewController implements Disposable {
   }
 
   public async searchProblemByID(): Promise<void> {
-    if (!statusBarService.getUser()) {
+    let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+    if (!sbp.getUser()) {
       promptForSignIn();
       return;
     }
@@ -769,7 +776,8 @@ class TreeViewController implements Disposable {
     const problems: IProblem[] = await this.getAllProblems();
     let randomProblem: IProblem;
 
-    const user_score = statusBarService.getUserContestScore();
+    let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+    const user_score = sbp.getUserContestScore();
     if (user_score > 0) {
       let min_score: number = getPickOneByRankRangeMin();
       let max_score: number = getPickOneByRankRangeMax();
@@ -956,13 +964,14 @@ class TreeViewController implements Disposable {
   }
 
   public async searchUserContest(): Promise<void> {
-    if (!statusBarService.getUser()) {
+    let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+    if (!sbp.getUser()) {
       promptForSignIn();
       return;
     }
     try {
       const needTranslation: boolean = isUseEndpointTranslation();
-      const solution: string = await executeService.getUserContest(needTranslation, statusBarService.getUser() || "");
+      const solution: string = await executeService.getUserContest(needTranslation, sbp.getUser() || "");
       const query_result = JSON.parse(solution);
       const tt: userContestRanKingBase = Object.assign({}, userContestRankingObj, query_result.userContestRanking);
       eventService.emit("searchUserContest", tt);
@@ -972,7 +981,8 @@ class TreeViewController implements Disposable {
     }
   }
   public async searchToday(): Promise<void> {
-    if (!statusBarService.getUser()) {
+    let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+    if (!sbp.getUser()) {
       promptForSignIn();
       return;
     }
@@ -1137,7 +1147,8 @@ class TreeViewController implements Disposable {
   }
 
   public async refreshCheck(): Promise<void> {
-    if (!statusBarService.getUser()) {
+    let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+    if (!sbp.getUser()) {
       return;
     }
     const day_start = systemUtils.getDayStart(); //获取当天零点的时间
@@ -1156,7 +1167,8 @@ class TreeViewController implements Disposable {
       this.waitTodayQuestion = true;
       await this.searchToday();
     }
-    let user_score = statusBarService.getUserContestScore();
+
+    let user_score = sbp.getUserContestScore();
     if (!user_score && !this.waitUserContest) {
       this.waitUserContest = true;
       await this.searchUserContest();
@@ -1168,7 +1180,10 @@ class TreeViewController implements Disposable {
     const temp_waitTodayQuestion: boolean = this.waitTodayQuestion;
     const temp_waitUserContest: boolean = this.waitUserContest;
     this.clearCache();
-    let user_score = statusBarService.getUserContestScore();
+
+    let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+
+    let user_score = sbp.getUserContestScore();
     for (const problem of await this.getAllProblems()) {
       this.explorerNodeMap.set(problem.id, new NodeModel(problem, true, user_score));
       this.fidToQid.set(problem.id, problem.qid.toString());
@@ -1188,7 +1203,8 @@ class TreeViewController implements Disposable {
   }
 
   public getRootNodes(): NodeModel[] {
-    let user_score = statusBarService.getUserContestScore();
+    let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+    let user_score = sbp.getUserContestScore();
     const baseNode: NodeModel[] = [
       new NodeModel(
         Object.assign({}, defaultProblem, {

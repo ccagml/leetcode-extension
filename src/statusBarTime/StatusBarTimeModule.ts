@@ -1,10 +1,10 @@
 /*
- * https://github.com/ccagml/leetcode-extension/src/service/StatusBarTimeService.ts
- * Path: https://github.com/ccagml/leetcode-extension
- * Created Date: Saturday, November 26th 2022, 2:14:53 pm
+ * Filename: /home/cc/leetcode-extension/src/statusBarTime/StatusBarTimeModule.ts
+ * Path: /home/cc/leetcode-extension
+ * Created Date: Wednesday, September 27th 2023, 8:26:28 pm
  * Author: ccagml
  *
- * Copyright (c) 2022  ccagml . All rights reserved.
+ * Copyright (c) 2023 ccagml . All rights reserved
  */
 
 import { Disposable, StatusBarItem, window, workspace, ConfigurationChangeEvent } from "vscode";
@@ -12,6 +12,7 @@ import { IProblem, ISubmitEvent, OutPutType } from "../model/Model";
 import { promptForOpenOutputChannel } from "../utils/OutputUtils";
 import { getDayNow } from "../utils/SystemUtils";
 import { enableTimerBar } from "../utils/ConfigUtils";
+import { BABAMediator, BABAProxy, BaseCC, BabaStr } from "../BABA";
 
 // 状态栏工具
 class StatusBarTimeService implements Disposable {
@@ -165,6 +166,63 @@ class StatusBarTimeService implements Disposable {
       this.stopBar.hide();
       this.resetBar.hide();
       this.reset();
+    }
+  }
+}
+
+export class StatusBarTimeProxy extends BABAProxy {
+  static NAME = BabaStr.StatusBarTimeProxy;
+  constructor() {
+    super(StatusBarTimeProxy.NAME);
+  }
+
+  public getCostTimeStr() {
+    return statusBarTimeService.getCostTimeStr();
+  }
+}
+
+export class StatusBarTimeMediator extends BABAMediator {
+  static NAME = BabaStr.StatusBarTimeMediator;
+  constructor() {
+    super(StatusBarTimeMediator.NAME);
+  }
+
+  listNotificationInterests(): string[] {
+    return [
+      BabaStr.every_second,
+      BabaStr.submit,
+      BabaStr.showProblemFinish,
+      BabaStr.VSCODE_DISPOST,
+      BabaStr.statusBarTime_start,
+      BabaStr.statusBarTime_stop,
+      BabaStr.statusBarTime_reset,
+    ];
+  }
+  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    switch (_notification.getName()) {
+      case BabaStr.every_second:
+        statusBarTimeService.updateSecond();
+        break;
+      case BabaStr.submit:
+        statusBarTimeService.checkSubmit(_notification.getBody());
+        break;
+      case BabaStr.showProblemFinish:
+        statusBarTimeService.showProblemFinish(_notification.getBody());
+        break;
+      case BabaStr.VSCODE_DISPOST:
+        statusBarTimeService.dispose();
+        break;
+      case BabaStr.statusBarTime_start:
+        statusBarTimeService.start();
+        break;
+      case BabaStr.statusBarTime_stop:
+        statusBarTimeService.stop();
+        break;
+      case BabaStr.statusBarTime_reset:
+        statusBarTimeService.reset();
+        break;
+      default:
+        break;
     }
   }
 }
