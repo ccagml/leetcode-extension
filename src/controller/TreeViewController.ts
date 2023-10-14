@@ -72,7 +72,6 @@ import { IDescriptionConfiguration, isStarShortcut } from "../utils/ConfigUtils"
 import * as systemUtils from "../utils/SystemUtils";
 import { solutionService } from "../service/SolutionService";
 import { eventService } from "../service/EventService";
-import { fileButtonService } from "../service/FileButtonService";
 
 import * as fse from "fs-extra";
 import { submissionService } from "../service/SubmissionService";
@@ -480,7 +479,7 @@ class TreeViewController implements Disposable {
       await treeDataService.refresh();
       await bricksDataService.refresh();
       if (isStarShortcut()) {
-        fileButtonService.refresh();
+        BABA.sendNotification(BabaStr.FileButton_refresh);
       }
     } catch (error) {
       await promptForOpenOutputChannel("添加喜欢题目失败. 请查看控制台信息~", OutPutType.error);
@@ -497,7 +496,7 @@ class TreeViewController implements Disposable {
       await treeDataService.refresh();
       await bricksDataService.refresh();
       if (isStarShortcut()) {
-        fileButtonService.refresh();
+        BABA.sendNotification(BabaStr.FileButton_refresh);
       }
     } catch (error) {
       await promptForOpenOutputChannel("移除喜欢题目失败. 请查看控制台信息~", OutPutType.error);

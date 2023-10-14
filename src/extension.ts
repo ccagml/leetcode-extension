@@ -8,7 +8,6 @@
  */
 
 import { ExtensionContext, window, commands, Uri, CommentReply, TextDocument } from "vscode";
-import { fileButtonController } from "./controller/FileButtonController";
 import { treeViewController } from "./controller/TreeViewController";
 import { NodeModel } from "./model/NodeModel";
 import { treeDataService } from "./service/TreeDataService";
@@ -32,6 +31,7 @@ import { StatusBarTimeMediator, StatusBarTimeProxy } from "./statusBarTime/Statu
 import { StatusBarMediator, StatusBarProxy } from "./statusBar/StatusBarModule";
 import { LogOutputMediator, LogOutputProxy } from "./logOutput/logOutputModule";
 import { RemarkMediator, RemarkProxy } from "./remark/RemarkServiceModule";
+import { FileButtonMediator, FileButtonProxy } from "./fileButton/FileButtonModule";
 
 //==================================BABA========================================
 
@@ -54,6 +54,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
       RemarkMediator,
       LogOutputProxy,
       LogOutputMediator,
+      FileButtonProxy,
+      FileButtonMediator,
     ]);
 
     BABA.sendNotification(BabaStr.InitAll, context);
@@ -74,7 +76,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       executeService,
       markdownService,
       BABA,
-      fileButtonController,
+
       treeViewController,
       window.registerFileDecorationProvider(treeItemDecorationService),
       window.createTreeView("QuestionExplorer", { treeDataProvider: treeDataService, showCollapseAll: true }),

@@ -1,6 +1,6 @@
 /*
- * Filename: /home/cc/leetcode-extension/src/BABA.ts
- * Path: /home/cc/leetcode-extension
+ * Filename: https://github.com/ccagml/leetcode-extension/src/BABA.ts
+ * Path: https://github.com/ccagml/leetcode-extension
  * Created Date: Saturday, September 23rd 2023, 8:17:16 pm
  * Author: ccagml
  *
@@ -40,6 +40,9 @@ export enum BabaStr {
   Remark_remarkEditNote = "Remark_remarkEditNote",
   Remark_startRemark = "Remark_startRemark",
   Remark_includeTemplates = "Remark_includeTemplates",
+  FileButtonProxy = "FileButtonProxy",
+  FileButtonMediator = "FileButtonMediator",
+  FileButton_refresh = "FileButton_refresh",
 }
 
 export class BABA {

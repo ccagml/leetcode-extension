@@ -1,6 +1,6 @@
 /*
- * Filename: /home/cc/leetcode-extension/src/logOutput/logOutputModule.ts
- * Path: /home/cc/leetcode-extension
+ * Filename: https://github.com/ccagml/leetcode-extension/src/logOutput/logOutputModule.ts
+ * Path: https://github.com/ccagml/leetcode-extension
  * Created Date: Saturday, October 14th 2023, 1:57:10 pm
  * Author: ccagml
  *

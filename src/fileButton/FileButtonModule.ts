@@ -1,13 +1,14 @@
 /*
- * Filename: https://github.com/ccagml/leetcode-extension/src/service/FileButtonService.ts
+ * Filename: https://github.com/ccagml/leetcode-extension/src/fileButton/FileButtonModule.ts
  * Path: https://github.com/ccagml/leetcode-extension
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Created Date: Friday, October 13th 2023, 10:35:28 am
  * Author: ccagml
  *
- * Copyright (c) 2022 ccagml . All rights reserved.
+ * Copyright (c) 2023 ccagml . All rights reserved
  */
 
 import * as vscode from "vscode";
+import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 import { treeViewController } from "../controller/TreeViewController";
 import { NodeModel } from "../model/NodeModel";
 import { getEditorShortcuts } from "../utils/ConfigUtils";
@@ -344,3 +345,59 @@ export class FileButtonService implements vscode.CodeLensProvider {
 }
 
 export const fileButtonService: FileButtonService = new FileButtonService();
+
+class FileButtonConfigChange implements vscode.Disposable {
+  private registeredProvider: vscode.Disposable | undefined;
+  private configurationChangeListener: vscode.Disposable;
+
+  constructor() {
+    this.configurationChangeListener = vscode.workspace.onDidChangeConfiguration(
+      (event: vscode.ConfigurationChangeEvent) => {
+        if (event.affectsConfiguration("leetcode-problem-rating.editor.shortcuts")) {
+          BABA.sendNotification(BabaStr.FileButton_refresh);
+        }
+      },
+      this
+    );
+
+    this.registeredProvider = vscode.languages.registerCodeLensProvider({ scheme: "file" }, fileButtonService);
+  }
+
+  public dispose(): void {
+    if (this.registeredProvider) {
+      this.registeredProvider.dispose();
+    }
+    this.configurationChangeListener.dispose();
+  }
+}
+
+export const fileButtonConfigChange: FileButtonConfigChange = new FileButtonConfigChange();
+
+export class FileButtonProxy extends BABAProxy {
+  static NAME = BabaStr.FileButtonProxy;
+  constructor() {
+    super(FileButtonProxy.NAME);
+  }
+}
+
+export class FileButtonMediator extends BABAMediator {
+  static NAME = BabaStr.FileButtonMediator;
+  constructor() {
+    super(FileButtonMediator.NAME);
+  }
+
+  listNotificationInterests(): string[] {
+    return [BabaStr.VSCODE_DISPOST, BabaStr.FileButton_refresh];
+  }
+  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    switch (_notification.getName()) {
+      case BabaStr.VSCODE_DISPOST:
+        fileButtonConfigChange.dispose();
+        break;
+      case BabaStr.FileButton_refresh:
+        fileButtonService.refresh();
+      default:
+        break;
+    }
+  }
+}

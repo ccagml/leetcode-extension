@@ -1,6 +1,6 @@
 /*
- * Filename: /home/cc/leetcode-extension/src/statusBarTime/StatusBarTimeModule.ts
- * Path: /home/cc/leetcode-extension
+ * Filename: https://github.com/ccagml/leetcode-extension/src/statusBarTime/StatusBarTimeModule.ts
+ * Path: https://github.com/ccagml/leetcode-extension
  * Created Date: Wednesday, September 27th 2023, 8:26:28 pm
  * Author: ccagml
  *
