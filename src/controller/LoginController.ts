@@ -15,10 +15,10 @@ import { createEnvOption } from "../utils/CliUtils";
 import { logOutput, promptForOpenOutputChannel } from "../utils/OutputUtils";
 import { eventService } from "../service/EventService";
 import { window, QuickPickOptions, ProgressLocation, Progress } from "vscode";
-import { statusBarService } from "../service/StatusBarService";
 import { treeDataService } from "../service/TreeDataService";
 import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
 import { bricksDataService } from "../service/BricksDataService";
+import { BABA, BabaStr } from "../BABA";
 
 // 登录控制器
 class LoginContorller {
@@ -203,7 +203,7 @@ class LoginContorller {
    * @returns The login status of the user.
    */
   public async getLoginStatus() {
-    return await statusBarService.getLoginStatus();
+    return await BABA.getProxy(BabaStr.StatusBarProxy).getLoginStatus();
   }
 
   // 删除所有缓存

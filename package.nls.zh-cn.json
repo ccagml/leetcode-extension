@@ -48,6 +48,7 @@
     "main.contributes.submenus.lcpr.setBricksType_sub1.label": "设置砖头类型",
     "main.contributes.configuration.title": "leetcode-problem-rating",
     "main.contributes.configuration.properties.leetcode-problem-rating.includeTemplates.description": "引入一些默认内容,防止VSCode都是波浪红线",
+    "main.contributes.configuration.properties.leetcode-problem-rating.includeTemplatesAuto.description": "自动引入模板",
     "main.contributes.configuration.properties.leetcode-problem-rating.includeTemplates.items.properties.language.description": "哪种语言",
     "main.contributes.configuration.properties.leetcode-problem-rating.includeTemplates.items.properties.template.description": "模板内容",
     "main.contributes.configuration.properties.leetcode-problem-rating.hideSolved.description": "隐藏已解决的问题",

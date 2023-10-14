@@ -402,9 +402,34 @@ export function isAnswerDiffColor(): boolean {
   return getVsCodeConfig().get<boolean>("answerDiffColor", false);
 }
 
+const singleLineFlag = {
+  bash: "#",
+  c: "//",
+  cpp: "//",
+  csharp: "//",
+  golang: "//",
+  java: "//",
+  javascript: "//",
+  kotlin: "//",
+  mysql: "--",
+  php: "//",
+  python: "#",
+  python3: "#",
+  ruby: "#",
+  rust: "//",
+  scala: "//",
+  swift: "//",
+  typescript: "//",
+};
+
+export function includeTemplatesAuto() {
+  return getVsCodeConfig().get<boolean>("includeTemplatesAuto", true);
+}
+
 export function getIncludeTemplate(lang: string): string {
   let temp_cfg = getVsCodeConfig().get<any>("includeTemplates") || [];
   let result = "";
+  let singleLine = singleLineFlag[lang] || "";
   temp_cfg.forEach((element) => {
     if (element.language == lang) {
       result = (element.template || []).join("\n");
@@ -412,7 +437,14 @@ export function getIncludeTemplate(lang: string): string {
     }
   });
 
-  return result;
+  let new_include_template: any = [
+    `\n`,
+    `${singleLine} @lcpr-template-start`,
+    `${result}`,
+    `${singleLine} @lcpr-template-end`,
+  ];
+
+  return new_include_template.join("\n");
 }
 
 // 获取清除缓存修改时间间隔
