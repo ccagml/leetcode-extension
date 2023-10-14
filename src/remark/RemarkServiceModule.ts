@@ -1,6 +1,6 @@
 /*
- * Filename: /home/cc/leetcode-extension/src/remark/RemarkService.ts
- * Path: /home/cc/leetcode-extension
+ * Filename: https://github.com/ccagml/leetcode-extension/src/remark/RemarkService.ts
+ * Path: https://github.com/ccagml/leetcode-extension
  * Created Date: Saturday, October 14th 2023, 2:24:19 pm
  * Author: ccagml
  *

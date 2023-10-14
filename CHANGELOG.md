@@ -1,3 +1,7 @@
+# version 3.1.2
+
+- 重构 filebutton 代码, 减少代码耦合
+
 # version 3.1.1
 
 - 重构 log 输出 和 remark 代码, 减少代码耦合
