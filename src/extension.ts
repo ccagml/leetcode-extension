@@ -13,7 +13,7 @@ import { treeViewController } from "./controller/TreeViewController";
 import { NodeModel } from "./model/NodeModel";
 import { treeDataService } from "./service/TreeDataService";
 import { treeItemDecorationService } from "./service/TreeItemDecorationService";
-import { logOutput, promptForOpenOutputChannel } from "./utils/OutputUtils";
+import { promptForOpenOutputChannel } from "./utils/OutputUtils";
 import { executeService } from "./service/ExecuteService";
 import { eventController } from "./controller/EventController";
 import { previewService } from "./service/PreviewService";
@@ -26,12 +26,12 @@ import { getLeetCodeEndpoint } from "./utils/ConfigUtils";
 import { BricksType, OutPutType, RemarkComment } from "./model/Model";
 import { bricksDataService } from "./service/BricksDataService";
 import { bricksViewController } from "./controller/BricksViewController";
-import { remarkController } from "./controller/RemarkController";
 import { debugContorller } from "./controller/DebugController";
 import { BABA, BabaStr } from "./BABA";
 import { StatusBarTimeMediator, StatusBarTimeProxy } from "./statusBarTime/StatusBarTimeModule";
 import { StatusBarMediator, StatusBarProxy } from "./statusBar/StatusBarModule";
-import { RemarkProxy, RemarkMediator } from "./service/RemarkService";
+import { LogOutputMediator, LogOutputProxy } from "./logOutput/logOutputModule";
+import { RemarkMediator, RemarkProxy } from "./remark/RemarkServiceModule";
 
 //==================================BABA========================================
 
@@ -52,7 +52,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
       StatusBarMediator,
       RemarkProxy,
       RemarkMediator,
+      LogOutputProxy,
+      LogOutputMediator,
     ]);
+
+    BABA.sendNotification(BabaStr.InitAll, context);
 
     // 初始化控制器
     mainContorller.initialize(context);
@@ -64,7 +68,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     // 资源管理
     context.subscriptions.push(
-      logOutput,
       previewService,
       submissionService,
       solutionService,
@@ -133,31 +136,31 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.removeQidFromGroup", (node) => bricksViewController.removeQidFromGroup(node)),
 
       commands.registerCommand("lcpr.remarkCreateNote", (reply: CommentReply) => {
-        remarkController.remarkCreateNote(reply);
+        BABA.sendNotification(BabaStr.Remark_remarkCreateNote, reply);
       }),
       commands.registerCommand("lcpr.remarkClose", (a) => {
-        remarkController.remarkClose(a);
+        BABA.sendNotification(BabaStr.Remark_remarkClose, a);
       }),
       commands.registerCommand("lcpr.remarkReplyNote", (reply: CommentReply) => {
-        remarkController.remarkReplyNote(reply);
+        BABA.sendNotification(BabaStr.Remark_remarkReplyNote, reply);
       }),
       commands.registerCommand("lcpr.remarkDeleteNoteComment", (comment: RemarkComment) => {
-        remarkController.remarkDeleteNoteComment(comment);
+        BABA.sendNotification(BabaStr.Remark_remarkDeleteNoteComment, comment);
       }),
       commands.registerCommand("lcpr.remarkCancelsaveNote", (comment: RemarkComment) => {
-        remarkController.remarkCancelsaveNote(comment);
+        BABA.sendNotification(BabaStr.Remark_remarkCancelsaveNote, comment);
       }),
       commands.registerCommand("lcpr.remarkSaveNote", (comment: RemarkComment) => {
-        remarkController.remarkSaveNote(comment);
+        BABA.sendNotification(BabaStr.Remark_remarkSaveNote, comment);
       }),
       commands.registerCommand("lcpr.remarkEditNote", (comment: RemarkComment) => {
-        remarkController.remarkEditNote(comment);
+        BABA.sendNotification(BabaStr.Remark_remarkEditNote, comment);
       }),
       commands.registerCommand("lcpr.startRemark", (document: TextDocument) => {
-        remarkController.startRemark(document);
+        BABA.sendNotification(BabaStr.Remark_startRemark, document);
       }),
       commands.registerCommand("lcpr.includeTemplates", (document: TextDocument) => {
-        remarkController.includeTemplates(document);
+        BABA.sendNotification(BabaStr.Remark_includeTemplates, document);
       }),
       commands.registerCommand("lcpr.simpleDebug", (document: TextDocument, testCase?) =>
         debugContorller.startDebug(document, testCase)
@@ -176,7 +179,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     await loginContorller.getLoginStatus();
     await bricksViewController.initialize();
   } catch (error) {
-    logOutput.appendLine(error.toString());
+    BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
     promptForOpenOutputChannel(
       "Extension initialization failed. Please open output channel for details.",
       OutPutType.error
