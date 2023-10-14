@@ -1,3 +1,12 @@
+/*
+ * Filename: /home/cc/leetcode-extension/src/remark/RemarkService.ts
+ * Path: /home/cc/leetcode-extension
+ * Created Date: Saturday, October 14th 2023, 2:24:19 pm
+ * Author: ccagml
+ *
+ * Copyright (c) 2023 ccagml . All rights reserved
+ */
+
 import {
   CommentMode,
   CommentThread,
@@ -213,15 +222,55 @@ export class RemarkMediator extends BABAMediator {
   }
 
   listNotificationInterests(): string[] {
-    return [BabaStr.showProblemFinishOpen];
+    return [
+      BabaStr.showProblemFinishOpen,
+      BabaStr.Remark_remarkCreateNote,
+      BabaStr.Remark_remarkClose,
+      BabaStr.Remark_remarkReplyNote,
+      BabaStr.Remark_remarkDeleteNoteComment,
+      BabaStr.Remark_remarkCancelsaveNote,
+      BabaStr.Remark_remarkSaveNote,
+      BabaStr.Remark_remarkEditNote,
+      BabaStr.Remark_startRemark,
+      BabaStr.Remark_includeTemplates,
+    ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    let body = _notification.getBody();
     switch (_notification.getName()) {
       case BabaStr.showProblemFinishOpen:
         let temp_doc = window.activeTextEditor?.document;
         if (temp_doc != undefined && includeTemplatesAuto()) {
           remarkService.includeTemplates(temp_doc);
         }
+        break;
+
+      case BabaStr.Remark_remarkCreateNote:
+        remarkService.remarkCreateNote(body);
+        break;
+      case BabaStr.Remark_remarkClose:
+        remarkService.remarkClose(body);
+        break;
+      case BabaStr.Remark_remarkReplyNote:
+        remarkService.remarkReplyNote(body);
+        break;
+      case BabaStr.Remark_remarkDeleteNoteComment:
+        remarkService.remarkDeleteNoteComment(body);
+        break;
+      case BabaStr.Remark_remarkCancelsaveNote:
+        remarkService.remarkCancelsaveNote(body);
+        break;
+      case BabaStr.Remark_remarkSaveNote:
+        remarkService.remarkSaveNote(body);
+        break;
+      case BabaStr.Remark_remarkEditNote:
+        remarkService.remarkEditNote(body);
+        break;
+      case BabaStr.Remark_startRemark:
+        remarkService.startRemark(body);
+        break;
+      case BabaStr.Remark_includeTemplates:
+        remarkService.includeTemplates(body);
         break;
       default:
         break;

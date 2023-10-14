@@ -1,3 +1,7 @@
+# version 3.1.1
+
+- 重构 log 输出 和 remark 代码, 减少代码耦合
+
 # version 2.19.19
 
 - win10 上 python3 调试 sys.argv 会忽略空字符串参数

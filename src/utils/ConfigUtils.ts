@@ -34,7 +34,7 @@ import { useWsl, toWslPath } from "../utils/SystemUtils";
 import * as path from "path";
 import * as fse from "fs-extra";
 import * as os from "os";
-import { logOutput } from "./OutputUtils";
+import { BABA, BabaStr } from "../BABA";
 
 // vscode的配置
 export function getVsCodeConfig(): WorkspaceConfiguration {
@@ -101,7 +101,9 @@ function resolveWorkspaceFolder(cur_wsf: string): string {
         if (process.env[placeholder]) {
           return process.env[placeholder] || "";
         } else {
-          logOutput.append("环境变量" + JSON.stringify(process.env));
+          BABA.getProxy(BabaStr.LogOutputProxy)
+            .get_log()
+            .append("环境变量" + JSON.stringify(process.env));
           throw new Error(`无法从环境变量获取到${placeholder}的变量, 请查看控制台信息~ `);
         }
     }

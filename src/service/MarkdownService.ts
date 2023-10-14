@@ -13,7 +13,7 @@ import * as MarkDownItKatex from "markdown-it-katex";
 import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
-import { logOutput } from "../utils/OutputUtils";
+import { BABA, BabaStr } from "../BABA";
 import { isWindows } from "../utils/SystemUtils";
 
 class MarkdownService implements vscode.Disposable {
@@ -66,7 +66,7 @@ class MarkdownService implements vscode.Disposable {
         })
       );
     } catch (error) {
-      logOutput.appendLine("[Error] Fail to load built-in markdown style file.");
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine("[Error] Fail to load built-in markdown style file.");
     }
     return styles
       .map((style: vscode.Uri) => `<link rel="stylesheet" type="text/css" href="${style.toString()}">`)

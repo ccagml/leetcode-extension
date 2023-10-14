@@ -11,11 +11,10 @@ import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
 import { ExtensionContext } from "vscode";
 import { treeDataService } from "../service/TreeDataService";
-import { logOutput } from "../utils/OutputUtils";
 import { extensionState } from "../utils/problemUtils";
-import { nlsUtils } from "../utils/NlsUtils";
 
 import * as fse from "fs-extra";
+import { BABA, BabaStr } from "../BABA";
 // 做杂活
 class MainContorller {
   constructor() {}
@@ -58,7 +57,7 @@ class MainContorller {
       cur_version_num *= 100;
       cur_version_num += Number(e);
     });
-    logOutput.setLCPTCTX("version", cur_version_num);
+    BABA.getProxy(BabaStr.LogOutputProxy).get_log().setLCPTCTX("version", cur_version_num);
   }
 
   // 初始化上下文
@@ -68,7 +67,6 @@ class MainContorller {
    * @param {ExtensionContext} context - ExtensionContext
    */
   public initialize(context: ExtensionContext) {
-    nlsUtils.init();
     this.setGlobal(context);
     treeDataService.initialize(context);
     extensionState.context = context;

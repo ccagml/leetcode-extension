@@ -12,7 +12,7 @@ import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
 import { OutPutType, Endpoint, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
 import { createEnvOption } from "../utils/CliUtils";
-import { logOutput, promptForOpenOutputChannel } from "../utils/OutputUtils";
+import { promptForOpenOutputChannel } from "../utils/OutputUtils";
 import { eventService } from "../service/EventService";
 import { window, QuickPickOptions, ProgressLocation, Progress } from "vscode";
 import { treeDataService } from "../service/TreeDataService";
@@ -59,7 +59,8 @@ class LoginContorller {
           childProc.stdout?.on("data", async (data: string | Buffer) => {
             data = data.toString();
             // vscode.window.showInformationMessage(`cc login msg ${data}.`);
-            logOutput.append(data);
+            BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(data);
+
             if (data.includes("twoFactorCode")) {
               const twoFactor: string | undefined = await window.showInputBox({
                 prompt: "Enter two-factor code.",
@@ -90,7 +91,9 @@ class LoginContorller {
             }
           });
 
-          childProc.stderr?.on("data", (data: string | Buffer) => logOutput.append(data.toString()));
+          childProc.stderr?.on("data", (data: string | Buffer) => {
+            BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(data.toString());
+          });
           childProc.on("error", reject);
 
           const name: string | undefined = await window.showInputBox({

@@ -58,7 +58,7 @@ import { ISearchSet } from "../model/Model";
 import { previewService } from "../service/PreviewService";
 import { executeService } from "../service/ExecuteService";
 import { getNodeIdFromFile } from "../utils/SystemUtils";
-import { logOutput, promptForOpenOutputChannel, promptForSignIn, promptHintMessage } from "../utils/OutputUtils";
+import { promptForOpenOutputChannel, promptForSignIn, promptHintMessage } from "../utils/OutputUtils";
 import { treeDataService } from "../service/TreeDataService";
 import {
   genFileExt,
@@ -689,7 +689,7 @@ class TreeViewController implements Disposable {
       );
       solutionService.show(solution);
     } catch (error) {
-      logOutput.appendLine(error.toString());
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
       await promptForOpenOutputChannel("Failed to fetch the top voted solution. 请查看控制台信息~", OutPutType.error);
     }
   }
@@ -701,7 +701,7 @@ class TreeViewController implements Disposable {
       // solutionService.show(solution);
       // debugContorller.try_get_diy_param();
     } catch (error) {
-      logOutput.appendLine(error.toString());
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
       await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", OutPutType.error);
     }
   }
@@ -840,7 +840,7 @@ class TreeViewController implements Disposable {
       if (finalPath) {
         finalPath = await this.resolveRelativePath(finalPath, node, language);
         if (!finalPath) {
-          logOutput.appendLine("Showing problem canceled by user.");
+          BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine("Showing problem canceled by user.");
           return;
         }
       }
@@ -985,7 +985,7 @@ class TreeViewController implements Disposable {
       const tt: userContestRanKingBase = Object.assign({}, userContestRankingObj, query_result.userContestRanking);
       eventService.emit("searchUserContest", tt);
     } catch (error) {
-      logOutput.appendLine(error.toString());
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
       await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", OutPutType.error);
     }
   }
@@ -1014,7 +1014,7 @@ class TreeViewController implements Disposable {
         await bricksDataService.refresh();
       }
     } catch (error) {
-      logOutput.appendLine(error.toString());
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
       await promptForOpenOutputChannel("Failed to fetch today question. 请查看控制台信息~", OutPutType.error);
     }
   }
@@ -1097,7 +1097,7 @@ class TreeViewController implements Disposable {
           return getDayNowStr();
         default:
           errorMsg = `The config '${placeholder}' is not supported.`;
-          logOutput.appendLine(errorMsg);
+          BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(errorMsg);
           throw new Error(errorMsg);
       }
     });
