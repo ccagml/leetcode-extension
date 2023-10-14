@@ -1,3 +1,7 @@
+# version 2.19.19
+
+- win10 上 python3 调试 sys.argv 会忽略空字符串参数
+
 # version 2.19.18
 
 - 使用新的 mvc 代码结构修改 statusBar 相关内容
