@@ -11,9 +11,9 @@ import { TreeDataProvider, EventEmitter, Event, TreeItem, TreeItemCollapsibleSta
 import { BricksNormalId, defaultProblem, ISubmitEvent } from "../model/Model";
 import { bricksViewController } from "../controller/BricksViewController";
 import { BricksNode } from "../model/NodeModel";
-import { statusBarService } from "./StatusBarService";
 import { bricksDao } from "../dao/bricksDao";
 import { groupDao } from "../dao/groupDao";
+import { BABA, BabaStr } from "../BABA";
 
 export class BricksDataService implements TreeDataProvider<BricksNode> {
   private onDidChangeTreeDataEvent: EventEmitter<BricksNode | undefined | null> = new EventEmitter<
@@ -66,7 +66,8 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
 
   // 获取子节点信息
   public async getChildren(element?: BricksNode | undefined): Promise<BricksNode[] | null | undefined> {
-    if (!statusBarService.getUser()) {
+    let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
+    if (!sbp.getUser()) {
       return [
         new BricksNode(
           Object.assign({}, defaultProblem, {

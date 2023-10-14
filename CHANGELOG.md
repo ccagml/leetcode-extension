@@ -1,3 +1,8 @@
+# version 2.19.18
+
+- 使用新的 mvc 代码结构修改 statusBar 相关内容
+- 增加自动引入 includeTemplates 设置选项,默认引入
+
 # version 2.19.17
 
 - 更新基础的分数数据 data.json

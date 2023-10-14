@@ -8,7 +8,6 @@
  */
 
 import { eventService } from "../service/EventService";
-import { statusBarTimeService } from "../service/StatusBarTimeService";
 // 事件的控制器
 /* The EventController class has a method called addEvent that calls the addEvent method on the
 eventService class */
@@ -22,10 +21,6 @@ class EventContorller {
    */
   public addEvent() {
     eventService.addEvent();
-  }
-
-  public every_second() {
-    statusBarTimeService.updateSecond();
   }
 }
 

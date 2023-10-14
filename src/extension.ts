@@ -16,7 +16,6 @@ import { treeItemDecorationService } from "./service/TreeItemDecorationService";
 import { logOutput, promptForOpenOutputChannel } from "./utils/OutputUtils";
 import { executeService } from "./service/ExecuteService";
 import { eventController } from "./controller/EventController";
-import { statusBarService } from "./service/StatusBarService";
 import { previewService } from "./service/PreviewService";
 import { solutionService } from "./service/SolutionService";
 import { submissionService } from "./service/SubmissionService";
@@ -27,9 +26,14 @@ import { getLeetCodeEndpoint } from "./utils/ConfigUtils";
 import { BricksType, OutPutType, RemarkComment } from "./model/Model";
 import { bricksDataService } from "./service/BricksDataService";
 import { bricksViewController } from "./controller/BricksViewController";
-import { statusBarTimeService } from "./service/StatusBarTimeService";
 import { remarkController } from "./controller/RemarkController";
 import { debugContorller } from "./controller/DebugController";
+import { BABA, BabaStr } from "./BABA";
+import { StatusBarTimeMediator, StatusBarTimeProxy } from "./statusBarTime/StatusBarTimeModule";
+import { StatusBarMediator, StatusBarProxy } from "./statusBar/StatusBarModule";
+import { RemarkProxy, RemarkMediator } from "./service/RemarkService";
+
+//==================================BABA========================================
 
 // 激活插件
 /**
@@ -40,6 +44,16 @@ import { debugContorller } from "./controller/DebugController";
 let lcpr_timer;
 export async function activate(context: ExtensionContext): Promise<void> {
   try {
+    BABA.init();
+    BABA.regClazz([
+      StatusBarTimeMediator,
+      StatusBarTimeProxy,
+      StatusBarProxy,
+      StatusBarMediator,
+      RemarkProxy,
+      RemarkMediator,
+    ]);
+
     // 初始化控制器
     mainContorller.initialize(context);
     // 检查node环境
@@ -50,14 +64,13 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     // 资源管理
     context.subscriptions.push(
-      statusBarService,
       logOutput,
       previewService,
       submissionService,
       solutionService,
       executeService,
       markdownService,
-      statusBarTimeService,
+      BABA,
       fileButtonController,
       treeViewController,
       window.registerFileDecorationProvider(treeItemDecorationService),
@@ -84,9 +97,15 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.addFavorite", (node: NodeModel) => treeViewController.addFavorite(node)),
       commands.registerCommand("lcpr.removeFavorite", (node: NodeModel) => treeViewController.removeFavorite(node)),
       commands.registerCommand("lcpr.problems.sort", () => treeViewController.switchSortingStrategy()),
-      commands.registerCommand("lcpr.statusBarTime.start", () => statusBarTimeService.start()),
-      commands.registerCommand("lcpr.statusBarTime.stop", () => statusBarTimeService.stop()),
-      commands.registerCommand("lcpr.statusBarTime.reset", () => statusBarTimeService.reset()),
+      commands.registerCommand("lcpr.statusBarTime.start", () => {
+        BABA.sendNotification(BabaStr.statusBarTime_start);
+      }),
+      commands.registerCommand("lcpr.statusBarTime.stop", () => {
+        BABA.sendNotification(BabaStr.statusBarTime_stop);
+      }),
+      commands.registerCommand("lcpr.statusBarTime.reset", () => {
+        BABA.sendNotification(BabaStr.statusBarTime_reset);
+      }),
       commands.registerCommand("lcpr.setBricksType0", (node: NodeModel) =>
         bricksViewController.setBricksType(node, BricksType.TYPE_0)
       ),
@@ -163,8 +182,12 @@ export async function activate(context: ExtensionContext): Promise<void> {
       OutPutType.error
     );
   } finally {
-    lcpr_timer = setInterval(eventController.every_second, 1000);
+    lcpr_timer = setInterval(lcpr_timer_callback, 1000);
   }
+}
+
+function lcpr_timer_callback() {
+  BABA.sendNotification(BabaStr.every_second);
 }
 
 export function deactivate(): void {

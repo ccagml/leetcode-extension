@@ -445,7 +445,7 @@ and csrf token to the user object and saves the user object to the session. */
             statusMessage: resp.statusMessage,
             msg: "密码错误?",
             msg1: "invalid password?",
-            msg2: "要是用浏览器在力扣官网登录过账号还没过期, 插件的登录会被拒绝,使得登录失败",
+            msg2: "要是用浏览器在力扣官网登录过账号还没过期, 插件的登录会被拒绝,使得登录失败,尝试用cookie方式登录",
           });
           return cb(_temp_msg);
         }
