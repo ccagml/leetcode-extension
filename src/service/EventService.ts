@@ -52,6 +52,12 @@ class EventService extends EventEmitter {
     this.on("showProblemFinish", (node: IProblem) => {
       BABA.sendNotification(BabaStr.showProblemFinish, node);
     });
+    this.on("showProblemFinishOpen", (node: IProblem, editor) => {
+      BABA.sendNotification(BabaStr.showProblemFinishOpen, { node: node, editor: editor });
+    });
+    this.on("showProblemFinishError", (node: IProblem, error) => {
+      BABA.sendNotification(BabaStr.showProblemFinishError, { node: node, error: error });
+    });
 
     this.on("groupUpdate", () => {
       bricksDataService.refresh();

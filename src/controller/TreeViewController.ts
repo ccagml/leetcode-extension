@@ -859,10 +859,19 @@ class TreeViewController implements Disposable {
       );
       if (show_code == 100) {
         const promises: any[] = [
-          vscode.window.showTextDocument(vscode.Uri.file(finalPath), {
-            preview: false,
-            viewColumn: vscode.ViewColumn.One,
-          }),
+          vscode.window
+            .showTextDocument(vscode.Uri.file(finalPath), {
+              preview: false,
+              viewColumn: vscode.ViewColumn.One,
+            })
+            .then(
+              (editor) => {
+                eventService.emit("showProblemFinishOpen", node, editor);
+              },
+              (error) => {
+                eventService.emit("showProblemFinishError", node, error);
+              }
+            ),
           promptHintMessage(
             "hint.commentDescription",
             'You can config how to show the problem description through "leetcode-problem-rating.showDescription".',

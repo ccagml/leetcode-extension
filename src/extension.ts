@@ -31,6 +31,7 @@ import { debugContorller } from "./controller/DebugController";
 import { BABA, BabaStr } from "./BABA";
 import { StatusBarTimeMediator, StatusBarTimeProxy } from "./statusBarTime/StatusBarTimeModule";
 import { StatusBarMediator, StatusBarProxy } from "./statusBar/StatusBarModule";
+import { RemarkProxy, RemarkMediator } from "./service/RemarkService";
 
 //==================================BABA========================================
 
@@ -44,7 +45,14 @@ let lcpr_timer;
 export async function activate(context: ExtensionContext): Promise<void> {
   try {
     BABA.init();
-    BABA.regClazz([StatusBarTimeMediator, StatusBarTimeProxy, StatusBarProxy, StatusBarMediator]);
+    BABA.regClazz([
+      StatusBarTimeMediator,
+      StatusBarTimeProxy,
+      StatusBarProxy,
+      StatusBarMediator,
+      RemarkProxy,
+      RemarkMediator,
+    ]);
 
     // 初始化控制器
     mainContorller.initialize(context);

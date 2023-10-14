@@ -48,6 +48,7 @@
     "main.contributes.submenus.lcpr.setBricksType_sub1.label": "Set repetition time",
     "main.contributes.configuration.title": "leetcode-problem-rating",
     "main.contributes.configuration.properties.leetcode-problem-rating.includeTemplates.description": "Introduce some default content to prevent VSCode from wavy red lines",
+    "main.contributes.configuration.properties.leetcode-problem-rating.includeTemplatesAuto.description": "auto Introduce some default content to prevent VSCode from wavy red lines",
     "main.contributes.configuration.properties.leetcode-problem-rating.includeTemplates.items.properties.language.description": "Programming language",
     "main.contributes.configuration.properties.leetcode-problem-rating.includeTemplates.items.properties.template.description": "template content",
     "main.contributes.configuration.properties.leetcode-problem-rating.hideSolved.description": "Hide solved problems.",

@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "2.19.17",
+    "version": "2.19.18",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -642,6 +642,11 @@
                                 }
                             }
                         }
+                    },
+                    "leetcode-problem-rating.includeTemplatesAuto": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.includeTemplatesAuto.description%"
                     },
                     "leetcode-problem-rating.hideSolved": {
                         "type": "boolean",

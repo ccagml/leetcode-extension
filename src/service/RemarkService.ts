@@ -14,7 +14,8 @@ import {
 import { treeViewController } from "../controller/TreeViewController";
 import { remarkDao } from "../dao/remarkDao";
 import { RemarkComment } from "../model/Model";
-import { getIncludeTemplate } from "../utils/ConfigUtils";
+import { includeTemplatesAuto, getIncludeTemplate } from "../utils/ConfigUtils";
+import { BABAMediator, BABAProxy, BaseCC, BabaStr } from "../BABA";
 
 class RemarkService implements Disposable {
   private _remarkComment;
@@ -59,6 +60,10 @@ class RemarkService implements Disposable {
     }
     for (let i: number = 0; i < document.lineCount; i++) {
       const lineContent: string = document.lineAt(i).text;
+      // 有了就不添加了
+      if (lineContent.indexOf("@lcpr-template-start") >= 0) {
+        break;
+      }
 
       if (lineContent.indexOf("@lc code=start") >= 0) {
         const editor = window.activeTextEditor;
@@ -193,3 +198,33 @@ class RemarkService implements Disposable {
 }
 
 export const remarkService: RemarkService = new RemarkService();
+
+export class RemarkProxy extends BABAProxy {
+  static NAME = BabaStr.RemarkProxy;
+  constructor() {
+    super(RemarkProxy.NAME);
+  }
+}
+
+export class RemarkMediator extends BABAMediator {
+  static NAME = BabaStr.RemarkMediator;
+  constructor() {
+    super(RemarkMediator.NAME);
+  }
+
+  listNotificationInterests(): string[] {
+    return [BabaStr.showProblemFinishOpen];
+  }
+  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    switch (_notification.getName()) {
+      case BabaStr.showProblemFinishOpen:
+        let temp_doc = window.activeTextEditor?.document;
+        if (temp_doc != undefined && includeTemplatesAuto()) {
+          remarkService.includeTemplates(temp_doc);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+}
