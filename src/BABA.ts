@@ -28,6 +28,18 @@ export enum BabaStr {
   statusBar_update_status = "statusBar_update_status",
   statusBar_update = "statusBar_update",
   statusBar_update_UserContestInfo = "statusBar_update_UserContestInfo",
+  InitAll = "InitAll",
+  LogOutputProxy = "LogOutputProxy",
+  LogOutputMediator = "LogOutputMediator",
+  Remark_remarkCreateNote = "Remark_remarkCreateNote",
+  Remark_remarkClose = "Remark_remarkClose",
+  Remark_remarkReplyNote = "Remark_remarkReplyNote",
+  Remark_remarkDeleteNoteComment = "Remark_remarkDeleteNoteComment",
+  Remark_remarkCancelsaveNote = "Remark_remarkCancelsaveNote",
+  Remark_remarkSaveNote = "Remark_remarkSaveNote",
+  Remark_remarkEditNote = "Remark_remarkEditNote",
+  Remark_startRemark = "Remark_startRemark",
+  Remark_includeTemplates = "Remark_includeTemplates",
 }
 
 export class BABA {

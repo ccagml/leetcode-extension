@@ -3,10 +3,10 @@ import * as net from "net";
 import * as vscode from "vscode";
 import { IDebugResult } from "../utils/problemUtils";
 import { debugCpp } from "../debugex/debugCpp";
-import { logOutput } from "../utils/OutputUtils";
 import * as fse from "fs-extra";
 import { fileMeta, getEntryFile, IDebugConfig, IProblemType } from "../utils/problemUtils";
 import { debugArgDao } from "../dao/debugArgDao";
+import { BABA, BabaStr } from "../BABA";
 
 const debugConfigMap: Map<string, IDebugConfig> = new Map([
   [
@@ -150,12 +150,12 @@ class DebugService {
       });
 
       clientSock.on("error", (error: Error) => {
-        logOutput.appendLine(error.toString());
+        BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
       });
     });
 
     this.server.on("error", (error: Error) => {
-      logOutput.appendLine(error.toString());
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
     });
 
     // listen on a random port

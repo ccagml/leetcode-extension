@@ -8,6 +8,7 @@
  */
 
 import * as vscode from "vscode";
+import { BABA, BabaStr } from "../BABA";
 import { DialogOptions, OutPutType } from "../model/Model";
 import { getLeetCodeEndpoint, getVsCodeConfig } from "./ConfigUtils";
 
@@ -76,41 +77,6 @@ export async function promptForOpenOutputChannel(message: string, type: OutPutTy
   }
 
   if (result === DialogOptions.open) {
-    logOutput.show();
+    BABA.getProxy(BabaStr.LogOutputProxy).get_log().show();
   }
 }
-
-class LogOutput implements vscode.Disposable {
-  private readonly channel: vscode.OutputChannel = vscode.window.createOutputChannel("LeetCodeProblemRating");
-
-  private LCPTCTX = {};
-  public appendLine(message: string): void {
-    this.channel.appendLine(message);
-  }
-
-  public append(message: string): void {
-    this.channel.append(message);
-  }
-
-  public show(): void {
-    this.channel.show();
-  }
-
-  public dispose(): void {
-    this.channel.dispose();
-  }
-
-  public setLCPTCTX(k, v) {
-    this.LCPTCTX[k] = v;
-  }
-
-  public getLCPTCTX(k) {
-    return this.LCPTCTX[k];
-  }
-
-  public getLCPTCTXAll() {
-    return this.LCPTCTX;
-  }
-}
-
-export const logOutput: LogOutput = new LogOutput();

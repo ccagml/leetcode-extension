@@ -9,7 +9,7 @@
 
 import * as cp from "child_process";
 import * as vscode from "vscode";
-import { logOutput } from "./OutputUtils";
+import { BABA, BabaStr } from "../BABA";
 import * as systemUtils from "./SystemUtils";
 
 interface IExecError extends Error {
@@ -45,10 +45,12 @@ export async function executeCommand(
     childProc.stdout?.on("data", (data: string | Buffer) => {
       data = data.toString();
       result = result.concat(data);
-      logOutput.append(data);
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(data);
     });
 
-    childProc.stderr?.on("data", (data: string | Buffer) => logOutput.append(data.toString()));
+    childProc.stderr?.on("data", (data: string | Buffer) =>
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(data.toString())
+    );
 
     childProc.on("error", reject);
 
@@ -97,7 +99,7 @@ export async function executeCommandWithProgress(
 }
 
 function childLCPTCTX(): string {
-  return JSON.stringify(logOutput.getLCPTCTXAll());
+  return JSON.stringify(BABA.getProxy(BabaStr.LogOutputProxy).get_log().getLCPTCTXAll());
 }
 
 // clone process.env and add http proxy

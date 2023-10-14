@@ -1,7 +1,6 @@
 import * as fse from "fs-extra";
 import * as path from "path";
 import * as vscode from "vscode";
-import { logOutput } from "../utils/OutputUtils";
 
 import { executeCommand } from "../utils/CliUtils";
 import {
@@ -18,6 +17,7 @@ import { isWindows } from "../utils/SystemUtils";
 
 import { DebugBase } from "../debugex/debugBase";
 import { debugArgDao } from "../dao/debugArgDao";
+import { BABA, BabaStr } from "../BABA";
 
 function getGdbDefaultConfig(): IDebugConfig {
   return {
@@ -396,8 +396,8 @@ class DebugCpp extends DebugBase {
       );
     } catch (e) {
       vscode.window.showErrorMessage(e);
-      logOutput.append(e.stack);
-      logOutput.show();
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(e.stack);
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().show();
       return;
     }
 
@@ -450,8 +450,8 @@ class DebugCpp extends DebugBase {
       );
     } catch (e) {
       vscode.window.showErrorMessage(e);
-      logOutput.append(e.stack);
-      logOutput.show();
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(e.stack);
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().show();
       return;
     }
 
