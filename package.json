@@ -30,7 +30,7 @@
         "onCommand:lcpr.toggleLeetCodeCn",
         "onCommand:lcpr.signin",
         "onCommand:lcpr.signout",
-        "onCommand:lcpr.refreshExplorer",
+        "onCommand:lcpr.refresh",
         "onCommand:lcpr.pickOne",
         "onCommand:lcpr.deleteAllCache",
         "onCommand:lcpr.showProblem",
@@ -68,8 +68,8 @@
                 "category": "LeetCode"
             },
             {
-                "command": "lcpr.refreshExplorer",
-                "title": "%main.contributes.commands.lcpr.refreshExplorer.title%",
+                "command": "lcpr.refresh",
+                "title": "%main.contributes.commands.lcpr.refresh.title%",
                 "category": "LeetCode",
                 "icon": "$(refresh)"
             },
@@ -366,7 +366,7 @@
                     "group": "navigation@2"
                 },
                 {
-                    "command": "lcpr.refreshExplorer",
+                    "command": "lcpr.refresh",
                     "when": "view == QuestionExplorer",
                     "group": "navigation@3"
                 },

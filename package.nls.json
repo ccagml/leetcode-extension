@@ -5,7 +5,7 @@
     "main.contributes.commands.lcpr.toggleLeetCodeCn.title": "Switch Endpoint",
     "main.contributes.commands.lcpr.signin.title": "Sign In",
     "main.contributes.commands.lcpr.signout.title": "Sign Out",
-    "main.contributes.commands.lcpr.refreshExplorer.title": "refresh",
+    "main.contributes.commands.lcpr.refresh.title": "refresh",
     "main.contributes.commands.lcpr.pickOne.title": "pickOne",
     "main.contributes.commands.lcpr.deleteAllCache.title": "deleteAllCache",
     "main.contributes.commands.lcpr.showProblem.title": "showProblem",

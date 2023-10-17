@@ -112,7 +112,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.getHelp", (input: NodeModel | Uri) =>
         BABA.sendNotification(BabaStr.TreeData_getHelp, input)
       ),
-      commands.registerCommand("lcpr.refreshExplorer", () => {
+      commands.registerCommand("lcpr.refresh", () => {
         BABA.sendNotification(BabaStr.TreeData_refresh);
       }),
       commands.registerCommand("lcpr.testSolution", (uri?: Uri) => {

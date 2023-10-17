@@ -35,6 +35,7 @@ import * as path from "path";
 import * as fse from "fs-extra";
 import * as os from "os";
 import { BABA, BabaStr } from "../BABA";
+import { NodeModel } from "../model/NodeModel";
 
 // vscode的配置
 export function getVsCodeConfig(): WorkspaceConfiguration {
@@ -209,6 +210,24 @@ export function isUseWsl() {
 
 export function getSortingStrategy(): SortingStrategy {
   return getVsCodeConfig().get<SortingStrategy>("problems.sortStrategy", SortingStrategy.None);
+}
+
+export function sortNodeList(nodes: NodeModel[]): NodeModel[] {
+  const strategy: SortingStrategy = getSortingStrategy();
+  switch (strategy) {
+    case SortingStrategy.AcceptanceRateAsc:
+      return nodes.sort((x: NodeModel, y: NodeModel) => Number(x.acceptanceRate) - Number(y.acceptanceRate));
+    case SortingStrategy.AcceptanceRateDesc:
+      return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.acceptanceRate) - Number(x.acceptanceRate));
+    case SortingStrategy.ScoreAsc:
+      return nodes.sort((x: NodeModel, y: NodeModel) => Number(x.score) - Number(y.score));
+    case SortingStrategy.ScoreDesc:
+      return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.score) - Number(x.score));
+    case SortingStrategy.IDDesc:
+      return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.id) - Number(x.id));
+    default:
+      return nodes;
+  }
 }
 
 export async function updateSortingStrategy(value: string, flag: boolean) {

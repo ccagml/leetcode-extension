@@ -65,7 +65,7 @@ import {
   getTextEditorFilePathByUri,
   usingCmd,
 } from "../utils/SystemUtils";
-import { IDescriptionConfiguration, isStarShortcut } from "../utils/ConfigUtils";
+import { IDescriptionConfiguration, isStarShortcut, sortNodeList } from "../utils/ConfigUtils";
 import * as systemUtils from "../utils/SystemUtils";
 import { eventService } from "../service/EventService";
 
@@ -1168,7 +1168,7 @@ class TreeViewController implements Disposable {
           }
         });
     }
-    return this.applySortingStrategy(sorceNode);
+    return sortNodeList(sorceNode);
   }
 
   public canShow(element: NodeModel) {
@@ -1203,7 +1203,7 @@ class TreeViewController implements Disposable {
           }
         });
     }
-    return this.applySortingStrategy(sorceNode);
+    return sortNodeList(sorceNode);
   }
   public getDayNodes(element: NodeModel | undefined): NodeModel[] {
     const rank_range: string = element?.input || "";
@@ -1218,7 +1218,7 @@ class TreeViewController implements Disposable {
           }
         });
     }
-    return this.applySortingStrategy(sorceNode);
+    return sortNodeList(sorceNode);
   }
 
   public getAllNodes(): NodeModel[] {
@@ -1229,7 +1229,7 @@ class TreeViewController implements Disposable {
       }
       res.push(node);
     }
-    return this.applySortingStrategy(res);
+    return sortNodeList(res);
   }
 
   public getAllDifficultyNodes(): NodeModel[] {
@@ -1407,7 +1407,7 @@ class TreeViewController implements Disposable {
         res.push(node);
       }
     }
-    return this.applySortingStrategy(res);
+    return sortNodeList(res);
   }
 
   public getChildrenNodesById(id: string): NodeModel[] {
@@ -1469,7 +1469,7 @@ class TreeViewController implements Disposable {
           break;
       }
     }
-    return this.applySortingStrategy(res);
+    return sortNodeList(res);
   }
 
   public clearCache(): void {
@@ -1514,24 +1514,6 @@ class TreeViewController implements Disposable {
         break;
       default:
         break;
-    }
-  }
-
-  private applySortingStrategy(nodes: NodeModel[]): NodeModel[] {
-    const strategy: SortingStrategy = getSortingStrategy();
-    switch (strategy) {
-      case SortingStrategy.AcceptanceRateAsc:
-        return nodes.sort((x: NodeModel, y: NodeModel) => Number(x.acceptanceRate) - Number(y.acceptanceRate));
-      case SortingStrategy.AcceptanceRateDesc:
-        return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.acceptanceRate) - Number(x.acceptanceRate));
-      case SortingStrategy.ScoreAsc:
-        return nodes.sort((x: NodeModel, y: NodeModel) => Number(x.score) - Number(y.score));
-      case SortingStrategy.ScoreDesc:
-        return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.score) - Number(x.score));
-      case SortingStrategy.IDDesc:
-        return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.id) - Number(x.id));
-      default:
-        return nodes;
     }
   }
 }

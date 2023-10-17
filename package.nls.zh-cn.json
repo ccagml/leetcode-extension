@@ -5,7 +5,7 @@
     "main.contributes.commands.lcpr.toggleLeetCodeCn.title": "切换站点",
     "main.contributes.commands.lcpr.signin.title": "登录",
     "main.contributes.commands.lcpr.signout.title": "登出",
-    "main.contributes.commands.lcpr.refreshExplorer.title": "刷新",
+    "main.contributes.commands.lcpr.refresh.title": "刷新",
     "main.contributes.commands.lcpr.pickOne.title": "手气一下",
     "main.contributes.commands.lcpr.deleteAllCache.title": "删除题目缓存",
     "main.contributes.commands.lcpr.showProblem.title": "做题",
