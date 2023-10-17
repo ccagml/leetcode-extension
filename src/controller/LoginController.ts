@@ -176,7 +176,7 @@ class LoginContorller {
     try {
       const userName: string | undefined = await this.getUserName();
       if (userName) {
-        BABA.sendNotification(BabaStr.USER_statusChanged, { userStatus: UserStatus.SignedIn, userName: userName });
+        BABA.sendNotification(BabaStr.USER_LOGIN_SUC, { userName: userName });
 
         window.showInformationMessage(`${inMessage} 成功`);
       }
@@ -194,7 +194,7 @@ class LoginContorller {
       await executeService.signOut();
       window.showInformationMessage("成功登出");
 
-      BABA.sendNotification(BabaStr.USER_statusChanged, { userStatus: UserStatus.SignedOut, userName: undefined });
+      BABA.sendNotification(BabaStr.USER_LOGIN_OUT, {});
     } catch (error) {
       // ShowMessage(`Failed to signOut. Please open the output channel for details`, OutPutType.error);
     }

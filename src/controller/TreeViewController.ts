@@ -42,7 +42,7 @@ import {
   enableSideMode,
   getPickOneByRankRangeMin,
   getPickOneByRankRangeMax,
-  updateSortingStrategy,
+  updateSortStrategy,
   getSortingStrategy,
   openSettingsEditor,
   fetchProblemLanguage,
@@ -64,7 +64,7 @@ import {
   getTextEditorFilePathByUri,
   usingCmd,
 } from "../utils/SystemUtils";
-import { IDescriptionConfiguration, isStarShortcut, sortNodeList } from "../utils/ConfigUtils";
+import { IDescriptionConfiguration, sortNodeList } from "../utils/ConfigUtils";
 import * as systemUtils from "../utils/SystemUtils";
 
 import * as fse from "fs-extra";
@@ -82,8 +82,7 @@ class TreeViewController implements Disposable {
   constructor() {
     this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
       if (event.affectsConfiguration("leetcode-problem-rating.hideScore")) {
-        BABA.sendNotification(BabaStr.TreeData_refresh);
-        BABA.sendNotification(BabaStr.BricksData_refresh);
+        BABA.sendNotification(BabaStr.ConfigChange_hideScore);
       }
     }, this);
   }
@@ -116,9 +115,6 @@ class TreeViewController implements Disposable {
       await ShowMessage("提交出错了. 请查看控制台信息~", OutPutType.error);
       return;
     }
-
-    BABA.sendNotification(BabaStr.TreeData_refresh);
-    BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 
   // 提交测试用例
@@ -404,9 +400,7 @@ class TreeViewController implements Disposable {
       return;
     }
 
-    await updateSortingStrategy(choice.value, true);
-    BABA.sendNotification(BabaStr.TreeData_refresh);
-    BABA.sendNotification(BabaStr.BricksData_refresh);
+    await updateSortStrategy(choice.value, true);
   }
 
   /**
@@ -416,11 +410,8 @@ class TreeViewController implements Disposable {
   public async addFavorite(node: NodeModel): Promise<void> {
     try {
       await executeService.toggleFavorite(node, true);
-      BABA.sendNotification(BabaStr.TreeData_refresh);
-      BABA.sendNotification(BabaStr.BricksData_refresh);
-      if (isStarShortcut()) {
-        BABA.sendNotification(BabaStr.FileButton_refresh);
-      }
+
+      BABA.sendNotification(BabaStr.TreeData_favoriteChange);
     } catch (error) {
       await ShowMessage("添加喜欢题目失败. 请查看控制台信息~", OutPutType.error);
     }
@@ -433,11 +424,7 @@ class TreeViewController implements Disposable {
   public async removeFavorite(node: NodeModel): Promise<void> {
     try {
       await executeService.toggleFavorite(node, false);
-      BABA.sendNotification(BabaStr.TreeData_refresh);
-      BABA.sendNotification(BabaStr.BricksData_refresh);
-      if (isStarShortcut()) {
-        BABA.sendNotification(BabaStr.FileButton_refresh);
-      }
+      BABA.sendNotification(BabaStr.TreeData_favoriteChange);
     } catch (error) {
       await ShowMessage("移除喜欢题目失败. 请查看控制台信息~", OutPutType.error);
     }

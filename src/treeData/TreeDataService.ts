@@ -339,9 +339,6 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.InitAll,
       BabaStr.TreeData_cleanUserScore,
       BabaStr.TreeData_checkSubmit,
-      BabaStr.TreeData_switchEndpoint,
-      BabaStr.VSCODE_DISPOST,
-      BabaStr.InitAll,
       BabaStr.CommitResult_showFinish,
       BabaStr.TreeData_switchEndpoint,
       BabaStr.TreeData_previewProblem,
@@ -365,6 +362,11 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.TreeData_searchUserContestFinish,
       BabaStr.TreeData_searchScoreRangeFinish,
       BabaStr.TreeData_searchContest,
+      BabaStr.ConfigChange_hideScore,
+      BabaStr.ConfigChange_SortStrategy,
+      BabaStr.TreeData_favoriteChange,
+      BabaStr.USER_statusChanged,
+      BabaStr.statusBar_update_statusFinish,
     ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -374,6 +376,7 @@ export class TreeDataMediator extends BABAMediator {
         treeViewController.dispose();
         break;
       case BabaStr.TreeData_refresh:
+      case BabaStr.ConfigChange_hideScore:
         treeDataService.refresh();
         break;
       case BabaStr.InitAll:
@@ -434,6 +437,7 @@ export class TreeDataMediator extends BABAMediator {
         treeViewController.switchSortingStrategy();
         break;
       case BabaStr.USER_statusChanged:
+      case BabaStr.statusBar_update_statusFinish:
         treeDataService.cleanUserScore();
         treeDataService.fire();
         break;
@@ -443,6 +447,8 @@ export class TreeDataMediator extends BABAMediator {
       case BabaStr.TreeData_searchUserContestFinish:
       case BabaStr.TreeData_searchScoreRangeFinish:
       case BabaStr.TreeData_searchContest:
+      case BabaStr.ConfigChange_SortStrategy:
+      case BabaStr.TreeData_favoriteChange:
         treeDataService.fire();
         break;
       default:

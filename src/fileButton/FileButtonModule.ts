@@ -10,7 +10,7 @@
 import * as vscode from "vscode";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 import { NodeModel } from "../model/NodeModel";
-import { getEditorShortcuts } from "../utils/ConfigUtils";
+import { getEditorShortcuts, isStarShortcut } from "../utils/ConfigUtils";
 import { supportDebugLanguages } from "../utils/problemUtils";
 
 export class FileButtonService implements vscode.CodeLensProvider {
@@ -386,12 +386,18 @@ export class FileButtonMediator extends BABAMediator {
   }
 
   listNotificationInterests(): string[] {
-    return [BabaStr.VSCODE_DISPOST, BabaStr.FileButton_refresh];
+    return [BabaStr.VSCODE_DISPOST, BabaStr.FileButton_refresh, BabaStr.TreeData_favoriteChange];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         fileButtonConfigChange.dispose();
+        break;
+
+      case BabaStr.TreeData_favoriteChange:
+        if (isStarShortcut()) {
+          fileButtonService.refresh();
+        }
         break;
       case BabaStr.FileButton_refresh:
         fileButtonService.refresh();

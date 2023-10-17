@@ -91,6 +91,11 @@ export enum BabaStr {
   TreeData_searchContest = "TreeData_searchContest",
   CommitResult_showFinish = "CommitResult_showFinish",
   USER_statusChanged = "USER_statusChanged",
+  ConfigChange_hideScore = "ConfigChange_hideScore",
+  ConfigChange_SortStrategy = "ConfigChange_SortStrategy",
+  TreeData_favoriteChange = "TreeData_favoriteChange",
+  USER_LOGIN_SUC = "USER_LOGIN_SUC",
+  USER_LOGIN_OUT = "USER_LOGIN_OUT",
 }
 
 export class BABA {

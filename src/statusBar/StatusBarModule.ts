@@ -58,7 +58,11 @@ class StatusBarService implements Disposable {
       this.currentUser = undefined;
       this.userStatus = UserStatus.SignedOut;
     } finally {
-      BABA.sendNotification(BabaStr.USER_statusChanged, { userStatus: this.userStatus, userName: this.currentUser });
+      if (this.userStatus == UserStatus.SignedOut) {
+        BABA.sendNotification(BabaStr.USER_LOGIN_OUT, { userStatus: this.userStatus, userName: this.currentUser });
+      } else {
+        BABA.sendNotification(BabaStr.USER_LOGIN_SUC, { userStatus: this.userStatus, userName: this.currentUser });
+      }
     }
   }
   private tryParseUserName(output: string): string | undefined {
@@ -189,17 +193,23 @@ export class StatusBarMediator extends BABAMediator {
       BabaStr.TreeData_searchUserContest,
       BabaStr.TreeData_searchUserContestFinish,
       BabaStr.USER_statusChanged,
+      BabaStr.USER_LOGIN_SUC,
+      BabaStr.USER_LOGIN_OUT,
     ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    let body = _notification.getBody();
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         statusBarService.dispose();
         break;
       case BabaStr.statusBar_update_status:
-      case BabaStr.USER_statusChanged:
-        let body = _notification.getBody();
-        statusBarService.update_status(body.userStatus, body.userName);
+
+      case BabaStr.USER_LOGIN_SUC:
+        statusBarService.update_status(UserStatus.SignedIn, body.userName);
+        break;
+      case BabaStr.USER_LOGIN_OUT:
+        statusBarService.update_status(UserStatus.SignedOut, undefined);
         break;
       case BabaStr.statusBar_update:
       case BabaStr.statusBar_update_statusFinish:

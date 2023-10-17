@@ -192,6 +192,11 @@ export class BricksDataMediator extends BABAMediator {
       BabaStr.TreeData_searchUserContestFinish,
       BabaStr.TreeData_searchScoreRangeFinish,
       BabaStr.TreeData_searchContest,
+      BabaStr.ConfigChange_hideScore,
+      BabaStr.ConfigChange_SortStrategy,
+      BabaStr.TreeData_favoriteChange,
+      BabaStr.USER_statusChanged,
+      BabaStr.statusBar_update_statusFinish,
     ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -204,6 +209,7 @@ export class BricksDataMediator extends BABAMediator {
         break;
       case BabaStr.BricksData_refresh:
       case BabaStr.USER_statusChanged:
+      case BabaStr.statusBar_update_statusFinish:
         bricksDataService.refresh();
         break;
       case BabaStr.QuestionData_refreshCacheFinish:
@@ -211,6 +217,9 @@ export class BricksDataMediator extends BABAMediator {
       case BabaStr.TreeData_searchUserContestFinish:
       case BabaStr.TreeData_searchScoreRangeFinish:
       case BabaStr.TreeData_searchContest:
+      case BabaStr.ConfigChange_hideScore:
+      case BabaStr.ConfigChange_SortStrategy:
+      case BabaStr.TreeData_favoriteChange:
         bricksDataService.fire();
         break;
       case BabaStr.CommitResult_showFinish:

@@ -230,8 +230,9 @@ export function sortNodeList(nodes: NodeModel[]): NodeModel[] {
   }
 }
 
-export async function updateSortingStrategy(value: string, flag: boolean) {
+export async function updateSortStrategy(value: string, flag: boolean) {
   await getVsCodeConfig().update("problems.sortStrategy", value, flag);
+  BABA.sendNotification(BabaStr.ConfigChange_SortStrategy);
 }
 
 export function getLeetCodeEndpoint(): string {
