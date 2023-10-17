@@ -111,7 +111,7 @@ class TreeViewController implements Disposable {
     try {
       const result: string = await executeService.submitSolution(filePath);
 
-      BABA.sendNotification(BabaStr.showProblemFinishError, { resultString: result });
+      BABA.sendNotification(BabaStr.CommitResult_submitSolutionResult, { resultString: result });
     } catch (error) {
       await ShowMessage("提交出错了. 请查看控制台信息~", OutPutType.error);
       return;
@@ -204,7 +204,7 @@ class TreeViewController implements Disposable {
       if (!result) {
         return;
       }
-      BABA.sendNotification(BabaStr.showProblemFinishError, { resultString: result, tsd: tsd });
+      BABA.sendNotification(BabaStr.CommitResult_testSolutionResult, { resultString: result, tsd: tsd });
     } catch (error) {
       await ShowMessage("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
@@ -258,7 +258,7 @@ class TreeViewController implements Disposable {
       if (!result) {
         return;
       }
-      BABA.sendNotification(BabaStr.showProblemFinishError, { resultString: result, tsd: tsd });
+      BABA.sendNotification(BabaStr.CommitResult_testSolutionResult, { resultString: result, tsd: tsd });
     } catch (error) {
       await ShowMessage("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
@@ -303,7 +303,7 @@ class TreeViewController implements Disposable {
         return;
       }
 
-      BABA.sendNotification(BabaStr.showProblemFinishError, { resultString: result, tsd: tsd });
+      BABA.sendNotification(BabaStr.CommitResult_testSolutionResult, { resultString: result, tsd: tsd });
     } catch (error) {
       await ShowMessage("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
@@ -341,7 +341,7 @@ class TreeViewController implements Disposable {
         return;
       }
 
-      BABA.sendNotification(BabaStr.showProblemFinishError, { resultString: result, tsd: tsd });
+      BABA.sendNotification(BabaStr.CommitResult_testSolutionResult, { resultString: result, tsd: tsd });
     } catch (error) {
       await ShowMessage("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
