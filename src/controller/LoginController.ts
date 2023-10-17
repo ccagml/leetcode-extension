@@ -13,7 +13,7 @@ import { executeService } from "../service/ExecuteService";
 import { OutPutType, Endpoint, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
 import { createEnvOption } from "../utils/CliUtils";
 import { ShowMessage } from "../utils/OutputUtils";
-import { eventService } from "../service/EventService";
+
 import { window, QuickPickOptions, ProgressLocation, Progress } from "vscode";
 import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
 import { BABA, BabaStr } from "../BABA";
@@ -176,7 +176,8 @@ class LoginContorller {
     try {
       const userName: string | undefined = await this.getUserName();
       if (userName) {
-        eventService.emit("statusChanged", UserStatus.SignedIn, userName);
+        BABA.sendNotification(BabaStr.USER_statusChanged, { userStatus: UserStatus.SignedIn, userName: userName });
+
         window.showInformationMessage(`${inMessage} 成功`);
       }
     } catch (error) {
@@ -192,7 +193,8 @@ class LoginContorller {
     try {
       await executeService.signOut();
       window.showInformationMessage("成功登出");
-      eventService.emit("statusChanged", UserStatus.SignedOut, undefined);
+
+      BABA.sendNotification(BabaStr.USER_statusChanged, { userStatus: UserStatus.SignedOut, userName: undefined });
     } catch (error) {
       // ShowMessage(`Failed to signOut. Please open the output channel for details`, OutPutType.error);
     }

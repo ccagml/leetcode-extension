@@ -26,6 +26,7 @@ export enum BabaStr {
   StatusBarProxy = "StatusBarProxy",
   StatusBarMediator = "StatusBarMediator",
   statusBar_update_status = "statusBar_update_status",
+  statusBar_update_statusFinish = "statusBar_update_statusFinish",
   statusBar_update = "statusBar_update",
   statusBar_update_UserContestInfo = "statusBar_update_UserContestInfo",
   InitAll = "InitAll",
@@ -88,6 +89,8 @@ export enum BabaStr {
   TreeData_searchUserContestFinish = "TreeData_searchUserContestFinish",
   TreeData_searchScoreRangeFinish = "TreeData_searchScoreRangeFinish",
   TreeData_searchContest = "TreeData_searchContest",
+  CommitResult_showFinish = "CommitResult_showFinish",
+  USER_statusChanged = "USER_statusChanged",
 }
 
 export class BABA {

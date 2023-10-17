@@ -12,7 +12,7 @@ import { NodeModel } from "./model/NodeModel";
 import { treeItemDecorationService } from "./service/TreeItemDecorationService";
 import { ShowMessage } from "./utils/OutputUtils";
 import { executeService } from "./service/ExecuteService";
-import { eventController } from "./controller/EventController";
+
 import { markdownService } from "./service/MarkdownService";
 import { mainContorller } from "./controller/MainController";
 import { loginContorller } from "./controller/LoginController";
@@ -77,8 +77,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
     // 检查node环境
     await mainContorller.checkNodeEnv(context);
     await mainContorller.deleteProblemCache();
-    // 事件监听
-    eventController.addEvent();
 
     // 资源管理
     context.subscriptions.push(

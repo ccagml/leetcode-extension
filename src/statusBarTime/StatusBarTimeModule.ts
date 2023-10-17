@@ -191,6 +191,7 @@ export class StatusBarTimeMediator extends BABAMediator {
     return [
       BabaStr.every_second,
       BabaStr.submit,
+      BabaStr.CommitResult_showFinish,
       BabaStr.showProblemFinish,
       BabaStr.VSCODE_DISPOST,
       BabaStr.statusBarTime_start,
@@ -204,6 +205,7 @@ export class StatusBarTimeMediator extends BABAMediator {
         statusBarTimeService.updateSecond();
         break;
       case BabaStr.submit:
+      case BabaStr.CommitResult_showFinish:
         statusBarTimeService.checkSubmit(_notification.getBody());
         break;
       case BabaStr.showProblemFinish:

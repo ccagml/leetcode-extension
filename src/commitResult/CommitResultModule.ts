@@ -14,7 +14,6 @@ import { ISubmitEvent, ITestSolutionData } from "../model/Model";
 import { IWebViewOption } from "../model/Model";
 import { promptHintMessage } from "../utils/OutputUtils";
 import { isAnswerDiffColor } from "../utils/ConfigUtils";
-import { eventService } from "../service/EventService";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 
 class SubmissionService extends BaseWebViewService {
@@ -43,7 +42,7 @@ class SubmissionService extends BaseWebViewService {
       let qid = submit_event?.qid?.toString();
       this.tempTestCase.set(qid, tsd);
     }
-    eventService.emit("submit", submit_event);
+    BABA.sendNotification(BabaStr.CommitResult_showFinish, submit_event);
   }
   public getSubmitEvent(): ISubmitEvent {
     return this.result.system_message as unknown as ISubmitEvent;

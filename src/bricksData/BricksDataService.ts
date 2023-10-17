@@ -158,10 +158,6 @@ export class BricksDataProxy extends BABAProxy {
     super(BricksDataProxy.NAME);
   }
 
-  public async checkSubmit(e: ISubmitEvent) {
-    bricksDataService.checkSubmit(e);
-  }
-
   public async setBricksType(node: BricksNode, type) {
     bricksDataService.setBricksType(node, type);
   }
@@ -207,6 +203,7 @@ export class BricksDataMediator extends BABAMediator {
         bricksDataService.initialize();
         break;
       case BabaStr.BricksData_refresh:
+      case BabaStr.USER_statusChanged:
         bricksDataService.refresh();
         break;
       case BabaStr.QuestionData_refreshCacheFinish:
@@ -216,6 +213,8 @@ export class BricksDataMediator extends BABAMediator {
       case BabaStr.TreeData_searchContest:
         bricksDataService.fire();
         break;
+      case BabaStr.CommitResult_showFinish:
+        bricksDataService.checkSubmit(_notification.getBody());
       default:
         break;
     }

@@ -10,7 +10,7 @@
 import { ConfigurationChangeEvent, Disposable, workspace, StatusBarItem, window } from "vscode";
 import { UserStatus, userContestRanKingBase } from "../model/Model";
 import { enableStatusBar } from "../utils/ConfigUtils";
-import { eventService } from "../service/EventService";
+
 import { executeService } from "../service/ExecuteService";
 import { BabaStr, BABAMediator, BABAProxy, BaseCC, BABA } from "../BABA";
 
@@ -58,7 +58,7 @@ class StatusBarService implements Disposable {
       this.currentUser = undefined;
       this.userStatus = UserStatus.SignedOut;
     } finally {
-      eventService.emit("statusChanged", this.userStatus, this.currentUser);
+      BABA.sendNotification(BabaStr.USER_statusChanged, { userStatus: this.userStatus, userName: this.currentUser });
     }
   }
   private tryParseUserName(output: string): string | undefined {
@@ -122,6 +122,7 @@ class StatusBarService implements Disposable {
       this.update_UserContestInfo(undefined);
     }
     this.currentUser = user;
+    BABA.sendNotification(BabaStr.statusBar_update_statusFinish);
   }
   public update_UserContestInfo(UserContestInfo?: userContestRanKingBase | undefined) {
     this.currentUserContestInfo = UserContestInfo;
@@ -182,10 +183,12 @@ export class StatusBarMediator extends BABAMediator {
     return [
       BabaStr.VSCODE_DISPOST,
       BabaStr.statusBar_update_status,
+      BabaStr.statusBar_update_statusFinish,
       BabaStr.statusBar_update,
       BabaStr.statusBar_update_UserContestInfo,
       BabaStr.TreeData_searchUserContest,
       BabaStr.TreeData_searchUserContestFinish,
+      BabaStr.USER_statusChanged,
     ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -194,10 +197,12 @@ export class StatusBarMediator extends BABAMediator {
         statusBarService.dispose();
         break;
       case BabaStr.statusBar_update_status:
+      case BabaStr.USER_statusChanged:
         let body = _notification.getBody();
         statusBarService.update_status(body.userStatus, body.userName);
         break;
       case BabaStr.statusBar_update:
+      case BabaStr.statusBar_update_statusFinish:
         statusBarService.update();
         break;
       case BabaStr.TreeData_searchUserContest:

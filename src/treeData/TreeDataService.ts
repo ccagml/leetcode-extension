@@ -342,8 +342,7 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.TreeData_switchEndpoint,
       BabaStr.VSCODE_DISPOST,
       BabaStr.InitAll,
-      BabaStr.TreeData_cleanUserScore,
-      BabaStr.TreeData_checkSubmit,
+      BabaStr.CommitResult_showFinish,
       BabaStr.TreeData_switchEndpoint,
       BabaStr.TreeData_previewProblem,
       BabaStr.TreeData_showProblem,
@@ -384,6 +383,7 @@ export class TreeDataMediator extends BABAMediator {
         treeDataService.cleanUserScore();
         break;
       case BabaStr.TreeData_checkSubmit:
+      case BabaStr.CommitResult_showFinish:
         treeDataService.checkSubmit(body);
         break;
       case BabaStr.TreeData_switchEndpoint:
@@ -432,6 +432,10 @@ export class TreeDataMediator extends BABAMediator {
         break;
       case BabaStr.TreeData_problems_sort:
         treeViewController.switchSortingStrategy();
+        break;
+      case BabaStr.USER_statusChanged:
+        treeDataService.cleanUserScore();
+        treeDataService.fire();
         break;
       case BabaStr.QuestionData_refreshCacheFinish:
       case BabaStr.TreeData_searchTodayFinish:
