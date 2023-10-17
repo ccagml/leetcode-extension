@@ -66,7 +66,6 @@ import {
 } from "../utils/SystemUtils";
 import { IDescriptionConfiguration, isStarShortcut, sortNodeList } from "../utils/ConfigUtils";
 import * as systemUtils from "../utils/SystemUtils";
-import { eventService } from "../service/EventService";
 
 import * as fse from "fs-extra";
 import { groupDao } from "../dao/groupDao";
@@ -776,8 +775,7 @@ class TreeViewController implements Disposable {
       time: Math.floor(Date.now() / 1000),
     });
     treeViewController.insertSearchSet(tt);
-    BABA.sendNotification(BabaStr.TreeData_refresh);
-    BABA.sendNotification(BabaStr.BricksData_refresh);
+    BABA.sendNotification(BabaStr.TreeData_searchScoreRangeFinish);
   }
 
   public async searchContest(): Promise<void> {
@@ -794,8 +792,7 @@ class TreeViewController implements Disposable {
       time: Math.floor(Date.now() / 1000),
     });
     treeViewController.insertSearchSet(tt);
-    BABA.sendNotification(BabaStr.TreeData_refresh);
-    BABA.sendNotification(BabaStr.BricksData_refresh);
+    BABA.sendNotification(BabaStr.TreeData_searchContest);
   }
 
   public async searchUserContest(): Promise<void> {
@@ -809,7 +806,7 @@ class TreeViewController implements Disposable {
       const solution: string = await executeService.getUserContest(needTranslation, sbp.getUser() || "");
       const query_result = JSON.parse(solution);
       const tt: userContestRanKingBase = Object.assign({}, userContestRankingObj, query_result.userContestRanking);
-      eventService.emit("searchUserContest", tt);
+      BABA.sendNotification(BabaStr.TreeData_searchUserContest, tt);
     } catch (error) {
       BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
       await ShowMessage("Failed to fetch today question. 请查看控制台信息~", OutPutType.error);
@@ -836,8 +833,7 @@ class TreeViewController implements Disposable {
           todayData: query_result,
         });
         treeViewController.insertSearchSet(tt);
-        BABA.sendNotification(BabaStr.TreeData_refresh);
-        BABA.sendNotification(BabaStr.BricksData_refresh);
+        BABA.sendNotification(BabaStr.TreeData_searchTodayFinish);
       }
     } catch (error) {
       BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
@@ -1014,13 +1010,11 @@ class TreeViewController implements Disposable {
     const temp_searchSet: Map<string, ISearchSet> = this.searchSet;
     const temp_waitTodayQuestion: boolean = this.waitTodayQuestion;
     const temp_waitUserContest: boolean = this.waitUserContest;
-    this.clearCache();
-
+    BABA.sendNotification(BabaStr.QuestionData_clearCache);
     BABA.sendNotification(BabaStr.QuestionData_refreshCache);
     this.searchSet = temp_searchSet;
     this.waitTodayQuestion = temp_waitTodayQuestion;
     this.waitUserContest = temp_waitUserContest;
-    BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 
   public getRootNodes(): NodeModel[] {
@@ -1467,13 +1461,9 @@ class TreeViewController implements Disposable {
     return sortNodeList(res);
   }
 
-  public clearCache(): void {
-    BABA.sendNotification(BabaStr.QuestionData_clearCache);
-  }
-
   public dispose(): void {
     this.configurationChangeListener.dispose();
-    this.clearCache();
+    BABA.sendNotification(BabaStr.QuestionData_clearCache);
   }
 
   private sortSubCategoryNodes(subCategoryNodes: NodeModel[], category: Category): void {

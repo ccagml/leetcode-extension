@@ -34,13 +34,6 @@ class EventService extends EventEmitter {
       BABA.getProxy(BabaStr.BricksDataProxy).checkSubmit(e);
       BABA.sendNotification(BabaStr.submit, e);
     });
-
-    this.on("searchUserContest", (tt) => {
-      BABA.sendNotification(BabaStr.statusBar_update_UserContestInfo, tt);
-      BABA.sendNotification(BabaStr.statusBar_update);
-      BABA.sendNotification(BabaStr.TreeData_refresh);
-      BABA.sendNotification(BabaStr.BricksData_refresh);
-    });
   }
 }
 

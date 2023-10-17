@@ -26,6 +26,10 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
     this.onDidChangeTreeDataEvent.fire(null);
   }
 
+  public fire() {
+    this.onDidChangeTreeDataEvent.fire(null);
+  }
+
   public async initialize() {
     await bricksDao.init();
     await groupDao.init();
@@ -183,7 +187,16 @@ export class BricksDataMediator extends BABAMediator {
   }
 
   listNotificationInterests(): string[] {
-    return [BabaStr.VSCODE_DISPOST, BabaStr.BricksData_refresh, BabaStr.InitAll];
+    return [
+      BabaStr.VSCODE_DISPOST,
+      BabaStr.BricksData_refresh,
+      BabaStr.InitAll,
+      BabaStr.QuestionData_refreshCacheFinish,
+      BabaStr.TreeData_searchTodayFinish,
+      BabaStr.TreeData_searchUserContestFinish,
+      BabaStr.TreeData_searchScoreRangeFinish,
+      BabaStr.TreeData_searchContest,
+    ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
@@ -195,6 +208,13 @@ export class BricksDataMediator extends BABAMediator {
         break;
       case BabaStr.BricksData_refresh:
         bricksDataService.refresh();
+        break;
+      case BabaStr.QuestionData_refreshCacheFinish:
+      case BabaStr.TreeData_searchTodayFinish:
+      case BabaStr.TreeData_searchUserContestFinish:
+      case BabaStr.TreeData_searchScoreRangeFinish:
+      case BabaStr.TreeData_searchContest:
+        bricksDataService.fire();
         break;
       default:
         break;

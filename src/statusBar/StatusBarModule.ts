@@ -12,7 +12,7 @@ import { UserStatus, userContestRanKingBase } from "../model/Model";
 import { enableStatusBar } from "../utils/ConfigUtils";
 import { eventService } from "../service/EventService";
 import { executeService } from "../service/ExecuteService";
-import { BabaStr, BABAMediator, BABAProxy, BaseCC } from "../BABA";
+import { BabaStr, BABAMediator, BABAProxy, BaseCC, BABA } from "../BABA";
 
 // 状态栏工具
 class StatusBarService implements Disposable {
@@ -125,6 +125,7 @@ class StatusBarService implements Disposable {
   }
   public update_UserContestInfo(UserContestInfo?: userContestRanKingBase | undefined) {
     this.currentUserContestInfo = UserContestInfo;
+    BABA.sendNotification(BabaStr.TreeData_searchUserContestFinish);
   }
 
   // 更新数据
@@ -183,6 +184,8 @@ export class StatusBarMediator extends BABAMediator {
       BabaStr.statusBar_update_status,
       BabaStr.statusBar_update,
       BabaStr.statusBar_update_UserContestInfo,
+      BabaStr.TreeData_searchUserContest,
+      BabaStr.TreeData_searchUserContestFinish,
     ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -197,8 +200,12 @@ export class StatusBarMediator extends BABAMediator {
       case BabaStr.statusBar_update:
         statusBarService.update();
         break;
-      case BabaStr.statusBar_update_UserContestInfo:
+      case BabaStr.TreeData_searchUserContest:
         statusBarService.update_UserContestInfo(_notification.getBody());
+        break;
+      case BabaStr.statusBar_update_UserContestInfo:
+      case BabaStr.TreeData_searchUserContestFinish:
+        statusBarService.update();
         break;
       default:
         break;

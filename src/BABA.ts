@@ -80,6 +80,14 @@ export enum BabaStr {
   PreviewProxy = "PreviewProxy",
   PreviewMediator = "PreviewMediator",
   Preview_show = "Preview_show",
+  TreeData_rebuildTreeData = "TreeData_rebuildTreeData",
+  QuestionData_refreshCacheFinish = "QuestionData_refreshCacheFinish",
+  TreeData_searchTodayFinish = "TreeData_searchTodayFinish",
+
+  TreeData_searchUserContest = "TreeData_searchUserContest",
+  TreeData_searchUserContestFinish = "TreeData_searchUserContestFinish",
+  TreeData_searchScoreRangeFinish = "TreeData_searchScoreRangeFinish",
+  TreeData_searchContest = "TreeData_searchContest",
 }
 
 export class BABA {

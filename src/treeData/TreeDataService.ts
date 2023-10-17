@@ -53,9 +53,12 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     treeViewController.clearUserScore();
   }
 
+  public fire() {
+    this.onDidChangeTreeDataEvent.fire(null);
+  }
+
   public async refresh(): Promise<void> {
     await treeViewController.refreshCache();
-    this.onDidChangeTreeDataEvent.fire(null);
     await treeViewController.refreshCheck();
   }
 
@@ -357,6 +360,12 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.TreeData_addFavorite,
       BabaStr.TreeData_removeFavorite,
       BabaStr.TreeData_problems_sort,
+      BabaStr.TreeData_rebuildTreeData,
+      BabaStr.QuestionData_refreshCacheFinish,
+      BabaStr.TreeData_searchTodayFinish,
+      BabaStr.TreeData_searchUserContestFinish,
+      BabaStr.TreeData_searchScoreRangeFinish,
+      BabaStr.TreeData_searchContest,
     ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -423,6 +432,14 @@ export class TreeDataMediator extends BABAMediator {
         break;
       case BabaStr.TreeData_problems_sort:
         treeViewController.switchSortingStrategy();
+        break;
+      case BabaStr.QuestionData_refreshCacheFinish:
+      case BabaStr.TreeData_searchTodayFinish:
+      case BabaStr.TreeData_rebuildTreeData:
+      case BabaStr.TreeData_searchUserContestFinish:
+      case BabaStr.TreeData_searchScoreRangeFinish:
+      case BabaStr.TreeData_searchContest:
+        treeDataService.fire();
         break;
       default:
         break;

@@ -44,6 +44,8 @@ class QuestionData {
         this.tagSet.add(tag);
       }
     }
+
+    BABA.sendNotification(BabaStr.QuestionData_refreshCacheFinish);
   }
   public getExplorerNodeMap(): Map<string, NodeModel> {
     return this.explorerNodeMap;
