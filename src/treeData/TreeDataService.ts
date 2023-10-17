@@ -30,7 +30,7 @@ import { tagsDao } from "../dao/tagsDao";
 import { executeService } from "../service/ExecuteService";
 import { ShowMessage, promptForSignIn } from "../utils/OutputUtils";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
-import { getLeetCodeEndpoint, isUseEndpointTranslation } from "../utils/ConfigUtils";
+import { getLeetCodeEndpoint, isUseEndpointTranslation, setDefaultLanguage } from "../utils/ConfigUtils";
 import { getNodeIdFromFile } from "../utils/SystemUtils";
 
 export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
@@ -413,7 +413,7 @@ export class TreeDataMediator extends BABAMediator {
         treeViewController.submitSolution(body.uri);
         break;
       case BabaStr.TreeData_setDefaultLanguage:
-        treeViewController.setDefaultLanguage();
+        setDefaultLanguage();
         break;
       case BabaStr.TreeData_addFavorite:
         treeViewController.addFavorite(body.node);

@@ -48,7 +48,6 @@ import {
   fetchProblemLanguage,
   getBelongingWorkspaceFolderUri,
   selectWorkspaceFolder,
-  setDefaultLanguage,
 } from "../utils/ConfigUtils";
 import { NodeModel } from "../model/NodeModel";
 import { ISearchSet } from "../model/Model";
@@ -443,10 +442,6 @@ class TreeViewController implements Disposable {
     } catch (error) {
       await ShowMessage("移除喜欢题目失败. 请查看控制台信息~", OutPutType.error);
     }
-  }
-
-  public async setDefaultLanguage(): Promise<void> {
-    await setDefaultLanguage();
   }
 
   public async searchProblem(): Promise<void> {

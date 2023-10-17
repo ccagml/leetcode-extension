@@ -259,7 +259,7 @@ export async function fetchProblemLanguage(): Promise<string | undefined> {
   (async (): Promise<void> => {
     if (language && !defaultLanguage && leetCodeConfig.get<boolean>("hint.setDefaultLanguage")) {
       const choice: MessageItem | undefined = await window.showInformationMessage(
-        `Would you like to set '${language}' as your default language?`,
+        `设置 '${language}' 默认编程语言?`,
         DialogOptions.yes,
         DialogOptions.no,
         DialogOptions.never
