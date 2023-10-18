@@ -8,13 +8,13 @@
  */
 
 import { ViewColumn, commands } from "vscode";
-import { BaseWebViewService } from "./BaseWebviewService";
-import { markdownService } from "./MarkdownService";
+import { BaseWebViewService } from "../service/BaseWebviewService";
+import { markdownService } from "../service/MarkdownService";
 import { ISubmitEvent, ITestSolutionData } from "../model/Model";
 import { IWebViewOption } from "../model/Model";
 import { promptHintMessage } from "../utils/OutputUtils";
 import { isAnswerDiffColor } from "../utils/ConfigUtils";
-import { eventService } from "./EventService";
+import { eventService } from "../service/EventService";
 import { BABA, BabaStr } from "../BABA";
 
 class SubmissionService extends BaseWebViewService {

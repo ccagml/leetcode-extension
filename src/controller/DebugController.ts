@@ -208,7 +208,6 @@ class DebugContorller {
       const meta: ProblemMeta | null = fileMeta(fileContent.toString());
 
       if (!this.canDebug(meta, document)) {
-        // window.showErrorMessage("这题还不能debug,请尝试配置区域调试参数,麻烦提issuse");
         // 判断生成测试区块
         await this.check_create_debug_area(meta, document);
 

@@ -8,6 +8,7 @@
  */
 
 import { Disposable, TreeItemCollapsibleState, window } from "vscode";
+import { BABA, BabaStr } from "../BABA";
 
 import { bricksDao } from "../dao/bricksDao";
 import { groupDao } from "../dao/groupDao";
@@ -15,7 +16,6 @@ import { BricksNormalId, defaultProblem, IQuickItemEx } from "../model/Model";
 import { BricksNode } from "../model/NodeModel";
 import { bricksDataService } from "../service/BricksDataService";
 import { eventService } from "../service/EventService";
-import { treeViewController } from "./TreeViewController";
 
 // 视图控制器
 class BricksViewController implements Disposable {
@@ -28,7 +28,7 @@ class BricksViewController implements Disposable {
     let all_qid: string[] = await bricksDao.getTodayBricks();
     const baseNode: BricksNode[] = [];
     all_qid.forEach((qid) => {
-      let node = treeViewController.getNodeByQid(qid);
+      let node = BABA.getProxy(BabaStr.QuestionDataProxy).getNodeByQid(qid);
       if (node) {
         baseNode.push(node);
       }
@@ -42,7 +42,7 @@ class BricksViewController implements Disposable {
     let qid_tip = await bricksDao.getTodayBricksSubmitToolTip(all_qid);
     const baseNode: BricksNode[] = [];
     all_qid.forEach((qid) => {
-      let node = treeViewController.getNodeByQid(qid);
+      let node = BABA.getProxy(BabaStr.QuestionDataProxy).getNodeByQid(qid);
       if (node) {
         let new_obj = new BricksNode(
           Object.assign({}, node.data, {}),
@@ -66,7 +66,7 @@ class BricksViewController implements Disposable {
     let all_qid: string[] = await groupDao.getQidByTime(time);
     const baseNode: BricksNode[] = [];
     all_qid.forEach((qid) => {
-      let node = treeViewController.getNodeByQid(qid);
+      let node = BABA.getProxy(BabaStr.QuestionDataProxy).getNodeByQid(qid);
       if (node) {
         let new_obj = new BricksNode(
           Object.assign({}, node.data, {}),
@@ -105,7 +105,7 @@ class BricksViewController implements Disposable {
     if (has_submit) {
       let temp_score = 0;
       all_submit_qid.forEach((qid) => {
-        let node = treeViewController.getNodeByQid(qid);
+        let node = BABA.getProxy(BabaStr.QuestionDataProxy).getNodeByQid(qid);
         if (node && node.score && Number(node.score) > 0) {
           temp_score += Number(node.score);
         }

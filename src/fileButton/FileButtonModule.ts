@@ -9,7 +9,6 @@
 
 import * as vscode from "vscode";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
-import { treeViewController } from "../controller/TreeViewController";
 import { NodeModel } from "../model/NodeModel";
 import { getEditorShortcuts } from "../utils/ConfigUtils";
 import { supportDebugLanguages } from "../utils/problemUtils";
@@ -292,7 +291,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
     const nodeId: string | undefined = matchResult[2];
     let node: NodeModel | undefined;
     if (nodeId) {
-      node = treeViewController.getNodeById(nodeId);
+      node = BABA.getProxy(BabaStr.QuestionDataProxy).getNodeById(nodeId);
     }
     let nodeLang: string | undefined = matchResult[3];
 

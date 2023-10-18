@@ -7,6 +7,8 @@ import * as fse from "fs-extra";
 import { fileMeta, getEntryFile, IDebugConfig, IProblemType } from "../utils/problemUtils";
 import { debugArgDao } from "../dao/debugArgDao";
 import { BABA, BabaStr } from "../BABA";
+import { ShowMessage } from "../utils/OutputUtils";
+import { OutPutType } from "../model/Model";
 
 const debugConfigMap: Map<string, IDebugConfig> = new Map([
   [
@@ -47,7 +49,7 @@ class DebugService {
     language: string
   ): Promise<string | undefined> {
     if (this.server == null || this.server.address() == null) {
-      vscode.window.showErrorMessage("Debug server error, maybe you can restart vscode.");
+      ShowMessage("Debug server error, maybe you can restart vscode.", OutPutType.error);
       return;
     }
 
@@ -63,21 +65,22 @@ class DebugService {
 
     const debugConfig: undefined | IDebugConfig = debugConfigMap.get(language);
     if (debugConfig == null) {
-      vscode.window.showErrorMessage("Notsupported language.");
+      ShowMessage("Notsupported language.", OutPutType.error);
       return;
     }
 
     const fileContent: Buffer = await fse.readFile(filePath);
     const meta: { id: string; lang: string } | null = fileMeta(fileContent.toString());
     if (meta == null) {
-      vscode.window.showErrorMessage(
-        "File meta info has been changed, please check the content: '@lc app=leetcode.cn id=xx lang=xx'."
+      ShowMessage(
+        "File meta info has been changed, please check the content: '@lc app=leetcode.cn id=xx lang=xx'.",
+        OutPutType.error
       );
       return;
     }
     const problemType: IProblemType | undefined = debugArgDao.getDebugArgData(meta.id, document);
     if (problemType == undefined) {
-      vscode.window.showErrorMessage(`Notsupported problem: ${meta.id}.`);
+      ShowMessage(`Notsupported problem: ${meta.id}.`, OutPutType.error);
       return;
     }
 
@@ -136,7 +139,7 @@ class DebugService {
       clientSock.on("data", async (data: Buffer) => {
         const result: IDebugResult = JSON.parse(data.toString());
         if (result.type === "error") {
-          vscode.window.showErrorMessage(result.message);
+          ShowMessage(result.message, OutPutType.error);
         } else {
           // const leetcodeResult: string = await leetCodeExecutor.testSolution(
           //     result.filePath,

@@ -16,7 +16,7 @@ import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace } 
 import { DialogOptions, OutPutType, Endpoint, IProblem, leetcodeHasInited } from "../model/Model";
 import { executeCommandWithProgress } from "../utils/CliUtils";
 import { getNodePath } from "../utils/ConfigUtils";
-import { openUrl, promptForOpenOutputChannel } from "../utils/OutputUtils";
+import { openUrl, ShowMessage } from "../utils/OutputUtils";
 import * as systemUtils from "../utils/SystemUtils";
 import { toWslPath, useWsl } from "../utils/SystemUtils";
 import { getOpenClearProblemCacheTime, isOpenClearProblemCache } from "../utils/ConfigUtils";
@@ -96,7 +96,7 @@ class ExecuteService implements Disposable {
           getOpenClearProblemCacheTime().toString(),
         ]);
       } catch (error) {
-        await promptForOpenOutputChannel("Failed to delete cache. 请查看控制台信息~", OutPutType.error);
+        await ShowMessage("Failed to delete cache. 请查看控制台信息~", OutPutType.error);
       }
     }
   }
@@ -109,7 +109,7 @@ class ExecuteService implements Disposable {
         "-d",
       ]);
     } catch (error) {
-      await promptForOpenOutputChannel("Failed to delete cache. 请查看控制台信息~", OutPutType.error);
+      await ShowMessage("Failed to delete cache. 请查看控制台信息~", OutPutType.error);
     }
   }
 
@@ -172,7 +172,7 @@ class ExecuteService implements Disposable {
         await fse.writeFile(filePath, successResult.msg);
         return successResult.code;
       } else {
-        await promptForOpenOutputChannel(`${codeTemplate} 请查看控制台信息~`, OutPutType.error);
+        await ShowMessage(`${codeTemplate} 请查看控制台信息~`, OutPutType.error);
       }
       return successResult.code;
     }

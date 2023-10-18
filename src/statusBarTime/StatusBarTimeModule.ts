@@ -9,7 +9,7 @@
 
 import { Disposable, StatusBarItem, window, workspace, ConfigurationChangeEvent } from "vscode";
 import { IProblem, ISubmitEvent, OutPutType } from "../model/Model";
-import { promptForOpenOutputChannel } from "../utils/OutputUtils";
+import { ShowMessage } from "../utils/OutputUtils";
 import { getDayNow } from "../utils/SystemUtils";
 import { enableTimerBar } from "../utils/ConfigUtils";
 import { BABAMediator, BABAProxy, BaseCC, BabaStr } from "../BABA";
@@ -96,7 +96,7 @@ class StatusBarTimeService implements Disposable {
     if (e.sub_type == "submit" && e.accepted) {
       let msg = this.getCostTimeStr();
       if (msg) {
-        promptForOpenOutputChannel(`${e.fid}耗时${msg}`, OutPutType.info);
+        ShowMessage(`${e.fid}耗时${msg}`, OutPutType.info);
       }
       this.stop();
     }

@@ -11,9 +11,8 @@ import { EventEmitter } from "events";
 
 import { IProblem, ITestSolutionData, UserStatus } from "../model/Model";
 import { ISubmitEvent } from "../model/Model";
-import { treeDataService } from "../service/TreeDataService";
 import { bricksDataService } from "./BricksDataService";
-import { submissionService } from "./SubmissionService";
+import { submissionService } from "../commitResult/SubmissionService";
 import { BABA, BabaStr } from "./../BABA";
 
 class EventService extends EventEmitter {
@@ -28,12 +27,13 @@ class EventService extends EventEmitter {
     this.on("statusChanged", (userStatus: UserStatus, userName?: string) => {
       BABA.sendNotification(BabaStr.statusBar_update_status, { userStatus: userStatus, userName: userName });
       BABA.sendNotification(BabaStr.statusBar_update);
-      treeDataService.cleanUserScore();
-      treeDataService.refresh();
+      BABA.sendNotification(BabaStr.TreeData_cleanUserScore);
+
+      BABA.sendNotification(BabaStr.TreeData_refresh);
       bricksDataService.refresh();
     });
     this.on("submit", (e: ISubmitEvent) => {
-      treeDataService.checkSubmit(e);
+      BABA.sendNotification(BabaStr.TreeData_checkSubmit, e);
       bricksDataService.checkSubmit(e);
       BABA.sendNotification(BabaStr.submit, e);
     });
@@ -41,7 +41,7 @@ class EventService extends EventEmitter {
     this.on("searchUserContest", (tt) => {
       BABA.sendNotification(BabaStr.statusBar_update_UserContestInfo, tt);
       BABA.sendNotification(BabaStr.statusBar_update);
-      treeDataService.refresh();
+      BABA.sendNotification(BabaStr.TreeData_refresh);
       bricksDataService.refresh();
     });
 

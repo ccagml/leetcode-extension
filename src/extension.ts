@@ -8,16 +8,14 @@
  */
 
 import { ExtensionContext, window, commands, Uri, CommentReply, TextDocument } from "vscode";
-import { treeViewController } from "./controller/TreeViewController";
 import { NodeModel } from "./model/NodeModel";
-import { treeDataService } from "./service/TreeDataService";
 import { treeItemDecorationService } from "./service/TreeItemDecorationService";
-import { promptForOpenOutputChannel } from "./utils/OutputUtils";
+import { ShowMessage } from "./utils/OutputUtils";
 import { executeService } from "./service/ExecuteService";
 import { eventController } from "./controller/EventController";
 import { previewService } from "./service/PreviewService";
 import { solutionService } from "./service/SolutionService";
-import { submissionService } from "./service/SubmissionService";
+import { submissionService } from "./commitResult/SubmissionService";
 import { markdownService } from "./service/MarkdownService";
 import { mainContorller } from "./controller/MainController";
 import { loginContorller } from "./controller/LoginController";
@@ -32,6 +30,8 @@ import { StatusBarMediator, StatusBarProxy } from "./statusBar/StatusBarModule";
 import { LogOutputMediator, LogOutputProxy } from "./logOutput/logOutputModule";
 import { RemarkMediator, RemarkProxy } from "./remark/RemarkServiceModule";
 import { FileButtonMediator, FileButtonProxy } from "./fileButton/FileButtonModule";
+import { QuestionDataMediator, QuestionDataProxy } from "./questionData/questionDataModule";
+import { TreeDataMediator, TreeDataProxy, treeDataService } from "./treeData/TreeDataService";
 
 //==================================BABA========================================
 
@@ -56,6 +56,10 @@ export async function activate(context: ExtensionContext): Promise<void> {
       LogOutputMediator,
       FileButtonProxy,
       FileButtonMediator,
+      QuestionDataProxy,
+      QuestionDataMediator,
+      TreeDataProxy,
+      TreeDataMediator,
     ]);
 
     BABA.sendNotification(BabaStr.InitAll, context);
@@ -77,31 +81,65 @@ export async function activate(context: ExtensionContext): Promise<void> {
       markdownService,
       BABA,
 
-      treeViewController,
       window.registerFileDecorationProvider(treeItemDecorationService),
       window.createTreeView("QuestionExplorer", { treeDataProvider: treeDataService, showCollapseAll: true }),
       window.createTreeView("BricksExplorer", { treeDataProvider: bricksDataService, showCollapseAll: true }),
       commands.registerCommand("lcpr.deleteCache", () => mainContorller.deleteCache()),
-      commands.registerCommand("lcpr.toggleLeetCodeCn", () => treeViewController.switchEndpoint()),
+      commands.registerCommand("lcpr.toggleLeetCodeCn", () => {
+        BABA.sendNotification(BabaStr.TreeData_switchEndpoint);
+      }),
       commands.registerCommand("lcpr.signin", () => loginContorller.signIn()),
       commands.registerCommand("lcpr.signout", () => loginContorller.signOut()),
-      commands.registerCommand("lcpr.previewProblem", (node: NodeModel) => treeViewController.previewProblem(node)),
-      commands.registerCommand("lcpr.showProblem", (node: NodeModel) => treeViewController.showProblem(node)),
-      commands.registerCommand("lcpr.pickOne", () => treeViewController.pickOne()),
+      commands.registerCommand("lcpr.previewProblem", (node: NodeModel) => {
+        BABA.sendNotification(BabaStr.TreeData_previewProblem, { input: node, isSideMode: false });
+      }),
+      commands.registerCommand("lcpr.showProblem", (node: NodeModel) => {
+        BABA.sendNotification(BabaStr.TreeData_showProblem, node);
+      }),
+      commands.registerCommand("lcpr.pickOne", () => {
+        BABA.sendNotification(BabaStr.TreeData_pickOne);
+      }),
       commands.registerCommand("lcpr.deleteAllCache", () => loginContorller.deleteAllCache()),
-      commands.registerCommand("leetcode.searchScoreRange", () => treeViewController.searchScoreRange()),
-      commands.registerCommand("lcpr.searchProblem", () => treeViewController.searchProblem()),
-      commands.registerCommand("lcpr.getHelp", (input: NodeModel | Uri) => treeViewController.getHelp(input)),
-      commands.registerCommand("lcpr.refreshExplorer", () => treeDataService.refresh()),
-      commands.registerCommand("lcpr.testSolution", (uri?: Uri) => treeViewController.testSolution(uri)),
-      commands.registerCommand("lcpr.reTestSolution", (uri?: Uri) => treeViewController.reTestSolution(uri)),
-      commands.registerCommand("lcpr.testCaseDef", (uri?, allCase?) => treeViewController.testCaseDef(uri, allCase)),
-      commands.registerCommand("lcpr.tesCaseArea", (uri, testCase?) => treeViewController.tesCaseArea(uri, testCase)),
-      commands.registerCommand("lcpr.submitSolution", (uri?: Uri) => treeViewController.submitSolution(uri)),
-      commands.registerCommand("lcpr.setDefaultLanguage", () => treeViewController.setDefaultLanguage()),
-      commands.registerCommand("lcpr.addFavorite", (node: NodeModel) => treeViewController.addFavorite(node)),
-      commands.registerCommand("lcpr.removeFavorite", (node: NodeModel) => treeViewController.removeFavorite(node)),
-      commands.registerCommand("lcpr.problems.sort", () => treeViewController.switchSortingStrategy()),
+      commands.registerCommand("leetcode.searchScoreRange", () => {
+        BABA.sendNotification(BabaStr.TreeData_searchScoreRange);
+      }),
+      commands.registerCommand("lcpr.searchProblem", () => BABA.sendNotification(BabaStr.TreeData_searchProblem)),
+      commands.registerCommand("lcpr.getHelp", (input: NodeModel | Uri) =>
+        BABA.sendNotification(BabaStr.TreeData_getHelp, input)
+      ),
+      commands.registerCommand("lcpr.refreshExplorer", () => {
+        BABA.sendNotification(BabaStr.TreeData_refresh);
+      }),
+      commands.registerCommand("lcpr.testSolution", (uri?: Uri) => {
+        BABA.sendNotification(BabaStr.TreeData_testSolution, { uri: uri });
+      }),
+
+      commands.registerCommand("lcpr.reTestSolution", (uri?: Uri) => {
+        BABA.sendNotification(BabaStr.TreeData_reTestSolution, { uri: uri });
+      }),
+      commands.registerCommand("lcpr.testCaseDef", (uri?, allCase?) => {
+        BABA.sendNotification(BabaStr.TreeData_testCaseDef, { uri: uri, allCase: allCase });
+      }),
+      commands.registerCommand("lcpr.tesCaseArea", (uri, testCase?) => {
+        BABA.sendNotification(BabaStr.TreeData_tesCaseArea, { uri: uri, testCase: testCase });
+      }),
+
+      commands.registerCommand("lcpr.submitSolution", (uri?: Uri) => {
+        BABA.sendNotification(BabaStr.TreeData_submitSolution, { uri: uri });
+      }),
+      commands.registerCommand("lcpr.setDefaultLanguage", () => {
+        BABA.sendNotification(BabaStr.TreeData_setDefaultLanguage);
+      }),
+      commands.registerCommand("lcpr.addFavorite", (node: NodeModel) => {
+        BABA.sendNotification(BabaStr.TreeData_addFavorite, { node: node });
+      }),
+
+      commands.registerCommand("lcpr.removeFavorite", (node: NodeModel) => {
+        BABA.sendNotification(BabaStr.TreeData_removeFavorite, { node: node });
+      }),
+      commands.registerCommand("lcpr.problems.sort", () => {
+        BABA.sendNotification(BabaStr.TreeData_problems_sort);
+      }),
       commands.registerCommand("lcpr.statusBarTime.start", () => {
         BABA.sendNotification(BabaStr.statusBarTime_start);
       }),
@@ -182,10 +220,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     await bricksViewController.initialize();
   } catch (error) {
     BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
-    promptForOpenOutputChannel(
-      "Extension initialization failed. Please open output channel for details.",
-      OutPutType.error
-    );
+    ShowMessage("Extension initialization failed. Please open output channel for details.", OutPutType.error);
   } finally {
     lcpr_timer = setInterval(lcpr_timer_callback, 1000);
   }

@@ -20,11 +20,11 @@ import {
   window,
   Position,
 } from "vscode";
-import { treeViewController } from "../controller/TreeViewController";
+
 import { remarkDao } from "../dao/remarkDao";
 import { RemarkComment } from "../model/Model";
 import { includeTemplatesAuto, getIncludeTemplate } from "../utils/ConfigUtils";
-import { BABAMediator, BABAProxy, BaseCC, BabaStr } from "../BABA";
+import { BABAMediator, BABAProxy, BaseCC, BabaStr, BABA } from "../BABA";
 
 class RemarkService implements Disposable {
   private _remarkComment;
@@ -40,7 +40,7 @@ class RemarkService implements Disposable {
       return result;
     }
     const fid: string | undefined = matchResult[2];
-    let qid: string | undefined = treeViewController.getQidByFid(fid);
+    let qid: string | undefined = BABA.getProxy(BabaStr.QuestionDataProxy).getQidByFid(fid);
     result["fid"] = fid;
     if (qid != undefined) {
       result["qid"] = qid.toString();

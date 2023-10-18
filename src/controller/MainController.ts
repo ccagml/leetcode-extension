@@ -10,7 +10,6 @@
 import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
 import { ExtensionContext } from "vscode";
-import { treeDataService } from "../service/TreeDataService";
 import { extensionState } from "../utils/problemUtils";
 
 import * as fse from "fs-extra";
@@ -63,12 +62,11 @@ class MainContorller {
   // 初始化上下文
   /**
    * This function sets the global variable and then calls the initialize function of the
-   * treeDataService.
+
    * @param {ExtensionContext} context - ExtensionContext
    */
   public initialize(context: ExtensionContext) {
     this.setGlobal(context);
-    treeDataService.initialize(context);
     extensionState.context = context;
     extensionState.cachePath = context.globalStoragePath;
   }

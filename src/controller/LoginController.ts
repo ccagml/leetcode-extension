@@ -12,10 +12,9 @@ import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
 import { OutPutType, Endpoint, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
 import { createEnvOption } from "../utils/CliUtils";
-import { promptForOpenOutputChannel } from "../utils/OutputUtils";
+import { ShowMessage } from "../utils/OutputUtils";
 import { eventService } from "../service/EventService";
 import { window, QuickPickOptions, ProgressLocation, Progress } from "vscode";
-import { treeDataService } from "../service/TreeDataService";
 import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
 import { bricksDataService } from "../service/BricksDataService";
 import { BABA, BabaStr } from "../BABA";
@@ -182,7 +181,7 @@ class LoginContorller {
         window.showInformationMessage(`${inMessage} 成功`);
       }
     } catch (error) {
-      promptForOpenOutputChannel(`${inMessage}失败. 请看看控制台输出信息`, OutPutType.error);
+      ShowMessage(`${inMessage}失败. 请看看控制台输出信息`, OutPutType.error);
     }
   }
 
@@ -196,7 +195,7 @@ class LoginContorller {
       window.showInformationMessage("成功登出");
       eventService.emit("statusChanged", UserStatus.SignedOut, undefined);
     } catch (error) {
-      // promptForOpenOutputChannel(`Failed to signOut. Please open the output channel for details`, OutPutType.error);
+      // ShowMessage(`Failed to signOut. Please open the output channel for details`, OutPutType.error);
     }
   }
 
@@ -217,7 +216,7 @@ class LoginContorller {
     await this.signOut();
     await executeService.removeOldCache();
     await executeService.switchEndpoint(getLeetCodeEndpoint());
-    await treeDataService.refresh();
+    BABA.sendNotification(BabaStr.TreeData_refresh);
     await bricksDataService.refresh();
   }
 }
