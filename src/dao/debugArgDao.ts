@@ -593,7 +593,7 @@ class DebugArgDao {
     },
     146: {
       funName: "LRUCache",
-      paramTypes: [ "string[]","number[][]"],
+      paramTypes: ["string[]", "number[][]"],
     },
     147: {
       funName: "insertionSortList",

@@ -84,7 +84,6 @@ export enum BabaStr {
   TreeData_rebuildTreeData = "TreeData_rebuildTreeData",
   QuestionData_refreshCacheFinish = "QuestionData_refreshCacheFinish",
   TreeData_searchTodayFinish = "TreeData_searchTodayFinish",
-
   TreeData_searchUserContest = "TreeData_searchUserContest",
   TreeData_searchUserContestFinish = "TreeData_searchUserContestFinish",
   TreeData_searchScoreRangeFinish = "TreeData_searchScoreRangeFinish",
@@ -96,14 +95,24 @@ export enum BabaStr {
   TreeData_favoriteChange = "TreeData_favoriteChange",
   USER_LOGIN_SUC = "USER_LOGIN_SUC",
   USER_LOGIN_OUT = "USER_LOGIN_OUT",
+  BricksData_setBricksType = "BricksData_setBricksType",
+  BricksData_newBrickGroup = "BricksData_newBrickGroup",
+  BricksData_addQidToGroup = "BricksData_addQidToGroup",
+  BricksData_removeBrickGroup = "BricksData_removeBrickGroup",
+  BricksData_removeQidFromGroup = "BricksData_removeQidFromGroup",
+  DebugProxy = "DebugProxy",
+  DebugMediator = "DebugMediator",
+  Debug_simpleDebug = "Debug_simpleDebug",
+  Debug_addDebugType = "Debug_addDebugType",
+  Debug_resetDebugType = "Debug_resetDebugType",
+  Extension_InitFinish = "Extension_InitFinish",
+  Debug_checkCanDebugSuc = "Debug_checkCanDebugSuc",
 }
 
 export class BABA {
   public static fa;
-  public static init() {
+  public static init(clazz_list) {
     this.fa = BaseCC.Facade.getInstance("lcpr");
-  }
-  public static regClazz(clazz_list) {
     let len = clazz_list.length;
     for (let j = 0; j < len; j++) {
       this[clazz_list[j].NAME] = new clazz_list[j]();

@@ -1,10 +1,10 @@
 /*
- * Filename: https://github.com/ccagml/leetcode-extension/src/service/TreeItemDecorationService.ts
- * Path: https://github.com/ccagml/leetcode-extension
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/leetcode-extension/src/treeColor/TreeColorModule.ts
+ * Path: /home/cc/leetcode-extension
+ * Created Date: Thursday, October 19th 2023, 00:40:45 am
  * Author: ccagml
  *
- * Copyright (c) 2022 ccagml . All rights reserved.
+ * Copyright (c) 2023 ccagml . All rights reserved
  */
 
 import { URLSearchParams } from "url";
@@ -18,7 +18,7 @@ import {
   WorkspaceConfiguration,
 } from "vscode";
 
-export class TreeItemDecorationService implements FileDecorationProvider {
+export class TreeColor implements FileDecorationProvider {
   private readonly ITEM_COLOR: { [key: string]: ThemeColor } = {
     easy: new ThemeColor("charts.green"),
     medium: new ThemeColor("charts.yellow"),
@@ -89,4 +89,4 @@ export class TreeItemDecorationService implements FileDecorationProvider {
   }
 }
 
-export const treeItemDecorationService: TreeItemDecorationService = new TreeItemDecorationService();
+export const treeColor: TreeColor = new TreeColor();

@@ -367,6 +367,7 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.TreeData_favoriteChange,
       BabaStr.USER_statusChanged,
       BabaStr.statusBar_update_statusFinish,
+      BabaStr.Extension_InitFinish,
     ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -377,6 +378,7 @@ export class TreeDataMediator extends BABAMediator {
         break;
       case BabaStr.TreeData_refresh:
       case BabaStr.ConfigChange_hideScore:
+      case BabaStr.Extension_InitFinish:
         treeDataService.refresh();
         break;
       case BabaStr.InitAll:
@@ -451,6 +453,7 @@ export class TreeDataMediator extends BABAMediator {
       case BabaStr.TreeData_favoriteChange:
         treeDataService.fire();
         break;
+
       default:
         break;
     }

@@ -197,9 +197,16 @@ export class BricksDataMediator extends BABAMediator {
       BabaStr.TreeData_favoriteChange,
       BabaStr.USER_statusChanged,
       BabaStr.statusBar_update_statusFinish,
+      BabaStr.BricksData_setBricksType,
+      BabaStr.BricksData_newBrickGroup,
+      BabaStr.BricksData_addQidToGroup,
+      BabaStr.BricksData_removeBrickGroup,
+      BabaStr.BricksData_removeQidFromGroup,
+      BabaStr.Extension_InitFinish,
     ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    let body = _notification.getBody();
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         break;
@@ -210,6 +217,7 @@ export class BricksDataMediator extends BABAMediator {
       case BabaStr.BricksData_refresh:
       case BabaStr.USER_statusChanged:
       case BabaStr.statusBar_update_statusFinish:
+      case BabaStr.Extension_InitFinish:
         bricksDataService.refresh();
         break;
       case BabaStr.QuestionData_refreshCacheFinish:
@@ -224,6 +232,22 @@ export class BricksDataMediator extends BABAMediator {
         break;
       case BabaStr.CommitResult_showFinish:
         bricksDataService.checkSubmit(_notification.getBody());
+
+      case BabaStr.BricksData_setBricksType:
+        bricksViewController.setBricksType(body.node, body.type);
+        break;
+      case BabaStr.BricksData_newBrickGroup:
+        bricksViewController.newBrickGroup();
+        break;
+      case BabaStr.BricksData_addQidToGroup:
+        bricksViewController.addQidToGroup(body);
+        break;
+      case BabaStr.BricksData_removeBrickGroup:
+        bricksViewController.removeBrickGroup(body);
+        break;
+      case BabaStr.BricksData_removeQidFromGroup:
+        bricksViewController.removeQidFromGroup(body);
+        break;
       default:
         break;
     }

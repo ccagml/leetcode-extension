@@ -14,8 +14,6 @@ import {
 } from "../utils/problemUtils";
 
 import { isWindows } from "../utils/SystemUtils";
-
-import { DebugBase } from "../debugex/debugBase";
 import { debugArgDao } from "../dao/debugArgDao";
 import { BABA, BabaStr } from "../BABA";
 import { ShowMessage } from "../utils/OutputUtils";
@@ -57,7 +55,8 @@ function getTemplateId(id: string): string {
   return findKey ? findKey : id;
 }
 
-class DebugCpp extends DebugBase {
+export class DebugCpp {
+  static DEBUG_LANG = "cpp";
   public async execute(
     document: vscode.TextDocument,
     filePath: string,
@@ -467,5 +466,3 @@ class DebugCpp extends DebugBase {
     return debugConfig;
   }
 }
-
-export const debugCpp: DebugCpp = new DebugCpp();

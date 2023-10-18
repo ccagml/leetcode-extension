@@ -10,7 +10,7 @@
 import * as cp from "child_process";
 import * as systemUtils from "../utils/SystemUtils";
 import { executeService } from "../service/ExecuteService";
-import { OutPutType, Endpoint, IQuickItemEx, loginArgsMapping, UserStatus } from "../model/Model";
+import { OutPutType, Endpoint, IQuickItemEx, loginArgsMapping } from "../model/Model";
 import { createEnvOption } from "../utils/CliUtils";
 import { ShowMessage } from "../utils/OutputUtils";
 

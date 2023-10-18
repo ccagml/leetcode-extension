@@ -9,18 +9,15 @@
 
 import { ExtensionContext, window, commands, Uri, CommentReply, TextDocument } from "vscode";
 import { NodeModel } from "./model/NodeModel";
-import { treeItemDecorationService } from "./service/TreeItemDecorationService";
+import { treeColor } from "./treeColor/TreeColorModule";
 import { ShowMessage } from "./utils/OutputUtils";
 import { executeService } from "./service/ExecuteService";
-
 import { markdownService } from "./service/MarkdownService";
 import { mainContorller } from "./controller/MainController";
 import { loginContorller } from "./controller/LoginController";
 import { getLeetCodeEndpoint } from "./utils/ConfigUtils";
 import { BricksType, OutPutType, RemarkComment } from "./model/Model";
 import { BricksDataMediator, BricksDataProxy, bricksDataService } from "./bricksData/BricksDataService";
-import { bricksViewController } from "./controller/BricksViewController";
-import { debugContorller } from "./controller/DebugController";
 import { BABA, BabaStr } from "./BABA";
 import { StatusBarTimeMediator, StatusBarTimeProxy } from "./statusBarTime/StatusBarTimeModule";
 import { StatusBarMediator, StatusBarProxy } from "./statusBar/StatusBarModule";
@@ -32,6 +29,7 @@ import { TreeDataMediator, TreeDataProxy, treeDataService } from "./treeData/Tre
 import { CommitResultMediator, CommitResultProxy } from "./commitResult/CommitResultModule";
 import { SolutionProxy, SolutionMediator } from "./solution/SolutionModule";
 import { PreviewMediator, PreviewProxy } from "./preView/PreviewModule";
+import { DebugMediator, DebugProxy } from "./debug/DebugModule";
 
 //==================================BABA========================================
 
@@ -44,8 +42,7 @@ import { PreviewMediator, PreviewProxy } from "./preView/PreviewModule";
 let lcpr_timer;
 export async function activate(context: ExtensionContext): Promise<void> {
   try {
-    BABA.init();
-    BABA.regClazz([
+    BABA.init([
       StatusBarTimeMediator,
       StatusBarTimeProxy,
       StatusBarProxy,
@@ -68,6 +65,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
       SolutionMediator,
       PreviewProxy,
       PreviewMediator,
+      DebugProxy,
+      DebugMediator,
     ]);
 
     BABA.sendNotification(BabaStr.InitAll, context);
@@ -83,8 +82,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       executeService,
       markdownService,
       BABA,
-
-      window.registerFileDecorationProvider(treeItemDecorationService),
+      window.registerFileDecorationProvider(treeColor),
       window.createTreeView("QuestionExplorer", { treeDataProvider: treeDataService, showCollapseAll: true }),
       window.createTreeView("BricksExplorer", { treeDataProvider: bricksDataService, showCollapseAll: true }),
       commands.registerCommand("lcpr.deleteCache", () => mainContorller.deleteCache()),
@@ -153,30 +151,34 @@ export async function activate(context: ExtensionContext): Promise<void> {
         BABA.sendNotification(BabaStr.statusBarTime_reset);
       }),
       commands.registerCommand("lcpr.setBricksType0", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_0)
+        BABA.sendNotification(BabaStr.BricksData_setBricksType, { node: node, type: BricksType.TYPE_0 })
       ),
       commands.registerCommand("lcpr.setBricksType1", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_1)
+        BABA.sendNotification(BabaStr.BricksData_setBricksType, { node: node, type: BricksType.TYPE_1 })
       ),
       commands.registerCommand("lcpr.setBricksType2", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_2)
+        BABA.sendNotification(BabaStr.BricksData_setBricksType, { node: node, type: BricksType.TYPE_2 })
       ),
       commands.registerCommand("lcpr.setBricksType3", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_3)
+        BABA.sendNotification(BabaStr.BricksData_setBricksType, { node: node, type: BricksType.TYPE_3 })
       ),
       commands.registerCommand("lcpr.setBricksType4", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_4)
+        BABA.sendNotification(BabaStr.BricksData_setBricksType, { node: node, type: BricksType.TYPE_4 })
       ),
       commands.registerCommand("lcpr.setBricksType5", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_5)
+        BABA.sendNotification(BabaStr.BricksData_setBricksType, { node: node, type: BricksType.TYPE_5 })
       ),
       commands.registerCommand("lcpr.setBricksType6", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_6)
+        BABA.sendNotification(BabaStr.BricksData_setBricksType, { node: node, type: BricksType.TYPE_6 })
       ),
-      commands.registerCommand("lcpr.newBrickGroup", () => bricksViewController.newBrickGroup()),
-      commands.registerCommand("lcpr.addQidToGroup", (a) => bricksViewController.addQidToGroup(a)),
-      commands.registerCommand("lcpr.removeBrickGroup", (a) => bricksViewController.removeBrickGroup(a)),
-      commands.registerCommand("lcpr.removeQidFromGroup", (node) => bricksViewController.removeQidFromGroup(node)),
+      commands.registerCommand("lcpr.newBrickGroup", () => BABA.sendNotification(BabaStr.BricksData_newBrickGroup)),
+      commands.registerCommand("lcpr.addQidToGroup", (a) => BABA.sendNotification(BabaStr.BricksData_addQidToGroup, a)),
+      commands.registerCommand("lcpr.removeBrickGroup", (a) =>
+        BABA.sendNotification(BabaStr.BricksData_removeBrickGroup, a)
+      ),
+      commands.registerCommand("lcpr.removeQidFromGroup", (node) =>
+        BABA.sendNotification(BabaStr.BricksData_removeQidFromGroup, node)
+      ),
 
       commands.registerCommand("lcpr.remarkCreateNote", (reply: CommentReply) => {
         BABA.sendNotification(BabaStr.Remark_remarkCreateNote, reply);
@@ -206,13 +208,13 @@ export async function activate(context: ExtensionContext): Promise<void> {
         BABA.sendNotification(BabaStr.Remark_includeTemplates, document);
       }),
       commands.registerCommand("lcpr.simpleDebug", (document: TextDocument, testCase?) =>
-        debugContorller.startDebug(document, testCase)
+        BABA.sendNotification(BabaStr.Debug_simpleDebug, { document: document, testCase: testCase })
       ),
       commands.registerCommand("lcpr.addDebugType", (document: TextDocument, addType) =>
-        debugContorller.addDebugType(document, addType)
+        BABA.sendNotification(BabaStr.Debug_addDebugType, { document: document, addType: addType })
       ),
       commands.registerCommand("lcpr.resetDebugType", (document: TextDocument, addType) =>
-        debugContorller.resetDebugType(document, addType)
+        BABA.sendNotification(BabaStr.Debug_resetDebugType, { document: document, addType: addType })
       )
     );
 
@@ -220,6 +222,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
     await executeService.switchEndpoint(getLeetCodeEndpoint());
     // 获取登录状态
     await loginContorller.getLoginStatus();
+
+    BABA.sendNotification(BabaStr.Extension_InitFinish);
   } catch (error) {
     BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
     ShowMessage("Extension initialization failed. Please open output channel for details.", OutPutType.error);
