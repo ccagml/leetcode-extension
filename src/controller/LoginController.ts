@@ -16,7 +16,6 @@ import { ShowMessage } from "../utils/OutputUtils";
 import { eventService } from "../service/EventService";
 import { window, QuickPickOptions, ProgressLocation, Progress } from "vscode";
 import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
-import { bricksDataService } from "../service/BricksDataService";
 import { BABA, BabaStr } from "../BABA";
 
 // 登录控制器
@@ -217,7 +216,7 @@ class LoginContorller {
     await executeService.removeOldCache();
     await executeService.switchEndpoint(getLeetCodeEndpoint());
     BABA.sendNotification(BabaStr.TreeData_refresh);
-    await bricksDataService.refresh();
+    BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 }
 

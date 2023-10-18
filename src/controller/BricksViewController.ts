@@ -14,15 +14,9 @@ import { bricksDao } from "../dao/bricksDao";
 import { groupDao } from "../dao/groupDao";
 import { BricksNormalId, defaultProblem, IQuickItemEx } from "../model/Model";
 import { BricksNode } from "../model/NodeModel";
-import { bricksDataService } from "../service/BricksDataService";
-import { eventService } from "../service/EventService";
 
 // 视图控制器
 class BricksViewController implements Disposable {
-  public async initialize() {
-    await bricksDataService.initialize();
-  }
-
   // 需要的
   public async getHaveNodes() {
     let all_qid: string[] = await bricksDao.getTodayBricks();
@@ -146,7 +140,7 @@ class BricksViewController implements Disposable {
   }
 
   public async setBricksType(node: BricksNode, type) {
-    await bricksDataService.setBricksType(node, type);
+    await BABA.getProxy(BabaStr.BricksDataProxy).setBricksType(node, type);
   }
   public dispose(): void {}
 
@@ -158,21 +152,21 @@ class BricksViewController implements Disposable {
       ignoreFocusOut: true,
     });
     if (name && name.trim()) {
-      bricksDataService.newBrickGroup(name);
-      eventService.emit("groupUpdate");
+      BABA.getProxy(BabaStr.BricksDataProxy).newBrickGroup(name);
+      BABA.sendNotification(BabaStr.BricksData_refresh);
     }
   }
 
   public async removeBrickGroup(node) {
     let time = node.groupTime;
-    bricksDataService.removeBrickGroup(time);
-    eventService.emit("groupUpdate");
+    BABA.getProxy(BabaStr.BricksDataProxy).removeBrickGroup(time);
+    BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 
   public async addQidToGroup(node: BricksNode) {
     const picks: Array<IQuickItemEx<string>> = [];
 
-    let all_group = await bricksDataService.getAllGroup();
+    let all_group = await BABA.getProxy(BabaStr.BricksDataProxy).getAllGroup();
     all_group.forEach((element) => {
       picks.push({
         label: element.name,
@@ -196,12 +190,12 @@ class BricksViewController implements Disposable {
       time_list.push(element.value);
     });
     groupDao.addQidToTimeList(node.qid, time_list);
-    eventService.emit("groupUpdate");
+    BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 
   public async removeQidFromGroup(node) {
     groupDao.removeQidFromTime(node.qid, node.groupTime);
-    eventService.emit("groupUpdate");
+    BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 }
 

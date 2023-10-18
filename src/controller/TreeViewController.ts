@@ -67,12 +67,9 @@ import {
 } from "../utils/SystemUtils";
 import { IDescriptionConfiguration, isStarShortcut } from "../utils/ConfigUtils";
 import * as systemUtils from "../utils/SystemUtils";
-import { solutionService } from "../service/SolutionService";
 import { eventService } from "../service/EventService";
 
 import * as fse from "fs-extra";
-import { submissionService } from "../commitResult/SubmissionService";
-import { bricksDataService } from "../service/BricksDataService";
 import { groupDao } from "../dao/groupDao";
 import { fileMeta, ProblemMeta } from "../utils/problemUtils";
 import { BABA, BabaStr } from "../BABA";
@@ -88,7 +85,7 @@ class TreeViewController implements Disposable {
     this.configurationChangeListener = workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
       if (event.affectsConfiguration("leetcode-problem-rating.hideScore")) {
         BABA.sendNotification(BabaStr.TreeData_refresh);
-        bricksDataService.refresh();
+        BABA.sendNotification(BabaStr.BricksData_refresh);
       }
     }, this);
   }
@@ -116,16 +113,14 @@ class TreeViewController implements Disposable {
     try {
       const result: string = await executeService.submitSolution(filePath);
 
-      eventService.emit("submitSolutionResult", result);
-      // submissionService.show(result);
-      // eventService.emit("submit", submissionService.getSubmitEvent());
+      BABA.sendNotification(BabaStr.showProblemFinishError, { resultString: result });
     } catch (error) {
       await ShowMessage("提交出错了. 请查看控制台信息~", OutPutType.error);
       return;
     }
 
     BABA.sendNotification(BabaStr.TreeData_refresh);
-    await bricksDataService.refresh();
+    BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 
   // 提交测试用例
@@ -211,9 +206,7 @@ class TreeViewController implements Disposable {
       if (!result) {
         return;
       }
-      // submissionService.show(result);
-      // eventService.emit("submit", submissionService.getSubmitEvent());
-      eventService.emit("testSolutionResult", result, tsd);
+      BABA.sendNotification(BabaStr.showProblemFinishError, { resultString: result, tsd: tsd });
     } catch (error) {
       await ShowMessage("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
@@ -267,9 +260,7 @@ class TreeViewController implements Disposable {
       if (!result) {
         return;
       }
-      // submissionService.show(result);
-      // eventService.emit("submit", submissionService.getSubmitEvent());
-      eventService.emit("testSolutionResult", result, tsd);
+      BABA.sendNotification(BabaStr.showProblemFinishError, { resultString: result, tsd: tsd });
     } catch (error) {
       await ShowMessage("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
@@ -304,7 +295,7 @@ class TreeViewController implements Disposable {
         return;
       }
 
-      let tsd: ITestSolutionData | undefined = submissionService.getTSDByQid(qid);
+      let tsd: ITestSolutionData | undefined = BABA.getProxy(BabaStr.CommitResultProxy).getTSDByQid(qid);
       if (tsd == undefined) {
         return;
       }
@@ -313,9 +304,8 @@ class TreeViewController implements Disposable {
       if (!result) {
         return;
       }
-      // submissionService.show(result);
-      // eventService.emit("submit", submissionService.getSubmitEvent());
-      eventService.emit("testSolutionResult", result, tsd);
+
+      BABA.sendNotification(BabaStr.showProblemFinishError, { resultString: result, tsd: tsd });
     } catch (error) {
       await ShowMessage("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
@@ -352,9 +342,8 @@ class TreeViewController implements Disposable {
       if (!result) {
         return;
       }
-      // submissionService.show(result);
-      // eventService.emit("submit", submissionService.getSubmitEvent());
-      eventService.emit("testSolutionResult", result, tsd);
+
+      BABA.sendNotification(BabaStr.showProblemFinishError, { resultString: result, tsd: tsd });
     } catch (error) {
       await ShowMessage("提交测试出错了. 请查看控制台信息~", OutPutType.error);
     }
@@ -419,7 +408,7 @@ class TreeViewController implements Disposable {
 
     await updateSortingStrategy(choice.value, true);
     BABA.sendNotification(BabaStr.TreeData_refresh);
-    await bricksDataService.refresh();
+    BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 
   /**
@@ -430,7 +419,7 @@ class TreeViewController implements Disposable {
     try {
       await executeService.toggleFavorite(node, true);
       BABA.sendNotification(BabaStr.TreeData_refresh);
-      await bricksDataService.refresh();
+      BABA.sendNotification(BabaStr.BricksData_refresh);
       if (isStarShortcut()) {
         BABA.sendNotification(BabaStr.FileButton_refresh);
       }
@@ -447,7 +436,7 @@ class TreeViewController implements Disposable {
     try {
       await executeService.toggleFavorite(node, false);
       BABA.sendNotification(BabaStr.TreeData_refresh);
-      await bricksDataService.refresh();
+      BABA.sendNotification(BabaStr.BricksData_refresh);
       if (isStarShortcut()) {
         BABA.sendNotification(BabaStr.FileButton_refresh);
       }
@@ -569,7 +558,7 @@ class TreeViewController implements Disposable {
         needTranslation,
         choice.value == "cn"
       );
-      solutionService.show(solution);
+      BABA.getProxy(BabaStr.SolutionProxy).show(solution);
     } catch (error) {
       BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
       await ShowMessage("Failed to fetch the top voted solution. 请查看控制台信息~", OutPutType.error);
@@ -578,10 +567,6 @@ class TreeViewController implements Disposable {
 
   public async testapi(): Promise<void> {
     try {
-      // let so = {};
-      // const solution: string = JSON.stringify(so);
-      // solutionService.show(solution);
-      // debugContorller.try_get_diy_param();
     } catch (error) {
       BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
       await ShowMessage("Failed to fetch today question. 请查看控制台信息~", OutPutType.error);
@@ -748,10 +733,10 @@ class TreeViewController implements Disposable {
             })
             .then(
               (editor) => {
-                eventService.emit("showProblemFinishOpen", node, editor);
+                BABA.sendNotification(BabaStr.showProblemFinishOpen, { node: node, editor: editor });
               },
               (error) => {
-                eventService.emit("showProblemFinishError", node, error);
+                BABA.sendNotification(BabaStr.showProblemFinishError, { node: node, error: error });
               }
             ),
           promptHintMessage(
@@ -766,7 +751,7 @@ class TreeViewController implements Disposable {
         }
         promises.push(
           new Promise(async (resolve, _) => {
-            await eventService.emit("showProblemFinish", node);
+            BABA.sendNotification(BabaStr.showProblemFinish, node);
             resolve(1);
           })
         );
@@ -797,7 +782,7 @@ class TreeViewController implements Disposable {
     });
     treeViewController.insertSearchSet(tt);
     BABA.sendNotification(BabaStr.TreeData_refresh);
-    await bricksDataService.refresh();
+    BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 
   public async searchContest(): Promise<void> {
@@ -815,7 +800,7 @@ class TreeViewController implements Disposable {
     });
     treeViewController.insertSearchSet(tt);
     BABA.sendNotification(BabaStr.TreeData_refresh);
-    await bricksDataService.refresh();
+    BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 
   public async searchUserContest(): Promise<void> {
@@ -857,7 +842,7 @@ class TreeViewController implements Disposable {
         });
         treeViewController.insertSearchSet(tt);
         BABA.sendNotification(BabaStr.TreeData_refresh);
-        await bricksDataService.refresh();
+        BABA.sendNotification(BabaStr.BricksData_refresh);
       }
     } catch (error) {
       BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
@@ -1040,7 +1025,7 @@ class TreeViewController implements Disposable {
     this.searchSet = temp_searchSet;
     this.waitTodayQuestion = temp_waitTodayQuestion;
     this.waitUserContest = temp_waitUserContest;
-    eventService.emit("explorerNodeMapSet");
+    BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 
   public getRootNodes(): NodeModel[] {

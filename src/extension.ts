@@ -13,15 +13,12 @@ import { treeItemDecorationService } from "./service/TreeItemDecorationService";
 import { ShowMessage } from "./utils/OutputUtils";
 import { executeService } from "./service/ExecuteService";
 import { eventController } from "./controller/EventController";
-import { previewService } from "./service/PreviewService";
-import { solutionService } from "./service/SolutionService";
-import { submissionService } from "./commitResult/SubmissionService";
 import { markdownService } from "./service/MarkdownService";
 import { mainContorller } from "./controller/MainController";
 import { loginContorller } from "./controller/LoginController";
 import { getLeetCodeEndpoint } from "./utils/ConfigUtils";
 import { BricksType, OutPutType, RemarkComment } from "./model/Model";
-import { bricksDataService } from "./service/BricksDataService";
+import { BricksDataMediator, BricksDataProxy, bricksDataService } from "./bricksData/BricksDataService";
 import { bricksViewController } from "./controller/BricksViewController";
 import { debugContorller } from "./controller/DebugController";
 import { BABA, BabaStr } from "./BABA";
@@ -32,6 +29,9 @@ import { RemarkMediator, RemarkProxy } from "./remark/RemarkServiceModule";
 import { FileButtonMediator, FileButtonProxy } from "./fileButton/FileButtonModule";
 import { QuestionDataMediator, QuestionDataProxy } from "./questionData/questionDataModule";
 import { TreeDataMediator, TreeDataProxy, treeDataService } from "./treeData/TreeDataService";
+import { CommitResultMediator, CommitResultProxy } from "./commitResult/CommitResultModule";
+import { SolutionProxy, SolutionMediator } from "./solution/SolutionModule";
+import { PreviewMediator, PreviewProxy } from "./preView/PreviewModule";
 
 //==================================BABA========================================
 
@@ -60,6 +60,14 @@ export async function activate(context: ExtensionContext): Promise<void> {
       QuestionDataMediator,
       TreeDataProxy,
       TreeDataMediator,
+      BricksDataProxy,
+      BricksDataMediator,
+      CommitResultProxy,
+      CommitResultMediator,
+      SolutionProxy,
+      SolutionMediator,
+      PreviewProxy,
+      PreviewMediator,
     ]);
 
     BABA.sendNotification(BabaStr.InitAll, context);
@@ -74,9 +82,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     // 资源管理
     context.subscriptions.push(
-      previewService,
-      submissionService,
-      solutionService,
       executeService,
       markdownService,
       BABA,
@@ -217,7 +222,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
     await executeService.switchEndpoint(getLeetCodeEndpoint());
     // 获取登录状态
     await loginContorller.getLoginStatus();
-    await bricksViewController.initialize();
   } catch (error) {
     BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
     ShowMessage("Extension initialization failed. Please open output channel for details.", OutPutType.error);

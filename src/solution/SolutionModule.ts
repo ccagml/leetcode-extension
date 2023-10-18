@@ -8,12 +8,12 @@
  */
 
 import { ViewColumn } from "vscode";
-import { previewService } from "./PreviewService";
-import { BaseWebViewService } from "./BaseWebviewService";
-import { markdownService } from "./MarkdownService";
+import { BaseWebViewService } from "../service/BaseWebviewService";
+import { markdownService } from "../service/MarkdownService";
 import { IWebViewOption } from "../model/Model";
 
 import * as path from "path";
+import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 
 class SolutionService extends BaseWebViewService {
   protected readonly viewType: string = "leetcode.solution";
@@ -26,7 +26,7 @@ class SolutionService extends BaseWebViewService {
   }
 
   protected getWebviewOption(): IWebViewOption {
-    if (previewService.isSideMode()) {
+    if (BABA.getProxy(BabaStr.PreviewProxy).isSideMode()) {
       return {
         title: "Solution",
         viewColumn: ViewColumn.Two,
@@ -135,3 +135,34 @@ class Solution {
 }
 
 export const solutionService: SolutionService = new SolutionService();
+
+export class SolutionProxy extends BABAProxy {
+  static NAME = BabaStr.SolutionProxy;
+  constructor() {
+    super(SolutionProxy.NAME);
+  }
+
+  public show(solutionString: string): void {
+    solutionService.show(solutionString);
+  }
+}
+
+export class SolutionMediator extends BABAMediator {
+  static NAME = BabaStr.SolutionMediator;
+  constructor() {
+    super(SolutionMediator.NAME);
+  }
+
+  listNotificationInterests(): string[] {
+    return [BabaStr.VSCODE_DISPOST, BabaStr.InitAll];
+  }
+  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    switch (_notification.getName()) {
+      case BabaStr.VSCODE_DISPOST:
+        solutionService.dispose();
+        break;
+      default:
+        break;
+    }
+  }
+}

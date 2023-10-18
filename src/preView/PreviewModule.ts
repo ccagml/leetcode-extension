@@ -10,8 +10,9 @@
 import { commands, ViewColumn } from "vscode";
 import { Endpoint, IProblem, IWebViewOption } from "../model/Model";
 import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
-import { BaseWebViewService } from "./BaseWebviewService";
-import { markdownService } from "./MarkdownService";
+import { BaseWebViewService } from "../service/BaseWebviewService";
+import { markdownService } from "../service/MarkdownService";
+import { BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 
 class PreviewService extends BaseWebViewService {
   protected readonly viewType: string = "leetcode.preview";
@@ -147,26 +148,6 @@ class PreviewService extends BaseWebViewService {
   }
 
   private parseDescription(descString: string, problem: IProblem): IDescription {
-    // const [
-    //   ,
-    //   ,
-    //   /* title */ url,
-    //   ,
-    //   ,
-    //   ,
-    //   ,
-    //   ,
-    //   /* tags */ /* langs */ category,
-    //   difficulty,
-    //   likes,
-    //   dislikes,
-    //   ,
-    //   ,
-    //   ,
-    //   ,
-    //   /* accepted */ /* submissions */ /* testcase */ ...body
-    // ] = descString.split("\n");
-
     let preview_data = JSON.parse(descString);
     return {
       title: problem.name,
@@ -220,3 +201,39 @@ interface IWebViewMessage {
 }
 
 export const previewService: PreviewService = new PreviewService();
+
+export class PreviewProxy extends BABAProxy {
+  static NAME = BabaStr.PreviewProxy;
+  constructor() {
+    super(PreviewProxy.NAME);
+  }
+
+  public isSideMode(): boolean {
+    return previewService.isSideMode();
+  }
+}
+
+export class PreviewMediator extends BABAMediator {
+  static NAME = BabaStr.PreviewMediator;
+  constructor() {
+    super(PreviewMediator.NAME);
+  }
+
+  listNotificationInterests(): string[] {
+    return [BabaStr.VSCODE_DISPOST, BabaStr.Preview_show];
+  }
+  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    let body = _notification.getBody();
+    switch (_notification.getName()) {
+      case BabaStr.VSCODE_DISPOST:
+        previewService.dispose();
+        break;
+
+      case BabaStr.Preview_show:
+        previewService.show(body.descString, body.node, body.isSideMode);
+        break;
+      default:
+        break;
+    }
+  }
+}

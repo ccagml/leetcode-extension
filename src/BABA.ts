@@ -68,6 +68,18 @@ export enum BabaStr {
   TreeData_addFavorite = "TreeData_addFavorite",
   TreeData_removeFavorite = "TreeData_removeFavorite",
   TreeData_problems_sort = "TreeData_problems_sort",
+  CommitResultProxy = "CommitResultProxy",
+  CommitResultMediator = "CommitResultMediator",
+  CommitResult_testSolutionResult = "CommitResult_testSolutionResult",
+  CommitResult_submitSolutionResult = "CommitResult_submitSolutionResult",
+  BricksDataProxy = "BricksDataProxy",
+  BricksDataMediator = "BricksDataMediator",
+  BricksData_refresh = "BricksData_refresh",
+  SolutionProxy = "SolutionProxy",
+  SolutionMediator = "SolutionMediator",
+  PreviewProxy = "PreviewProxy",
+  PreviewMediator = "PreviewMediator",
+  Preview_show = "Preview_show",
 }
 
 export class BABA {

@@ -32,7 +32,6 @@ import { ShowMessage, promptForSignIn } from "../utils/OutputUtils";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 import { getLeetCodeEndpoint, isUseEndpointTranslation } from "../utils/ConfigUtils";
 import { getNodeIdFromFile } from "../utils/SystemUtils";
-import { previewService } from "../service/PreviewService";
 
 export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
   private context: vscode.ExtensionContext;
@@ -286,7 +285,11 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
       successResult = {};
     }
     if (successResult.code == 100) {
-      previewService.show(JSON.stringify(successResult.msg), node, isSideMode);
+      BABA.sendNotification(BabaStr.Preview_show, {
+        descString: JSON.stringify(successResult.msg),
+        node: node,
+        isSideMode: isSideMode,
+      });
     } else {
       await ShowMessage(`${descString} 请查看控制台信息~`, OutPutType.error);
     }
@@ -335,7 +338,6 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.TreeData_checkSubmit,
       BabaStr.TreeData_switchEndpoint,
       BabaStr.VSCODE_DISPOST,
-      BabaStr.TreeData_refresh,
       BabaStr.InitAll,
       BabaStr.TreeData_cleanUserScore,
       BabaStr.TreeData_checkSubmit,

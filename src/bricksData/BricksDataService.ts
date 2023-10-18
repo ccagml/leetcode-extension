@@ -13,7 +13,7 @@ import { bricksViewController } from "../controller/BricksViewController";
 import { BricksNode } from "../model/NodeModel";
 import { bricksDao } from "../dao/bricksDao";
 import { groupDao } from "../dao/groupDao";
-import { BABA, BabaStr } from "../BABA";
+import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 
 export class BricksDataService implements TreeDataProvider<BricksNode> {
   private onDidChangeTreeDataEvent: EventEmitter<BricksNode | undefined | null> = new EventEmitter<
@@ -104,14 +104,14 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
     if (e.sub_type == "submit" && e.accepted) {
       let qid: string = e.qid.toString();
       bricksDao.addSubmitTimeByQid(qid);
-      await bricksDataService.refresh();
+      BABA.sendNotification(BabaStr.BricksData_refresh);
     }
   }
 
   public async setBricksType(node: BricksNode, type) {
     let qid: string = node.qid.toString();
     bricksDao.setTypeByQid(qid, type);
-    await bricksDataService.refresh();
+    BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 
   private parseIconPathFromProblemState(element: BricksNode): string {
@@ -147,3 +147,57 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
 }
 
 export const bricksDataService: BricksDataService = new BricksDataService();
+
+export class BricksDataProxy extends BABAProxy {
+  static NAME = BabaStr.BricksDataProxy;
+  constructor() {
+    super(BricksDataProxy.NAME);
+  }
+
+  public async checkSubmit(e: ISubmitEvent) {
+    bricksDataService.checkSubmit(e);
+  }
+
+  public async setBricksType(node: BricksNode, type) {
+    bricksDataService.setBricksType(node, type);
+  }
+
+  // 创建一个新的分类
+  public async newBrickGroup(name) {
+    await bricksDataService.newBrickGroup(name);
+  }
+  // 删除一个分类
+  public async removeBrickGroup(time) {
+    await bricksDataService.removeBrickGroup(time);
+  }
+
+  public async getAllGroup() {
+    return await bricksDataService.getAllGroup();
+  }
+}
+
+export class BricksDataMediator extends BABAMediator {
+  static NAME = BabaStr.BricksDataMediator;
+  constructor() {
+    super(BricksDataMediator.NAME);
+  }
+
+  listNotificationInterests(): string[] {
+    return [BabaStr.VSCODE_DISPOST, BabaStr.BricksData_refresh, BabaStr.InitAll];
+  }
+  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    switch (_notification.getName()) {
+      case BabaStr.VSCODE_DISPOST:
+        break;
+
+      case BabaStr.InitAll:
+        bricksDataService.initialize();
+        break;
+      case BabaStr.BricksData_refresh:
+        bricksDataService.refresh();
+        break;
+      default:
+        break;
+    }
+  }
+}

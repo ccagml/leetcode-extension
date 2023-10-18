@@ -15,7 +15,7 @@ import { IWebViewOption } from "../model/Model";
 import { promptHintMessage } from "../utils/OutputUtils";
 import { isAnswerDiffColor } from "../utils/ConfigUtils";
 import { eventService } from "../service/EventService";
-import { BABA, BabaStr } from "../BABA";
+import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 
 class SubmissionService extends BaseWebViewService {
   protected readonly viewType: string = "leetcode.submission";
@@ -230,3 +230,42 @@ interface IResult {
 }
 
 export const submissionService: SubmissionService = new SubmissionService();
+
+export class CommitResultProxy extends BABAProxy {
+  static NAME = BabaStr.CommitResultProxy;
+  constructor() {
+    super(CommitResultProxy.NAME);
+  }
+
+  public getTSDByQid(qid: string): ITestSolutionData | undefined {
+    return submissionService.getTSDByQid(qid);
+  }
+}
+
+export class CommitResultMediator extends BABAMediator {
+  static NAME = BabaStr.CommitResultMediator;
+  constructor() {
+    super(CommitResultMediator.NAME);
+  }
+
+  listNotificationInterests(): string[] {
+    return [BabaStr.VSCODE_DISPOST, BabaStr.CommitResult_testSolutionResult, BabaStr.CommitResult_submitSolutionResult];
+  }
+  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    let body = _notification.getBody();
+    switch (_notification.getName()) {
+      case BabaStr.VSCODE_DISPOST:
+        submissionService.dispose();
+        break;
+
+      case BabaStr.CommitResult_testSolutionResult:
+        submissionService.show(body.resultString, body.tsd);
+        break;
+      case BabaStr.CommitResult_submitSolutionResult:
+        submissionService.show(body.resultString);
+        break;
+      default:
+        break;
+    }
+  }
+}
