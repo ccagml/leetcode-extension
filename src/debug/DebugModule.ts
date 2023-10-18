@@ -3,12 +3,14 @@ import * as net from "net";
 import * as vscode from "vscode";
 import { IDebugResult } from "../utils/problemUtils";
 
-import { fileMeta, ProblemMeta, supportDebugLanguages } from "../utils/problemUtils";
+import { fileMeta, ProblemMeta, supportDebugLanguages, extensionState } from "../utils/problemUtils";
 import { debugArgDao } from "../dao/debugArgDao";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 import { ShowMessage } from "../utils/OutputUtils";
 import { OutPutType } from "../model/Model";
 import { IQuickItemEx } from "../model/Model";
+
+import * as fse from "fs-extra";
 
 import { getTextEditorFilePathByUri } from "../utils/SystemUtils";
 import * as fs from "fs";
@@ -48,6 +50,15 @@ class DebugService {
     for (let index = 0; index < subList.length; index++) {
       let sub_clazz = subList[index];
       this.sub_object.set(sub_clazz.DEBUG_LANG, new sub_clazz());
+    }
+  }
+
+  public async InitAll(context) {
+    extensionState.context = context;
+    extensionState.cachePath = context.globalStoragePath;
+
+    if (!(await fse.pathExists(extensionState.cachePath))) {
+      await fse.mkdirs(extensionState.cachePath);
     }
   }
 
@@ -439,6 +450,7 @@ export class DebugMediator extends BABAMediator {
       BabaStr.Debug_simpleDebug,
       BabaStr.Debug_addDebugType,
       BabaStr.Debug_resetDebugType,
+      BabaStr.InitAll,
     ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -456,6 +468,8 @@ export class DebugMediator extends BABAMediator {
         debugService.resetDebugType(body.document, body.addType);
         break;
 
+      case BabaStr.InitAll:
+        debugService.InitAll(body);
       default:
         break;
     }

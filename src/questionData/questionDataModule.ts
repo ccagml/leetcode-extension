@@ -10,7 +10,6 @@
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 import { IProblem, OutPutType, ProblemState, RootNodeSort, UserStatus } from "../model/Model";
 import { NodeModel } from "../model/NodeModel";
-import { executeService } from "../service/ExecuteService";
 
 import { isShowLocked, isUseEndpointTranslation } from "../utils/ConfigUtils";
 import { ShowMessage } from "../utils/OutputUtils";
@@ -106,7 +105,9 @@ export class QuestionDataProxy extends BABAProxy {
 
       const showLockedFlag: boolean = isShowLocked();
       const useEndpointTranslation: boolean = isUseEndpointTranslation();
-      const result: string = await executeService.getAllProblems(showLockedFlag, useEndpointTranslation);
+      const result: string = await BABA.getProxy(BabaStr.ChildCallProxy)
+        .get_instance()
+        .getAllProblems(showLockedFlag, useEndpointTranslation);
       let all_problem_info = JSON.parse(result);
       if (!showLockedFlag) {
         all_problem_info = all_problem_info.filter((p) => !p.locked);

@@ -66,12 +66,23 @@ export class LogOutputMediator extends BABAMediator {
   }
 
   listNotificationInterests(): string[] {
-    return [BabaStr.VSCODE_DISPOST];
+    return [BabaStr.VSCODE_DISPOST, BabaStr.InitAll];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         logOutput.dispose();
+        break;
+      case BabaStr.InitAll:
+        let context = _notification.getBody();
+        let cur_version: string = context.extension.packageJSON.version || "1.0.0";
+        let cur_version_arr: Array<string> = cur_version.split(".");
+        let cur_version_num = 0;
+        cur_version_arr.forEach((e) => {
+          cur_version_num *= 100;
+          cur_version_num += Number(e);
+        });
+        logOutput.setLCPTCTX("version", cur_version_num);
         break;
       default:
         break;

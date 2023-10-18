@@ -11,11 +11,9 @@ import { ExtensionContext, window, commands, Uri, CommentReply, TextDocument } f
 import { NodeModel } from "./model/NodeModel";
 import { treeColor } from "./treeColor/TreeColorModule";
 import { ShowMessage } from "./utils/OutputUtils";
-import { executeService } from "./service/ExecuteService";
+import { ChildCallMediator, ChildCallProxy } from "./childCall/childCallModule";
 import { markdownService } from "./service/MarkdownService";
-import { mainContorller } from "./controller/MainController";
 import { loginContorller } from "./controller/LoginController";
-import { getLeetCodeEndpoint } from "./utils/ConfigUtils";
 import { BricksType, OutPutType, RemarkComment } from "./model/Model";
 import { BricksDataMediator, BricksDataProxy, bricksDataService } from "./bricksData/BricksDataService";
 import { BABA, BabaStr } from "./BABA";
@@ -67,25 +65,21 @@ export async function activate(context: ExtensionContext): Promise<void> {
       PreviewMediator,
       DebugProxy,
       DebugMediator,
+      ChildCallProxy,
+      ChildCallMediator,
     ]);
 
     BABA.sendNotification(BabaStr.InitAll, context);
-
-    // 初始化控制器
-    mainContorller.initialize(context);
-    // 检查node环境
-    await mainContorller.checkNodeEnv(context);
-    await mainContorller.deleteProblemCache();
+    BABA.sendNotification(BabaStr.AfterInitAll, context);
 
     // 资源管理
     context.subscriptions.push(
-      executeService,
       markdownService,
       BABA,
       window.registerFileDecorationProvider(treeColor),
       window.createTreeView("QuestionExplorer", { treeDataProvider: treeDataService, showCollapseAll: true }),
       window.createTreeView("BricksExplorer", { treeDataProvider: bricksDataService, showCollapseAll: true }),
-      commands.registerCommand("lcpr.deleteCache", () => mainContorller.deleteCache()),
+      commands.registerCommand("lcpr.deleteCache", () => BABA.sendNotification(BabaStr.DeleteCache)),
       commands.registerCommand("lcpr.toggleLeetCodeCn", () => {
         BABA.sendNotification(BabaStr.TreeData_switchEndpoint);
       }),
@@ -218,11 +212,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       )
     );
 
-    // 设置站点
-    await executeService.switchEndpoint(getLeetCodeEndpoint());
-    // 获取登录状态
-    await loginContorller.getLoginStatus();
-
+    await BABA.getProxy(BabaStr.StatusBarProxy).getLoginStatus();
     BABA.sendNotification(BabaStr.Extension_InitFinish);
   } catch (error) {
     BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());

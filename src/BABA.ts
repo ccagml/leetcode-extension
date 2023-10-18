@@ -107,6 +107,11 @@ export enum BabaStr {
   Debug_resetDebugType = "Debug_resetDebugType",
   Extension_InitFinish = "Extension_InitFinish",
   Debug_checkCanDebugSuc = "Debug_checkCanDebugSuc",
+  ChildCallProxy = "ChildCallProxy",
+  ChildCallMediator = "ChildCallMediator",
+  AfterInitAll = "AfterInitAll",
+  DeleteCache = "DeleteCache",
+  BeforeExtension_InitFinish = "BeforeExtension_InitFinish",
 }
 
 export class BABA {

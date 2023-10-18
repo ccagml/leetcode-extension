@@ -52,8 +52,6 @@ import {
 import { NodeModel } from "../model/NodeModel";
 import { ISearchSet } from "../model/Model";
 
-import { executeService } from "../service/ExecuteService";
-
 import { ShowMessage, promptForSignIn, promptHintMessage } from "../utils/OutputUtils";
 
 import {
@@ -108,7 +106,7 @@ class TreeViewController implements Disposable {
     }
 
     try {
-      const result: string = await executeService.submitSolution(filePath);
+      const result: string = await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().submitSolution(filePath);
 
       BABA.sendNotification(BabaStr.CommitResult_submitSolutionResult, { resultString: result });
     } catch (error) {
@@ -174,7 +172,9 @@ class TreeViewController implements Disposable {
             tsd.testString = this.parseTestString(testString);
             tsd.allCase = false;
             tsd.type = TestSolutionType.Type_1;
-            result = await executeService.testSolution(tsd.filePath, tsd.testString, tsd.allCase);
+            result = await BABA.getProxy(BabaStr.ChildCallProxy)
+              .get_instance()
+              .testSolution(tsd.filePath, tsd.testString, tsd.allCase);
             tsd.result = result;
           }
           break;
@@ -186,7 +186,9 @@ class TreeViewController implements Disposable {
               tsd.filePath = filePath;
               tsd.testString = this.parseTestString(input.replace(/\r?\n/g, "\\n"));
               tsd.allCase = false;
-              result = await executeService.testSolution(tsd.filePath, tsd.testString, tsd.allCase);
+              result = await BABA.getProxy(BabaStr.ChildCallProxy)
+                .get_instance()
+                .testSolution(tsd.filePath, tsd.testString, tsd.allCase);
               tsd.result = result;
               tsd.type = TestSolutionType.Type_2;
             } else {
@@ -225,7 +227,7 @@ class TreeViewController implements Disposable {
   }
 
   /**
-   * It gets the active file path, and then calls the executeService.testSolution function to test the
+   * It gets the active file path, and then calls the BABA.getProxy(BabaStr.ChildCallProxy).get_instance().testSolution function to test the
    * solution
    * @param [uri] - The path of the file to be submitted. If it is not passed, the currently active file
    * is submitted.
@@ -249,7 +251,9 @@ class TreeViewController implements Disposable {
       tsd.testString = undefined;
       tsd.allCase = allCase || false;
       tsd.type = TestSolutionType.Type_3;
-      let result: string | undefined = await executeService.testSolution(tsd.filePath, tsd.testString, tsd.allCase);
+      let result: string | undefined = await BABA.getProxy(BabaStr.ChildCallProxy)
+        .get_instance()
+        .testSolution(tsd.filePath, tsd.testString, tsd.allCase);
       tsd.result = result;
       if (!result) {
         return;
@@ -294,7 +298,9 @@ class TreeViewController implements Disposable {
         return;
       }
 
-      let result: string | undefined = await executeService.testSolution(tsd.filePath, tsd.testString, tsd.allCase);
+      let result: string | undefined = await BABA.getProxy(BabaStr.ChildCallProxy)
+        .get_instance()
+        .testSolution(tsd.filePath, tsd.testString, tsd.allCase);
       if (!result) {
         return;
       }
@@ -306,7 +312,7 @@ class TreeViewController implements Disposable {
   }
 
   /**
-   * It gets the active file path, then calls the executeService.testSolution function to test the
+   * It gets the active file path, then calls the BABA.getProxy(BabaStr.ChildCallProxy).get_instance().testSolution function to test the
    * solution
    * @param [uri] - The file path of the file to be submitted. If it is not passed in, the currently
    * active file is submitted.
@@ -331,7 +337,9 @@ class TreeViewController implements Disposable {
       tsd.testString = testcase;
       tsd.allCase = false;
       tsd.type = TestSolutionType.Type_4;
-      let result: string | undefined = await executeService.testSolution(tsd.filePath, tsd.testString, tsd.allCase);
+      let result: string | undefined = await BABA.getProxy(BabaStr.ChildCallProxy)
+        .get_instance()
+        .testSolution(tsd.filePath, tsd.testString, tsd.allCase);
       tsd.result = result;
       if (!result) {
         return;
@@ -409,7 +417,7 @@ class TreeViewController implements Disposable {
    */
   public async addFavorite(node: NodeModel): Promise<void> {
     try {
-      await executeService.toggleFavorite(node, true);
+      await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().toggleFavorite(node, true);
 
       BABA.sendNotification(BabaStr.TreeData_favoriteChange);
     } catch (error) {
@@ -423,7 +431,7 @@ class TreeViewController implements Disposable {
    */
   public async removeFavorite(node: NodeModel): Promise<void> {
     try {
-      await executeService.toggleFavorite(node, false);
+      await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().toggleFavorite(node, false);
       BABA.sendNotification(BabaStr.TreeData_favoriteChange);
     } catch (error) {
       await ShowMessage("移除喜欢题目失败. 请查看控制台信息~", OutPutType.error);
@@ -533,12 +541,9 @@ class TreeViewController implements Disposable {
 
     try {
       const needTranslation: boolean = isUseEndpointTranslation();
-      const solution: string = await executeService.getHelp(
-        problemInput,
-        language,
-        needTranslation,
-        choice.value == "cn"
-      );
+      const solution: string = await BABA.getProxy(BabaStr.ChildCallProxy)
+        .get_instance()
+        .getHelp(problemInput, language, needTranslation, choice.value == "cn");
       BABA.getProxy(BabaStr.SolutionProxy).show(solution);
     } catch (error) {
       BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
@@ -698,13 +703,9 @@ class TreeViewController implements Disposable {
       const descriptionConfig: IDescriptionConfiguration = getDescriptionConfiguration();
       const needTranslation: boolean = isUseEndpointTranslation();
 
-      let show_code = await executeService.showProblem(
-        node,
-        language,
-        finalPath,
-        descriptionConfig.showInComment,
-        needTranslation
-      );
+      let show_code = await BABA.getProxy(BabaStr.ChildCallProxy)
+        .get_instance()
+        .showProblem(node, language, finalPath, descriptionConfig.showInComment, needTranslation);
       if (show_code == 100) {
         const promises: any[] = [
           vscode.window
@@ -790,7 +791,9 @@ class TreeViewController implements Disposable {
     }
     try {
       const needTranslation: boolean = isUseEndpointTranslation();
-      const solution: string = await executeService.getUserContest(needTranslation, sbp.getUser() || "");
+      const solution: string = await BABA.getProxy(BabaStr.ChildCallProxy)
+        .get_instance()
+        .getUserContest(needTranslation, sbp.getUser() || "");
       const query_result = JSON.parse(solution);
       const tt: userContestRanKingBase = Object.assign({}, userContestRankingObj, query_result.userContestRanking);
       BABA.sendNotification(BabaStr.TreeData_searchUserContest, tt);
@@ -807,7 +810,9 @@ class TreeViewController implements Disposable {
     }
     try {
       const needTranslation: boolean = isUseEndpointTranslation();
-      const solution: string = await executeService.getTodayQuestion(needTranslation);
+      const solution: string = await BABA.getProxy(BabaStr.ChildCallProxy)
+        .get_instance()
+        .getTodayQuestion(needTranslation);
       const query_result = JSON.parse(solution);
       // const titleSlug: string = query_result.titleSlug
       // const questionId: string = query_result.questionId

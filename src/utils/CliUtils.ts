@@ -31,9 +31,6 @@ export async function executeCommand(
         newargs.push(args[arg_index]);
       }
       let new_opt = { silent: true, ...options, env: createEnvOption() };
-      if (false) {
-        new_opt["execArgv"] = ["--inspect=43210"];
-      }
       childProc = cp.fork(command, newargs, new_opt);
     } else {
       childProc = cp.spawn(command, args, {
@@ -72,30 +69,6 @@ export async function executeCommand(
       }
     });
   });
-}
-
-export async function executeCommandWithProgress(
-  message: string,
-  command: string,
-  args: string[],
-  options: cp.SpawnOptions = { shell: true }
-): Promise<string> {
-  let result: string = "";
-  await vscode.window.withProgress(
-    { location: vscode.ProgressLocation.Notification },
-    async (p: vscode.Progress<{}>) => {
-      return new Promise<void>(async (resolve: () => void, reject: (e: Error) => void): Promise<void> => {
-        p.report({ message });
-        try {
-          result = await executeCommand(command, args, options);
-          resolve();
-        } catch (e) {
-          reject(e);
-        }
-      });
-    }
-  );
-  return result;
 }
 
 function childLCPTCTX(): string {

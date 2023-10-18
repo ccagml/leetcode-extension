@@ -1,25 +1,26 @@
 /*
- * Filename: https://github.com/ccagml/leetcode-extension/src/service/executeService.ts
- * Path: https://github.com/ccagml/leetcode-extension
- * Created Date: Monday, October 31st 2022, 10:16:47 am
+ * Filename: /home/cc/leetcode-extension/src/childCall/ExecuteService.ts
+ * Path: /home/cc/leetcode-extension
+ * Created Date: Thursday, October 19th 2023, 1:24:54 am
  * Author: ccagml
  *
- * Copyright (c) 2022 ccagml . All rights reserved.
+ * Copyright (c) 2023 ccagml . All rights reserved
  */
 
 import * as cp from "child_process";
 import * as fse from "fs-extra";
 import * as os from "os";
 import * as path from "path";
-import { ExtensionContext } from "vscode";
+import { ExtensionContext, ProgressLocation, Progress } from "vscode";
 import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace } from "vscode";
 import { DialogOptions, OutPutType, Endpoint, IProblem, leetcodeHasInited } from "../model/Model";
-import { executeCommandWithProgress } from "../utils/CliUtils";
-import { getNodePath } from "../utils/ConfigUtils";
+import { getLeetCodeEndpoint, getNodePath } from "../utils/ConfigUtils";
 import { openUrl, ShowMessage } from "../utils/OutputUtils";
 import * as systemUtils from "../utils/SystemUtils";
 import { toWslPath, useWsl } from "../utils/SystemUtils";
 import { getOpenClearProblemCacheTime, isOpenClearProblemCache } from "../utils/ConfigUtils";
+import { BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
+import { executeCommand } from "../utils/CliUtils";
 
 class ExecuteService implements Disposable {
   private leetCodeCliResourcesRootPath: string;
@@ -68,7 +69,7 @@ class ExecuteService implements Disposable {
       }
     }
     try {
-      await this.executeCommandWithProgressEx("正在检查Node环境~", this.nodeExecutable, ["-v"]);
+      await this.callWithMsg("正在检查Node环境~", this.nodeExecutable, ["-v"]);
     } catch (error) {
       const choice: MessageItem | undefined = await window.showErrorMessage(
         "LeetCode extension needs Node.js installed in environment path",
@@ -87,7 +88,7 @@ class ExecuteService implements Disposable {
   public async deleteProblemCache() {
     if (isOpenClearProblemCache()) {
       try {
-        await this.executeCommandWithProgressEx("正在清除缓存~", this.nodeExecutable, [
+        await this.callWithMsg("正在清除缓存~", this.nodeExecutable, [
           await this.getLeetCodeBinaryPath(),
           "cache",
           "-d",
@@ -103,29 +104,21 @@ class ExecuteService implements Disposable {
 
   public async deleteCache() {
     try {
-      await this.executeCommandWithProgressEx("正在清除缓存~", this.nodeExecutable, [
-        await this.getLeetCodeBinaryPath(),
-        "cache",
-        "-d",
-      ]);
+      await this.callWithMsg("正在清除缓存~", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "cache", "-d"]);
     } catch (error) {
       await ShowMessage("Failed to delete cache. 请查看控制台信息~", OutPutType.error);
     }
   }
 
   public async getUserInfo(): Promise<string> {
-    return await this.executeCommandWithProgressEx("正在获取角色信息~", this.nodeExecutable, [
+    return await this.callWithMsg("正在获取角色信息~", this.nodeExecutable, [
       await this.getLeetCodeBinaryPath(),
       "user",
     ]);
   }
 
   public async signOut(): Promise<string> {
-    return await this.executeCommandWithProgressEx("正在登出~", this.nodeExecutable, [
-      await this.getLeetCodeBinaryPath(),
-      "user",
-      "-L",
-    ]);
+    return await this.callWithMsg("正在登出~", this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "user", "-L"]);
   }
 
   public async getAllProblems(showLocked: boolean, needTranslation: boolean): Promise<string> {
@@ -137,7 +130,7 @@ class ExecuteService implements Disposable {
       cmd.push("-q");
       cmd.push("L");
     }
-    return await this.executeCommandWithProgressEx("正在获取题目数据~", this.nodeExecutable, cmd);
+    return await this.callWithMsg("正在获取题目数据~", this.nodeExecutable, cmd);
   }
 
   public async showProblem(
@@ -155,11 +148,7 @@ class ExecuteService implements Disposable {
     }
 
     if (!(await fse.pathExists(filePath))) {
-      const codeTemplate: string = await this.executeCommandWithProgressEx(
-        "正在获取题目数据~",
-        this.nodeExecutable,
-        cmd
-      );
+      const codeTemplate: string = await this.callWithMsg("正在获取题目数据~", this.nodeExecutable, cmd);
 
       let successResult;
       try {
@@ -188,7 +177,7 @@ class ExecuteService implements Disposable {
     if (cn_help) {
       cmd.push("-f");
     }
-    const solution: string = await this.executeCommandWithProgressEx("正在获取题解~~~", this.nodeExecutable, cmd);
+    const solution: string = await this.callWithMsg("正在获取题解~~~", this.nodeExecutable, cmd);
     return solution;
   }
 
@@ -198,21 +187,21 @@ class ExecuteService implements Disposable {
     if (!needTranslation) {
       cmd.push("-T");
     }
-    const solution: string = await this.executeCommandWithProgressEx("正在获取竞赛分信息~", this.nodeExecutable, cmd);
+    const solution: string = await this.callWithMsg("正在获取竞赛分信息~", this.nodeExecutable, cmd);
     return solution;
   }
 
   public async getScoreDataOnline(): Promise<string> {
     // solution don't support translation
     const cmd: string[] = [await this.getLeetCodeBinaryPath(), "query", "-c"];
-    const solution: string = await this.executeCommandWithProgressEx("正在获取分数数据~", this.nodeExecutable, cmd);
+    const solution: string = await this.callWithMsg("正在获取分数数据~", this.nodeExecutable, cmd);
     return solution;
   }
 
   public async getTestApi(username: string): Promise<string> {
     // solution don't support translation
     const cmd: string[] = [await this.getLeetCodeBinaryPath(), "query", "-z", username];
-    const solution: string = await this.executeCommandWithProgressEx("Fetching testapi...", this.nodeExecutable, cmd);
+    const solution: string = await this.callWithMsg("Fetching testapi...", this.nodeExecutable, cmd);
     return solution;
   }
 
@@ -222,7 +211,7 @@ class ExecuteService implements Disposable {
     if (!needTranslation) {
       cmd.push("-T");
     }
-    const solution: string = await this.executeCommandWithProgressEx("正在获取每日一题~", this.nodeExecutable, cmd);
+    const solution: string = await this.callWithMsg("正在获取每日一题~", this.nodeExecutable, cmd);
     return solution;
   }
 
@@ -231,19 +220,19 @@ class ExecuteService implements Disposable {
     if (!needTranslation) {
       cmd.push("-T");
     }
-    return await this.executeCommandWithProgressEx("正在获取题目详情~", this.nodeExecutable, cmd);
+    return await this.callWithMsg("正在获取题目详情~", this.nodeExecutable, cmd);
   }
 
   public async submitSolution(filePath: string): Promise<string> {
     try {
       if (systemUtils.useVscodeNode()) {
-        return await this.executeCommandWithProgressEx("正在提交代码~", this.nodeExecutable, [
+        return await this.callWithMsg("正在提交代码~", this.nodeExecutable, [
           await this.getLeetCodeBinaryPath(),
           "submit",
           `${filePath}`,
         ]);
       }
-      return await this.executeCommandWithProgressEx("正在提交代码~", this.nodeExecutable, [
+      return await this.callWithMsg("正在提交代码~", this.nodeExecutable, [
         await this.getLeetCodeBinaryPath(),
         "submit",
         `"${filePath}"`,
@@ -259,7 +248,7 @@ class ExecuteService implements Disposable {
   public async testSolution(filePath: string, testString?: string, allCase?: boolean): Promise<string> {
     if (testString) {
       if (systemUtils.useVscodeNode()) {
-        return await this.executeCommandWithProgressEx("正在提交代码~", this.nodeExecutable, [
+        return await this.callWithMsg("正在提交代码~", this.nodeExecutable, [
           await this.getLeetCodeBinaryPath(),
           "test",
           `${filePath}`,
@@ -267,7 +256,7 @@ class ExecuteService implements Disposable {
           `${testString}`,
         ]);
       }
-      return await this.executeCommandWithProgressEx("正在提交代码~", this.nodeExecutable, [
+      return await this.callWithMsg("正在提交代码~", this.nodeExecutable, [
         await this.getLeetCodeBinaryPath(),
         "test",
         `"${filePath}"`,
@@ -277,14 +266,14 @@ class ExecuteService implements Disposable {
     }
     if (allCase) {
       if (systemUtils.useVscodeNode()) {
-        return await this.executeCommandWithProgressEx("正在提交代码~", this.nodeExecutable, [
+        return await this.callWithMsg("正在提交代码~", this.nodeExecutable, [
           await this.getLeetCodeBinaryPath(),
           "test",
           `${filePath}`,
           "-a",
         ]);
       }
-      return await this.executeCommandWithProgressEx("正在提交代码~", this.nodeExecutable, [
+      return await this.callWithMsg("正在提交代码~", this.nodeExecutable, [
         await this.getLeetCodeBinaryPath(),
         "test",
         `"${filePath}"`,
@@ -292,13 +281,13 @@ class ExecuteService implements Disposable {
       ]);
     }
     if (systemUtils.useVscodeNode()) {
-      return await this.executeCommandWithProgressEx("正在提交代码~", this.nodeExecutable, [
+      return await this.callWithMsg("正在提交代码~", this.nodeExecutable, [
         await this.getLeetCodeBinaryPath(),
         "test",
         `${filePath}`,
       ]);
     }
-    return await this.executeCommandWithProgressEx("正在提交代码~", this.nodeExecutable, [
+    return await this.callWithMsg("正在提交代码~", this.nodeExecutable, [
       await this.getLeetCodeBinaryPath(),
       "test",
       `"${filePath}"`,
@@ -308,7 +297,7 @@ class ExecuteService implements Disposable {
   public async switchEndpoint(endpoint: string): Promise<string> {
     switch (endpoint) {
       case Endpoint.LeetCodeCN:
-        return await this.executeCommandWithProgressEx("正在切换登录点~", this.nodeExecutable, [
+        return await this.callWithMsg("正在切换登录点~", this.nodeExecutable, [
           await this.getLeetCodeBinaryPath(),
           "plugin",
           "-e",
@@ -316,7 +305,7 @@ class ExecuteService implements Disposable {
         ]);
       case Endpoint.LeetCode:
       default:
-        return await this.executeCommandWithProgressEx("正在切换登录点~", this.nodeExecutable, [
+        return await this.callWithMsg("正在切换登录点~", this.nodeExecutable, [
           await this.getLeetCodeBinaryPath(),
           "plugin",
           "-d",
@@ -330,7 +319,7 @@ class ExecuteService implements Disposable {
     if (!addToFavorite) {
       commandParams.push("-d");
     }
-    await this.executeCommandWithProgressEx("正在更新收藏列表~", "node", commandParams);
+    await this.callWithMsg("正在更新收藏列表~", "node", commandParams);
   }
 
   public get node(): string {
@@ -348,27 +337,37 @@ class ExecuteService implements Disposable {
     return getNodePath();
   }
 
-  // private async executeCommandEx(
-  //   command: string,
-  //   args: string[],
-  //   options: cp.SpawnOptions = { shell: true }
-  // ): Promise<string> {
-  //   if (systemUtils.useWsl()) {
-  //     return await executeCommand("wsl", [command].concat(args), options);
-  //   }
-  //   return await executeCommand(command, args, options);
-  // }
-
-  private async executeCommandWithProgressEx(
+  private async callWithMsg(
     message: string,
     command: string,
     args: string[],
     options: cp.SpawnOptions = { shell: true }
   ): Promise<string> {
     if (systemUtils.useWsl()) {
-      return await executeCommandWithProgress(message, "wsl", [command].concat(args), options);
+      return await this.cCall(message, "wsl", [command].concat(args), options);
     }
-    return await executeCommandWithProgress(message, command, args, options);
+    return await this.cCall(message, command, args, options);
+  }
+
+  public async cCall(
+    message: string,
+    command: string,
+    args: string[],
+    options: cp.SpawnOptions = { shell: true }
+  ): Promise<string> {
+    let result: string = "";
+    await window.withProgress({ location: ProgressLocation.Notification }, async (p: Progress<{}>) => {
+      return new Promise<void>(async (resolve: () => void, reject: (e: Error) => void): Promise<void> => {
+        p.report({ message });
+        try {
+          result = await executeCommand(command, args, options);
+          resolve();
+        } catch (e) {
+          reject(e);
+        }
+      });
+    });
+    return result;
   }
 
   public async removeOldCache(): Promise<void> {
@@ -380,3 +379,44 @@ class ExecuteService implements Disposable {
 }
 
 export const executeService: ExecuteService = new ExecuteService();
+
+export class ChildCallProxy extends BABAProxy {
+  static NAME = BabaStr.ChildCallProxy;
+  constructor() {
+    super(ChildCallProxy.NAME);
+  }
+
+  public get_instance() {
+    return executeService;
+  }
+}
+
+export class ChildCallMediator extends BABAMediator {
+  static NAME = BabaStr.ChildCallMediator;
+  constructor() {
+    super(ChildCallMediator.NAME);
+  }
+
+  listNotificationInterests(): string[] {
+    return [BabaStr.VSCODE_DISPOST, BabaStr.AfterInitAll, BabaStr.DeleteCache];
+  }
+  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    switch (_notification.getName()) {
+      case BabaStr.VSCODE_DISPOST:
+        executeService.dispose();
+        break;
+      case BabaStr.AfterInitAll:
+        if (!systemUtils.useVscodeNode()) {
+          executeService.checkNodeEnv(_notification.getBody());
+        }
+        executeService.deleteProblemCache();
+        executeService.switchEndpoint(getLeetCodeEndpoint());
+        break;
+      case BabaStr.DeleteCache:
+        executeService.deleteCache();
+        break;
+      default:
+        break;
+    }
+  }
+}

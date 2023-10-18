@@ -9,7 +9,6 @@
 
 import * as cp from "child_process";
 import * as systemUtils from "../utils/SystemUtils";
-import { executeService } from "../service/ExecuteService";
 import { OutPutType, Endpoint, IQuickItemEx, loginArgsMapping } from "../model/Model";
 import { createEnvOption } from "../utils/CliUtils";
 import { ShowMessage } from "../utils/OutputUtils";
@@ -34,23 +33,42 @@ class LoginContorller {
             reject(new Error("not commandArg"));
             return;
           }
-          const leetCodeBinaryPath: string = await executeService.getLeetCodeBinaryPath();
+          const leetCodeBinaryPath: string = await BABA.getProxy(BabaStr.ChildCallProxy)
+            .get_instance()
+            .getLeetCodeBinaryPath();
           let childProc: cp.ChildProcess;
           if (systemUtils.useVscodeNode()) {
-            childProc = cp.fork(await executeService.getLeetCodeBinaryPath(), ["user", this.commandArg], {
-              silent: true,
-              env: createEnvOption(),
-            });
+            childProc = cp.fork(
+              await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().getLeetCodeBinaryPath(),
+              ["user", this.commandArg],
+              {
+                silent: true,
+                env: createEnvOption(),
+              }
+            );
           } else {
             if (systemUtils.useWsl()) {
-              childProc = cp.spawn("wsl", [executeService.node, leetCodeBinaryPath, "user", this.commandArg], {
-                shell: true,
-              });
+              childProc = cp.spawn(
+                "wsl",
+                [
+                  BABA.getProxy(BabaStr.ChildCallProxy).get_instance().node,
+                  leetCodeBinaryPath,
+                  "user",
+                  this.commandArg,
+                ],
+                {
+                  shell: true,
+                }
+              );
             } else {
-              childProc = cp.spawn(executeService.node, [leetCodeBinaryPath, "user", this.commandArg], {
-                shell: true,
-                env: createEnvOption(),
-              });
+              childProc = cp.spawn(
+                BABA.getProxy(BabaStr.ChildCallProxy).get_instance().node,
+                [leetCodeBinaryPath, "user", this.commandArg],
+                {
+                  shell: true,
+                  env: createEnvOption(),
+                }
+              );
             }
           }
 
@@ -191,7 +209,7 @@ class LoginContorller {
    */
   public async signOut(): Promise<void> {
     try {
-      await executeService.signOut();
+      await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().signOut();
       window.showInformationMessage("成功登出");
 
       BABA.sendNotification(BabaStr.USER_LOGIN_OUT, {});
@@ -200,23 +218,14 @@ class LoginContorller {
     }
   }
 
-  // 获取登录状态
-  /**
-   * It returns the login status of the user.
-   * @returns The login status of the user.
-   */
-  public async getLoginStatus() {
-    return await BABA.getProxy(BabaStr.StatusBarProxy).getLoginStatus();
-  }
-
   // 删除所有缓存
   /**
    * It signs out, removes old cache, switches to the default endpoint, and refreshes the tree data
    */
   public async deleteAllCache(): Promise<void> {
     await this.signOut();
-    await executeService.removeOldCache();
-    await executeService.switchEndpoint(getLeetCodeEndpoint());
+    await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().removeOldCache();
+    await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().switchEndpoint(getLeetCodeEndpoint());
     BABA.sendNotification(BabaStr.TreeData_refresh);
     BABA.sendNotification(BabaStr.BricksData_refresh);
   }

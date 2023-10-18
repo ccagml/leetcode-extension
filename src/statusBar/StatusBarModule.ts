@@ -11,7 +11,6 @@ import { ConfigurationChangeEvent, Disposable, workspace, StatusBarItem, window 
 import { UserStatus, userContestRanKingBase } from "../model/Model";
 import { enableStatusBar } from "../utils/ConfigUtils";
 
-import { executeService } from "../service/ExecuteService";
 import { BabaStr, BABAMediator, BABAProxy, BaseCC, BABA } from "../BABA";
 
 // 状态栏工具
@@ -46,10 +45,8 @@ class StatusBarService implements Disposable {
 
   public async getLoginStatus(): Promise<void> {
     try {
-      const result: string = await executeService.getUserInfo();
-      // BUG: this.tryParseUserName(result)拿到的是对象,而不是字符串
+      const result: string = await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().getUserInfo();
       this.currentUser = this.tryParseUserName(result);
-      // this.currentUser = { ...result, user_name: result.login };
       this.userStatus = UserStatus.SignedIn;
       if (this.currentUser == undefined) {
         this.userStatus = UserStatus.SignedOut;
@@ -195,6 +192,7 @@ export class StatusBarMediator extends BABAMediator {
       BabaStr.USER_statusChanged,
       BabaStr.USER_LOGIN_SUC,
       BabaStr.USER_LOGIN_OUT,
+      BabaStr.BeforeExtension_InitFinish,
     ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -222,6 +220,8 @@ export class StatusBarMediator extends BABAMediator {
       case BabaStr.TreeData_searchUserContestFinish:
         statusBarService.update();
         break;
+      case BabaStr.BeforeExtension_InitFinish:
+        statusBarService.getLoginStatus();
       default:
         break;
     }

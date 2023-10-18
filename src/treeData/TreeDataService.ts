@@ -27,7 +27,6 @@ import { NodeModel } from "../model/NodeModel";
 import { scoreDao } from "../dao/scoreDao";
 import { choiceDao } from "../dao/choiceDao";
 import { tagsDao } from "../dao/tagsDao";
-import { executeService } from "../service/ExecuteService";
 import { ShowMessage, promptForSignIn } from "../utils/OutputUtils";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 import { getLeetCodeEndpoint, isUseEndpointTranslation, setDefaultLanguage } from "../utils/ConfigUtils";
@@ -176,7 +175,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
   }
   // 在线获取题目数据
   public async getScoreDataOnline() {
-    let stringData = await executeService.getScoreDataOnline();
+    let stringData = await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().getScoreDataOnline();
     let objData;
     try {
       objData = JSON.parse(stringData);
@@ -243,7 +242,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     const leetCodeConfig: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("leetcode-problem-rating");
     try {
       const endpoint: string = choice.value;
-      await executeService.switchEndpoint(endpoint);
+      await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().switchEndpoint(endpoint);
       await leetCodeConfig.update("endpoint", endpoint, true /* UserSetting */);
       vscode.window.showInformationMessage(`Switched the endpoint to ${endpoint}`);
     } catch (error) {
@@ -252,7 +251,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
 
     try {
       await vscode.commands.executeCommand("lcpr.signout");
-      await executeService.deleteCache();
+      await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().deleteCache();
       await promptForSignIn();
     } catch (error) {
       await ShowMessage("登录失败. 请查看控制台信息~", OutPutType.error);
@@ -279,7 +278,9 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
       node = input;
     }
     const needTranslation: boolean = isUseEndpointTranslation();
-    const descString: string = await executeService.getDescription(node.qid, needTranslation);
+    const descString: string = await BABA.getProxy(BabaStr.ChildCallProxy)
+      .get_instance()
+      .getDescription(node.qid, needTranslation);
 
     let successResult;
     try {
@@ -442,6 +443,7 @@ export class TreeDataMediator extends BABAMediator {
       case BabaStr.statusBar_update_statusFinish:
         treeDataService.cleanUserScore();
         treeDataService.fire();
+        treeDataService.refresh();
         break;
       case BabaStr.QuestionData_refreshCacheFinish:
       case BabaStr.TreeData_searchTodayFinish:
