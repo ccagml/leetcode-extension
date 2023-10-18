@@ -19,8 +19,8 @@ import { openUrl, ShowMessage } from "../utils/OutputUtils";
 import * as systemUtils from "../utils/SystemUtils";
 import { toWslPath, useWsl } from "../utils/SystemUtils";
 import { getOpenClearProblemCacheTime, isOpenClearProblemCache } from "../utils/ConfigUtils";
-import { BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
-import { executeCommand } from "../utils/CliUtils";
+import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
+import { sysCall } from "../utils/SystemUtils";
 
 class ExecuteService implements Disposable {
   private leetCodeCliResourcesRootPath: string;
@@ -319,7 +319,91 @@ class ExecuteService implements Disposable {
     if (!addToFavorite) {
       commandParams.push("-d");
     }
-    await this.callWithMsg("正在更新收藏列表~", "node", commandParams);
+    await this.callWithMsg("正在更新收藏列表~", this.nodeExecutable, commandParams);
+  }
+
+  public async trySignIn(loginMethod: string) {
+    const loginArgsMapping: Map<string, string> = new Map([
+      ["LeetCode", "-l"],
+      ["Cookie", "-c"],
+      ["GitHub", "-g"],
+      ["LinkedIn", "-i"],
+    ]);
+
+    let commandArg = loginArgsMapping.get(loginMethod);
+    if (!commandArg) {
+      throw new Error(`不支持 "${loginMethod}" 方式登录`);
+    }
+
+    const cmd: string[] = [await this.getLeetCodeBinaryPath(), "user", commandArg];
+
+    return await this.callWithMsg("正在登录中~~~~", this.nodeExecutable, cmd, undefined, this.trySignInProcInit, {
+      loginMethod: loginMethod,
+    });
+  }
+
+  public async trySignInProcInit(arg, child_process, resolve, reject) {
+    child_process.stdout?.on("data", async (data: string | Buffer) => {
+      data = data.toString();
+      // vscode.window.showInformationMessage(`cc login msg ${data}.`);
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(data);
+
+      if (data.includes("twoFactorCode")) {
+        const twoFactor: string | undefined = await window.showInputBox({
+          prompt: "Enter two-factor code.",
+          ignoreFocusOut: true,
+          validateInput: (s: string): string | undefined => (s && s.trim() ? undefined : "The input must not be empty"),
+        });
+        if (!twoFactor) {
+          child_process.kill();
+          return resolve(undefined);
+        }
+        child_process.stdin?.write(`${twoFactor}\n`);
+      }
+
+      let successMatch: any;
+      try {
+        successMatch = JSON.parse(data);
+      } catch (e) {
+        successMatch = {};
+      }
+      if (successMatch.code == 100) {
+        child_process.stdin?.end();
+        let result = successMatch.user_name || name || "没有取到用户名"; //successMatch.user_name;
+        return resolve(result);
+      } else if (successMatch.code < 0) {
+        child_process.stdin?.end();
+        return reject(new Error(successMatch.msg));
+      }
+    });
+    child_process.stderr?.on("data", (data: string | Buffer) => {
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(data.toString());
+    });
+    child_process.on("error", reject);
+
+    const name: string | undefined = await window.showInputBox({
+      prompt: "Enter username or E-mail.",
+      ignoreFocusOut: true,
+      validateInput: (s: string): string | undefined => (s && s.trim() ? undefined : "The input must not be empty"),
+    });
+    if (!name) {
+      child_process.kill();
+      return resolve(undefined);
+    }
+    child_process.stdin?.write(`${name}\n`);
+    const isByCookie: boolean = arg.loginMethod === "Cookie";
+    const pwd: string | undefined = await window.showInputBox({
+      prompt: isByCookie ? "Enter cookie" : "Enter password.",
+      password: true,
+      ignoreFocusOut: true,
+      validateInput: (s: string): string | undefined =>
+        s ? undefined : isByCookie ? "Cookie must not be empty" : "Password must not be empty",
+    });
+    if (!pwd) {
+      child_process.kill();
+      return resolve(undefined);
+    }
+    child_process.stdin?.write(`${pwd}\n`);
   }
 
   public get node(): string {
@@ -341,26 +425,30 @@ class ExecuteService implements Disposable {
     message: string,
     command: string,
     args: string[],
-    options: cp.SpawnOptions = { shell: true }
+    options: cp.SpawnOptions = { shell: true },
+    procInitCallback?,
+    procInitCallbackArg?
   ): Promise<string> {
     if (systemUtils.useWsl()) {
-      return await this.cCall(message, "wsl", [command].concat(args), options);
+      return await this.cCall(message, "wsl", [command].concat(args), options, procInitCallback, procInitCallbackArg);
     }
-    return await this.cCall(message, command, args, options);
+    return await this.cCall(message, command, args, options, procInitCallback, procInitCallbackArg);
   }
 
   public async cCall(
     message: string,
     command: string,
     args: string[],
-    options: cp.SpawnOptions = { shell: true }
+    options: cp.SpawnOptions = { shell: true },
+    procInitCallback?,
+    procInitCallbackArg?
   ): Promise<string> {
     let result: string = "";
     await window.withProgress({ location: ProgressLocation.Notification }, async (p: Progress<{}>) => {
       return new Promise<void>(async (resolve: () => void, reject: (e: Error) => void): Promise<void> => {
         p.report({ message });
         try {
-          result = await executeCommand(command, args, options);
+          result = await sysCall(command, args, options, procInitCallback, procInitCallbackArg);
           resolve();
         } catch (e) {
           reject(e);

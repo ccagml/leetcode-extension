@@ -7,13 +7,10 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import * as cp from "child_process";
-import * as systemUtils from "../utils/SystemUtils";
-import { OutPutType, Endpoint, IQuickItemEx, loginArgsMapping } from "../model/Model";
-import { createEnvOption } from "../utils/CliUtils";
+import { OutPutType, Endpoint, IQuickItemEx } from "../model/Model";
 import { ShowMessage } from "../utils/OutputUtils";
 
-import { window, QuickPickOptions, ProgressLocation, Progress } from "vscode";
+import { window, QuickPickOptions } from "vscode";
 import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
 import { BABA, BabaStr } from "../BABA";
 
@@ -22,127 +19,6 @@ class LoginContorller {
   constructor() {}
   commandArg: string | undefined;
   loginMethod: string;
-
-  public async getUserName(): Promise<string | undefined> {
-    let result: string = "";
-
-    await window.withProgress({ location: ProgressLocation.Notification }, async (p: Progress<{}>) => {
-      return new Promise(
-        async (resolve: (res: string | undefined) => void, reject: (e: Error) => void): Promise<void> => {
-          if (this.commandArg == undefined) {
-            reject(new Error("not commandArg"));
-            return;
-          }
-          const leetCodeBinaryPath: string = await BABA.getProxy(BabaStr.ChildCallProxy)
-            .get_instance()
-            .getLeetCodeBinaryPath();
-          let childProc: cp.ChildProcess;
-          if (systemUtils.useVscodeNode()) {
-            childProc = cp.fork(
-              await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().getLeetCodeBinaryPath(),
-              ["user", this.commandArg],
-              {
-                silent: true,
-                env: createEnvOption(),
-              }
-            );
-          } else {
-            if (systemUtils.useWsl()) {
-              childProc = cp.spawn(
-                "wsl",
-                [
-                  BABA.getProxy(BabaStr.ChildCallProxy).get_instance().node,
-                  leetCodeBinaryPath,
-                  "user",
-                  this.commandArg,
-                ],
-                {
-                  shell: true,
-                }
-              );
-            } else {
-              childProc = cp.spawn(
-                BABA.getProxy(BabaStr.ChildCallProxy).get_instance().node,
-                [leetCodeBinaryPath, "user", this.commandArg],
-                {
-                  shell: true,
-                  env: createEnvOption(),
-                }
-              );
-            }
-          }
-
-          childProc.stdout?.on("data", async (data: string | Buffer) => {
-            data = data.toString();
-            // vscode.window.showInformationMessage(`cc login msg ${data}.`);
-            BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(data);
-
-            if (data.includes("twoFactorCode")) {
-              const twoFactor: string | undefined = await window.showInputBox({
-                prompt: "Enter two-factor code.",
-                ignoreFocusOut: true,
-                validateInput: (s: string): string | undefined =>
-                  s && s.trim() ? undefined : "The input must not be empty",
-              });
-              if (!twoFactor) {
-                childProc.kill();
-                return resolve(undefined);
-              }
-              childProc.stdin?.write(`${twoFactor}\n`);
-            }
-
-            let successMatch: any;
-            try {
-              successMatch = JSON.parse(data);
-            } catch (e) {
-              successMatch = {};
-            }
-            if (successMatch.code == 100) {
-              childProc.stdin?.end();
-              result = successMatch.user_name || name || "没有取到用户名"; //successMatch.user_name;
-              return resolve(result);
-            } else if (successMatch.code < 0) {
-              childProc.stdin?.end();
-              return reject(new Error(successMatch.msg));
-            }
-          });
-
-          childProc.stderr?.on("data", (data: string | Buffer) => {
-            BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(data.toString());
-          });
-          childProc.on("error", reject);
-
-          const name: string | undefined = await window.showInputBox({
-            prompt: "Enter username or E-mail.",
-            ignoreFocusOut: true,
-            validateInput: (s: string): string | undefined =>
-              s && s.trim() ? undefined : "The input must not be empty",
-          });
-          if (!name) {
-            childProc.kill();
-            return resolve(undefined);
-          }
-          childProc.stdin?.write(`${name}\n`);
-          const isByCookie: boolean = this.loginMethod === "Cookie";
-          const pwd: string | undefined = await window.showInputBox({
-            prompt: isByCookie ? "Enter cookie" : "Enter password.",
-            password: true,
-            ignoreFocusOut: true,
-            validateInput: (s: string): string | undefined =>
-              s ? undefined : isByCookie ? "Cookie must not be empty" : "Password must not be empty",
-          });
-          if (!pwd) {
-            childProc.kill();
-            return resolve(undefined);
-          }
-          childProc.stdin?.write(`${pwd}\n`);
-          p.report({ message: "正在登录中~~~~" });
-        }
-      );
-    });
-
-    return result;
-  }
 
   /* A login function. */
   // 登录操作
@@ -185,14 +61,13 @@ class LoginContorller {
       return;
     }
     this.loginMethod = choice.value;
-    this.commandArg = loginArgsMapping.get(this.loginMethod);
-    if (!this.commandArg) {
-      throw new Error(`不支持 "${this.loginMethod}" 方式登录`);
-    }
+
     const isByCookie: boolean = this.loginMethod === "Cookie";
     const inMessage: string = isByCookie ? " 通过cookie登录" : "登录";
     try {
-      const userName: string | undefined = await this.getUserName();
+      const userName: string | undefined = await BABA.getProxy(BabaStr.ChildCallProxy)
+        .get_instance()
+        .trySignIn(this.loginMethod);
       if (userName) {
         BABA.sendNotification(BabaStr.USER_LOGIN_SUC, { userName: userName });
 

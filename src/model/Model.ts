@@ -53,13 +53,6 @@ export const defaultTestSolutionData: ITestSolutionData = {
   result: undefined,
 };
 
-export const loginArgsMapping: Map<string, string> = new Map([
-  ["LeetCode", "-l"],
-  ["Cookie", "-c"],
-  ["GitHub", "-g"],
-  ["LinkedIn", "-i"],
-]);
-
 export const AllProgramLanguage: string[] = [
   "bash",
   "c",

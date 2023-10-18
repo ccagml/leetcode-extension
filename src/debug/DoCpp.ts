@@ -2,7 +2,7 @@ import * as fse from "fs-extra";
 import * as path from "path";
 import * as vscode from "vscode";
 
-import { executeCommand } from "../utils/CliUtils";
+import { sysCall } from "../utils/SystemUtils";
 import {
   fileMeta,
   getEntryFile,
@@ -391,7 +391,7 @@ export class DebugCpp {
     const debugConfig = getGdbDefaultConfig();
     try {
       const includePath: string = path.dirname(exePath);
-      await executeCommand(
+      await sysCall(
         "g++",
         ["-g", program, commonDestPath, jsonPath, "-o", exePath, "-I", includePath, "-I", thirdPartyPath],
         { shell: false }
@@ -432,7 +432,7 @@ export class DebugCpp {
     const debugConfig = getClangDefaultConfig();
     try {
       const includePath: string = path.dirname(exePath);
-      await executeCommand(
+      await sysCall(
         "/usr/bin/clang++",
         [
           "-std=c++17",
