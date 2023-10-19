@@ -112,6 +112,9 @@ export enum BabaStr {
   AfterInitAll = "AfterInitAll",
   DeleteCache = "DeleteCache",
   BeforeExtension_InitFinish = "BeforeExtension_InitFinish",
+  TreeData_Login = "TreeData_Login",
+  TreeData_LoginOut = "TreeData_LoginOut",
+  TreeData_deleteAllCache = "TreeData_deleteAllCache",
 }
 
 export class BABA {

@@ -298,6 +298,88 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
       await ShowMessage(`${descString} 请查看控制台信息~`, OutPutType.error);
     }
   }
+
+  public async signIn(): Promise<void> {
+    const picks: Array<IQuickItemEx<string>> = [];
+    let qpOpiton: vscode.QuickPickOptions = {
+      title: "正在登录leetcode.com",
+      matchOnDescription: false,
+      matchOnDetail: false,
+      placeHolder: "请选择登录方式 正在登录leetcode.com",
+    };
+    if (getLeetCodeEndpoint() == Endpoint.LeetCodeCN) {
+      picks.push({
+        label: "LeetCode Account",
+        detail: "只能登录leetcode.cn",
+        value: "LeetCode",
+      });
+      qpOpiton.title = "正在登录中文版leetcode.cn";
+      qpOpiton.placeHolder = "请选择登录方式 正在登录中文版leetcode.cn";
+    }
+    picks.push(
+      {
+        label: "Third-Party: GitHub",
+        detail: "Use GitHub account to login",
+        value: "GitHub",
+      },
+      {
+        label: "Third-Party: LinkedIn",
+        detail: "Use LinkedIn account to login",
+        value: "LinkedIn",
+      },
+      {
+        label: "LeetCode Cookie",
+        detail: "Use LeetCode cookie copied from browser to login",
+        value: "Cookie",
+      }
+    );
+    const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks, qpOpiton);
+    if (!choice) {
+      return;
+    }
+    let loginMethod = choice.value;
+
+    const isByCookie: boolean = loginMethod === "Cookie";
+    const inMessage: string = isByCookie ? " 通过cookie登录" : "登录";
+    try {
+      const userName: string | undefined = await BABA.getProxy(BabaStr.ChildCallProxy)
+        .get_instance()
+        .trySignIn(loginMethod);
+      if (userName) {
+        BABA.sendNotification(BabaStr.USER_LOGIN_SUC, { userName: userName });
+        vscode.window.showInformationMessage(`${inMessage} 成功`);
+      }
+    } catch (error) {
+      ShowMessage(`${inMessage}失败. 请看看控制台输出信息`, OutPutType.error);
+    }
+  }
+
+  // 登出
+  /**
+   * It signs out the user
+   */
+  public async signOut(): Promise<void> {
+    try {
+      await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().signOut();
+      vscode.window.showInformationMessage("成功登出");
+
+      BABA.sendNotification(BabaStr.USER_LOGIN_OUT, {});
+    } catch (error) {
+      // ShowMessage(`Failed to signOut. Please open the output channel for details`, OutPutType.error);
+    }
+  }
+
+  // 删除所有缓存
+  /**
+   * It signs out, removes old cache, switches to the default endpoint, and refreshes the tree data
+   */
+  public async deleteAllCache(): Promise<void> {
+    await this.signOut();
+    await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().removeOldCache();
+    await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().switchEndpoint(getLeetCodeEndpoint());
+    BABA.sendNotification(BabaStr.TreeData_refresh);
+    BABA.sendNotification(BabaStr.BricksData_refresh);
+  }
 }
 
 export const treeDataService: TreeDataService = new TreeDataService();
@@ -369,6 +451,9 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.USER_statusChanged,
       BabaStr.statusBar_update_statusFinish,
       BabaStr.Extension_InitFinish,
+      BabaStr.TreeData_Login,
+      BabaStr.TreeData_LoginOut,
+      BabaStr.TreeData_deleteAllCache,
     ];
   }
   handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -445,15 +530,26 @@ export class TreeDataMediator extends BABAMediator {
         treeDataService.fire();
         treeDataService.refresh();
         break;
+      case BabaStr.TreeData_searchUserContestFinish:
+        treeDataService.refresh();
+        break;
       case BabaStr.QuestionData_refreshCacheFinish:
       case BabaStr.TreeData_searchTodayFinish:
       case BabaStr.TreeData_rebuildTreeData:
-      case BabaStr.TreeData_searchUserContestFinish:
       case BabaStr.TreeData_searchScoreRangeFinish:
       case BabaStr.TreeData_searchContest:
       case BabaStr.ConfigChange_SortStrategy:
       case BabaStr.TreeData_favoriteChange:
         treeDataService.fire();
+        break;
+      case BabaStr.TreeData_Login:
+        treeDataService.signIn();
+        break;
+      case BabaStr.TreeData_LoginOut:
+        treeDataService.signOut();
+        break;
+      case BabaStr.TreeData_deleteAllCache:
+        treeDataService.deleteAllCache();
         break;
 
       default:

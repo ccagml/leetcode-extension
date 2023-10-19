@@ -13,7 +13,6 @@ import { treeColor } from "./treeColor/TreeColorModule";
 import { ShowMessage } from "./utils/OutputUtils";
 import { ChildCallMediator, ChildCallProxy } from "./childCall/childCallModule";
 import { markdownService } from "./service/MarkdownService";
-import { loginContorller } from "./controller/LoginController";
 import { BricksType, OutPutType, RemarkComment } from "./model/Model";
 import { BricksDataMediator, BricksDataProxy, bricksDataService } from "./bricksData/BricksDataService";
 import { BABA, BabaStr } from "./BABA";
@@ -69,9 +68,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
       ChildCallMediator,
     ]);
 
-    BABA.sendNotification(BabaStr.InitAll, context);
-    BABA.sendNotification(BabaStr.AfterInitAll, context);
-
     // 资源管理
     context.subscriptions.push(
       markdownService,
@@ -83,8 +79,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.toggleLeetCodeCn", () => {
         BABA.sendNotification(BabaStr.TreeData_switchEndpoint);
       }),
-      commands.registerCommand("lcpr.signin", () => loginContorller.signIn()),
-      commands.registerCommand("lcpr.signout", () => loginContorller.signOut()),
+      commands.registerCommand("lcpr.signin", () => BABA.sendNotification(BabaStr.TreeData_Login)),
+      commands.registerCommand("lcpr.signout", () => BABA.sendNotification(BabaStr.TreeData_LoginOut)),
       commands.registerCommand("lcpr.previewProblem", (node: NodeModel) => {
         BABA.sendNotification(BabaStr.TreeData_previewProblem, { input: node, isSideMode: false });
       }),
@@ -94,7 +90,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.pickOne", () => {
         BABA.sendNotification(BabaStr.TreeData_pickOne);
       }),
-      commands.registerCommand("lcpr.deleteAllCache", () => loginContorller.deleteAllCache()),
+      commands.registerCommand("lcpr.deleteAllCache", () => BABA.sendNotification(BabaStr.TreeData_deleteAllCache)),
       commands.registerCommand("leetcode.searchScoreRange", () => {
         BABA.sendNotification(BabaStr.TreeData_searchScoreRange);
       }),
@@ -211,6 +207,9 @@ export async function activate(context: ExtensionContext): Promise<void> {
         BABA.sendNotification(BabaStr.Debug_resetDebugType, { document: document, addType: addType })
       )
     );
+
+    BABA.sendNotification(BabaStr.InitAll, context);
+    BABA.sendNotification(BabaStr.AfterInitAll, context);
 
     await BABA.getProxy(BabaStr.StatusBarProxy).getLoginStatus();
     BABA.sendNotification(BabaStr.Extension_InitFinish);
