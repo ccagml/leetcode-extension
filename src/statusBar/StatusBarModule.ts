@@ -195,7 +195,7 @@ export class StatusBarMediator extends BABAMediator {
       BabaStr.BeforeExtension_InitFinish,
     ];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     let body = _notification.getBody();
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:

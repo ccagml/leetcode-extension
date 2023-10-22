@@ -222,7 +222,7 @@ export class PreviewMediator extends BABAMediator {
   listNotificationInterests(): string[] {
     return [BabaStr.VSCODE_DISPOST, BabaStr.Preview_show];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     let body = _notification.getBody();
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:

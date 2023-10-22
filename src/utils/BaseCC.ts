@@ -84,6 +84,19 @@ export namespace BaseCC {
       }
       this.notifyObservers(new Notification(name, body, type));
     }
+
+    async notifyObserversAsync(notification) {
+      if (this.view) await this.view.notifyObserversAsync(notification);
+    }
+    async sendNotificationAsync(name, body?, type?) {
+      if (typeof body === "undefined") {
+        body = null;
+      }
+      if (typeof type === "undefined") {
+        type = null;
+      }
+      await this.notifyObserversAsync(new Notification(name, body, type));
+    }
     initializeNotifier(key: string) {
       this.facade_init_key = key;
     }
@@ -244,6 +257,20 @@ export namespace BaseCC {
         }
       }
     }
+
+    async notifyObserversAsync(notification) {
+      let notificationName = notification.getName();
+      let observersRef = this.observerMap[notificationName];
+      if (observersRef) {
+        let observers = observersRef.slice(0);
+        let len = observers.length;
+        for (let i = 0; i < len; i++) {
+          let observer = observers[i];
+          await observer.notifyObserverAsync(notification);
+        }
+      }
+    }
+
     registerMediator(mediator) {
       let name = mediator.getMediatorName();
       if (this.mediatorMap[name]) return;
@@ -387,6 +414,9 @@ export namespace BaseCC {
     }
     notifyObserver(notification) {
       this.getNotifyMethod().call(this.getNotifyContext(), notification);
+    }
+    async notifyObserverAsync(notification) {
+      await this.getNotifyMethod().call(this.getNotifyContext(), notification);
     }
     compareNotifyContext(object) {
       return object === this.context;

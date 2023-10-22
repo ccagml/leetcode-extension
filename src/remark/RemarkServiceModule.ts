@@ -235,7 +235,7 @@ export class RemarkMediator extends BABAMediator {
       BabaStr.Remark_includeTemplates,
     ];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     let body = _notification.getBody();
     switch (_notification.getName()) {
       case BabaStr.showProblemFinishOpen:

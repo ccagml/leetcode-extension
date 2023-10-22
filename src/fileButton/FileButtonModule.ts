@@ -388,7 +388,7 @@ export class FileButtonMediator extends BABAMediator {
   listNotificationInterests(): string[] {
     return [BabaStr.VSCODE_DISPOST, BabaStr.FileButton_refresh, BabaStr.TreeData_favoriteChange];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         fileButtonConfigChange.dispose();
@@ -401,6 +401,7 @@ export class FileButtonMediator extends BABAMediator {
         break;
       case BabaStr.FileButton_refresh:
         fileButtonService.refresh();
+        break;
       default:
         break;
     }

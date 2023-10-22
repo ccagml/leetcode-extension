@@ -173,7 +173,7 @@ export class QuestionDataMediator extends BABAMediator {
   listNotificationInterests(): string[] {
     return [BabaStr.VSCODE_DISPOST, BabaStr.QuestionData_clearCache, BabaStr.QuestionData_refreshCache];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         break;

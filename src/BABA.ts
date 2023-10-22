@@ -118,7 +118,7 @@ export enum BabaStr {
 }
 
 export class BABA {
-  public static fa;
+  public static fa: BaseCC.Facade;
   public static init(clazz_list) {
     this.fa = BaseCC.Facade.getInstance("lcpr");
     let len = clazz_list.length;
@@ -132,6 +132,9 @@ export class BABA {
   }
   public static sendNotification(name: string, body?: any, type?: string) {
     this.fa.sendNotification(name, body, type);
+  }
+  public static async sendNotificationAsync(name: string, body?: any, type?: string) {
+    await this.fa.sendNotificationAsync(name, body, type);
   }
 
   public static getProxy(name: string) {

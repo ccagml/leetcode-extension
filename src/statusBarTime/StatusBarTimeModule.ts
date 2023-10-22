@@ -199,7 +199,7 @@ export class StatusBarTimeMediator extends BABAMediator {
       BabaStr.statusBarTime_reset,
     ];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
       case BabaStr.every_second:
         statusBarTimeService.updateSecond();

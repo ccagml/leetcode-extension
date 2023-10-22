@@ -208,11 +208,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
       )
     );
 
-    BABA.sendNotification(BabaStr.InitAll, context);
-    BABA.sendNotification(BabaStr.AfterInitAll, context);
+    await BABA.sendNotificationAsync(BabaStr.InitAll, context);
+    await BABA.sendNotificationAsync(BabaStr.AfterInitAll, context);
 
     await BABA.getProxy(BabaStr.StatusBarProxy).getLoginStatus();
-    BABA.sendNotification(BabaStr.Extension_InitFinish);
+    await BABA.sendNotificationAsync(BabaStr.Extension_InitFinish);
   } catch (error) {
     BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
     ShowMessage("Extension initialization failed. Please open output channel for details.", OutPutType.error);

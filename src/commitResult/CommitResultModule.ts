@@ -250,7 +250,7 @@ export class CommitResultMediator extends BABAMediator {
   listNotificationInterests(): string[] {
     return [BabaStr.VSCODE_DISPOST, BabaStr.CommitResult_testSolutionResult, BabaStr.CommitResult_submitSolutionResult];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     let body = _notification.getBody();
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:

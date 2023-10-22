@@ -453,7 +453,7 @@ export class DebugMediator extends BABAMediator {
       BabaStr.InitAll,
     ];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     let body = _notification.getBody();
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
@@ -469,7 +469,7 @@ export class DebugMediator extends BABAMediator {
         break;
 
       case BabaStr.InitAll:
-        debugService.InitAll(body);
+        await debugService.InitAll(body);
       default:
         break;
     }

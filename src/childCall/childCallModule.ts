@@ -315,7 +315,7 @@ class ExecuteService implements Disposable {
   }
 
   public async toggleFavorite(node: IProblem, addToFavorite: boolean): Promise<void> {
-    const commandParams: string[] = [await this.getLeetCodeBinaryPath(), "star", node.id];
+    const commandParams: string[] = [await this.getLeetCodeBinaryPath(), "star", node.qid];
     if (!addToFavorite) {
       commandParams.push("-d");
     }
@@ -488,17 +488,17 @@ export class ChildCallMediator extends BABAMediator {
   listNotificationInterests(): string[] {
     return [BabaStr.VSCODE_DISPOST, BabaStr.AfterInitAll, BabaStr.DeleteCache];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         executeService.dispose();
         break;
       case BabaStr.AfterInitAll:
         if (!systemUtils.useVscodeNode()) {
-          executeService.checkNodeEnv(_notification.getBody());
+          await executeService.checkNodeEnv(_notification.getBody());
         }
-        executeService.deleteProblemCache();
-        executeService.switchEndpoint(getLeetCodeEndpoint());
+        await executeService.deleteProblemCache();
+        await executeService.switchEndpoint(getLeetCodeEndpoint());
         break;
       case BabaStr.DeleteCache:
         executeService.deleteCache();

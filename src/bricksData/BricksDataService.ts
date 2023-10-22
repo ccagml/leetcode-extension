@@ -205,14 +205,14 @@ export class BricksDataMediator extends BABAMediator {
       BabaStr.Extension_InitFinish,
     ];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     let body = _notification.getBody();
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         break;
 
       case BabaStr.InitAll:
-        bricksDataService.initialize();
+        await bricksDataService.initialize();
         break;
       case BabaStr.BricksData_refresh:
       case BabaStr.USER_statusChanged:

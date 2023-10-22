@@ -456,7 +456,7 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.TreeData_deleteAllCache,
     ];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     let body = _notification.getBody();
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
@@ -465,7 +465,7 @@ export class TreeDataMediator extends BABAMediator {
       case BabaStr.TreeData_refresh:
       case BabaStr.ConfigChange_hideScore:
       case BabaStr.Extension_InitFinish:
-        treeDataService.refresh();
+        await treeDataService.refresh();
         break;
       case BabaStr.InitAll:
         treeDataService.initialize(body);
@@ -531,6 +531,7 @@ export class TreeDataMediator extends BABAMediator {
         treeDataService.refresh();
         break;
       case BabaStr.TreeData_searchUserContestFinish:
+      case BabaStr.TreeData_favoriteChange:
         treeDataService.refresh();
         break;
       case BabaStr.QuestionData_refreshCacheFinish:
@@ -539,7 +540,6 @@ export class TreeDataMediator extends BABAMediator {
       case BabaStr.TreeData_searchScoreRangeFinish:
       case BabaStr.TreeData_searchContest:
       case BabaStr.ConfigChange_SortStrategy:
-      case BabaStr.TreeData_favoriteChange:
         treeDataService.fire();
         break;
       case BabaStr.TreeData_Login:
