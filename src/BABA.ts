@@ -115,6 +115,7 @@ export enum BabaStr {
   TreeData_Login = "TreeData_Login",
   TreeData_LoginOut = "TreeData_LoginOut",
   TreeData_deleteAllCache = "TreeData_deleteAllCache",
+  QuestionData_submitNewAccept = "QuestionData_submitNewAccept",
 }
 
 export class BABA {

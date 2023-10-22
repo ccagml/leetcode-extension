@@ -8,7 +8,7 @@
  */
 
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
-import { IProblem, OutPutType, ProblemState, RootNodeSort, UserStatus } from "../model/Model";
+import { IProblem, ISubmitEvent, OutPutType, ProblemState, RootNodeSort, UserStatus } from "../model/Model";
 import { NodeModel } from "../model/NodeModel";
 
 import { isShowLocked, isUseEndpointTranslation } from "../utils/ConfigUtils";
@@ -61,6 +61,13 @@ class QuestionData {
   }
   public getQidToFid() {
     return this.qidToFid;
+  }
+  public checkSubmit(e: ISubmitEvent) {
+    if (e.sub_type == "submit" && e.accepted) {
+      if (this.explorerNodeMap.get(e.fid)?.state != ProblemState.AC) {
+        BABA.sendNotification(BabaStr.QuestionData_submitNewAccept);
+      }
+    }
   }
 }
 
@@ -171,7 +178,12 @@ export class QuestionDataMediator extends BABAMediator {
   }
 
   listNotificationInterests(): string[] {
-    return [BabaStr.VSCODE_DISPOST, BabaStr.QuestionData_clearCache, BabaStr.QuestionData_refreshCache];
+    return [
+      BabaStr.VSCODE_DISPOST,
+      BabaStr.QuestionData_clearCache,
+      BabaStr.QuestionData_refreshCache,
+      BabaStr.CommitResult_showFinish,
+    ];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
@@ -182,6 +194,8 @@ export class QuestionDataMediator extends BABAMediator {
         break;
       case BabaStr.QuestionData_refreshCache:
         questionData.refreshCache();
+      case BabaStr.CommitResult_showFinish:
+        questionData.checkSubmit(_notification.getBody());
       default:
         break;
     }

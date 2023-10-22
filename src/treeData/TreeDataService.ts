@@ -421,7 +421,6 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.TreeData_refresh,
       BabaStr.InitAll,
       BabaStr.TreeData_cleanUserScore,
-      BabaStr.TreeData_checkSubmit,
       BabaStr.CommitResult_showFinish,
       BabaStr.TreeData_switchEndpoint,
       BabaStr.TreeData_previewProblem,
@@ -454,6 +453,7 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.TreeData_Login,
       BabaStr.TreeData_LoginOut,
       BabaStr.TreeData_deleteAllCache,
+      BabaStr.QuestionData_submitNewAccept,
     ];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -465,6 +465,7 @@ export class TreeDataMediator extends BABAMediator {
       case BabaStr.TreeData_refresh:
       case BabaStr.ConfigChange_hideScore:
       case BabaStr.Extension_InitFinish:
+      case BabaStr.QuestionData_submitNewAccept:
         await treeDataService.refresh();
         break;
       case BabaStr.InitAll:
@@ -473,7 +474,7 @@ export class TreeDataMediator extends BABAMediator {
       case BabaStr.TreeData_cleanUserScore:
         treeDataService.cleanUserScore();
         break;
-      case BabaStr.TreeData_checkSubmit:
+
       case BabaStr.CommitResult_showFinish:
         treeDataService.checkSubmit(body);
         break;

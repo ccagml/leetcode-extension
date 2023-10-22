@@ -204,7 +204,6 @@ export class StatusBarTimeMediator extends BABAMediator {
       case BabaStr.every_second:
         statusBarTimeService.updateSecond();
         break;
-      case BabaStr.submit:
       case BabaStr.CommitResult_showFinish:
         statusBarTimeService.checkSubmit(_notification.getBody());
         break;
