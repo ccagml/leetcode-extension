@@ -17,7 +17,7 @@ import { isWindows } from "../utils/SystemUtils";
 import { debugArgDao } from "../dao/debugArgDao";
 import { BABA, BabaStr } from "../BABA";
 import { ShowMessage } from "../utils/OutputUtils";
-import { OutPutType } from "../model/Model";
+import { OutPutType } from "../model/ConstDefind";
 
 function getGdbDefaultConfig(): IDebugConfig {
   return {

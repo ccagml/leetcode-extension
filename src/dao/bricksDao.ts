@@ -11,7 +11,7 @@ import { selectWorkspaceFolder } from "../utils/ConfigUtils";
 import { useWsl, toWinPath, getDayStart, getDayNow, getYMD } from "../utils/SystemUtils";
 import * as path from "path";
 import * as fse from "fs-extra";
-import { BricksType, BricksTypeName } from "../model/Model";
+import { BricksType, BricksTypeName } from "../model/ConstDefind";
 
 // let bricks_json = {
 //   version: 1,

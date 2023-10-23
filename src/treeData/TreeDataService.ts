@@ -21,7 +21,7 @@ import {
   Endpoint,
   IQuickItemEx,
   IProblem,
-} from "../model/Model";
+} from "../model/ConstDefind";
 import { treeViewController } from "../controller/TreeViewController";
 import { NodeModel } from "../model/NodeModel";
 import { scoreDao } from "../dao/scoreDao";
@@ -377,7 +377,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     await this.signOut();
     await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().removeOldCache();
     await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().switchEndpoint(getLeetCodeEndpoint());
-    BABA.sendNotification(BabaStr.TreeData_refresh);
+    BABA.sendNotification(BabaStr.BABACMD_refresh);
     BABA.sendNotification(BabaStr.BricksData_refresh);
   }
 }
@@ -418,28 +418,28 @@ export class TreeDataMediator extends BABAMediator {
   listNotificationInterests(): string[] {
     return [
       BabaStr.VSCODE_DISPOST,
-      BabaStr.TreeData_refresh,
-      BabaStr.InitAll,
+      BabaStr.BABACMD_refresh,
+      BabaStr.InitFile,
       BabaStr.TreeData_cleanUserScore,
       BabaStr.CommitResult_showFinish,
       BabaStr.TreeData_switchEndpoint,
-      BabaStr.TreeData_previewProblem,
-      BabaStr.TreeData_showProblem,
-      BabaStr.TreeData_pickOne,
-      BabaStr.TreeData_searchScoreRange,
-      BabaStr.TreeData_searchProblem,
-      BabaStr.TreeData_getHelp,
-      BabaStr.TreeData_testSolution,
-      BabaStr.TreeData_reTestSolution,
-      BabaStr.TreeData_testCaseDef,
-      BabaStr.TreeData_tesCaseArea,
-      BabaStr.TreeData_submitSolution,
-      BabaStr.TreeData_setDefaultLanguage,
-      BabaStr.TreeData_addFavorite,
-      BabaStr.TreeData_removeFavorite,
-      BabaStr.TreeData_problems_sort,
+      BabaStr.BABACMD_previewProblem,
+      BabaStr.BABACMD_showProblem,
+      BabaStr.BABACMD_pickOne,
+      BabaStr.BABACMD_searchScoreRange,
+      BabaStr.BABACMD_searchProblem,
+      BabaStr.BABACMD_getHelp,
+      BabaStr.BABACMD_testSolution,
+      BabaStr.BABACMD_reTestSolution,
+      BabaStr.BABACMD_testCaseDef,
+      BabaStr.BABACMD_tesCaseArea,
+      BabaStr.BABACMD_submitSolution,
+      BabaStr.BABACMD_setDefaultLanguage,
+      BabaStr.BABACMD_addFavorite,
+      BabaStr.BABACMD_removeFavorite,
+      BabaStr.BABACMD_problems_sort,
       BabaStr.TreeData_rebuildTreeData,
-      BabaStr.QuestionData_refreshCacheFinish,
+      BabaStr.QuestionData_ReBuildQuestionDataFinish,
       BabaStr.TreeData_searchTodayFinish,
       BabaStr.TreeData_searchUserContestFinish,
       BabaStr.TreeData_searchScoreRangeFinish,
@@ -449,10 +449,10 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.TreeData_favoriteChange,
       BabaStr.USER_statusChanged,
       BabaStr.statusBar_update_statusFinish,
-      BabaStr.Extension_InitFinish,
-      BabaStr.TreeData_Login,
-      BabaStr.TreeData_LoginOut,
-      BabaStr.TreeData_deleteAllCache,
+      BabaStr.StartReadData,
+      BabaStr.BABACMD_Login,
+      BabaStr.BABACMD_LoginOut,
+      BabaStr.BABACMD_deleteAllCache,
       BabaStr.QuestionData_submitNewAccept,
     ];
   }
@@ -462,13 +462,14 @@ export class TreeDataMediator extends BABAMediator {
       case BabaStr.VSCODE_DISPOST:
         treeViewController.dispose();
         break;
-      case BabaStr.TreeData_refresh:
+      case BabaStr.StartReadData:
+        break;
+      case BabaStr.BABACMD_refresh:
       case BabaStr.ConfigChange_hideScore:
-      case BabaStr.Extension_InitFinish:
       case BabaStr.QuestionData_submitNewAccept:
         await treeDataService.refresh();
         break;
-      case BabaStr.InitAll:
+      case BabaStr.InitFile:
         treeDataService.initialize(body);
         break;
       case BabaStr.TreeData_cleanUserScore:
@@ -480,49 +481,49 @@ export class TreeDataMediator extends BABAMediator {
         break;
       case BabaStr.TreeData_switchEndpoint:
         treeDataService.switchEndpoint();
-      case BabaStr.TreeData_previewProblem:
+      case BabaStr.BABACMD_previewProblem:
         treeDataService.previewProblem(body.input, body.isSideMode);
         break;
-      case BabaStr.TreeData_showProblem:
+      case BabaStr.BABACMD_showProblem:
         treeViewController.showProblem(body);
         break;
-      case BabaStr.TreeData_pickOne:
+      case BabaStr.BABACMD_pickOne:
         treeViewController.pickOne();
         break;
-      case BabaStr.TreeData_searchScoreRange:
+      case BabaStr.BABACMD_searchScoreRange:
         treeViewController.searchScoreRange();
         break;
-      case BabaStr.TreeData_searchProblem:
+      case BabaStr.BABACMD_searchProblem:
         treeViewController.searchProblem();
         break;
-      case BabaStr.TreeData_getHelp:
+      case BabaStr.BABACMD_getHelp:
         treeViewController.getHelp(body);
         break;
-      case BabaStr.TreeData_testSolution:
+      case BabaStr.BABACMD_testSolution:
         treeViewController.testSolution(body.uri);
         break;
-      case BabaStr.TreeData_reTestSolution:
+      case BabaStr.BABACMD_reTestSolution:
         treeViewController.reTestSolution(body.uri);
         break;
-      case BabaStr.TreeData_testCaseDef:
+      case BabaStr.BABACMD_testCaseDef:
         treeViewController.testCaseDef(body.uri, body.allCase);
         break;
-      case BabaStr.TreeData_tesCaseArea:
+      case BabaStr.BABACMD_tesCaseArea:
         treeViewController.tesCaseArea(body.uri, body.testCase);
         break;
-      case BabaStr.TreeData_submitSolution:
+      case BabaStr.BABACMD_submitSolution:
         treeViewController.submitSolution(body.uri);
         break;
-      case BabaStr.TreeData_setDefaultLanguage:
+      case BabaStr.BABACMD_setDefaultLanguage:
         setDefaultLanguage();
         break;
-      case BabaStr.TreeData_addFavorite:
+      case BabaStr.BABACMD_addFavorite:
         treeViewController.addFavorite(body.node);
         break;
-      case BabaStr.TreeData_removeFavorite:
+      case BabaStr.BABACMD_removeFavorite:
         treeViewController.removeFavorite(body.node);
         break;
-      case BabaStr.TreeData_problems_sort:
+      case BabaStr.BABACMD_problems_sort:
         treeViewController.switchSortingStrategy();
         break;
       case BabaStr.USER_statusChanged:
@@ -535,7 +536,7 @@ export class TreeDataMediator extends BABAMediator {
       case BabaStr.TreeData_favoriteChange:
         treeDataService.refresh();
         break;
-      case BabaStr.QuestionData_refreshCacheFinish:
+      case BabaStr.QuestionData_ReBuildQuestionDataFinish:
       case BabaStr.TreeData_searchTodayFinish:
       case BabaStr.TreeData_rebuildTreeData:
       case BabaStr.TreeData_searchScoreRangeFinish:
@@ -543,13 +544,13 @@ export class TreeDataMediator extends BABAMediator {
       case BabaStr.ConfigChange_SortStrategy:
         treeDataService.fire();
         break;
-      case BabaStr.TreeData_Login:
+      case BabaStr.BABACMD_Login:
         treeDataService.signIn();
         break;
-      case BabaStr.TreeData_LoginOut:
+      case BabaStr.BABACMD_LoginOut:
         treeDataService.signOut();
         break;
-      case BabaStr.TreeData_deleteAllCache:
+      case BabaStr.BABACMD_deleteAllCache:
         treeDataService.deleteAllCache();
         break;
 

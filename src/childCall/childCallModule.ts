@@ -13,7 +13,7 @@ import * as os from "os";
 import * as path from "path";
 import { ExtensionContext, ProgressLocation, Progress } from "vscode";
 import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace } from "vscode";
-import { DialogOptions, OutPutType, Endpoint, IProblem, leetcodeHasInited } from "../model/Model";
+import { DialogOptions, OutPutType, Endpoint, IProblem, leetcodeHasInited } from "../model/ConstDefind";
 import { getLeetCodeEndpoint, getNodePath } from "../utils/ConfigUtils";
 import { openUrl, ShowMessage } from "../utils/OutputUtils";
 import * as systemUtils from "../utils/SystemUtils";
@@ -486,14 +486,14 @@ export class ChildCallMediator extends BABAMediator {
   }
 
   listNotificationInterests(): string[] {
-    return [BabaStr.VSCODE_DISPOST, BabaStr.AfterInitAll, BabaStr.DeleteCache];
+    return [BabaStr.VSCODE_DISPOST, BabaStr.InitEnv, BabaStr.DeleteCache];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         executeService.dispose();
         break;
-      case BabaStr.AfterInitAll:
+      case BabaStr.InitEnv:
         if (!systemUtils.useVscodeNode()) {
           await executeService.checkNodeEnv(_notification.getBody());
         }

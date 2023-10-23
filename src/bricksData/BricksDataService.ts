@@ -8,7 +8,7 @@
  */
 
 import { TreeDataProvider, EventEmitter, Event, TreeItem, TreeItemCollapsibleState } from "vscode";
-import { BricksNormalId, defaultProblem, ISubmitEvent } from "../model/Model";
+import { BricksNormalId, defaultProblem, ISubmitEvent } from "../model/ConstDefind";
 import { bricksViewController } from "../controller/BricksViewController";
 import { BricksNode } from "../model/NodeModel";
 import { bricksDao } from "../dao/bricksDao";
@@ -21,10 +21,6 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
   >();
   // tslint:disable-next-line:member-ordering
   public readonly onDidChangeTreeData: Event<any> = this.onDidChangeTreeDataEvent.event;
-
-  public async refresh(): Promise<void> {
-    this.onDidChangeTreeDataEvent.fire(null);
-  }
 
   public fire() {
     this.onDidChangeTreeDataEvent.fire(null);
@@ -108,14 +104,14 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
     if (e.sub_type == "submit" && e.accepted) {
       let qid: string = e.qid.toString();
       bricksDao.addSubmitTimeByQid(qid);
-      BABA.sendNotification(BabaStr.BricksData_refresh);
+      BABA.sendNotification(BabaStr.BricksData_submitAndAccepted);
     }
   }
 
   public async setBricksType(node: BricksNode, type) {
     let qid: string = node.qid.toString();
     bricksDao.setTypeByQid(qid, type);
-    BABA.sendNotification(BabaStr.BricksData_refresh);
+    BABA.sendNotification(BabaStr.BricksData_setBricksTypeFinish);
   }
 
   private parseIconPathFromProblemState(element: BricksNode): string {
@@ -186,8 +182,8 @@ export class BricksDataMediator extends BABAMediator {
     return [
       BabaStr.VSCODE_DISPOST,
       BabaStr.BricksData_refresh,
-      BabaStr.InitAll,
-      BabaStr.QuestionData_refreshCacheFinish,
+      BabaStr.InitFile,
+      BabaStr.QuestionData_ReBuildQuestionDataFinish,
       BabaStr.TreeData_searchTodayFinish,
       BabaStr.TreeData_searchUserContestFinish,
       BabaStr.TreeData_searchScoreRangeFinish,
@@ -197,12 +193,17 @@ export class BricksDataMediator extends BABAMediator {
       BabaStr.TreeData_favoriteChange,
       BabaStr.USER_statusChanged,
       BabaStr.statusBar_update_statusFinish,
-      BabaStr.BricksData_setBricksType,
-      BabaStr.BricksData_newBrickGroup,
-      BabaStr.BricksData_addQidToGroup,
-      BabaStr.BricksData_removeBrickGroup,
-      BabaStr.BricksData_removeQidFromGroup,
-      BabaStr.Extension_InitFinish,
+      BabaStr.BABACMD_setBricksType,
+      BabaStr.BABACMD_newBrickGroup,
+      BabaStr.BABACMD_addQidToGroup,
+      BabaStr.BABACMD_removeBrickGroup,
+      BabaStr.BABACMD_removeQidFromGroup,
+      BabaStr.BricksData_submitAndAccepted,
+      BabaStr.BricksData_setBricksTypeFinish,
+      BabaStr.BricksData_newBrickGroupFinish,
+      BabaStr.BricksData_removeBrickGroupFinish,
+      BabaStr.BricksData_addQidToGroupFinish,
+      BabaStr.BricksData_removeQidFromGroupFinish,
     ];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -210,17 +211,19 @@ export class BricksDataMediator extends BABAMediator {
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         break;
-
-      case BabaStr.InitAll:
+      case BabaStr.InitFile:
         await bricksDataService.initialize();
         break;
+      case BabaStr.BricksData_newBrickGroupFinish:
+      case BabaStr.BricksData_removeBrickGroupFinish:
+      case BabaStr.BricksData_addQidToGroupFinish:
+      case BabaStr.BricksData_removeQidFromGroupFinish:
+      case BabaStr.BricksData_setBricksTypeFinish:
       case BabaStr.BricksData_refresh:
+      case BabaStr.BricksData_submitAndAccepted:
       case BabaStr.USER_statusChanged:
       case BabaStr.statusBar_update_statusFinish:
-      case BabaStr.Extension_InitFinish:
-        bricksDataService.refresh();
-        break;
-      case BabaStr.QuestionData_refreshCacheFinish:
+      case BabaStr.QuestionData_ReBuildQuestionDataFinish:
       case BabaStr.TreeData_searchTodayFinish:
       case BabaStr.TreeData_searchUserContestFinish:
       case BabaStr.TreeData_searchScoreRangeFinish:
@@ -233,19 +236,19 @@ export class BricksDataMediator extends BABAMediator {
       case BabaStr.CommitResult_showFinish:
         bricksDataService.checkSubmit(_notification.getBody());
 
-      case BabaStr.BricksData_setBricksType:
+      case BabaStr.BABACMD_setBricksType:
         bricksViewController.setBricksType(body.node, body.type);
         break;
-      case BabaStr.BricksData_newBrickGroup:
+      case BabaStr.BABACMD_newBrickGroup:
         bricksViewController.newBrickGroup();
         break;
-      case BabaStr.BricksData_addQidToGroup:
+      case BabaStr.BABACMD_addQidToGroup:
         bricksViewController.addQidToGroup(body);
         break;
-      case BabaStr.BricksData_removeBrickGroup:
+      case BabaStr.BABACMD_removeBrickGroup:
         bricksViewController.removeBrickGroup(body);
         break;
-      case BabaStr.BricksData_removeQidFromGroup:
+      case BabaStr.BABACMD_removeQidFromGroup:
         bricksViewController.removeQidFromGroup(body);
         break;
       default:

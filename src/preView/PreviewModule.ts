@@ -8,7 +8,7 @@
  */
 
 import { commands, ViewColumn } from "vscode";
-import { Endpoint, IProblem, IWebViewOption } from "../model/Model";
+import { Endpoint, IProblem, IWebViewOption } from "../model/ConstDefind";
 import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
 import { BaseWebViewService } from "../service/BaseWebviewService";
 import { markdownService } from "../service/MarkdownService";

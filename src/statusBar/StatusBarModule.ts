@@ -8,7 +8,7 @@
  */
 
 import { ConfigurationChangeEvent, Disposable, workspace, StatusBarItem, window } from "vscode";
-import { UserStatus, userContestRanKingBase } from "../model/Model";
+import { UserStatus, userContestRanKingBase } from "../model/ConstDefind";
 import { enableStatusBar } from "../utils/ConfigUtils";
 
 import { BabaStr, BABAMediator, BABAProxy, BaseCC, BABA } from "../BABA";
@@ -192,7 +192,7 @@ export class StatusBarMediator extends BABAMediator {
       BabaStr.USER_statusChanged,
       BabaStr.USER_LOGIN_SUC,
       BabaStr.USER_LOGIN_OUT,
-      BabaStr.BeforeExtension_InitFinish,
+      BabaStr.InitLoginStatus,
     ];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -220,8 +220,8 @@ export class StatusBarMediator extends BABAMediator {
       case BabaStr.TreeData_searchUserContestFinish:
         statusBarService.update();
         break;
-      case BabaStr.BeforeExtension_InitFinish:
-        statusBarService.getLoginStatus();
+      case BabaStr.InitLoginStatus:
+        await statusBarService.getLoginStatus();
       default:
         break;
     }

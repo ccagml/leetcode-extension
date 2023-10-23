@@ -33,7 +33,7 @@ import {
   TestSolutionType,
   ITestSolutionData,
   defaultTestSolutionData,
-} from "../model/Model";
+} from "../model/ConstDefind";
 import {
   isHideSolvedProblem,
   isHideScoreProblem,
@@ -50,7 +50,7 @@ import {
   selectWorkspaceFolder,
 } from "../utils/ConfigUtils";
 import { NodeModel } from "../model/NodeModel";
-import { ISearchSet } from "../model/Model";
+import { ISearchSet } from "../model/ConstDefind";
 
 import { ShowMessage, promptForSignIn, promptHintMessage } from "../utils/OutputUtils";
 
@@ -746,7 +746,7 @@ class TreeViewController implements Disposable {
   }
 
   public async showDescriptionView(node: IProblem): Promise<void> {
-    BABA.sendNotification(BabaStr.TreeData_previewProblem, { input: node, isSideMode: enableSideMode() });
+    BABA.sendNotification(BabaStr.BABACMD_previewProblem, { input: node, isSideMode: enableSideMode() });
   }
 
   public async searchScoreRange(): Promise<void> {
@@ -1002,8 +1002,7 @@ class TreeViewController implements Disposable {
     const temp_searchSet: Map<string, ISearchSet> = this.searchSet;
     const temp_waitTodayQuestion: boolean = this.waitTodayQuestion;
     const temp_waitUserContest: boolean = this.waitUserContest;
-    BABA.sendNotification(BabaStr.QuestionData_clearCache);
-    BABA.sendNotification(BabaStr.QuestionData_refreshCache);
+    BABA.sendNotification(BabaStr.QuestionData_ReBuildQuestionData);
     this.searchSet = temp_searchSet;
     this.waitTodayQuestion = temp_waitTodayQuestion;
     this.waitUserContest = temp_waitUserContest;

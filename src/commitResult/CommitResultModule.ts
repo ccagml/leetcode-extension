@@ -10,8 +10,8 @@
 import { ViewColumn, commands } from "vscode";
 import { BaseWebViewService } from "../service/BaseWebviewService";
 import { markdownService } from "../service/MarkdownService";
-import { ISubmitEvent, ITestSolutionData } from "../model/Model";
-import { IWebViewOption } from "../model/Model";
+import { ISubmitEvent, ITestSolutionData } from "../model/ConstDefind";
+import { IWebViewOption } from "../model/ConstDefind";
 import { promptHintMessage } from "../utils/OutputUtils";
 import { isAnswerDiffColor } from "../utils/ConfigUtils";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";

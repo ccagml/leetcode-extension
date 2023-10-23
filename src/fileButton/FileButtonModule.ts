@@ -20,7 +20,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
     return this.onDidChangeCodeLensesEmitter.event;
   }
 
-  public refresh(): void {
+  public fire(): void {
     this.onDidChangeCodeLensesEmitter.fire();
   }
 
@@ -165,26 +165,6 @@ export class FileButtonService implements vscode.CodeLensProvider {
 
     return temp_result;
   }
-
-  public singleLineFlag = {
-    bash: "#",
-    c: "//",
-    cpp: "//",
-    csharp: "//",
-    golang: "//",
-    java: "//",
-    javascript: "//",
-    kotlin: "//",
-    mysql: "--",
-    php: "//",
-    python: "#",
-    python3: "#",
-    ruby: "#",
-    rust: "//",
-    scala: "//",
-    swift: "//",
-    typescript: "//",
-  };
 
   public processRemarkButton(codeLensLine, document): vscode.CodeLens[] {
     const temp_result: vscode.CodeLens[] = [];
@@ -353,7 +333,7 @@ class FileButtonConfigChange implements vscode.Disposable {
     this.configurationChangeListener = vscode.workspace.onDidChangeConfiguration(
       (event: vscode.ConfigurationChangeEvent) => {
         if (event.affectsConfiguration("leetcode-problem-rating.editor.shortcuts")) {
-          BABA.sendNotification(BabaStr.FileButton_refresh);
+          BABA.sendNotification(BabaStr.FileButton_ConfigChange);
         }
       },
       this
@@ -386,7 +366,7 @@ export class FileButtonMediator extends BABAMediator {
   }
 
   listNotificationInterests(): string[] {
-    return [BabaStr.VSCODE_DISPOST, BabaStr.FileButton_refresh, BabaStr.TreeData_favoriteChange];
+    return [BabaStr.VSCODE_DISPOST, BabaStr.FileButton_ConfigChange, BabaStr.TreeData_favoriteChange];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
@@ -396,11 +376,11 @@ export class FileButtonMediator extends BABAMediator {
 
       case BabaStr.TreeData_favoriteChange:
         if (isStarShortcut()) {
-          fileButtonService.refresh();
+          fileButtonService.fire();
         }
         break;
-      case BabaStr.FileButton_refresh:
-        fileButtonService.refresh();
+      case BabaStr.FileButton_ConfigChange:
+        fileButtonService.fire();
         break;
       default:
         break;

@@ -8,7 +8,7 @@
  */
 
 import { Disposable, StatusBarItem, window, workspace, ConfigurationChangeEvent } from "vscode";
-import { IProblem, ISubmitEvent, OutPutType } from "../model/Model";
+import { IProblem, ISubmitEvent, OutPutType } from "../model/ConstDefind";
 import { ShowMessage } from "../utils/OutputUtils";
 import { getDayNow } from "../utils/SystemUtils";
 import { enableTimerBar } from "../utils/ConfigUtils";
@@ -194,9 +194,9 @@ export class StatusBarTimeMediator extends BABAMediator {
       BabaStr.CommitResult_showFinish,
       BabaStr.showProblemFinish,
       BabaStr.VSCODE_DISPOST,
-      BabaStr.statusBarTime_start,
-      BabaStr.statusBarTime_stop,
-      BabaStr.statusBarTime_reset,
+      BabaStr.BABACMD_statusBarTime_start,
+      BabaStr.BABACMD_statusBarTime_stop,
+      BabaStr.BABACMD_statusBarTime_reset,
     ];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -213,13 +213,13 @@ export class StatusBarTimeMediator extends BABAMediator {
       case BabaStr.VSCODE_DISPOST:
         statusBarTimeService.dispose();
         break;
-      case BabaStr.statusBarTime_start:
+      case BabaStr.BABACMD_statusBarTime_start:
         statusBarTimeService.start();
         break;
-      case BabaStr.statusBarTime_stop:
+      case BabaStr.BABACMD_statusBarTime_stop:
         statusBarTimeService.stop();
         break;
-      case BabaStr.statusBarTime_reset:
+      case BabaStr.BABACMD_statusBarTime_reset:
         statusBarTimeService.reset();
         break;
       default:

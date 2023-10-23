@@ -8,7 +8,7 @@
  */
 
 import { Command, Uri } from "vscode";
-import { IProblem, IScoreData, ITodayData, ProblemState, RootNodeSort } from "./Model";
+import { IProblem, IScoreData, ITodayData, ProblemState, RootNodeSort } from "./ConstDefind";
 
 export class NodeModel {
   private _u_score;

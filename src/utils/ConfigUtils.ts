@@ -28,7 +28,8 @@ import {
   DialogOptions,
   OpenOption,
   IQuickItemEx,
-} from "../model/Model";
+  singleLineFlag,
+} from "../model/ConstDefind";
 
 import { useWsl, toWslPath } from "../utils/SystemUtils";
 import * as path from "path";
@@ -423,26 +424,6 @@ export async function setDefaultLanguage(): Promise<void> {
 export function isAnswerDiffColor(): boolean {
   return getVsCodeConfig().get<boolean>("answerDiffColor", false);
 }
-
-const singleLineFlag = {
-  bash: "#",
-  c: "//",
-  cpp: "//",
-  csharp: "//",
-  golang: "//",
-  java: "//",
-  javascript: "//",
-  kotlin: "//",
-  mysql: "--",
-  php: "//",
-  python: "#",
-  python3: "#",
-  ruby: "#",
-  rust: "//",
-  scala: "//",
-  swift: "//",
-  typescript: "//",
-};
 
 export function includeTemplatesAuto() {
   return getVsCodeConfig().get<boolean>("includeTemplatesAuto", true);

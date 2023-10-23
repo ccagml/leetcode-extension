@@ -9,7 +9,7 @@
 
 import * as vscode from "vscode";
 import { BABA, BabaStr } from "../BABA";
-import { DialogOptions, OutPutType } from "../model/Model";
+import { DialogOptions, OutPutType } from "../model/ConstDefind";
 import { getLeetCodeEndpoint, getVsCodeConfig } from "./ConfigUtils";
 
 export async function openUrl(url: string): Promise<void> {

@@ -10,7 +10,7 @@
 import * as fs from "fs";
 import * as _ from "lodash";
 import * as path from "path";
-import { IProblem, langExt } from "../model/Model";
+import { IProblem, langExt } from "../model/ConstDefind";
 
 import { isUseVscodeNode, isUseWsl } from "./ConfigUtils";
 import { Uri, window, TextEditor } from "vscode";

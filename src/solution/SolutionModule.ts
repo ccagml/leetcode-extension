@@ -10,7 +10,7 @@
 import { ViewColumn } from "vscode";
 import { BaseWebViewService } from "../service/BaseWebviewService";
 import { markdownService } from "../service/MarkdownService";
-import { IWebViewOption } from "../model/Model";
+import { IWebViewOption } from "../model/ConstDefind";
 
 import * as path from "path";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
@@ -154,7 +154,7 @@ export class SolutionMediator extends BABAMediator {
   }
 
   listNotificationInterests(): string[] {
-    return [BabaStr.VSCODE_DISPOST, BabaStr.InitAll];
+    return [BabaStr.VSCODE_DISPOST];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {

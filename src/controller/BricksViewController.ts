@@ -12,7 +12,7 @@ import { BABA, BabaStr } from "../BABA";
 
 import { bricksDao } from "../dao/bricksDao";
 import { groupDao } from "../dao/groupDao";
-import { BricksNormalId, defaultProblem, IQuickItemEx } from "../model/Model";
+import { BricksNormalId, defaultProblem, IQuickItemEx } from "../model/ConstDefind";
 import { BricksNode } from "../model/NodeModel";
 
 // 视图控制器
@@ -153,14 +153,14 @@ class BricksViewController implements Disposable {
     });
     if (name && name.trim()) {
       BABA.getProxy(BabaStr.BricksDataProxy).newBrickGroup(name);
-      BABA.sendNotification(BabaStr.BricksData_refresh);
+      BABA.sendNotification(BabaStr.BricksData_newBrickGroupFinish);
     }
   }
 
   public async removeBrickGroup(node) {
     let time = node.groupTime;
     BABA.getProxy(BabaStr.BricksDataProxy).removeBrickGroup(time);
-    BABA.sendNotification(BabaStr.BricksData_refresh);
+    BABA.sendNotification(BabaStr.BricksData_removeBrickGroupFinish);
   }
 
   public async addQidToGroup(node: BricksNode) {
@@ -190,12 +190,12 @@ class BricksViewController implements Disposable {
       time_list.push(element.value);
     });
     groupDao.addQidToTimeList(node.qid, time_list);
-    BABA.sendNotification(BabaStr.BricksData_refresh);
+    BABA.sendNotification(BabaStr.BricksData_addQidToGroupFinish);
   }
 
   public async removeQidFromGroup(node) {
     groupDao.removeQidFromTime(node.qid, node.groupTime);
-    BABA.sendNotification(BabaStr.BricksData_refresh);
+    BABA.sendNotification(BabaStr.BricksData_removeQidFromGroupFinish);
   }
 }
 

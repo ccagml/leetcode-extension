@@ -4,7 +4,7 @@ import * as fse from "fs-extra";
 import { fileMeta, getEntryFile, IProblemType } from "../utils/problemUtils";
 
 import { ShowMessage } from "../utils/OutputUtils";
-import { OutPutType } from "../model/Model";
+import { OutPutType } from "../model/ConstDefind";
 import { debugArgDao } from "../dao/debugArgDao";
 
 export class DebugPy3 {

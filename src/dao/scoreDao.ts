@@ -7,7 +7,7 @@
  * Copyright (c) 2022 ccagml . All rights reserved.
  */
 
-import { IScoreData } from "../model/Model";
+import { IScoreData } from "../model/ConstDefind";
 
 class ScoreDao {
   private scoreBase = require("../../../resources/data.json");

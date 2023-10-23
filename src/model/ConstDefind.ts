@@ -23,6 +23,26 @@ export interface IQuickItemEx<T> extends QuickPickItem {
   value: T;
 }
 
+export const singleLineFlag = {
+  bash: "#",
+  c: "//",
+  cpp: "//",
+  csharp: "//",
+  golang: "//",
+  java: "//",
+  javascript: "//",
+  kotlin: "//",
+  mysql: "--",
+  php: "//",
+  python: "#",
+  python3: "#",
+  ruby: "#",
+  rust: "//",
+  scala: "//",
+  swift: "//",
+  typescript: "//",
+};
+
 export enum UserStatus {
   SignedIn = 1,
   SignedOut = 2,

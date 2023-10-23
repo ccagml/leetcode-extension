@@ -8,7 +8,7 @@
  */
 
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
-import { IProblem, ISubmitEvent, OutPutType, ProblemState, RootNodeSort, UserStatus } from "../model/Model";
+import { IProblem, ISubmitEvent, OutPutType, ProblemState, RootNodeSort, UserStatus } from "../model/ConstDefind";
 import { NodeModel } from "../model/NodeModel";
 
 import { isShowLocked, isUseEndpointTranslation } from "../utils/ConfigUtils";
@@ -29,7 +29,7 @@ class QuestionData {
     this.qidToFid.clear();
   }
 
-  public async refreshCache() {
+  public async ReBuildQuestionData() {
     let user_score = BABA.getProxy(BabaStr.StatusBarProxy).getUserContestScore();
     for (const problem of await BABA.getProxy(BabaStr.QuestionDataProxy).getAllProblems()) {
       this.explorerNodeMap.set(problem.id, new NodeModel(problem, true, user_score));
@@ -44,7 +44,7 @@ class QuestionData {
       }
     }
 
-    BABA.sendNotification(BabaStr.QuestionData_refreshCacheFinish);
+    BABA.sendNotification(BabaStr.QuestionData_ReBuildQuestionDataFinish);
   }
   public getExplorerNodeMap(): Map<string, NodeModel> {
     return this.explorerNodeMap;
@@ -181,8 +181,9 @@ export class QuestionDataMediator extends BABAMediator {
     return [
       BabaStr.VSCODE_DISPOST,
       BabaStr.QuestionData_clearCache,
-      BabaStr.QuestionData_refreshCache,
+      BabaStr.QuestionData_ReBuildQuestionData,
       BabaStr.CommitResult_showFinish,
+      BabaStr.StartReadData,
     ];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -192,10 +193,16 @@ export class QuestionDataMediator extends BABAMediator {
       case BabaStr.QuestionData_clearCache:
         questionData.clearCache();
         break;
-      case BabaStr.QuestionData_refreshCache:
-        questionData.refreshCache();
+      case BabaStr.QuestionData_ReBuildQuestionData:
+        await questionData.ReBuildQuestionData();
+        break;
       case BabaStr.CommitResult_showFinish:
         questionData.checkSubmit(_notification.getBody());
+        break;
+      case BabaStr.StartReadData:
+        questionData.clearCache();
+        await questionData.ReBuildQuestionData();
+        break;
       default:
         break;
     }

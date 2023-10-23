@@ -7,8 +7,8 @@ import { fileMeta, ProblemMeta, supportDebugLanguages, extensionState } from "..
 import { debugArgDao } from "../dao/debugArgDao";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 import { ShowMessage } from "../utils/OutputUtils";
-import { OutPutType } from "../model/Model";
-import { IQuickItemEx } from "../model/Model";
+import { OutPutType, singleLineFlag } from "../model/ConstDefind";
+import { IQuickItemEx } from "../model/ConstDefind";
 
 import * as fse from "fs-extra";
 
@@ -17,26 +17,6 @@ import * as fs from "fs";
 import { DebugCpp } from "./DoCpp";
 import { DebugPy3 } from "./DoPy3";
 import { DebugJs } from "./DoJs";
-
-const singleLineFlag = {
-  bash: "#",
-  c: "//",
-  cpp: "//",
-  csharp: "//",
-  golang: "//",
-  java: "//",
-  javascript: "//",
-  kotlin: "//",
-  mysql: "--",
-  php: "//",
-  python: "#",
-  python3: "#",
-  ruby: "#",
-  rust: "//",
-  scala: "//",
-  swift: "//",
-  typescript: "//",
-};
 
 class DebugService {
   private server: net.Server;
@@ -370,13 +350,23 @@ class DebugService {
 
       if (lineContent.indexOf("@lc code=end") >= 0) {
         const editor = vscode.window.activeTextEditor;
-        await editor
-          ?.edit((edit) => {
-            edit.insert(new vscode.Position(i + 1, i + 1), div_debug_arg.join("\n"));
-          })
-          .then(() => {
-            editor.document.save();
-          });
+
+        await new Promise(async (resolve, _) => {
+          editor
+            ?.edit((edit) => {
+              edit.insert(new vscode.Position(i + 1, i + 1), div_debug_arg.join("\n"));
+            })
+            .then((success) => {
+              if (success) {
+                editor.document.save().then(() => {
+                  resolve(1);
+                });
+              } else {
+                resolve(1);
+              }
+            });
+        });
+        break;
       }
     }
   }
@@ -447,10 +437,10 @@ export class DebugMediator extends BABAMediator {
   listNotificationInterests(): string[] {
     return [
       BabaStr.VSCODE_DISPOST,
-      BabaStr.Debug_simpleDebug,
-      BabaStr.Debug_addDebugType,
-      BabaStr.Debug_resetDebugType,
-      BabaStr.InitAll,
+      BabaStr.BABACMD_simpleDebug,
+      BabaStr.BABACMD_addDebugType,
+      BabaStr.BABACMD_resetDebugType,
+      BabaStr.InitFile,
     ];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -458,17 +448,17 @@ export class DebugMediator extends BABAMediator {
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         break;
-      case BabaStr.Debug_simpleDebug:
+      case BabaStr.BABACMD_simpleDebug:
         debugService.checkCanDebug(body.document, body.testCase);
         break;
-      case BabaStr.Debug_addDebugType:
+      case BabaStr.BABACMD_addDebugType:
         debugService.addDebugType(body.document, body.addType);
         break;
-      case BabaStr.Debug_resetDebugType:
+      case BabaStr.BABACMD_resetDebugType:
         debugService.resetDebugType(body.document, body.addType);
         break;
 
-      case BabaStr.InitAll:
+      case BabaStr.InitFile:
         await debugService.InitAll(body);
       default:
         break;
