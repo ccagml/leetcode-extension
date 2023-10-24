@@ -924,25 +924,7 @@ class TreeViewController implements Disposable {
     this.searchSet = new Map<string, ISearchSet>();
   }
 
-  public checkSubmit(e: ISubmitEvent) {
-    if (e.sub_type == "submit" && e.accepted) {
-      const day_start = systemUtils.getDayStart(); //获取当天零点的时间
-      const day_end = systemUtils.getDayEnd(); //获取当天23:59:59的时间
-      let need_get_today: boolean = false;
-      this.searchSet.forEach((element) => {
-        if (element.type == SearchSetType.Day) {
-          if (day_start <= element.time && element.time <= day_end) {
-            if (e.fid == element.value) {
-              need_get_today = true;
-            }
-          }
-        }
-      });
-      if (need_get_today) {
-        BABA.getProxy(BabaStr.TodayDataProxy).searchToday();
-      }
-    }
-  }
+
 
   public async refreshCheck(): Promise<void> {
     let sbp = BABA.getProxy(BabaStr.StatusBarProxy);

@@ -71,5 +71,15 @@
             "trace": true,
             "preLaunchTask": "window_npm"
         },
+        {
+            "name": "debugcheck",
+            "program": "${workspaceFolder}/check_list_case.js",
+            "request": "launch",
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceRoot}/check_list_case.js"
+            ],
+            "type": "node"
+        },
     ]
 }

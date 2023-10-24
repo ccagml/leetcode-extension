@@ -40,10 +40,6 @@ export class TreeDataService implements vscode.TreeDataProvider<TreeNodeModel> {
     this.context = context;
   }
 
-  public async checkSubmit(e: ISubmitEvent) {
-    await treeViewController.checkSubmit(e);
-  }
-
   public cleanUserScore() {
     treeViewController.clearUserScore();
   }
@@ -388,7 +384,6 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.BABACMD_refresh,
       BabaStr.InitFile,
       BabaStr.TreeData_cleanUserScore,
-      BabaStr.CommitResult_showFinish,
       BabaStr.TreeData_switchEndpoint,
       BabaStr.BABACMD_previewProblem,
       BabaStr.BABACMD_showProblem,
@@ -443,9 +438,6 @@ export class TreeDataMediator extends BABAMediator {
         treeDataService.cleanUserScore();
         break;
 
-      case BabaStr.CommitResult_showFinish:
-        treeDataService.checkSubmit(body);
-        break;
       case BabaStr.TreeData_switchEndpoint:
         treeDataService.switchEndpoint();
       case BabaStr.BABACMD_previewProblem:

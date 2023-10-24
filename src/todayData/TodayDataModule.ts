@@ -8,7 +8,7 @@
  */
 
 import { BABAMediator, BABAProxy, BabaStr, BaseCC, BABA } from "../BABA";
-import { OutPutType } from "../model/ConstDefind";
+import { ISubmitEvent, OutPutType } from "../model/ConstDefind";
 import { ITodayDataResponse } from "../model/TreeNodeModel";
 import { isUseEndpointTranslation } from "../utils/ConfigUtils";
 import { promptForSignIn, ShowMessage } from "../utils/OutputUtils";
@@ -37,6 +37,13 @@ class TodayData {
     });
     if (need_get_today) {
       BABA.getProxy(BabaStr.TodayDataProxy).searchToday();
+    }
+  }
+  public async checkSubmit(e: ISubmitEvent) {
+    if (e.sub_type == "submit" && e.accepted) {
+      if (this.getFidInfo(e.fid)) {
+        await BABA.getProxy(BabaStr.TodayDataProxy).searchToday();
+      }
     }
   }
 }
@@ -99,7 +106,7 @@ export class TodayDataMediator extends BABAMediator {
   }
 
   listNotificationInterests(): string[] {
-    return [BabaStr.VSCODE_DISPOST, BabaStr.StartReadData];
+    return [BabaStr.VSCODE_DISPOST, BabaStr.StartReadData, BabaStr.CommitResult_showFinish];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
@@ -107,6 +114,9 @@ export class TodayDataMediator extends BABAMediator {
         break;
       case BabaStr.StartReadData:
         await BABA.getProxy(BabaStr.TodayDataProxy).searchToday();
+        break;
+      case BabaStr.CommitResult_showFinish:
+        todayData.checkSubmit(_notification.getBody());
         break;
       default:
         break;
