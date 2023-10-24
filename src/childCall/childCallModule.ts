@@ -13,7 +13,7 @@ import * as os from "os";
 import * as path from "path";
 import { ExtensionContext, ProgressLocation, Progress } from "vscode";
 import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace } from "vscode";
-import { DialogOptions, OutPutType, Endpoint, IProblem, leetcodeHasInited } from "../model/ConstDefind";
+import { DialogOptions, OutPutType, Endpoint, leetcodeHasInited } from "../model/ConstDefind";
 import { getLeetCodeEndpoint, getNodePath } from "../utils/ConfigUtils";
 import { openUrl, ShowMessage } from "../utils/OutputUtils";
 import * as systemUtils from "../utils/SystemUtils";
@@ -21,6 +21,7 @@ import { toWslPath, useWsl } from "../utils/SystemUtils";
 import { getOpenClearProblemCacheTime, isOpenClearProblemCache } from "../utils/ConfigUtils";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 import { sysCall } from "../utils/SystemUtils";
+import { TreeNodeModel } from "../model/TreeNodeModel";
 
 class ExecuteService implements Disposable {
   private leetCodeCliResourcesRootPath: string;
@@ -134,7 +135,7 @@ class ExecuteService implements Disposable {
   }
 
   public async showProblem(
-    problemNode: IProblem,
+    problemNode: TreeNodeModel,
     language: string,
     filePath: string,
     showDescriptionInComment: boolean = false,
@@ -314,7 +315,7 @@ class ExecuteService implements Disposable {
     }
   }
 
-  public async toggleFavorite(node: IProblem, addToFavorite: boolean): Promise<void> {
+  public async toggleFavorite(node: TreeNodeModel, addToFavorite: boolean): Promise<void> {
     const commandParams: string[] = [await this.getLeetCodeBinaryPath(), "star", node.qid];
     if (!addToFavorite) {
       commandParams.push("-d");

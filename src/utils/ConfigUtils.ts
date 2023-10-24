@@ -22,7 +22,6 @@ import {
 import {
   DescriptionConfiguration,
   Endpoint,
-  IProblem,
   SortingStrategy,
   AllProgramLanguage,
   DialogOptions,
@@ -36,7 +35,7 @@ import * as path from "path";
 import * as fse from "fs-extra";
 import * as os from "os";
 import { BABA, BabaStr } from "../BABA";
-import { NodeModel } from "../model/NodeModel";
+import { TreeNodeModel } from "../model/TreeNodeModel";
 
 // vscode的配置
 export function getVsCodeConfig(): WorkspaceConfiguration {
@@ -49,7 +48,8 @@ export function isHideSolvedProblem(): boolean {
 }
 
 // 隐藏分数
-export function isHideScoreProblem(problem: IProblem, user_score: number): boolean {
+export function isHideScoreProblem(problem: TreeNodeModel): boolean {
+  const user_score = BABA.getProxy(BabaStr.StatusBarProxy).getUserContestScore();
   const config_value: string = getVsCodeConfig().get<string>("hideScore", "None");
   const min_v = getPickOneByRankRangeMin();
   const max_v = getPickOneByRankRangeMax();
@@ -213,19 +213,19 @@ export function getSortingStrategy(): SortingStrategy {
   return getVsCodeConfig().get<SortingStrategy>("problems.sortStrategy", SortingStrategy.None);
 }
 
-export function sortNodeList(nodes: NodeModel[]): NodeModel[] {
+export function sortNodeList(nodes: TreeNodeModel[]): TreeNodeModel[] {
   const strategy: SortingStrategy = getSortingStrategy();
   switch (strategy) {
     case SortingStrategy.AcceptanceRateAsc:
-      return nodes.sort((x: NodeModel, y: NodeModel) => Number(x.acceptanceRate) - Number(y.acceptanceRate));
+      return nodes.sort((x: TreeNodeModel, y: TreeNodeModel) => Number(x.acceptanceRate) - Number(y.acceptanceRate));
     case SortingStrategy.AcceptanceRateDesc:
-      return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.acceptanceRate) - Number(x.acceptanceRate));
+      return nodes.sort((x: TreeNodeModel, y: TreeNodeModel) => Number(y.acceptanceRate) - Number(x.acceptanceRate));
     case SortingStrategy.ScoreAsc:
-      return nodes.sort((x: NodeModel, y: NodeModel) => Number(x.score) - Number(y.score));
+      return nodes.sort((x: TreeNodeModel, y: TreeNodeModel) => Number(x.score) - Number(y.score));
     case SortingStrategy.ScoreDesc:
-      return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.score) - Number(x.score));
+      return nodes.sort((x: TreeNodeModel, y: TreeNodeModel) => Number(y.score) - Number(x.score));
     case SortingStrategy.IDDesc:
-      return nodes.sort((x: NodeModel, y: NodeModel) => Number(y.id) - Number(x.id));
+      return nodes.sort((x: TreeNodeModel, y: TreeNodeModel) => Number(y.id) - Number(x.id));
     default:
       return nodes;
   }

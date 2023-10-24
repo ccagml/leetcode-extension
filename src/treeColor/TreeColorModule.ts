@@ -17,6 +17,7 @@ import {
   workspace,
   WorkspaceConfiguration,
 } from "vscode";
+import { BABA, BabaStr } from "../BABA";
 
 export class TreeColor implements FileDecorationProvider {
   private readonly ITEM_COLOR: { [key: string]: ThemeColor } = {
@@ -36,20 +37,17 @@ export class TreeColor implements FileDecorationProvider {
       return;
     }
 
-    if (uri.scheme !== "leetcode" && uri.authority !== "problems") {
+    if (uri.authority !== "problems") {
       return;
     }
 
     const params: URLSearchParams = new URLSearchParams(uri.query);
     // const difficulty: string = params.get("difficulty")!.toLowerCase();
     const score: string = params.get("score") || "0";
-    const user_score: string = params.get("user_score") || "0";
+    // const user_score: string = params.get("user_score") || "0";
+    const user_score = BABA.getProxy(BabaStr.StatusBarProxy).getUserContestScore();
 
-    const file_color: FileDecoration = {
-      // badge: score > "0" ? "" : this.DIFFICULTY_BADGE_LABEL[difficulty],
-      // color: this.ITEM_COLOR[difficulty],
-      // tooltip: score > "0" ? score : "0"
-    };
+    const file_color: FileDecoration = {};
     const score_num = Number(score);
     const user_score_num = Number(user_score);
     if (score_num > 0) {

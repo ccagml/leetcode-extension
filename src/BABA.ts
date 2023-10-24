@@ -7,6 +7,8 @@
  * Copyright (c) 2023 ccagml . All rights reserved
  */
 
+import * as vscode from "vscode";
+
 import { BaseCC } from "./utils/BaseCC";
 export * as BaseCC from "./utils/BaseCC";
 export enum BabaStr {
@@ -124,6 +126,8 @@ export enum BabaStr {
   BricksData_removeBrickGroupFinish = "BricksData_removeBrickGroupFinish",
   BricksData_addQidToGroupFinish = "BricksData_addQidToGroupFinish",
   BricksData_removeQidFromGroupFinish = "BricksData_removeQidFromGroupFinish",
+  TodayDataProxy = "TodayDataProxy",
+  TodayDataMediator = "TodayDataMediator",
 }
 
 export class BABA {
@@ -140,10 +144,21 @@ export class BABA {
     this.sendNotification(BabaStr.VSCODE_DISPOST);
   }
   public static sendNotification(name: string, body?: any, type?: string) {
-    this.fa.sendNotification(name, body, type);
+    try {
+      this.fa.sendNotification(name, body, type);
+    } catch (error) {
+      console.log(error);
+      vscode.window.createOutputChannel("LeetCodeProblemRatingERR").append(`${error?.message}, ${error?.stack}`);
+    }
   }
+
   public static async sendNotificationAsync(name: string, body?: any, type?: string) {
-    await this.fa.sendNotificationAsync(name, body, type);
+    try {
+      await this.fa.sendNotificationAsync(name, body, type);
+    } catch (error) {
+      console.log(error);
+      vscode.window.createOutputChannel("LeetCodeProblemRatingERR").append(`${error?.message}, ${error?.stack}`);
+    }
   }
 
   public static getProxy(name: string) {

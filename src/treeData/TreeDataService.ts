@@ -12,19 +12,15 @@ import * as path from "path";
 import * as vscode from "vscode";
 import {
   Category,
-  defaultProblem,
-  IScoreData,
   ProblemState,
   SearchSetType,
   ISubmitEvent,
   OutPutType,
   Endpoint,
   IQuickItemEx,
-  IProblem,
 } from "../model/ConstDefind";
 import { treeViewController } from "../controller/TreeViewController";
-import { NodeModel } from "../model/NodeModel";
-import { scoreDao } from "../dao/scoreDao";
+import { TreeNodeModel, TreeNodeType } from "../model/TreeNodeModel";
 import { choiceDao } from "../dao/choiceDao";
 import { tagsDao } from "../dao/tagsDao";
 import { ShowMessage, promptForSignIn } from "../utils/OutputUtils";
@@ -32,10 +28,10 @@ import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 import { getLeetCodeEndpoint, isUseEndpointTranslation, setDefaultLanguage } from "../utils/ConfigUtils";
 import { getNodeIdFromFile } from "../utils/SystemUtils";
 
-export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
+export class TreeDataService implements vscode.TreeDataProvider<TreeNodeModel> {
   private context: vscode.ExtensionContext;
-  private onDidChangeTreeDataEvent: vscode.EventEmitter<NodeModel | undefined | null> = new vscode.EventEmitter<
-    NodeModel | undefined | null
+  private onDidChangeTreeDataEvent: vscode.EventEmitter<TreeNodeModel | undefined | null> = new vscode.EventEmitter<
+    TreeNodeModel | undefined | null
   >();
   // tslint:disable-next-line:member-ordering
   public readonly onDidChangeTreeData: vscode.Event<any> = this.onDidChangeTreeDataEvent.event;
@@ -61,7 +57,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     await treeViewController.refreshCheck();
   }
 
-  public getTreeItem(element: NodeModel): vscode.TreeItem | Thenable<vscode.TreeItem> {
+  public getTreeItem(element: TreeNodeModel): vscode.TreeItem | Thenable<vscode.TreeItem> {
     if (element.id === "notSignIn") {
       return {
         label: element.name,
@@ -96,16 +92,15 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     return result;
   }
 
-  public getChildren(element?: NodeModel | undefined): vscode.ProviderResult<NodeModel[]> {
-    let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
-    if (!sbp.getUser()) {
+  public getChildren(element?: TreeNodeModel | undefined): vscode.ProviderResult<TreeNodeModel[]> {
+    if (!BABA.getProxy(BabaStr.StatusBarProxy).getUser()) {
       return [
-        new NodeModel(
-          Object.assign({}, defaultProblem, {
+        new TreeNodeModel(
+          {
             id: "notSignIn",
             name: "未登录",
-          }),
-          false
+          },
+          TreeNodeType.TreeDataNormal
         ),
       ];
     }
@@ -113,7 +108,9 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
       // Root view
       return treeViewController.getRootNodes();
     } else {
-      if (element.isSearchResult) {
+      if (element.nodeType == TreeNodeType.TreeDataDay) {
+        return treeViewController.getDayNodes(element);
+      } else if (element.isSearchResult) {
         switch (element.id) {
           case SearchSetType.ScoreRange:
             return treeViewController.getScoreRangeNodes(element.input);
@@ -143,7 +140,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
           case Category.Company:
             return treeViewController.getAllCompanyNodes();
           case Category.Score:
-            return treeViewController.getAllScoreNodes(element.user_score);
+            return treeViewController.getAllScoreNodes();
           case Category.Choice:
             return treeViewController.getAllChoiceNodes();
           case Category.Contest:
@@ -169,30 +166,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     return tagsDao.getTagsDataEn(fid) || ["Unknown"];
   }
 
-  // 返回题目id的数据
-  public getScoreData(): Map<string, IScoreData> {
-    return scoreDao.getScoreData();
-  }
-  // 在线获取题目数据
-  public async getScoreDataOnline() {
-    let stringData = await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().getScoreDataOnline();
-    let objData;
-    try {
-      objData = JSON.parse(stringData);
-    } catch (error) {
-      objData = {};
-    }
-    if (objData.code == 101) {
-      ShowMessage("从 https://zerotrac.github.io/leetcode_problem_rating/data.json 获取数据出错", OutPutType.info);
-      objData = {};
-    } else if (objData.code == 102) {
-      objData = {};
-      // 请求超时 不处理
-    }
-    return scoreDao.getScoreData(objData.data);
-  }
-
-  private parseIconPathFromProblemState(element: NodeModel): string {
+  private parseIconPathFromProblemState(element: TreeNodeModel): string {
     if (!element.isProblem) {
       return "";
     }
@@ -211,7 +185,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
     }
   }
 
-  private getSubCategoryTooltip(element: NodeModel): string {
+  private getSubCategoryTooltip(element: TreeNodeModel): string {
     // return '' unless it is a sub-category node
     if (element.isProblem || element.id === "ROOT" || element.id in Category) {
       return "";
@@ -257,8 +231,8 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
       await ShowMessage("登录失败. 请查看控制台信息~", OutPutType.error);
     }
   }
-  public async previewProblem(input: IProblem | vscode.Uri, isSideMode: boolean = false): Promise<void> {
-    let node: IProblem;
+  public async previewProblem(input: TreeNodeModel | vscode.Uri, isSideMode: boolean = false): Promise<void> {
+    let node: TreeNodeModel;
     if (input instanceof vscode.Uri) {
       const activeFilePath: string = input.fsPath;
       const id: string = await getNodeIdFromFile(activeFilePath);
@@ -266,7 +240,7 @@ export class TreeDataService implements vscode.TreeDataProvider<NodeModel> {
         ShowMessage(`Failed to resolve the problem id from file: ${activeFilePath}.`, OutPutType.error);
         return;
       }
-      const cachedNode: IProblem | undefined = BABA.getProxy(BabaStr.QuestionDataProxy).getNodeById(id);
+      const cachedNode: TreeNodeModel | undefined = BABA.getProxy(BabaStr.QuestionDataProxy).getNodeById(id);
       if (!cachedNode) {
         ShowMessage(`Failed to resolve the problem with id: ${id}.`, OutPutType.error);
         return;
@@ -395,13 +369,6 @@ export class TreeDataProxy extends BABAProxy {
   }
   public getChoiceData() {
     return treeDataService.getChoiceData();
-  }
-  public getScoreData(): Map<string, IScoreData> {
-    return treeDataService.getScoreData();
-  }
-
-  public async getScoreDataOnline() {
-    return await treeDataService.getScoreDataOnline();
   }
 
   public getTagsData(fid: string): Array<string> {

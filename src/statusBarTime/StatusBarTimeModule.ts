@@ -8,11 +8,12 @@
  */
 
 import { Disposable, StatusBarItem, window, workspace, ConfigurationChangeEvent } from "vscode";
-import { IProblem, ISubmitEvent, OutPutType } from "../model/ConstDefind";
+import { ISubmitEvent, OutPutType } from "../model/ConstDefind";
 import { ShowMessage } from "../utils/OutputUtils";
 import { getDayNow } from "../utils/SystemUtils";
 import { enableTimerBar } from "../utils/ConfigUtils";
 import { BABAMediator, BABAProxy, BaseCC, BabaStr } from "../BABA";
+import { TreeNodeModel } from "../model/TreeNodeModel";
 
 // 状态栏工具
 class StatusBarTimeService implements Disposable {
@@ -23,7 +24,7 @@ class StatusBarTimeService implements Disposable {
   private resetBar: StatusBarItem;
   private startTime: number;
   private saveTime: number;
-  private questionNode: IProblem;
+  private questionNode: TreeNodeModel;
 
   constructor() {
     this.showBar = window.createStatusBarItem(undefined, 1004);

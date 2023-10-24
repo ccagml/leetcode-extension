@@ -8,7 +8,7 @@
  */
 
 import { ExtensionContext, window, commands, Uri, CommentReply, TextDocument } from "vscode";
-import { NodeModel } from "./model/NodeModel";
+import { TreeNodeModel } from "./model/TreeNodeModel";
 import { treeColor } from "./treeColor/TreeColorModule";
 import { ShowMessage } from "./utils/OutputUtils";
 import { ChildCallMediator, ChildCallProxy } from "./childCall/childCallModule";
@@ -27,6 +27,8 @@ import { CommitResultMediator, CommitResultProxy } from "./commitResult/CommitRe
 import { SolutionProxy, SolutionMediator } from "./solution/SolutionModule";
 import { PreviewMediator, PreviewProxy } from "./preView/PreviewModule";
 import { DebugMediator, DebugProxy } from "./debug/DebugModule";
+import { RankScoreDataMediator, RankScoreDataProxy } from "./rankScore/RankScoreDataModule";
+import { TodayDataMediator, TodayDataProxy } from "./todayData/TodayDataModule";
 
 //==================================BABA========================================
 
@@ -66,6 +68,10 @@ export async function activate(context: ExtensionContext): Promise<void> {
       DebugMediator,
       ChildCallProxy,
       ChildCallMediator,
+      RankScoreDataProxy,
+      RankScoreDataMediator,
+      TodayDataProxy,
+      TodayDataMediator,
     ]);
 
     // 资源管理
@@ -81,10 +87,10 @@ export async function activate(context: ExtensionContext): Promise<void> {
       }),
       commands.registerCommand("lcpr.signin", () => BABA.sendNotification(BabaStr.BABACMD_Login)),
       commands.registerCommand("lcpr.signout", () => BABA.sendNotification(BabaStr.BABACMD_LoginOut)),
-      commands.registerCommand("lcpr.previewProblem", (node: NodeModel) => {
+      commands.registerCommand("lcpr.previewProblem", (node: TreeNodeModel) => {
         BABA.sendNotification(BabaStr.BABACMD_previewProblem, { input: node, isSideMode: false });
       }),
-      commands.registerCommand("lcpr.showProblem", (node: NodeModel) => {
+      commands.registerCommand("lcpr.showProblem", (node: TreeNodeModel) => {
         BABA.sendNotification(BabaStr.BABACMD_showProblem, node);
       }),
       commands.registerCommand("lcpr.pickOne", () => {
@@ -95,7 +101,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
         BABA.sendNotification(BabaStr.BABACMD_searchScoreRange);
       }),
       commands.registerCommand("lcpr.searchProblem", () => BABA.sendNotification(BabaStr.BABACMD_searchProblem)),
-      commands.registerCommand("lcpr.getHelp", (input: NodeModel | Uri) =>
+      commands.registerCommand("lcpr.getHelp", (input: TreeNodeModel | Uri) =>
         BABA.sendNotification(BabaStr.BABACMD_getHelp, input)
       ),
       commands.registerCommand("lcpr.refresh", () => {
@@ -121,11 +127,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.setDefaultLanguage", () => {
         BABA.sendNotification(BabaStr.BABACMD_setDefaultLanguage);
       }),
-      commands.registerCommand("lcpr.addFavorite", (node: NodeModel) => {
+      commands.registerCommand("lcpr.addFavorite", (node: TreeNodeModel) => {
         BABA.sendNotification(BabaStr.BABACMD_addFavorite, { node: node });
       }),
 
-      commands.registerCommand("lcpr.removeFavorite", (node: NodeModel) => {
+      commands.registerCommand("lcpr.removeFavorite", (node: TreeNodeModel) => {
         BABA.sendNotification(BabaStr.BABACMD_removeFavorite, { node: node });
       }),
       commands.registerCommand("lcpr.problems.sort", () => {
@@ -140,25 +146,25 @@ export async function activate(context: ExtensionContext): Promise<void> {
       commands.registerCommand("lcpr.statusBarTime.reset", () => {
         BABA.sendNotification(BabaStr.BABACMD_statusBarTime_reset);
       }),
-      commands.registerCommand("lcpr.setBricksType0", (node: NodeModel) =>
+      commands.registerCommand("lcpr.setBricksType0", (node: TreeNodeModel) =>
         BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_0 })
       ),
-      commands.registerCommand("lcpr.setBricksType1", (node: NodeModel) =>
+      commands.registerCommand("lcpr.setBricksType1", (node: TreeNodeModel) =>
         BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_1 })
       ),
-      commands.registerCommand("lcpr.setBricksType2", (node: NodeModel) =>
+      commands.registerCommand("lcpr.setBricksType2", (node: TreeNodeModel) =>
         BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_2 })
       ),
-      commands.registerCommand("lcpr.setBricksType3", (node: NodeModel) =>
+      commands.registerCommand("lcpr.setBricksType3", (node: TreeNodeModel) =>
         BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_3 })
       ),
-      commands.registerCommand("lcpr.setBricksType4", (node: NodeModel) =>
+      commands.registerCommand("lcpr.setBricksType4", (node: TreeNodeModel) =>
         BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_4 })
       ),
-      commands.registerCommand("lcpr.setBricksType5", (node: NodeModel) =>
+      commands.registerCommand("lcpr.setBricksType5", (node: TreeNodeModel) =>
         BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_5 })
       ),
-      commands.registerCommand("lcpr.setBricksType6", (node: NodeModel) =>
+      commands.registerCommand("lcpr.setBricksType6", (node: TreeNodeModel) =>
         BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_6 })
       ),
       commands.registerCommand("lcpr.newBrickGroup", () => BABA.sendNotification(BabaStr.BABACMD_newBrickGroup)),

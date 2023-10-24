@@ -12,15 +12,15 @@ import { BABA, BabaStr } from "../BABA";
 
 import { bricksDao } from "../dao/bricksDao";
 import { groupDao } from "../dao/groupDao";
-import { BricksNormalId, defaultProblem, IQuickItemEx } from "../model/ConstDefind";
-import { BricksNode } from "../model/NodeModel";
+import { BricksNormalId, IQuickItemEx } from "../model/ConstDefind";
+import { TreeNodeModel, TreeNodeType } from "../model/TreeNodeModel";
 
 // 视图控制器
 class BricksViewController implements Disposable {
   // 需要的
   public async getHaveNodes() {
     let all_qid: string[] = await bricksDao.getTodayBricks();
-    const baseNode: BricksNode[] = [];
+    const baseNode: TreeNodeModel[] = [];
     all_qid.forEach((qid) => {
       let node = BABA.getProxy(BabaStr.QuestionDataProxy).getNodeByQid(qid);
       if (node) {
@@ -34,17 +34,17 @@ class BricksViewController implements Disposable {
     // 增加tooltip
     let all_qid: string[] = await bricksDao.getTodayBricksSubmit();
     let qid_tip = await bricksDao.getTodayBricksSubmitToolTip(all_qid);
-    const baseNode: BricksNode[] = [];
+    const baseNode: TreeNodeModel[] = [];
     all_qid.forEach((qid) => {
       let node = BABA.getProxy(BabaStr.QuestionDataProxy).getNodeByQid(qid);
       if (node) {
-        let new_obj = new BricksNode(
-          Object.assign({}, node.data, {}),
-          true,
-          node.user_score,
-          TreeItemCollapsibleState.None,
-          0,
-          qid_tip.get(qid)
+        let new_obj = new TreeNodeModel(
+          Object.assign({}, node.get_data(), {
+            collapsibleState: TreeItemCollapsibleState.None,
+            groupTime: 0,
+            toolTip: qid_tip.get(qid),
+          }),
+          TreeNodeType.BricksDataLeaf
         );
         baseNode.push(new_obj);
       }
@@ -52,22 +52,22 @@ class BricksViewController implements Disposable {
     return baseNode;
   }
 
-  public async getDiyNode(element: BricksNode) {
+  public async getDiyNode(element: TreeNodeModel) {
     let time = element.groupTime;
     if (time == undefined) {
       return [];
     }
     let all_qid: string[] = await groupDao.getQidByTime(time);
-    const baseNode: BricksNode[] = [];
+    const baseNode: TreeNodeModel[] = [];
     all_qid.forEach((qid) => {
       let node = BABA.getProxy(BabaStr.QuestionDataProxy).getNodeByQid(qid);
       if (node) {
-        let new_obj = new BricksNode(
-          Object.assign({}, node.data, {}),
-          true,
-          node.user_score,
-          TreeItemCollapsibleState.None,
-          time
+        let new_obj = new TreeNodeModel(
+          Object.assign({}, node.get_data(), {
+            collapsibleState: TreeItemCollapsibleState.None,
+            groupTime: time,
+          }),
+          TreeNodeType.BricksDataLeaf
         );
         baseNode.push(new_obj);
       }
@@ -75,23 +75,22 @@ class BricksViewController implements Disposable {
     return baseNode;
   }
 
-  public async getRootNodes(): Promise<BricksNode[]> {
+  public async getRootNodes(): Promise<TreeNodeModel[]> {
     let all_qid: string[] = await bricksDao.getTodayBricks();
     let all_submit_qid: string[] = await bricksDao.getTodayBricksSubmit();
 
     let has_qid = all_qid.length > 0;
     let has_submit = all_submit_qid.length > 0;
-    const baseNode: BricksNode[] = [];
+    const baseNode: TreeNodeModel[] = [];
     // 监工
     baseNode.push(
-      new BricksNode(
-        Object.assign({}, defaultProblem, {
+      new TreeNodeModel(
+        {
           id: has_qid ? BricksNormalId.Have : BricksNormalId.No,
           name: has_qid ? BricksNormalId.HaveDesc : BricksNormalId.NoDesc,
-        }),
-        false,
-        0,
-        has_qid ? TreeItemCollapsibleState.Collapsed : TreeItemCollapsibleState.None
+          collapsibleState: has_qid ? TreeItemCollapsibleState.Collapsed : TreeItemCollapsibleState.None,
+        },
+        TreeNodeType.BricksDataNormal
       )
     );
 
@@ -106,16 +105,15 @@ class BricksViewController implements Disposable {
       });
 
       baseNode.push(
-        new BricksNode(
-          Object.assign({}, defaultProblem, {
+        new TreeNodeModel(
+          {
             id: BricksNormalId.Today,
             name:
               `今天搬了${all_submit_qid.length}块砖,赚了${temp_score}分` +
               (all_submit_qid.length > 3 ? ",又是上分的一天~" : ",别吹牛了,赶紧干活啊!!!"),
-          }),
-          false,
-          0,
-          TreeItemCollapsibleState.Collapsed
+            collapsibleState: TreeItemCollapsibleState.Collapsed,
+          },
+          TreeNodeType.BricksDataNormal
         )
       );
     }
@@ -123,15 +121,15 @@ class BricksViewController implements Disposable {
     let all_group = await groupDao.getAllGroup();
     all_group.forEach((element) => {
       baseNode.push(
-        new BricksNode(
-          Object.assign({}, defaultProblem, {
+        new TreeNodeModel(
+          {
             id: BricksNormalId.DIY,
             name: element.name,
-          }),
-          false,
-          0,
-          TreeItemCollapsibleState.Collapsed,
-          element.time
+            collapsibleState: TreeItemCollapsibleState.Collapsed,
+            groupTime: element.time,
+          },
+
+          TreeNodeType.BricksDataNormal
         )
       );
     });
@@ -139,7 +137,7 @@ class BricksViewController implements Disposable {
     return baseNode;
   }
 
-  public async setBricksType(node: BricksNode, type) {
+  public async setBricksType(node: TreeNodeModel, type) {
     await BABA.getProxy(BabaStr.BricksDataProxy).setBricksType(node, type);
   }
   public dispose(): void {}
@@ -163,7 +161,7 @@ class BricksViewController implements Disposable {
     BABA.sendNotification(BabaStr.BricksData_removeBrickGroupFinish);
   }
 
-  public async addQidToGroup(node: BricksNode) {
+  public async addQidToGroup(node: TreeNodeModel) {
     const picks: Array<IQuickItemEx<string>> = [];
 
     let all_group = await BABA.getProxy(BabaStr.BricksDataProxy).getAllGroup();

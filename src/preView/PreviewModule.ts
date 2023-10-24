@@ -8,15 +8,16 @@
  */
 
 import { commands, ViewColumn } from "vscode";
-import { Endpoint, IProblem, IWebViewOption } from "../model/ConstDefind";
+import { Endpoint, IWebViewOption } from "../model/ConstDefind";
 import { getLeetCodeEndpoint } from "../utils/ConfigUtils";
 import { BaseWebViewService } from "../service/BaseWebviewService";
 import { markdownService } from "../service/MarkdownService";
 import { BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
+import { TreeNodeModel } from "../model/TreeNodeModel";
 
 class PreviewService extends BaseWebViewService {
   protected readonly viewType: string = "leetcode.preview";
-  private node: IProblem;
+  private node: TreeNodeModel;
   private description: IDescription;
   private sideMode: boolean = false;
 
@@ -24,7 +25,7 @@ class PreviewService extends BaseWebViewService {
     return this.sideMode;
   }
 
-  public show(descString: string, node: IProblem, isSideMode: boolean = false): void {
+  public show(descString: string, node: TreeNodeModel, isSideMode: boolean = false): void {
     this.description = this.parseDescription(descString, node);
     this.node = node;
     this.sideMode = isSideMode;
@@ -147,7 +148,7 @@ class PreviewService extends BaseWebViewService {
     }
   }
 
-  private parseDescription(descString: string, problem: IProblem): IDescription {
+  private parseDescription(descString: string, problem: TreeNodeModel): IDescription {
     let preview_data = JSON.parse(descString);
     return {
       title: problem.name,

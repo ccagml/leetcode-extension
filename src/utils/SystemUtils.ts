@@ -10,7 +10,7 @@
 import * as fs from "fs";
 import * as _ from "lodash";
 import * as path from "path";
-import { IProblem, langExt } from "../model/ConstDefind";
+import { langExt } from "../model/ConstDefind";
 
 import { isUseVscodeNode, isUseWsl } from "./ConfigUtils";
 import { Uri, window, TextEditor } from "vscode";
@@ -19,6 +19,7 @@ import { fileMeta, ProblemMeta } from "../utils/problemUtils";
 import * as cp from "child_process";
 import * as vscode from "vscode";
 import { BABA, BabaStr } from "../BABA";
+import { TreeNodeModel } from "../model/TreeNodeModel";
 
 export function isWindows(): boolean {
   return process.platform === "win32";
@@ -55,7 +56,7 @@ export function genFileExt(language: string): string {
   return ext;
 }
 
-export function genFileName(node: IProblem, language: string): string {
+export function genFileName(node: TreeNodeModel, language: string): string {
   const slug: string = _.kebabCase(node.name);
   const ext: string = genFileExt(language);
   return `${node.id}.${slug}.${ext}`;

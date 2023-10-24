@@ -8,16 +8,16 @@
  */
 
 import { TreeDataProvider, EventEmitter, Event, TreeItem, TreeItemCollapsibleState } from "vscode";
-import { BricksNormalId, defaultProblem, ISubmitEvent } from "../model/ConstDefind";
+import { BricksNormalId, ISubmitEvent } from "../model/ConstDefind";
 import { bricksViewController } from "../controller/BricksViewController";
-import { BricksNode } from "../model/NodeModel";
+import { TreeNodeModel, TreeNodeType } from "../model/TreeNodeModel";
 import { bricksDao } from "../dao/bricksDao";
 import { groupDao } from "../dao/groupDao";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 
-export class BricksDataService implements TreeDataProvider<BricksNode> {
-  private onDidChangeTreeDataEvent: EventEmitter<BricksNode | undefined | null> = new EventEmitter<
-    BricksNode | undefined | null
+export class BricksDataService implements TreeDataProvider<TreeNodeModel> {
+  private onDidChangeTreeDataEvent: EventEmitter<TreeNodeModel | undefined | null> = new EventEmitter<
+    TreeNodeModel | undefined | null
   >();
   // tslint:disable-next-line:member-ordering
   public readonly onDidChangeTreeData: Event<any> = this.onDidChangeTreeDataEvent.event;
@@ -32,7 +32,7 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
   }
 
   // 节点的内容
-  public getTreeItem(element: BricksNode): TreeItem | Thenable<TreeItem> {
+  public getTreeItem(element: TreeNodeModel): TreeItem | Thenable<TreeItem> {
     if (element.id === "notSignIn") {
       return {
         label: element.name,
@@ -65,18 +65,17 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
   }
 
   // 获取子节点信息
-  public async getChildren(element?: BricksNode | undefined): Promise<BricksNode[] | null | undefined> {
+  public async getChildren(element?: TreeNodeModel | undefined): Promise<TreeNodeModel[] | null | undefined> {
     let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
     if (!sbp.getUser()) {
       return [
-        new BricksNode(
-          Object.assign({}, defaultProblem, {
+        new TreeNodeModel(
+          {
             id: "notSignIn",
             name: "工头说你不是我们工地的人",
-          }),
-          false,
-          0,
-          TreeItemCollapsibleState.None
+            collapsibleState: TreeItemCollapsibleState.None,
+          },
+          TreeNodeType.BricksDataNormal
         ),
       ];
     }
@@ -103,25 +102,25 @@ export class BricksDataService implements TreeDataProvider<BricksNode> {
   public async checkSubmit(e: ISubmitEvent) {
     if (e.sub_type == "submit" && e.accepted) {
       let qid: string = e.qid.toString();
-      bricksDao.addSubmitTimeByQid(qid);
+      await bricksDao.addSubmitTimeByQid(qid);
       BABA.sendNotification(BabaStr.BricksData_submitAndAccepted);
     }
   }
 
-  public async setBricksType(node: BricksNode, type) {
+  public async setBricksType(node: TreeNodeModel, type) {
     let qid: string = node.qid.toString();
     bricksDao.setTypeByQid(qid, type);
     BABA.sendNotification(BabaStr.BricksData_setBricksTypeFinish);
   }
 
-  private parseIconPathFromProblemState(element: BricksNode): string {
+  private parseIconPathFromProblemState(element: TreeNodeModel): string {
     switch (element.state) {
       default:
         return "";
     }
   }
 
-  private getSubCategoryTooltip(element: BricksNode): string {
+  private getSubCategoryTooltip(element: TreeNodeModel): string {
     // return '' unless it is a sub-category node
     if (element.id === "ROOT") {
       return "";
@@ -154,7 +153,7 @@ export class BricksDataProxy extends BABAProxy {
     super(BricksDataProxy.NAME);
   }
 
-  public async setBricksType(node: BricksNode, type) {
+  public async setBricksType(node: TreeNodeModel, type) {
     bricksDataService.setBricksType(node, type);
   }
 
@@ -204,6 +203,7 @@ export class BricksDataMediator extends BABAMediator {
       BabaStr.BricksData_removeBrickGroupFinish,
       BabaStr.BricksData_addQidToGroupFinish,
       BabaStr.BricksData_removeQidFromGroupFinish,
+      BabaStr.CommitResult_showFinish,
     ];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -234,7 +234,7 @@ export class BricksDataMediator extends BABAMediator {
         bricksDataService.fire();
         break;
       case BabaStr.CommitResult_showFinish:
-        bricksDataService.checkSubmit(_notification.getBody());
+        await bricksDataService.checkSubmit(_notification.getBody());
 
       case BabaStr.BABACMD_setBricksType:
         bricksViewController.setBricksType(body.node, body.type);

@@ -449,7 +449,7 @@
                 },
                 {
                     "command": "lcpr.addQidToGroup",
-                    "when": "view == BricksExplorer && viewItem != nodebricksdiy",
+                    "when": "view == BricksExplorer && viewItem != nodebricksdiy && viewItem != brickshave && viewItem != brickstoday && viewItem != bricksdiy",
                     "group": "leetcode@5"
                 },
                 {

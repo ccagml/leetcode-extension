@@ -8,21 +8,21 @@
  */
 
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
-import { IProblem, ISubmitEvent, OutPutType, ProblemState, RootNodeSort, UserStatus } from "../model/ConstDefind";
-import { NodeModel } from "../model/NodeModel";
+import { ISubmitEvent, OutPutType, ProblemState, UserStatus } from "../model/ConstDefind";
+import { IQuestionData, TreeNodeModel, TreeNodeType } from "../model/TreeNodeModel";
 
 import { isShowLocked, isUseEndpointTranslation } from "../utils/ConfigUtils";
 import { ShowMessage } from "../utils/OutputUtils";
 
 class QuestionData {
-  private explorerNodeMap: Map<string, NodeModel> = new Map<string, NodeModel>();
+  private fidMapQuestionData: Map<string, TreeNodeModel> = new Map<string, TreeNodeModel>();
   private fidToQid: Map<string, string> = new Map<string, string>();
   private qidToFid: Map<string, string> = new Map<string, string>();
   private companySet: Set<string> = new Set<string>();
   private tagSet: Set<string> = new Set<string>();
 
   public clearCache(): void {
-    this.explorerNodeMap.clear();
+    this.fidMapQuestionData.clear();
     this.companySet.clear();
     this.tagSet.clear();
     this.fidToQid.clear();
@@ -30,24 +30,25 @@ class QuestionData {
   }
 
   public async ReBuildQuestionData() {
-    let user_score = BABA.getProxy(BabaStr.StatusBarProxy).getUserContestScore();
-    for (const problem of await BABA.getProxy(BabaStr.QuestionDataProxy).getAllProblems()) {
-      this.explorerNodeMap.set(problem.id, new NodeModel(problem, true, user_score));
-      this.fidToQid.set(problem.id, problem.qid.toString());
-      this.qidToFid.set(problem.qid.toString(), problem.id);
+    let all_data = await BABA.getProxy(BabaStr.QuestionDataProxy).getAllQuestionData();
+    for (const problem of all_data) {
+      let TreeNodeObj = new TreeNodeModel(problem, TreeNodeType.TreeQuestionData);
+      this.fidMapQuestionData.set(TreeNodeObj.id, TreeNodeObj);
+      this.fidToQid.set(TreeNodeObj.id, TreeNodeObj.qid.toString());
+      this.qidToFid.set(TreeNodeObj.qid.toString(), TreeNodeObj.id);
 
-      for (const company of problem.companies) {
+      for (const company of TreeNodeObj.companies) {
         this.companySet.add(company);
       }
-      for (const tag of problem.tags) {
+      for (const tag of TreeNodeObj.tags) {
         this.tagSet.add(tag);
       }
     }
 
     BABA.sendNotification(BabaStr.QuestionData_ReBuildQuestionDataFinish);
   }
-  public getExplorerNodeMap(): Map<string, NodeModel> {
-    return this.explorerNodeMap;
+  public getfidMapQuestionData(): Map<string, TreeNodeModel> {
+    return this.fidMapQuestionData;
   }
 
   public getCompanySet() {
@@ -64,7 +65,7 @@ class QuestionData {
   }
   public checkSubmit(e: ISubmitEvent) {
     if (e.sub_type == "submit" && e.accepted) {
-      if (this.explorerNodeMap.get(e.fid)?.state != ProblemState.AC) {
+      if (this.fidMapQuestionData.get(e.fid)?.state != ProblemState.AC) {
         BABA.sendNotification(BabaStr.QuestionData_submitNewAccept);
       }
     }
@@ -79,8 +80,8 @@ export class QuestionDataProxy extends BABAProxy {
     super(QuestionDataProxy.NAME);
   }
 
-  public getExplorerNodeMap(): Map<string, NodeModel> {
-    return questionData.getExplorerNodeMap();
+  public getfidMapQuestionData(): Map<string, TreeNodeModel> {
+    return questionData.getfidMapQuestionData();
   }
 
   public getCompanySet() {
@@ -90,11 +91,11 @@ export class QuestionDataProxy extends BABAProxy {
     return questionData.getTagSet();
   }
 
-  public getNodeById(id: string): NodeModel | undefined {
-    return this.getExplorerNodeMap().get(id);
+  public getNodeById(id: string): TreeNodeModel | undefined {
+    return this.getfidMapQuestionData().get(id);
   }
 
-  public getNodeByQid(qid: string): NodeModel | undefined {
+  public getNodeByQid(qid: string): TreeNodeModel | undefined {
     let new_qid = qid.toString();
     return this.getNodeById(questionData.getQidToFid().get(new_qid) || "");
   }
@@ -103,7 +104,7 @@ export class QuestionDataProxy extends BABAProxy {
     return questionData.getFidToQid().get(id);
   }
 
-  public async getAllProblems(): Promise<IProblem[]> {
+  public async getAllQuestionData(): Promise<IQuestionData[]> {
     try {
       let sbp = BABA.getProxy(BabaStr.StatusBarProxy);
       if (sbp.getStatus() === UserStatus.SignedOut) {
@@ -119,10 +120,10 @@ export class QuestionDataProxy extends BABAProxy {
       if (!showLockedFlag) {
         all_problem_info = all_problem_info.filter((p) => !p.locked);
       }
-      const problems: IProblem[] = [];
-      const AllScoreData = BABA.getProxy(BabaStr.TreeDataProxy).getScoreData();
-      // 增加直接在线获取分数数据
-      const AllScoreDataOnline = await BABA.getProxy(BabaStr.TreeDataProxy).getScoreDataOnline();
+      const problems: IQuestionData[] = [];
+      // const AllScoreData = BABA.getProxy(BabaStr.TreeDataProxy).getScoreData();
+      // // 增加直接在线获取分数数据
+      // const AllScoreDataOnline = await BABA.getProxy(BabaStr.TreeDataProxy).getScoreDataOnline();
       for (const p of all_problem_info) {
         problems.push({
           id: p.fid,
@@ -136,12 +137,6 @@ export class QuestionDataProxy extends BABAProxy {
           difficulty: p.level,
           passRate: p.percent,
           companies: p.companies || [],
-          tags: BABA.getProxy(BabaStr.TreeDataProxy).getTagsData(p.fid),
-          scoreData: AllScoreDataOnline.get(p.fid) || AllScoreData.get(p.fid),
-          isSearchResult: false,
-          input: "",
-          rootNodeSortId: RootNodeSort.ZERO,
-          todayData: undefined,
         });
       }
       return problems.reverse();
