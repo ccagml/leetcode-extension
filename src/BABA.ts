@@ -101,6 +101,8 @@ export enum BabaStr {
   BABACMD_newBrickGroup = "BABACMD_newBrickGroup",
   BABACMD_addQidToGroup = "BABACMD_addQidToGroup",
   BABACMD_removeBrickGroup = "BABACMD_removeBrickGroup",
+  BABACMD_removeBricksHave = "BABACMD_removeBricksHave",
+  BricksData_removeBricksHaveFinish = "BricksData_removeBricksHaveFinish",
   BABACMD_removeQidFromGroup = "BABACMD_removeQidFromGroup",
   DebugProxy = "DebugProxy",
   DebugMediator = "DebugMediator",

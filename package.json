@@ -253,6 +253,11 @@
                 "command": "lcpr.simpleDebug",
                 "title": "%main.contributes.commands.lcpr.simpleDebug.title%",
                 "icon": "$(remove)"
+            },
+            {
+                "command": "lcpr.removeBricksHave",
+                "title": "%main.contributes.commands.lcpr.removeBricksHave.title%",
+                "icon": "$(remove)"
             }
         ],
         "viewsContainers": {
@@ -450,6 +455,11 @@
                 {
                     "command": "lcpr.addQidToGroup",
                     "when": "view == BricksExplorer && viewItem != nodebricksdiy && viewItem != brickshave && viewItem != brickstoday && viewItem != bricksdiy",
+                    "group": "leetcode@5"
+                },
+                {
+                    "command": "lcpr.removeBricksHave",
+                    "when": "view == BricksExplorer && viewItem == brickshave",
                     "group": "leetcode@5"
                 },
                 {

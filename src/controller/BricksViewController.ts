@@ -20,11 +20,20 @@ class BricksViewController implements Disposable {
   // 需要的
   public async getHaveNodes() {
     let all_qid: string[] = await bricksDao.getTodayBricks();
+    let qid_tip = await bricksDao.getLastSubmitTimeToolTip(all_qid);
     const baseNode: TreeNodeModel[] = [];
     all_qid.forEach((qid) => {
       let node = BABA.getProxy(BabaStr.QuestionDataProxy).getNodeByQid(qid);
       if (node) {
-        baseNode.push(node);
+        let new_obj = new TreeNodeModel(
+          Object.assign({}, node.get_data(), {
+            collapsibleState: TreeItemCollapsibleState.None,
+            groupTime: 0,
+            toolTip: qid_tip.get(qid),
+          }),
+          TreeNodeType.BricksDataLeaf
+        );
+        baseNode.push(new_obj);
       }
     });
     return baseNode;
@@ -194,6 +203,12 @@ class BricksViewController implements Disposable {
   public async removeQidFromGroup(node) {
     groupDao.removeQidFromTime(node.qid, node.groupTime);
     BABA.sendNotification(BabaStr.BricksData_removeQidFromGroupFinish);
+  }
+
+  public async removeBricksHave() {
+    let all_qid: string[] = await bricksDao.getTodayBricks();
+    await bricksDao.addQidSubmitTime(all_qid);
+    BABA.sendNotification(BabaStr.BricksData_removeBricksHaveFinish);
   }
 }
 

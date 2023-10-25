@@ -37,6 +37,7 @@
     "main.contributes.commands.lcpr.newBrickGroup.title": "new category",
     "main.contributes.commands.lcpr.addQidToGroup.title": "add to category",
     "main.contributes.commands.lcpr.removeBrickGroup.title": "delete category",
+    "main.contributes.commands.lcpr.removeBricksHave.title": "remove bricks have",
     "main.contributes.commands.lcpr.removeQidFromGroup.title": "remove this",
     "main.contributes.commands.lcpr.includeTemplates.title": "insert template",
     "main.contributes.commands.lcpr.simpleDebug.title": "simple debug",

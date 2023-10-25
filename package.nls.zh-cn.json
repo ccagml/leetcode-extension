@@ -37,6 +37,7 @@
     "main.contributes.commands.lcpr.newBrickGroup.title": "新建一个自定义分类",
     "main.contributes.commands.lcpr.addQidToGroup.title": "添加题目到自定义分类",
     "main.contributes.commands.lcpr.removeBrickGroup.title": "移除这个自定义分类",
+    "main.contributes.commands.lcpr.removeBricksHave.title": "砖头太多搬不过来了,重置砖头",
     "main.contributes.commands.lcpr.removeQidFromGroup.title": "从分类中移除这个题目",
     "main.contributes.commands.lcpr.includeTemplates.title": "插入头文件模板",
     "main.contributes.commands.lcpr.simpleDebug.title": "简单调试",

@@ -204,6 +204,8 @@ export class BricksDataMediator extends BABAMediator {
       BabaStr.BricksData_addQidToGroupFinish,
       BabaStr.BricksData_removeQidFromGroupFinish,
       BabaStr.CommitResult_showFinish,
+      BabaStr.BricksData_removeBricksHaveFinish,
+      BabaStr.BABACMD_removeBricksHave,
     ];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -231,6 +233,7 @@ export class BricksDataMediator extends BABAMediator {
       case BabaStr.ConfigChange_hideScore:
       case BabaStr.ConfigChange_SortStrategy:
       case BabaStr.TreeData_favoriteChange:
+      case BabaStr.BricksData_removeBricksHaveFinish:
         bricksDataService.fire();
         break;
       case BabaStr.CommitResult_showFinish:
@@ -250,6 +253,9 @@ export class BricksDataMediator extends BABAMediator {
         break;
       case BabaStr.BABACMD_removeQidFromGroup:
         bricksViewController.removeQidFromGroup(body);
+        break;
+      case BabaStr.BABACMD_removeBricksHave:
+        bricksViewController.removeBricksHave();
         break;
       default:
         break;
