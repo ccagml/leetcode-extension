@@ -13,7 +13,7 @@ import * as os from "os";
 import * as path from "path";
 import { ExtensionContext, ProgressLocation, Progress } from "vscode";
 import { ConfigurationChangeEvent, Disposable, MessageItem, window, workspace } from "vscode";
-import { DialogOptions, OutPutType, Endpoint, leetcodeHasInited } from "../model/ConstDefind";
+import { DialogOptions, OutPutType, Endpoint, leetcodeHasInited, IQuickItemEx } from "../model/ConstDefind";
 import { getLeetCodeEndpoint, getNodePath } from "../utils/ConfigUtils";
 import { openUrl, ShowMessage } from "../utils/OutputUtils";
 import * as systemUtils from "../utils/SystemUtils";
@@ -175,11 +175,81 @@ class ExecuteService implements Disposable {
     if (!needTranslation) {
       cmd.push("-T");
     }
+    let solution;
     if (cn_help) {
       cmd.push("-f");
+      solution = await this.callWithMsg(
+        "正在获取中文题解~~~",
+        this.nodeExecutable,
+        cmd,
+        undefined,
+        this.tryCnMulSolution,
+        {}
+      );
+    } else {
+      solution = await this.callWithMsg("正在获取题解~~~", this.nodeExecutable, cmd);
     }
-    const solution: string = await this.callWithMsg("正在获取题解~~~", this.nodeExecutable, cmd);
+
     return solution;
+  }
+
+  public async tryCnMulSolution(_, child_process, resolve, reject) {
+    child_process.stdout?.on("data", async (data: string | Buffer) => {
+      data = data.toString();
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(data);
+      let successMatch: any;
+      try {
+        successMatch = JSON.parse(data);
+      } catch (e) {
+        successMatch = {};
+      }
+
+      if (successMatch.oper == "requireOper") {
+        let cookie = successMatch.cookie;
+        let arg = successMatch.arg;
+        if (arg.oper == "need_select") {
+          let canSelect = arg.canSelect || [];
+          const picks: Array<IQuickItemEx<string>> = [];
+
+          canSelect.forEach((element) => {
+            if (element?.node?.slug) {
+              picks.push({
+                label: `${element?.node.title}`,
+                description: `作者:${element?.node?.author?.username}`,
+                detail: "",
+                value: element?.node?.slug,
+              });
+            }
+          });
+
+          const choice: IQuickItemEx<string> | undefined = await window.showQuickPick(picks, {
+            ignoreFocusOut: true,
+          });
+          if (!choice) {
+            child_process.stdin?.end();
+            return reject(new Error(successMatch.msg));
+          }
+
+          let select_result = {
+            c: cookie,
+            slug: choice.value,
+          };
+          child_process.stdin?.write(JSON.stringify(select_result));
+        }
+        return;
+      }
+      if (successMatch.code == 100) {
+        child_process.stdin?.end();
+        return resolve(data);
+      } else if (successMatch.code < 0) {
+        child_process.stdin?.end();
+        return reject(new Error(successMatch.msg));
+      }
+    });
+    child_process.stderr?.on("data", (data: string | Buffer) => {
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(data.toString());
+    });
+    child_process.on("error", reject);
   }
 
   public async getUserContest(needTranslation: boolean, username: string): Promise<string> {
