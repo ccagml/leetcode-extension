@@ -25,7 +25,6 @@ import {
   SearchSetTypeName,
   RootNodeSort,
   SearchSetType,
-  ISubmitEvent,
   SORT_ORDER,
   OutPutType,
   TestSolutionType,
@@ -923,8 +922,6 @@ class TreeViewController implements Disposable {
     this.waitTodayQuestion = false;
     this.searchSet = new Map<string, ISearchSet>();
   }
-
-
 
   public async refreshCheck(): Promise<void> {
     let sbp = BABA.getProxy(BabaStr.StatusBarProxy);

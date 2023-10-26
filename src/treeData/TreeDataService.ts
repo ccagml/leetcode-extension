@@ -10,15 +10,7 @@
 // import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
-import {
-  Category,
-  ProblemState,
-  SearchSetType,
-  ISubmitEvent,
-  OutPutType,
-  Endpoint,
-  IQuickItemEx,
-} from "../model/ConstDefind";
+import { Category, ProblemState, SearchSetType, OutPutType, Endpoint, IQuickItemEx } from "../model/ConstDefind";
 import { treeViewController } from "../controller/TreeViewController";
 import { TreeNodeModel, TreeNodeType } from "../model/TreeNodeModel";
 import { choiceDao } from "../dao/choiceDao";
