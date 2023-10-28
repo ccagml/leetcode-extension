@@ -8,11 +8,12 @@
  */
 
 import { Disposable, StatusBarItem, window, workspace, ConfigurationChangeEvent } from "vscode";
-import { IProblem, ISubmitEvent, OutPutType } from "../model/Model";
-import { promptForOpenOutputChannel } from "../utils/OutputUtils";
+import { ISubmitEvent, OutPutType } from "../model/ConstDefind";
+import { ShowMessage } from "../utils/OutputUtils";
 import { getDayNow } from "../utils/SystemUtils";
 import { enableTimerBar } from "../utils/ConfigUtils";
 import { BABAMediator, BABAProxy, BaseCC, BabaStr } from "../BABA";
+import { TreeNodeModel } from "../model/TreeNodeModel";
 
 // 状态栏工具
 class StatusBarTimeService implements Disposable {
@@ -23,7 +24,7 @@ class StatusBarTimeService implements Disposable {
   private resetBar: StatusBarItem;
   private startTime: number;
   private saveTime: number;
-  private questionNode: IProblem;
+  private questionNode: TreeNodeModel;
 
   constructor() {
     this.showBar = window.createStatusBarItem(undefined, 1004);
@@ -96,7 +97,7 @@ class StatusBarTimeService implements Disposable {
     if (e.sub_type == "submit" && e.accepted) {
       let msg = this.getCostTimeStr();
       if (msg) {
-        promptForOpenOutputChannel(`${e.fid}耗时${msg}`, OutPutType.info);
+        ShowMessage(`${e.fid}耗时${msg}`, OutPutType.info);
       }
       this.stop();
     }
@@ -191,19 +192,20 @@ export class StatusBarTimeMediator extends BABAMediator {
     return [
       BabaStr.every_second,
       BabaStr.submit,
+      BabaStr.CommitResult_showFinish,
       BabaStr.showProblemFinish,
       BabaStr.VSCODE_DISPOST,
-      BabaStr.statusBarTime_start,
-      BabaStr.statusBarTime_stop,
-      BabaStr.statusBarTime_reset,
+      BabaStr.BABACMD_statusBarTime_start,
+      BabaStr.BABACMD_statusBarTime_stop,
+      BabaStr.BABACMD_statusBarTime_reset,
     ];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
       case BabaStr.every_second:
         statusBarTimeService.updateSecond();
         break;
-      case BabaStr.submit:
+      case BabaStr.CommitResult_showFinish:
         statusBarTimeService.checkSubmit(_notification.getBody());
         break;
       case BabaStr.showProblemFinish:
@@ -212,13 +214,13 @@ export class StatusBarTimeMediator extends BABAMediator {
       case BabaStr.VSCODE_DISPOST:
         statusBarTimeService.dispose();
         break;
-      case BabaStr.statusBarTime_start:
+      case BabaStr.BABACMD_statusBarTime_start:
         statusBarTimeService.start();
         break;
-      case BabaStr.statusBarTime_stop:
+      case BabaStr.BABACMD_statusBarTime_stop:
         statusBarTimeService.stop();
         break;
-      case BabaStr.statusBarTime_reset:
+      case BabaStr.BABACMD_statusBarTime_reset:
         statusBarTimeService.reset();
         break;
       default:

@@ -8,10 +8,10 @@
  */
 
 import { selectWorkspaceFolder } from "../utils/ConfigUtils";
-import { useWsl, toWinPath, getDayStart, getDayNow, getYMD } from "../utils/SystemUtils";
+import { useWsl, toWinPath, getDayStart, getDayNow, getYMD, getDayEnd } from "../utils/SystemUtils";
 import * as path from "path";
 import * as fse from "fs-extra";
-import { BricksType, BricksTypeName } from "../model/Model";
+import { BricksType, BricksTypeName } from "../model/ConstDefind";
 
 // let bricks_json = {
 //   version: 1,
@@ -158,15 +158,34 @@ class BricksDao {
     return all_qid;
   }
 
+  public async getLastSubmitTimeToolTip(qid_list: Array<string>) {
+    let all_bricks = await this.getAllBricks();
+    let result: Map<string, string> = new Map<string, string>();
+    qid_list.forEach((qid) => {
+      const value = all_bricks[qid];
+      const submit_time = value.submit_time || [];
+      const submit_size = submit_time.length;
+      if (submit_size >= 1) {
+        result.set(qid, `${getYMD(submit_time[submit_size - 1])}日提交`);
+      }
+    });
+    return result;
+  }
+
   public async getTodayBricksSubmit(): Promise<string[]> {
     let today_time = getDayStart();
+    let today_time_end = getDayEnd();
     let all_bricks = await this.getAllBricks();
     let all_qid: Array<string> = [];
     for (const qid in all_bricks) {
       const value = all_bricks[qid];
       const submit_time = value.submit_time || [];
       let submit_size = submit_time.length;
-      if (submit_size > 0 && submit_time[submit_size - 1] >= today_time) {
+      if (
+        submit_size > 0 &&
+        submit_time[submit_size - 1] >= today_time &&
+        submit_time[submit_size - 1] <= today_time_end
+      ) {
         all_qid.push(qid);
       }
     }
@@ -209,6 +228,20 @@ class BricksDao {
     let all_data = await this._read_data();
     let temp = all_data.all_bricks || {};
     temp[qid] = info;
+    all_data.all_bricks = temp;
+    await this._write_data(all_data);
+  }
+  // 清空
+  public async addQidSubmitTime(qid_list: string[]) {
+    let all_data = await this._read_data();
+    let temp = all_data.all_bricks || {};
+    qid_list.forEach((qid) => {
+      const value = temp[qid] || {};
+      const submit_time = value.submit_time || [];
+      submit_time.push(2012345678);
+      value.submit_time = submit_time;
+      temp[qid] = value;
+    });
     all_data.all_bricks = temp;
     await this._write_data(all_data);
   }

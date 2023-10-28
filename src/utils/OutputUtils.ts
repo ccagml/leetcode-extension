@@ -9,7 +9,7 @@
 
 import * as vscode from "vscode";
 import { BABA, BabaStr } from "../BABA";
-import { DialogOptions, OutPutType } from "../model/Model";
+import { DialogOptions, OutPutType } from "../model/ConstDefind";
 import { getLeetCodeEndpoint, getVsCodeConfig } from "./ConfigUtils";
 
 export async function openUrl(url: string): Promise<void> {
@@ -60,7 +60,7 @@ export async function promptForSignIn(): Promise<void> {
   }
 }
 
-export async function promptForOpenOutputChannel(message: string, type: OutPutType): Promise<void> {
+export async function ShowMessage(message: string, type: OutPutType): Promise<void> {
   let result: vscode.MessageItem | undefined;
   switch (type) {
     case OutPutType.info:

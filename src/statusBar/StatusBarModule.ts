@@ -8,11 +8,10 @@
  */
 
 import { ConfigurationChangeEvent, Disposable, workspace, StatusBarItem, window } from "vscode";
-import { UserStatus, userContestRanKingBase } from "../model/Model";
+import { UserStatus, userContestRanKingBase } from "../model/ConstDefind";
 import { enableStatusBar } from "../utils/ConfigUtils";
-import { eventService } from "../service/EventService";
-import { executeService } from "../service/ExecuteService";
-import { BabaStr, BABAMediator, BABAProxy, BaseCC } from "../BABA";
+
+import { BabaStr, BABAMediator, BABAProxy, BaseCC, BABA } from "../BABA";
 
 // 状态栏工具
 class StatusBarService implements Disposable {
@@ -46,10 +45,8 @@ class StatusBarService implements Disposable {
 
   public async getLoginStatus(): Promise<void> {
     try {
-      const result: string = await executeService.getUserInfo();
-      // BUG: this.tryParseUserName(result)拿到的是对象,而不是字符串
+      const result: string = await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().getUserInfo();
       this.currentUser = this.tryParseUserName(result);
-      // this.currentUser = { ...result, user_name: result.login };
       this.userStatus = UserStatus.SignedIn;
       if (this.currentUser == undefined) {
         this.userStatus = UserStatus.SignedOut;
@@ -58,7 +55,11 @@ class StatusBarService implements Disposable {
       this.currentUser = undefined;
       this.userStatus = UserStatus.SignedOut;
     } finally {
-      eventService.emit("statusChanged", this.userStatus, this.currentUser);
+      if (this.userStatus == UserStatus.SignedOut) {
+        BABA.sendNotification(BabaStr.USER_LOGIN_OUT, { userStatus: this.userStatus, userName: this.currentUser });
+      } else {
+        BABA.sendNotification(BabaStr.USER_LOGIN_SUC, { userStatus: this.userStatus, userName: this.currentUser });
+      }
     }
   }
   private tryParseUserName(output: string): string | undefined {
@@ -122,9 +123,11 @@ class StatusBarService implements Disposable {
       this.update_UserContestInfo(undefined);
     }
     this.currentUser = user;
+    BABA.sendNotification(BabaStr.statusBar_update_statusFinish);
   }
   public update_UserContestInfo(UserContestInfo?: userContestRanKingBase | undefined) {
     this.currentUserContestInfo = UserContestInfo;
+    BABA.sendNotification(BabaStr.TreeData_searchUserContestFinish);
   }
 
   // 更新数据
@@ -181,25 +184,44 @@ export class StatusBarMediator extends BABAMediator {
     return [
       BabaStr.VSCODE_DISPOST,
       BabaStr.statusBar_update_status,
+      BabaStr.statusBar_update_statusFinish,
       BabaStr.statusBar_update,
       BabaStr.statusBar_update_UserContestInfo,
+      BabaStr.TreeData_searchUserContest,
+      BabaStr.TreeData_searchUserContestFinish,
+      BabaStr.USER_statusChanged,
+      BabaStr.USER_LOGIN_SUC,
+      BabaStr.USER_LOGIN_OUT,
+      BabaStr.InitLoginStatus,
     ];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    let body = _notification.getBody();
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         statusBarService.dispose();
         break;
       case BabaStr.statusBar_update_status:
-        let body = _notification.getBody();
-        statusBarService.update_status(body.userStatus, body.userName);
+
+      case BabaStr.USER_LOGIN_SUC:
+        statusBarService.update_status(UserStatus.SignedIn, body.userName);
+        break;
+      case BabaStr.USER_LOGIN_OUT:
+        statusBarService.update_status(UserStatus.SignedOut, undefined);
         break;
       case BabaStr.statusBar_update:
+      case BabaStr.statusBar_update_statusFinish:
         statusBarService.update();
         break;
-      case BabaStr.statusBar_update_UserContestInfo:
+      case BabaStr.TreeData_searchUserContest:
         statusBarService.update_UserContestInfo(_notification.getBody());
         break;
+      case BabaStr.statusBar_update_UserContestInfo:
+      case BabaStr.TreeData_searchUserContestFinish:
+        statusBarService.update();
+        break;
+      case BabaStr.InitLoginStatus:
+        await statusBarService.getLoginStatus();
       default:
         break;
     }

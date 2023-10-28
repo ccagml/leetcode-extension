@@ -29,6 +29,13 @@
             "continueOnAttach": true
         },
         {
+            "type": "node",
+            "request": "attach",
+            "name": "attach 9229",
+            "port": 9229, // 与子进程中的 --inspect 端口一致
+            "continueOnAttach": true
+        },
+        {
             "name": "Launch Tests",
             "type": "extensionHost",
             "request": "launch",
@@ -63,6 +70,16 @@
             ],
             "trace": true,
             "preLaunchTask": "window_npm"
+        },
+        {
+            "name": "debugcheck",
+            "program": "${workspaceFolder}/check_list_case.js",
+            "request": "launch",
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceRoot}/check_list_case.js"
+            ],
+            "type": "node"
         },
     ]
 }

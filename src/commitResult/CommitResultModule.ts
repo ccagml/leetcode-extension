@@ -8,14 +8,13 @@
  */
 
 import { ViewColumn, commands } from "vscode";
-import { BaseWebViewService } from "./BaseWebviewService";
-import { markdownService } from "./MarkdownService";
-import { ISubmitEvent, ITestSolutionData } from "../model/Model";
-import { IWebViewOption } from "../model/Model";
+import { BaseWebViewService } from "../service/BaseWebviewService";
+import { markdownService } from "../service/MarkdownService";
+import { ISubmitEvent, ITestSolutionData } from "../model/ConstDefind";
+import { IWebViewOption } from "../model/ConstDefind";
 import { promptHintMessage } from "../utils/OutputUtils";
 import { isAnswerDiffColor } from "../utils/ConfigUtils";
-import { eventService } from "./EventService";
-import { BABA, BabaStr } from "../BABA";
+import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 
 class SubmissionService extends BaseWebViewService {
   protected readonly viewType: string = "leetcode.submission";
@@ -43,7 +42,7 @@ class SubmissionService extends BaseWebViewService {
       let qid = submit_event?.qid?.toString();
       this.tempTestCase.set(qid, tsd);
     }
-    eventService.emit("submit", submit_event);
+    BABA.sendNotification(BabaStr.CommitResult_showFinish, submit_event);
   }
   public getSubmitEvent(): ISubmitEvent {
     return this.result.system_message as unknown as ISubmitEvent;
@@ -230,3 +229,42 @@ interface IResult {
 }
 
 export const submissionService: SubmissionService = new SubmissionService();
+
+export class CommitResultProxy extends BABAProxy {
+  static NAME = BabaStr.CommitResultProxy;
+  constructor() {
+    super(CommitResultProxy.NAME);
+  }
+
+  public getTSDByQid(qid: string): ITestSolutionData | undefined {
+    return submissionService.getTSDByQid(qid);
+  }
+}
+
+export class CommitResultMediator extends BABAMediator {
+  static NAME = BabaStr.CommitResultMediator;
+  constructor() {
+    super(CommitResultMediator.NAME);
+  }
+
+  listNotificationInterests(): string[] {
+    return [BabaStr.VSCODE_DISPOST, BabaStr.CommitResult_testSolutionResult, BabaStr.CommitResult_submitSolutionResult];
+  }
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
+    let body = _notification.getBody();
+    switch (_notification.getName()) {
+      case BabaStr.VSCODE_DISPOST:
+        submissionService.dispose();
+        break;
+
+      case BabaStr.CommitResult_testSolutionResult:
+        submissionService.show(body.resultString, body.tsd);
+        break;
+      case BabaStr.CommitResult_submitSolutionResult:
+        submissionService.show(body.resultString);
+        break;
+      default:
+        break;
+    }
+  }
+}

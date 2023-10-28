@@ -299,7 +299,7 @@ function getSolutionArticlesSlugList(question_slug: string, lang: string, cb) {
   opts.json = true;
   opts.body = {
     operationName: "questionSolutionArticles",
-    variables: { questionSlug: question_slug, first: 1, skip: 0, orderBy: "DEFAULT", tagSlugs: [lang] },
+    variables: { questionSlug: question_slug, first: 5, skip: 0, orderBy: "DEFAULT", tagSlugs: [lang] },
     query: [
       "query questionSolutionArticles($questionSlug: String!, $skip: Int, $first: Int, $orderBy: SolutionArticleOrderBy, $userInput: String, $tagSlugs: [String!]) {",
       "questionSolutionArticles(questionSlug: $questionSlug, skip: $skip, first: $first, orderBy: $orderBy, userInput: $userInput, tagSlugs: $tagSlugs) {",
@@ -317,6 +317,10 @@ function getSolutionArticlesSlugList(question_slug: string, lang: string, cb) {
       "fragment solutionArticle on SolutionArticleNode {",
       "      uuid",
       "      slug",
+      "      title",
+      "      author {",
+      "       username",
+      "      }",
       "  byLeetcode",
       "  __typename",
       "}",
@@ -333,7 +337,17 @@ function getSolutionArticlesSlugList(question_slug: string, lang: string, cb) {
       }
     });
 
-    cb(e, temp_result);
+    if (edges.length > 0) {
+      cnSelectSolution(edges, cb);
+    } else {
+      cb(e, temp_result);
+    }
+  });
+}
+
+function cnSelectSolution(edges, cb) {
+  reply.remote_post({ canSelect: edges, oper: "need_select" }, function (_, back_arg) {
+    cb(undefined, back_arg.slug);
   });
 }
 

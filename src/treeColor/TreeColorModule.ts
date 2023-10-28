@@ -1,10 +1,10 @@
 /*
- * Filename: https://github.com/ccagml/leetcode-extension/src/service/TreeItemDecorationService.ts
- * Path: https://github.com/ccagml/leetcode-extension
- * Created Date: Thursday, October 27th 2022, 7:43:29 pm
+ * Filename: /home/cc/leetcode-extension/src/treeColor/TreeColorModule.ts
+ * Path: /home/cc/leetcode-extension
+ * Created Date: Thursday, October 19th 2023, 00:40:45 am
  * Author: ccagml
  *
- * Copyright (c) 2022 ccagml . All rights reserved.
+ * Copyright (c) 2023 ccagml . All rights reserved
  */
 
 import { URLSearchParams } from "url";
@@ -17,8 +17,9 @@ import {
   workspace,
   WorkspaceConfiguration,
 } from "vscode";
+import { BABA, BabaStr } from "../BABA";
 
-export class TreeItemDecorationService implements FileDecorationProvider {
+export class TreeColor implements FileDecorationProvider {
   private readonly ITEM_COLOR: { [key: string]: ThemeColor } = {
     easy: new ThemeColor("charts.green"),
     medium: new ThemeColor("charts.yellow"),
@@ -36,20 +37,17 @@ export class TreeItemDecorationService implements FileDecorationProvider {
       return;
     }
 
-    if (uri.scheme !== "leetcode" && uri.authority !== "problems") {
+    if (uri.authority !== "problems") {
       return;
     }
 
     const params: URLSearchParams = new URLSearchParams(uri.query);
     // const difficulty: string = params.get("difficulty")!.toLowerCase();
     const score: string = params.get("score") || "0";
-    const user_score: string = params.get("user_score") || "0";
+    // const user_score: string = params.get("user_score") || "0";
+    const user_score = BABA.getProxy(BabaStr.StatusBarProxy).getUserContestScore();
 
-    const file_color: FileDecoration = {
-      // badge: score > "0" ? "" : this.DIFFICULTY_BADGE_LABEL[difficulty],
-      // color: this.ITEM_COLOR[difficulty],
-      // tooltip: score > "0" ? score : "0"
-    };
+    const file_color: FileDecoration = {};
     const score_num = Number(score);
     const user_score_num = Number(user_score);
     if (score_num > 0) {
@@ -89,4 +87,4 @@ export class TreeItemDecorationService implements FileDecorationProvider {
   }
 }
 
-export const treeItemDecorationService: TreeItemDecorationService = new TreeItemDecorationService();
+export const treeColor: TreeColor = new TreeColor();

@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "3.1.2",
+    "version": "3.1.3",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -30,7 +30,7 @@
         "onCommand:lcpr.toggleLeetCodeCn",
         "onCommand:lcpr.signin",
         "onCommand:lcpr.signout",
-        "onCommand:lcpr.refreshExplorer",
+        "onCommand:lcpr.refresh",
         "onCommand:lcpr.pickOne",
         "onCommand:lcpr.deleteAllCache",
         "onCommand:lcpr.showProblem",
@@ -68,8 +68,8 @@
                 "category": "LeetCode"
             },
             {
-                "command": "lcpr.refreshExplorer",
-                "title": "%main.contributes.commands.lcpr.refreshExplorer.title%",
+                "command": "lcpr.refresh",
+                "title": "%main.contributes.commands.lcpr.refresh.title%",
                 "category": "LeetCode",
                 "icon": "$(refresh)"
             },
@@ -253,6 +253,11 @@
                 "command": "lcpr.simpleDebug",
                 "title": "%main.contributes.commands.lcpr.simpleDebug.title%",
                 "icon": "$(remove)"
+            },
+            {
+                "command": "lcpr.removeBricksHave",
+                "title": "%main.contributes.commands.lcpr.removeBricksHave.title%",
+                "icon": "$(remove)"
             }
         ],
         "viewsContainers": {
@@ -366,7 +371,7 @@
                     "group": "navigation@2"
                 },
                 {
-                    "command": "lcpr.refreshExplorer",
+                    "command": "lcpr.refresh",
                     "when": "view == QuestionExplorer",
                     "group": "navigation@3"
                 },
@@ -449,7 +454,12 @@
                 },
                 {
                     "command": "lcpr.addQidToGroup",
-                    "when": "view == BricksExplorer && viewItem != nodebricksdiy",
+                    "when": "view == BricksExplorer && viewItem != nodebricksdiy && viewItem != brickshave && viewItem != brickstoday && viewItem != bricksdiy",
+                    "group": "leetcode@5"
+                },
+                {
+                    "command": "lcpr.removeBricksHave",
+                    "when": "view == BricksExplorer && viewItem == brickshave",
                     "group": "leetcode@5"
                 },
                 {

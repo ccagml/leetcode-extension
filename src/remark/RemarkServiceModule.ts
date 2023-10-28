@@ -20,11 +20,11 @@ import {
   window,
   Position,
 } from "vscode";
-import { treeViewController } from "../controller/TreeViewController";
+
 import { remarkDao } from "../dao/remarkDao";
-import { RemarkComment } from "../model/Model";
+import { RemarkComment } from "../model/ConstDefind";
 import { includeTemplatesAuto, getIncludeTemplate } from "../utils/ConfigUtils";
-import { BABAMediator, BABAProxy, BaseCC, BabaStr } from "../BABA";
+import { BABAMediator, BABAProxy, BaseCC, BabaStr, BABA } from "../BABA";
 
 class RemarkService implements Disposable {
   private _remarkComment;
@@ -40,7 +40,7 @@ class RemarkService implements Disposable {
       return result;
     }
     const fid: string | undefined = matchResult[2];
-    let qid: string | undefined = treeViewController.getQidByFid(fid);
+    let qid: string | undefined = BABA.getProxy(BabaStr.QuestionDataProxy).getQidByFid(fid);
     result["fid"] = fid;
     if (qid != undefined) {
       result["qid"] = qid.toString();
@@ -76,9 +76,23 @@ class RemarkService implements Disposable {
 
       if (lineContent.indexOf("@lc code=start") >= 0) {
         const editor = window.activeTextEditor;
-        editor?.edit((edit) => {
-          edit.insert(new Position(i - 1, i - 1), getIncludeTemplate(matchResult[3]));
+
+        await new Promise(async (resolve, _) => {
+          editor
+            ?.edit((edit) => {
+              edit.insert(new Position(i - 1, i - 1), getIncludeTemplate(matchResult[3]));
+            })
+            .then((success) => {
+              if (success) {
+                editor.document.save().then(() => {
+                  resolve(1);
+                });
+              } else {
+                resolve(1);
+              }
+            });
         });
+        break;
       }
     }
     return undefined;
@@ -224,18 +238,18 @@ export class RemarkMediator extends BABAMediator {
   listNotificationInterests(): string[] {
     return [
       BabaStr.showProblemFinishOpen,
-      BabaStr.Remark_remarkCreateNote,
-      BabaStr.Remark_remarkClose,
-      BabaStr.Remark_remarkReplyNote,
-      BabaStr.Remark_remarkDeleteNoteComment,
-      BabaStr.Remark_remarkCancelsaveNote,
-      BabaStr.Remark_remarkSaveNote,
-      BabaStr.Remark_remarkEditNote,
-      BabaStr.Remark_startRemark,
-      BabaStr.Remark_includeTemplates,
+      BabaStr.BABACMD_remarkCreateNote,
+      BabaStr.BABACMD_remarkClose,
+      BabaStr.BABACMD_remarkReplyNote,
+      BabaStr.BABACMD_remarkDeleteNoteComment,
+      BabaStr.BABACMD_remarkCancelsaveNote,
+      BabaStr.BABACMD_remarkSaveNote,
+      BabaStr.BABACMD_remarkEditNote,
+      BabaStr.BABACMD_startRemark,
+      BabaStr.BABACMD_includeTemplates,
     ];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     let body = _notification.getBody();
     switch (_notification.getName()) {
       case BabaStr.showProblemFinishOpen:
@@ -245,31 +259,31 @@ export class RemarkMediator extends BABAMediator {
         }
         break;
 
-      case BabaStr.Remark_remarkCreateNote:
+      case BabaStr.BABACMD_remarkCreateNote:
         remarkService.remarkCreateNote(body);
         break;
-      case BabaStr.Remark_remarkClose:
+      case BabaStr.BABACMD_remarkClose:
         remarkService.remarkClose(body);
         break;
-      case BabaStr.Remark_remarkReplyNote:
+      case BabaStr.BABACMD_remarkReplyNote:
         remarkService.remarkReplyNote(body);
         break;
-      case BabaStr.Remark_remarkDeleteNoteComment:
+      case BabaStr.BABACMD_remarkDeleteNoteComment:
         remarkService.remarkDeleteNoteComment(body);
         break;
-      case BabaStr.Remark_remarkCancelsaveNote:
+      case BabaStr.BABACMD_remarkCancelsaveNote:
         remarkService.remarkCancelsaveNote(body);
         break;
-      case BabaStr.Remark_remarkSaveNote:
+      case BabaStr.BABACMD_remarkSaveNote:
         remarkService.remarkSaveNote(body);
         break;
-      case BabaStr.Remark_remarkEditNote:
+      case BabaStr.BABACMD_remarkEditNote:
         remarkService.remarkEditNote(body);
         break;
-      case BabaStr.Remark_startRemark:
+      case BabaStr.BABACMD_startRemark:
         remarkService.startRemark(body);
         break;
-      case BabaStr.Remark_includeTemplates:
+      case BabaStr.BABACMD_includeTemplates:
         remarkService.includeTemplates(body);
         break;
       default:

@@ -22,19 +22,20 @@ import {
 import {
   DescriptionConfiguration,
   Endpoint,
-  IProblem,
   SortingStrategy,
   AllProgramLanguage,
   DialogOptions,
   OpenOption,
   IQuickItemEx,
-} from "../model/Model";
+  singleLineFlag,
+} from "../model/ConstDefind";
 
 import { useWsl, toWslPath } from "../utils/SystemUtils";
 import * as path from "path";
 import * as fse from "fs-extra";
 import * as os from "os";
 import { BABA, BabaStr } from "../BABA";
+import { TreeNodeModel } from "../model/TreeNodeModel";
 
 // vscode的配置
 export function getVsCodeConfig(): WorkspaceConfiguration {
@@ -47,7 +48,8 @@ export function isHideSolvedProblem(): boolean {
 }
 
 // 隐藏分数
-export function isHideScoreProblem(problem: IProblem, user_score: number): boolean {
+export function isHideScoreProblem(problem: TreeNodeModel): boolean {
+  const user_score = BABA.getProxy(BabaStr.StatusBarProxy).getUserContestScore();
   const config_value: string = getVsCodeConfig().get<string>("hideScore", "None");
   const min_v = getPickOneByRankRangeMin();
   const max_v = getPickOneByRankRangeMax();
@@ -211,8 +213,27 @@ export function getSortingStrategy(): SortingStrategy {
   return getVsCodeConfig().get<SortingStrategy>("problems.sortStrategy", SortingStrategy.None);
 }
 
-export async function updateSortingStrategy(value: string, flag: boolean) {
+export function sortNodeList(nodes: TreeNodeModel[]): TreeNodeModel[] {
+  const strategy: SortingStrategy = getSortingStrategy();
+  switch (strategy) {
+    case SortingStrategy.AcceptanceRateAsc:
+      return nodes.sort((x: TreeNodeModel, y: TreeNodeModel) => Number(x.acceptanceRate) - Number(y.acceptanceRate));
+    case SortingStrategy.AcceptanceRateDesc:
+      return nodes.sort((x: TreeNodeModel, y: TreeNodeModel) => Number(y.acceptanceRate) - Number(x.acceptanceRate));
+    case SortingStrategy.ScoreAsc:
+      return nodes.sort((x: TreeNodeModel, y: TreeNodeModel) => Number(x.score) - Number(y.score));
+    case SortingStrategy.ScoreDesc:
+      return nodes.sort((x: TreeNodeModel, y: TreeNodeModel) => Number(y.score) - Number(x.score));
+    case SortingStrategy.IDDesc:
+      return nodes.sort((x: TreeNodeModel, y: TreeNodeModel) => Number(y.id) - Number(x.id));
+    default:
+      return nodes;
+  }
+}
+
+export async function updateSortStrategy(value: string, flag: boolean) {
   await getVsCodeConfig().update("problems.sortStrategy", value, flag);
+  BABA.sendNotification(BabaStr.ConfigChange_SortStrategy);
 }
 
 export function getLeetCodeEndpoint(): string {
@@ -240,7 +261,7 @@ export async function fetchProblemLanguage(): Promise<string | undefined> {
   (async (): Promise<void> => {
     if (language && !defaultLanguage && leetCodeConfig.get<boolean>("hint.setDefaultLanguage")) {
       const choice: MessageItem | undefined = await window.showInformationMessage(
-        `Would you like to set '${language}' as your default language?`,
+        `设置 '${language}' 默认编程语言?`,
         DialogOptions.yes,
         DialogOptions.no,
         DialogOptions.never
@@ -403,26 +424,6 @@ export async function setDefaultLanguage(): Promise<void> {
 export function isAnswerDiffColor(): boolean {
   return getVsCodeConfig().get<boolean>("answerDiffColor", false);
 }
-
-const singleLineFlag = {
-  bash: "#",
-  c: "//",
-  cpp: "//",
-  csharp: "//",
-  golang: "//",
-  java: "//",
-  javascript: "//",
-  kotlin: "//",
-  mysql: "--",
-  php: "//",
-  python: "#",
-  python3: "#",
-  ruby: "#",
-  rust: "//",
-  scala: "//",
-  swift: "//",
-  typescript: "//",
-};
 
 export function includeTemplatesAuto() {
   return getVsCodeConfig().get<boolean>("includeTemplatesAuto", true);

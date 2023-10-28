@@ -23,6 +23,26 @@ export interface IQuickItemEx<T> extends QuickPickItem {
   value: T;
 }
 
+export const singleLineFlag = {
+  bash: "#",
+  c: "//",
+  cpp: "//",
+  csharp: "//",
+  golang: "//",
+  java: "//",
+  javascript: "//",
+  kotlin: "//",
+  mysql: "--",
+  php: "//",
+  python: "#",
+  python3: "#",
+  ruby: "#",
+  rust: "//",
+  scala: "//",
+  swift: "//",
+  typescript: "//",
+};
+
 export enum UserStatus {
   SignedIn = 1,
   SignedOut = 2,
@@ -52,13 +72,6 @@ export const defaultTestSolutionData: ITestSolutionData = {
   type: TestSolutionType.Type_1,
   result: undefined,
 };
-
-export const loginArgsMapping: Map<string, string> = new Map([
-  ["LeetCode", "-l"],
-  ["Cookie", "-c"],
-  ["GitHub", "-g"],
-  ["LinkedIn", "-i"],
-]);
 
 export const AllProgramLanguage: string[] = [
   "bash",
@@ -123,26 +136,9 @@ export enum RootNodeSort {
   Score = 8,
   ScoreRange = 9,
   Context = 9,
-}
-
-export interface IProblem {
-  isFavorite: boolean;
-  locked: boolean;
-  state: ProblemState;
-  id: string; // 题目编号 fid
-  qid: string;
-  name: string;
-  cn_name: string;
-  en_name: string;
-  difficulty: string;
-  passRate: string;
-  companies: string[];
-  tags: string[];
-  scoreData: IScoreData | undefined; // 分数的结构
-  isSearchResult: boolean;
-  input: string;
-  rootNodeSortId: RootNodeSort;
-  todayData: ITodayData | undefined;
+  DIFEASY = 1,
+  DIFMID = 2,
+  DIFHARD = 3,
 }
 
 export interface ITodayData {
@@ -158,26 +154,6 @@ export interface IScoreData {
   ProblemIndex: string; // 周赛第几题
   ContestSlug: string; // 周赛名称
 }
-
-export const defaultProblem: IProblem = {
-  isFavorite: false,
-  locked: false,
-  state: ProblemState.Unknown,
-  id: "",
-  qid: "",
-  name: "",
-  cn_name: "",
-  en_name: "",
-  difficulty: "",
-  passRate: "",
-  companies: [] as string[],
-  tags: [] as string[],
-  scoreData: undefined,
-  isSearchResult: false,
-  input: "",
-  rootNodeSortId: RootNodeSort.ZERO,
-  todayData: undefined,
-};
 
 export enum BricksNormalId {
   Have = "bricksHave", // 有活

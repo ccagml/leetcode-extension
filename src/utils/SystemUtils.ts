@@ -10,11 +10,16 @@
 import * as fs from "fs";
 import * as _ from "lodash";
 import * as path from "path";
-import { IProblem, langExt } from "../model/Model";
-import { executeCommand } from "./CliUtils";
+import { langExt } from "../model/ConstDefind";
+
 import { isUseVscodeNode, isUseWsl } from "./ConfigUtils";
 import { Uri, window, TextEditor } from "vscode";
 import { fileMeta, ProblemMeta } from "../utils/problemUtils";
+
+import * as cp from "child_process";
+import * as vscode from "vscode";
+import { BABA, BabaStr } from "../BABA";
+import { TreeNodeModel } from "../model/TreeNodeModel";
 
 export function isWindows(): boolean {
   return process.platform === "win32";
@@ -31,17 +36,16 @@ export function useWsl(): boolean {
 }
 
 export async function toWslPath(path: string): Promise<string> {
-  return (await executeCommand("wsl", ["wslpath", "-u", `"${path.replace(/\\/g, "/")}"`])).trim();
+  return (await sysCall("wsl", ["wslpath", "-u", `"${path.replace(/\\/g, "/")}"`])).trim();
 }
 
 export async function toWinPath(path: string): Promise<string> {
   if (path.startsWith("\\mnt\\")) {
     return (
-      (await executeCommand("wsl", ["wslpath", "-w", `"${path.replace(/\\/g, "/").substr(0, 6)}"`])).trim() +
-      path.substr(7)
+      (await sysCall("wsl", ["wslpath", "-w", `"${path.replace(/\\/g, "/").substr(0, 6)}"`])).trim() + path.substr(7)
     );
   }
-  return (await executeCommand("wsl", ["wslpath", "-w", "/"])).trim() + path;
+  return (await sysCall("wsl", ["wslpath", "-w", "/"])).trim() + path;
 }
 
 export function genFileExt(language: string): string {
@@ -52,7 +56,7 @@ export function genFileExt(language: string): string {
   return ext;
 }
 
-export function genFileName(node: IProblem, language: string): string {
+export function genFileName(node: TreeNodeModel, language: string): string {
   const slug: string = _.kebabCase(node.name);
   const ext: string = genFileExt(language);
   return `${node.id}.${slug}.${ext}`;
@@ -168,4 +172,86 @@ export async function getTextEditorFilePathByUri(uri?: Uri): Promise<string | un
     return undefined;
   }
   return useWsl() ? toWslPath(textEditor.document.uri.fsPath) : textEditor.document.uri.fsPath;
+}
+
+// 执行操作系统的指令
+
+export async function sysCall(
+  command: string,
+  args: string[],
+  options: cp.SpawnOptions = { shell: true },
+  procInitCallback?,
+  procInitCallbackArg?
+): Promise<string> {
+  return new Promise((resolve: (res: string) => void, reject: (e: Error) => void): void => {
+    let result: string = "";
+    let childProc: cp.ChildProcess;
+    if (useVscodeNode() && command == "node") {
+      let newargs: string[] = [];
+      command = args[0];
+      for (let arg_index = 1; arg_index < args.length; arg_index++) {
+        newargs.push(args[arg_index]);
+      }
+      let new_opt = { silent: true, ...options, env: createEnvOption() };
+      childProc = cp.fork(command, newargs, new_opt);
+    } else {
+      childProc = cp.spawn(command, args, {
+        ...options,
+        env: createEnvOption(),
+      });
+    }
+
+    childProc.stdout?.on("data", (data: string | Buffer) => {
+      data = data.toString();
+      result = result.concat(data);
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(data);
+    });
+
+    childProc.stderr?.on("data", (data: string | Buffer) =>
+      BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(data.toString())
+    );
+
+    childProc.on("error", reject);
+
+    childProc.on("close", (code: number) => {
+      let try_result_json;
+      try {
+        try_result_json = JSON.parse(result);
+      } catch (e) {
+        try_result_json;
+      }
+      if (code !== 0 || (try_result_json ? try_result_json.code < 0 : result.indexOf("ERROR") > -1)) {
+        const error = new Error(
+          `Command "${command} ${args.toString()}" failed with exit code "${code}". ${result || ""}`
+        );
+        reject(error);
+      } else {
+        resolve(result);
+      }
+    });
+
+    if (procInitCallback != undefined) {
+      procInitCallback(procInitCallbackArg, childProc, resolve, reject);
+    }
+  });
+}
+
+function childLCPTCTX(): string {
+  return JSON.stringify(BABA.getProxy(BabaStr.LogOutputProxy).get_log().getLCPTCTXAll());
+}
+
+// clone process.env and add http proxy
+export function createEnvOption(): {} {
+  const proxy: string | undefined = getHttpAgent();
+  const env: any = Object.create(process.env);
+  if (proxy) {
+    env.http_proxy = proxy;
+    return env;
+  }
+  env.ccagml = childLCPTCTX();
+  return env;
+}
+
+function getHttpAgent(): string | undefined {
+  return vscode.workspace.getConfiguration("http").get<string>("proxy");
 }

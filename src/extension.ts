@@ -8,30 +8,27 @@
  */
 
 import { ExtensionContext, window, commands, Uri, CommentReply, TextDocument } from "vscode";
-import { treeViewController } from "./controller/TreeViewController";
-import { NodeModel } from "./model/NodeModel";
-import { treeDataService } from "./service/TreeDataService";
-import { treeItemDecorationService } from "./service/TreeItemDecorationService";
-import { promptForOpenOutputChannel } from "./utils/OutputUtils";
-import { executeService } from "./service/ExecuteService";
-import { eventController } from "./controller/EventController";
-import { previewService } from "./service/PreviewService";
-import { solutionService } from "./service/SolutionService";
-import { submissionService } from "./service/SubmissionService";
+import { TreeNodeModel } from "./model/TreeNodeModel";
+import { treeColor } from "./treeColor/TreeColorModule";
+import { ShowMessage } from "./utils/OutputUtils";
+import { ChildCallMediator, ChildCallProxy } from "./childCall/childCallModule";
 import { markdownService } from "./service/MarkdownService";
-import { mainContorller } from "./controller/MainController";
-import { loginContorller } from "./controller/LoginController";
-import { getLeetCodeEndpoint } from "./utils/ConfigUtils";
-import { BricksType, OutPutType, RemarkComment } from "./model/Model";
-import { bricksDataService } from "./service/BricksDataService";
-import { bricksViewController } from "./controller/BricksViewController";
-import { debugContorller } from "./controller/DebugController";
+import { BricksType, OutPutType, RemarkComment } from "./model/ConstDefind";
+import { BricksDataMediator, BricksDataProxy, bricksDataService } from "./bricksData/BricksDataService";
 import { BABA, BabaStr } from "./BABA";
 import { StatusBarTimeMediator, StatusBarTimeProxy } from "./statusBarTime/StatusBarTimeModule";
 import { StatusBarMediator, StatusBarProxy } from "./statusBar/StatusBarModule";
 import { LogOutputMediator, LogOutputProxy } from "./logOutput/logOutputModule";
 import { RemarkMediator, RemarkProxy } from "./remark/RemarkServiceModule";
 import { FileButtonMediator, FileButtonProxy } from "./fileButton/FileButtonModule";
+import { QuestionDataMediator, QuestionDataProxy } from "./questionData/QuestionDataModule";
+import { TreeDataMediator, TreeDataProxy, treeDataService } from "./treeData/TreeDataService";
+import { CommitResultMediator, CommitResultProxy } from "./commitResult/CommitResultModule";
+import { SolutionProxy, SolutionMediator } from "./solution/SolutionModule";
+import { PreviewMediator, PreviewProxy } from "./preView/PreviewModule";
+import { DebugMediator, DebugProxy } from "./debug/DebugModule";
+import { RankScoreDataMediator, RankScoreDataProxy } from "./rankScore/RankScoreDataModule";
+import { TodayDataMediator, TodayDataProxy } from "./todayData/TodayDataModule";
 
 //==================================BABA========================================
 
@@ -44,8 +41,7 @@ import { FileButtonMediator, FileButtonProxy } from "./fileButton/FileButtonModu
 let lcpr_timer;
 export async function activate(context: ExtensionContext): Promise<void> {
   try {
-    BABA.init();
-    BABA.regClazz([
+    BABA.init([
       StatusBarTimeMediator,
       StatusBarTimeProxy,
       StatusBarProxy,
@@ -56,136 +52,178 @@ export async function activate(context: ExtensionContext): Promise<void> {
       LogOutputMediator,
       FileButtonProxy,
       FileButtonMediator,
+      QuestionDataProxy,
+      QuestionDataMediator,
+      TreeDataProxy,
+      TreeDataMediator,
+      BricksDataProxy,
+      BricksDataMediator,
+      CommitResultProxy,
+      CommitResultMediator,
+      SolutionProxy,
+      SolutionMediator,
+      PreviewProxy,
+      PreviewMediator,
+      DebugProxy,
+      DebugMediator,
+      ChildCallProxy,
+      ChildCallMediator,
+      RankScoreDataProxy,
+      RankScoreDataMediator,
+      TodayDataProxy,
+      TodayDataMediator,
     ]);
-
-    BABA.sendNotification(BabaStr.InitAll, context);
-
-    // 初始化控制器
-    mainContorller.initialize(context);
-    // 检查node环境
-    await mainContorller.checkNodeEnv(context);
-    await mainContorller.deleteProblemCache();
-    // 事件监听
-    eventController.addEvent();
 
     // 资源管理
     context.subscriptions.push(
-      previewService,
-      submissionService,
-      solutionService,
-      executeService,
       markdownService,
       BABA,
-
-      treeViewController,
-      window.registerFileDecorationProvider(treeItemDecorationService),
+      window.registerFileDecorationProvider(treeColor),
       window.createTreeView("QuestionExplorer", { treeDataProvider: treeDataService, showCollapseAll: true }),
       window.createTreeView("BricksExplorer", { treeDataProvider: bricksDataService, showCollapseAll: true }),
-      commands.registerCommand("lcpr.deleteCache", () => mainContorller.deleteCache()),
-      commands.registerCommand("lcpr.toggleLeetCodeCn", () => treeViewController.switchEndpoint()),
-      commands.registerCommand("lcpr.signin", () => loginContorller.signIn()),
-      commands.registerCommand("lcpr.signout", () => loginContorller.signOut()),
-      commands.registerCommand("lcpr.previewProblem", (node: NodeModel) => treeViewController.previewProblem(node)),
-      commands.registerCommand("lcpr.showProblem", (node: NodeModel) => treeViewController.showProblem(node)),
-      commands.registerCommand("lcpr.pickOne", () => treeViewController.pickOne()),
-      commands.registerCommand("lcpr.deleteAllCache", () => loginContorller.deleteAllCache()),
-      commands.registerCommand("leetcode.searchScoreRange", () => treeViewController.searchScoreRange()),
-      commands.registerCommand("lcpr.searchProblem", () => treeViewController.searchProblem()),
-      commands.registerCommand("lcpr.getHelp", (input: NodeModel | Uri) => treeViewController.getHelp(input)),
-      commands.registerCommand("lcpr.refreshExplorer", () => treeDataService.refresh()),
-      commands.registerCommand("lcpr.testSolution", (uri?: Uri) => treeViewController.testSolution(uri)),
-      commands.registerCommand("lcpr.reTestSolution", (uri?: Uri) => treeViewController.reTestSolution(uri)),
-      commands.registerCommand("lcpr.testCaseDef", (uri?, allCase?) => treeViewController.testCaseDef(uri, allCase)),
-      commands.registerCommand("lcpr.tesCaseArea", (uri, testCase?) => treeViewController.tesCaseArea(uri, testCase)),
-      commands.registerCommand("lcpr.submitSolution", (uri?: Uri) => treeViewController.submitSolution(uri)),
-      commands.registerCommand("lcpr.setDefaultLanguage", () => treeViewController.setDefaultLanguage()),
-      commands.registerCommand("lcpr.addFavorite", (node: NodeModel) => treeViewController.addFavorite(node)),
-      commands.registerCommand("lcpr.removeFavorite", (node: NodeModel) => treeViewController.removeFavorite(node)),
-      commands.registerCommand("lcpr.problems.sort", () => treeViewController.switchSortingStrategy()),
+      commands.registerCommand("lcpr.deleteCache", () => BABA.sendNotification(BabaStr.DeleteCache)),
+      commands.registerCommand("lcpr.toggleLeetCodeCn", () => {
+        BABA.sendNotification(BabaStr.TreeData_switchEndpoint);
+      }),
+      commands.registerCommand("lcpr.signin", () => BABA.sendNotification(BabaStr.BABACMD_Login)),
+      commands.registerCommand("lcpr.signout", () => BABA.sendNotification(BabaStr.BABACMD_LoginOut)),
+      commands.registerCommand("lcpr.previewProblem", (node: TreeNodeModel) => {
+        BABA.sendNotification(BabaStr.BABACMD_previewProblem, { input: node, isSideMode: false });
+      }),
+      commands.registerCommand("lcpr.showProblem", (node: TreeNodeModel) => {
+        BABA.sendNotification(BabaStr.BABACMD_showProblem, node);
+      }),
+      commands.registerCommand("lcpr.pickOne", () => {
+        BABA.sendNotification(BabaStr.BABACMD_pickOne);
+      }),
+      commands.registerCommand("lcpr.deleteAllCache", () => BABA.sendNotification(BabaStr.BABACMD_deleteAllCache)),
+      commands.registerCommand("leetcode.searchScoreRange", () => {
+        BABA.sendNotification(BabaStr.BABACMD_searchScoreRange);
+      }),
+      commands.registerCommand("lcpr.searchProblem", () => BABA.sendNotification(BabaStr.BABACMD_searchProblem)),
+      commands.registerCommand("lcpr.getHelp", (input: TreeNodeModel | Uri) =>
+        BABA.sendNotification(BabaStr.BABACMD_getHelp, input)
+      ),
+      commands.registerCommand("lcpr.refresh", () => {
+        BABA.sendNotification(BabaStr.BABACMD_refresh);
+      }),
+      commands.registerCommand("lcpr.testSolution", (uri?: Uri) => {
+        BABA.sendNotification(BabaStr.BABACMD_testSolution, { uri: uri });
+      }),
+
+      commands.registerCommand("lcpr.reTestSolution", (uri?: Uri) => {
+        BABA.sendNotification(BabaStr.BABACMD_reTestSolution, { uri: uri });
+      }),
+      commands.registerCommand("lcpr.testCaseDef", (uri?, allCase?) => {
+        BABA.sendNotification(BabaStr.BABACMD_testCaseDef, { uri: uri, allCase: allCase });
+      }),
+      commands.registerCommand("lcpr.tesCaseArea", (uri, testCase?) => {
+        BABA.sendNotification(BabaStr.BABACMD_tesCaseArea, { uri: uri, testCase: testCase });
+      }),
+
+      commands.registerCommand("lcpr.submitSolution", (uri?: Uri) => {
+        BABA.sendNotification(BabaStr.BABACMD_submitSolution, { uri: uri });
+      }),
+      commands.registerCommand("lcpr.setDefaultLanguage", () => {
+        BABA.sendNotification(BabaStr.BABACMD_setDefaultLanguage);
+      }),
+      commands.registerCommand("lcpr.addFavorite", (node: TreeNodeModel) => {
+        BABA.sendNotification(BabaStr.BABACMD_addFavorite, { node: node });
+      }),
+
+      commands.registerCommand("lcpr.removeFavorite", (node: TreeNodeModel) => {
+        BABA.sendNotification(BabaStr.BABACMD_removeFavorite, { node: node });
+      }),
+      commands.registerCommand("lcpr.problems.sort", () => {
+        BABA.sendNotification(BabaStr.BABACMD_problems_sort);
+      }),
       commands.registerCommand("lcpr.statusBarTime.start", () => {
-        BABA.sendNotification(BabaStr.statusBarTime_start);
+        BABA.sendNotification(BabaStr.BABACMD_statusBarTime_start);
       }),
       commands.registerCommand("lcpr.statusBarTime.stop", () => {
-        BABA.sendNotification(BabaStr.statusBarTime_stop);
+        BABA.sendNotification(BabaStr.BABACMD_statusBarTime_stop);
       }),
       commands.registerCommand("lcpr.statusBarTime.reset", () => {
-        BABA.sendNotification(BabaStr.statusBarTime_reset);
+        BABA.sendNotification(BabaStr.BABACMD_statusBarTime_reset);
       }),
-      commands.registerCommand("lcpr.setBricksType0", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_0)
+      commands.registerCommand("lcpr.setBricksType0", (node: TreeNodeModel) =>
+        BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_0 })
       ),
-      commands.registerCommand("lcpr.setBricksType1", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_1)
+      commands.registerCommand("lcpr.setBricksType1", (node: TreeNodeModel) =>
+        BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_1 })
       ),
-      commands.registerCommand("lcpr.setBricksType2", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_2)
+      commands.registerCommand("lcpr.setBricksType2", (node: TreeNodeModel) =>
+        BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_2 })
       ),
-      commands.registerCommand("lcpr.setBricksType3", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_3)
+      commands.registerCommand("lcpr.setBricksType3", (node: TreeNodeModel) =>
+        BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_3 })
       ),
-      commands.registerCommand("lcpr.setBricksType4", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_4)
+      commands.registerCommand("lcpr.setBricksType4", (node: TreeNodeModel) =>
+        BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_4 })
       ),
-      commands.registerCommand("lcpr.setBricksType5", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_5)
+      commands.registerCommand("lcpr.setBricksType5", (node: TreeNodeModel) =>
+        BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_5 })
       ),
-      commands.registerCommand("lcpr.setBricksType6", (node: NodeModel) =>
-        bricksViewController.setBricksType(node, BricksType.TYPE_6)
+      commands.registerCommand("lcpr.setBricksType6", (node: TreeNodeModel) =>
+        BABA.sendNotification(BabaStr.BABACMD_setBricksType, { node: node, type: BricksType.TYPE_6 })
       ),
-      commands.registerCommand("lcpr.newBrickGroup", () => bricksViewController.newBrickGroup()),
-      commands.registerCommand("lcpr.addQidToGroup", (a) => bricksViewController.addQidToGroup(a)),
-      commands.registerCommand("lcpr.removeBrickGroup", (a) => bricksViewController.removeBrickGroup(a)),
-      commands.registerCommand("lcpr.removeQidFromGroup", (node) => bricksViewController.removeQidFromGroup(node)),
+      commands.registerCommand("lcpr.newBrickGroup", () => BABA.sendNotification(BabaStr.BABACMD_newBrickGroup)),
+      commands.registerCommand("lcpr.addQidToGroup", (a) => BABA.sendNotification(BabaStr.BABACMD_addQidToGroup, a)),
+      commands.registerCommand("lcpr.removeBrickGroup", (a) =>
+        BABA.sendNotification(BabaStr.BABACMD_removeBrickGroup, a)
+      ),
+      commands.registerCommand("lcpr.removeBricksHave", (a) =>
+        BABA.sendNotification(BabaStr.BABACMD_removeBricksHave, a)
+      ),
+      commands.registerCommand("lcpr.removeQidFromGroup", (node) =>
+        BABA.sendNotification(BabaStr.BABACMD_removeQidFromGroup, node)
+      ),
 
       commands.registerCommand("lcpr.remarkCreateNote", (reply: CommentReply) => {
-        BABA.sendNotification(BabaStr.Remark_remarkCreateNote, reply);
+        BABA.sendNotification(BabaStr.BABACMD_remarkCreateNote, reply);
       }),
       commands.registerCommand("lcpr.remarkClose", (a) => {
-        BABA.sendNotification(BabaStr.Remark_remarkClose, a);
+        BABA.sendNotification(BabaStr.BABACMD_remarkClose, a);
       }),
       commands.registerCommand("lcpr.remarkReplyNote", (reply: CommentReply) => {
-        BABA.sendNotification(BabaStr.Remark_remarkReplyNote, reply);
+        BABA.sendNotification(BabaStr.BABACMD_remarkReplyNote, reply);
       }),
       commands.registerCommand("lcpr.remarkDeleteNoteComment", (comment: RemarkComment) => {
-        BABA.sendNotification(BabaStr.Remark_remarkDeleteNoteComment, comment);
+        BABA.sendNotification(BabaStr.BABACMD_remarkDeleteNoteComment, comment);
       }),
       commands.registerCommand("lcpr.remarkCancelsaveNote", (comment: RemarkComment) => {
-        BABA.sendNotification(BabaStr.Remark_remarkCancelsaveNote, comment);
+        BABA.sendNotification(BabaStr.BABACMD_remarkCancelsaveNote, comment);
       }),
       commands.registerCommand("lcpr.remarkSaveNote", (comment: RemarkComment) => {
-        BABA.sendNotification(BabaStr.Remark_remarkSaveNote, comment);
+        BABA.sendNotification(BabaStr.BABACMD_remarkSaveNote, comment);
       }),
       commands.registerCommand("lcpr.remarkEditNote", (comment: RemarkComment) => {
-        BABA.sendNotification(BabaStr.Remark_remarkEditNote, comment);
+        BABA.sendNotification(BabaStr.BABACMD_remarkEditNote, comment);
       }),
       commands.registerCommand("lcpr.startRemark", (document: TextDocument) => {
-        BABA.sendNotification(BabaStr.Remark_startRemark, document);
+        BABA.sendNotification(BabaStr.BABACMD_startRemark, document);
       }),
       commands.registerCommand("lcpr.includeTemplates", (document: TextDocument) => {
-        BABA.sendNotification(BabaStr.Remark_includeTemplates, document);
+        BABA.sendNotification(BabaStr.BABACMD_includeTemplates, document);
       }),
       commands.registerCommand("lcpr.simpleDebug", (document: TextDocument, testCase?) =>
-        debugContorller.startDebug(document, testCase)
+        BABA.sendNotification(BabaStr.BABACMD_simpleDebug, { document: document, testCase: testCase })
       ),
       commands.registerCommand("lcpr.addDebugType", (document: TextDocument, addType) =>
-        debugContorller.addDebugType(document, addType)
+        BABA.sendNotification(BabaStr.BABACMD_addDebugType, { document: document, addType: addType })
       ),
       commands.registerCommand("lcpr.resetDebugType", (document: TextDocument, addType) =>
-        debugContorller.resetDebugType(document, addType)
+        BABA.sendNotification(BabaStr.BABACMD_resetDebugType, { document: document, addType: addType })
       )
     );
 
-    // 设置站点
-    await executeService.switchEndpoint(getLeetCodeEndpoint());
-    // 获取登录状态
-    await loginContorller.getLoginStatus();
-    await bricksViewController.initialize();
+    await BABA.sendNotificationAsync(BabaStr.InitFile, context);
+    await BABA.sendNotificationAsync(BabaStr.InitEnv, context);
+    await BABA.sendNotificationAsync(BabaStr.InitLoginStatus);
+    await BABA.sendNotificationAsync(BabaStr.StartReadData);
   } catch (error) {
     BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
-    promptForOpenOutputChannel(
-      "Extension initialization failed. Please open output channel for details.",
-      OutPutType.error
-    );
+    ShowMessage("Extension initialization failed. Please open output channel for details.", OutPutType.error);
   } finally {
     lcpr_timer = setInterval(lcpr_timer_callback, 1000);
   }

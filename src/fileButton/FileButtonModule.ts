@@ -9,9 +9,8 @@
 
 import * as vscode from "vscode";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
-import { treeViewController } from "../controller/TreeViewController";
-import { NodeModel } from "../model/NodeModel";
-import { getEditorShortcuts } from "../utils/ConfigUtils";
+import { TreeNodeModel } from "../model/TreeNodeModel";
+import { getEditorShortcuts, isStarShortcut } from "../utils/ConfigUtils";
 import { supportDebugLanguages } from "../utils/problemUtils";
 
 export class FileButtonService implements vscode.CodeLensProvider {
@@ -21,7 +20,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
     return this.onDidChangeCodeLensesEmitter.event;
   }
 
-  public refresh(): void {
+  public fire(): void {
     this.onDidChangeCodeLensesEmitter.fire();
   }
 
@@ -167,26 +166,6 @@ export class FileButtonService implements vscode.CodeLensProvider {
     return temp_result;
   }
 
-  public singleLineFlag = {
-    bash: "#",
-    c: "//",
-    cpp: "//",
-    csharp: "//",
-    golang: "//",
-    java: "//",
-    javascript: "//",
-    kotlin: "//",
-    mysql: "--",
-    php: "//",
-    python: "#",
-    python3: "#",
-    ruby: "#",
-    rust: "//",
-    scala: "//",
-    swift: "//",
-    typescript: "//",
-  };
-
   public processRemarkButton(codeLensLine, document): vscode.CodeLens[] {
     const temp_result: vscode.CodeLens[] = [];
 
@@ -290,9 +269,9 @@ export class FileButtonService implements vscode.CodeLensProvider {
       return undefined;
     }
     const nodeId: string | undefined = matchResult[2];
-    let node: NodeModel | undefined;
+    let node: TreeNodeModel | undefined;
     if (nodeId) {
-      node = treeViewController.getNodeById(nodeId);
+      node = BABA.getProxy(BabaStr.QuestionDataProxy).getNodeById(nodeId);
     }
     let nodeLang: string | undefined = matchResult[3];
 
@@ -354,7 +333,7 @@ class FileButtonConfigChange implements vscode.Disposable {
     this.configurationChangeListener = vscode.workspace.onDidChangeConfiguration(
       (event: vscode.ConfigurationChangeEvent) => {
         if (event.affectsConfiguration("leetcode-problem-rating.editor.shortcuts")) {
-          BABA.sendNotification(BabaStr.FileButton_refresh);
+          BABA.sendNotification(BabaStr.FileButton_ConfigChange);
         }
       },
       this
@@ -387,15 +366,22 @@ export class FileButtonMediator extends BABAMediator {
   }
 
   listNotificationInterests(): string[] {
-    return [BabaStr.VSCODE_DISPOST, BabaStr.FileButton_refresh];
+    return [BabaStr.VSCODE_DISPOST, BabaStr.FileButton_ConfigChange, BabaStr.TreeData_favoriteChange];
   }
-  handleNotification(_notification: BaseCC.BaseCC.INotification) {
+  async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
       case BabaStr.VSCODE_DISPOST:
         fileButtonConfigChange.dispose();
         break;
-      case BabaStr.FileButton_refresh:
-        fileButtonService.refresh();
+
+      case BabaStr.TreeData_favoriteChange:
+        if (isStarShortcut()) {
+          fileButtonService.fire();
+        }
+        break;
+      case BabaStr.FileButton_ConfigChange:
+        fileButtonService.fire();
+        break;
       default:
         break;
     }

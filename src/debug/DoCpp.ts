@@ -2,7 +2,7 @@ import * as fse from "fs-extra";
 import * as path from "path";
 import * as vscode from "vscode";
 
-import { executeCommand } from "../utils/CliUtils";
+import { sysCall } from "../utils/SystemUtils";
 import {
   fileMeta,
   getEntryFile,
@@ -14,10 +14,10 @@ import {
 } from "../utils/problemUtils";
 
 import { isWindows } from "../utils/SystemUtils";
-
-import { DebugBase } from "../debugex/debugBase";
 import { debugArgDao } from "../dao/debugArgDao";
 import { BABA, BabaStr } from "../BABA";
+import { ShowMessage } from "../utils/OutputUtils";
+import { OutPutType } from "../model/ConstDefind";
 
 function getGdbDefaultConfig(): IDebugConfig {
   return {
@@ -55,7 +55,8 @@ function getTemplateId(id: string): string {
   return findKey ? findKey : id;
 }
 
-class DebugCpp extends DebugBase {
+export class DebugCpp {
+  static DEBUG_LANG = "cpp";
   public async execute(
     document: vscode.TextDocument,
     filePath: string,
@@ -66,14 +67,15 @@ class DebugCpp extends DebugBase {
     const sourceFileContent: string = (await fse.readFile(filePath)).toString();
     const meta: { id: string; lang: string } | null = fileMeta(sourceFileContent);
     if (meta == null) {
-      vscode.window.showErrorMessage(
-        "File meta info has been changed, please check the content: '@lc app=leetcode.cn id=xx lang=xx'."
+      ShowMessage(
+        "File meta info has been changed, please check the content: '@lc app=leetcode.cn id=xx lang=xx'.",
+        OutPutType.error
       );
       return;
     }
     const problemType: IProblemType | undefined = debugArgDao.getDebugArgData(meta.id, document);
     if (problemType == undefined) {
-      vscode.window.showErrorMessage(`Notsupported problem: ${meta.id}.`);
+      ShowMessage(`Notsupported problem: ${meta.id}.`, OutPutType.error);
       return;
     }
 
@@ -104,7 +106,7 @@ class DebugCpp extends DebugBase {
     // 参数不够就不行
 
     if (params.length < paramsType.length) {
-      vscode.window.showErrorMessage("Input parameters is not match the problem!");
+      ShowMessage("Input parameters is not match the problem!", OutPutType.error);
       return;
     }
     // 参数太多舍弃
@@ -389,13 +391,13 @@ class DebugCpp extends DebugBase {
     const debugConfig = getGdbDefaultConfig();
     try {
       const includePath: string = path.dirname(exePath);
-      await executeCommand(
+      await sysCall(
         "g++",
         ["-g", program, commonDestPath, jsonPath, "-o", exePath, "-I", includePath, "-I", thirdPartyPath],
         { shell: false }
       );
     } catch (e) {
-      vscode.window.showErrorMessage(e);
+      ShowMessage(e, OutPutType.error);
       BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(e.stack);
       BABA.getProxy(BabaStr.LogOutputProxy).get_log().show();
       return;
@@ -430,7 +432,7 @@ class DebugCpp extends DebugBase {
     const debugConfig = getClangDefaultConfig();
     try {
       const includePath: string = path.dirname(exePath);
-      await executeCommand(
+      await sysCall(
         "/usr/bin/clang++",
         [
           "-std=c++17",
@@ -449,7 +451,7 @@ class DebugCpp extends DebugBase {
         { shell: false }
       );
     } catch (e) {
-      vscode.window.showErrorMessage(e);
+      ShowMessage(e, OutPutType.error);
       BABA.getProxy(BabaStr.LogOutputProxy).get_log().append(e.stack);
       BABA.getProxy(BabaStr.LogOutputProxy).get_log().show();
       return;
@@ -464,5 +466,3 @@ class DebugCpp extends DebugBase {
     return debugConfig;
   }
 }
-
-export const debugCpp: DebugCpp = new DebugCpp();

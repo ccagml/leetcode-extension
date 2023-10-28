@@ -9,7 +9,7 @@
 
 import { commands, ConfigurationChangeEvent, Disposable, ViewColumn, WebviewPanel, window, workspace } from "vscode";
 import { markdownService } from "./MarkdownService";
-import { IWebViewOption } from "../model/Model";
+import { IWebViewOption } from "../model/ConstDefind";
 import { openSettingsEditor } from "../utils/ConfigUtils";
 import { promptHintMessage } from "../utils/OutputUtils";
 
