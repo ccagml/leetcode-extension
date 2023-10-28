@@ -238,7 +238,7 @@ export class BricksDataMediator extends BABAMediator {
         break;
       case BabaStr.CommitResult_showFinish:
         await bricksDataService.checkSubmit(_notification.getBody());
-
+        break;
       case BabaStr.BABACMD_setBricksType:
         bricksViewController.setBricksType(body.node, body.type);
         break;

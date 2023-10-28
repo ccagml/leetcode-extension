@@ -460,6 +460,7 @@ export class DebugMediator extends BABAMediator {
 
       case BabaStr.InitFile:
         await debugService.InitAll(body);
+        break;
       default:
         break;
     }

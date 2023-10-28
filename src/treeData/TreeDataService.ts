@@ -432,6 +432,7 @@ export class TreeDataMediator extends BABAMediator {
 
       case BabaStr.TreeData_switchEndpoint:
         treeDataService.switchEndpoint();
+        break;
       case BabaStr.BABACMD_previewProblem:
         treeDataService.previewProblem(body.input, body.isSideMode);
         break;
