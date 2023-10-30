@@ -579,7 +579,7 @@ and csrf token to the user object and saves the user object to the session. */
         if (resp.statusCode !== 200) {
           return cb("GitHub login failed");
         }
-        if (resp.request.uri.href !== urls.github_tf_redirect) {
+        if (!resp.request.uri.href.startsWith(urls.github_tf_redirect)) {
           return that.requestLeetcodeAndSave(_request, leetcodeUrl, user, cb);
         }
         prompt_out.colors = false;
