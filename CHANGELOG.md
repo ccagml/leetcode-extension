@@ -1,3 +1,7 @@
+# version 3.1.4
+
+- 修复 Github 登录的 twoFactor 验证
+
 # version 3.1.3
 
 - 重构代码,减少耦合
