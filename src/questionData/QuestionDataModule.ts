@@ -92,7 +92,7 @@ export class QuestionDataProxy extends BABAProxy {
   }
 
   public getNodeById(id: string): TreeNodeModel | undefined {
-    let map = this.getfidMapQuestionData();
+    let map = this.getfidMapQuestionData() as Map<any, TreeNodeModel>;
     if (map.has(id)) {
       return map.get(id);
     } else if (map.has(parseInt(id))) {

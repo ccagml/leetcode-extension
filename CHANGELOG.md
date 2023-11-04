@@ -1,3 +1,7 @@
+# version 3.1.5
+
+- 说在 Windows 和 Mac 题目编号会是数字,不是字符串导致取不到 Description
+
 # version 3.1.4
 
 - 修复 Github 登录的 twoFactor 验证
