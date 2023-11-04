@@ -53,6 +53,13 @@
                 "-rf",
                 "out"
             ],
+            "windows": {
+                "command": "Remove-item",
+                "args": [
+                    "out",
+                    "-recurse"
+                ],
+            }
             // "isBackground": true,
         },
         {
