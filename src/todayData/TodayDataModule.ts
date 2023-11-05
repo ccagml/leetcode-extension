@@ -42,7 +42,12 @@ class TodayData {
   public async checkSubmit(e: ISubmitEvent) {
     if (e.sub_type == "submit" && e.accepted) {
       if (this.getFidInfo(e.fid)) {
-        await BABA.getProxy(BabaStr.TodayDataProxy).searchToday();
+        let cur_info = this.getFidInfo(e.fid);
+        if (cur_info?.userStatus != "FINISH") {
+          setTimeout(() => {
+            BABA.getProxy(BabaStr.TodayDataProxy).searchToday();
+          }, 5000);
+        }
       }
     }
   }
@@ -106,7 +111,7 @@ export class TodayDataMediator extends BABAMediator {
   }
 
   listNotificationInterests(): string[] {
-    return [BabaStr.VSCODE_DISPOST, BabaStr.StartReadData, BabaStr.CommitResult_showFinish];
+    return [BabaStr.VSCODE_DISPOST, BabaStr.StartReadData, BabaStr.CommitResult_showFinish, BabaStr.BABACMD_refresh];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
@@ -117,6 +122,9 @@ export class TodayDataMediator extends BABAMediator {
         break;
       case BabaStr.CommitResult_showFinish:
         todayData.checkSubmit(_notification.getBody());
+        break;
+      case BabaStr.BABACMD_refresh:
+        BABA.getProxy(BabaStr.TodayDataProxy).searchToday();
         break;
       default:
         break;
