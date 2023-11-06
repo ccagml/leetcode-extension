@@ -218,6 +218,9 @@ def parseMountainArray(param):
 
 
 def parseTreeNode(param):
+    # LCP 194题的参数 是整数
+    if (isNumber(param)):
+        return TreeNode(param)
     if (not isList(param)):
         onParameterError()
 

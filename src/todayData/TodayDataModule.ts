@@ -12,7 +12,7 @@ import { ISubmitEvent, OutPutType } from "../model/ConstDefind";
 import { ITodayDataResponse } from "../model/TreeNodeModel";
 import { isUseEndpointTranslation } from "../utils/ConfigUtils";
 import { promptForSignIn, ShowMessage } from "../utils/OutputUtils";
-import { getDayEnd, getDayStart } from "../utils/SystemUtils";
+import { getDayEnd, getDayNow, getDayStart } from "../utils/SystemUtils";
 
 class TodayData {
   fidInfo: Map<string, ITodayDataResponse> = new Map<string, ITodayDataResponse>();
@@ -25,10 +25,15 @@ class TodayData {
     return this.fidInfo.get(fid);
   }
 
-  checkNeedReadNew() {
+  async checkNeedReadNew() {
     const day_start = getDayStart(); //获取当天零点的时间
     const day_end = getDayEnd(); //获取当天23:59:59的时间
     let need_get_today: boolean = true;
+
+    let cur_time = getDayNow();
+    if (cur_time > day_start + 600 || cur_time < day_start + 300) {
+      return;
+    }
 
     this.fidInfo.forEach((value) => {
       if (day_start <= value.time && value.time <= day_end) {
@@ -36,7 +41,7 @@ class TodayData {
       }
     });
     if (need_get_today) {
-      BABA.getProxy(BabaStr.TodayDataProxy).searchToday();
+      await BABA.getProxy(BabaStr.TodayDataProxy).searchToday();
     }
   }
   public async checkSubmit(e: ISubmitEvent) {
@@ -111,7 +116,13 @@ export class TodayDataMediator extends BABAMediator {
   }
 
   listNotificationInterests(): string[] {
-    return [BabaStr.VSCODE_DISPOST, BabaStr.StartReadData, BabaStr.CommitResult_showFinish, BabaStr.BABACMD_refresh];
+    return [
+      BabaStr.VSCODE_DISPOST,
+      BabaStr.StartReadData,
+      BabaStr.CommitResult_showFinish,
+      BabaStr.BABACMD_refresh,
+      BabaStr.every_minute,
+    ];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
     switch (_notification.getName()) {
@@ -125,6 +136,9 @@ export class TodayDataMediator extends BABAMediator {
         break;
       case BabaStr.BABACMD_refresh:
         BABA.getProxy(BabaStr.TodayDataProxy).searchToday();
+        break;
+      case BabaStr.every_minute:
+        await todayData.checkNeedReadNew();
         break;
       default:
         break;

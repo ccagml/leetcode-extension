@@ -11,7 +11,7 @@ const sock = net.connect(
         port: debugServerPort,
         host: "127.0.0.1",
     },
-    function() {
+    function () {
         start();
     },
 );
@@ -47,7 +47,7 @@ function onSuccess() {
     onClose();
 }
 
-process.on("uncaughtException", function(err) {
+process.on("uncaughtException", function (err) {
     onError(err.message + "\n" + err.stack);
     throw err;
 });
@@ -209,7 +209,7 @@ function NestedInteger(ni) {
      * Return true if this NestedInteger holds a single integer, rather than a nested list.
      * @return { boolean }
      */
-    this.isInteger = function() {
+    this.isInteger = function () {
         if (Array.isArray(ni)) {
             return false;
         }
@@ -221,7 +221,7 @@ function NestedInteger(ni) {
      * Return null if this NestedInteger holds a nested list
      * @return { integer }
      */
-    this.getInteger = function() {
+    this.getInteger = function () {
         if (Array.isArray(ni)) {
             return null;
         }
@@ -233,7 +233,7 @@ function NestedInteger(ni) {
      * Return null if this NestedInteger holds a single integer
      * @return { NestedInteger[] }
      */
-    this.getList = function() {
+    this.getList = function () {
         if (Array.isArray(ni)) {
             return nested;
         }
@@ -256,14 +256,14 @@ function parseMountainArray(param) {
          * @param {integer} index
          * @return {integer}
          */
-        this.get = function(index) {
+        this.get = function (index) {
             return param[index];
         };
 
         /**
          * @return {integer}
          */
-        this.length = function() {
+        this.length = function () {
             return param.length;
         };
     }
@@ -276,6 +276,12 @@ function TreeNode(val) {
 }
 
 function parseTreeNode(param) {
+    // LCP 194题的参数 是整数
+    if (isNumber(param)) {
+        return new TreeNode(param);
+    }
+
+
     if (!Array.isArray(param)) {
         onParameterError();
     }
