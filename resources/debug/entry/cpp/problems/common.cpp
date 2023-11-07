@@ -1,5 +1,5 @@
-#include <vector>
 #include <queue>
+#include <vector>
 using namespace std;
 
 #include "cJSON.h"
@@ -239,6 +239,13 @@ TreeNode *parseTreeNode(const cJSON *node)
     TreeNode *parent = nullptr;
     queue<TreeNode *> q;
     int i = 0;
+
+    // LCP 194题的参数 是整数
+    if (node->type == cJSON_Number)
+    {
+        TreeNode *child = new TreeNode(node->valueint);
+        return child;
+    }
 
     if (node->type != cJSON_Array)
     {

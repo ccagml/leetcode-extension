@@ -42,14 +42,17 @@ export class DebugPy3 {
       return;
     }
 
-    debugConfig.program = await getEntryFile(meta.lang, meta.id);
+    const numericStr = meta.id.replace(/\D/g, ""); // 去除非数字字符
+    const temp_meta_id = parseInt(numericStr, 10);
+
+    debugConfig.program = await getEntryFile(meta.lang, temp_meta_id.toString());
 
     // check whether module.exports is exist or not
     const moduleExportsReg: RegExp = /# @lcpr-before-debug-begin/;
     if (!moduleExportsReg.test(fileContent.toString())) {
       await fse.writeFile(
         filePath,
-        `# @lcpr-before-debug-begin\nfrom python3problem${meta.id} import *\nfrom typing import *\n# @lcpr-before-debug-end\n\n` +
+        `# @lcpr-before-debug-begin\nfrom python3problem${temp_meta_id.toString()} import *\nfrom typing import *\n# @lcpr-before-debug-end\n\n` +
           fileContent.toString()
       );
     }
@@ -60,7 +63,7 @@ export class DebugPy3 {
       problemType.funName,
       problemType.paramTypes.join(","),
       problemType.returnType || "returnType",
-      meta.id,
+      temp_meta_id.toString(),
       port.toString(),
     ];
     vscode.debug.startDebugging(

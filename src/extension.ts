@@ -38,7 +38,8 @@ import { TodayDataMediator, TodayDataProxy } from "./todayData/TodayDataModule";
  * @param {ExtensionContext} context - ExtensionContext
  */
 
-let lcpr_timer;
+let lcpr_timer_sec;
+let lcpr_timer_min;
 export async function activate(context: ExtensionContext): Promise<void> {
   try {
     BABA.init([
@@ -225,22 +226,29 @@ export async function activate(context: ExtensionContext): Promise<void> {
     BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
     ShowMessage("Extension initialization failed. Please open output channel for details.", OutPutType.error);
   } finally {
-    lcpr_timer = setInterval(lcpr_timer_callback, 1000);
+    lcpr_timer_sec = setInterval(() => {
+      new Promise(async (resolve, _) => {
+        await BABA.sendNotificationAsync(BabaStr.every_second);
+        resolve(1);
+      });
+    }, 1000);
+    lcpr_timer_min = setInterval(() => {
+      new Promise(async (resolve, _) => {
+        await BABA.sendNotificationAsync(BabaStr.every_minute);
+        resolve(1);
+      });
+    }, 60000);
   }
-}
-
-function lcpr_timer_callback() {
-  BABA.sendNotification(BabaStr.every_second);
 }
 
 export function deactivate(): void {
   // Do nothing.
-  if (0) {
-    let a = 0;
-    console.log(a);
+  if (lcpr_timer_sec != undefined) {
+    clearInterval(lcpr_timer_sec);
+    lcpr_timer_sec = undefined;
   }
-  if (lcpr_timer != undefined) {
-    clearInterval(lcpr_timer);
-    lcpr_timer = undefined;
+  if (lcpr_timer_min != undefined) {
+    clearInterval(lcpr_timer_min);
+    lcpr_timer_min = undefined;
   }
 }

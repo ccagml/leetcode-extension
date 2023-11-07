@@ -13,6 +13,7 @@ import { BaseCC } from "./utils/BaseCC";
 export * as BaseCC from "./utils/BaseCC";
 export enum BabaStr {
   every_second = "every_second",
+  every_minute = "every_minute",
   StatusBarTimeMediator = "StatusBarTimeMediator",
   StatusBarTimeProxy = "StatusBarTimeProxy",
   RemarkMediator = "RemarkMediator",
