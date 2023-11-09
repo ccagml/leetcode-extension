@@ -447,6 +447,7 @@ class StorageUtils {
   }
 
   // 去除测试用例前的注释符号, 测试用例 可能有某些语言的注释符号, 例如 844题的#
+  // 有些题目的用例是空格如125题
   public fix_lineContent(lineContent) {
     let cut_pos = 0;
     for (let left = 0; left < lineContent.length; left++) {
@@ -467,7 +468,7 @@ class StorageUtils {
       cut_pos = left;
       break;
     }
-    return lineContent.substring(cut_pos);
+    return lineContent.substring(cut_pos).replace(/\s+$/g, "");
   }
 
   public meta(filename) {
@@ -482,7 +483,7 @@ class StorageUtils {
     for (let all_input = 0; all_input < file_info.length; all_input++) {
       const lineContent = file_info[all_input];
       if (caseFlag && lineContent.indexOf("@lcpr case=end") < 0) {
-        curCase += this.fix_lineContent(lineContent).replace(/\s+/g, "").replace(/\\n/g, "\n");
+        curCase += this.fix_lineContent(lineContent).replace(/\\n/g, "\n");
       }
       // 收集所有用例
       if (lineContent.indexOf("@lcpr case=start") >= 0) {

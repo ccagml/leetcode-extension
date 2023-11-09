@@ -187,6 +187,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
   }
 
   // 去除测试用例前的注释符号, 测试用例 可能有某些语言的注释符号, 例如 844题的#
+  // 有些题目的用例是空格如125题
   public fix_lineContent(lineContent) {
     let cut_pos = 0;
     for (let left = 0; left < lineContent.length; left++) {
@@ -207,7 +208,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       cut_pos = left;
       break;
     }
-    return lineContent.substring(cut_pos);
+    return lineContent.substring(cut_pos).replace(/\s+$/g, "");
   }
 
   public createDebugButton(codeLensLine, document, lineContent): vscode.CodeLens[] {
@@ -291,7 +292,7 @@ export class FileButtonService implements vscode.CodeLensProvider {
       }
 
       if (caseFlag && lineContent.indexOf("@lcpr case=end") < 0) {
-        curCase += this.fix_lineContent(lineContent).replace(/\s+/g, "");
+        curCase += this.fix_lineContent(lineContent);
       }
       // 收集所有用例
       if (lineContent.indexOf("@lcpr case=start") >= 0) {
