@@ -268,7 +268,7 @@ def parseParameter(index, paramType, param):
     }
     switchfun = switch.get(paramType, 0)
 
-    if switchfun is 0:
+    if switchfun == 0:
         result = parseSpecialParameter(index, paramType, param)
         if result is None:
             onParameterTypeError(paramType)
