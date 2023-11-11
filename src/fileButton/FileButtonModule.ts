@@ -12,6 +12,7 @@ import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
 import { TreeNodeModel } from "../model/TreeNodeModel";
 import { getEditorShortcuts, isStarShortcut } from "../utils/ConfigUtils";
 import { supportDebugLanguages } from "../utils/problemUtils";
+import { isWindows } from "../utils/SystemUtils";
 
 export class FileButtonService implements vscode.CodeLensProvider {
   private onDidChangeCodeLensesEmitter: vscode.EventEmitter<void> = new vscode.EventEmitter<void>();
@@ -152,6 +153,11 @@ export class FileButtonService implements vscode.CodeLensProvider {
     }
 
     if (supportDebugLanguages.indexOf(nodeLang) != -1) {
+      // 如果获取的是windows系统,python3 调试的按理是字符串"",需要多一个空格,不然在debug的时候命令行参数会解析错误
+      if (isWindows() && "python3" == nodeLang) {
+        testCase = testCase.replace(/^"/, ' "');
+      }
+
       if (shortcuts.indexOf("debug") >= 0) {
         temp_result.push(
           new vscode.CodeLens(range, {
