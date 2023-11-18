@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "3.1.9",
+    "version": "3.1.10",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",

@@ -77,6 +77,18 @@ export class TreeColor implements FileDecorationProvider {
       } else {
         file_color.tooltip = "还没有竞赛分";
       }
+    } else {
+      const difficulty: string = params.get("difficulty") || "0";
+      if (difficulty == "Easy") {
+        file_color.color = this.ITEM_COLOR.green;
+        file_color.tooltip = "简单难度";
+      } else if (difficulty == "Medium") {
+        file_color.color = this.ITEM_COLOR.yellow;
+        file_color.tooltip = "中等难度";
+      } else if (difficulty == "Hard") {
+        file_color.color = this.ITEM_COLOR.red;
+        file_color.tooltip = "困难难度";
+      }
     }
     return file_color;
   }
