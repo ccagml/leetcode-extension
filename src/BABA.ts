@@ -33,6 +33,7 @@ export enum BabaStr {
   statusBar_update = "statusBar_update",
   statusBar_update_UserContestInfo = "statusBar_update_UserContestInfo",
   InitFile = "InitFile",
+  InitWorkspaceFolder = "InitWorkspaceFolder",
   LogOutputProxy = "LogOutputProxy",
   LogOutputMediator = "LogOutputMediator",
   BABACMD_remarkCreateNote = "BABACMD_remarkCreateNote",

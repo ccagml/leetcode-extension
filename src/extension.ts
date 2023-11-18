@@ -218,6 +218,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       )
     );
 
+    await BABA.sendNotificationAsync(BabaStr.InitWorkspaceFolder, context);
     await BABA.sendNotificationAsync(BabaStr.InitFile, context);
     await BABA.sendNotificationAsync(BabaStr.InitEnv, context);
     await BABA.sendNotificationAsync(BabaStr.InitLoginStatus);

@@ -1,6 +1,7 @@
 # version 3.1.10
 
 - 没有分数的题目 按照 简单->绿色、中等->黄色、困难->红色 上色
+- 增加配置 workspaceFolderList 当 workspaceFolder 所在目录不存在,尝试从 workspaceFolderList 获取可用目录
 
 # version 3.1.9
 

@@ -781,6 +781,12 @@
                         "description": "%main.contributes.configuration.properties.leetcode-problem-rating.workspaceFolder.description%",
                         "default": ""
                     },
+                    "leetcode-problem-rating.workspaceFolderList": {
+                        "type": "array",
+                        "scope": "machine",
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.workspaceFolderList.description%",
+                        "default": []
+                    },
                     "leetcode-problem-rating.filePath": {
                         "type": "object",
                         "description": "%main.contributes.configuration.properties.leetcode-problem-rating.filePath.description%",

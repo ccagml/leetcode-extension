@@ -17,7 +17,12 @@ import { choiceDao } from "../dao/choiceDao";
 import { tagsDao } from "../dao/tagsDao";
 import { ShowMessage, promptForSignIn } from "../utils/OutputUtils";
 import { BABA, BABAMediator, BABAProxy, BabaStr, BaseCC } from "../BABA";
-import { getLeetCodeEndpoint, isUseEndpointTranslation, setDefaultLanguage } from "../utils/ConfigUtils";
+import {
+  getLeetCodeEndpoint,
+  isUseEndpointTranslation,
+  selectWorkspaceFolderList,
+  setDefaultLanguage,
+} from "../utils/ConfigUtils";
 import { getNodeIdFromFile } from "../utils/SystemUtils";
 
 export class TreeDataService implements vscode.TreeDataProvider<TreeNodeModel> {
@@ -43,6 +48,10 @@ export class TreeDataService implements vscode.TreeDataProvider<TreeNodeModel> {
   public async refresh(): Promise<void> {
     await treeViewController.refreshCache();
     await treeViewController.refreshCheck();
+  }
+
+  public async checkWorkspaceFolder() {
+    await selectWorkspaceFolderList();
   }
 
   public getTreeItem(element: TreeNodeModel): vscode.TreeItem | Thenable<vscode.TreeItem> {
@@ -408,6 +417,7 @@ export class TreeDataMediator extends BABAMediator {
       BabaStr.BABACMD_LoginOut,
       BabaStr.BABACMD_deleteAllCache,
       BabaStr.QuestionData_submitNewAccept,
+      BabaStr.InitWorkspaceFolder,
     ];
   }
   async handleNotification(_notification: BaseCC.BaseCC.INotification) {
@@ -417,6 +427,9 @@ export class TreeDataMediator extends BABAMediator {
         treeViewController.dispose();
         break;
       case BabaStr.StartReadData:
+        break;
+      case BabaStr.InitWorkspaceFolder:
+        await treeDataService.checkWorkspaceFolder();
         break;
       case BabaStr.BABACMD_refresh:
       case BabaStr.ConfigChange_hideScore:
