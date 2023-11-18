@@ -1,3 +1,8 @@
+# version 3.1.10
+
+- 没有分数的题目 按照 简单->绿色、中等->黄色、困难->红色 上色
+- 增加配置 workspaceFolderList 当 workspaceFolder 所在目录不存在,尝试从 workspaceFolderList 获取可用目录
+
 # version 3.1.9
 
 - 在 Windows 上的 Python3 调试,当用例是字符串 " " 且包含空格,会使得调试参数解析错误

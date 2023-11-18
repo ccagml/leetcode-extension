@@ -2,7 +2,7 @@
     "name": "vscode-leetcode-problem-rating",
     "displayName": "LeetCode",
     "description": "%main.description%",
-    "version": "3.1.9",
+    "version": "3.1.10",
     "author": "ccagml",
     "publisher": "ccagml",
     "license": "MIT",
@@ -780,6 +780,12 @@
                         "scope": "machine",
                         "description": "%main.contributes.configuration.properties.leetcode-problem-rating.workspaceFolder.description%",
                         "default": ""
+                    },
+                    "leetcode-problem-rating.workspaceFolderList": {
+                        "type": "array",
+                        "scope": "machine",
+                        "description": "%main.contributes.configuration.properties.leetcode-problem-rating.workspaceFolderList.description%",
+                        "default": []
                     },
                     "leetcode-problem-rating.filePath": {
                         "type": "object",

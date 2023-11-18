@@ -28,6 +28,7 @@ import {
   OpenOption,
   IQuickItemEx,
   singleLineFlag,
+  OutPutType,
 } from "../model/ConstDefind";
 
 import { useWsl, toWslPath } from "../utils/SystemUtils";
@@ -36,6 +37,7 @@ import * as fse from "fs-extra";
 import * as os from "os";
 import { BABA, BabaStr } from "../BABA";
 import { TreeNodeModel } from "../model/TreeNodeModel";
+import { ShowMessage } from "./OutputUtils";
 
 // vscode的配置
 export function getVsCodeConfig(): WorkspaceConfiguration {
@@ -92,6 +94,17 @@ export function getPickOneByRankRangeMax(): number {
 export function getWorkspaceFolder(): string {
   let cur_wsf = getVsCodeConfig().get<string>("workspaceFolder", "");
   return resolveWorkspaceFolder(cur_wsf);
+}
+
+// 工作目录
+export function getWorkspaceFolderList(): Array<string> {
+  let cur_wsf = getVsCodeConfig().get<Array<string>>("workspaceFolderList", []);
+  let result: Array<string> = [];
+  for (let index = 0; index < cur_wsf.length; index++) {
+    const element = resolveWorkspaceFolder(cur_wsf[index]);
+    result.push(element);
+  }
+  return result;
 }
 
 // 尝试从环境变量解析WorkspaceFolder
@@ -282,8 +295,8 @@ export async function determineLeetCodeFolder(): Promise<string> {
   picks.push(
     {
       label: `Default location`,
-      detail: `${path.join(os.homedir(), ".leetcode")}`,
-      value: `${path.join(os.homedir(), ".leetcode")}`,
+      detail: `${path.join(os.homedir(), ".lcpr")}`,
+      value: `${path.join(os.homedir(), ".lcpr")}`,
     },
     {
       label: "$(file-directory) Browse...",
@@ -306,8 +319,58 @@ export async function determineLeetCodeFolder(): Promise<string> {
     result = choice.value;
   }
 
-  getVsCodeConfig().update("workspaceFolder", result, ConfigurationTarget.Global);
+  await getVsCodeConfig().update("workspaceFolder", result, ConfigurationTarget.Global);
 
+  return result;
+}
+
+export async function updateWorkSpaceByList(list: Array<string>): Promise<string> {
+  let result: string;
+  const picks: Array<IQuickItemEx<string>> = [];
+
+  for (let index = 0; index < list.length; index++) {
+    const element = list[index];
+    picks.push({
+      label: `切换workspaceFolder目录为:${element}`,
+      detail: `${element}`,
+      value: `${element}`,
+    });
+  }
+
+  let choice: IQuickItemEx<string> | undefined;
+
+  if (picks.length == 1) {
+    choice = picks[0];
+  } else {
+    picks.push({
+      label: "$(file-directory) Browse...",
+      value: ":browse",
+    });
+
+    choice = await window.showQuickPick(picks, {
+      placeHolder: "选择 workspaceFolderList 中的目录作为 workspaceFolder",
+    });
+  }
+
+  if (!choice) {
+    result = "";
+  } else if (choice.value === ":browse") {
+    const directory: Uri[] | undefined = await showDirectorySelectDialog();
+    if (!directory || directory.length < 1) {
+      result = "";
+    } else {
+      result = directory[0].fsPath;
+    }
+  } else {
+    result = choice.value;
+  }
+
+  await getVsCodeConfig().update("workspaceFolder", result, ConfigurationTarget.Global);
+
+  let workspaceFolderSetting: string = getWorkspaceFolder();
+  if (workspaceFolderSetting) {
+    ShowMessage(`原workspaceFolder目录不存在切换为${workspaceFolderSetting}`, OutPutType.info);
+  }
   return result;
 }
 
@@ -340,6 +403,29 @@ export function isSubFolder(from: string, to: string): boolean {
     return true;
   }
   return !relative.startsWith("..") && !path.isAbsolute(relative);
+}
+
+export async function selectWorkspaceFolderList() {
+  let workSpaceList = getWorkspaceFolderList();
+  if (workSpaceList.length > 0) {
+    // 检查已存在的目录
+    let checkResult: Array<string> = [];
+
+    for (let index = 0; index < workSpaceList.length; index++) {
+      const checkPath = workSpaceList[index];
+      let exists = await fse.pathExists(checkPath);
+      if (exists) {
+        checkResult.push(checkPath);
+      }
+    }
+
+    let curWorkSpace = getWorkspaceFolder();
+    let cur_exists = await fse.pathExists(curWorkSpace);
+    // 当前目录不存在,且checkResult 可以选择
+    if (!cur_exists && checkResult.length > 0) {
+      await updateWorkSpaceByList(checkResult);
+    }
+  }
 }
 
 export async function selectWorkspaceFolder(isAsk: boolean = true): Promise<string> {
