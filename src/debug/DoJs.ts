@@ -67,6 +67,9 @@ export class DebugJs {
       meta.id,
       port.toString(),
     ];
+    if (vscode.debug.activeDebugSession) {
+      return;
+    }
     vscode.debug.startDebugging(
       undefined,
       Object.assign({}, debugConfig, {

@@ -66,6 +66,9 @@ export class DebugPy3 {
       temp_meta_id.toString(),
       port.toString(),
     ];
+    if (vscode.debug.activeDebugSession) {
+      return;
+    }
     vscode.debug.startDebugging(
       undefined,
       Object.assign({}, debugConfig, {

@@ -276,6 +276,11 @@ export class DebugCpp {
       port.toString(),
     ];
     const debugSessionName: string = randomString(16);
+
+    if (vscode.debug.activeDebugSession) {
+      return;
+    }
+
     const debuging: boolean = await vscode.debug.startDebugging(
       undefined,
       Object.assign({}, debugConfig, {
