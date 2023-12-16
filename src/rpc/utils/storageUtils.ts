@@ -378,6 +378,12 @@ class StorageUtils {
             temp_case.push(temp_collect.trim());
           } else {
             // 解析 x = aaa, y = bbb 之类的输入参数
+
+            // 第40题,测试用例最后面多了一个,
+            if (new_ele.length > 10 && new_ele[new_ele.length - 1] == ",") {
+              new_ele = new_ele.slice(0, -1);
+            }
+
             for (let index = new_ele.length - 1; index >= 0; index--) {
               if (no_need_flag) {
                 if (new_ele[index] == ",") {
