@@ -440,7 +440,7 @@ export class DebugCpp {
       await sysCall(
         "/usr/bin/clang++",
         [
-          "-std=c++17",
+          "-std=c++20",
           "-stdlib=libc++",
           "-g",
           program,

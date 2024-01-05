@@ -18,6 +18,9 @@ import { DebugCpp } from "./DoCpp";
 import { DebugPy3 } from "./DoPy3";
 import { DebugJs } from "./DoJs";
 
+// 支持的语言环境
+// https://support.leetcode.com/hc/en-us/articles/360011833974-What-are-the-environments-for-the-programming-languages-
+
 class DebugService {
   private server: net.Server;
 
