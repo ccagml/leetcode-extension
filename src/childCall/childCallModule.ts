@@ -225,14 +225,10 @@ class ExecuteService implements Disposable {
           const choice: IQuickItemEx<string> | undefined = await window.showQuickPick(picks, {
             ignoreFocusOut: true,
           });
-          if (!choice) {
-            child_process.stdin?.end();
-            return reject(new Error(successMatch.msg));
-          }
 
           let select_result = {
             c: cookie,
-            slug: choice.value,
+            slug: choice ? choice.value : "",
           };
           child_process.stdin?.write(JSON.stringify(select_result));
         }

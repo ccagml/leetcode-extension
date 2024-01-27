@@ -219,6 +219,12 @@ class LeetCodeCn extends ChainNodeBase {
 }
 
 function getSolutionBySlug(question_slug: string, articles_slug: string, lang: string) {
+  // 没有选择的题解标识
+  if (articles_slug == "") {
+    reply.info(JSON.stringify({ code: 100 }));
+    return;
+  }
+
   const opts = makeOpts(configUtils.sys.urls.graphql);
   opts.headers.Origin = configUtils.sys.urls.base;
   let URL_DISCUSS = "https://leetcode.cn/problems/$slug/solution/$articles_slug/";
