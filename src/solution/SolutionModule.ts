@@ -22,7 +22,9 @@ class SolutionService extends BaseWebViewService {
 
   public show(solutionString: string): void {
     this.solution = this.parseSolution(solutionString);
-    this.showWebviewInternal();
+    if (this.solution.init_data) {
+      this.showWebviewInternal();
+    }
   }
 
   protected getWebviewOption(): IWebViewOption {
@@ -109,7 +111,7 @@ class SolutionService extends BaseWebViewService {
     // solution.body = raw;
     let obj = JSON.parse(raw);
     let solution: Solution = new Solution();
-    if (obj.code == 100) {
+    if (obj.code == 100 && obj.solution) {
       this.problemName = obj.solution.problem_name;
       solution.title = obj.solution.title;
       solution.url = obj.solution.url;
@@ -118,6 +120,8 @@ class SolutionService extends BaseWebViewService {
       solution.votes = obj.solution.votes || 0;
       solution.body = obj.solution.body;
       solution.is_cn = obj.solution.is_cn;
+      solution.init_data = true;
+      return solution;
     }
     return solution;
   }
@@ -132,6 +136,7 @@ class Solution {
   public votes: string = "";
   public body: string = ""; // Markdown supported
   public is_cn?: boolean = false;
+  public init_data = false;
 }
 
 export const solutionService: SolutionService = new SolutionService();
