@@ -68,6 +68,12 @@ class QueryApi extends ApiBase {
         default: configUtils.code.lang,
         describe: "getHelp Programming language of the source code",
       })
+      .option("h", {
+        alias: "hints",
+        type: "boolean",
+        default: false,
+        describe: "get Hints Programming language of the source code",
+      })
       .option("z", {
         alias: "test",
         type: "string",
@@ -136,6 +142,17 @@ class QueryApi extends ApiBase {
         chainMgr.getChainHead().getProblem(argv.keyword, !argv.dontTranslate, function (e, problem) {
           if (e) return reply.info(e);
           chainMgr.getChainHead().getHelpOnline(problem, argv.f, argv.g);
+        });
+      }
+    } else if (argv.h) {
+      if (argv.keyword.length > 0) {
+        // show specific one
+        chainMgr.getChainHead().getProblem(argv.keyword, !argv.dontTranslate, function (e, problem) {
+          if (e) return reply.info(e);
+          chainMgr.getChainHead().getHintsOnline(problem, function (e, result) {
+            if (e) return;
+            reply.info(JSON.stringify({ code: 100, hints: result }));
+          });
         });
       }
     } else if (argv.z) {

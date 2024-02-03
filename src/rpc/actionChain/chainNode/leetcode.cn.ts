@@ -216,6 +216,36 @@ class LeetCodeCn extends ChainNodeBase {
       this.next.getHelpOnline(problem, cn_flag, lang);
     }
   };
+
+  getHintsOnline = (problem, cb) => {
+    getSolutionHints(problem.slug, cb);
+  };
+}
+
+function getSolutionHints(question_slug: string, cb) {
+  const opts = makeOpts(configUtils.sys.urls.graphql);
+  opts.headers.Origin = configUtils.sys.urls.base;
+  // let URL_DISCUSSES = "https://leetcode.com/graphql";
+  let URL_DISCUSS = "https://leetcode.cn/problems/$slug/description/";
+  opts.headers.Referer = URL_DISCUSS.replace("$slug", question_slug);
+
+  opts.json = true;
+  opts.body = {
+    operationName: "questionHints",
+    variables: { titleSlug: question_slug },
+    query: [
+      "query questionHints($titleSlug: String!) {",
+      " question(titleSlug: $titleSlug) {",
+      "        hints",
+      "  }",
+      "}",
+    ].join("\n"),
+  };
+
+  request.post(opts, function (e, _, body) {
+    let hints = body?.data?.question?.hints || [];
+    cb(e, hints);
+  });
 }
 
 function getSolutionBySlug(question_slug: string, articles_slug: string, lang: string) {
