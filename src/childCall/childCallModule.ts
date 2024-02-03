@@ -193,6 +193,15 @@ class ExecuteService implements Disposable {
     return solution;
   }
 
+  public async getHints(input: string): Promise<string> {
+    // solution don't support translation
+    const cmd: string[] = [await this.getLeetCodeBinaryPath(), "query", input, "-h"];
+
+    let solution = await this.callWithMsg("正在获取提示~~~", this.nodeExecutable, cmd);
+
+    return solution;
+  }
+
   public async tryCnMulSolution(_, child_process, resolve, reject) {
     child_process.stdout?.on("data", async (data: string | Buffer) => {
       data = data.toString();

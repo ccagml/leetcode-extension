@@ -118,4 +118,7 @@ export class ChainNodeBase {
   public getHelpOnline(problem, cn_flag, lang): void {
     this.next.getHelpOnline(problem, cn_flag, lang);
   }
+  public getHintsOnline(problem, cb: Function): void {
+    this.next.getHintsOnline(problem, cb);
+  }
 }

@@ -19,6 +19,7 @@ class CommUtils {
       problems: "problems",
       translation: "translationConfig",
       ranting_path: "../../rating",
+      hints_path: "../../hints",
       problem: (p) => p.fid + "." + p.slug + "." + p.category,
     };
   }

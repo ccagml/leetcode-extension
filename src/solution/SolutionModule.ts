@@ -19,30 +19,82 @@ class SolutionService extends BaseWebViewService {
   protected readonly viewType: string = "leetcode.solution";
   private problemName: string;
   private solution: Solution;
+  private is_hints: boolean;
+  private hints: Array<string>;
 
-  public show(solutionString: string): void {
-    this.solution = this.parseSolution(solutionString);
-    if (this.solution.init_data) {
+  public show(solutionString: string, is_hints: boolean = false): void {
+    this.is_hints = is_hints;
+    if (is_hints) {
+      this.hints = this.parseHints(solutionString);
       this.showWebviewInternal();
+    } else {
+      this.solution = this.parseSolution(solutionString);
+      if (this.solution.init_data) {
+        this.showWebviewInternal();
+      }
     }
   }
 
   protected getWebviewOption(): IWebViewOption {
     if (BABA.getProxy(BabaStr.PreviewProxy).isSideMode()) {
       return {
-        title: "Solution",
+        title: this.is_hints ? "Hints" : "Solution",
         viewColumn: ViewColumn.Two,
         preserveFocus: true,
       };
     } else {
       return {
-        title: `Solution: ${this.problemName}`,
+        title: this.is_hints ? "Hints" : `Solution: ${this.problemName}`,
         viewColumn: ViewColumn.One,
       };
     }
   }
 
   protected getWebviewContent(): string {
+    if (this.is_hints) {
+      return this.getHintsContent();
+    } else {
+      return this.getSolutionContent();
+    }
+  }
+
+  private getHintsContent(): string {
+    const styles: string = markdownService.getStyles();
+    let h = this.hints;
+    let body: Array<any> = [];
+    if (h.length == 0) {
+      body.push("本题无提示");
+    } else {
+      for (let index = 0; index < h.length; index++) {
+        const element = h[index];
+        let hint_body = ["<details><summary>", `提示:${index}`, "</summary>", `${element}`, "</details>"].join("\n");
+        body.push(hint_body);
+      }
+    }
+    return `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta http-equiv="Content-Security-Policy" content="default-src self; img-src vscode-resource:; script-src vscode-resource: 'self' 'unsafe-inline'; style-src vscode-resource: 'self' 'unsafe-inline'; "/>
+                ${styles}
+                <link rel="stylesheet" type="text/css" href= "vscode-resource:${path.join(
+                  __dirname,
+                  "..",
+                  "..",
+                  "..",
+                  "resources",
+                  "katexcss",
+                  "kates.min.css"
+                )}">
+            </head>
+            <body class="vscode-body 'scrollBeyondLastLine' 'wordWrap' 'showEditorSelection'" style="tab-size:4">
+                ${body.join("\n")}
+            </body>
+            </html>
+        `;
+  }
+
+  private getSolutionContent(): string {
     const styles: string = markdownService.getStyles();
     const { title, url, lang, author, votes } = this.solution;
     const head: string = markdownService.render(`# [${title}](${url})`);
@@ -99,16 +151,6 @@ class SolutionService extends BaseWebViewService {
   }
 
   private parseSolution(raw: string): Solution {
-    // raw = raw.slice(1); // skip first empty line
-    // [this.problemName, raw] = raw.split(/\n\n([^]+)/); // parse problem name and skip one line
-    // const solution: Solution = new Solution();
-    // // [^] matches everything including \n, yet can be replaced by . in ES2018's `m` flag
-    // [solution.title, raw] = raw.split(/\n\n([^]+)/);
-    // [solution.url, raw] = raw.split(/\n\n([^]+)/);
-    // [solution.lang, raw] = raw.match(/\* Lang:\s+(.+)\n([^]+)/)!.slice(1);
-    // [solution.author, raw] = raw.match(/\* Author:\s+(.+)\n([^]+)/)!.slice(1);
-    // [solution.votes, raw] = raw.match(/\* Votes:\s+(\d+)\n\n([^]+)/)!.slice(1);
-    // solution.body = raw;
     let obj = JSON.parse(raw);
     let solution: Solution = new Solution();
     if (obj.code == 100 && obj.solution) {
@@ -124,6 +166,14 @@ class SolutionService extends BaseWebViewService {
       return solution;
     }
     return solution;
+  }
+  private parseHints(raw: string): Array<string> {
+    let obj = JSON.parse(raw);
+
+    if (obj.code == 100) {
+      return obj.hints;
+    }
+    return [];
   }
 }
 
@@ -147,8 +197,8 @@ export class SolutionProxy extends BABAProxy {
     super(SolutionProxy.NAME);
   }
 
-  public show(solutionString: string): void {
-    solutionService.show(solutionString);
+  public show(solutionString: string, hints: boolean): void {
+    solutionService.show(solutionString, hints);
   }
 }
 

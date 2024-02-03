@@ -129,6 +129,22 @@ problems from the next layer. */
     sessionUtils.deleteCodingSession();
     return user;
   };
+
+  public getHintsOnline = (problem, cb) => {
+    const hints = storageUtils.getCache(commUtils.KEYS.hints) || {};
+    if (hints && hints[problem.id]) {
+      return cb(null, hints[problem.id]);
+    }
+    this.next.getHintsOnline(problem, function (e, hints_result) {
+      if (e) return cb(e);
+
+      const hints = storageUtils.getCache(commUtils.KEYS.hints) || {};
+      hints[problem.id] = hints_result;
+      storageUtils.setCache(commUtils.KEYS.hints, hints);
+
+      return cb(null, hints_result);
+    });
+  };
 }
 
 export const pluginObj: CachePlugin = new CachePlugin();

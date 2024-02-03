@@ -529,6 +529,12 @@ class TreeViewController implements Disposable {
         description: "",
         detail: "",
         value: "en",
+      },
+      {
+        label: "获取提示",
+        description: "",
+        detail: "",
+        value: "cnhints",
       }
     );
     const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks);
@@ -537,11 +543,15 @@ class TreeViewController implements Disposable {
     }
 
     try {
-      const needTranslation: boolean = isUseEndpointTranslation();
-      const solution: string = await BABA.getProxy(BabaStr.ChildCallProxy)
-        .get_instance()
-        .getHelp(problemInput, language, needTranslation, choice.value == "cn");
-      BABA.getProxy(BabaStr.SolutionProxy).show(solution);
+      if (choice.value == "cn" || choice.value == "en") {
+        const solution: string = await BABA.getProxy(BabaStr.ChildCallProxy)
+          .get_instance()
+          .getHelp(problemInput, language, isUseEndpointTranslation(), choice.value == "cn");
+        BABA.getProxy(BabaStr.SolutionProxy).show(solution);
+      } else if (choice.value == "cnhints") {
+        const hints: string = await BABA.getProxy(BabaStr.ChildCallProxy).get_instance().getHints(problemInput);
+        BABA.getProxy(BabaStr.SolutionProxy).show(hints, true);
+      }
     } catch (error) {
       BABA.getProxy(BabaStr.LogOutputProxy).get_log().appendLine(error.toString());
       await ShowMessage("Failed to fetch the top voted solution. 请查看控制台信息~", OutPutType.error);
