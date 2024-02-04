@@ -221,9 +221,7 @@ export async function sysCall(
         try_result_json;
       }
       if (code !== 0 || (try_result_json ? try_result_json.code < 0 : result.indexOf("ERROR") > -1)) {
-        const error = new Error(
-          `Command "${command} ${args.toString()}" failed with exit code "${code}". ${result || ""}`
-        );
+        const error = new Error(`exit code "${code}". ${result || ""}`);
         reject(error);
       } else {
         resolve(result);
