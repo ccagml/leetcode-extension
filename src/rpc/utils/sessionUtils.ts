@@ -19,6 +19,7 @@ class Session {
     EXPIRED: {
       msg: "session expired, please login again",
       statusCode: -1,
+      code: -1000,
     },
   };
   argv: any = {};

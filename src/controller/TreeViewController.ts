@@ -107,7 +107,7 @@ class TreeViewController implements Disposable {
 
       BABA.sendNotification(BabaStr.CommitResult_submitSolutionResult, { resultString: result });
     } catch (error) {
-      await ShowMessage("提交出错了. 请查看控制台信息~", OutPutType.error);
+      await ShowMessage(`提交出错${error}了. 请查看控制台信息~`, OutPutType.error);
       return;
     }
   }
@@ -201,7 +201,7 @@ class TreeViewController implements Disposable {
       }
       BABA.sendNotification(BabaStr.CommitResult_testSolutionResult, { resultString: result, tsd: tsd });
     } catch (error) {
-      await ShowMessage("提交测试出错了. 请查看控制台信息~", OutPutType.error);
+      await ShowMessage(`提交测试出错${error}了. 请查看控制台信息~`, OutPutType.error);
     }
   }
   /**
@@ -257,7 +257,7 @@ class TreeViewController implements Disposable {
       }
       BABA.sendNotification(BabaStr.CommitResult_testSolutionResult, { resultString: result, tsd: tsd });
     } catch (error) {
-      await ShowMessage("提交测试出错了. 请查看控制台信息~", OutPutType.error);
+      await ShowMessage(`提交测试出错${error}了. 请查看控制台信息~`, OutPutType.error);
     }
   }
 
@@ -304,7 +304,7 @@ class TreeViewController implements Disposable {
 
       BABA.sendNotification(BabaStr.CommitResult_testSolutionResult, { resultString: result, tsd: tsd });
     } catch (error) {
-      await ShowMessage("提交测试出错了. 请查看控制台信息~", OutPutType.error);
+      await ShowMessage(`提交测试出错${error}了. 请查看控制台信息~`, OutPutType.error);
     }
   }
 
@@ -344,7 +344,7 @@ class TreeViewController implements Disposable {
 
       BABA.sendNotification(BabaStr.CommitResult_testSolutionResult, { resultString: result, tsd: tsd });
     } catch (error) {
-      await ShowMessage("提交测试出错了. 请查看控制台信息~", OutPutType.error);
+      await ShowMessage(`提交测试出错${error}了. 请查看控制台信息~`, OutPutType.error);
     }
   }
 
