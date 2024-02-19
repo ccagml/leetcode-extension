@@ -4614,7 +4614,7 @@ class TagsDao {
     "two-pointers": "双指针",
     sorting: "排序",
     backtracking: "回溯",
-    stack: "堆",
+    stack: "栈",
     "heap-priority-queue": "优先级队列",
     "merge-sort": "归并排序",
     "string-matching": "字符串匹配",
