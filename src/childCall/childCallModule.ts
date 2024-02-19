@@ -468,13 +468,34 @@ class ExecuteService implements Disposable {
     }
     child_process.stdin?.write(`${name}\n`);
     const isByCookie: boolean = arg.loginMethod === "Cookie";
-    const pwd: string | undefined = await window.showInputBox({
-      prompt: isByCookie ? "Enter cookie" : "Enter password.",
-      password: true,
-      ignoreFocusOut: true,
-      validateInput: (s: string): string | undefined =>
-        s ? undefined : isByCookie ? "Cookie must not be empty" : "Password must not be empty",
-    });
+    let pwd: string | undefined = undefined;
+    if (isByCookie) {
+      let cf_v = await window.showInputBox({
+        title: '正确的cookie例子csrftoken="xxx"; LEETCODE_SESSION="yyy";',
+        prompt: "输入例子中csrftoken的值xxx",
+        ignoreFocusOut: true,
+        validateInput: (s: string): string | undefined => (s ? undefined : "csrftoken不为空"),
+      });
+      let ls_v = await window.showInputBox({
+        title: '正确的cookie例子csrftoken="xxx"; LEETCODE_SESSION="yyy";',
+        prompt: "输入例子中LEETCODE_SESSION的值yyy",
+        ignoreFocusOut: true,
+        validateInput: (s: string): string | undefined => (s ? undefined : "LEETCODE_SESSION不为空"),
+      });
+
+      if (cf_v && ls_v) {
+        pwd = `csrftoken="${cf_v}";LEETCODE_SESSION="${ls_v}";`;
+      }
+      // csrftoken="xxxx"; LEETCODE_SESSION="xxxx";
+    } else {
+      pwd = await window.showInputBox({
+        prompt: "Enter password.",
+        password: true,
+        ignoreFocusOut: true,
+        validateInput: (s: string): string | undefined => (s ? undefined : "Password must not be empty"),
+      });
+    }
+
     if (!pwd) {
       child_process.kill();
       return resolve(undefined);
