@@ -3825,6 +3825,1597 @@ class TagsDao {
     "2419": { topicTags: ["bit-manipulation", "brainteaser", "array"] },
     "2420": { topicTags: ["array", "dynamic-programming", "prefix-sum"] },
     "2421": { topicTags: ["tree", "union-find", "graph", "array"] },
+    "2422": {
+      topicTags: ["greedy", "array", "two-pointers"],
+    },
+    "2423": {
+      topicTags: ["hash-table", "string", "counting"],
+    },
+    "2424": {
+      topicTags: [
+        "union-find",
+        "design",
+        "binary-indexed-tree",
+        "segment-tree",
+        "binary-search",
+        "ordered-set",
+        "heap-priority-queue",
+      ],
+    },
+    "2425": {
+      topicTags: ["bit-manipulation", "brainteaser", "array"],
+    },
+    "2426": {
+      topicTags: [
+        "binary-indexed-tree",
+        "segment-tree",
+        "array",
+        "binary-search",
+        "divide-and-conquer",
+        "ordered-set",
+        "merge-sort",
+      ],
+    },
+    "2427": {
+      topicTags: ["math", "enumeration", "number-theory"],
+    },
+    "2428": {
+      topicTags: ["array", "matrix", "prefix-sum"],
+    },
+    "2429": {
+      topicTags: ["greedy", "bit-manipulation"],
+    },
+    "2430": {
+      topicTags: ["string", "dynamic-programming", "string-matching", "hash-function", "rolling-hash"],
+    },
+    "2431": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "2432": {
+      topicTags: ["array"],
+    },
+    "2433": {
+      topicTags: ["bit-manipulation", "array"],
+    },
+    "2434": {
+      topicTags: ["stack", "greedy", "hash-table", "string"],
+    },
+    "2435": {
+      topicTags: ["array", "dynamic-programming", "matrix"],
+    },
+    "2436": {
+      topicTags: ["greedy", "array", "math", "dynamic-programming", "number-theory"],
+    },
+    "2437": {
+      topicTags: ["string", "enumeration"],
+    },
+    "2438": {
+      topicTags: ["bit-manipulation", "array", "prefix-sum"],
+    },
+    "2439": {
+      topicTags: ["greedy", "array", "binary-search", "dynamic-programming", "prefix-sum"],
+    },
+    "2440": {
+      topicTags: ["tree", "depth-first-search", "array", "math", "enumeration"],
+    },
+    "2441": {
+      topicTags: ["array", "hash-table", "two-pointers", "sorting"],
+    },
+    "2442": {
+      topicTags: ["array", "hash-table", "math"],
+    },
+    "2443": {
+      topicTags: ["math", "enumeration"],
+    },
+    "2444": {
+      topicTags: ["queue", "array", "sliding-window", "monotonic-queue"],
+    },
+    "2445": {
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
+    },
+    "2446": {
+      topicTags: ["array", "string"],
+    },
+    "2447": {
+      topicTags: ["array", "math", "number-theory"],
+    },
+    "2448": {
+      topicTags: ["greedy", "array", "binary-search", "prefix-sum", "sorting"],
+    },
+    "2449": {
+      topicTags: ["greedy", "array", "sorting"],
+    },
+    "2450": {
+      topicTags: ["math", "string"],
+    },
+    "2451": {
+      topicTags: ["array", "hash-table", "string"],
+    },
+    "2452": {
+      topicTags: ["array", "string"],
+    },
+    "2453": {
+      topicTags: ["array", "hash-table", "counting"],
+    },
+    "2454": {
+      topicTags: ["stack", "array", "binary-search", "sorting", "monotonic-stack", "heap-priority-queue"],
+    },
+    "2455": {
+      topicTags: ["array", "math"],
+    },
+    "2456": {
+      topicTags: ["array", "hash-table", "string", "sorting", "heap-priority-queue"],
+    },
+    "2457": {
+      topicTags: ["greedy", "math"],
+    },
+    "2458": {
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "array", "binary-tree"],
+    },
+    "2459": {
+      topicTags: ["greedy", "array", "sorting"],
+    },
+    "2460": {
+      topicTags: ["array", "simulation"],
+    },
+    "2461": {
+      topicTags: ["array", "hash-table", "sliding-window"],
+    },
+    "2462": {
+      topicTags: ["array", "two-pointers", "simulation", "heap-priority-queue"],
+    },
+    "2463": {
+      topicTags: ["array", "dynamic-programming", "sorting"],
+    },
+    "2464": {
+      topicTags: ["array", "math", "dynamic-programming", "number-theory"],
+    },
+    "2465": {
+      topicTags: ["array", "hash-table", "two-pointers", "sorting"],
+    },
+    "2466": {
+      topicTags: ["dynamic-programming"],
+    },
+    "2467": {
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "graph", "array"],
+    },
+    "2468": {
+      topicTags: ["string", "binary-search"],
+    },
+    "2469": {
+      topicTags: ["math"],
+    },
+    "2470": {
+      topicTags: ["array", "math", "number-theory"],
+    },
+    "2471": {
+      topicTags: ["tree", "breadth-first-search", "binary-tree"],
+    },
+    "2472": {
+      topicTags: ["string", "dynamic-programming"],
+    },
+    "2473": {
+      topicTags: ["graph", "array", "shortest-path", "heap-priority-queue"],
+    },
+    "2475": {
+      topicTags: ["array", "hash-table", "sorting"],
+    },
+    "2476": {
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "array", "binary-search", "binary-tree"],
+    },
+    "2477": {
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "graph"],
+    },
+    "2478": {
+      topicTags: ["string", "dynamic-programming"],
+    },
+    "2479": {
+      topicTags: ["tree", "depth-first-search", "graph", "trie"],
+    },
+    "2481": {
+      topicTags: ["geometry", "math"],
+    },
+    "2482": {
+      topicTags: ["array", "matrix", "simulation"],
+    },
+    "2483": {
+      topicTags: ["string", "prefix-sum"],
+    },
+    "2484": {
+      topicTags: ["string", "dynamic-programming"],
+    },
+    "2485": {
+      topicTags: ["math", "prefix-sum"],
+    },
+    "2486": {
+      topicTags: ["greedy", "two-pointers", "string"],
+    },
+    "2487": {
+      topicTags: ["stack", "recursion", "linked-list", "monotonic-stack"],
+    },
+    "2488": {
+      topicTags: ["array", "hash-table", "prefix-sum"],
+    },
+    "2489": {
+      topicTags: ["hash-table", "math", "string", "prefix-sum"],
+    },
+    "2490": {
+      topicTags: ["string"],
+    },
+    "2491": {
+      topicTags: ["array", "hash-table", "two-pointers", "sorting"],
+    },
+    "2492": {
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
+    },
+    "2493": {
+      topicTags: ["breadth-first-search", "union-find", "graph"],
+    },
+    "2495": {
+      topicTags: ["array", "math", "dynamic-programming"],
+    },
+    "2496": {
+      topicTags: ["array", "string"],
+    },
+    "2497": {
+      topicTags: ["greedy", "graph", "array", "sorting", "heap-priority-queue"],
+    },
+    "2498": {
+      topicTags: ["greedy", "array", "binary-search"],
+    },
+    "2499": {
+      topicTags: ["greedy", "array", "hash-table", "counting"],
+    },
+    "2500": {
+      topicTags: ["array", "matrix", "sorting", "simulation", "heap-priority-queue"],
+    },
+    "2501": {
+      topicTags: ["array", "hash-table", "binary-search", "dynamic-programming", "sorting"],
+    },
+    "2502": {
+      topicTags: ["design", "array", "hash-table", "simulation"],
+    },
+    "2503": {
+      topicTags: [
+        "breadth-first-search",
+        "union-find",
+        "array",
+        "two-pointers",
+        "matrix",
+        "sorting",
+        "heap-priority-queue",
+      ],
+    },
+    "2505": {
+      topicTags: ["bit-manipulation", "brainteaser", "array", "math"],
+    },
+    "2506": {
+      topicTags: ["array", "hash-table", "string"],
+    },
+    "2507": {
+      topicTags: ["math", "number-theory"],
+    },
+    "2508": {
+      topicTags: ["graph", "hash-table"],
+    },
+    "2509": {
+      topicTags: ["tree", "binary-tree"],
+    },
+    "2510": {
+      topicTags: ["array", "dynamic-programming", "matrix"],
+    },
+    "2511": {
+      topicTags: ["array", "two-pointers"],
+    },
+    "2512": {
+      topicTags: ["array", "hash-table", "string", "sorting", "heap-priority-queue"],
+    },
+    "2513": {
+      topicTags: ["math", "binary-search", "number-theory"],
+    },
+    "2514": {
+      topicTags: ["hash-table", "math", "string", "combinatorics", "counting"],
+    },
+    "2515": {
+      topicTags: ["array", "string"],
+    },
+    "2516": {
+      topicTags: ["hash-table", "string", "sliding-window"],
+    },
+    "2517": {
+      topicTags: ["array", "binary-search", "sorting"],
+    },
+    "2518": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "2519": {
+      topicTags: [
+        "binary-indexed-tree",
+        "segment-tree",
+        "array",
+        "binary-search",
+        "divide-and-conquer",
+        "ordered-set",
+        "merge-sort",
+      ],
+    },
+    "2520": {
+      topicTags: ["math"],
+    },
+    "2521": {
+      topicTags: ["array", "hash-table", "math", "number-theory"],
+    },
+    "2522": {
+      topicTags: ["greedy", "string", "dynamic-programming"],
+    },
+    "2523": {
+      topicTags: ["math", "number-theory"],
+    },
+    "2524": {
+      topicTags: ["array", "hash-table", "math", "sliding-window"],
+    },
+    "2525": {
+      topicTags: ["math"],
+    },
+    "2526": {
+      topicTags: ["design", "queue", "hash-table", "counting", "data-stream"],
+    },
+    "2527": {
+      topicTags: ["bit-manipulation", "array", "math"],
+    },
+    "2528": {
+      topicTags: ["greedy", "queue", "array", "binary-search", "prefix-sum", "sliding-window"],
+    },
+    "2529": {
+      topicTags: ["array", "binary-search", "counting"],
+    },
+    "2530": {
+      topicTags: ["greedy", "array", "heap-priority-queue"],
+    },
+    "2531": {
+      topicTags: ["hash-table", "string", "counting"],
+    },
+    "2532": {
+      topicTags: ["array", "simulation", "heap-priority-queue"],
+    },
+    "2533": {
+      topicTags: ["dynamic-programming"],
+    },
+    "2534": {
+      topicTags: ["queue", "array", "simulation"],
+    },
+    "2535": {
+      topicTags: ["array", "math"],
+    },
+    "2536": {
+      topicTags: ["array", "matrix", "prefix-sum"],
+    },
+    "2537": {
+      topicTags: ["array", "hash-table", "sliding-window"],
+    },
+    "2538": {
+      topicTags: ["tree", "depth-first-search", "array", "dynamic-programming"],
+    },
+    "2539": {
+      topicTags: ["hash-table", "math", "string", "combinatorics", "counting"],
+    },
+    "2540": {
+      topicTags: ["array", "hash-table", "two-pointers", "binary-search"],
+    },
+    "2541": {
+      topicTags: ["greedy", "array", "math"],
+    },
+    "2542": {
+      topicTags: ["greedy", "array", "sorting", "heap-priority-queue"],
+    },
+    "2543": {
+      topicTags: ["math", "number-theory"],
+    },
+    "2544": {
+      topicTags: ["math"],
+    },
+    "2545": {
+      topicTags: ["array", "matrix", "sorting"],
+    },
+    "2546": {
+      topicTags: ["bit-manipulation", "string"],
+    },
+    "2547": {
+      topicTags: ["array", "hash-table", "dynamic-programming", "counting"],
+    },
+    "2548": {
+      topicTags: ["greedy", "array", "sorting"],
+    },
+    "2549": {
+      topicTags: ["array", "hash-table", "math", "simulation"],
+    },
+    "2550": {
+      topicTags: ["recursion", "math"],
+    },
+    "2551": {
+      topicTags: ["greedy", "array", "sorting", "heap-priority-queue"],
+    },
+    "2552": {
+      topicTags: ["binary-indexed-tree", "array", "dynamic-programming", "enumeration", "prefix-sum"],
+    },
+    "2553": {
+      topicTags: ["array", "simulation"],
+    },
+    "2554": {
+      topicTags: ["greedy", "array", "hash-table", "binary-search", "sorting"],
+    },
+    "2555": {
+      topicTags: ["array", "binary-search", "sliding-window"],
+    },
+    "2556": {
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "dynamic-programming", "matrix"],
+    },
+    "2557": {
+      topicTags: ["greedy", "array", "binary-search", "sorting"],
+    },
+    "2558": {
+      topicTags: ["array", "simulation", "heap-priority-queue"],
+    },
+    "2559": {
+      topicTags: ["array", "string", "prefix-sum"],
+    },
+    "2560": {
+      topicTags: ["array", "binary-search"],
+    },
+    "2561": {
+      topicTags: ["greedy", "array", "hash-table"],
+    },
+    "2562": {
+      topicTags: ["array", "two-pointers", "simulation"],
+    },
+    "2563": {
+      topicTags: ["array", "two-pointers", "binary-search", "sorting"],
+    },
+    "2564": {
+      topicTags: ["bit-manipulation", "array", "hash-table", "string"],
+    },
+    "2565": {
+      topicTags: ["two-pointers", "string", "binary-search"],
+    },
+    "2566": {
+      topicTags: ["greedy", "math"],
+    },
+    "2567": {
+      topicTags: ["greedy", "array", "sorting"],
+    },
+    "2568": {
+      topicTags: ["bit-manipulation", "brainteaser", "array"],
+    },
+    "2569": {
+      topicTags: ["segment-tree", "array"],
+    },
+    "2570": {
+      topicTags: ["array", "hash-table", "two-pointers"],
+    },
+    "2571": {
+      topicTags: ["greedy", "bit-manipulation", "dynamic-programming"],
+    },
+    "2572": {
+      topicTags: ["bit-manipulation", "array", "math", "dynamic-programming", "bitmask"],
+    },
+    "2573": {
+      topicTags: ["greedy", "union-find", "array", "string", "dynamic-programming", "matrix"],
+    },
+    "2574": {
+      topicTags: ["array", "prefix-sum"],
+    },
+    "2575": {
+      topicTags: ["array", "math", "string"],
+    },
+    "2576": {
+      topicTags: ["greedy", "array", "two-pointers", "binary-search", "sorting"],
+    },
+    "2577": {
+      topicTags: ["breadth-first-search", "graph", "array", "matrix", "shortest-path", "heap-priority-queue"],
+    },
+    "2578": {
+      topicTags: ["greedy", "math", "sorting"],
+    },
+    "2579": {
+      topicTags: ["math"],
+    },
+    "2580": {
+      topicTags: ["array", "sorting"],
+    },
+    "2581": {
+      topicTags: ["tree", "depth-first-search", "hash-table", "dynamic-programming"],
+    },
+    "2582": {
+      topicTags: ["math", "simulation"],
+    },
+    "2583": {
+      topicTags: ["tree", "breadth-first-search", "binary-tree", "sorting"],
+    },
+    "2584": {
+      topicTags: ["array", "hash-table", "math", "number-theory"],
+    },
+    "2585": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "2586": {
+      topicTags: ["array", "string"],
+    },
+    "2587": {
+      topicTags: ["greedy", "array", "prefix-sum", "sorting"],
+    },
+    "2588": {
+      topicTags: ["bit-manipulation", "array", "hash-table", "prefix-sum"],
+    },
+    "2589": {
+      topicTags: ["stack", "greedy", "array", "binary-search", "sorting"],
+    },
+    "2590": {
+      topicTags: ["design", "array", "hash-table", "string", "sorting"],
+    },
+    "2591": {
+      topicTags: ["greedy", "math"],
+    },
+    "2592": {
+      topicTags: ["greedy", "array", "two-pointers", "sorting"],
+    },
+    "2593": {
+      topicTags: ["array", "sorting", "simulation", "heap-priority-queue"],
+    },
+    "2594": {
+      topicTags: ["array", "binary-search"],
+    },
+    "2595": {
+      topicTags: ["bit-manipulation"],
+    },
+    "2596": {
+      topicTags: ["depth-first-search", "breadth-first-search", "array", "matrix", "simulation"],
+    },
+    "2597": {
+      topicTags: ["array", "dynamic-programming", "backtracking", "sorting"],
+    },
+    "2598": {
+      topicTags: ["greedy", "array", "hash-table", "math"],
+    },
+    "2599": {
+      topicTags: ["greedy", "array", "heap-priority-queue"],
+    },
+    "2600": {
+      topicTags: ["greedy", "math"],
+    },
+    "2601": {
+      topicTags: ["greedy", "array", "math", "binary-search", "number-theory"],
+    },
+    "2602": {
+      topicTags: ["array", "binary-search", "prefix-sum", "sorting"],
+    },
+    "2603": {
+      topicTags: ["tree", "graph", "topological-sort", "array"],
+    },
+    "2604": {
+      topicTags: ["array", "binary-search", "sorting"],
+    },
+    "2605": {
+      topicTags: ["array", "hash-table", "enumeration"],
+    },
+    "2606": {
+      topicTags: ["array", "hash-table", "string", "dynamic-programming"],
+    },
+    "2607": {
+      topicTags: ["array", "math", "number-theory", "sorting"],
+    },
+    "2608": {
+      topicTags: ["breadth-first-search", "graph"],
+    },
+    "2609": {
+      topicTags: ["string"],
+    },
+    "2610": {
+      topicTags: ["array", "hash-table"],
+    },
+    "2611": {
+      topicTags: ["greedy", "array", "sorting", "heap-priority-queue"],
+    },
+    "2612": {
+      topicTags: ["breadth-first-search", "array", "ordered-set"],
+    },
+    "2613": {
+      topicTags: ["geometry", "array", "math", "divide-and-conquer", "ordered-set", "sorting"],
+    },
+    "2614": {
+      topicTags: ["array", "math", "matrix", "number-theory"],
+    },
+    "2615": {
+      topicTags: ["array", "hash-table", "prefix-sum"],
+    },
+    "2616": {
+      topicTags: ["greedy", "array", "binary-search"],
+    },
+    "2617": {
+      topicTags: [
+        "stack",
+        "union-find",
+        "binary-indexed-tree",
+        "segment-tree",
+        "array",
+        "binary-search",
+        "dynamic-programming",
+      ],
+    },
+    "2638": {
+      topicTags: ["array", "dynamic-programming", "sorting"],
+    },
+    "2639": {
+      topicTags: ["array", "matrix"],
+    },
+    "2640": {
+      topicTags: ["array", "prefix-sum"],
+    },
+    "2641": {
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "hash-table", "binary-tree"],
+    },
+    "2642": {
+      topicTags: ["graph", "design", "shortest-path", "heap-priority-queue"],
+    },
+    "2643": {
+      topicTags: ["array", "matrix"],
+    },
+    "2644": {
+      topicTags: ["array"],
+    },
+    "2645": {
+      topicTags: ["stack", "greedy", "string", "dynamic-programming"],
+    },
+    "2646": {
+      topicTags: ["tree", "depth-first-search", "graph", "array", "dynamic-programming"],
+    },
+    "2647": {
+      topicTags: ["array", "math"],
+    },
+    "2651": {
+      topicTags: ["math"],
+    },
+    "2652": {
+      topicTags: ["math"],
+    },
+    "2653": {
+      topicTags: ["array", "hash-table", "sliding-window"],
+    },
+    "2654": {
+      topicTags: ["array", "math", "number-theory"],
+    },
+    "2655": {
+      topicTags: ["array", "sorting"],
+    },
+    "2656": {
+      topicTags: ["greedy", "array"],
+    },
+    "2657": {
+      topicTags: ["bit-manipulation", "array", "hash-table"],
+    },
+    "2658": {
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
+    },
+    "2659": {
+      topicTags: ["greedy", "binary-indexed-tree", "segment-tree", "array", "binary-search", "ordered-set", "sorting"],
+    },
+    "2660": {
+      topicTags: ["array", "simulation"],
+    },
+    "2661": {
+      topicTags: ["array", "hash-table", "matrix"],
+    },
+    "2662": {
+      topicTags: ["graph", "array", "shortest-path", "heap-priority-queue"],
+    },
+    "2663": {
+      topicTags: ["greedy", "string"],
+    },
+    "2664": {
+      topicTags: ["array", "backtracking", "matrix"],
+    },
+    "2670": {
+      topicTags: ["array", "hash-table"],
+    },
+    "2671": {
+      topicTags: ["design", "hash-table"],
+    },
+    "2672": {
+      topicTags: ["array"],
+    },
+    "2673": {
+      topicTags: ["greedy", "tree", "array", "dynamic-programming", "binary-tree"],
+    },
+    "2674": {
+      topicTags: ["linked-list", "two-pointers"],
+    },
+    "2678": {
+      topicTags: ["array", "string"],
+    },
+    "2679": {
+      topicTags: ["array", "matrix", "sorting", "simulation", "heap-priority-queue"],
+    },
+    "2680": {
+      topicTags: ["greedy", "bit-manipulation", "array", "prefix-sum"],
+    },
+    "2681": {
+      topicTags: ["array", "math", "prefix-sum", "sorting"],
+    },
+    "2682": {
+      topicTags: ["array", "hash-table", "simulation"],
+    },
+    "2683": {
+      topicTags: ["bit-manipulation", "array"],
+    },
+    "2684": {
+      topicTags: ["array", "dynamic-programming", "matrix"],
+    },
+    "2685": {
+      topicTags: ["depth-first-search", "breadth-first-search", "graph"],
+    },
+    "2689": {
+      topicTags: ["tree", "depth-first-search", "binary-tree"],
+    },
+    "2696": {
+      topicTags: ["stack", "string", "simulation"],
+    },
+    "2697": {
+      topicTags: ["greedy", "two-pointers", "string"],
+    },
+    "2698": {
+      topicTags: ["math", "backtracking"],
+    },
+    "2699": {
+      topicTags: ["graph", "shortest-path", "heap-priority-queue"],
+    },
+    "2702": {
+      topicTags: ["array", "binary-search"],
+    },
+    "2706": {
+      topicTags: ["array", "sorting"],
+    },
+    "2707": {
+      topicTags: ["trie", "array", "hash-table", "string", "dynamic-programming"],
+    },
+    "2708": {
+      topicTags: ["greedy", "array", "backtracking", "sorting"],
+    },
+    "2709": {
+      topicTags: ["union-find", "array", "math", "number-theory"],
+    },
+    "2710": {
+      topicTags: ["string"],
+    },
+    "2711": {
+      topicTags: ["array", "hash-table", "matrix"],
+    },
+    "2712": {
+      topicTags: ["greedy", "string", "dynamic-programming"],
+    },
+    "2713": {
+      topicTags: ["memoization", "array", "binary-search", "dynamic-programming", "matrix", "sorting"],
+    },
+    "2714": {
+      topicTags: ["graph", "shortest-path", "heap-priority-queue"],
+    },
+    "2716": {
+      topicTags: ["hash-table", "string"],
+    },
+    "2717": {
+      topicTags: ["array", "simulation"],
+    },
+    "2718": {
+      topicTags: ["array", "hash-table"],
+    },
+    "2719": {
+      topicTags: ["math", "string", "dynamic-programming"],
+    },
+    "2728": {
+      topicTags: ["array", "interactive"],
+    },
+    "2729": {
+      topicTags: ["hash-table", "math"],
+    },
+    "2730": {
+      topicTags: ["string", "sliding-window"],
+    },
+    "2731": {
+      topicTags: ["brainteaser", "array", "prefix-sum", "sorting"],
+    },
+    "2732": {
+      topicTags: ["greedy", "bit-manipulation", "array", "matrix"],
+    },
+    "2733": {
+      topicTags: ["array", "sorting"],
+    },
+    "2734": {
+      topicTags: ["greedy", "string"],
+    },
+    "2735": {
+      topicTags: ["array", "enumeration"],
+    },
+    "2736": {
+      topicTags: [
+        "stack",
+        "binary-indexed-tree",
+        "segment-tree",
+        "array",
+        "binary-search",
+        "sorting",
+        "monotonic-stack",
+      ],
+    },
+    "2737": {
+      topicTags: ["graph", "array", "shortest-path", "heap-priority-queue"],
+    },
+    "2739": {
+      topicTags: ["math", "simulation"],
+    },
+    "2740": {
+      topicTags: ["array", "sorting"],
+    },
+    "2741": {
+      topicTags: ["bit-manipulation", "array", "bitmask"],
+    },
+    "2742": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "2743": {
+      topicTags: ["hash-table", "string", "sliding-window"],
+    },
+    "2744": {
+      topicTags: ["array", "hash-table", "string", "simulation"],
+    },
+    "2745": {
+      topicTags: ["greedy", "brainteaser", "math"],
+    },
+    "2746": {
+      topicTags: ["array", "string", "dynamic-programming"],
+    },
+    "2747": {
+      topicTags: ["array", "hash-table", "sorting", "sliding-window"],
+    },
+    "2748": {
+      topicTags: ["array", "math", "number-theory"],
+    },
+    "2749": {
+      topicTags: ["bit-manipulation", "brainteaser"],
+    },
+    "2750": {
+      topicTags: ["array", "math"],
+    },
+    "2751": {
+      topicTags: ["stack", "array", "sorting", "simulation"],
+    },
+    "2753": {
+      topicTags: [],
+    },
+    "2760": {
+      topicTags: ["array", "sliding-window"],
+    },
+    "2761": {
+      topicTags: ["array", "math", "enumeration", "number-theory"],
+    },
+    "2762": {
+      topicTags: ["queue", "array", "ordered-set", "sliding-window", "monotonic-queue", "heap-priority-queue"],
+    },
+    "2763": {
+      topicTags: ["array", "hash-table", "ordered-set"],
+    },
+    "2764": {
+      topicTags: ["stack", "tree", "depth-first-search", "binary-tree"],
+    },
+    "2765": {
+      topicTags: ["array", "enumeration"],
+    },
+    "2766": {
+      topicTags: ["array", "hash-table", "sorting", "simulation"],
+    },
+    "2767": {
+      topicTags: ["hash-table", "string", "dynamic-programming", "backtracking"],
+    },
+    "2768": {
+      topicTags: ["array", "hash-table", "enumeration"],
+    },
+    "2769": {
+      topicTags: ["math"],
+    },
+    "2770": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "2771": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "2772": {
+      topicTags: ["array", "prefix-sum"],
+    },
+    "2773": {
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
+    },
+    "2778": {
+      topicTags: ["array", "enumeration"],
+    },
+    "2779": {
+      topicTags: ["array", "binary-search", "sorting", "sliding-window"],
+    },
+    "2780": {
+      topicTags: ["array", "hash-table", "sorting"],
+    },
+    "2781": {
+      topicTags: ["array", "hash-table", "string", "sliding-window"],
+    },
+    "2782": {
+      topicTags: ["union-find", "counting", "interactive"],
+    },
+    "2784": {
+      topicTags: ["array", "hash-table", "sorting"],
+    },
+    "2785": {
+      topicTags: ["string", "sorting"],
+    },
+    "2786": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "2787": {
+      topicTags: ["dynamic-programming"],
+    },
+    "2788": {
+      topicTags: ["array", "string"],
+    },
+    "2789": {
+      topicTags: ["greedy", "array"],
+    },
+    "2790": {
+      topicTags: ["greedy", "array", "math", "binary-search", "sorting"],
+    },
+    "2791": {
+      topicTags: ["bit-manipulation", "tree", "depth-first-search", "dynamic-programming", "bitmask"],
+    },
+    "2792": {
+      topicTags: ["tree", "depth-first-search", "divide-and-conquer", "binary-tree"],
+    },
+    "2798": {
+      topicTags: ["array"],
+    },
+    "2799": {
+      topicTags: ["array", "hash-table", "sliding-window"],
+    },
+    "2800": {
+      topicTags: ["greedy", "string", "enumeration"],
+    },
+    "2801": {
+      topicTags: ["string", "dynamic-programming"],
+    },
+    "2802": {
+      topicTags: ["bit-manipulation", "math", "string"],
+    },
+    "2806": {
+      topicTags: ["math"],
+    },
+    "2807": {
+      topicTags: ["linked-list", "math", "number-theory"],
+    },
+    "2808": {
+      topicTags: ["array", "hash-table"],
+    },
+    "2809": {
+      topicTags: ["array", "dynamic-programming", "sorting"],
+    },
+    "2810": {
+      topicTags: ["string", "simulation"],
+    },
+    "2811": {
+      topicTags: ["greedy", "array", "dynamic-programming"],
+    },
+    "2812": {
+      topicTags: ["breadth-first-search", "union-find", "array", "binary-search", "matrix"],
+    },
+    "2813": {
+      topicTags: ["greedy", "array", "hash-table", "sorting", "heap-priority-queue"],
+    },
+    "2814": {
+      topicTags: ["breadth-first-search", "array", "matrix"],
+    },
+    "2815": {
+      topicTags: ["array", "hash-table"],
+    },
+    "2816": {
+      topicTags: ["stack", "linked-list", "math"],
+    },
+    "2817": {
+      topicTags: ["array", "binary-search", "ordered-set"],
+    },
+    "2818": {
+      topicTags: ["stack", "greedy", "array", "math", "number-theory", "monotonic-stack"],
+    },
+    "2819": {
+      topicTags: ["array", "binary-search", "prefix-sum", "sorting"],
+    },
+    "2824": {
+      topicTags: ["array", "two-pointers", "binary-search", "sorting"],
+    },
+    "2825": {
+      topicTags: ["two-pointers", "string"],
+    },
+    "2826": {
+      topicTags: ["array", "binary-search", "dynamic-programming"],
+    },
+    "2827": {
+      topicTags: ["math", "dynamic-programming"],
+    },
+    "2828": {
+      topicTags: ["array", "string"],
+    },
+    "2829": {
+      topicTags: ["greedy", "math"],
+    },
+    "2830": {
+      topicTags: ["array", "hash-table", "binary-search", "dynamic-programming", "sorting"],
+    },
+    "2831": {
+      topicTags: ["array", "hash-table", "binary-search", "sliding-window"],
+    },
+    "2832": {
+      topicTags: ["stack", "array", "monotonic-stack"],
+    },
+    "2833": {
+      topicTags: ["string", "counting"],
+    },
+    "2834": {
+      topicTags: ["greedy", "math"],
+    },
+    "2835": {
+      topicTags: ["greedy", "bit-manipulation", "array"],
+    },
+    "2836": {
+      topicTags: ["bit-manipulation", "array", "dynamic-programming"],
+    },
+    "2838": {
+      topicTags: ["array", "two-pointers", "binary-search", "prefix-sum", "sorting"],
+    },
+    "2839": {
+      topicTags: ["string"],
+    },
+    "2840": {
+      topicTags: ["hash-table", "string", "sorting"],
+    },
+    "2841": {
+      topicTags: ["array", "hash-table", "sliding-window"],
+    },
+    "2842": {
+      topicTags: ["greedy", "hash-table", "math", "string", "combinatorics"],
+    },
+    "2843": {
+      topicTags: ["math", "enumeration"],
+    },
+    "2844": {
+      topicTags: ["greedy", "math", "string", "enumeration"],
+    },
+    "2845": {
+      topicTags: ["array", "hash-table", "prefix-sum"],
+    },
+    "2846": {
+      topicTags: ["tree", "graph", "array", "strongly-connected-component"],
+    },
+    "2847": {
+      topicTags: ["greedy", "math"],
+    },
+    "2848": {
+      topicTags: ["array", "hash-table", "prefix-sum"],
+    },
+    "2849": {
+      topicTags: ["math"],
+    },
+    "2850": {
+      topicTags: ["breadth-first-search", "array", "dynamic-programming", "matrix"],
+    },
+    "2851": {
+      topicTags: ["math", "string", "dynamic-programming", "string-matching"],
+    },
+    "2852": {
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "array", "matrix"],
+    },
+    "2855": {
+      topicTags: ["array"],
+    },
+    "2856": {
+      topicTags: ["greedy", "array", "hash-table", "two-pointers", "binary-search", "counting"],
+    },
+    "2857": {
+      topicTags: ["bit-manipulation", "array", "hash-table"],
+    },
+    "2858": {
+      topicTags: ["depth-first-search", "breadth-first-search", "graph", "dynamic-programming"],
+    },
+    "2859": {
+      topicTags: ["bit-manipulation", "array"],
+    },
+    "2860": {
+      topicTags: ["array", "enumeration", "sorting"],
+    },
+    "2861": {
+      topicTags: ["array", "binary-search"],
+    },
+    "2862": {
+      topicTags: ["array", "math", "number-theory"],
+    },
+    "2863": {
+      topicTags: ["array", "hash-table", "sorting"],
+    },
+    "2864": {
+      topicTags: ["greedy", "math", "string"],
+    },
+    "2865": {
+      topicTags: ["stack", "array", "monotonic-stack"],
+    },
+    "2866": {
+      topicTags: ["stack", "array", "monotonic-stack"],
+    },
+    "2867": {
+      topicTags: ["tree", "depth-first-search", "math", "dynamic-programming", "number-theory"],
+    },
+    "2868": {
+      topicTags: ["array", "math", "two-pointers", "string", "game-theory"],
+    },
+    "2869": {
+      topicTags: ["bit-manipulation", "array", "hash-table"],
+    },
+    "2870": {
+      topicTags: ["greedy", "array", "hash-table", "counting"],
+    },
+    "2871": {
+      topicTags: ["greedy", "bit-manipulation", "array"],
+    },
+    "2872": {
+      topicTags: ["tree", "depth-first-search"],
+    },
+    "2873": {
+      topicTags: ["array"],
+    },
+    "2874": {
+      topicTags: ["array"],
+    },
+    "2875": {
+      topicTags: ["array", "hash-table", "prefix-sum", "sliding-window"],
+    },
+    "2876": {
+      topicTags: ["graph", "memoization", "dynamic-programming"],
+    },
+    "2892": {
+      topicTags: ["greedy", "array", "dynamic-programming"],
+    },
+    "2894": {
+      topicTags: ["math"],
+    },
+    "2895": {
+      topicTags: ["greedy", "array", "sorting"],
+    },
+    "2896": {
+      topicTags: ["string", "dynamic-programming"],
+    },
+    "2897": {
+      topicTags: ["greedy", "bit-manipulation", "array", "hash-table"],
+    },
+    "2898": {
+      topicTags: ["array", "hash-table"],
+    },
+    "2899": {
+      topicTags: ["array", "string", "simulation"],
+    },
+    "2900": {
+      topicTags: ["greedy", "array", "string", "dynamic-programming"],
+    },
+    "2901": {
+      topicTags: ["array", "string", "dynamic-programming"],
+    },
+    "2902": {
+      topicTags: ["array", "hash-table", "dynamic-programming", "sliding-window"],
+    },
+    "2903": {
+      topicTags: ["array", "two-pointers"],
+    },
+    "2904": {
+      topicTags: ["string", "sliding-window"],
+    },
+    "2905": {
+      topicTags: ["array", "two-pointers"],
+    },
+    "2906": {
+      topicTags: ["array", "matrix", "prefix-sum"],
+    },
+    "2907": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "2908": {
+      topicTags: ["array"],
+    },
+    "2909": {
+      topicTags: ["array"],
+    },
+    "2910": {
+      topicTags: ["greedy", "array", "hash-table"],
+    },
+    "2911": {
+      topicTags: ["two-pointers", "string", "dynamic-programming"],
+    },
+    "2912": {
+      topicTags: ["math", "dynamic-programming", "combinatorics"],
+    },
+    "2913": {
+      topicTags: ["array", "hash-table"],
+    },
+    "2914": {
+      topicTags: ["string"],
+    },
+    "2915": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "2916": {
+      topicTags: ["binary-indexed-tree", "segment-tree", "array", "dynamic-programming"],
+    },
+    "2917": {
+      topicTags: ["bit-manipulation", "array"],
+    },
+    "2918": {
+      topicTags: ["greedy", "array"],
+    },
+    "2919": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "2920": {
+      topicTags: ["bit-manipulation", "tree", "depth-first-search", "array", "dynamic-programming"],
+    },
+    "2921": {
+      topicTags: ["binary-indexed-tree", "array"],
+    },
+    "2923": {
+      topicTags: ["array", "matrix"],
+    },
+    "2924": {
+      topicTags: ["graph"],
+    },
+    "2925": {
+      topicTags: ["tree", "depth-first-search", "dynamic-programming"],
+    },
+    "2926": {
+      topicTags: ["binary-indexed-tree", "segment-tree", "array", "binary-search", "dynamic-programming"],
+    },
+    "2927": {
+      topicTags: ["math", "combinatorics"],
+    },
+    "2928": {
+      topicTags: ["math", "combinatorics", "enumeration"],
+    },
+    "2929": {
+      topicTags: ["math", "combinatorics", "enumeration"],
+    },
+    "2930": {
+      topicTags: ["math", "dynamic-programming", "combinatorics"],
+    },
+    "2931": {
+      topicTags: ["greedy", "array", "matrix", "sorting", "heap-priority-queue"],
+    },
+    "2932": {
+      topicTags: ["bit-manipulation", "trie", "array", "hash-table", "sliding-window"],
+    },
+    "2933": {
+      topicTags: ["array", "hash-table", "string", "sorting"],
+    },
+    "2934": {
+      topicTags: ["array", "enumeration"],
+    },
+    "2935": {
+      topicTags: ["bit-manipulation", "trie", "array", "hash-table", "sliding-window"],
+    },
+    "2936": {
+      topicTags: ["array", "binary-search", "divide-and-conquer"],
+    },
+    "2937": {
+      topicTags: ["string"],
+    },
+    "2938": {
+      topicTags: ["greedy", "two-pointers", "string"],
+    },
+    "2939": {
+      topicTags: ["greedy", "bit-manipulation", "math"],
+    },
+    "2940": {
+      topicTags: [
+        "stack",
+        "binary-indexed-tree",
+        "segment-tree",
+        "array",
+        "binary-search",
+        "monotonic-stack",
+        "heap-priority-queue",
+      ],
+    },
+    "2941": {
+      topicTags: ["array", "math", "binary-search", "number-theory"],
+    },
+    "2942": {
+      topicTags: ["array", "string"],
+    },
+    "2943": {
+      topicTags: ["array", "sorting"],
+    },
+    "2944": {
+      topicTags: ["queue", "array", "dynamic-programming", "monotonic-queue", "heap-priority-queue"],
+    },
+    "2945": {
+      topicTags: [
+        "stack",
+        "queue",
+        "array",
+        "binary-search",
+        "dynamic-programming",
+        "monotonic-queue",
+        "monotonic-stack",
+      ],
+    },
+    "2946": {
+      topicTags: ["array", "math", "matrix", "simulation"],
+    },
+    "2947": {
+      topicTags: ["string", "enumeration", "prefix-sum"],
+    },
+    "2948": {
+      topicTags: ["union-find", "array", "sorting"],
+    },
+    "2949": {
+      topicTags: ["hash-table", "math", "string", "number-theory", "prefix-sum"],
+    },
+    "2950": {
+      topicTags: ["hash-table", "string", "counting", "prefix-sum"],
+    },
+    "2951": {
+      topicTags: ["array", "enumeration"],
+    },
+    "2952": {
+      topicTags: ["greedy", "array", "sorting"],
+    },
+    "2953": {
+      topicTags: ["hash-table", "string", "sliding-window"],
+    },
+    "2954": {
+      topicTags: ["array", "math", "combinatorics"],
+    },
+    "2955": {
+      topicTags: ["array", "hash-table", "string", "counting", "prefix-sum"],
+    },
+    "2956": {
+      topicTags: ["array", "hash-table"],
+    },
+    "2957": {
+      topicTags: ["greedy", "string", "dynamic-programming"],
+    },
+    "2958": {
+      topicTags: ["array", "hash-table", "sliding-window"],
+    },
+    "2959": {
+      topicTags: ["bit-manipulation", "graph", "enumeration", "shortest-path", "heap-priority-queue"],
+    },
+    "2960": {
+      topicTags: ["array", "simulation"],
+    },
+    "2961": {
+      topicTags: ["array", "math", "simulation"],
+    },
+    "2962": {
+      topicTags: ["array", "sliding-window"],
+    },
+    "2963": {
+      topicTags: ["array", "hash-table", "math", "combinatorics"],
+    },
+    "2964": {
+      topicTags: ["array", "hash-table"],
+    },
+    "2965": {
+      topicTags: ["array", "hash-table", "math", "matrix"],
+    },
+    "2966": {
+      topicTags: ["greedy", "array", "sorting"],
+    },
+    "2967": {
+      topicTags: ["greedy", "array", "math", "sorting"],
+    },
+    "2968": {
+      topicTags: ["array", "binary-search", "prefix-sum", "sorting", "sliding-window"],
+    },
+    "2969": {
+      topicTags: ["queue", "array", "dynamic-programming", "monotonic-queue", "heap-priority-queue"],
+    },
+    "2970": {
+      topicTags: ["array", "two-pointers", "binary-search", "enumeration"],
+    },
+    "2971": {
+      topicTags: ["greedy", "array", "prefix-sum", "sorting"],
+    },
+    "2972": {
+      topicTags: ["array", "two-pointers", "binary-search"],
+    },
+    "2973": {
+      topicTags: ["tree", "depth-first-search", "dynamic-programming", "sorting", "heap-priority-queue"],
+    },
+    "2974": {
+      topicTags: ["array", "sorting", "simulation", "heap-priority-queue"],
+    },
+    "2975": {
+      topicTags: ["array", "hash-table", "enumeration"],
+    },
+    "2976": {
+      topicTags: ["graph", "array", "string", "shortest-path"],
+    },
+    "2977": {
+      topicTags: ["graph", "trie", "array", "string", "dynamic-programming", "shortest-path"],
+    },
+    "2979": {
+      topicTags: ["math", "dynamic-programming", "number-theory"],
+    },
+    "2980": {
+      topicTags: ["bit-manipulation", "array"],
+    },
+    "2981": {
+      topicTags: ["hash-table", "string", "binary-search", "counting", "sliding-window"],
+    },
+    "2982": {
+      topicTags: ["hash-table", "string", "binary-search", "counting", "sliding-window"],
+    },
+    "2983": {
+      topicTags: ["hash-table", "string", "prefix-sum"],
+    },
+    "2992": {
+      topicTags: ["bit-manipulation", "recursion", "array", "dynamic-programming", "bitmask"],
+    },
+    "2996": {
+      topicTags: ["array", "hash-table", "sorting"],
+    },
+    "2997": {
+      topicTags: ["bit-manipulation", "array"],
+    },
+    "2998": {
+      topicTags: ["breadth-first-search", "memoization", "dynamic-programming"],
+    },
+    "2999": {
+      topicTags: ["math", "string", "dynamic-programming"],
+    },
+    "3000": {
+      topicTags: ["array"],
+    },
+    "3001": {
+      topicTags: ["array", "enumeration"],
+    },
+    "3002": {
+      topicTags: ["greedy", "array", "hash-table"],
+    },
+    "3003": {
+      topicTags: ["bit-manipulation", "string", "dynamic-programming", "bitmask"],
+    },
+    "3004": {
+      topicTags: ["tree", "depth-first-search", "array", "dynamic-programming"],
+    },
+    "3005": {
+      topicTags: ["array", "hash-table", "counting"],
+    },
+    "3006": {
+      topicTags: ["two-pointers", "string", "binary-search", "string-matching", "hash-function", "rolling-hash"],
+    },
+    "3007": {
+      topicTags: ["bit-manipulation", "binary-search", "dynamic-programming"],
+    },
+    "3008": {
+      topicTags: ["two-pointers", "string", "binary-search", "string-matching", "hash-function", "rolling-hash"],
+    },
+    "3009": {
+      topicTags: ["binary-indexed-tree", "geometry", "array", "math"],
+    },
+    "3010": {
+      topicTags: ["array", "enumeration", "sorting"],
+    },
+    "3011": {
+      topicTags: ["bit-manipulation", "array", "sorting"],
+    },
+    "3012": {
+      topicTags: ["greedy", "array", "math", "number-theory"],
+    },
+    "3013": {
+      topicTags: ["array", "hash-table", "sliding-window", "heap-priority-queue"],
+    },
+    "3014": {
+      topicTags: ["greedy", "math", "string"],
+    },
+    "3015": {
+      topicTags: ["breadth-first-search", "graph", "prefix-sum"],
+    },
+    "3016": {
+      topicTags: ["greedy", "hash-table", "string", "counting", "sorting"],
+    },
+    "3017": {
+      topicTags: ["breadth-first-search", "graph", "prefix-sum"],
+    },
+    "3018": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "3019": {
+      topicTags: ["string"],
+    },
+    "3020": {
+      topicTags: ["array", "hash-table", "enumeration"],
+    },
+    "3021": {
+      topicTags: ["math"],
+    },
+    "3022": {
+      topicTags: ["greedy", "bit-manipulation", "array"],
+    },
+    "3023": {
+      topicTags: ["array", "string-matching", "sliding-window", "hash-function", "rolling-hash"],
+    },
+    "3024": {
+      topicTags: ["array", "math", "sorting"],
+    },
+    "3025": {
+      topicTags: ["geometry", "array", "math", "enumeration", "sorting"],
+    },
+    "3026": {
+      topicTags: ["array", "hash-table", "prefix-sum"],
+    },
+    "3027": {
+      topicTags: ["geometry", "array", "math", "enumeration", "sorting"],
+    },
+    "3028": {
+      topicTags: ["array", "prefix-sum", "simulation"],
+    },
+    "3029": {
+      topicTags: ["string", "string-matching", "hash-function", "rolling-hash"],
+    },
+    "3030": {
+      topicTags: ["array", "matrix"],
+    },
+    "3031": {
+      topicTags: ["string", "string-matching", "hash-function", "rolling-hash"],
+    },
+    "3032": {
+      topicTags: ["hash-table", "math", "dynamic-programming"],
+    },
+    "3033": {
+      topicTags: ["array", "matrix"],
+    },
+    "3034": {
+      topicTags: ["array", "string-matching", "hash-function", "rolling-hash"],
+    },
+    "3035": {
+      topicTags: ["greedy", "array", "hash-table", "string", "counting", "sorting"],
+    },
+    "3036": {
+      topicTags: ["array", "string-matching", "hash-function", "rolling-hash"],
+    },
+    "3037": {
+      topicTags: [],
+    },
+    "3038": {
+      topicTags: [],
+    },
+    "3039": {
+      topicTags: [],
+    },
+    "3040": {
+      topicTags: [],
+    },
+    "3041": {
+      topicTags: [],
+    },
+    "3042": {
+      topicTags: [],
+    },
+    "3043": {
+      topicTags: [],
+    },
+    "3044": {
+      topicTags: [],
+    },
+    "3045": {
+      topicTags: [],
+    },
     "LCP 01": { topicTags: ["array"] },
     "LCP 02": { topicTags: ["array", "math", "number-theory", "simulation"] },
     "LCP 03": { topicTags: ["array", "hash-table", "simulation"] },
@@ -3934,11 +5525,381 @@ class TagsDao {
     "LCP 58": { topicTags: ["array", "backtracking", "matrix"] },
     "LCP 59": { topicTags: ["array", "dynamic-programming"] },
     "LCP 60": { topicTags: ["tree", "dynamic-programming", "binary-tree"] },
-    "LCP 61": { topicTags: [] },
-    "LCP 62": { topicTags: [] },
-    "LCP 63": { topicTags: [] },
-    "LCP 64": { topicTags: [] },
-    "LCP 65": { topicTags: [] },
+
+    "LCP 61": {
+      topicTags: ["array"],
+    },
+    "LCP 62": {
+      topicTags: ["graph"],
+    },
+    "LCP 63": {
+      topicTags: [
+        "depth-first-search",
+        "breadth-first-search",
+        "graph",
+        "topological-sort",
+        "memoization",
+        "array",
+        "dynamic-programming",
+        "matrix",
+      ],
+    },
+    "LCP 64": {
+      topicTags: ["tree", "depth-first-search", "dynamic-programming", "binary-tree"],
+    },
+    "LCP 65": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "LCP 66": {
+      topicTags: ["array", "hash-table", "string", "counting"],
+    },
+    "LCP 67": {
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
+    },
+    "LCP 68": {
+      topicTags: ["array", "sliding-window"],
+    },
+    "LCP 69": {
+      topicTags: ["bit-manipulation", "array", "string", "dynamic-programming", "bitmask"],
+    },
+    "LCP 70": {
+      topicTags: ["array", "math"],
+    },
+    "LCP 71": {
+      topicTags: ["union-find", "array", "matrix"],
+    },
+    "LCP 72": {
+      topicTags: [],
+    },
+    "LCP 73": {
+      topicTags: [],
+    },
+    "LCP 74": {
+      topicTags: [],
+    },
+    "LCP 75": {
+      topicTags: [],
+    },
+    "LCP 76": {
+      topicTags: [],
+    },
+    "LCP 77": {
+      topicTags: [],
+    },
+    "LCP 78": {
+      topicTags: [],
+    },
+    "LCP 79": {
+      topicTags: [],
+    },
+    "LCP 80": {
+      topicTags: [],
+    },
+    "LCP 81": {
+      topicTags: [],
+    },
+    "LCP 82": {
+      topicTags: [],
+    },
+    "LCR 001": {
+      topicTags: ["math"],
+    },
+    "LCR 002": {
+      topicTags: ["bit-manipulation", "math", "string", "simulation"],
+    },
+    "LCR 003": {
+      topicTags: ["bit-manipulation", "dynamic-programming"],
+    },
+    "LCR 004": {
+      topicTags: ["bit-manipulation", "array"],
+    },
+    "LCR 005": {
+      topicTags: ["bit-manipulation", "array", "string"],
+    },
+    "LCR 006": {
+      topicTags: ["array", "two-pointers", "binary-search"],
+    },
+    "LCR 007": {
+      topicTags: ["array", "two-pointers", "sorting"],
+    },
+    "LCR 008": {
+      topicTags: ["array", "binary-search", "prefix-sum", "sliding-window"],
+    },
+    "LCR 009": {
+      topicTags: ["array", "sliding-window"],
+    },
+    "LCR 010": {
+      topicTags: ["array", "hash-table", "prefix-sum"],
+    },
+    "LCR 011": {
+      topicTags: ["array", "hash-table", "prefix-sum"],
+    },
+    "LCR 012": {
+      topicTags: ["array", "prefix-sum"],
+    },
+    "LCR 013": {
+      topicTags: ["design", "array", "matrix", "prefix-sum"],
+    },
+    "LCR 014": {
+      topicTags: ["hash-table", "two-pointers", "string", "sliding-window"],
+    },
+    "LCR 015": {
+      topicTags: ["hash-table", "string", "sliding-window"],
+    },
+    "LCR 016": {
+      topicTags: ["hash-table", "string", "sliding-window"],
+    },
+    "LCR 017": {
+      topicTags: ["hash-table", "string", "sliding-window"],
+    },
+    "LCR 118": {
+      topicTags: ["depth-first-search", "breadth-first-search", "union-find", "graph"],
+    },
+    "LCR 119": {
+      topicTags: ["union-find", "array", "hash-table"],
+    },
+    "LCR 120": {
+      topicTags: ["array", "hash-table", "sorting"],
+    },
+    "LCR 121": {
+      topicTags: ["array", "binary-search", "divide-and-conquer", "matrix"],
+    },
+    "LCR 122": {
+      topicTags: ["string"],
+    },
+    "LCR 123": {
+      topicTags: ["stack", "recursion", "linked-list", "two-pointers"],
+    },
+    "LCR 124": {
+      topicTags: ["tree", "array", "hash-table", "divide-and-conquer", "binary-tree"],
+    },
+    "LCR 125": {
+      topicTags: ["stack", "design", "queue"],
+    },
+    "LCR 126": {
+      topicTags: ["memoization", "math", "dynamic-programming"],
+    },
+    "LCR 127": {
+      topicTags: ["memoization", "math", "dynamic-programming"],
+    },
+    "LCR 128": {
+      topicTags: ["array", "binary-search"],
+    },
+    "LCR 129": {
+      topicTags: ["array", "backtracking", "matrix"],
+    },
+    "LCR 130": {
+      topicTags: ["depth-first-search", "breadth-first-search", "dynamic-programming"],
+    },
+    "LCR 131": {
+      topicTags: ["math", "dynamic-programming"],
+    },
+    "LCR 132": {
+      topicTags: ["math", "dynamic-programming"],
+    },
+    "LCR 133": {
+      topicTags: ["bit-manipulation"],
+    },
+    "LCR 134": {
+      topicTags: ["recursion", "math"],
+    },
+    "LCR 135": {
+      topicTags: ["array", "math"],
+    },
+    "LCR 136": {
+      topicTags: ["linked-list"],
+    },
+    "LCR 137": {
+      topicTags: ["recursion", "string", "dynamic-programming"],
+    },
+    "LCR 138": {
+      topicTags: ["string"],
+    },
+    "LCR 139": {
+      topicTags: ["array", "two-pointers", "sorting"],
+    },
+    "LCR 140": {
+      topicTags: ["linked-list", "two-pointers"],
+    },
+    "LCR 141": {
+      topicTags: ["recursion", "linked-list"],
+    },
+    "LCR 142": {
+      topicTags: ["recursion", "linked-list"],
+    },
+    "LCR 143": {
+      topicTags: ["tree", "depth-first-search", "binary-tree"],
+    },
+    "LCR 144": {
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
+    },
+    "LCR 145": {
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
+    },
+    "LCR 146": {
+      topicTags: ["array", "matrix", "simulation"],
+    },
+    "LCR 147": {
+      topicTags: ["stack", "design"],
+    },
+    "LCR 148": {
+      topicTags: ["stack", "array", "simulation"],
+    },
+    "LCR 149": {
+      topicTags: ["tree", "breadth-first-search", "binary-tree"],
+    },
+    "LCR 150": {
+      topicTags: ["tree", "breadth-first-search", "binary-tree"],
+    },
+    "LCR 151": {
+      topicTags: ["tree", "breadth-first-search", "binary-tree"],
+    },
+    "LCR 152": {
+      topicTags: ["stack", "tree", "binary-search-tree", "recursion", "binary-tree", "monotonic-stack"],
+    },
+    "LCR 153": {
+      topicTags: ["tree", "depth-first-search", "backtracking", "binary-tree"],
+    },
+    "LCR 154": {
+      topicTags: ["hash-table", "linked-list"],
+    },
+    "LCR 155": {
+      topicTags: [
+        "stack",
+        "tree",
+        "depth-first-search",
+        "binary-search-tree",
+        "linked-list",
+        "binary-tree",
+        "doubly-linked-list",
+      ],
+    },
+    "LCR 156": {
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "design", "string", "binary-tree"],
+    },
+    "LCR 157": {
+      topicTags: ["string", "backtracking"],
+    },
+    "LCR 158": {
+      topicTags: ["array", "hash-table", "divide-and-conquer", "counting", "sorting"],
+    },
+    "LCR 159": {
+      topicTags: ["array", "divide-and-conquer", "quickselect", "sorting", "heap-priority-queue"],
+    },
+    "LCR 160": {
+      topicTags: ["design", "two-pointers", "data-stream", "sorting", "heap-priority-queue"],
+    },
+    "LCR 161": {
+      topicTags: ["array", "divide-and-conquer", "dynamic-programming"],
+    },
+    "LCR 162": {
+      topicTags: ["recursion", "math", "dynamic-programming"],
+    },
+    "LCR 163": {
+      topicTags: ["math", "binary-search"],
+    },
+    "LCR 164": {
+      topicTags: ["greedy", "string", "sorting"],
+    },
+    "LCR 165": {
+      topicTags: ["string", "dynamic-programming"],
+    },
+    "LCR 166": {
+      topicTags: ["array", "dynamic-programming", "matrix"],
+    },
+    "LCR 167": {
+      topicTags: ["hash-table", "string", "sliding-window"],
+    },
+    "LCR 168": {
+      topicTags: ["hash-table", "math", "dynamic-programming", "heap-priority-queue"],
+    },
+    "LCR 169": {
+      topicTags: ["queue", "hash-table", "string", "counting"],
+    },
+    "LCR 170": {
+      topicTags: [
+        "binary-indexed-tree",
+        "segment-tree",
+        "array",
+        "binary-search",
+        "divide-and-conquer",
+        "ordered-set",
+        "merge-sort",
+      ],
+    },
+    "LCR 171": {
+      topicTags: ["hash-table", "linked-list", "two-pointers"],
+    },
+    "LCR 172": {
+      topicTags: ["array", "binary-search"],
+    },
+    "LCR 173": {
+      topicTags: ["bit-manipulation", "array", "hash-table", "math", "binary-search"],
+    },
+    "LCR 174": {
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
+    },
+    "LCR 175": {
+      topicTags: ["tree", "depth-first-search", "breadth-first-search", "binary-tree"],
+    },
+    "LCR 176": {
+      topicTags: ["tree", "depth-first-search", "binary-tree"],
+    },
+    "LCR 177": {
+      topicTags: ["bit-manipulation", "array"],
+    },
+    "LCR 178": {
+      topicTags: ["bit-manipulation", "array"],
+    },
+    "LCR 179": {
+      topicTags: ["array", "two-pointers", "binary-search"],
+    },
+    "LCR 180": {
+      topicTags: ["math", "two-pointers", "enumeration"],
+    },
+    "LCR 181": {
+      topicTags: ["two-pointers", "string"],
+    },
+    "LCR 182": {
+      topicTags: ["math", "two-pointers", "string"],
+    },
+    "LCR 183": {
+      topicTags: ["queue", "array", "sliding-window", "monotonic-queue", "heap-priority-queue"],
+    },
+    "LCR 184": {
+      topicTags: ["design", "queue", "monotonic-queue"],
+    },
+    "LCR 185": {
+      topicTags: ["math", "dynamic-programming", "probability-and-statistics"],
+    },
+    "LCR 186": {
+      topicTags: ["array", "sorting"],
+    },
+    "LCR 187": {
+      topicTags: ["recursion", "math"],
+    },
+    "LCR 188": {
+      topicTags: ["array", "dynamic-programming"],
+    },
+    "LCR 189": {
+      topicTags: ["bit-manipulation", "recursion", "brainteaser"],
+    },
+    "LCR 190": {
+      topicTags: ["bit-manipulation", "math"],
+    },
+    "LCR 191": {
+      topicTags: ["array", "prefix-sum"],
+    },
+    "LCR 192": {
+      topicTags: ["string"],
+    },
+    "LCR 193": {
+      topicTags: ["tree", "depth-first-search", "binary-search-tree", "binary-tree"],
+    },
+    "LCR 194": {
+      topicTags: ["tree", "depth-first-search", "binary-tree"],
+    },
+
     "LCS 01": { topicTags: ["greedy", "math", "dynamic-programming"] },
     "LCS 02": { topicTags: ["greedy", "array", "hash-table", "sorting"] },
     "LCS 03": {
@@ -4614,7 +6575,7 @@ class TagsDao {
     "two-pointers": "双指针",
     sorting: "排序",
     backtracking: "回溯",
-    stack: "堆",
+    stack: "栈",
     "heap-priority-queue": "优先级队列",
     "merge-sort": "归并排序",
     "string-matching": "字符串匹配",
