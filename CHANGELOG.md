@@ -1,3 +1,10 @@
+# version 3.1.17
+
+- 修改题目 Tag 中 stack 的中文翻译 堆 -> 栈
+- cookie 登录改为分别输入 LEETCODE_SESSION 和 csrftoken 的值, 避免格式解析失败
+- 补充部分题目 tag 数据
+- 更新基础的题目分数数据 resources/data.json
+
 # version 3.1.16
 
 - 会话已过期提示

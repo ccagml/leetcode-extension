@@ -480,11 +480,24 @@ class ExecuteService implements Disposable {
         title: '正确的cookie例子csrftoken="xxx"; LEETCODE_SESSION="yyy";',
         prompt: "输入例子中LEETCODE_SESSION的值yyy",
         ignoreFocusOut: true,
-        validateInput: (s: string): string | undefined => (s ? undefined : "LEETCODE_SESSION不为空"),
+        validateInput: (s: string): string | undefined => (s && s.trim() ? undefined : "LEETCODE_SESSION不为空"),
       });
 
       if (cf_v && ls_v) {
-        pwd = `csrftoken="${cf_v}";LEETCODE_SESSION="${ls_v}";`;
+        let cf_v_t = cf_v.trim();
+        let ls_v_t = ls_v.trim();
+        // 判断输入的有没有 " '
+        let cf_flag = cf_v_t[0] == '"' || cf_v_t[0] == "'";
+        let ls_flag = ls_v_t[0] == '"' || ls_v_t[0] == "'";
+        if (cf_flag && ls_flag) {
+          pwd = `csrftoken=${cf_v_t};LEETCODE_SESSION=${ls_v_t};`;
+        } else if (cf_flag) {
+          pwd = `csrftoken=${cf_v_t};LEETCODE_SESSION="${ls_v_t}";`;
+        } else if (ls_flag) {
+          pwd = `csrftoken="${cf_v_t}";LEETCODE_SESSION=${ls_v_t};`;
+        } else {
+          pwd = `csrftoken="${cf_v_t}";LEETCODE_SESSION="${ls_v_t}";`;
+        }
       }
       // csrftoken="xxxx"; LEETCODE_SESSION="xxxx";
     } else {
