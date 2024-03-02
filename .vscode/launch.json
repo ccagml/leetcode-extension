@@ -10,23 +10,23 @@
             "runtimeExecutable": "${execPath}",
             "args": [
                 "--extensionDevelopmentPath=${workspaceRoot}",
-                "--trace-warnings"
+                "--no-warnings"
             ],
-            // "autoAttachChildProcesses": true,
+            "autoAttachChildProcesses": true,
             // "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [
                 "${workspaceRoot}/out/src/**/*.js"
             ],
-            "trace": true,
-            "preLaunchTask": "npm"
+            "trace": false,
+            "preLaunchTask": "npm",
         },
         {
             "type": "node",
             "request": "attach",
             "name": "attach process",
             "processId": "${command:PickProcess}",
-            "continueOnAttach": true
+            "continueOnAttach": true,
         },
         {
             "type": "node",
