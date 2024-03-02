@@ -215,6 +215,12 @@ class SubmissionService extends BaseWebViewService {
 
   private parseResult(raw: string): IResult {
     let temp = JSON.parse(raw);
+
+    // 当结果是正确的时候,不用判断上色
+    if (temp?.system_message?.accepted) {
+      return temp;
+    }
+
     if (isAnswerDiffColor()) {
       this.add_color(temp);
     }
