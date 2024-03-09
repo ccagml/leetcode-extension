@@ -68,7 +68,7 @@
             "outFiles": [
                 "${workspaceRoot}/out/src/**/*.js"
             ],
-            "trace": true,
+            "trace": false,
             "preLaunchTask": "window_npm"
         },
         {
