@@ -42,6 +42,15 @@ class Config {
         "swift",
         "typescript",
       ],
+      my_headers: {
+        User_Agent: 'Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0',
+        Referer: 'https://leetcode.com',
+        Origin: 'https://leetcode.com/',
+        Host: 'leetcode.com',
+        Content_Type: 'application/json',
+        Accept: 'application/json',
+      },
+
       urls: {
         // base urls
         base: "https://leetcode.com",
@@ -134,6 +143,14 @@ class Config {
     this.sys.urls.github_login = "https://leetcode.cn/accounts/github/login/?next=%2F";
     this.sys.urls.linkedin_login = "https://leetcode.cn/accounts/linkedin_oauth2/login/?next=%2F";
     this.sys.urls.leetcode_redirect = "https://leetcode.cn/";
+    this.sys.my_headers = {
+      User_Agent: 'Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0',
+      Referer: 'https://leetcode.cn',
+      Origin: 'https://leetcode.cn/',
+      Host: 'leetcode.cn',
+      Content_Type: 'application/json',
+      Accept: 'application/json',
+    }
   }
 }
 

@@ -391,6 +391,13 @@ function signOpts(opts: any, user: any) {
   opts.headers.Cookie = "LEETCODE_SESSION=" + user.sessionId + ";csrftoken=" + user.sessionCSRF + ";";
   opts.headers["X-CSRFToken"] = user.sessionCSRF;
   opts.headers["X-Requested-With"] = "XMLHttpRequest";
+  opts.headers['x-csrftoken'] = user.sessionCSRF;
+  opts.headers['User-Agent'] = configUtils.sys.my_headers.User_Agent
+  opts.headers['Referer'] = configUtils.sys.my_headers.Referer
+  opts.headers['Origin'] = configUtils.sys.my_headers.Origin
+  opts.headers['Host'] = configUtils.sys.my_headers.Host
+  opts.headers['Content-Type'] = configUtils.sys.my_headers.Content_Type
+  opts.headers['Accept'] = configUtils.sys.my_headers.Accept
 }
 
 function makeOpts(url: any) {
@@ -398,7 +405,7 @@ function makeOpts(url: any) {
   opts.url = url;
   opts.headers = {};
 
-  if (sessionUtils.isLogin()) signOpts(opts, sessionUtils.getUser());
+  signOpts(opts, sessionUtils.getUser());
   return opts;
 }
 
