@@ -62,7 +62,7 @@
                 "--extensionDevelopmentPath=${workspaceRoot}",
                 "--trace-warnings"
             ],
-            // "autoAttachChildProcesses": true,
+            "autoAttachChildProcesses": true,
             // "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [

@@ -827,8 +827,9 @@ function getHelpEn(problem, lang, cb) {
   let URL_DISCUSSES = "https://leetcode.com/graphql";
 
   if (lang === "python3") lang = "python";
-
+  const opts11 = makeOpts(URL_DISCUSSES);
   let opts = {
+    headers: opts11,
     url: URL_DISCUSSES,
     json: true,
     body: {
@@ -881,7 +882,7 @@ function makeOpts(url) {
   opts.url = url;
   opts.headers = {};
 
-  if (sessionUtils.isLogin()) signOpts(opts, sessionUtils.getUser());
+  signOpts(opts, sessionUtils.getUser());
   return opts;
 }
 
@@ -889,6 +890,13 @@ function signOpts(opts, user) {
   opts.headers.Cookie = "LEETCODE_SESSION=" + user.sessionId + ";csrftoken=" + user.sessionCSRF + ";";
   opts.headers["X-CSRFToken"] = user.sessionCSRF;
   opts.headers["X-Requested-With"] = "XMLHttpRequest";
+  opts.headers["x-csrftoken"] = user.sessionCSRF;
+  opts.headers['User-Agent'] = configUtils.sys.my_headers.User_Agent
+  opts.headers['Referer'] = configUtils.sys.my_headers.Referer
+  opts.headers['Origin'] = configUtils.sys.my_headers.Origin
+  opts.headers['Host'] = configUtils.sys.my_headers.Host
+  opts.headers['Content-Type'] = configUtils.sys.my_headers.Content_Type
+  opts.headers['Accept'] = configUtils.sys.my_headers.Accept
 }
 function checkError(e, resp, expectedStatus) {
   if (!e && resp && resp.statusCode !== expectedStatus) {
