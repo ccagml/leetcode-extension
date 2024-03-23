@@ -162,6 +162,9 @@ class TestApi extends ApiBase {
 
         if (results[0].state === "Accepted") {
           results[0].state = "Finished";
+          log_obj.system_message.compare_result = results[0].compare_result;
+        }
+        if (results[0].ok) {
           log_obj.system_message.accepted = true;
         }
         that.printResult(results[0], null, "state", log_obj);

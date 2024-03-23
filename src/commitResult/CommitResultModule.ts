@@ -196,8 +196,9 @@ class SubmissionService extends BaseWebViewService {
       let output_str = temp[output_key] || [];
       let expected_str = temp[expected_key] || [];
       let min_len = Math.min(output_str.length, expected_str.length);
+      let compare_result = temp.system_message.compare_result || ""
       for (let index = 0; index < min_len; index++) {
-        if (output_str[index] != expected_str[index]) {
+        if (compare_result[index] != '1' && output_str[index] != expected_str[index]) {
           let temp_result = this.add_color_str(output_str[index], expected_str[index]);
           output_str[index] = temp_result[0] || "";
           expected_str[index] = temp_result[1] || "";
