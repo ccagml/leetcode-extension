@@ -217,6 +217,7 @@ server to get the problem's description, test cases, and other information. */
       testcase: util.inspect(result.input || result.last_testcase || ""),
       passed: result.total_correct || 0,
       total: result.total_testcases || 0,
+      compare_result: result.compare_result || ""
     };
 
     x.error = underscore
