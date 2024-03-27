@@ -35,6 +35,12 @@ class UserApi extends ApiBase {
         default: false,
         describe: "cookieLogin",
       })
+      .option("r", {
+        alias: "curl",
+        type: "boolean",
+        default: false,
+        describe: "curl",
+      })
       .option("g", {
         alias: "github",
         type: "boolean",
@@ -132,6 +138,24 @@ class UserApi extends ApiBase {
         function (e, user) {
           if (e) return reply.info(e);
           chainMgr.getChainHead().cookieLogin(user, function (e, user) {
+            if (e) return reply.info(JSON.stringify({ code: -6, msg: e.msg || e }));
+            reply.info(JSON.stringify({ code: 100, user_name: user.name || user.login || "username" }));
+          });
+        }
+      );
+    } else if (argv.curl) {
+      // session
+      prompt_out.colors = false;
+      prompt_out.message = "";
+      prompt_out.start();
+      prompt_out.get(
+        [
+          { name: "login", required: true },
+          { name: "curl_data", required: true },
+        ],
+        function (e, user) {
+          if (e) return reply.info(e);
+          chainMgr.getChainHead().curlcookieLogin(user, function (e, user) {
             if (e) return reply.info(JSON.stringify({ code: -6, msg: e.msg || e }));
             reply.info(JSON.stringify({ code: 100, user_name: user.name || user.login || "username" }));
           });

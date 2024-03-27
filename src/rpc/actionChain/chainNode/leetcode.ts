@@ -13,6 +13,13 @@ let underscore = require("underscore");
 let request = require("request");
 let prompt_out = require("prompt");
 
+var { context, CookieJar } = require('fetch-h2')
+const ToughCookie = require('tough-cookie')
+const myJar = new ToughCookie.CookieJar()
+const cookieJar = new CookieJar(myJar);
+const { fetch } = context({ cookieJar });
+var parseCurl = require('parse-curl')
+
 import { configUtils } from "../../utils/configUtils";
 import { commUtils } from "../../utils/commUtils";
 import { storageUtils } from "../../utils/storageUtils";
@@ -57,36 +64,68 @@ class LeetCode extends ChainNodeBase {
   getCategoryProblems = (category, cb) => {
     const opts = makeOpts(configUtils.sys.urls.problems.replace("$category", category));
 
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
+    if (configUtils.isCN()) {
+      request(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
 
-      const json = JSON.parse(body);
+        const json = JSON.parse(body);
 
-      if (json.user_name.length === 0) {
-        return cb(sessionUtils.errors.EXPIRED);
-      }
+        if (json.user_name.length === 0) {
+          return cb(sessionUtils.errors.EXPIRED);
+        }
 
-      const problems = json.stat_status_pairs
-        .filter((p) => !p.stat.question__hide)
-        .map(function (p) {
-          return {
-            state: p.status || "None",
-            id: p.stat.question_id,
-            fid: p.stat.frontend_question_id,
-            name: p.stat.question__title,
-            slug: p.stat.question__title_slug,
-            link: configUtils.sys.urls.problem.replace("$slug", p.stat.question__title_slug),
-            locked: p.paid_only,
-            percent: (p.stat.total_acs * 100) / p.stat.total_submitted,
-            level: commUtils.getNameByLevel(p.difficulty.level),
-            starred: p.is_favor,
-            category: json.category_slug,
-          };
-        });
+        const problems = json.stat_status_pairs
+          .filter((p) => !p.stat.question__hide)
+          .map(function (p) {
+            return {
+              state: p.status || "None",
+              id: p.stat.question_id,
+              fid: p.stat.frontend_question_id,
+              name: p.stat.question__title,
+              slug: p.stat.question__title_slug,
+              link: configUtils.sys.urls.problem.replace("$slug", p.stat.question__title_slug),
+              locked: p.paid_only,
+              percent: (p.stat.total_acs * 100) / p.stat.total_submitted,
+              level: commUtils.getNameByLevel(p.difficulty.level),
+              starred: p.is_favor,
+              category: json.category_slug,
+            };
+          });
 
-      return cb(null, problems);
-    });
+        return cb(null, problems);
+      });
+    } else {
+      this.h2request.get(opts, function (e, resp, json) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
+        if (json.user_name.length === 0) {
+          return cb(sessionUtils.errors.EXPIRED);
+        }
+
+        const problems = json.stat_status_pairs
+          .filter((p) => !p.stat.question__hide)
+          .map(function (p) {
+            return {
+              state: p.status || "None",
+              id: p.stat.question_id,
+              fid: p.stat.frontend_question_id,
+              name: p.stat.question__title,
+              slug: p.stat.question__title_slug,
+              link: configUtils.sys.urls.problem.replace("$slug", p.stat.question__title_slug),
+              locked: p.paid_only,
+              percent: (p.stat.total_acs * 100) / p.stat.total_submitted,
+              level: commUtils.getNameByLevel(p.difficulty.level),
+              starred: p.is_favor,
+              category: json.category_slug,
+            };
+          });
+
+        return cb(null, problems);
+      })
+    }
+
+
   };
 
   /* A function that takes in a problem and a callback function. It then makes a request to the leetcode
@@ -120,29 +159,58 @@ server to get the problem's description, test cases, and other information. */
       operationName: "getQuestionDetail",
     };
 
-    request.post(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
+    if (configUtils.isCN()) {
+      request.post(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
 
-      const q = body.data.question;
-      if (!q) return cb("failed to load problem!");
+        const q = body.data.question;
+        if (!q) return cb("failed to load problem!");
 
-      problem.totalAC = JSON.parse(q.stats).totalAccepted;
-      problem.totalSubmit = JSON.parse(q.stats).totalSubmission;
-      problem.likes = q.likes;
-      problem.dislikes = q.dislikes;
+        problem.totalAC = JSON.parse(q.stats).totalAccepted;
+        problem.totalSubmit = JSON.parse(q.stats).totalSubmission;
+        problem.likes = q.likes;
+        problem.dislikes = q.dislikes;
 
-      problem.desc = q.translatedContent && needTranslation ? q.translatedContent : q.content;
+        problem.desc = q.translatedContent && needTranslation ? q.translatedContent : q.content;
 
-      problem.templates = JSON.parse(q.codeDefinition);
-      problem.testcase = q.sampleTestCase;
-      problem.testable = q.enableRunCode;
-      problem.templateMeta = JSON.parse(q.metaData);
-      // @si-yao: seems below property is never used.
-      // problem.discuss =  q.discussCategoryId;
+        problem.templates = JSON.parse(q.codeDefinition);
+        problem.testcase = q.sampleTestCase;
+        problem.testable = q.enableRunCode;
+        problem.templateMeta = JSON.parse(q.metaData);
+        // @si-yao: seems below property is never used.
+        // problem.discuss =  q.discussCategoryId;
 
-      return cb(null, problem);
-    });
+        return cb(null, problem);
+      });
+    } else {
+      opts.json = opts.body
+      delete opts.body
+      this.h2request.post(opts, function (e, resp, body) {
+
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
+
+        const q = body.data.question;
+        if (!q) return cb('failed to load problem!');
+
+        problem.totalAC = JSON.parse(q.stats).totalAccepted;
+        problem.totalSubmit = JSON.parse(q.stats).totalSubmission;
+        problem.likes = q.likes;
+        problem.dislikes = q.dislikes;
+
+        problem.desc = (q.translatedContent && needTranslation) ? q.translatedContent : q.content;
+
+        problem.templates = JSON.parse(q.codeDefinition);
+        problem.testcase = q.sampleTestCase;
+        problem.testable = q.enableRunCode;
+        problem.templateMeta = JSON.parse(q.metaData);
+
+        return cb(null, problem);
+      });
+    }
+
+
   };
   /* A function that is used to run the code on the server. */
   runCode = (opts, problem, cb) => {
@@ -161,24 +229,53 @@ server to get the problem's description, test cases, and other information. */
     });
 
     let that = this;
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
 
-      if (body.error) {
-        if (!body.error.includes("too soon")) return cb(body.error);
+    if (configUtils.isCN()) {
+      request(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
 
-        ++opts._delay;
+        if (body.error) {
+          if (!body.error.includes("too soon")) return cb(body.error);
 
-        const reRun = underscore.partial(that.runCode, opts, problem, cb);
-        return setTimeout(reRun, opts._delay * 1000);
-      }
+          ++opts._delay;
 
-      opts.json = false;
-      opts.body = null;
+          const reRun = underscore.partial(that.runCode, opts, problem, cb);
+          return setTimeout(reRun, opts._delay * 1000);
+        }
 
-      return cb(null, body);
-    });
+        opts.json = false;
+        opts.body = null;
+
+        return cb(null, body);
+      });
+    } else {
+      let new_opts: any = {}
+      underscore.extendOwn(new_opts, opts);
+      new_opts.json = opts.body
+      delete new_opts.body
+
+      that.h2request.post(new_opts, function (e, resp, body) {
+
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
+
+        if (body.error) {
+          if (!body.error.includes('too soon'))
+            return cb(body.error);
+          ++opts._delay;
+
+          const reRun = underscore.partial(that.runCode, opts, problem, cb);
+          return setTimeout(reRun, opts._delay * 1000);
+        }
+
+        opts.json = false;
+        opts.body = null;
+
+        return cb(null, body);
+      });
+    }
+
   };
 
   /* A function that is used to verify the result of a task. */
@@ -188,20 +285,36 @@ server to get the problem's description, test cases, and other information. */
     opts.url = configUtils.sys.urls.verify.replace("$id", task.id);
 
     let that = this;
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
+    if (configUtils.isCN()) {
+      request(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
 
-      let result = JSON.parse(body);
-      if (result.state === "SUCCESS") {
-        result = that.formatResult(result);
-        underscore.extendOwn(result, task);
-        queue.ctx.results.push(result);
-      } else {
-        queue.addTask(task);
-      }
-      return cb();
-    });
+        let result = JSON.parse(body);
+        if (result.state === "SUCCESS") {
+          result = that.formatResult(result);
+          underscore.extendOwn(result, task);
+          queue.ctx.results.push(result);
+        } else {
+          queue.addTask(task);
+        }
+        return cb();
+      });
+    } else {
+      this.h2request.get(opts, function (e, resp, result) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
+
+        if (result.state === 'SUCCESS') {
+          result = that.formatResult(result);
+          underscore.extendOwn(result, task);
+          queue.ctx.results.push(result);
+        } else {
+          queue.addTask(task);
+        }
+        return cb();
+      });
+    }
   };
 
   /* Formatting the result of the submission. */
@@ -293,34 +406,62 @@ server to get the problem's description, test cases, and other information. */
     const opts = makeOpts(configUtils.sys.urls.submissions.replace("$slug", problem.slug));
     opts.headers.Referer = configUtils.sys.urls.problem.replace("$slug", problem.slug);
 
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
+    if (configUtils.isCN()) {
+      request(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
 
-      // FIXME: this only return the 1st 20 submissions, we should get next if necessary.
-      const submissions = JSON.parse(body).submissions_dump;
-      for (const submission of submissions)
-        submission.id = underscore.last(underscore.compact(submission.url.split("/")));
+        // FIXME: this only return the 1st 20 submissions, we should get next if necessary.
+        const submissions = JSON.parse(body).submissions_dump;
+        for (const submission of submissions)
+          submission.id = underscore.last(underscore.compact(submission.url.split("/")));
 
-      return cb(null, submissions);
-    });
+        return cb(null, submissions);
+      });
+    } else {
+      this.h2request.get(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
+
+        // FIXME: this only return the 1st 20 submissions, we should get next if necessary.
+        const submissions = JSON.parse(body).submissions_dump;
+        for (const submission of submissions)
+          submission.id = underscore.last(underscore.compact(submission.url.split('/')));
+
+        return cb(null, submissions);
+      });
+    }
   };
 
   /* Getting the submission code and the runtime distribution chart. */
   getSubmission = (submission, cb) => {
     const opts = makeOpts(configUtils.sys.urls.submission.replace("$id", submission.id));
+    if (configUtils.isCN()) {
+      request(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
 
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
+        let re = body.match(/submissionCode:\s('[^']*')/);
+        if (re) submission.code = eval(re[1]);
 
-      let re = body.match(/submissionCode:\s('[^']*')/);
-      if (re) submission.code = eval(re[1]);
+        re = body.match(/runtimeDistributionFormatted:\s('[^']+')/);
+        if (re) submission.distributionChart = JSON.parse(eval(re[1]));
+        return cb(null, submission);
+      });
+    } else {
+      this.h2request.get(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
 
-      re = body.match(/runtimeDistributionFormatted:\s('[^']+')/);
-      if (re) submission.distributionChart = JSON.parse(eval(re[1]));
-      return cb(null, submission);
-    });
+        let re = body.match(/submissionCode:\s('[^']*')/);
+        if (re) submission.code = eval(re[1]);
+
+        re = body.match(/runtimeDistributionFormatted:\s('[^']+')/);
+        if (re) submission.distributionChart = JSON.parse(eval(re[1]));
+        return cb(null, submission);
+      });
+    }
+
   };
 
   /* A function that is used to star a problem. */
@@ -338,25 +479,89 @@ server to get the problem's description, test cases, and other information. */
       operationName: operationName,
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    request.post(opts, function (e: any, resp: any, _) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
-      return cb(null, starred);
-    });
+    if (configUtils.isCN()) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      request.post(opts, function (e: any, resp: any, _) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
+        return cb(null, starred);
+      });
+    } else {
+
+      opts.json = opts.body
+      delete opts.body
+      this.h2request.post(opts, function (e, resp, _) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
+        return cb(null, starred);
+      });
+
+    }
   };
+
+  h2request = {
+    h2core(opts, cb) {
+      cookieJar.setCookies(
+        opts?.headers?.cookie?.split?.(';') || [],
+        configUtils.sys.urls.base
+      ).then(() => {
+        if (opts?.headers?.cookie) delete opts.headers.cookie
+        if (opts?.headers?.Cookie) delete opts.headers.Cookie
+        opts.allowForbiddenHeaders = true
+        opts.timeout = 10000
+        return fetch(opts.url, opts).then(function (response) {
+          if (!response.ok) {
+            const c = `HTTP ${opts.method} error with opts: ${JSON.stringify(opts)} Response: ${JSON.stringify(response)}`
+            return cb(new Error(c))
+          }
+          // Save new "Set-Cookie" cookies to cache
+          const user = sessionUtils.getUser()
+          user.my_us_header.cookie = myJar.getCookieStringSync(opts.url)
+          sessionUtils.saveUser(user);
+
+          if (!response.json) {
+            const c = `HTTP ${opts.method} didn't respond with JSON opts: ${JSON.stringify(opts)} Response: ${JSON.stringify(response)}`
+            cb(new Error(c))
+          } else {
+            response.json().then((data) => {
+              cb(null, response, data)
+            })
+          }
+        })
+      })
+    },
+    post(opts, cb) {
+      opts.method = 'POST'
+      this.h2core(opts, cb)
+    },
+    get(opts, cb) {
+      opts.method = 'GET'
+      this.h2core(opts, cb)
+    }
+  }
+
 
   /* Making a request to the server to get the favorites. */
   getFavorites = (cb: any) => {
+
     const opts = makeOpts(configUtils.sys.urls.favorites);
+    if (!configUtils.isCN()) {
+      this.h2request.get(opts, function (e, resp, favorites) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
+        return cb(null, favorites);
+      });
+    } else {
+      request(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
 
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
+        const favorites = JSON.parse(body);
+        return cb(null, favorites);
+      });
+    }
 
-      const favorites = JSON.parse(body);
-      return cb(null, favorites);
-    });
+
   };
 
   /* Making a POST request to the GraphQL API. */
@@ -370,13 +575,27 @@ server to get the problem's description, test cases, and other information. */
       variables: {},
     };
 
-    request.post(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e) return cb(e);
+    if (configUtils.isCN()) {
 
-      const user = body.data.user;
-      return cb(null, user);
-    });
+      request.post(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
+
+        const user = body.data.user;
+        return cb(null, user);
+      });
+    } else {
+      opts.json = opts.body
+      delete opts.body
+      this.h2request.post(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e) return cb(e);
+
+        const user = body.data.user;
+        return cb(null, user);
+      });
+    }
+
   };
 
   /* Making a request to the server and returning the response. */
@@ -386,12 +605,23 @@ server to get the problem's description, test cases, and other information. */
     opts.method = method;
     opts.body = data;
 
-    request(opts, function (e, resp, body) {
-      e = checkError(e, resp, 200);
-      if (e && e.statusCode === 302) e = sessionUtils.errors.EXPIRED;
+    if (configUtils.isCN()) {
+      request(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e && e.statusCode === 302) e = sessionUtils.errors.EXPIRED;
 
-      return e ? cb(e) : cb(null, body.sessions);
-    });
+        return e ? cb(e) : cb(null, body.sessions);
+      });
+    } else {
+      this.h2request.get(opts, function (e, resp, body) {
+        e = checkError(e, resp, 200);
+        if (e && e.status === 302) e = sessionUtils.errors.EXPIRED;
+
+        return e ? cb(e) : cb(null, body.sessions);
+      });
+    }
+
+
   };
 
   getSessions = (cb) => {
@@ -528,11 +758,39 @@ and csrf token to the user object and saves the user object to the session. */
   };
 
   cookieLogin = (user, cb) => {
-    const cookieData = this.parseCookie(user.cookie, cb);
-    user.sessionId = cookieData.sessionId;
-    user.sessionCSRF = cookieData.sessionCSRF;
-    sessionUtils.saveUser(user);
-    this.getUser(user, cb);
+
+    if (configUtils.isCN()) {
+      const cookieData = this.parseCookie(user.cookie, cb);
+      user.sessionId = cookieData.sessionId;
+      user.sessionCSRF = cookieData.sessionCSRF;
+      sessionUtils.saveUser(user);
+      this.getUser(user, cb);
+    } else {
+      const curl = parseCurl(user.cookie)
+      if (curl.header.referer) delete curl.header.referer
+      if (curl.header.Referer) delete curl.header.Referer
+      user.my_us_header = curl.header
+      sessionUtils.saveUser(user);
+      this.getUser(user, cb);
+    }
+  };
+
+  curlcookieLogin = (user, cb) => {
+
+    if (configUtils.isCN()) {
+      const cookieData = this.parseCookie(user.cookie, cb);
+      user.sessionId = cookieData.sessionId;
+      user.sessionCSRF = cookieData.sessionCSRF;
+      sessionUtils.saveUser(user);
+      this.getUser(user, cb);
+    } else {
+      const curl = parseCurl(user.curl_data)
+      if (curl.header.referer) delete curl.header.referer
+      if (curl.header.Referer) delete curl.header.Referer
+      user.my_us_header = curl.header
+      sessionUtils.saveUser(user);
+      this.getUser(user, cb);
+    }
   };
 
   /* A function that is used to login to GitHub. */
@@ -888,6 +1146,12 @@ function makeOpts(url) {
 }
 
 function signOpts(opts, user) {
+
+  if (user.my_us_header) {
+    opts.headers = user.my_us_header
+    return
+  }
+
   opts.headers.Cookie = "LEETCODE_SESSION=" + user.sessionId + ";csrftoken=" + user.sessionCSRF + ";";
   opts.headers["X-CSRFToken"] = user.sessionCSRF;
   opts.headers["X-Requested-With"] = "XMLHttpRequest";
@@ -898,10 +1162,11 @@ function signOpts(opts, user) {
   opts.headers['Host'] = configUtils.sys.my_headers.Host
   opts.headers['Content-Type'] = configUtils.sys.my_headers.Content_Type
   opts.headers['Accept'] = configUtils.sys.my_headers.Accept
+  opts.my_us_cookie = user.my_us_cookie
 }
 function checkError(e, resp, expectedStatus) {
-  if (!e && resp && resp.statusCode !== expectedStatus) {
-    const code = resp.statusCode;
+  if (!e && resp && (resp.statusCode || resp.status) !== expectedStatus) {
+    const code = (resp.statusCode || resp.status);
 
     if (code === 403 || code === 401) {
       e = sessionUtils.errors.EXPIRED;

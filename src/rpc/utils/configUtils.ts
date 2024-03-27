@@ -122,6 +122,10 @@ class Config {
     return cfg;
   }
 
+  isCN() {
+    return this.app == "leetcode.cn"
+  }
+
   fix_cn() {
     this.app = "leetcode.cn";
     this.sys.urls.base = "https://leetcode.cn";
