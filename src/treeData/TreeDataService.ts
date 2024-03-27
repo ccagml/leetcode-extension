@@ -124,7 +124,7 @@ export class TreeDataService implements vscode.TreeDataProvider<TreeNodeModel> {
         return [];
       } else {
         switch (
-          element.id // First-level
+        element.id // First-level
         ) {
           case Category.All:
             return treeViewController.getAllNodes();
@@ -283,9 +283,22 @@ export class TreeDataService implements vscode.TreeDataProvider<TreeNodeModel> {
         label: "LeetCode Account",
         detail: "只能登录leetcode.cn",
         value: "LeetCode",
-      });
+      },
+        {
+          label: "LeetCode Cookie",
+          detail: "Use LeetCode cookie copied from browser to login",
+          value: "Cookie",
+        });
       qpOpiton.title = "正在登录中文版leetcode.cn";
       qpOpiton.placeHolder = "请选择登录方式 正在登录中文版leetcode.cn";
+    }
+
+    if (getLeetCodeEndpoint() == Endpoint.LeetCode) {
+      picks.push({
+        label: "LeetCode chrome copy curl(bash) ",
+        detail: "使用chrome复制最后一个graphql网络请求为curl请求,去掉复制内容中的换行符",
+        value: "curltype",
+      })
     }
     picks.push(
       {
@@ -298,11 +311,6 @@ export class TreeDataService implements vscode.TreeDataProvider<TreeNodeModel> {
         detail: "Use LinkedIn account to login",
         value: "LinkedIn",
       },
-      {
-        label: "LeetCode Cookie",
-        detail: "Use LeetCode cookie copied from browser to login",
-        value: "Cookie",
-      }
     );
     const choice: IQuickItemEx<string> | undefined = await vscode.window.showQuickPick(picks, qpOpiton);
     if (!choice) {

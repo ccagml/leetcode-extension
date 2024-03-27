@@ -30,6 +30,7 @@
 - 增加获取中文站的题解
 - 增加 cpp、js、py3 一些题目的 debug(参考 wangtao0101 项目,有问题提 issues)
 - [有些题目原插件无法调试,请尝试配置区域调试参数](#区域调试参数的一些说明)
+- [国际站修改登录方式 cRUL 方式登录](#cRUL 登录)
 
 # 关于本项目
 
@@ -74,6 +75,14 @@
 ## 状态栏增加简易计时器
 
 - 查看一个题目时会开始计时,提交一个题目通过后会停止计时
+
+## 国际站 cRUL 登录
+
+- 使用谷歌浏览器或者其他浏览器
+- F12 查看登录国际站后的请求
+- 选中复制最后一个 graphql 请求
+- 右键->复制-> 以 cURL(bash)格式复制
+- 插件登录选择 使用 cURL Cookie 方式登录,输入账号,输入复制来的 cURL(bash)格式请求数据
 
 ## 区域调试参数的一些说明
 
@@ -231,6 +240,7 @@
 - 本插件基于[LeetCode-OpenSource](https://github.com/LeetCode-OpenSource)的[vscode-leetcode](https://github.com/LeetCode-OpenSource/vscode-leetcode/)
 - 题目分数数据基于[zerotrac](https://github.com/zerotrac)的[leetcode_problem_rating](https://github.com/zerotrac/leetcode_problem_rating/)每周的更新
 - 插件 debug 参考[wangtao0101](https://github.com/wangtao0101/vscode-debug-leetcode)
+- 插件 使用谷歌浏览器复制为 cUrl 方式登录 参考[StevenJohnston](https://github.com/StevenJohnston/leetcode-cli)
 
 <!-- ## 编译插件的相关信息
 

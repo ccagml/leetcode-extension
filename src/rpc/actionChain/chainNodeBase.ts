@@ -9,7 +9,7 @@ export class ChainNodeBase {
   name: string; // 点的名称
   deleted: boolean;
 
-  public init() {}
+  public init() { }
 
   public save(): void {
     const stats = storageUtils.getCache(commUtils.KEYS.plugins) || {};
@@ -85,6 +85,9 @@ export class ChainNodeBase {
   }
   public cookieLogin(user, cb: Function): void {
     this.next.cookieLogin(user, cb);
+  }
+  public curlcookieLogin(user, cb: Function): void {
+    this.next.curlcookieLogin(user, cb);
   }
   public filterProblems(opts, cb: Function): void {
     this.next.filterProblems(opts, cb);

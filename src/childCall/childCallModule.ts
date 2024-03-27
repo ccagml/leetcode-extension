@@ -404,6 +404,7 @@ class ExecuteService implements Disposable {
       ["Cookie", "-c"],
       ["GitHub", "-g"],
       ["LinkedIn", "-i"],
+      ["curltype", "-r"],
     ]);
 
     let commandArg = loginArgsMapping.get(loginMethod);
@@ -500,6 +501,16 @@ class ExecuteService implements Disposable {
         }
       }
       // csrftoken="xxxx"; LEETCODE_SESSION="xxxx";
+    } else if (arg.loginMethod === "curltype") {
+      pwd = await window.showInputBox({
+        prompt: "输入从浏览器复制来的cURL请求.",
+        password: true,
+        ignoreFocusOut: true,
+        validateInput: (s: string): string | undefined => (s ? undefined : "Password must not be empty"),
+      });
+
+      pwd = pwd?.trim();
+      pwd = pwd?.replace(/\\  /g, ' ')
     } else {
       pwd = await window.showInputBox({
         prompt: "Enter password.",
